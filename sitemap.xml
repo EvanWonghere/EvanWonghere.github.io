@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://yufenghuang.tech/2023/06/09/%E4%BD%BF%E7%94%A8Visual-Studio%E9%83%A8%E7%BD%B2Boost-Python/</loc>
+    
+    <lastmod>2023-06-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://yufenghuang.tech/2023/05/29/%E5%85%B3%E4%BA%8E%E6%9C%AC%E5%8D%9A%E5%AE%A2/</loc>
     
     <lastmod>2023-05-29</lastmod>
@@ -157,12 +166,26 @@
 
   <url>
     <loc>https://yufenghuang.tech/</loc>
-    <lastmod>2023-05-29</lastmod>
+    <lastmod>2023-06-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   
+  <url>
+    <loc>https://yufenghuang.tech/tags/Boost-Python-Boost-Python-Visual-Studio-C-cpp-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</loc>
+    <lastmod>2023-06-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
+  
+  <url>
+    <loc>https://yufenghuang.tech/categories/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</loc>
+    <lastmod>2023-06-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
   
 </urlset>

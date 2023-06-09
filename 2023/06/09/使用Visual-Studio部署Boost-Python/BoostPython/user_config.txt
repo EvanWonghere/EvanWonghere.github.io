@@ -1,0 +1,10 @@
+# Configure msvc (default version, searched for in standard locations and PATH).
+# using msvc : 14.3;
+
+# Configure specific Python version.
+# using python  : 3.9
+                : "D:\Anaconda\python.exe"
+                : "D:\Anaconda\include"
+                : "D:\Anaconda\libs";
+
+msvc https://en.wikipedia.org/wiki/Microsoft_Visual_C++
