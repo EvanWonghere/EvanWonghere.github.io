@@ -22,7 +22,9 @@
             
             <tag> Boost::Python </tag>
             
-            <tag> Boost, Python </tag>
+            <tag> Boost </tag>
+            
+            <tag> Python </tag>
             
             <tag> Visual Studio </tag>
             

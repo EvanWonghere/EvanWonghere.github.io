@@ -9,7 +9,7 @@
     <atom:link href="https://yufenghuang.tech/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>焦虑的原因是：想同时做很多事，又想立即看到效果。</description>
-    <pubDate>Fri, 09 Jun 2023 18:01:33 GMT</pubDate>
+    <pubDate>Fri, 09 Jun 2023 18:02:47 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
@@ -33,7 +33,9 @@
       
       <category domain="https://yufenghuang.tech/tags/Boost-Python/">Boost::Python</category>
       
-      <category domain="https://yufenghuang.tech/tags/Boost-Python/">Boost, Python</category>
+      <category domain="https://yufenghuang.tech/tags/Boost/">Boost</category>
+      
+      <category domain="https://yufenghuang.tech/tags/Python/">Python</category>
       
       <category domain="https://yufenghuang.tech/tags/Visual-Studio/">Visual Studio</category>
       

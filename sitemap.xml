@@ -180,7 +180,14 @@
   </url>
   
   <url>
-    <loc>https://yufenghuang.tech/tags/Boost-Python/</loc>
+    <loc>https://yufenghuang.tech/tags/Boost/</loc>
+    <lastmod>2023-06-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://yufenghuang.tech/tags/Python/</loc>
     <lastmod>2023-06-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
