@@ -173,6 +173,27 @@
 
   
   <url>
+    <loc>https://yufenghuang.tech/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</loc>
+    <lastmod>2023-07-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://yufenghuang.tech/tags/C/</loc>
+    <lastmod>2023-07-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://yufenghuang.tech/tags/Visual-Studio-Code/</loc>
+    <lastmod>2023-07-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://yufenghuang.tech/tags/Boost-Python/</loc>
     <lastmod>2023-07-15</lastmod>
     <changefreq>weekly</changefreq>
@@ -209,27 +230,6 @@
   
   <url>
     <loc>https://yufenghuang.tech/tags/cpp/</loc>
-    <lastmod>2023-07-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://yufenghuang.tech/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</loc>
-    <lastmod>2023-07-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://yufenghuang.tech/tags/C/</loc>
-    <lastmod>2023-07-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://yufenghuang.tech/tags/Visual-Studio-Code/</loc>
     <lastmod>2023-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
