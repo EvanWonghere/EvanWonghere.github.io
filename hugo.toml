@@ -8,19 +8,19 @@ hasCJKLanguage = true
 
 [languages.en]
 languageName = "English"
-title = "Example Site"
+title = "Hive"
 weight = 1
 
 [languages.en.params.sidebar]
-subtitle = "Example description"
+subtitle = "EvanWong's Personal Blog"
 
 [languages.zh-cn]
 languageName = "中文"
-title = "演示站点"
+title = "蜂窝"
 weight = 2
 
 [languages.zh-cn.params.sidebar]
-subtitle = "演示说明"
+subtitle = "EvanWong的个人博客"
 
 [services.disqus]
 shortname = "hugo-theme-stack"
@@ -36,7 +36,7 @@ page = "/:slug/"
 
 [params]
 description = "My personal blog."
-mainSections = [ "post" ]
+mainSections = [ "posts" ]
 featuredImageField = "image"
 rssFullContent = true
 
@@ -53,7 +53,7 @@ rssFullContent = true
 
   [params.sidebar]
   emoji = "🐝"
-  subtitle = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  subtitle = "Bee."
 
     [params.sidebar.avatar]
     enabled = true
@@ -71,7 +71,7 @@ rssFullContent = true
 
   [params.comments]
   enabled = true
-  provider = "disqus"
+  provider = "giscus"
 
     [params.comments.disqusjs]
 
@@ -101,8 +101,14 @@ rssFullContent = true
     siteName = ""
 
     [params.comments.giscus]
+    repo = "EvanWonghere/EvanWonghere.github.io"
+    repoID = "R_kgDOPzgwzg"
+    category = "Announcements"
+    categoryID = "DIC_kwDOPzgwzs4Cvsti"
+    mapping = "pathname"
     reactionsEnabled = 1
     emitMetadata = 0
+    data-loading = "lazy"
 
     [params.comments.gitalk]
 

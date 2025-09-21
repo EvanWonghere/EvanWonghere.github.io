@@ -1,15 +1,58 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>Pages on 演示站点</title>
+        <title>Pages on 蜂窝</title>
         <link>http://localhost:1313/page/</link>
-        <description>Recent content in Pages on 演示站点</description>
+        <description>Recent content in Pages on 蜂窝</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor>
         <webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster>
         <copyright>EvanWong</copyright>
-        <lastBuildDate>Tue, 28 May 2019 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/page/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 20 Sep 2025 23:50:00 +0800</lastBuildDate><atom:link href="http://localhost:1313/page/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>关于我</title>
+        <link>http://localhost:1313/about/</link>
+        <pubDate>Sat, 20 Sep 2025 23:50:00 +0800</pubDate>
+        <author>yufenghuang009@gmail.com (Evan Wong)</author>
+        <guid>http://localhost:1313/about/</guid>
+        <description>&lt;h2 id=&#34;你好我是-evanwong-&#34;&gt;你好，我是 EvanWong 👋
+&lt;/h2&gt;&lt;p&gt;欢迎来到**「蜂窝」**。很高兴能在这里与你相遇。&lt;/p&gt;
+&lt;p&gt;我是一名 CS 专业在读大四牲。我创建这个博客（其实是秽土转生？），是让我有一个地方可以记录、沉淀和分享我的所学所思。&lt;/p&gt;
+&lt;h3 id=&#34;关于这个博客&#34;&gt;关于这个博客
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;「蜂窝」&lt;/strong&gt; 是我的个人知识库和思考笔记本。在这里，你可能会看到以下内容：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;📚 读书笔记&lt;/strong&gt;：更多可能会是专业类书籍的笔记。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;🧠 个人总结&lt;/strong&gt;：对某个项目、某段经历或某个阶段性学习的复盘与反思。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;💡 知识梳理&lt;/strong&gt;：将碎片化的知识体系化，主题可能涵盖 CS、游戏设计等。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;🔧 难题解析&lt;/strong&gt;：记录在学习和工作中遇到的“拦路虎”，以及如何一步步解决它的过程。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;📸 生活瞬间&lt;/strong&gt;：偶尔，我也会分享一些摄影、音乐或生活中的随笔感悟（或许会）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我在此博客分享的内容纯属个人主观观点。如果文章中有任何疏漏或错误，欢迎你通过评论或邮件交流指正。&lt;/p&gt;
+&lt;h3 id=&#34;联系我&#34;&gt;联系我
+&lt;/h3&gt;&lt;p&gt;你可以通过以下方式找到我：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;GitHub&lt;/strong&gt;: &lt;a class=&#34;link&#34; href=&#34;https://github.com/EvanWonghere&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;@EvanWonghere&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Email&lt;/strong&gt;: &lt;a class=&#34;link&#34; href=&#34;mailto:yufenghuang009@gmail.com&#34; &gt;yufenghuang009@gmail.com&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Steam&lt;/strong&gt;: &lt;a class=&#34;link&#34; href=&#34;https://steamcommunity.com/profiles/76561198980535015/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Is this my name?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h4 id=&#34;关于本站-colophon&#34;&gt;关于本站 (Colophon)
+&lt;/h4&gt;&lt;p&gt;作为一个小小的技术彩蛋，这个网站是基于以下这些优秀的技术构建的：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;静态网站生成器: &lt;a class=&#34;link&#34; href=&#34;https://gohugo.io/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Hugo&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;主题: &lt;a class=&#34;link&#34; href=&#34;https://themes.gohugo.io/themes/hugo-theme-stack/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Stack&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;评论系统: &lt;a class=&#34;link&#34; href=&#34;https://giscus.app/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Giscus&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;托管平台: &lt;a class=&#34;link&#34; href=&#34;https://pages.github.com&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GitHub Pages&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
         <title>Archives</title>
         <link>http://localhost:1313/archives/</link>
         <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
