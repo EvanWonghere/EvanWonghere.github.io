@@ -1,0 +1,848 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 蜂窝</title><link>https://yufenghuang.tech/post/</link><description>Recent content in Posts on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Tue, 21 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://yufenghuang.tech/post/index.xml" rel="self" type="application/rss+xml"/><item><title>游戏设计梦工厂，第一篇第二章额外篇</title><link>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0%E9%A2%9D%E5%A4%96%E7%AF%87/</link><pubDate>Tue, 21 Jan 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0%E9%A2%9D%E5%A4%96%E7%AF%87/</guid><description>&lt;img src="https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0%E9%A2%9D%E5%A4%96%E7%AF%87/cover.png" alt="Featured image of post 游戏设计梦工厂，第一篇第二章额外篇" /&gt;&lt;pre&gt;&lt;code&gt;阅读时间：2025-01-21
+阅读目标：了解何为谜题、解密游戏和其他游戏的区别、如何设计好的谜题。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="本篇摘要"&gt;本篇摘要
+&lt;/h2&gt;&lt;p&gt;​ 作者给谜题下了定义：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;谜题是有趣的&lt;/li&gt;
+&lt;li&gt;谜题有一个正确答案&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;​ 而如何让一个谜题有趣呢？作者给出以下三点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;小说&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;不要太简单或太难&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;小把戏&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;而让谜题有一个正确答案是为了区分谜题和其他娱乐形式，并给出他们之间的关系，据此得到判断谜题设计好坏的工具。&lt;/p&gt;
+&lt;h2 id="主要内容与要点"&gt;主要内容与要点
+&lt;/h2&gt;&lt;h3 id="什么是谜题"&gt;什么是谜题？
+&lt;/h3&gt;&lt;p&gt;​ 作者最喜欢的谜题的定义是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;谜题是有趣的&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这说明了谜题是一种玩法&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;谜题有一个正确答案&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这区分了谜题和其他形式的玩法，比如游戏和玩具&lt;/p&gt;
+&lt;p&gt;这个定义甚至是迷惑性的简单，但也带来很多有趣的效果。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="好玩吗"&gt;好玩吗？
+&lt;/h3&gt;&lt;p&gt;​ 给出了一些让谜题变得更好玩的东西。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;小说&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;玩开始于怀疑日常生活中的规则，那一些熟悉的东西再加一些小说氛围，是一种让人玩得好的方式。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;不要太简单，不要太难&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;太简单的谜题让人失望，太难的谜题让人受挫。不要太高估玩家，也不要太低估玩家。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;小把戏&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;让谜题是「反直觉的」，或者说「改变常用的诠释方式」，类似于推理小说中的「叙述诡计」。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;​ 人们对好玩的感觉是主观的，好不好玩取决于参与者的眼光，但作者认为反而更兴奋的是「在这世界上的每一个问题，无论多么乏味，总会有人想要去解决它」。&lt;/p&gt;
+&lt;h3 id="它有正确答案吗"&gt;它有正确答案吗？
+&lt;/h3&gt;&lt;p&gt;​ 当答案公布时，绝大多数人都认可这是最佳答案，那么它就是有答案的。但有时候可能仍有漏洞，这就需要额外填补。&lt;/p&gt;
+&lt;h3 id="谜题之于游戏"&gt;谜题之于游戏
+&lt;/h3&gt;&lt;p&gt;​ 前面说过「拥有一个正确答案」是为了区别谜题和游戏以及其他玩法。Chris Forward 给出了多种玩法类型的关系。&lt;/p&gt;
+&lt;img src="types_of_play.png" alt="Types of Play" style="zoom: 33%;" /&gt;
+&lt;p&gt;​ 这样的结构使我们获得一个判断谜题设计师好坏的好工具：要做一个好的谜题，先要做一个好的玩具。玩家应该能在操作谜题中得到乐趣，即使他们还不能得到一个解法。&lt;/p&gt;
+&lt;h3 id="设计谜题"&gt;设计谜题
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;谜题有两方面，一方面是谜题游戏中的关卡设计，以一个固定的规则为基础来制作一个特定的谜题；另一方面是规则设计，发明整体使用的规则、目标和谜题形式。&lt;/li&gt;
+&lt;li&gt;总的来说谜题设计和游戏设计拥有一样的目标：让玩家在一个享受并同时拥有挑战的状态中。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="书中案例与引申"&gt;书中案例与引申
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;书中给了一个谜题，我认为的确是很简单小巧但是不失精致，挺有趣的。&lt;/p&gt;
+&lt;img src="puzzle.png" alt="Puzzle" style="zoom: 33%;" /&gt;
+&lt;p&gt;已知该字母不是 L，那么是什么呢？&lt;/p&gt;
+&lt;p&gt;答案是「F」，是一个很巧妙的答案，很多人在尝试还原的时候估计都不会想到折叠过来的部分下面还有一个部分！这运用到了作者给出的让谜题变得好玩的技巧里的「不要太简单也不要太难」和「小把戏」，并且也完全符合作者提出来的谜题的定义！&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="我的思考与疑问"&gt;我的思考与疑问
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;如果我的谜题是为了剧情服务，那我应该如何入手设计？&lt;/p&gt;
+&lt;p&gt;叙事解谜不需要核心机制，每道题与每道题之间相对独立，没有内在的联系。解谜的逻辑是一种天然的、生活化的逻辑。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="书中问题"&gt;书中问题
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;发明一个电脑谜题，灵感源自于今日的新闻头条。至少两个关卡，一个简单一个难。作出纸面原型并让其他人测试并改进。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="精选摘录"&gt;精选摘录
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;「玩开始于怀疑日常生活中的规则，能放纵我们去做不使用的事情。」&lt;/li&gt;
+&lt;li&gt;「太简单的谜题让人失望，太难的谜题让人受挫。」&lt;/li&gt;
+&lt;li&gt;「对你来说是每天的麻烦问题，对其他人来说或许是一个有趣的谜题。」&lt;/li&gt;
+&lt;li&gt;「在这世界上的每一个问题，无论多么乏味，总会有人会想要去解决它。」&lt;/li&gt;
+&lt;li&gt;「如果玩家本身没有娱乐精神，即使是最好的游戏也可能被毁掉。」&lt;/li&gt;
+&lt;li&gt;「玩家是愿意改变游戏规则来让游戏每个人都觉得游戏好玩的。」&lt;/li&gt;
+&lt;li&gt;「要做一个好的谜题，首先要做一个好的玩具。」&lt;/li&gt;
+&lt;li&gt;「玩家应该能够在操作谜题中得到乐趣，即使他们还不能得到一个解法。」&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="本章小结与感想"&gt;本章小结与感想
+&lt;/h2&gt;&lt;p&gt;​ 学到了关于谜题的定义以及评判和设计谜题的一些方法，正好我打算这段时间开发一个叙事解谜游戏，或许会有所帮助。&lt;/p&gt;</description></item><item><title>游戏设计梦工厂，第一篇第二章</title><link>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0/</link><pubDate>Sun, 19 Jan 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0/</guid><description>&lt;img src="https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0/cover.png" alt="Featured image of post 游戏设计梦工厂，第一篇第二章" /&gt;&lt;pre&gt;&lt;code&gt;阅读时间：2025-01-19
+阅读目标：了解游戏如何运转及为什么玩家会玩游戏
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="本章摘要"&gt;本章摘要
+&lt;/h2&gt;&lt;h2 id="主要内容与要点"&gt;主要内容与要点
+&lt;/h2&gt;&lt;h3 id="formal-elements"&gt;Formal Elements
+&lt;/h3&gt;&lt;p&gt;​ 一般译作「形式元素」或「正规元素」，是用于区分游戏和其他事物的元素，对设计师来说是非常重要且需要理解的概念，因为其提供了游戏的结构和形式。下一章会更详细讲解，本章主要介绍以下元素：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Player 玩家&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;游戏与其他娱乐方式最明显的区别就是，它是被设计为需要消费者参与其中的。「玩家」这个概念都是自愿参与和使用这个娱乐环境的，自愿接受游戏的规则和限制。这也被称为「Lusory 态度」。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Objectives 目标&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;目标就是玩家要达成的任务或达到的结果。玩家对实现游戏中目标的渴望就是我们衡量玩家对游戏有多投入的一个标准。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Procedure 程序/流程&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;由于有多种翻译，这里就称 procedure。Procedure 是游戏规定的玩的行为或方式，指引玩家的行动，创造了游戏之外几乎不可能发生的互动。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Rules 规则&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;规则定义了游戏的物品和概念，并限制玩家的行为和互动对象，并且实际上定义了游戏边界。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Resources 资源&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;资源就是由于可以帮助玩家实现目标的有限资源。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Conflict 冲突&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;玩家的目标规则、程序的关系限制指引了玩家的行为，创造了游戏的另一个与其他行为的区别——冲突，玩家需要努力解决冲突才能实现目标。冲突也是游戏的驱动力。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Boundaries 边界&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;游戏就是一个「魔法圈 &lt;em&gt;magic circle&lt;/em&gt;」，发生在临时世界中，运行着游戏的规则，而不存在于现实世界中。边界定义了游戏世界和现实世界的分界线。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Outcome 结果&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;游戏的结果是最终达到的状态，通常与玩家的目标相关。不确定的结果在以玩法为核心的流程中很重要，因为这是玩家动力的一个关键因素。游戏设计师的职责就是设计出一个满意的游戏结果，通常来说是一个可衡量但不相等的结果。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="dramatic-elements"&gt;Dramatic Elements
+&lt;/h3&gt;&lt;p&gt;​ 一般译作「戏剧元素」，是让玩家能对游戏产生情感连接的元素，通过在 formal elements 中创作戏剧化内容，使玩家在情感上投入。同样的在第四章会更加详细地讲解，本章主要介绍：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Challenge 挑战&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;游戏会制造冲突，并且玩家必须以游戏乐意的方式解决冲突。这些冲突挑战玩家，在玩家解决问题时创造紧张感。平衡玩家对挑战的情感反应是让玩家持续投入游戏的关键。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Play 玩&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Salen 和 Zimmerman 定义 「玩」为「在一个限定的结构中的自由行动」，这启示我们可以利用游戏系统提供给玩家形式更加自由的互动来实现游戏中的目标。要设计能吸引你的玩家的那种玩法类型，同时在更严谨的游戏框架内还要给玩家设计一些自由度，这是另一个让玩家投入游戏的关键思考点。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Premise 前设/背景设定&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Premise 给 formal elements 提供了内容，最基本的目的是让玩家更容易理解他们选择的处境，同时还是一个让玩家情感上投入到 formal elements 互动中的一个强有力的工具。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Character 角色&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在传统的故事叙事中，角色是体验一个戏剧故事的替身，而在游戏中也可以是一样的，通过角色做替身来体验游戏角色的生活。角色还可以成为玩家参与游戏的容器，是体验处境和冲突的介入点。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Story 故事&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;游戏叙事的核心，结合 formal elements 创造出的环境让玩家投入，会随着游戏进程展开。故事如何结合游戏一直在争论，但是明确的是故事和玩法结合可以产生出强大的情感影响。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="dynamic-elements"&gt;Dynamic Elements
+&lt;/h3&gt;&lt;p&gt;​ 本章只用几段话简单介绍了「把游戏看作是动态系统」的想法，在第五章会更详细介绍。本章里主要说的是：
+游戏是一个系统——一组互相关联的元素组合在一起形成一个复杂的整体。思考游戏系统时要注意「&lt;strong&gt;整体优于各个部分的总和&lt;/strong&gt;」，意思是一个系统由于内部元素的关系，当它们运行起来时，成为了新维度的事物。所有游戏元素在被人运行和操作之前，都只是形成了一个「初始的潜在游戏」，在玩家玩游戏时会出现什么是我们无法预知的。这样的现象也被称为「&lt;strong&gt;Emergence 涌现&lt;/strong&gt;」，原文并未说明，不知本书后续是否会提及此概念。&lt;/p&gt;
+&lt;h3 id="什么是谜题"&gt;什么是谜题？
+&lt;/h3&gt;&lt;p&gt;​ 书中特别摘录了 Scott Kim 写的《什么是谜题？》，关于此文章的笔记和思考我将另开一文，在此篇中不讨论。&lt;/p&gt;
+&lt;h3 id="定义游戏"&gt;定义游戏
+&lt;/h3&gt;&lt;p&gt;​ 本书给出了游戏的三个定义：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;「&lt;strong&gt;一个游戏是一个封闭的、正规（formal）的系统。&lt;/strong&gt;」&lt;/p&gt;
+&lt;p&gt;​ 前面说过游戏是存在边界的，是和现实世界分开的，因此「游戏是封闭的」。&lt;/p&gt;
+&lt;p&gt;​ 游戏拥有正规元素（formal elements）而不是其他形式的互动，这些元素是相互关联的，因此「游戏是正规系统 formal system」。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;「&lt;strong&gt;游戏让玩家投入于有结构的冲突中。&lt;/strong&gt;」&lt;/p&gt;
+&lt;p&gt;​ 游戏的整个目的就是让玩家投入，没有玩家就没有游戏的意义。而让玩家投入的方式就是让玩家参与到 formal elements 和 dramatic element 构成的冲突中，挑战玩家实现目标，因此「游戏让玩家投入与有结构的冲突中」。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;「&lt;strong&gt;游戏以一种不平等的方式来解决游戏的不确定性。&lt;/strong&gt;」&lt;/p&gt;
+&lt;p&gt;​ 游戏的一个本质就是「不确定性」，游戏还能够结束这种不确定性，通过不平等的结果来解决不确定性。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="超越定义"&gt;超越定义
+&lt;/h3&gt;&lt;p&gt;​ 游戏的定义之外还有什么？现在有很多各种类型的游戏，超越了娱乐，设计教育、培训、政治、健康、人生追求、艺术、建筑等等领域，因此出现了「游戏化」这个概念，想要把「玩和重要的想法结合起来」。&lt;/p&gt;
+&lt;h2 id="书中案例与引申"&gt;书中案例与引申
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;《钓鱼》和《雷神之锤》的比较&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 这两个游戏截然不同，一个是使用实体扑克牌进行线下游玩的回合制多人卡牌游戏，一个是 3D 的 FPS 游戏，需要有软件和电脑。一个有公开的玩法，人人都能玩的游戏，一个是有版权的软件产品。但是这两者之间在个更深层次上是有相似点的，据此引出 formal elements，更加说明这是游戏的基础。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="我的疑问与思考"&gt;我的疑问与思考
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Procedure 和 Rules 的区别是什么？有什么联系？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 这两个的区别就在于，「rules」告诉你什么能做、什么不能做，也就是 「what (not) to do」，而「procedure」告诉你如何去和游戏进行交互，游戏如何进行下去，也就是「how to do」。一个是静态的框架，一个是动态的描述。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Objectives 和 Outcome 的区别和界限？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 「目标」和「结果」是不同的，比如多人游戏中，多个玩家都可以完成目标，但结果只能有一个玩家胜出或被淘汰；就算是单人游戏，也会出现玩家并没有达成目标而导致失败的结果。&lt;/p&gt;
+&lt;p&gt;​ 个人认为「结果」就是「结局」，而「目标」是达成某个「结果」的指向。一个在游戏过程中一直存在，告诉玩家「应该朝着什么方向去做」，是动态的；一个在游戏结束时才确定，告诉玩家「做得怎么样」，是静态的。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Conflict 和 Challenge 的区别和界限？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 「冲突」是预设好的、来自系统的困难和障碍，是静态的，是游戏规则和结构的一部分。&lt;/p&gt;
+&lt;p&gt;​ 「挑战」是动态的，是玩家在游玩过程中，与「冲突」动态交互产生的「困难体验」，是「冲突」的实际效果。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;一定要存在 Objectives 和 Outcome 吗？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 个人认为，并不是一定要存在的，就比如经典游戏 Minecraft，游戏并没有实际意义上的结局，打败末影龙其实也不算，尽管能获得「The End」这个成就，但是游戏远没有结束，不然官方也不会更新末地折跃门等。Minecraft 也没有实际意义上的目标，硬要说有的话，那我认为也是「Explore and Craft」，也非传统意义的目标。因此，在很多高自由度的游戏中，「目标」和「结果」并不是必要的，或者说是「更加非传统更加抽象的概念」，由玩家自行发掘和体验，并不由设计师强行施加给玩家。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;电子竞技算是体育，那么体育竞技算游戏吗？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 我认为从定义上来说，是的，但不完全是。让我们根据三条定义一条条分析，都以 100m 跑为例：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;体育竞技是封闭的 formal system&lt;/p&gt;
+&lt;p&gt;​ 体育竞技具有 formal elements，有玩家——运动员，有目标——跑得尽量快，有 procedure——准备、鸣枪、跑步、冲线，有规则——详见国际田联有关文件，有资源——运动员的设备资源、教练资源、医疗资源等，有冲突——只有一个运动员能够拿第一，有边界——在固定的时间固定的场所固定的规则，有结果——最终的成绩。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;体育竞技让玩家投入与有结构的冲突中&lt;/p&gt;
+&lt;p&gt;​ 有多方面的挑战，来自同台运动员、场地的适应程度、自身的热身程度等。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;体育竞技以一种不平等的方式来解决游戏的不确定性&lt;/p&gt;
+&lt;p&gt;​ 每个运动员的状态得无法稳定恒久保持，之前默默无名的小将有可能突然跑出好成绩，而顶级运动员也可能中途拉伤或者抢跑被罚下等，是充满不确定性的，而且一定会分出高低名次，因此是使用不平等的方式来解决。&lt;/p&gt;
+&lt;p&gt;​ 但是，虽然竞技体育在一定程度上是封闭的，场上争破头场下还可能是好朋友，但是不可否定的，竞技体育的结果会对现实世界产生影响，这似乎不太符合，但也不是所有竞技体育都对现实世界有影响，或者说很多比赛对现实世界的影响有限，界限还是比较模糊的，因此或许可以定义为「具有社会影响价值的」、「现实化的」游戏。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;阅读电子书不算游戏，那为什么「剧情游戏」算游戏呢？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 首先题目是我随便想的，其实我觉得并不全对，有些书籍已经完全算是模糊了「游戏」与「阅读」的界限了，比如《S.》、《胜者出局》等，有兴趣者可以自行了解。&lt;/p&gt;
+&lt;p&gt;​ 言归正传，我认为主要区别在于「dramatic elements 带来的互动性和代入感」。&lt;/p&gt;
+&lt;p&gt;​ 剧情游戏通常将玩家与主角绑定在一起，让玩家称为故事的一部分，以主角的视角体验剧情，而读书时读者通常处于「上帝视角」，以旁观者的身份观察和理解角色与故事。剧情游戏里的冲突或因玩家的选择而引发和解除，玩家的选项会推进故事发展，还可能具有多结局，而读书只是在被动跟着剧情走。剧情游戏还会通过音乐、画面效果等来强化体验和沉浸感，而读书基本靠“脑补“。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="书中问题"&gt;书中问题
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;问题 1: 想一个游戏&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;想想玩过的任何一款游戏，然后将游戏的描述写下来。写详细一些，假设是给从来没有玩过此类型的游戏的人写的。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;《艾尔登法环》，玩家需要操控「褪色者」，获得并使用强力的武器、魔法、祷告、骨灰、道具等来击败通往「黄金树」路上的一个个 BOSS，最终杀死在黄金树内部的最终 BOSS，成为「交界地」的新王。&lt;/p&gt;
+&lt;p&gt;「褪色者」具有等级系统，可消耗「卢恩」进行升级获得各种属性点，卢恩还可以购买道具等，武器都可以消耗不同「锻造石」进行强化，骨灰也可以通过消耗不同的「墓地铃兰」进行强化，基本属性条包括血量、蓝量、体力条。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;现在想一个完全不同类型的游戏，越不同越好，用同样的方法描述这个游戏。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;《疑案追声》，玩家通过使用「声探」系统，操纵虚拟人物倾听案发现场不同人说的话和各种声音来协助破案，可以回溯、暂停、快进等，也可以在某个时间点进行标记。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;比较这两份描述，其中有哪些元素相同、不同？深入地思考两款游戏的机制分别是什么。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;相同的元素有可操纵的主角、都具有剧情、都有目标；不同在于《艾尔登法环》具有动作部分、是开放大世界，《疑案追声》具有解谜机制、时间操纵机制。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;问题 2: 描述玩家会怎样开始玩《钓鱼》或《雷神之锤》。在每种情况下他们需要怎么做——社交、进程或技巧？刚开始玩卡牌游戏和刚开始玩动作游戏的玩家肯定会很不同，但是这其中是不是还有相似点呢？如果有，描述这些相似点。&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;问题 3: 列举五款游戏，并用一句话分别描述每款游戏的目标。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;《山河旅探》，探寻哥哥死亡的真相。&lt;/p&gt;
+&lt;p&gt;《TOEM》，拍摄到 TOEM。&lt;/p&gt;
+&lt;p&gt;《艾尔登法环》，当上艾尔登之王。&lt;/p&gt;
+&lt;p&gt;《暗喻幻想》，找到拯救王子的方法，揭穿并阻止路易。&lt;/p&gt;
+&lt;p&gt;《塞尔达传说：王国之泪》，打败魔王加侬多夫并拯救塞尔达公主。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;问题 4: 你可以想象出一个没有规则的游戏吗？如果有，描述这个游戏。只有一个规则的游戏会怎么样呢？为什么这个练习很难？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;没有规则的游戏我认为是不存在的，只要存在「边界」就一定有规则。&lt;/p&gt;
+&lt;p&gt;而只有一个规则的游戏，无疑会是混乱不堪的，没有足够的规则，就无法规定好目标，无法制造足够的冲突，也就不会是个好游戏。&lt;/p&gt;
+&lt;p&gt;这个练习难在，规则越少那么就越难划分一个好的边界。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;问题 5: 对比足球和扑克牌的冲突。分别描述两款游戏如何给玩家制造冲突。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;足球的冲突主要来自与对方球员的相互竞争，以及己方队友可能出现的失误。&lt;/p&gt;
+&lt;p&gt;扑克牌的冲突主要来自机制，手牌的获取基本全靠运气，极大加强了不确定性。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;问题 6: 列举三个你觉得特别有挑战的游戏，并说说为什么。&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;问题 7: Risk、Clue、Pit 和 《吉他英雄》的游戏 premise 是什么？如果你不知道这些游戏，找一些你更加熟悉的游戏来进行研究。&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;问题 8: 有没有哪款游戏中的故事曾把你紧紧抓住，让你产生触动了，或激发了你的灵感呢？如果有，为什么？如果没有，又为什么？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;《我在七年后等着你》，这是我第一个玩哭的游戏，爱情与相互拯救让我无法控制自己。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="精选摘录"&gt;精选摘录
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;「这两个描述中最明显的相同点就是，它们都是为玩家设计的。」&lt;/li&gt;
+&lt;li&gt;「如果你没有遵守这些规则，那么在现实中，你就已经不是在玩这个游戏了。」&lt;/li&gt;
+&lt;li&gt;「这些让游戏体验和其他体验不同的界限可以作为我们区别游戏的另一方法。」&lt;/li&gt;
+&lt;li&gt;「其中最有影响力的是把游戏看作经济学、行为心理学、社会学和人类学的研究冲突。」&lt;/li&gt;
+&lt;li&gt;「让我感到兴奋的想法是，在这世界上的每一个问题，无论多么乏味，总有人会想要去解决它。」&lt;/li&gt;
+&lt;li&gt;「“拥有一个正确答案”的目的是为了区别谜题和游戏与其他玩法。」&lt;/li&gt;
+&lt;li&gt;「把你在这里读到的所有内容当作是一个你可以跳跃的起点，一个为你远征游戏设计世界准备的发射台，把玩家带到不可思议的地方。」&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="本章小结与感想"&gt;本章小结与感想
+&lt;/h2&gt;&lt;p&gt;​ 本章简单介绍了 FDD 理论，并为游戏提供了一个有用的定义，但并不是总体的游戏的绝对定义，因为随着新一代设计师对游戏边缘的不断探索，不断的新领域正在涌现。但是提供的定义对游戏分析和设计都很重要。&lt;/p&gt;</description></item><item><title>游戏设计梦工厂，第一篇第一章</title><link>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%80%E7%AB%A0/</link><pubDate>Sat, 18 Jan 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%80%E7%AB%A0/</guid><description>&lt;img src="https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%80%E7%AB%A0/cover.png" alt="Featured image of post 游戏设计梦工厂，第一篇第一章" /&gt;&lt;pre&gt;&lt;code&gt;阅读时间：2025 年 1 月 18 日
+阅读目标：探寻如何成为一名游戏设计师以及需要的技能等。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="本章摘要"&gt;本章摘要
+&lt;/h2&gt;&lt;p&gt;​ 本章主要回答“如何成为一名游戏设计师？”、“需要什么样的才能和技巧？”、“在这个过程中需要做什么？”、“什么才是最好的游戏设计方法？”这几个问题。&lt;/p&gt;
+&lt;p&gt;​ 针对第一个问题，最重要的就是「&lt;strong&gt;与玩家站在同一阵营&lt;/strong&gt;」，好的核心玩法才是游戏的本质，游戏设计师的注意力应该集中在玩家体验上。因此游戏测试者也十分重要，他们直接告诉你你的游戏的体验，出色的游戏设计师应该为玩家创造一种有潜力的体验，布置好游戏世界内容后让玩家亲自体验，而不是想着掌控游戏的所有功能和细节，&lt;strong&gt;试玩是了解自己游戏表现力最好的方法，是整个游戏设计过程的心脏&lt;/strong&gt;。游戏在反复测试和仔细观察中进化，让游戏进化成为超越自己最初想法的游戏是游戏设计师的职责，不是一成不变，而是孕育出新的生命，「这就是游戏设计的艺术」。&lt;/p&gt;
+&lt;p&gt;​ 针对第二个问题，游戏设计师首先需要具备的基本特征就是&lt;strong&gt;对游戏和玩的热情&lt;/strong&gt;。然后，最重要的技能是和所有团队成员进行清楚、高效的&lt;strong&gt;交流&lt;/strong&gt;，同时做一个好的听众和妥协者，并且&lt;strong&gt;妥协是一件必要的事&lt;/strong&gt;，你的职责就是在妥协的情况下把游戏做得流畅和成功。在此之上，需要优秀的团队合作和工作流，你需要保证「所有不同类型的人确实是在为同一个游戏工作」。此外，你需要是一个能够看清复杂的系统、分析出事物间的联系和规则，并且能在常见的互动当中找到&lt;strong&gt;灵感&lt;/strong&gt;的人。你还需要「&lt;strong&gt;成为更好的玩家&lt;/strong&gt;」——用你自己和你的游戏体验来训练自己对好的游戏玩法的敏锐程度（貌似不太对，但这让我不禁想到岩田聪先生的“玩家之心”）。此外，一定需要有&lt;strong&gt;创造力&lt;/strong&gt;才能设计出一个很棒的游戏。&lt;/p&gt;
+&lt;p&gt;​ 针对第三、四个问题，本章主要介绍的是「&lt;strong&gt;以玩法为核心的设计流程&lt;/strong&gt;」。其流程为：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;建立玩家体验目标&lt;/li&gt;
+&lt;li&gt;制作原型和测试游戏&lt;/li&gt;
+&lt;li&gt;迭代设计流程
+&lt;ol&gt;
+&lt;li&gt;brainstorm&lt;/li&gt;
+&lt;li&gt;实物原型&lt;/li&gt;
+&lt;li&gt;展示（可选）&lt;/li&gt;
+&lt;li&gt;软件原型&lt;/li&gt;
+&lt;li&gt;设计文档&lt;/li&gt;
+&lt;li&gt;生产&lt;/li&gt;
+&lt;li&gt;QA (Quality Assurance)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="主要内容与要点"&gt;主要内容与要点
+&lt;/h2&gt;&lt;h3 id="游戏设计的核心"&gt;游戏设计的核心
+&lt;/h3&gt;&lt;p&gt;​ 本章的观点是「&lt;strong&gt;好的核心玩法才是游戏的本质&lt;/strong&gt;」，只有好的核心玩法才能吸引住玩家，游戏设计师的注意力应该集中在玩家体验上，不要被其他顾虑干扰。（然而现在国内许多厂商游戏本质上都是套皮游戏，糖豆人火了就出蛋仔派对、PUBG 火了就出和平精英、搜打撤火了就出三角洲、黎明杀机火了就出第五人格等等，都在害怕创新带来不确定性）
+应该牢记「&lt;strong&gt;游戏测试是整个游戏设计过程的心脏&lt;/strong&gt;」，在各个阶段都坚持让目标用户测试游戏，并且游戏原型的构建和迭代要很早就开始，积极测试、验证、迭代。&lt;/p&gt;
+&lt;h3 id="游戏设计师所需的才能和技能"&gt;游戏设计师所需的才能和技能
+&lt;/h3&gt;&lt;p&gt;​ 游戏设计师最基本的特征是「&lt;strong&gt;热爱游戏和玩&lt;/strong&gt;」，然后需要能进行「&lt;strong&gt;清楚、高效地交流，并做一个好的听众和妥协者&lt;/strong&gt;」，需要「&lt;strong&gt;保证整个团队各种类型的人都在为同一个游戏工作&lt;/strong&gt;」，需要会并且从开发的最开始阶段就「&lt;strong&gt;坚持执行良好的开发流程&lt;/strong&gt;」，需要能「&lt;strong&gt;用不同的视角看这个世界，在常见的互动中找到玩法灵感&lt;/strong&gt;」，需要「&lt;strong&gt;训练和保持对游戏和游戏玩法的敏锐直觉&lt;/strong&gt;」，需要有「&lt;strong&gt;创造力&lt;/strong&gt;」。&lt;/p&gt;
+&lt;h3 id="doa"&gt;D.O.A.
+&lt;/h3&gt;&lt;p&gt;​ D.O.A.，Dead On Arrival，是指一个游戏玩起来完全没有任何乐趣，一上市就被认定失败。（比如 星鸣特攻、魔戒：咕噜 这些？）&lt;/p&gt;
+&lt;h3 id="以玩法为核心的设计流程"&gt;以玩法为核心的设计流程
+&lt;/h3&gt;&lt;h4 id="建立玩家体验目标"&gt;建立玩家体验目标
+&lt;/h4&gt;&lt;p&gt;​ 此设计流程坚持考虑玩家体验，在每一个开发阶段都让目标用户测试游戏。“玩家体验目标”就是：玩家在有设计师创建的游戏中能够体验到的不同感受的目标。这并不是游戏里的实际内容，而是玩家可以在游戏中自行发掘的体验。&lt;/p&gt;
+&lt;h4 id="制作原型和测试游戏"&gt;制作原型和测试游戏
+&lt;/h4&gt;&lt;p&gt;​ 要尽早地做出游戏原型并进行游戏测试，不要在对玩家体验目标、核心游戏机制深入理解时就开始游戏制作。开始制作游戏前，设计和原型的准备时间越长，就越可能避免高昂代价的错误。&lt;/p&gt;
+&lt;h4 id="迭代设计流程"&gt;迭代设计流程
+&lt;/h4&gt;&lt;p&gt;​ 一遍又一遍地对游戏的方方面面进行设计、测试和评估，持续提升游戏的质量，直到玩家在游戏中的体验符合预期。
+在设计游戏时应该知道：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;设定玩家体验的目标&lt;/li&gt;
+&lt;li&gt;构思一个想法或系统&lt;/li&gt;
+&lt;li&gt;让一个想法或系统成型（写下来或做成一个原型）&lt;/li&gt;
+&lt;li&gt;以玩家的体验为目标，测试一个想法或系统的影响（即对游戏性进行测试或分析反馈）&lt;/li&gt;
+&lt;li&gt;如果效果表现出来与玩家的体验相违背，那么回到第一步&lt;/li&gt;
+&lt;li&gt;如果出来的效果是好的，但是没达到你的预期，阿么尝试再次修改和测试&lt;/li&gt;
+&lt;li&gt;如果新的想法最终能达到你的预期，那么迭代过程完成。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="书中案例与引申"&gt;书中案例与引申
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Will Wright 创造 SimAnt 和 SimEarth&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ Will Wright 创造 SimArt 灵感来源于观察蚂蚁群落，而进一步地，他开始观察生态系统，从盖亚假说中找到灵感，做出了 SimEarth。对这个世界有一个非常强的好奇心和热情，是 Wright 游戏灵感的重要来源。&lt;/p&gt;
+&lt;p&gt;​ 那么，我们如何找到灵感呢？从系统的角度观测我们所热衷的事物，将其拆解为目标、行为、关系等。试着理解这个系统中的每一个元素到底是如何进行互动的，这就可以成为一个有意思的游戏的基础。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;宫本茂的游戏灵感来源&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 宫本茂的游戏很多都来自于他记忆中童年探险的感觉和奇遇，他说总是从他自己的童年和爱好中寻找灵感。
+而想想自己的生活经历，有可能就有激发自己游戏想法的记忆，「童年可以成为一个强大的游戏设计灵感来源」，其原因也很简单，当我们是孩子的时候，我们总是会全神贯注地玩游戏。所以当你回顾童年，也许就会发现所需要的游戏素材就在那里。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;游戏《你不知道的杰克》&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 此游戏的设计师简单地结合了高端和低端的知识来挑战玩家，这样可以让玩家在两个领域都变得很擅长，如此创新的游戏跨过了游戏的边界，使各种人都爱玩。&lt;/p&gt;
+&lt;p&gt;​ 这旨在说明创造力或许还是两个毫不相干的事物结合在一起的产物。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Katamari Damacy 的作者 Keita Takahashi 的游戏灵感来源&lt;/p&gt;
+&lt;p&gt;​ Keita Takahashi 在分配到“想出一款竞速比赛游戏的做法”时，想要做出比竞速游戏更加独特的游戏，于是就想出了“粘球”的游戏机制，在游戏中玩家可以滚动粘球来粘起物品。&lt;/p&gt;
+&lt;p&gt;​ 这说明创新的想法有时会主动找上门来，但是需要注意哪些想法是不合实际的。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Eric Zimmerman 和 Nathalie Pozzi 在游戏 SiSSYFiGHT 2000 中的迭代过程&lt;/p&gt;
+&lt;p&gt;​ 主要是给一个具体的例子，体验下迭代设计法的具体应用。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="我的思考与疑问"&gt;我的思考与疑问
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;如何区别“以玩法为核心的设计方法”和其他设计方法？什么时候正确使用？&lt;/p&gt;
+&lt;p&gt;​ 我个人认为，还是应该根据自己的游戏的主要内容和目标群体来确定。有的游戏的主体就是故事本身，而对操作什么的并不是很重要，比如 galgame 和 底特律：变人 这样的互动叙事类/剧情游戏，这部分游戏应该考虑的是「以叙事为核心」（随手写的，非专业术语）。所以我认为，应该先确立玩家的体验目标，然后对应的运用设计方法。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;游戏设计师和游戏制作人的区别？&lt;/p&gt;
+&lt;p&gt;​ 这里贴一个&lt;a class="link" href="https://gamedesignskills.com/game-development/game-designer-or-game-producer-career-path/" target="_blank" rel="noopener"
+&gt;文章&lt;/a&gt;，我的理解就是 game designer 主要负责核心玩法、系统、内容的设计，而 game producer 负责项目的管理和推进、质量把控和预算控制。&lt;/p&gt;
+&lt;p&gt;​ 这里附上刚才的文章的部分摘录：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;While designers are focused on a game’s vision and producers on the schedule and execution, being attuned to both will make you better at either job.
+Game development strikes a balance between the two; each needs good advocates for a game to be successful.&lt;/p&gt;
+&lt;p&gt;当设计师专注于游戏的愿景，而制作人专注于时间表和执行时，同时对两者都有所了解将使你在任意一个职位上表现得更出色。
+游戏开发在两者之间寻求平衡；为了游戏的成功，每个角色都需要优秀的倡导者。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;实物原型只在创新时需要吗？如何界定「创新」？&lt;/p&gt;
+&lt;p&gt;​ 文章说的是「跳过实物原型阶段，你很难设计出一个原创游戏。对现有的参考游戏进行加强或改造，意味着你的游戏从一开始就注定是衍生品。」。怎么样的游戏才算得上是「原创」，怎样又才是「衍生品」？
+在此浅谈下自己的理解，我认为「实物原型是必要的」，能够在初期展示游戏玩法，有助于团队沟通和验证核心机制、减少成本。&lt;/p&gt;
+&lt;p&gt;​ 而何为创新，我认为需要分不同方面来说，完全的「原创」几乎是不可能的，但是「创新」仍然是游戏行业生命里的来源。创新方面来说，最经典的就是「玩法创新」，是能够直接开创新的游戏类型的存在，比如「雷神之锤」之于 3D游戏 和 FPS 游戏；还有「设计创新」，比如「塞尔达传说：旷野之息」之于开放世界地图设计；还有「艺术创新」，比如「Atlus」就以独特的艺术风格闻名。除此之外应该还有其他，暂时先写这么多吧。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="练习"&gt;练习
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;练习 1: 成为一名测试者&lt;/strong&gt;
+&lt;em&gt;扮演一名测试者，玩游戏的时候观察自己，记录自己的行为和感受作出详细记录。然后看自己的朋友玩并重复记录。比较这两份记录并分析自己学到了什么。&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;练习 2: D.O.A. (Dead On Arrival)&lt;/strong&gt;
+&lt;em&gt;找一个玩过的 D.O.A. 并写下来喜欢这个游戏的哪些部分、哪些部分又是被设计师忽略的、以及这个游戏又可以如何提高？&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;​ 很遗憾我几乎没有玩过 D.O.A. 的游戏，但我可以说说我了解一点🤏的游戏「魔戒：咕噜」，对我来说，这个游戏的背景故事可能会有一些吸引我，我对此游戏和开发工作室并不太了解，对「指环王」的故事也不甚了解，但毕竟顶着这么有名的 IP，又是我比较感兴趣的西幻世界，所以背景故事会是有可能吸引我的地方。&lt;/p&gt;
+&lt;p&gt;​ 然而据我了解，游戏里的任务十分无趣且糟糕，任务的性能和操作手感也不好等等。&lt;/p&gt;
+&lt;p&gt;​ 这么看来设计师最忽略的地方就是「玩家体验」，我甚至很怀疑在开发过程中甚至根本没有「试玩和迭代」，开发人员只是在开发「自认为可以」的游戏。这个游戏如果要提高，就需要从头来过，重视玩家体验和测试迭代。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;练习3: 把你的生活做成一个游戏&lt;/strong&gt;
+&lt;em&gt;列出你生活中的五个可以作为游戏的领域，然后简要的形容每一个可能拥有的游戏结构。&lt;/em&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;骑车上学路
+初中的时候我骑自行车上下学，但是经常起晚了快迟到了在路上飙车，需要躲避路上的车辆行人还有莫名其妙的杂物，有时候还会碰到别的也在飙车的，于是双方开始竞速。晚上回家的时候走完全不同的路线，要躲避因为天黑可能看不清的路上的大坑，一旦撞上去就得爆胎。&lt;/p&gt;
+&lt;p&gt;​ 我认为可以据此设计一个简单的赛车躲避游戏，背景就是上下学路。游戏有日夜系统，白天晚上路况不同，还有随机刷新的其他自行车手，需要在到达终点前超越。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;食堂模拟器&lt;/p&gt;
+&lt;p&gt;​ 为什么食堂阿姨总是手抖？难道食堂真的赚不到钱？干脆模拟一下算了！你承包了一间学校食堂，你要根据预算采购食品、选择菜品，并且售价不能高于学校的规定，别忘了给员工还要发工资。你可以选择阿姨的手抖程度，价格不变的情况下减少昂贵菜品的量来控制成本，但是这可能导致学生们不开心而不来吃！找到最适合食堂的生存之道吧！&lt;/p&gt;
+&lt;p&gt;​ 先写这么多！&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;练习 4：游戏日志&lt;/strong&gt;
+&lt;em&gt;开始写一个游戏日志。不要只是说游戏里有什么东西，而是要深入挖掘你在游戏中做的选择，你对这些选择的思考和感受是什么，找到提供这些选择的游戏机制。详细地写，寻找为什么游戏中存在多样的游戏机制，分析为什么游戏中存在多样的游戏机制，分析为什么游戏的某一特定时刻很好玩而不是另外一个。&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;练习 5: 你的童年&lt;/strong&gt;
+&lt;em&gt;列出十个你小时候玩过的游戏，简单地形容每个游戏吸引你的地方在哪里。&lt;/em&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;抛石子&lt;/p&gt;
+&lt;p&gt;​ 就是将石子打磨成近似正方体，然后有很多关，每一关都是不同的抛法和接法。&lt;/p&gt;
+&lt;p&gt;​ 我认为此游戏吸引我的地方在于紧张感和突破时的成就感，所有关必须一次打通，失败一次就要交给别人，然后自己重新开始，现在看来貌似有些像「实体版 rougelike」。当成功通关的感觉真的很舒畅。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;翻纸牌&lt;/p&gt;
+&lt;p&gt;​ 牌就是自己的「资产」，每次对局都拿出一张牌，将纸牌放在地上，看谁能将其翻起来，翻起来的人就拿走别的纸牌。&lt;/p&gt;
+&lt;p&gt;​ 此游戏吸引我的地方就是翻起来时一次性获得其他人的牌的爽快的感觉。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;手心手背翻纸牌&lt;/p&gt;
+&lt;p&gt;​ 貌似也不是纸牌，是用纸叠成的别的形状，具体有些忘了，暂且称之为纸牌吧。现将自己和别人出若干纸牌，然后将总的纸牌先堆叠在手心，然后将纸牌抛至空中用手背接住，再抛至空中用手握住，最后手里握住多少牌就获得多少牌。&lt;/p&gt;
+&lt;p&gt;​ 此游戏最吸引我的地方感觉也是，当很多牌一起时如果全部抓住或者抓住很多时的成就感。&lt;/p&gt;
+&lt;p&gt;​ 先写这么多吧。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="精选摘录"&gt;精选摘录
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;「作为一名游戏设计师，首先且同时最重要的就是和玩家站在同一阵营。」&lt;/li&gt;
+&lt;li&gt;「游戏并不是单向交流的娱乐，想要做一名出色的游戏设计师，并不是要掌控游戏的所有功能的细节，而是要为玩家创造出一种有潜力的体验——把游戏世界的内容都布置好，当玩家进入这个世界后亲自体验。」&lt;/li&gt;
+&lt;li&gt;「在本书中，游戏测试是整个游戏设计过程的心脏。」&lt;/li&gt;
+&lt;li&gt;「作为一名设计师，让游戏进化成为超越你最初想法的游戏是你的职责。不是把它紧锁在一个地方一成不变，而是孕育出新的生命，这就是游戏设计的艺术。」&lt;/li&gt;
+&lt;li&gt;「伟大的游戏设计师热爱创作可玩性高的游戏，最游戏和玩的热情是所有伟大的设计师的共同点。」&lt;/li&gt;
+&lt;li&gt;「游戏设计师通常在用不同的视角看这个世界。一部分原因是职业，另一部分原因是游戏设计的艺术需要一个能够看清复杂系统、分析出事物间的联系和规则，并且能在常见的互动中找到玩法灵感的人。」&lt;/li&gt;
+&lt;li&gt;「如果你要想出一个非常独特的想法，那么就不要从现有的游戏中找想法。取而代之的是，去看你周围的世界。」&lt;/li&gt;
+&lt;li&gt;「如果你想做一个游戏设计师，你就需要在玩游戏的时候集中注意力，通过保持敏感来体验自己的感受，并且批判性地分析游戏内部结构，就像学习其他艺术形式需要做的事情一样。」&lt;/li&gt;
+&lt;li&gt;「我们过去的经历，我们的爱好，我们的感情关系，还有我们的个人身份，在我们试图创新时全都扮演着重要角色。了不起的游戏设计师能够找到一个把它们注入创作灵魂中的方法。」&lt;/li&gt;
+&lt;li&gt;「我们要坚持在每一个开发阶段都让目标用户测试游戏。」&lt;/li&gt;
+&lt;li&gt;「你让玩家参与进来得越早，效果就越好。」&lt;/li&gt;
+&lt;li&gt;「以玩法为核心的设计中，另外一个重要内容就是要尽早地做出游戏原型并进行游戏测试。」&lt;/li&gt;
+&lt;li&gt;「我们建议，你不要在还没有对你的玩家体验目标、核心游戏机制深入理解时，就开始游戏制作。」&lt;/li&gt;
+&lt;li&gt;「对于游戏而言，迭代设计也意味着对游戏好不好玩进行测试。」&lt;/li&gt;
+&lt;li&gt;「设计第一个原型时，我们首要思考的是如何以最快的速度得到一个可执行版本，并以一种合理的方式去处理项目中的不确定因素。」&lt;/li&gt;
+&lt;li&gt;「在迭代设计过程中，不管何时你都要仔细思考在下一个版本的原型中，你应该做什么样的调整以及预期得到什么样的效果。」&lt;/li&gt;
+&lt;li&gt;「如果跳过实物原型阶段，你很难设计出一个原创游戏。对现有的参考游戏进行加强或改造，意味着你的游戏从一开始就注定是衍生品。」&lt;/li&gt;
+&lt;li&gt;「如果你看不到团队有所争执，你就不可能知道他们之间是否在充分地交流想法。」&lt;/li&gt;
+&lt;li&gt;「真正的创新很少来自灵光一现，往往更多是来自长期积累和实验。」&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="本章小结与感想"&gt;本章小结与感想
+&lt;/h2&gt;&lt;p&gt;​ 本章给了成为游戏设计师应该需要的技巧和工具，这是具备挑战游戏设计极限能力的基础。个人理解，总结起来技巧就是「热爱、沟通与创造」，工具就是「以玩法为核心」。而在整个开发过程中，最重要的就是「测试、原型与迭代」，先做出可玩原型，而不是拘泥于其他方面。&lt;/p&gt;</description></item><item><title>Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 3</title><link>https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/</link><pubDate>Mon, 03 Jun 2024 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/</guid><description>&lt;img src="https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/cover.png" alt="Featured image of post Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 3" /&gt;&lt;h2 id="chapter-3-the-layered-tetrad"&gt;Chapter 3 The Layered Tetrad
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;分层四元法帮助你分析你爱的游戏，并且帮助能能够以一个总体的视角去看待你的游戏，让你不仅是了解游戏的机制，更包括他们的游玩的含义、社会属性、意义和文化的实现。&lt;/em&gt;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;​ 分层四元法是前面所提的三个框架的理念的拓展和组合。分层四元法并不定义什么是游戏，而是一个帮助你理解所有制作游戏需要设计的不同元素，和它们在游戏内外的意义。&lt;/p&gt;
+&lt;p&gt;​ 分层四元法由 Schell 的四元法中的四个元素组成，但这些元素通过三个层次来体验。&lt;/p&gt;
+&lt;p&gt;​ 前两个为&lt;strong&gt;内嵌层&lt;/strong&gt; (&lt;em&gt;inscribed&lt;/em&gt;) 和&lt;strong&gt;动态层&lt;/strong&gt; (&lt;em&gt;dynamic&lt;/em&gt;) ，基于 Fullerton 的形式元素 (formal elements) 和动态元素 (dynamic elements) 来划分。第三个是&lt;strong&gt;文化层&lt;/strong&gt; (&lt;em&gt;culture&lt;/em&gt;)，涵盖了游戏的生命 (game&amp;rsquo;s life) 和游玩之外的影响，还提供了链接游戏和文化的纽带，这对我们成为有意义的艺术创作者和负责人的游戏设计师极其重要。&lt;/p&gt;
+&lt;p&gt;​ 本章会简短描述每一层，后面章节会细讲。&lt;/p&gt;
+&lt;h3 id="the-inscribed-layer"&gt;The Inscribed Layer
+&lt;/h3&gt;&lt;p&gt;​ 这层与Schell的四元法极其相似，定义也十分相似，但是它们被限制只存在于游戏未被游玩时游戏层面。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://picx.zhimg.com/80/v2-4ba0410d18e1d9d616bdebe69410740e_1440w.png?source=ccfced1a"
+loading="lazy"
+alt="img"
+&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;内嵌层&lt;/p&gt;&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Mechanics&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 内嵌系统 (inscribed system) 定义了玩家和游戏如何交互的。&lt;/p&gt;
+&lt;p&gt;​ 这包括游戏的规则和 Fullerton 的形式元素：玩家交互模式、目标、资源、边界等。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Aesthetics&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 内嵌美学 (inscribed aesthetics) 描述了游戏看起来如何、听起来如何、闻起来如何、尝起来如何和感觉起来如何（how the game looks, sounds, smells, tastes, and feels）。实际上这和 Schell 的定义相同。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Technology&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 也和 Schell 的一样！&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Narrative&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ Schell 在他的四元法中用了 &lt;em&gt;story&lt;/em&gt; 这个术语，但分层四元法采用 &lt;em&gt;narrative&lt;/em&gt; 这个更广泛的术语来表示，与 Fullerton 的用法类似，涵盖了前提、角色和情节。内在叙事（inscribed narrative）包括所有游戏中的预设剧本故事（pre-scripted story）和预设角色（pre-generated characters）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="the-dynamic-layer"&gt;The Dynamic Layer
+&lt;/h3&gt;&lt;p&gt;​ 正如 Fullerton 的书 &lt;em&gt;Game Design Workshop&lt;/em&gt; 和 MDA 框架所描述的，动态层在游玩过程中涌现。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://picx.zhimg.com/80/v2-48fc0d573133edb1f782fcbb97e9650d_1440w.png?source=ccfced1a"
+loading="lazy"
+alt="img"
+&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;内嵌层 + 动态层&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;通过游玩游戏，玩家从内嵌层中生成动态层。&lt;/em&gt;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;​ 正如图中所示，玩家从静态的内嵌层（inscribed layer）中构建出动态层（dynamic layer）。动态层中的一切都通过游玩产生，并且动态层由玩家直接控制的元素和玩家和内嵌层元素产生的交互一同构成。动态层是涌现（&lt;strong&gt;emergence&lt;/strong&gt;）的领域，即从看似简单的规则中产生复杂的行为的现象。游戏的涌现行为通常很难预测，但是你将会反复构建的一个游戏设计中的强大技能就是去预测涌现行为的能力，或者至少做出相当不错的猜测。&lt;/p&gt;
+&lt;p&gt;动态层中的四个动态元素是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Mechanics&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 内嵌机制涵盖了规则、目标等，而动态机制则是玩家如何与内嵌元素交互。&lt;/p&gt;
+&lt;p&gt;​ 动态机制包括过程（&lt;em&gt;procedure&lt;/em&gt;）、策略（&lt;em&gt;strategies&lt;/em&gt;）、涌现游戏行为（&lt;em&gt;emergent game behavior&lt;/em&gt;），最终包括游戏的结果（&lt;em&gt;the outcome of the game&lt;/em&gt;）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Aesthetics&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 动态美学涵盖了在游戏过程中为玩家生成美学元素的方式（the way that aesthetic elements are generated for the player during play）。&lt;/p&gt;
+&lt;p&gt;​ 这包括从程序艺术（procedural art，从给的定义看不是process art而更像生成式艺术generative art，由计算机代码即时生成的数字游戏艺术或者音乐）到身体负担比如长时间反复按按钮（比如你可能听过“任天堂拇指，nintendo thumb”）。 &lt;em&gt;不是？真要把physical strain算作aesthetics吗？&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Technology&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 动态技术描述了游戏的技术组件在游玩时的行为。&lt;/p&gt;
+&lt;p&gt;​ 这包括了一对骰子实际上似乎从不产生数学概率预测的平滑钟曲线的结果（意思是并不一定服从正态分布？），还涵盖了数字游戏中的计算机代码所做的几乎所有事情。这方面的一个具体例子可能是游戏中敌人的AI代码的性能，但是从更广泛的意义上说，动态技术绝对涵盖了数字游戏的代码在游戏运行时所做的一切。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Narrative&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 动态叙事指代的是从游戏系统中过程性地/程序性地（procedurally）涌现的故事。这可以意味着一个玩家分支剧情叙事的路径。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="the-culture-layer"&gt;The Culture Layer
+&lt;/h3&gt;&lt;p&gt;​ 文化层描述了超越游玩之外的游戏，涵盖了游戏和文化之间的相互影响。&lt;/p&gt;
+&lt;p&gt;​ 游戏的玩家社区产生了文化层，在这里，玩家的控制比游戏设计师更强，而设计师的社会责任在这里清晰起来。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://picx.zhimg.com/80/v2-b13b74750a8bd4e4a7a120da04ae18d6_1440w.png?source=ccfced1a"
+loading="lazy"
+alt="img"
+&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;玩家社区和社会的碰撞产生了文化层&lt;/em&gt;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;​ 在文化层中四个元素之间更加模糊，但是仍值得从四个元素的角度来解读。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Mechanics&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 文化层机制的最简单的呈现就是游戏 mod，也涵盖了复杂如游戏的涌现游玩 (emergent play) 对社会的影响。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Aesthetics&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 与机制类似，文化层的美学涵盖了同人作品、游戏音乐的 remix 或者其他的美学上的粉丝行为如 cosplay。&lt;/p&gt;
+&lt;p&gt;​ 很重要的一点是&lt;em&gt;授权了的&lt;/em&gt;跨媒体产品&lt;em&gt;不属于&lt;/em&gt;文化层，因为它们的控制者仍是游戏知识产权的所有者，而文化层的美学是由游戏玩家社区所控制的。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Technology&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 文化层技术涵盖了非游戏目的的游戏技术的使用和能够影响游戏体验的技术。&lt;/p&gt;
+&lt;p&gt;​ 文化层技术还涵盖了游戏的可能性的拓展（the expansion of possibilities of what &lt;em&gt;game&lt;/em&gt; can mean by continually expanding the possibility space of gaming）以及玩家使用 mod 修改游戏内嵌元素的技术方面。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Narrative&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 文化层叙事涵盖了同人跨媒体作品的叙事方面，也包括文化和社会中关于游戏的故事，比如对 GTA 的恶评和对风之旅人或 Ico 的美谈。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="the-responsibility-of-the-designer"&gt;The Responsibility of the Designer
+&lt;/h3&gt;&lt;p&gt;​ 所有设计师都明白他们对游戏内嵌层的责任。很明显，游戏开发必须具有清晰的规则、有趣的美术等鼓励玩家进行游戏。&lt;/p&gt;
+&lt;p&gt;​ 到了动态层，设计师们就更不清楚（muddier）自己的责任了。游戏设计师会惊叹于他们的游戏的涌现并且想把该行为的责任推卸给玩家，但其实设计师仍要对玩家在动态层于设计师设计的系统的影响中的体验（the experiences of players at the dynamic layer through the implications of the systems they designed）负责。事实上，游戏设计最重要的一方面就是预测并打造动态层体验。这当然是个很艰难的任务，但也正是它有趣的部分原因。&lt;/p&gt;
+&lt;p&gt;​ 那么，设计师在文化层上的责任是什么呢？简短来说，你要对你的游戏产生的社会影响和对玩家造成的影响负责，我们有责任通过游戏促进亲社会和thoughtful的行为，并且尊重玩家以及他们花费在体验我们所创造的上的时间，而不是损坏游戏在社会上的形象，如诱骗小孩充巨资（书上就有，不是我影射某公司）。&lt;/p&gt;</description></item><item><title>Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 1 &amp; 2</title><link>https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/</link><pubDate>Fri, 26 Apr 2024 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/</guid><description>&lt;img src="https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/cover.png" alt="Featured image of post Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 1 &amp; 2" /&gt;&lt;blockquote&gt;
+&lt;p&gt;长文预警！！！另外其实笔者并不咋会做笔记，基本可以看作翻译和吐槽&amp;hellip;&amp;hellip;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h2 id="chapter-1-thinking-like-a-designers"&gt;Chapter 1 Thinking Like a Designers
+&lt;/h2&gt;&lt;p&gt;​ 本章首先以Bartok游戏为例，简单讲解如何设计并迭代一个游戏，其实应该说讲的是如何迭代一个经过基本设计的游戏。&lt;/p&gt;
+&lt;h3 id="playtesting"&gt;Playtesting
+&lt;/h3&gt;&lt;p&gt;​ 首先要做的事就是试玩上几轮， &amp;ldquo;to get a feel for it&amp;rdquo;。如果你想玩Bartok的网页版本，可以访问 &lt;a class="link" href="https://book.prototools.net/BartokWebBuild/BartokWebBuild.html" target="_blank" rel="noopener"
+&gt;https://book.prototools.net/BartokWebBuild/BartokWebBuild.html&lt;/a&gt;。&lt;/p&gt;
+&lt;h3 id="analysis-asking-the-right-question"&gt;Analysis: Asking the Right Question
+&lt;/h3&gt;&lt;p&gt;​ 在每次试玩之后，问自己正确的问题很重要，不同游戏自然问题不同，但一般都基于以下几个 general guidelines：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Is the game of the appropriate difficulty for the intended audience?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 对目标受众而言难度是否合适？是否会太困难或太简单，还是刚刚好？&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Is the outcome of the game based more on strategy or chance?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 这个游戏的结果更吃运气还是更看重策略？随机因素作用是否会太强？或者游戏决定性太强，一名玩家领先后其他玩家根本没机会赶上？&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Does the game have meaningful, interesting decisions?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 游戏是否有有意义且有趣的决策？到你的回合时，你是否有多个选择，且在这些选择之间做决定会是有趣的事吗？&lt;/p&gt;
+&lt;p&gt;​ (&amp;ldquo;When it&amp;rsquo;s your turn, do you have several choices, and is the decision between those choices an interesting one?&amp;quot;）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Is the game interesting when it&amp;rsquo;s not your turn?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 你是否能影响其他玩家的回合？或者其他玩家回合能否对你产生立即影响？&lt;/p&gt;
+&lt;p&gt;​ 我们还能问出许多其他问题，但是这几个是最常见的。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="modifying-the-rules"&gt;Modifying the Rules
+&lt;/h3&gt;&lt;p&gt;​ 正如你会在这整本书里看到的，从过程的角度来看游戏设计十分简单，几乎就总是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;逐渐修改规则，每次测试后只修改很小一部分&lt;/li&gt;
+&lt;li&gt;用新规则游玩测试游戏&lt;/li&gt;
+&lt;li&gt;分析新规则之下游戏的feel如何改变&lt;/li&gt;
+&lt;li&gt;设计你认为能让游戏的feel往你想要的方向进行移动的新规则&lt;/li&gt;
+&lt;li&gt;重复这个过程直到你满意&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;​ 以上这个重复的过程，术语为“迭代设计（Iterative Design）”。对于Bartok的例子，你可以从以下三个规则改动当中挑一个来开始游玩测试：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Rule 1&lt;/strong&gt;: 如果一个玩家打出了2，那么ta左边的玩家不得出牌，且必须抽取两张牌&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Rule 2:&lt;/strong&gt; 如果一个玩家的某张牌的颜色和数字都能对的上此时目标牌，那么可以无视顺序随时打出此牌并大喊 &amp;ldquo;&lt;strong&gt;Match Card!&lt;/strong&gt;&amp;quot;，随后游戏从该玩家的下一位玩家继续。此规则可用来强行跳过某些玩家的回合。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Rule 3&lt;/strong&gt;: 如果某名玩家只剩最后一张手牌，那么需要立刻宣布 &amp;ldquo;&lt;strong&gt;Last Card&lt;/strong&gt;&amp;quot;，如果被其他玩家先宣布，那么需要罚抽两张牌。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="analysis-comparing-the-rounds"&gt;Analysis: Comparing the Rounds
+&lt;/h3&gt;&lt;p&gt;​ 在你游玩过不同规则选项的游戏之后，分析每一轮的结果，回看你的笔记去看不同的规则是如何改变游戏的感觉的。你或许能体验到即使是简单的规则改变也能够很大程度地改变游戏的感觉。书中列出了Bartok在不同规则下的场景反馈，在此简单列出来：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;The original rules&lt;/strong&gt; 有些无聊，没有什么有趣的选择，游戏越到后面就越经常只有一个选择。游戏很靠运气，玩家不需要很在意其他玩家的回合，也没办法影响到其他玩家。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Rule 1&lt;/strong&gt; 增加了游戏的趣味性，允许玩家直接影响其他人。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Rule 2&lt;/strong&gt; 对玩家注意力影响很大，因为所有玩家都有机会中断其他玩家的回合，玩家们会更加其他玩家的回合，增加了紧张刺激感，更能吸引玩家。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Rule 3&lt;/strong&gt; 这条规则只在游戏可能快要结束时生效，不会影响游戏主进程，但仍会影响玩家在此时的行为。这条规则将引入一种有趣的紧张感，当某个玩家即将只剩一张牌时其他玩家将会想办法抢先说出&amp;quot;Last Card&amp;rdquo;（&amp;ldquo;try to jump in and say&amp;rdquo;）。这是多米诺和纸牌游戏的常见规则，当玩家正尝试清空手牌而忘记了这条规则，这就让其他玩家有机会赶上领先的玩家。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="chapter-2-game-analysis-framework"&gt;Chapter 2 Game Analysis Framework
+&lt;/h2&gt;&lt;p&gt;​ 首先学一个 “fancy word”，&lt;strong&gt;ludology&lt;/strong&gt;，这是给 study of games and game design 取的 “fancy name”。它的词源是 &amp;ldquo;From the Latin ludus (“game”) +‎ -ology. May also be construed as ludo +‎ -ology, although the prefix ludo- apparently derives from this word.&amp;rdquo;&lt;/p&gt;
+&lt;h3 id="common-frameworks-for-ludology"&gt;Common Frameworks for Ludology
+&lt;/h3&gt;&lt;p&gt;​ 本章将要介绍的框架如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Mechanics, Dynamics, and Aesthetics (MDA)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 由 Robin Hunicke, Marc Lebranc 和 Robert Zubek 首次提出，MDA 分别代表 Mechanics（机制）, Dynamics（动态）和 Aesthetics（美学），最为业内设计师所熟知。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Formal, Dramatic, and Dynamic elements (FDD)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 由 Tracy Fullerton 和 Chris Swain 在 Game Design Workshop（游戏设计梦工厂）一书中提出。FDD 与电影学有着千丝万缕的联系。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Elemental tetrad（四元法）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 由 Jesse Schell 在他的 The Art of Game Design（游戏设计艺术）一书中提出，将游戏分为四个核心元素：&lt;/p&gt;
+&lt;p&gt;​ mechanics（机制）, aesthetics（美学）, story（剧情）和 technology（技术）。&lt;/p&gt;
+&lt;p&gt;​ 每个框架都有优缺点，他们共同促成了本书所述的 Layered Tetrad（分层四元法）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="mda-mechanics-dynamics-and-aesthetics"&gt;MDA: Mechanics, Dynamics, and Aesthetics
+&lt;/h4&gt;&lt;p&gt;​ MDA的核心元素是 mechanics, dynamics, and aesthetics 的定义、设计师和玩家看待游戏的不同视角的理解，并且提出设计师应当首先通过美学的视角来接近游戏，再回过头来处理能够产生这些美学的动态和机制。&lt;/p&gt;
+&lt;h5 id="definitions-of-mechanics-dynamics-and-aesthetics"&gt;Definitions of Mechanics, Dynamics, and Aesthetics
+&lt;/h5&gt;&lt;p&gt;​ 需要注意的是上面提到的几个框架有一些共同的名词，但是它们的定义不尽相同，甚至会完全不同。&lt;/p&gt;
+&lt;p&gt;​ 以下为MDA的定义：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Mechanics&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 游戏在数据表示和算法层次的特定组件，包括游戏规则和玩家交互的设计方面。 （第一句话中文版第一版翻译的是“游戏的数据层面上的组件和算法”，但是英文版第三版原文为 “The particular components of the game at the level of data representation and algorithms.”，原论文表述为 “Mechanics describes the particular components of the game, at the level of data representation and algorithms.”，英文版 wiki 介绍为“Mechanics are the base components of the game - its rules, every basic action the player can take in the game, the algorithms and data structures in the game engine etc.”，中文版 wiki 为“机制，指游戏的基础部分 - 规则。在游戏中玩家可执行的每个基本动作、以及游戏编程、游戏引擎中的算法算法和数据结构等等。”，故可基本认定为中文版第一版翻译错误。）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Dynamics&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 响应玩家输入以及其他输出的机制的运行时表现，会随着时间变化，包括所有在游戏时由于机制而发生的实际操作。 （先给大家看原文第一句“The runtime behavior of the mechanics acting on player inputs and each other’s outputs over time. ”， btw，这句话基本上和论文原文一致。中文版第一版翻译为“相应玩家输入和其他输出的实时行为”，这个翻译我认为不好，并没有体现mechanics和dynamics的联系。所以我觉得翻译的不好！）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Aesthetics&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 玩家在与游戏系统交互时（设计师）期望（玩家）唤起的情感响应。在MDA框架中，玩家在游玩游戏时和结束游戏后的感受都属于美学。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在第一版中，以上三点都只有从论文中摘抄下来的部分，也就是只有第一句，故中文版第一版也只翻译了第一句。（我说这翻译怎么都只翻译一半）&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;​ MDA对美学的定义是很独特的，没有其他的框架会如此定义。美学通常指的是哲学上的一个分支，和美、丑等概念有关。而更通俗地说，设计美学（design aesthetic）是设计的一种统一意图。（讲道理，我觉得这并不“colloquially”，因为其实我并没有看懂，还是 po 出原文吧&amp;quot;And, more colloquially, a design aesthetic is the cohesive intent of a design.&amp;quot;）&lt;/p&gt;
+&lt;h5 id="designer-and-player-views-of-a-game"&gt;Designer and Player Views of a Game
+&lt;/h5&gt;&lt;p&gt;​ 基于 MDA，设计者应该首先从美学视角看待游戏，考虑游玩时要给玩家如何的情感体验。再回过头寻找能够产生那些情感的动态，再最终寻找能够创造这些动态的机制。而玩家倾向于以一个相反的方向看待游戏，首先体验到游戏的机制（经常是通过阅读游戏规则），然后在游玩中体验到动态，最后（希望）体验到设计师一开始预想的美学。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/MDA.png"
+width="466"
+height="171"
+srcset="https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/MDA_hu_8f0c4a0a868153a5.png 480w, https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/MDA_hu_2242ab2e98780c9e.png 1024w"
+loading="lazy"
+alt="MDA"
+class="gallery-image"
+data-flex-grow="272"
+data-flex-basis="654px"
+&gt;&lt;/p&gt;
+&lt;h5 id="design-from-aesthetics-to-dynamics-to-mechanics"&gt;Design from Aesthetics to Dynamics to Mechanics
+&lt;/h5&gt;&lt;p&gt;​ 书中以Snakes and Ladders为例（想必这个游戏的规则不用再介绍），体现了设计师是如何通过修改机制影响动态和美学的。&lt;/p&gt;
+&lt;p&gt;​ 原始版本的游戏被设计成让孩子们感觉良好并且始终有赢的可能，玩家必须能感觉到游戏的结局不是固定的，在游戏过程中始终可以寄希望于好运气。期望的美学是让玩家体验希望、好运的逆转还有完全不做决定的刺激。实现此的机制就是蛇和梯子，而动态就是两者的交汇，产生在玩家与机制遭遇之时，带来了希望和刺激的美学感觉。&lt;/p&gt;
+&lt;p&gt;​ 但成年人更倾向更具有挑战性的游戏，他们不希望靠运气而是使用策略来赢得游戏。因此设计师希望让游戏感觉更策略化和目的化，我们可以通过仅修改规则（机制的元素之一）来达成这样的美学改变。比如说加入以下规则：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;每个玩家控制两枚棋子&lt;/li&gt;
+&lt;li&gt;每个回合，玩家掷两枚骰子&lt;/li&gt;
+&lt;li&gt;可以两枚骰子都给一个棋子用，或者一个棋子一枚骰子&lt;/li&gt;
+&lt;li&gt;可以选择牺牲一枚骰子，然后用另一枚骰子来逆向移动对手的棋子&lt;/li&gt;
+&lt;li&gt;如果玩家的棋子行进后遇到对手的棋子，那么可将对手棋子下移一行&lt;/li&gt;
+&lt;li&gt;如果玩家的棋子行进后遇到自己的棋子，那么可选择自己的一个棋子上移一行&lt;/li&gt;
+&lt;li&gt;规则4、5让玩家之间相互协作或对抗，规则1、3让游戏减少运气的影响，都增加了游戏的策略性。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="formal-dramatic-and-dynamic-elements"&gt;Formal, Dramatic, and Dynamic Elements
+&lt;/h4&gt;&lt;p&gt;​ 当 MDA 在试图帮助设计师和评论家更好地理解和讨论游戏时，由 Tracy Fullerton 和 Chris Swain 创建的 FDD 旨在帮助 USC 的 Game Design Workshop 课程的学生更效率地设计游戏。&lt;/p&gt;
+&lt;p&gt;​ 这个框架将游戏拆解成三类元素：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Formal elements&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 将游戏从其它类型的媒体或交互区分开来的元素，提供了游戏的结构。形式元素包括规则、资源和边界等。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Dramatic elements&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 游戏的剧情和叙事，包括前提剧情/故事背景/背景设定（就是 premise，不知道怎么翻更确切）。戏剧元素将游戏连结在一起（tie the game together），帮助玩家理解规则，并鼓励玩家对游戏的结果产生情感投入（encourage the player to become emotionally invested in the outcome of the game）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Dynamic elements&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 游戏的动态过程（the game in motion）。当玩家将规则转变为实际的游玩时，游戏就进入了动态元素阶段。动态元素包括策略、行为和游戏实体间的联系等。需要注意的是，这和 MDA 中使用的 dynamics 术语有关联但范围更广，因为它不仅仅是机制的运行时表现（，还包括比如策略、行为和游戏实体间的联系等）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5 id="formal-elements"&gt;Formal Elements
+&lt;/h5&gt;&lt;p&gt;​ Game Design Workshop提出了将游戏和其他种类媒体区分开来的七种形式元素：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Player interaction pattern&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 玩家如何交互？&lt;/p&gt;
+&lt;p&gt;​ 游戏是单人、一对一、队伍对抗、乱斗（多个玩家相互对抗）、一对多、合作甚至是多人对抗一个系统？&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Objective&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 玩家在游戏中试图得到什么？如何赢下游戏？&lt;/p&gt;
+&lt;p&gt;​ （What are the players trying to achieve in the game? When has someone won the game?）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Rules&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 规则通过告诉玩家能做什么不能做什么来限制玩家的行为。&lt;/p&gt;
+&lt;p&gt;​ 许多规则明确写在游戏中，但有些 implicitly understood by all players（相当于默认规则/共识，比如尽管大富翁中没有明确写出不能抢银行，但玩家也明白不能。）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Procedures&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 玩家在游戏中采取的行动类型。&lt;/p&gt;
+&lt;p&gt;​ Snakes and Ladders 中的规则告诉你投骰子并移动对应格数。这个规则所指明的过程（procedure）就是投骰子和移动棋子。过程由一系列规则的相互作用所定义（Procedures is defined by the interaction of a number of rules.）。但有一些仍在规则之外：尽管 Poker 中没有明确定义相关规则，但是虚张声势仍是游戏中一个重要的过程。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Resources&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 资源是游戏中有价值的各种元素。&lt;/p&gt;
+&lt;p&gt;​ 比如金钱、生命值、物品和财产等。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Boundaries&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 游戏和现实的界限在哪？（Where does the game end and reality begin?）&lt;/p&gt;
+&lt;p&gt;​ Johan Huizinga 在他的书 Homo Ludens 中定义了 magic circle，这是个由游戏规则取代现实规则的临时世界（defines the magic circle as a temporary world where the rules of the game apply rather than the rules of the ordinary world）。在足球和冰球等运动中，magic circle 有场地的边界定义；但在 I Love Bee 这样的另类实境游戏（Alternative Reality Game）中，边界远不那么清晰。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Outcome&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 游戏如何结束？在游戏中既有最终结果也有过程性结果。&lt;/p&gt;
+&lt;p&gt;​ （中文版第一版翻译为”除了终点，过程也不断导向结局“，原文为 &amp;ldquo;There are both final and incremental outcomes in games&amp;rdquo;，但根据后续内容，以及作者在书的官方网站所放出的 PPT ，作者要表达的应该是有 ”final“ 和 ”incremental“ 这两种 outcome，而不是什么都导向结局）在棋类游戏中，最终结果是一个玩家赢，另一个玩家输（显然作者忘了有和棋规则的说&amp;hellip;）。在 D&amp;amp;D 这样的纸笔 RPG（&amp;ldquo;pen-and-paper RPG&amp;rdquo;, AKA &amp;ldquo;tabletop RPG&amp;rdquo;）中，过程性结果是当玩家击败一个敌人或者提升了等级，甚至死亡通常都不是最终结果，因为还有方法来复活玩家。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;​ 根据 Fullerton 的理论，对形式元素的另一种看法是，当这些元素被移除时，游戏就不复存在了。如果从游戏中移除规则、结果等，它就不再是个游戏。（再次拷打中文版翻译，中文第一版翻译为”根据 Fullerton 的理论，另一种审视形式元素的看法是，尝试移除任意一种规则，看看它是否还称得上游戏“，原文为 &amp;ldquo;According to Fullerton, another way to look at formal elements is that game ceases to exist when they are removed. If one removes the rules, outcome and so on from a game, it ceases to be a game.&amp;quot;，你就说说这翻译的什么东西？）&lt;/p&gt;
+&lt;h5 id="dramatic-elements"&gt;Dramatic Elements
+&lt;/h5&gt;&lt;p&gt;​ 戏剧元素帮助玩家更好地理解规则和资源，并且给予玩家在游戏中更强的情感投入。&lt;/p&gt;
+&lt;p&gt;​ Fullerton 提出了三种戏剧元素：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Premise&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 游戏世界的基础故事（或者背景故事？&amp;ldquo;The basic story of the game world&amp;rdquo;）。&lt;/p&gt;
+&lt;p&gt;​ 其为游戏叙事构建的基础。（The premise forms the basis around which the rest of the game&amp;rsquo;s narrative is built.）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Character&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 角色是故事围绕的个体（Characters are the individuals around whom the story revolves.）
+（依旧拷打中文版翻译：“角色是故事里的人物”，很明显作者指的是玩家扮演的角色啊，某个小支线里面的小NPC 也是故事里的人物，ta 难道也是 Fullerton 说的 Character 吗？），有的像 Quake 中的无名、定义不清、沉默的第一人称主角，也有的像 Uncharted 系列的 Nathan Drake 这样深刻且多维的角色，就像电影里的主角。&lt;/p&gt;
+&lt;p&gt;​ 与电影不同，电影导演的目标鼓励观众与电影主角产生共鸣，但是在游戏中玩家就是主角，设计师必须选择主角是作为玩家的化身（avatar）（将玩家的情感、欲望和意图传递到游戏世界，并且遵循玩家的意愿），或者是作为玩家必须扮演的角色（role）（这样，相反地，玩家表现出游戏角色的意愿）。后者是最常见的，也是对写手和开发者来说更容易实现的。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Story&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 游戏的情节。&lt;/p&gt;
+&lt;p&gt;​ 故事包含整个游戏过程的的叙事内容。前提（premise）为故事的发生搭建了舞台。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;​ 戏剧元素的一个未被以上三种元素明确提及的主要目的是：&lt;strong&gt;帮助玩家更好地理解规则&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;​ 比如 1943 年 Milton Bradley 在美国出版 Snakes and Ladders 时将名字改成了 Chutes and Ladders，也许就是为了让美国儿童更容易理解规则，因为 Chutes 比 Snakes 更加直观。除此之外游戏的许多版本还有一张图片，图片上面的孩子在梯子底部做好事，在梯子底部得到奖励。相反，滑梯则是孩子在顶部犯错，在底部被惩罚。如此一来，叙事便与道德标准相结合起来。&lt;/p&gt;
+&lt;p&gt;​ 戏剧元素兼具&lt;strong&gt;嵌入叙事&lt;/strong&gt;（&lt;strong&gt;embedded narrative&lt;/strong&gt;），&lt;strong&gt;帮助玩家记忆规则&lt;/strong&gt;（比如将蛇换成梯子）和游戏叙事&lt;strong&gt;向玩家传递游戏之外持续存在的意义的能力&lt;/strong&gt;（比如用图片表示行善作恶的后果）（这里感觉我翻的怪怪的，我认为大概意思是在说游戏叙事可以超脱游戏，给玩家传递来自游戏之外/超越游戏本身的意义，英文原文为&amp;quot;the ability of the game narrative to convey meaning to the players that persists outside of the game&amp;rdquo;，中文版翻译为“传达游戏叙事超越游戏本身的能力”）&lt;/p&gt;
+&lt;h5 id="dynamic-elements"&gt;Dynamic Elements
+&lt;/h5&gt;&lt;p&gt;​ 动态元素是指那些只在游戏被游玩后出现的东西（Dynamic are those that occur only when the game is being played）。&lt;/p&gt;
+&lt;p&gt;要理解游戏中的动态元素，有以下几个要点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Emergence&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 看似简单的规则的碰撞可以导致不可预料的结果。&lt;/p&gt;
+&lt;p&gt;​ 哪怕是简单如 Snakes and Ladders 的游戏也会带来难以预料的动态体验。如果一个玩家整局游戏都恰好碰到梯子，而另一位玩家一直碰到蛇，那么带来的体验就完全不同。简单的规则会导致复杂并且难以预料的行为，游戏设计师的一个最重要的工作就是尝试理解游戏规则的涌现影响。（One of a game designer&amp;rsquo;s most important jobs is to attempt to understand the emergent implications of the rules in a game.）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Emergent narrative&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 除了MDA模型所提到的机制的动态行为之外，Fullerton的模型还指出叙事也可以是动态的，因为游戏玩法本身就能涌现出十分宽广的叙事。&lt;/p&gt;
+&lt;p&gt;​ 游戏的天性就会将玩家置入非寻常的情境中，并且将因此引导产生有趣的故事。这是桌上 RPG 比如 D&amp;amp;D 的核心魅力，由一个玩家扮演 DM，给其他玩家创造体验的场景和交互的角色。这与 Fullerton 的戏剧元素提到的嵌入叙事（embedded narrative）不同，并且是互动体验独有的娱乐可能之一。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Playtesting is the only way to understand dynamics&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 有经验的游戏设计师相比新人设计师能对动态行为和涌现做出更准确的预测，但是没人能不试玩却能清楚的理解游戏的动态会如何运行（but no one understands exactly how the dynamics of a game will play out without playtesting them.）。&lt;/p&gt;
+&lt;p&gt;​ 重复试玩可以揭示游戏本来应该具有的各种动态行为，并且帮助设计师理解他们的游戏可能产生的体验范围。（大概就是都会玩出怎么样的体验）&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="the-elemental-tetrad"&gt;The Elemental Tetrad
+&lt;/h4&gt;&lt;p&gt;​ Jesse Schell 在书 The Art of Game Design: A book of Lenses 中描述了四元法，提出了他认为的游戏的四个基本元素：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Mechanics&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 玩家和游戏交互的规则。&lt;/p&gt;
+&lt;p&gt;​ 四元法中的机制是指将游戏和其他非互动形式媒体（如电影或书）区分开来的元素（和 FDD 的 formal elements很像）。机制包括规则、目标和其他 Fullerton 提到的形式元素。和 MDA 中提到的机制不同，Schell 用此术语来区别游戏机制和实现它们的技术。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Aesthetics&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 美学描述了游戏如何被五感接受：视觉、听觉、嗅觉、味觉和触觉。&lt;/p&gt;
+&lt;p&gt;​ 美学涵盖从原声带到人物模型、包装和封面艺术。这与 MDA 的美学不同，Schell 指的是那些由游戏开发者创造出来的东西，比如游戏艺术和声音。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Technology&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ 这个元素包括所有让游戏运作起来的根本技术（This element covers all the underlying technology that makes the game work.）。除了主机硬件、计算机软件等，还包括桌游中的技术元素，比如骰子的类型和数字、各种用来决定行动结局的表格等。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Story&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​ Schell 用这个表达 Fullerton 的全部戏剧元素，不仅仅她提到的 story。在 Schell 的定义中，剧情包含所有游戏中的叙事元素，包括前提和角色。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;img src="Tetrad.png" alt="Tetrad" style="zoom:50%;" /&gt;
+&lt;p&gt;​ 上图展示了四元法的四个元素如何相互关联。Schell 指出美学对玩家总是可见的（不是 MDA 的美学喔！）。游戏的技术是最不可见的，相比起来，玩家通常对游戏机制有更好的理解。Schell 的四元法并不涉及游戏的动态玩法，更多在于盒子里的（桌游）或硬盘里的游戏的静态元素。Schell 的四元法将在下一张更深入的探讨和拓展，因为它激发了分层四元法的四个元素。&lt;/p&gt;
+&lt;h3 id="summary"&gt;Summary
+&lt;/h3&gt;&lt;p&gt;​ 每个这些用来理解游戏和交互艺术的框架都从不同的视角来解读：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;MDA&lt;/strong&gt; 旨在展示并具体化这样一个观点：玩家和设计师从不同的方向接近游戏，并且提出设计师可以通过学习从玩家体验的角度来看待他们的游戏来更有效地进行游戏设计。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;FDD&lt;/strong&gt; 框架将游戏设计分解成可以分别考虑和改进的特定组件。它旨在成为设计师的toolkit，是设计师能够分离并检查游戏中所有可以被改进的组件。FDD还强调了叙事在玩家体验中的重要性。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;四元法&lt;/strong&gt;更多用游戏开发者的视角来看待游戏。它将游戏的基本元素分为通常分配给开发团队不同组的部分：游戏设计师负责机制、艺术家负责美学、写手负责故事、程序员负责技术。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description></item></channel></rss>
