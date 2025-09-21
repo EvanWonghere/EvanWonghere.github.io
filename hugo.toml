@@ -6,6 +6,11 @@ copyright = "EvanWong"
 DefaultContentLanguage = "zh-cn"
 hasCJKLanguage = true
 
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+  series = "series"
+
 [languages.en]
 languageName = "English"
 title = "Hive"
@@ -36,7 +41,7 @@ page = "/:slug/"
 
 [params]
 description = "My personal blog."
-mainSections = [ "posts" ]
+mainSections = [ "post" ]
 featuredImageField = "image"
 rssFullContent = true
 
@@ -201,12 +206,12 @@ enabled = true
     icon = "brand-github"
 
   [[menu.social]]
-  identifier = "twitter"
-  name = "Twitter"
-  url = "https://twitter.com"
+  identifier = "steam"
+  name = "Steam"
+  url = "https://steamcommunity.com/profiles/76561198980535015/"
 
     [menu.social.params]
-    icon = "brand-twitter"
+    icon = "brand-steam"
 
 [related]
 includeNewer = true

@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 长文预警！！！另外其实笔者并不咋会做笔记，基本可以看作翻译和吐槽&hellip;&hellip;\nChapter 1 Thinking Like a Designers \u200b\t本章首先以Bartok游戏为例，简单讲解如何设计并迭代一个游戏，其实应该说讲的是如何迭代一个经过基本设计的游戏。\n">
+<title>Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 1 &amp; 2</title>
+
+<link rel='canonical' href='http://localhost:1313/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 1 & 2">
+<meta property='og:description' content=" 长文预警！！！另外其实笔者并不咋会做笔记，基本可以看作翻译和吐槽&hellip;&hellip;\nChapter 1 Thinking Like a Designers \u200b\t本章首先以Bartok游戏为例，简单讲解如何设计并迭代一个游戏，其实应该说讲的是如何迭代一个经过基本设计的游戏。\n">
+<meta property='og:url' content='http://localhost:1313/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/'>
+<meta property='og:site_name' content='蜂窝'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='ReadingNote' /><meta property='article:tag' content='读书笔记' /><meta property='article:tag' content='Game Analysis Framework' /><meta property='article:tag' content='游戏分析框架' /><meta property='article:published_time' content='2024-04-26T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-04-26T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/cover.png' />
+<meta name="twitter:title" content="Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 1 & 2">
+<meta name="twitter:description" content=" 长文预警！！！另外其实笔者并不咋会做笔记，基本可以看作翻译和吐槽&hellip;&hellip;\nChapter 1 Thinking Like a Designers \u200b\t本章首先以Bartok游戏为例，简单讲解如何设计并迭代一个游戏，其实应该说讲的是如何迭代一个经过基本设计的游戏。\n"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/cover.png' />
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_789ebd951ab60789.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🐝</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">蜂窝</a></h1>
+            <h2 class="site-description">EvanWong的个人博客</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/EvanWonghere/EvanWonghere.github.io'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://steamcommunity.com/profiles/76561198980535015/'
+                        target="_blank"
+                        title="Steam"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Steam</title><path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012H7.54zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.663 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.253 0-2.265-1.014-2.265-2.265z"/></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="http://localhost:1313/en/" >English</option>
+                                
+                                    <option value="http://localhost:1313/" selected>中文</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#chapter-1-thinking-like-a-designers">Chapter 1 Thinking Like a Designers</a>
+      <ol>
+        <li><a href="#playtesting">Playtesting</a></li>
+        <li><a href="#analysis-asking-the-right-question">Analysis: Asking the Right Question</a></li>
+        <li><a href="#modifying-the-rules">Modifying the Rules</a></li>
+        <li><a href="#analysis-comparing-the-rounds">Analysis: Comparing the Rounds</a></li>
+      </ol>
+    </li>
+    <li><a href="#chapter-2-game-analysis-framework">Chapter 2 Game Analysis Framework</a>
+      <ol>
+        <li><a href="#common-frameworks-for-ludology">Common Frameworks for Ludology</a>
+          <ol>
+            <li><a href="#mda-mechanics-dynamics-and-aesthetics">MDA: Mechanics, Dynamics, and Aesthetics</a></li>
+            <li><a href="#formal-dramatic-and-dynamic-elements">Formal, Dramatic, and Dynamic Elements</a></li>
+            <li><a href="#the-elemental-tetrad">The Elemental Tetrad</a></li>
+          </ol>
+        </li>
+        <li><a href="#summary">Summary</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/">
+                <img src="/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/cover_hu_ed062f385f794568.png"
+                        srcset="/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/cover_hu_ed062f385f794568.png 800w, /p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/cover_hu_1f45de81a6040968.png 1600w"
+                        width="800" 
+                        height="1030" 
+                        loading="lazy"
+                        alt="Featured image of post Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 1 &amp; 2" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/" >
+                游戏设计
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/">Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 1 &amp; 2</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Apr 26, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 15 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <blockquote>
+<p>长文预警！！！另外其实笔者并不咋会做笔记，基本可以看作翻译和吐槽&hellip;&hellip;</p></blockquote>
+<h2 id="chapter-1-thinking-like-a-designers">Chapter 1 Thinking Like a Designers
+</h2><p>​	本章首先以Bartok游戏为例，简单讲解如何设计并迭代一个游戏，其实应该说讲的是如何迭代一个经过基本设计的游戏。</p>
+<h3 id="playtesting">Playtesting
+</h3><p>​	首先要做的事就是试玩上几轮， &ldquo;to get a feel for it&rdquo;。如果你想玩Bartok的网页版本，可以访问 <a class="link" href="https://book.prototools.net/BartokWebBuild/BartokWebBuild.html"  target="_blank" rel="noopener"
+    >https://book.prototools.net/BartokWebBuild/BartokWebBuild.html</a>。</p>
+<h3 id="analysis-asking-the-right-question">Analysis: Asking the Right Question
+</h3><p>​	在每次试玩之后，问自己正确的问题很重要，不同游戏自然问题不同，但一般都基于以下几个 general guidelines：</p>
+<ul>
+<li>
+<p><strong>Is the game of the appropriate difficulty for the intended audience?</strong></p>
+<p>​	对目标受众而言难度是否合适？是否会太困难或太简单，还是刚刚好？</p>
+</li>
+<li>
+<p><strong>Is the outcome of the game based more on strategy or chance?</strong></p>
+<p>​	这个游戏的结果更吃运气还是更看重策略？随机因素作用是否会太强？或者游戏决定性太强，一名玩家领先后其他玩家根本没机会赶上？</p>
+</li>
+<li>
+<p><strong>Does the game have meaningful, interesting decisions?</strong></p>
+<p>​	游戏是否有有意义且有趣的决策？到你的回合时，你是否有多个选择，且在这些选择之间做决定会是有趣的事吗？</p>
+<p>​	(&ldquo;When it&rsquo;s your turn, do you have several choices, and is the decision between those choices an interesting one?&quot;）</p>
+</li>
+<li>
+<p><strong>Is the game interesting when it&rsquo;s not your turn?</strong></p>
+<p>​	你是否能影响其他玩家的回合？或者其他玩家回合能否对你产生立即影响？</p>
+<p>​	我们还能问出许多其他问题，但是这几个是最常见的。</p>
+</li>
+</ul>
+<h3 id="modifying-the-rules">Modifying the Rules
+</h3><p>​	正如你会在这整本书里看到的，从过程的角度来看游戏设计十分简单，几乎就总是：</p>
+<ol>
+<li>逐渐修改规则，每次测试后只修改很小一部分</li>
+<li>用新规则游玩测试游戏</li>
+<li>分析新规则之下游戏的feel如何改变</li>
+<li>设计你认为能让游戏的feel往你想要的方向进行移动的新规则</li>
+<li>重复这个过程直到你满意</li>
+</ol>
+<p>​	以上这个重复的过程，术语为“迭代设计（Iterative Design）”。对于Bartok的例子，你可以从以下三个规则改动当中挑一个来开始游玩测试：</p>
+<ul>
+<li>
+<p><strong>Rule 1</strong>: 如果一个玩家打出了2，那么ta左边的玩家不得出牌，且必须抽取两张牌</p>
+</li>
+<li>
+<p><strong>Rule 2:</strong> 如果一个玩家的某张牌的颜色和数字都能对的上此时目标牌，那么可以无视顺序随时打出此牌并大喊 &ldquo;<strong>Match Card!</strong>&quot;，随后游戏从该玩家的下一位玩家继续。此规则可用来强行跳过某些玩家的回合。</p>
+</li>
+<li>
+<p><strong>Rule 3</strong>: 如果某名玩家只剩最后一张手牌，那么需要立刻宣布 &ldquo;<strong>Last Card</strong>&quot;，如果被其他玩家先宣布，那么需要罚抽两张牌。</p>
+</li>
+</ul>
+<h3 id="analysis-comparing-the-rounds">Analysis: Comparing the Rounds
+</h3><p>​	在你游玩过不同规则选项的游戏之后，分析每一轮的结果，回看你的笔记去看不同的规则是如何改变游戏的感觉的。你或许能体验到即使是简单的规则改变也能够很大程度地改变游戏的感觉。书中列出了Bartok在不同规则下的场景反馈，在此简单列出来：</p>
+<ul>
+<li>
+<p><strong>The original rules</strong> 有些无聊，没有什么有趣的选择，游戏越到后面就越经常只有一个选择。游戏很靠运气，玩家不需要很在意其他玩家的回合，也没办法影响到其他玩家。</p>
+</li>
+<li>
+<p><strong>Rule 1</strong> 增加了游戏的趣味性，允许玩家直接影响其他人。</p>
+</li>
+<li>
+<p><strong>Rule 2</strong> 对玩家注意力影响很大，因为所有玩家都有机会中断其他玩家的回合，玩家们会更加其他玩家的回合，增加了紧张刺激感，更能吸引玩家。</p>
+</li>
+<li>
+<p><strong>Rule 3</strong> 这条规则只在游戏可能快要结束时生效，不会影响游戏主进程，但仍会影响玩家在此时的行为。这条规则将引入一种有趣的紧张感，当某个玩家即将只剩一张牌时其他玩家将会想办法抢先说出&quot;Last Card&rdquo;（&ldquo;try to jump in and say&rdquo;）。这是多米诺和纸牌游戏的常见规则，当玩家正尝试清空手牌而忘记了这条规则，这就让其他玩家有机会赶上领先的玩家。</p>
+</li>
+</ul>
+<h2 id="chapter-2-game-analysis-framework">Chapter 2 Game Analysis Framework
+</h2><p>​	首先学一个 “fancy word”，<strong>ludology</strong>，这是给 study of games and game design 取的 “fancy name”。它的词源是 &ldquo;From the Latin ludus (“game”) +‎ -ology. May also be construed as ludo +‎ -ology, although the prefix ludo- apparently derives from this word.&rdquo;</p>
+<h3 id="common-frameworks-for-ludology">Common Frameworks for Ludology
+</h3><p>​	本章将要介绍的框架如下：</p>
+<ul>
+<li>
+<p><strong>Mechanics, Dynamics, and Aesthetics (MDA)</strong></p>
+<p>​	由 Robin Hunicke, Marc Lebranc 和 Robert Zubek 首次提出，MDA 分别代表 Mechanics（机制）, Dynamics（动态）和 Aesthetics（美学），最为业内设计师所熟知。</p>
+</li>
+<li>
+<p><strong>Formal, Dramatic, and Dynamic elements (FDD)</strong></p>
+<p>​	由 Tracy Fullerton 和 Chris Swain 在 Game Design Workshop（游戏设计梦工厂）一书中提出。FDD 与电影学有着千丝万缕的联系。</p>
+</li>
+<li>
+<p><strong>Elemental tetrad（四元法）</strong></p>
+<p>​	由 Jesse Schell 在他的 The Art of Game Design（游戏设计艺术）一书中提出，将游戏分为四个核心元素：</p>
+<p>​	mechanics（机制）, aesthetics（美学）, story（剧情）和 technology（技术）。</p>
+<p>​	每个框架都有优缺点，他们共同促成了本书所述的 Layered Tetrad（分层四元法）。</p>
+</li>
+</ul>
+<h4 id="mda-mechanics-dynamics-and-aesthetics">MDA: Mechanics, Dynamics, and Aesthetics
+</h4><p>​	MDA的核心元素是 mechanics, dynamics, and aesthetics 的定义、设计师和玩家看待游戏的不同视角的理解，并且提出设计师应当首先通过美学的视角来接近游戏，再回过头来处理能够产生这些美学的动态和机制。</p>
+<h5 id="definitions-of-mechanics-dynamics-and-aesthetics">Definitions of Mechanics, Dynamics, and Aesthetics
+</h5><p>​	需要注意的是上面提到的几个框架有一些共同的名词，但是它们的定义不尽相同，甚至会完全不同。</p>
+<p>​	以下为MDA的定义：</p>
+<ul>
+<li>
+<p><strong>Mechanics</strong></p>
+<p>​	游戏在数据表示和算法层次的特定组件，包括游戏规则和玩家交互的设计方面。 （第一句话中文版第一版翻译的是“游戏的数据层面上的组件和算法”，但是英文版第三版原文为 “The particular components of the game at the level of data representation and algorithms.”，原论文表述为 “Mechanics describes the particular components of the game, at the level of data representation and algorithms.”，英文版 wiki 介绍为“Mechanics are the base components of the game - its rules, every basic action the player can take in the game, the algorithms and data structures in the game engine etc.”，中文版 wiki 为“机制，指游戏的基础部分 - 规则。在游戏中玩家可执行的每个基本动作、以及游戏编程、游戏引擎中的算法算法和数据结构等等。”，故可基本认定为中文版第一版翻译错误。）</p>
+</li>
+<li>
+<p><strong>Dynamics</strong></p>
+<p>​	响应玩家输入以及其他输出的机制的运行时表现，会随着时间变化，包括所有在游戏时由于机制而发生的实际操作。 （先给大家看原文第一句“The runtime behavior of the mechanics acting on player inputs and each other’s outputs over time. ”， btw，这句话基本上和论文原文一致。中文版第一版翻译为“相应玩家输入和其他输出的实时行为”，这个翻译我认为不好，并没有体现mechanics和dynamics的联系。所以我觉得翻译的不好！）</p>
+</li>
+<li>
+<p><strong>Aesthetics</strong></p>
+<p>​	玩家在与游戏系统交互时（设计师）期望（玩家）唤起的情感响应。在MDA框架中，玩家在游玩游戏时和结束游戏后的感受都属于美学。</p>
+</li>
+</ul>
+<blockquote>
+<p>在第一版中，以上三点都只有从论文中摘抄下来的部分，也就是只有第一句，故中文版第一版也只翻译了第一句。（我说这翻译怎么都只翻译一半）</p></blockquote>
+<p>​	MDA对美学的定义是很独特的，没有其他的框架会如此定义。美学通常指的是哲学上的一个分支，和美、丑等概念有关。而更通俗地说，设计美学（design aesthetic）是设计的一种统一意图。（讲道理，我觉得这并不“colloquially”，因为其实我并没有看懂，还是 po 出原文吧&quot;And, more colloquially, a design aesthetic is the cohesive intent of a design.&quot;）</p>
+<h5 id="designer-and-player-views-of-a-game">Designer and Player Views of a Game
+</h5><p>​	基于 MDA，设计者应该首先从美学视角看待游戏，考虑游玩时要给玩家如何的情感体验。再回过头寻找能够产生那些情感的动态，再最终寻找能够创造这些动态的机制。而玩家倾向于以一个相反的方向看待游戏，首先体验到游戏的机制（经常是通过阅读游戏规则），然后在游玩中体验到动态，最后（希望）体验到设计师一开始预想的美学。</p>
+<p><img src="/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/MDA.png"
+	width="466"
+	height="171"
+	srcset="/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/MDA_hu_8f0c4a0a868153a5.png 480w, /p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/MDA_hu_2242ab2e98780c9e.png 1024w"
+	loading="lazy"
+	
+		alt="MDA"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="272"
+		data-flex-basis="654px"
+	
+></p>
+<h5 id="design-from-aesthetics-to-dynamics-to-mechanics">Design from Aesthetics to Dynamics to Mechanics
+</h5><p>​	书中以Snakes and Ladders为例（想必这个游戏的规则不用再介绍），体现了设计师是如何通过修改机制影响动态和美学的。</p>
+<p>​	原始版本的游戏被设计成让孩子们感觉良好并且始终有赢的可能，玩家必须能感觉到游戏的结局不是固定的，在游戏过程中始终可以寄希望于好运气。期望的美学是让玩家体验希望、好运的逆转还有完全不做决定的刺激。实现此的机制就是蛇和梯子，而动态就是两者的交汇，产生在玩家与机制遭遇之时，带来了希望和刺激的美学感觉。</p>
+<p>​	但成年人更倾向更具有挑战性的游戏，他们不希望靠运气而是使用策略来赢得游戏。因此设计师希望让游戏感觉更策略化和目的化，我们可以通过仅修改规则（机制的元素之一）来达成这样的美学改变。比如说加入以下规则：</p>
+<ul>
+<li>每个玩家控制两枚棋子</li>
+<li>每个回合，玩家掷两枚骰子</li>
+<li>可以两枚骰子都给一个棋子用，或者一个棋子一枚骰子</li>
+<li>可以选择牺牲一枚骰子，然后用另一枚骰子来逆向移动对手的棋子</li>
+<li>如果玩家的棋子行进后遇到对手的棋子，那么可将对手棋子下移一行</li>
+<li>如果玩家的棋子行进后遇到自己的棋子，那么可选择自己的一个棋子上移一行</li>
+<li>规则4、5让玩家之间相互协作或对抗，规则1、3让游戏减少运气的影响，都增加了游戏的策略性。</li>
+</ul>
+<h4 id="formal-dramatic-and-dynamic-elements">Formal, Dramatic, and Dynamic Elements
+</h4><p>​	当 MDA 在试图帮助设计师和评论家更好地理解和讨论游戏时，由 Tracy Fullerton 和 Chris Swain 创建的 FDD 旨在帮助 USC 的 Game Design Workshop 课程的学生更效率地设计游戏。</p>
+<p>​	这个框架将游戏拆解成三类元素：</p>
+<ul>
+<li>
+<p><strong>Formal elements</strong></p>
+<p>​	将游戏从其它类型的媒体或交互区分开来的元素，提供了游戏的结构。形式元素包括规则、资源和边界等。</p>
+</li>
+<li>
+<p><strong>Dramatic elements</strong></p>
+<p>​	游戏的剧情和叙事，包括前提剧情/故事背景/背景设定（就是 premise，不知道怎么翻更确切）。戏剧元素将游戏连结在一起（tie the game together），帮助玩家理解规则，并鼓励玩家对游戏的结果产生情感投入（encourage the player to become emotionally invested in the outcome of the game）。</p>
+</li>
+<li>
+<p><strong>Dynamic elements</strong></p>
+<p>​	游戏的动态过程（the game in motion）。当玩家将规则转变为实际的游玩时，游戏就进入了动态元素阶段。动态元素包括策略、行为和游戏实体间的联系等。需要注意的是，这和 MDA 中使用的 dynamics 术语有关联但范围更广，因为它不仅仅是机制的运行时表现（，还包括比如策略、行为和游戏实体间的联系等）。</p>
+</li>
+</ul>
+<h5 id="formal-elements">Formal Elements
+</h5><p>​	Game Design Workshop提出了将游戏和其他种类媒体区分开来的七种形式元素：</p>
+<ul>
+<li>
+<p><strong>Player interaction pattern</strong></p>
+<p>​	玩家如何交互？</p>
+<p>​	游戏是单人、一对一、队伍对抗、乱斗（多个玩家相互对抗）、一对多、合作甚至是多人对抗一个系统？</p>
+</li>
+<li>
+<p><strong>Objective</strong></p>
+<p>​	玩家在游戏中试图得到什么？如何赢下游戏？</p>
+<p>​	（What are the players trying to achieve in the game? When has someone won the game?）</p>
+</li>
+<li>
+<p><strong>Rules</strong></p>
+<p>​	规则通过告诉玩家能做什么不能做什么来限制玩家的行为。</p>
+<p>​	许多规则明确写在游戏中，但有些 implicitly understood by all players（相当于默认规则/共识，比如尽管大富翁中没有明确写出不能抢银行，但玩家也明白不能。）</p>
+</li>
+<li>
+<p><strong>Procedures</strong></p>
+<p>​	玩家在游戏中采取的行动类型。</p>
+<p>​	Snakes and Ladders 中的规则告诉你投骰子并移动对应格数。这个规则所指明的过程（procedure）就是投骰子和移动棋子。过程由一系列规则的相互作用所定义（Procedures is defined by the interaction of a number of rules.）。但有一些仍在规则之外：尽管 Poker 中没有明确定义相关规则，但是虚张声势仍是游戏中一个重要的过程。</p>
+</li>
+<li>
+<p><strong>Resources</strong></p>
+<p>​	资源是游戏中有价值的各种元素。</p>
+<p>​	比如金钱、生命值、物品和财产等。</p>
+</li>
+<li>
+<p><strong>Boundaries</strong></p>
+<p>​	游戏和现实的界限在哪？（Where does the game end and reality begin?）</p>
+<p>​	Johan Huizinga 在他的书 Homo Ludens 中定义了 magic circle，这是个由游戏规则取代现实规则的临时世界（defines the magic circle as a temporary world where the rules of the game apply rather than the rules of the ordinary world）。在足球和冰球等运动中，magic circle 有场地的边界定义；但在 I Love Bee 这样的另类实境游戏（Alternative Reality Game）中，边界远不那么清晰。</p>
+</li>
+<li>
+<p><strong>Outcome</strong></p>
+<p>​	游戏如何结束？在游戏中既有最终结果也有过程性结果。</p>
+<p>​	（中文版第一版翻译为”除了终点，过程也不断导向结局“，原文为 &ldquo;There are both final and incremental outcomes in games&rdquo;，但根据后续内容，以及作者在书的官方网站所放出的 PPT ，作者要表达的应该是有 ”final“ 和 ”incremental“ 这两种 outcome，而不是什么都导向结局）在棋类游戏中，最终结果是一个玩家赢，另一个玩家输（显然作者忘了有和棋规则的说&hellip;）。在 D&amp;D 这样的纸笔 RPG（&ldquo;pen-and-paper RPG&rdquo;, AKA &ldquo;tabletop RPG&rdquo;）中，过程性结果是当玩家击败一个敌人或者提升了等级，甚至死亡通常都不是最终结果，因为还有方法来复活玩家。</p>
+</li>
+</ul>
+<p>​	根据 Fullerton 的理论，对形式元素的另一种看法是，当这些元素被移除时，游戏就不复存在了。如果从游戏中移除规则、结果等，它就不再是个游戏。（再次拷打中文版翻译，中文第一版翻译为”根据 Fullerton 的理论，另一种审视形式元素的看法是，尝试移除任意一种规则，看看它是否还称得上游戏“，原文为 &ldquo;According to Fullerton, another way to look at formal elements is that game ceases to exist when they are removed. If one removes the rules, outcome and so on from a game, it ceases to be a game.&quot;，你就说说这翻译的什么东西？）</p>
+<h5 id="dramatic-elements">Dramatic Elements
+</h5><p>​	戏剧元素帮助玩家更好地理解规则和资源，并且给予玩家在游戏中更强的情感投入。</p>
+<p>​	Fullerton 提出了三种戏剧元素：</p>
+<ul>
+<li>
+<p><strong>Premise</strong></p>
+<p>​	游戏世界的基础故事（或者背景故事？&ldquo;The basic story of the game world&rdquo;）。</p>
+<p>​	其为游戏叙事构建的基础。（The premise forms the basis around which the rest of the game&rsquo;s narrative is built.）</p>
+</li>
+<li>
+<p><strong>Character</strong></p>
+<p>​	角色是故事围绕的个体（Characters are the individuals around whom the story revolves.）
+（依旧拷打中文版翻译：“角色是故事里的人物”，很明显作者指的是玩家扮演的角色啊，某个小支线里面的小NPC 也是故事里的人物，ta 难道也是 Fullerton 说的 Character 吗？），有的像 Quake 中的无名、定义不清、沉默的第一人称主角，也有的像 Uncharted 系列的 Nathan Drake 这样深刻且多维的角色，就像电影里的主角。</p>
+<p>​	与电影不同，电影导演的目标鼓励观众与电影主角产生共鸣，但是在游戏中玩家就是主角，设计师必须选择主角是作为玩家的化身（avatar）（将玩家的情感、欲望和意图传递到游戏世界，并且遵循玩家的意愿），或者是作为玩家必须扮演的角色（role）（这样，相反地，玩家表现出游戏角色的意愿）。后者是最常见的，也是对写手和开发者来说更容易实现的。</p>
+</li>
+<li>
+<p><strong>Story</strong></p>
+<p>​	游戏的情节。</p>
+<p>​	故事包含整个游戏过程的的叙事内容。前提（premise）为故事的发生搭建了舞台。</p>
+</li>
+</ul>
+<p>​	戏剧元素的一个未被以上三种元素明确提及的主要目的是：<strong>帮助玩家更好地理解规则</strong>。</p>
+<p>​	比如 1943 年 Milton Bradley 在美国出版 Snakes and Ladders 时将名字改成了 Chutes and Ladders，也许就是为了让美国儿童更容易理解规则，因为 Chutes 比 Snakes 更加直观。除此之外游戏的许多版本还有一张图片，图片上面的孩子在梯子底部做好事，在梯子底部得到奖励。相反，滑梯则是孩子在顶部犯错，在底部被惩罚。如此一来，叙事便与道德标准相结合起来。</p>
+<p>​	戏剧元素兼具<strong>嵌入叙事</strong>（<strong>embedded narrative</strong>），<strong>帮助玩家记忆规则</strong>（比如将蛇换成梯子）和游戏叙事<strong>向玩家传递游戏之外持续存在的意义的能力</strong>（比如用图片表示行善作恶的后果）（这里感觉我翻的怪怪的，我认为大概意思是在说游戏叙事可以超脱游戏，给玩家传递来自游戏之外/超越游戏本身的意义，英文原文为&quot;the ability of the game narrative to convey meaning to the players that persists outside of the game&rdquo;，中文版翻译为“传达游戏叙事超越游戏本身的能力”）</p>
+<h5 id="dynamic-elements">Dynamic Elements
+</h5><p>​	动态元素是指那些只在游戏被游玩后出现的东西（Dynamic are those that occur only when the game is being played）。</p>
+<p>要理解游戏中的动态元素，有以下几个要点：</p>
+<ul>
+<li>
+<p><strong>Emergence</strong></p>
+<p>​	看似简单的规则的碰撞可以导致不可预料的结果。</p>
+<p>​	哪怕是简单如 Snakes and Ladders 的游戏也会带来难以预料的动态体验。如果一个玩家整局游戏都恰好碰到梯子，而另一位玩家一直碰到蛇，那么带来的体验就完全不同。简单的规则会导致复杂并且难以预料的行为，游戏设计师的一个最重要的工作就是尝试理解游戏规则的涌现影响。（One of a game designer&rsquo;s most important jobs is to attempt to understand the emergent implications of the rules in a game.）</p>
+</li>
+<li>
+<p><strong>Emergent narrative</strong></p>
+<p>​	除了MDA模型所提到的机制的动态行为之外，Fullerton的模型还指出叙事也可以是动态的，因为游戏玩法本身就能涌现出十分宽广的叙事。</p>
+<p>​	游戏的天性就会将玩家置入非寻常的情境中，并且将因此引导产生有趣的故事。这是桌上 RPG 比如 D&amp;D 的核心魅力，由一个玩家扮演 DM，给其他玩家创造体验的场景和交互的角色。这与 Fullerton 的戏剧元素提到的嵌入叙事（embedded narrative）不同，并且是互动体验独有的娱乐可能之一。</p>
+</li>
+<li>
+<p><strong>Playtesting is the only way to understand dynamics</strong></p>
+<p>​	有经验的游戏设计师相比新人设计师能对动态行为和涌现做出更准确的预测，但是没人能不试玩却能清楚的理解游戏的动态会如何运行（but no one understands exactly how the dynamics of a game will play out without playtesting them.）。</p>
+<p>​	重复试玩可以揭示游戏本来应该具有的各种动态行为，并且帮助设计师理解他们的游戏可能产生的体验范围。（大概就是都会玩出怎么样的体验）</p>
+</li>
+</ul>
+<h4 id="the-elemental-tetrad">The Elemental Tetrad
+</h4><p>​	Jesse Schell 在书 The Art of Game Design: A book of Lenses 中描述了四元法，提出了他认为的游戏的四个基本元素：</p>
+<ul>
+<li>
+<p><strong>Mechanics</strong></p>
+<p>​	玩家和游戏交互的规则。</p>
+<p>​	四元法中的机制是指将游戏和其他非互动形式媒体（如电影或书）区分开来的元素（和 FDD 的 formal elements很像）。机制包括规则、目标和其他 Fullerton 提到的形式元素。和 MDA 中提到的机制不同，Schell 用此术语来区别游戏机制和实现它们的技术。</p>
+</li>
+<li>
+<p><strong>Aesthetics</strong></p>
+<p>​	美学描述了游戏如何被五感接受：视觉、听觉、嗅觉、味觉和触觉。</p>
+<p>​	美学涵盖从原声带到人物模型、包装和封面艺术。这与 MDA 的美学不同，Schell 指的是那些由游戏开发者创造出来的东西，比如游戏艺术和声音。</p>
+</li>
+<li>
+<p><strong>Technology</strong></p>
+<p>​	这个元素包括所有让游戏运作起来的根本技术（This element covers all the underlying technology that makes the game work.）。除了主机硬件、计算机软件等，还包括桌游中的技术元素，比如骰子的类型和数字、各种用来决定行动结局的表格等。</p>
+</li>
+<li>
+<p><strong>Story</strong></p>
+<p>​	Schell 用这个表达 Fullerton 的全部戏剧元素，不仅仅她提到的 story。在 Schell 的定义中，剧情包含所有游戏中的叙事元素，包括前提和角色。</p>
+</li>
+</ul>
+<img src="Tetrad.png" alt="Tetrad" style="zoom:50%;" />
+<p>​	上图展示了四元法的四个元素如何相互关联。Schell 指出美学对玩家总是可见的（不是 MDA 的美学喔！）。游戏的技术是最不可见的，相比起来，玩家通常对游戏机制有更好的理解。Schell 的四元法并不涉及游戏的动态玩法，更多在于盒子里的（桌游）或硬盘里的游戏的静态元素。Schell 的四元法将在下一张更深入的探讨和拓展，因为它激发了分层四元法的四个元素。</p>
+<h3 id="summary">Summary
+</h3><p>​	每个这些用来理解游戏和交互艺术的框架都从不同的视角来解读：</p>
+<ul>
+<li>
+<p><strong>MDA</strong> 旨在展示并具体化这样一个观点：玩家和设计师从不同的方向接近游戏，并且提出设计师可以通过学习从玩家体验的角度来看待他们的游戏来更有效地进行游戏设计。</p>
+</li>
+<li>
+<p><strong>FDD</strong> 框架将游戏设计分解成可以分别考虑和改进的特定组件。它旨在成为设计师的toolkit，是设计师能够分离并检查游戏中所有可以被改进的组件。FDD还强调了叙事在玩家体验中的重要性。</p>
+</li>
+<li>
+<p><strong>四元法</strong>更多用游戏开发者的视角来看待游戏。它将游戏的基本元素分为通常分配给开发团队不同组的部分：游戏设计师负责机制、艺术家负责美学、写手负责故事、程序员负责技术。</p>
+</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/readingnote/">ReadingNote</a>
+        
+            <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+        
+            <a href="/tags/game-analysis-framework/">Game Analysis Framework</a>
+        
+            <a href="/tags/%E6%B8%B8%E6%88%8F%E5%88%86%E6%9E%90%E6%A1%86%E6%9E%B6/">游戏分析框架</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/">
+        
+        
+            <div class="article-image">
+                <img src="/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/cover.da456e378c7ac915309618910711ca32_hu_d8adbaed82452526.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 3"
+                        
+                        data-hash="md5-2kVuN4x6yRUwlhiRBxHKMg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 3</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0%E9%A2%9D%E5%A4%96%E7%AF%87/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0%E9%A2%9D%E5%A4%96%E7%AF%87/cover.41cf062f4552dbdad8ea4c648c04f955_hu_53f5e5e81943d114.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 游戏设计梦工厂，第一篇第二章额外篇"
+                        
+                        data-hash="md5-Qc8GL0VS29rY6kxkjAT5VQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">游戏设计梦工厂，第一篇第二章额外篇</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0/cover.41cf062f4552dbdad8ea4c648c04f955_hu_53f5e5e81943d114.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 游戏设计梦工厂，第一篇第二章"
+                        
+                        data-hash="md5-Qc8GL0VS29rY6kxkjAT5VQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">游戏设计梦工厂，第一篇第二章</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%80%E7%AB%A0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%80%E7%AB%A0/cover.41cf062f4552dbdad8ea4c648c04f955_hu_53f5e5e81943d114.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 游戏设计梦工厂，第一篇第一章"
+                        
+                        data-hash="md5-Qc8GL0VS29rY6kxkjAT5VQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">游戏设计梦工厂，第一篇第一章</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="EvanWonghere/EvanWonghere.github.io"
+    data-repo-id="R_kgDOPzgwzg"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOPzgwzs4Cvsti"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="light"
+    data-lang="en"
+    data-loading=""
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('dark_dimmed');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 EvanWong
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.31.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.f140b912c7d07b398f639499ee39741023a15cbd08b0dbb13257b83dfbf08989.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
