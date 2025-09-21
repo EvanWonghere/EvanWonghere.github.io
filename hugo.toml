@@ -44,6 +44,7 @@ description = "My personal blog."
 mainSections = [ "post" ]
 featuredImageField = "image"
 rssFullContent = true
+favicon = "/favicon.ico"
 
   [params.author] # This defines author as an object
   name = "Evan Wong"
