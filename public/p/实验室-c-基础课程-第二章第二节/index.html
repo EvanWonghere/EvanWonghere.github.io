@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="这是当年在实验室给新生培训的课件，也顺便搬过来了。做了点微小修订，也懒得全部更新了。当年为了给新生上压力，使用了全英文的课件。">
+<title>实验室 C&#43;&#43; 基础课程 · 第二章第二节</title>
+
+<link rel='canonical' href='http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="实验室 C++ 基础课程 · 第二章第二节">
+<meta property='og:description' content="这是当年在实验室给新生培训的课件，也顺便搬过来了。做了点微小修订，也懒得全部更新了。当年为了给新生上压力，使用了全英文的课件。">
+<meta property='og:url' content='http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/'>
+<meta property='og:site_name' content='蜂窝'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='C&#43;&#43;' /><meta property='article:tag' content='LearningNote' /><meta property='article:tag' content='学习笔记' /><meta property='article:published_time' content='2023-10-26T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-10-26T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="实验室 C++ 基础课程 · 第二章第二节">
+<meta name="twitter:description" content="这是当年在实验室给新生培训的课件，也顺便搬过来了。做了点微小修订，也懒得全部更新了。当年为了给新生上压力，使用了全英文的课件。">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_789ebd951ab60789.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🐝</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">蜂窝</a></h1>
+            <h2 class="site-description">EvanWong的个人博客</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/EvanWonghere/EvanWonghere.github.io'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://steamcommunity.com/profiles/76561198980535015/'
+                        target="_blank"
+                        title="Steam"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Steam</title><path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012H7.54zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.663 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.253 0-2.265-1.014-2.265-2.265z"/></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="http://localhost:1313/en/" >English</option>
+                                
+                                    <option value="http://localhost:1313/" selected>中文</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#chapter-2--dealing-with-data">Chapter 2 —— Dealing with data</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >
+                学习笔记
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/">实验室 C&#43;&#43; 基础课程 · 第二章第二节</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            这是当年在实验室给新生培训的课件，也顺便搬过来了。做了点微小修订，也懒得全部更新了。当年为了给新生上压力，使用了全英文的课件。
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Oct 26, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 6 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="c-basic-course">C++ Basic Course
+</h1><h2 id="chapter-2--dealing-with-data">Chapter 2 —— Dealing with data
+</h2><ul>
+<li>
+<p><em><strong>pointer</strong></em></p>
+<p>​	Today we&rsquo;ll deals with the basic language mechanisms for referring to memory. Obviously, we can refer to  object by name, but in C++ (most) objects “have identity.” That is, they reside at a specific address in memory, and an object can be accessed if you know its address and its type. The language constructs for holding and using addresses are pointers and references.</p>
+<p>​	Pointers, which are variables that store addresses of values rather than the values themselves. But before discussing pointers, let’s talk about how to explicitly find addresses for ordinary variables. You just apply the address operator, represented by &amp;, to a variable to get its location; the name of the pointer represents the location. Applying the * operator, called the <em>indirect value</em> or the <em>dereferencing</em> operator, yields the value at the location. (Yes, this is the same * symbol used for multiplication; C++ uses the context to determine whether you mean multiplication or dereferencing.)</p>
+<p><img src="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/pointer_and_reference.png"
+	width="1006"
+	height="530"
+	srcset="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/pointer_and_reference_hu_ac530dd4a3200faa.png 480w, /p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/pointer_and_reference_hu_b5b8770d42b2cce0.png 1024w"
+	loading="lazy"
+	
+		alt="Pointer and Reference"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="189"
+		data-flex-basis="455px"
+	
+></p>
+<p>​	As you can see, the int variable updates and the pointer variable p_updates are just two sides of the same coin. The updates variable represents the value as primary and uses the &amp; operator to get the address, whereas the p_updates variable represents the address as primary and uses the * operator to get the value.</p>
+<p>​	Because p_updates points to updates, *p_updates and updates are completely equivalent. You can use *p_updates exactly as you would use a type int variable. As the program below shows, you can even assign values to *p_updates. Doing so changes the value of the pointed-to value, updates.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">update</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span><span class="o">*</span> <span class="n">p_update</span><span class="p">;</span> <span class="c1">// or int * p_update or int *p_update
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">p_update</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">update</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Express values in two ways
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Values: update = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">update</span>
+</span></span><span class="line"><span class="cl">              <span class="o">&lt;&lt;</span> <span class="s">&#34;, *p_update = &#34;</span>    <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">p_update</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Express address in  two ways
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Address: &amp;update = &#34;</span> <span class="o">&lt;&lt;</span> <span class="o">&amp;</span><span class="n">update</span>
+</span></span><span class="line"><span class="cl">              <span class="o">&lt;&lt;</span> <span class="s">&#34;, p_update = &#34;</span>        <span class="o">&lt;&lt;</span> <span class="n">p_update</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Use pointer to change value
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="o">*</span><span class="n">p_update</span> <span class="o">=</span> <span class="o">*</span><span class="n">p_update</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Now update = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">update</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p><em><strong>Declaring and Initializing Pointers</strong></em></p>
+<p>​	Let’s examine the process of declaring pointers. A computer needs to keep track of the type of value to which a pointer refers. For example, the address of a char typically looks the same as the address of a double, but char and double use different numbers of bytes and different internal formats for storing values. Therefore,a pointer declaration must specify what type of data to which the pointer points.</p>
+<p>​	For example, the preceding example has this declaration:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="o">*</span> <span class="n">p_update</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	This states that the combination * p_updates is type int. Because you use the * operator by applying it to a pointer, the p_updates variable itself must <em>be</em> a pointer. We say that p_updates points to type int. We also say that the type for p_updates is pointer-to-int or, more concisely, int *.To repeat: p_updates is a pointer (an address),and *p_updates is an int and not a pointer.</p>
+<p><img src="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/memory_address.png"
+	width="1374"
+	height="1032"
+	srcset="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/memory_address_hu_e33796475082bfa4.png 480w, /p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/memory_address_hu_10612ff47c7c25fc.png 1024w"
+	loading="lazy"
+	
+		alt="Pointer and Value"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="133"
+		data-flex-basis="319px"
+	
+></p>
+<p>​	Incidentally, the use of spaces around the * operator are optional.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="o">*</span><span class="n">ptr</span><span class="p">;</span> 	<span class="c1">// C programmers have used this form,
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		  	<span class="c1">// accentuates the idea that the combination *ptr is a type int value.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">ptr</span><span class="p">;</span>	<span class="c1">// C++ programmers, on the other hand, use this form,
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="c1">// This emphasizes the idea that int* is a type, pointer-to-int.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span><span class="n">ptr</span><span class="p">;</span>	<span class="c1">// You could even do this
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">;</span>	<span class="c1">// Be aware, this declaration creates
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>				<span class="c1">// one pointer (p1) and one ordinary int (p2)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>				<span class="c1">// You need an * for each pointer variable name.
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><em><strong>pointer danger</strong></em></p>
+<p>​	Danger awaits those who incautiously use pointers. One extremely important point is that when you create a pointer in C++, the computer allocates memory to hold an address, but it does not allocate memory to hold the data to which the address points. Creating space for the data involves a separate step. Omitting that step,as in the following, is an invitation to disaster:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">long</span> <span class="o">*</span> <span class="n">fellow</span><span class="p">;</span>		<span class="c1">// create pointer to double
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">*</span><span class="n">fellow</span> <span class="o">=</span> <span class="mi">223323</span><span class="p">;</span>	<span class="c1">// where is the value stores? .. Who knows?
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	Sure, fellow is a pointer. But where does it point? The code failed to assign an address to fellow. So where is the value 223323 placed? We can’t say. Because fellow wasn’t initialized, it could have any value. Whatever that value is, the program interprets it as the address at which to store 223323. If fellow happens to have the value 1200, then the computer attempts to place the data at address 1200, even if that happens to be an address in the middle of your program code. Chances are that wherever fellow points, that is not where you want to put the number 223323. This kind of error can produce some of the most insidious and hard -to-trace bugs.</p>
+<p>​	Hence remember that  <em><em><em>Always</em> initialize a pointer to a definite and appropriate address before you apply the dereferencing operator (</em>) to it.</em>*</p>
+</li>
+<li>
+<p><em><strong>Pointers, Arrays, and Pointer Arithmetic</strong></em></p>
+<p>​	The near equivalence of pointers and array names stems from <em>pointer arithmetic</em> and how C++ handles arrays internally. First, let’s check out the arithmetic. Adding one to an integer variable increases its value by one, but adding one to a pointer variable increases its value by the number of bytes of the type to which it points. Adding one to a pointer to double adds 8 to the numeric value on systems with 8-byte double, whereas adding one to a pointer-to-short adds two to the pointer value if short is 2 bytes. The code below demonstrates this amazing point. It also shows a second important point: C++ interprets the array name as an address.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">double</span> <span class="n">wages</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mf">10000.0</span><span class="p">,</span> <span class="mf">20000.0</span><span class="p">,</span> <span class="mf">30000.0</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">short</span> <span class="n">stacks</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Here are two ways to get the address of an array
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">double</span> <span class="o">*</span> <span class="n">pw</span> <span class="o">=</span> <span class="n">wages</span><span class="p">;</span>        <span class="c1">// name of an array = address
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">short</span> <span class="o">*</span> <span class="n">ps</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">stacks</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>    <span class="c1">// or use address operator
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// with array element
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;pw = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">pw</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;, *pw = &#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">pw</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pw</span> <span class="o">=</span> <span class="n">pw</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;add 1 to the pw pointer:</span><span class="se">\n</span><span class="s">&#34;</span>
+</span></span><span class="line"><span class="cl">              <span class="o">&lt;&lt;</span> <span class="s">&#34;pw = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">pw</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;, *pw = &#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">pw</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;</span><span class="se">\n\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;ps = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ps</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;, *ps = &#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">ps</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ps</span> <span class="o">=</span> <span class="n">ps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;add 1 to the ps pointer:</span><span class="se">\n</span><span class="s">&#34;</span>
+</span></span><span class="line"><span class="cl">              <span class="o">&lt;&lt;</span> <span class="s">&#34;ps = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ps</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;, *ps = &#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">ps</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;</span><span class="se">\n\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;access two elements with array notation</span><span class="se">\n</span><span class="s">&#34;</span>
+</span></span><span class="line"><span class="cl">              <span class="o">&lt;&lt;</span> <span class="s">&#34;stacks[0] = &#34;</span>   <span class="o">&lt;&lt;</span> <span class="n">stacks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">              <span class="o">&lt;&lt;</span> <span class="s">&#34;, stacks[1] = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">stacks</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;access two elements with pointer notation</span><span class="se">\n</span><span class="s">&#34;</span>
+</span></span><span class="line"><span class="cl">              <span class="o">&lt;&lt;</span> <span class="s">&#34;*stacks = &#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">stacks</span>
+</span></span><span class="line"><span class="cl">              <span class="o">&lt;&lt;</span> <span class="s">&#34;, *(stacks + 1) = &#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="p">(</span><span class="n">stacks</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">wages</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; = size of wages array</span><span class="se">\n</span><span class="s">&#34;</span>
+</span></span><span class="line"><span class="cl">              <span class="o">&lt;&lt;</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">pw</span><span class="p">)</span>    <span class="o">&lt;&lt;</span> <span class="s">&#34; = size of pw pointer</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	In most contexts, C++ interprets the name of an array as the address of its first element. But remember that the name of an array is not a pointer! It do always interprets to pointer, but it not!</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">arr</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="n">T1</span> <span class="o">=</span> <span class="n">delctype</span><span class="p">(</span><span class="n">arr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="n">T2</span> <span class="o">=</span> <span class="n">delctype</span><span class="p">(</span><span class="o">+</span><span class="n">arr</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	You can use it like a pointer, like we said before</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">arr</span> <span class="o">==</span> <span class="o">&amp;</span><span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">the</span> <span class="n">address</span> <span class="n">of</span> <span class="n">first</span> <span class="n">element</span> <span class="n">in</span> <span class="n">array</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	So what is &amp;arr means? In value, its equals to a and &amp;a[0], but in meaning, it stands for the whole array.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">arr</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;arr:         &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">arr</span>			<span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span>
+</span></span><span class="line"><span class="cl">          <span class="o">&lt;&lt;</span> <span class="s">&#34;&amp;arr[0]:     &#34;</span> <span class="o">&lt;&lt;</span> <span class="o">&amp;</span><span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> 	<span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span>
+</span></span><span class="line"><span class="cl">          <span class="o">&lt;&lt;</span> <span class="s">&#34;&amp;arr:        &#34;</span> <span class="o">&lt;&lt;</span> <span class="o">&amp;</span><span class="n">arr</span> 		<span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span>
+</span></span><span class="line"><span class="cl">          <span class="o">&lt;&lt;</span> <span class="s">&#34;arr + 1:     &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">arr</span> <span class="o">+</span> <span class="mi">1</span> 	<span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span>
+</span></span><span class="line"><span class="cl">          <span class="o">&lt;&lt;</span> <span class="s">&#34;&amp;arr[0] + 1: &#34;</span> <span class="o">&lt;&lt;</span> <span class="o">&amp;</span><span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span>
+</span></span><span class="line"><span class="cl">          <span class="o">&lt;&lt;</span> <span class="s">&#34;&amp;arr + 1:    &#34;</span> <span class="o">&lt;&lt;</span> <span class="o">&amp;</span><span class="n">arr</span> <span class="o">+</span> <span class="mi">1</span>    <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">...................................</span><span class="n">OUTPUT</span><span class="p">....................................</span>
+</span></span><span class="line"><span class="cl"><span class="nl">arr</span><span class="p">:</span>         <span class="mh">0x61fe14</span>
+</span></span><span class="line"><span class="cl"><span class="o">&amp;</span><span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">:</span>     <span class="mh">0x61fe14</span>
+</span></span><span class="line"><span class="cl"><span class="o">&amp;</span><span class="nl">arr</span><span class="p">:</span>        <span class="mh">0x61fe14</span>
+</span></span><span class="line"><span class="cl"><span class="n">arr</span> <span class="o">+</span> <span class="mi">1</span><span class="o">:</span>     <span class="mh">0x61fe18</span>
+</span></span><span class="line"><span class="cl"><span class="o">&amp;</span><span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="o">:</span> <span class="mh">0x61fe18</span>
+</span></span><span class="line"><span class="cl"><span class="o">&amp;</span><span class="n">arr</span> <span class="o">+</span> <span class="mi">1</span><span class="o">:</span>    <span class="mh">0x61fe20</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	In general, wherever you use array notation, C++ makes the following conversion:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">arrayname</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="n">becomes</span> <span class="o">*</span><span class="p">(</span><span class="n">arrayname</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	And if you use a pointer instead of an array name, C++ makes the same conversion:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">pointername</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="n">becomes</span> <span class="o">*</span><span class="p">(</span><span class="n">pointername</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	Thus, in many respects you can use pointer names and array names in the same way. You can use the array brackets notation with either. You can apply the dereferencing operator (*) to either. In most expressions, each represents an address. One difference is that you can change the value of a pointer, whereas an array name is a constant:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">pointername</span> <span class="o">=</span> <span class="n">pointername</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>	<span class="c1">// valid
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">arrayname</span> <span class="o">=</span> <span class="n">arrayname</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>		<span class="c1">// not allowed
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	A second difference is that applying the sizeof operator to an array name yields the size of the array, but applying sizeof to a pointer yields the size of the pointer, even if the pointer points to the array.</p>
+</li>
+<li>
+<p><strong>Allocating Memory with <em>new</em></strong></p>
+<p>​	It can be advantageous to create arrays during runtime rather than at compile time. You can use the new operator to allocate a piece of memory to a pointer. The new operator is used to dynamically allocate memory on the heap and returns the allocated memory address. You can use this pointer to access and manipulate dynamically allocated memory.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">ptr1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">ptr2</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">*</span><span class="n">ptr1</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="c1">// dangerous
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">*</span><span class="n">ptr2</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	But this only allocates memory for a single element to the pointer, but how can the pointer achieve the same function as an array and store a large number of elements? The new operator is also used, but the syntax is different</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">ptr</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span> <span class="c1">// similar to int arr[5];
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	It is very important to note that the memory space dynamically allocated by the program from the operating system should be released after use and returned to the operating system so that the operating system can allocate this memory space to other programs. C++ provides the delete operator to release dynamically allocated memory space.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">ptr1</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">ptr2</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">delete</span> <span class="n">ptr1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">delete</span> <span class="p">[]</span> <span class="n">ptr2</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	In C++, once you use the <code>delete</code> operator to release memory pointed to by a pointer, the pointer still exists, but the memory it points to no longer belongs to your program. This is called a dangling pointer. Trying to use a dangling pointer can lead to undefined behavior because the memory has been deallocated and may be used by other programs, or due to memory management reasons, it can result in crashes or unpredictable outcomes.</p>
+<p>​	Therefore, in most cases, after using <code>delete</code>, you should set the pointer to <code>nullptr</code> to avoid accidentally referencing a dangling pointer. This can help you prevent dangling pointer issues. For example:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">myPointer</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Perform some operations with myPointer
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">delete</span> <span class="n">myPointer</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">myPointer</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span> <span class="c1">// Set the pointer to nullptr
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	By doing this, if you attempt to use <code>myPointer</code> afterward, it will be a null pointer rather than pointing to deallocated memory as a dangling pointer.</p>
+<p>​	But&hellip; What is <code>nullptr</code>?</p>
+</li>
+<li>
+<p><em><strong>NULL &amp;&amp; nullptr</strong></em></p>
+<p>A null pointer has several important uses and reasons in programming:</p>
+<ol>
+<li>Initialization: When you create a pointer variable but don&rsquo;t have a valid target to allocate memory to, a null pointer is a suitable initial value. It allows you to specify a valid memory address later.</li>
+<li>Representing Absence: A null pointer can be used to indicate that a pointer doesn&rsquo;t point to anything, i.e., no memory has been allocated. This is meaningful in many situations, such as in data structures to represent a node without child nodes.</li>
+<li>Error Handling: In some cases, if memory allocation fails or a pointer references invalid memory, you can use a null pointer to represent an error state and take appropriate actions.</li>
+<li>Function Return Values: In certain situations, a function may need to return a pointer, but due to some reason, cannot allocate valid memory. In such cases, the function can return a null pointer to indicate failure or a specific condition.</li>
+</ol>
+<p>​	In summary, a null pointer is a useful tool in programming for representing the absence or invalidity of a pointer. It can help you deal with various scenarios, from memory allocation to error handling.</p>
+<p>​	However, it&rsquo;s essential to use null pointers safely to avoid issues like dangling pointers and segmentation faults.</p>
+<p>​	When it comes to <code>NULL</code> and <code>nullptr</code> in C++, it&rsquo;s important to understand their background and purposes.</p>
+<ol>
+<li>
+<p><code>NULL</code>:</p>
+<ul>
+<li><code>NULL</code> is a macro, typically defined as 0. In earlier versions of C and C++, it was used to indicate that a pointer doesn&rsquo;t point to any valid memory address.</li>
+<li>However, <code>NULL</code> has some issues because 0 can also be used to represent integers or floating-point numbers, leading to potential ambiguities. It may also trigger certain compiler warnings or errors.</li>
+<li>In more recent C++ standards, it is recommended to avoid using <code>NULL</code> and use <code>nullptr</code> instead.</li>
+</ul>
+</li>
+<li>
+<p><code>nullptr</code>:</p>
+<ul>
+<li><code>nullptr</code> is a keyword introduced in C++11 specifically for representing a null pointer. It is type-safe.</li>
+<li><code>nullptr</code> will not be interpreted as an integer or other data types; it can only be assigned to pointer types, helping catch some errors at compile time.</li>
+<li>The type of <code>nullptr</code> is <code>nullptr_t</code>, and it can be implicitly converted to any pointer type.</li>
+</ul>
+<p>Now, let&rsquo;s elaborate on the differences between them:</p>
+</li>
+<li>
+<p>Type Safety:</p>
+<ul>
+<li><code>NULL</code> is a macro with no specific type; it&rsquo;s just 0.</li>
+<li><code>nullptr</code> is a keyword with a specific type, <code>nullptr_t</code>, making it stronger in terms of type safety. It can only be assigned to pointer types.</li>
+</ul>
+</li>
+<li>
+<p>Compile-Time Checks:</p>
+<ul>
+<li><code>nullptr</code> can help catch certain type mismatches at compile time.</li>
+<li><code>NULL</code> cannot offer the same level of safety because it&rsquo;s just an integer and can be confused with other integer types.</li>
+</ul>
+</li>
+<li>
+<p>Recommended Usage:</p>
+<ul>
+<li>In newer C++ standards, it&rsquo;s recommended to use <code>nullptr</code> over <code>NULL</code> because of its improved type safety and ability to prevent some common errors.</li>
+</ul>
+</li>
+</ol>
+<p>​	In summary, for writing safer and clearer C++ code, it&rsquo;s advisable to use <code>nullptr</code> to represent null pointers and avoid using <code>NULL</code>. <code>nullptr</code> provides better type safety and compile-time checks.</p>
+</li>
+<li>
+<p>**<em>void</em> ***</p>
+<p>​	<code>void*</code> is a special pointer type in C++, often referred to as a &ldquo;void pointer&rdquo; or &ldquo;generic pointer.&rdquo; Its primary characteristic is that it can point to memory of any data type, as it doesn&rsquo;t have a specified type. Here&rsquo;s a detailed explanation of <code>void*</code>:</p>
+<ol>
+<li>
+<p>Versatility: <code>void*</code> can point to memory of any data type. This makes it highly flexible and suitable for handling pointers to various data types.</p>
+</li>
+<li>
+<p>Type Safety: <code>void*</code> lacks type information, so the compiler doesn&rsquo;t perform type checking. This means you need to use <code>void*</code> with caution because it won&rsquo;t tell you the actual data type the pointer points to.</p>
+</li>
+<li>
+<p>Use Cases:</p>
+<ul>
+<li>Dynamic Memory Allocation: When using dynamic memory allocation functions like <code>malloc()</code> or <code>new</code>, they typically return <code>void*</code> because they don&rsquo;t know the data type to be allocated.</li>
+<li>Callback Functions: When writing generic callback functions that need to accept pointers to different data types, <code>void*</code> can be helpful.</li>
+<li>Data Passing: In some situations, you might need to pass pointers to data where the data type is determined at runtime; <code>void*</code> can be used for passing such pointers.</li>
+</ul>
+</li>
+<li>
+<p>Usage Considerations:</p>
+<ul>
+<li>When using <code>void*</code>, you need to be very careful to keep track of the actual data type the pointer points to in order to avoid type mismatch errors when accessing the data.</li>
+<li>When casting <code>void*</code> back to the original pointer type, you&rsquo;ll need to perform explicit type conversions. This may involve using operations like <code>static_cast</code> or <code>reinterpret_cast</code>.</li>
+</ul>
+</li>
+</ol>
+<p>Example:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">myValue</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span><span class="o">*</span> <span class="n">ptr</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">myValue</span><span class="p">;</span> <span class="c1">// Using void* to point to an int
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span><span class="o">*</span> <span class="n">intPtr</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">ptr</span><span class="p">);</span> <span class="c1">// Reverting to an int pointer
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">intPtr</span><span class="p">;</span> <span class="c1">// Outputs 42
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	In summary, <code>void*</code> is a useful tool, but it requires careful handling as it sacrifices type safety. It&rsquo;s commonly used for dealing with pointers to unknown data types or for passing pointers in certain situations, but it needs to be managed and type-cast with caution.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><em><strong>reference</strong></em></p>
+<p><em>We’ll leave it to tommorow.</em></p>
+</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/c&#43;&#43;/">C&#43;&#43;</a>
+        
+            <a href="/tags/learningnote/">LearningNote</a>
+        
+            <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">实验室 C&#43;&#43; 基础课程 · 第二章第三节</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">实验室 C&#43;&#43; 基础课程 · 第二章第一节</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">实验室 C&#43;&#43; 基础课程 · 第一章第三节</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">实验室 C&#43;&#43; 基础课程 · 第一章第二节</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">实验室 C&#43;&#43; 基础课程 · 第一章第一节</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="EvanWonghere/EvanWonghere.github.io"
+    data-repo-id="R_kgDOPzgwzg"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOPzgwzs4Cvsti"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="light"
+    data-lang="en"
+    data-loading=""
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('dark_dimmed');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 EvanWong
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.31.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.f140b912c7d07b398f639499ee39741023a15cbd08b0dbb13257b83dfbf08989.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="这是当年在实验室给新生培训的课件，也顺便搬过来了。做了点微小修订，也懒得全部更新了。">
+<title>实验室 C&#43;&#43; 基础课程 · 第零章第二节</title>
+
+<link rel='canonical' href='http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="实验室 C++ 基础课程 · 第零章第二节">
+<meta property='og:description' content="这是当年在实验室给新生培训的课件，也顺便搬过来了。做了点微小修订，也懒得全部更新了。">
+<meta property='og:url' content='http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/'>
+<meta property='og:site_name' content='蜂窝'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='C&#43;&#43;' /><meta property='article:tag' content='LearningNote' /><meta property='article:tag' content='学习笔记' /><meta property='article:published_time' content='2023-10-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-10-18T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="实验室 C++ 基础课程 · 第零章第二节">
+<meta name="twitter:description" content="这是当年在实验室给新生培训的课件，也顺便搬过来了。做了点微小修订，也懒得全部更新了。">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_789ebd951ab60789.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🐝</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">蜂窝</a></h1>
+            <h2 class="site-description">EvanWong的个人博客</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/EvanWonghere/EvanWonghere.github.io'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://steamcommunity.com/profiles/76561198980535015/'
+                        target="_blank"
+                        title="Steam"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Steam</title><path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012H7.54zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.663 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.253 0-2.265-1.014-2.265-2.265z"/></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="http://localhost:1313/en/" >English</option>
+                                
+                                    <option value="http://localhost:1313/" selected>中文</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#第零章工欲善其事必先利其器">第零章——工欲善其事必先利其器</a>
+      <ol>
+        <li><a href="#0提前说明">0.提前说明</a></li>
+        <li><a href="#第二节c开发环境配置">第二节——C++开发环境配置</a>
+          <ol>
+            <li><a href="#ides">IDEs</a></li>
+            <li><a href="#编译器--编辑器">编译器 + 编辑器</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >
+                学习笔记
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/">实验室 C&#43;&#43; 基础课程 · 第零章第二节</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            这是当年在实验室给新生培训的课件，也顺便搬过来了。做了点微小修订，也懒得全部更新了。
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Oct 18, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 4 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="c基础课程">C++基础课程
+</h1><h2 id="第零章工欲善其事必先利其器">第零章——工欲善其事必先利其器
+</h2><h3 id="0提前说明">0.提前说明
+</h3><ul>
+<li>
+<p>本课程均以<code>Windows 11</code>系统作为示例，若为<code>Linux</code>或者<code>MacOS</code>可另外课外提问或自己查阅资料。</p>
+</li>
+<li>
+<p>个人建议，少用百度，能则<code>Google</code>，不行的话<code>Bing</code>体验也不错。</p>
+</li>
+</ul>
+<h3 id="第二节c开发环境配置">第二节——C++开发环境配置
+</h3><p>一般地，你可以使用<em><strong>集成开发环境（Integrated Development Environment, AKA IDE）<em><strong>或者</strong></em>自行配置编译器 + 编辑器</strong></em>来进行C++开发。</p>
+<h4 id="ides">IDEs
+</h4><ul>
+<li>
+<p><em><strong>Visual Studio</strong></em></p>
+<ul>
+<li>
+<p>在<a class="link" href="https://visualstudio.microsoft.com/zh-hans/downloads/"  target="_blank" rel="noopener"
+    >官网</a>下载<em><strong>Visual Studio 2022 Community Edition</strong></em></p>
+<p><img src="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_vs.png"
+	width="3012"
+	height="1674"
+	srcset="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_vs_hu_911f0fb234ba1d.png 480w, /p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_vs_hu_7f80a45d71028ffc.png 1024w"
+	loading="lazy"
+	
+		alt="Download Visual Studio"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="179"
+		data-flex-basis="431px"
+	
+></p>
+</li>
+<li>
+<p>只选择使用C++的桌面开发足够，之后也可在<em><strong>Visual Studio Installer</strong></em>中选择修改</p>
+<p><img src="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/install_vs.png"
+	width="1380"
+	height="1508"
+	srcset="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/install_vs_hu_3e4d5445c53fe361.png 480w, /p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/install_vs_hu_778d74dede881ffa.png 1024w"
+	loading="lazy"
+	
+		alt="Install Visual Studio Components"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="91"
+		data-flex-basis="219px"
+	
+></p>
+</li>
+</ul>
+</li>
+<li>
+<p><em><strong>CLion</strong></em></p>
+<ul>
+<li>
+<p>请注意，在使用 <em><strong>CLion</strong></em> 之前你可能需要在 <em><strong>JetBrains</strong></em> 官网<a class="link" href="https://www.jetbrains.com/shop/eform/students"  target="_blank" rel="noopener"
+    >申请</a> <em><strong>JetBrains Product Pack for Students</strong></em>.</p>
+<p><img src="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_clion.png"
+	width="3012"
+	height="1674"
+	srcset="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_clion_hu_c998bd982dfc1219.png 480w, /p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_clion_hu_1dd96f337312e30c.png 1024w"
+	loading="lazy"
+	
+		alt="Download CLion"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="179"
+		data-flex-basis="431px"
+	
+></p>
+</li>
+<li>
+<p><a class="link" href="https://www.jetbrains.com/clion/"  target="_blank" rel="noopener"
+    >官网</a>下载安装好后登陆你的 JetBrains 账户激活 License 即可。</p>
+<p><img src="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/clion_website.png"
+	width="3012"
+	height="1674"
+	srcset="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/clion_website_hu_5b57c62fe23b62d9.png 480w, /p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/clion_website_hu_5b3bab20f8305627.png 1024w"
+	loading="lazy"
+	
+		alt="CLion Official Website"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="179"
+		data-flex-basis="431px"
+	
+></p>
+</li>
+</ul>
+</li>
+<li>
+<p><em><strong>Code::Blocks</strong></em></p>
+<ul>
+<li>
+<p><a class="link" href="https://www.codeblocks.org/downloads/binaries/"  target="_blank" rel="noopener"
+    >官网</a>下载即可，如果你本地已有编译器则下载 <code>codeblocks-25.03-setup.exe</code> 即可，如果没有的话则下载 <code>codeblocks-25.03mingw-setup.exe</code>。</p>
+<p><img src="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_codeblocks.png"
+	width="3012"
+	height="1674"
+	srcset="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_codeblocks_hu_dc1926cd8bf47d4c.png 480w, /p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_codeblocks_hu_967977d6c2cbebf.png 1024w"
+	loading="lazy"
+	
+		alt="Download Code::Blocks"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="179"
+		data-flex-basis="431px"
+	
+></p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="编译器--编辑器">编译器 + 编辑器
+</h4><ul>
+<li>
+<p>编译器</p>
+<p>只介绍 <em><strong>MinGW-w64（Minimalist GNU for Windows）</strong></em>。</p>
+<ul>
+<li>
+<p>在<a class="link" href="https://www.mingw-w64.org/source/"  target="_blank" rel="noopener"
+    >官网</a>可以看到下载地址</p>
+<p><img src="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_mingw.png"
+	width="3012"
+	height="1674"
+	srcset="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_mingw_hu_a0c1a2051df7ba80.png 480w, /p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_mingw_hu_55053ead8d304ec8.png 1024w"
+	loading="lazy"
+	
+		alt="Download MinGW-w64"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="179"
+		data-flex-basis="431px"
+	
+></p>
+</li>
+<li>
+<p>下载好压缩包并解压后，windows 搜索“<strong>编辑系统环境变量</strong>”，打开。</p>
+<p>找到<code>系统变量 Path</code>，新建变量，变量的值为刚才解压的文件夹的<code>bin</code>目录的绝对路径。</p>
+<p><img src="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/mingw_path.png"
+	width="1376"
+	height="558"
+	srcset="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/mingw_path_hu_7952db48a863caef.png 480w, /p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/mingw_path_hu_c2361242c4c3238e.png 1024w"
+	loading="lazy"
+	
+		alt="Path For MinGW"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="246"
+		data-flex-basis="591px"
+	
+></p>
+</li>
+<li>
+<p>终端输入<code>g++ -v</code>进行检测</p>
+<p><img src="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/test_mingw.png"
+	width="1382"
+	height="430"
+	srcset="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/test_mingw_hu_6b0ecb04275eb33e.png 480w, /p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/test_mingw_hu_8217e7f5140e92b9.png 1024w"
+	loading="lazy"
+	
+		alt="Test MinGW"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="321"
+		data-flex-basis="771px"
+	
+></p>
+</li>
+</ul>
+</li>
+<li>
+<p>编辑器</p>
+<ul>
+<li>
+<p><em><strong>Visual Studio Code</strong></em></p>
+<ul>
+<li>
+<p>VSCode 世界第一！</p>
+</li>
+<li>
+<p><a class="link" href="https://code.visualstudio.com/download"  target="_blank" rel="noopener"
+    >官网</a>下载安装</p>
+<p><img src="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_vscode.png"
+	width="3012"
+	height="1674"
+	srcset="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_vscode_hu_f987e02ee1f94474.png 480w, /p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_vscode_hu_7f2f926bab8b9c2f.png 1024w"
+	loading="lazy"
+	
+		alt="Download Visual Studio Code"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="179"
+		data-flex-basis="431px"
+	
+></p>
+</li>
+<li>
+<p>拓展支持</p>
+<p>VSCode支持海量拓展！在此推荐几乎为必要的插件：</p>
+<ol>
+<li>
+<p><em><strong>Chinese (Simplified) (简体中文) Language Pack for Visual Studio Code</strong></em></p>
+<p>如果你想锻炼英语的话，不推荐安装</p>
+<p><img src="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_chinese.png"
+	width="3012"
+	height="1918"
+	srcset="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_chinese_hu_4246f8a01c4fa403.png 480w, /p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_chinese_hu_4418db854dd8169d.png 1024w"
+	loading="lazy"
+	
+		alt="Chinese Simplified Extension"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="157"
+		data-flex-basis="376px"
+	
+></p>
+</li>
+<li>
+<p><em><strong>C/C++</strong></em></p>
+<p>貌似内置了，不太清楚了</p>
+<p><img src="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_c&#43;&#43;.png"
+	width="3012"
+	height="1918"
+	srcset="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_c&#43;&#43;_hu_5eb81b28c4376ad.png 480w, /p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_c&#43;&#43;_hu_2f987dd5ea1b644d.png 1024w"
+	loading="lazy"
+	
+		alt="C/C&#43;&#43; Extension"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="157"
+		data-flex-basis="376px"
+	
+></p>
+</li>
+<li>
+<p><em><strong>Code Runner</strong></em></p>
+<p>Code Runner 的好处在于方便，不用编写配置的json文件</p>
+<p><img src="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_coderunner.png"
+	width="3012"
+	height="1918"
+	srcset="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_coderunner_hu_464dcc45dbfd543f.png 480w, /p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_coderunner_hu_e1c05c3ed73e8325.png 1024w"
+	loading="lazy"
+	
+		alt="Code Runner Extension"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="157"
+		data-flex-basis="376px"
+	
+></p>
+</li>
+</ol>
+</li>
+<li>
+<p>配置编辑器</p>
+<p>创建一个新目录，在vscode中打开</p>
+<ul>
+<li>
+<p>新建一个文件夹，并命名为<code>.vscode</code>。然后再在<code>.vscode</code>文件夹下新建三个文件，分别为：（或者当你新建一个工作空间时，会自动生成<code>.vscode</code>）
+   1. <code>tasks.json</code>
+   2. <code>launch.json</code>
+           3. <code>c_cpp_properties.json</code></p>
+</li>
+<li>
+<p>编辑<code>task.json</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;tasks&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;cppbuild&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;label&#34;</span><span class="p">:</span> <span class="s2">&#34;C/C++: g++.exe 生成活动文件&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;command&#34;</span><span class="p">:</span> <span class="s2">&#34;Your_G++_Path&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;args&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;-fdiagnostics-color=always&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;-g&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;${file}&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;-o&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;${fileDirname}\\${fileBasenameNoExtension}.exe&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">],</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;options&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&#34;cwd&#34;</span><span class="p">:</span> <span class="s2">&#34;${fileDirname}&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">},</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;problemMatcher&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;$gcc&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">],</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;group&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&#34;kind&#34;</span><span class="p">:</span> <span class="s2">&#34;build&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&#34;isDefault&#34;</span><span class="p">:</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">            <span class="p">},</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;detail&#34;</span><span class="p">:</span> <span class="s2">&#34;调试器生成的任务。&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;2.0.0&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>编辑<code>launch.json</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;0.2.0&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;configurations&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;g++.exe - Build and debug active file&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;cppdbg&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;request&#34;</span><span class="p">:</span> <span class="s2">&#34;launch&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;program&#34;</span><span class="p">:</span> <span class="s2">&#34;${fileDirname}\\${fileBasenameNoExtension}.exe&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;args&#34;</span><span class="p">:</span> <span class="p">[],</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;stopAtEntry&#34;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;cwd&#34;</span><span class="p">:</span> <span class="s2">&#34;${fileDirname}&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;environment&#34;</span><span class="p">:</span> <span class="p">[],</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;externalConsole&#34;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;MIMode&#34;</span><span class="p">:</span> <span class="s2">&#34;gdb&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;miDebuggerPath&#34;</span><span class="p">:</span> <span class="s2">&#34;Your_GDB_Path&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;setupCommands&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&#34;description&#34;</span><span class="p">:</span> <span class="s2">&#34;Enable pretty-printing for gdb&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&#34;text&#34;</span><span class="p">:</span> <span class="s2">&#34;-enable-pretty-printing&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&#34;ignoreFailures&#34;</span><span class="p">:</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">],</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;preLaunchTask&#34;</span><span class="p">:</span> <span class="s2">&#34;C/C++: g++.exe 生成活动文件&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p><strong>externalConsole</strong> ：这个配置表明是否启动控制台， true 会出现额外的黑窗口， false 则会调用内置终端。由于黑窗口运行完之后会直接关闭，不利于查看运行结果，所以推荐设为 false ，这样就可以在终端中看到结果了。</p>
+</li>
+<li>
+<p><strong>miDebuggerPath</strong> ：调试器的路径。我们用 gdb 作为调试器，所以路径为mingw64/bin/gdb.exe</p>
+</li>
+<li>
+<p><strong>preLaunchTask</strong> ：前置运行任务，这里要和 tasks.json 里边的 label 属性一样。</p>
+<p>因为调试前需要先编译出可执行文件，所以这里需要调用编译可执行文件的配置，先去执行编译任务，再进行debug。</p>
+<p>也就是会先去调用前面的 tasks.json 里边定义的任务，生成一个 .exe 的文件。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>编辑<code>c_cpp_properties.json</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;configurations&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;Win32&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;includePath&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;${workspaceFolder}/**&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">],</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;defines&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;_DEBUG&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;UNICODE&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;_UNICODE&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">],</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;compilerPath&#34;</span><span class="p">:</span> <span class="s2">&#34;Your_GCC_Path&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;intelliSenseMode&#34;</span><span class="p">:</span> <span class="s2">&#34;windows-gcc-x64&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;cppStandard&#34;</span><span class="p">:</span> <span class="s2">&#34;c++23&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;cStandard&#34;</span><span class="p">:</span> <span class="s2">&#34;c23&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>includePath</strong> ：头文件的位置，这里的 <code>${workspaceFolder}/</code>**，“/”前为一个 vscode 变量，值为工作区路径（工作区就是你当前打开的文件夹），“/”后的“**”的意思是递归向下寻找。如果你需要安装 C++ 第三方库，请看后面的 Q&amp;A。头文件库默认包含了 C++ 标准库，无需指定。</p>
+<ul>
+<li><strong>compilepath</strong> ：编译器路径，C++ 扩展会从 path 环境变量中自动寻找 gcc 的路径，如果这个路径找不到，请手动设置。</li>
+<li><strong>intelliSenseMode</strong> ：选择当前的平台和编译器，我们是在 windows 平台上使用 gcc 作为编译器，所以填 windows-gcc-x64。</li>
+<li><strong>cppStandard</strong> &amp; <strong>cStandard</strong> ：指定 C 和 C++标准。为了不影响代码编写（指某些奇怪的红色波浪线），同时享受新标准的便利，请至少设为 <code>c++17</code> 或以上和 <code>c11</code> 以上。我们所用的 gcc 12.2.0 已经部分支持 c++23 和 c++20 。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>以上的这些选项，也可以在设置-&gt;C/C++中寻找相同的选项进行配置，我觉得会更加友好。</p></blockquote>
+</li>
+</ul>
+</li>
+<li>
+<p><em><strong>Sublime Text</strong></em></p>
+<ul>
+<li>
+<p><a class="link" href="https://www.sublimetext.com/download"  target="_blank" rel="noopener"
+    >官网</a>下载安装</p>
+<p><img src="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_sublime.png"
+	width="3012"
+	height="1674"
+	srcset="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_sublime_hu_86e616824c63c10c.png 480w, /p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_sublime_hu_b320a4d9044d11a7.png 1024w"
+	loading="lazy"
+	
+		alt="Download Sublime Text"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="179"
+		data-flex-basis="431px"
+	
+></p>
+</li>
+<li>
+<p><strong>创建 C++ 项目</strong>:</p>
+<p>使用 Sublime Text 创建一个文件夹，将你的 C++ 项目文件添加到文件夹中。打开 Sublime Text，然后选择 &ldquo;File&rdquo; -&gt; &ldquo;Open Folder&rdquo;，选择你的项目文件夹。</p>
+</li>
+<li>
+<p><strong>配置编译系统</strong>:</p>
+<p>在 Sublime Text 中，选择 &ldquo;Tools&rdquo; -&gt; &ldquo;Build System&rdquo; -&gt; &ldquo;New Build System&rdquo;，然后在新文件中输入适合你的 C++ 编译器的配置。以下是一个示例配置用于 MinGW：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;shell_cmd&#34;</span><span class="p">:</span> <span class="s2">&#34;g++ -std=c++11 -o \&#34;$file_base_name\&#34; \&#34;$file\&#34;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;working_dir&#34;</span><span class="p">:</span> <span class="s2">&#34;$file_path&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;selector&#34;</span><span class="p">:</span> <span class="s2">&#34;source.c++&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/configure_sublime.png"
+	width="1238"
+	height="714"
+	srcset="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/configure_sublime_hu_1101532850de2314.png 480w, /p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/configure_sublime_hu_257a87685f2a00d0.png 1024w"
+	loading="lazy"
+	
+		alt="Configure Sublime Text"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="173"
+		data-flex-basis="416px"
+	
+></p>
+</li>
+<li>
+<p><strong>构建和运行代码</strong>:</p>
+<p>编辑你的 C++ 代码文件，然后按 <code>Ctrl</code> + <code>B</code> 来编译和运行代码。Sublime Text 将使用你配置的编译系统执行编译操作，并在输出面板中显示编译结果。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/c&#43;&#43;/">C&#43;&#43;</a>
+        
+            <a href="/tags/learningnote/">LearningNote</a>
+        
+            <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">实验室 C&#43;&#43; 基础课程 · 第二章第三节</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">实验室 C&#43;&#43; 基础课程 · 第二章第二节</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">实验室 C&#43;&#43; 基础课程 · 第二章第一节</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">实验室 C&#43;&#43; 基础课程 · 第一章第三节</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">实验室 C&#43;&#43; 基础课程 · 第一章第二节</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="EvanWonghere/EvanWonghere.github.io"
+    data-repo-id="R_kgDOPzgwzg"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOPzgwzs4Cvsti"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="light"
+    data-lang="en"
+    data-loading=""
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('dark_dimmed');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 EvanWong
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.31.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.f140b912c7d07b398f639499ee39741023a15cbd08b0dbb13257b83dfbf08989.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

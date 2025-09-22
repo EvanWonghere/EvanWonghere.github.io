@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="这是当年在实验室给新生培训的课件，也顺便搬过来了。做了点微小修订，也懒得全部更新了。当年为了给新生上压力，使用了全英文的课件。">
+<title>实验室 C&#43;&#43; 基础课程 · 第二章第一节</title>
+
+<link rel='canonical' href='http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="实验室 C++ 基础课程 · 第二章第一节">
+<meta property='og:description' content="这是当年在实验室给新生培训的课件，也顺便搬过来了。做了点微小修订，也懒得全部更新了。当年为了给新生上压力，使用了全英文的课件。">
+<meta property='og:url' content='http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/'>
+<meta property='og:site_name' content='蜂窝'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='C&#43;&#43;' /><meta property='article:tag' content='LearningNote' /><meta property='article:tag' content='学习笔记' /><meta property='article:published_time' content='2023-10-25T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-10-25T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="实验室 C++ 基础课程 · 第二章第一节">
+<meta name="twitter:description" content="这是当年在实验室给新生培训的课件，也顺便搬过来了。做了点微小修订，也懒得全部更新了。当年为了给新生上压力，使用了全英文的课件。">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_789ebd951ab60789.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🐝</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">蜂窝</a></h1>
+            <h2 class="site-description">EvanWong的个人博客</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/EvanWonghere/EvanWonghere.github.io'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://steamcommunity.com/profiles/76561198980535015/'
+                        target="_blank"
+                        title="Steam"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Steam</title><path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012H7.54zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.663 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.253 0-2.265-1.014-2.265-2.265z"/></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="http://localhost:1313/en/" >English</option>
+                                
+                                    <option value="http://localhost:1313/" selected>中文</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#chapter-2--dealing-with-data">Chapter 2 —— Dealing with data</a>
+      <ol>
+        <li>
+          <ol>
+            <li><a href="#rvalue">rvalue</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#the-importance-of-valid-subscript-values">The Importance of Valid Subscript Values</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >
+                学习笔记
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/">实验室 C&#43;&#43; 基础课程 · 第二章第一节</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            这是当年在实验室给新生培训的课件，也顺便搬过来了。做了点微小修订，也懒得全部更新了。当年为了给新生上压力，使用了全英文的课件。
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Oct 25, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 7 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="c-basic-course">C++ Basic Course
+</h1><h2 id="chapter-2--dealing-with-data">Chapter 2 —— Dealing with data
+</h2><ul>
+<li>
+<p><em><strong>type alias</strong></em></p>
+<ul>
+<li>
+<p>using the <code>typedef</code> keyword:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="kt">int</span> <span class="n">Integer</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">Integer</span> <span class="n">doorNumber</span> <span class="o">=</span> <span class="mi">211</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>using the <code>using</code> keyword:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">WHAT</span> <span class="n">ARE</span> <span class="n">YOU</span> <span class="n">EXPECTING</span> <span class="n">WE</span> <span class="n">JUST</span> <span class="n">LEARNED</span> <span class="n">NOT</span> <span class="n">LONG</span> <span class="n">AGO</span>
+</span></span><span class="line"><span class="cl"><span class="n">BTW</span><span class="p">,</span> <span class="k">using</span> <span class="n">is</span> <span class="n">the</span> <span class="n">superset</span> <span class="n">of</span> <span class="k">typedef</span><span class="p">,</span> <span class="n">we</span> <span class="n">recommend</span> <span class="n">you</span> <span class="n">to</span> <span class="n">use</span> <span class="k">using</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>using the <code>decltype</code> keyword:</p>
+<p>The <code>decltype</code> keyword allows you to obtain the type of a variable or expression and use it as a type alias.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">211</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">decltype</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">985</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">decltype</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span> <span class="n">res</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><em><strong>WARNING AGAIN</strong></em></p>
+<p><em><strong>What the <code>#define</code> directive does is simply replace the text.</strong></em></p>
+</li>
+</ul>
+</li>
+<li>
+<p><em><strong>const &amp;&amp; constexpr</strong></em></p>
+<ul>
+<li>
+<p><em><strong>const</strong></em></p>
+<p>​	Now let’s return to the topic of symbolic names for constants. A symbolic name can suggest what the constant represents. Also if the program uses the constant in several places and you need to change the value, you can just change the single symbol definition. Suppose, for example, that you want a symbolic constant for the number of months in a year. Just enter this line in a program:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">int</span> <span class="n">Months</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span> <span class="c1">// Months is symbolic constant for 12
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	Now you can use Months in a program instead of 12. (A bare 12 in a program might represent the number of inches in a foot or the number of donuts in a dozen, but the name Months tells you what the value 12 represents.) After you initialize a constant such as Months, its value is set.The compiler does not let you subsequently change the value Months. If you try to, for example, g++ gives an error message that the program used an assignment of a read-only variable.The keyword const is termed a qualifier because it qualifies the meaning of a declaration.</p>
+</li>
+<li>
+<p><em><strong>constexpr</strong></em></p>
+<pre><code>​	`constexpr` variables are constants computed at compile-time. They must be initialized at declaration and can only contain values known at compile-time.
+
+```cpp
+constexpr int y = 2 + 3;  // Calculate y's value at compile-time
+```
+
+​	`constexpr` functions are executed at compile-time. Their parameters and return values must be of `constexpr` types, and their bodies can only contain operations known at compile-time.
+
+```c++
+constexpr int add(int a, int b) {  // A compile-time addition function
+    return a + b;
+}
+```
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>the <em><strong>auto</strong></em> keyword</p>
+<pre><code>​	C++11 introduces a facility that allows the compiler to deduce a type from the type of an initialization value. For this purpose it redefines the meaning of auto, a keyword dating back to C, but one hardly ever used. (We'll discuss the previous meaning of auto later, or not.) Just use auto instead of the type name in an initializing declaration, and the compiler assigns the variable the same type as that of the initializer:
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>		<span class="c1">// n is int
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">1.5</span><span class="p">;</span>		<span class="c1">// x is double
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">1.3e12L</span><span class="p">;</span>	<span class="c1">// y is long double
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	However, this automatic type deduction isn’t really intended for such simple cases. Indeed, you might even go astray. Only use when the type is obvious or when the type is annoyingly verbose to write out.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;map&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;unordered_map&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="kt">char</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">complexType</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// What does this do? We&#39;ll find out in the iterators lecture!
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="kt">char</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">it</span> <span class="o">=</span> <span class="n">complexType</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// vs
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">complexType</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><em><strong>lvalue &amp;&amp; rvalue</strong></em></p>
+<p>​	To help you understand better, here is a simple and crude definition of lvalue and rvalue: lvalue is a value that can appear on the left side of the assignment operator, and of course it can also appear on the right side; and rvalue, is a value that is not lvalue.</p>
+<p>​	But you still need to understand a little more deeply. lvalues are generally addressable objects, while rvalues represent temporary or non-addressable values. It may be counter-intuitive: string literals are lvalues. This is because in C++, the string constant pool mechanism was introduced. This special area of the string constant pool is located in the data segment (Data Segment) of the program. When writing a program, we can declare a string constant using const char* or string. During the running of the program, these strings are saved in the data segment. As long as the contents of the two strings are the same, they will be saved at the same address.</p>
+<p>​	Since the string constant pool in C++ is read-only, we cannot modify the strings in it. If modification is attempted, the program will throw an exception. Therefore, when we need to modify a string, we need to use other methods to modify it, such as using a char array.</p>
+<p>According to <a class="link" href="https://en.cppreference.com/w/cpp/language/value_category.html"  target="_blank" rel="noopener"
+    >cpp reference</a>，The following expressions are <em>lvalue expressions</em>：</p>
+<ul>
+<li>the name of a variable, a function, a <a class="link" href="https://en.cppreference.com/w/cpp/language/template_parameters#Non-type_template_parameter"  target="_blank" rel="noopener"
+    >template parameter object</a> (since C++20), or a data member, regardless of type, such as <a class="link" href="http://en.cppreference.com/w/cpp/io/cin"  target="_blank" rel="noopener"
+    >std::cin</a> or <a class="link" href="http://en.cppreference.com/w/cpp/io/manip/endl"  target="_blank" rel="noopener"
+    >std::endl</a>. Even if the variable&rsquo;s type is rvalue reference, the expression consisting of its name is an lvalue expression (but see <a class="link" href="https://en.cppreference.com/w/cpp/language/value_category#Move-eligible_expressions"  target="_blank" rel="noopener"
+    >Move-eligible expressions</a>);</li>
+<li>a function call or an overloaded operator expression, whose return type is lvalue reference, such as <a class="link" href="http://en.cppreference.com/w/cpp/string/basic_string/getline"  target="_blank" rel="noopener"
+    >std::getline</a>(<a class="link" href="http://en.cppreference.com/w/cpp/io/cin"  target="_blank" rel="noopener"
+    >std::cin</a>, str), <a class="link" href="http://en.cppreference.com/w/cpp/io/cout"  target="_blank" rel="noopener"
+    >std::cout</a> &laquo; 1, str1 = str2, or ++it;</li>
+<li>a = b, a += b, a %= b, and all other built-in <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_assignment"  target="_blank" rel="noopener"
+    >assignment and compound assignment</a> expressions;</li>
+<li>++a and &ndash;a, the built-in <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_incdec#Built-in_prefix_operators"  target="_blank" rel="noopener"
+    >pre-increment and pre-decrement</a> expressions;</li>
+<li>*p, the built-in <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_indirection_operator"  target="_blank" rel="noopener"
+    >indirection</a> expression;</li>
+<li>a[n] and p[n], the built-in <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_subscript_operator"  target="_blank" rel="noopener"
+    >subscript</a> expressions, where one operand in a[n] is an array lvalue (since C++11);</li>
+<li>a.m, the <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_member_access_operators"  target="_blank" rel="noopener"
+    >member of object</a> expression, except where <code>m</code> is a member enumerator or a non-static member function, or where a is an rvalue and <code>m</code> is a non-static data member of object type;</li>
+<li>p-&gt;m, the built-in <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_member_access_operators"  target="_blank" rel="noopener"
+    >member of pointer</a> expression, except where <code>m</code> is a member enumerator or a non-static member function;</li>
+<li>a.*mp, the <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_pointer-to-member_access_operators"  target="_blank" rel="noopener"
+    >pointer to member of object</a> expression, where a is an lvalue and <code>mp</code> is a pointer to data member;</li>
+<li>p-&gt;*mp, the built-in <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_pointer-to-member_access_operators"  target="_blank" rel="noopener"
+    >pointer to member of pointer</a> expression, where <code>mp</code> is a pointer to data member;</li>
+<li>a, b, the built-in <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_other#Built-in_comma_operator"  target="_blank" rel="noopener"
+    >comma</a> expression, where b is an lvalue;</li>
+<li>a ? b : c, the <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_other#Conditional_operator"  target="_blank" rel="noopener"
+    >ternary conditional</a> expression for certain b and c (e.g., when both are lvalues of the same type, but see <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_other#Conditional_operator"  target="_blank" rel="noopener"
+    >definition</a> for detail);</li>
+<li>a <a class="link" href="https://en.cppreference.com/w/cpp/language/string_literal"  target="_blank" rel="noopener"
+    >string literal</a>, such as &ldquo;Hello, world!&rdquo;;</li>
+<li>a cast expression to lvalue reference type, such as static_cast&lt;int&amp;&gt;(x) or static_cast&lt;void(&amp;)(int)&gt;(x);</li>
+<li>a non-type <a class="link" href="https://en.cppreference.com/w/cpp/language/template_parameters"  target="_blank" rel="noopener"
+    >template parameter</a> of an lvalue reference type;</li>
+<li>a function call or an overloaded operator expression, whose return type is rvalue reference to function;(Since C++ 11)</li>
+<li>a cast expression to rvalue reference to function type, such as static_cast&lt;void(&amp;&amp;)(int)&gt;(x). (Since C++11)</li>
+</ul>
+<p>Properties:</p>
+<ul>
+<li>Same as glvalue (below).</li>
+<li>Address of an lvalue may be taken by built-in address-of operator: &amp;++i[<a class="link" href="https://en.cppreference.com/w/cpp/language/value_category#cite_note-1"  target="_blank" rel="noopener"
+    >1]</a> and &amp;<a class="link" href="http://en.cppreference.com/w/cpp/io/manip/endl"  target="_blank" rel="noopener"
+    >std::endl</a> are valid expressions.</li>
+<li>A modifiable lvalue may be used as the left-hand operand of the built-in assignment and compound assignment operators.</li>
+<li>An lvalue may be used to <a class="link" href="https://en.cppreference.com/w/cpp/language/reference_initialization"  target="_blank" rel="noopener"
+    >initialize an lvalue reference</a>; this associates a new name with the object identified by the expression.</li>
+</ul>
+<h4 id="rvalue">rvalue
+</h4><p>An <em>rvalue expression</em> is either prvalue or xvalue.</p>
+<p>The following expressions are <em>prvalue expressions</em>:</p>
+<ul>
+<li>a <a class="link" href="https://en.cppreference.com/w/cpp/language/expressions#Literals"  target="_blank" rel="noopener"
+    >literal</a> (except for <a class="link" href="https://en.cppreference.com/w/cpp/language/string_literal"  target="_blank" rel="noopener"
+    >string literal</a>), such as 42, true or nullptr;</li>
+<li>a function call or an overloaded operator expression, whose return type is non-reference, such as str.substr(1, 2), str1 + str2, or it++;</li>
+<li>a++ and a&ndash;, the built-in <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_incdec#Built-in_postfix_operators"  target="_blank" rel="noopener"
+    >post-increment and post-decrement</a> expressions;</li>
+<li>a + b, a % b, a &amp; b, a &laquo; b, and all other built-in <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_arithmetic"  target="_blank" rel="noopener"
+    >arithmetic</a> expressions;</li>
+<li>a &amp;&amp; b, a || b, !a, the built-in <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_logical"  target="_blank" rel="noopener"
+    >logical</a> expressions;</li>
+<li>a &lt; b, a == b, a &gt;= b, and all other built-in <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_comparison"  target="_blank" rel="noopener"
+    >comparison</a> expressions;</li>
+<li>&amp;a, the built-in <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_address-of_operator"  target="_blank" rel="noopener"
+    >address-of</a> expression;</li>
+<li>a.m, the <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_member_access_operators"  target="_blank" rel="noopener"
+    >member of object</a> expression, where <code>m</code> is a member enumerator or a non-static member function[<a class="link" href="https://en.cppreference.com/w/cpp/language/value_category#cite_note-pmfc-2"  target="_blank" rel="noopener"
+    >2]</a>;</li>
+<li>p-&gt;m, the built-in <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_member_access_operators"  target="_blank" rel="noopener"
+    >member of pointer</a> expression, where <code>m</code> is a member enumerator or a non-static member function[<a class="link" href="https://en.cppreference.com/w/cpp/language/value_category#cite_note-pmfc-2"  target="_blank" rel="noopener"
+    >2]</a>;</li>
+<li>a.*mp, the <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_pointer-to-member_access_operators"  target="_blank" rel="noopener"
+    >pointer to member of object</a> expression, where <code>mp</code> is a pointer to member function[<a class="link" href="https://en.cppreference.com/w/cpp/language/value_category#cite_note-pmfc-2"  target="_blank" rel="noopener"
+    >2]</a>;</li>
+<li>p-&gt;*mp, the built-in <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_pointer-to-member_access_operators"  target="_blank" rel="noopener"
+    >pointer to member of pointer</a> expression, where <code>mp</code> is a pointer to member function[<a class="link" href="https://en.cppreference.com/w/cpp/language/value_category#cite_note-pmfc-2"  target="_blank" rel="noopener"
+    >2]</a>;</li>
+<li>a, b, the built-in <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_other#Built-in_comma_operator"  target="_blank" rel="noopener"
+    >comma</a> expression, where b is an prvalue;</li>
+<li>a ? b : c, the <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_other#Conditional_operator"  target="_blank" rel="noopener"
+    >ternary conditional</a> expression for certain b and c (see <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_other#Conditional_operator"  target="_blank" rel="noopener"
+    >definition</a> for detail);</li>
+<li>a cast expression to non-reference type, such as static_cast<double>(x), <a class="link" href="http://en.cppreference.com/w/cpp/string/basic_string"  target="_blank" rel="noopener"
+    >std::string</a>{}, or (int)42;</li>
+<li>the <a class="link" href="https://en.cppreference.com/w/cpp/language/this"  target="_blank" rel="noopener"
+    ><code>this</code></a> pointer;</li>
+<li>an <a class="link" href="https://en.cppreference.com/w/cpp/language/enum"  target="_blank" rel="noopener"
+    >enumerator</a>;</li>
+<li>a non-type <a class="link" href="https://en.cppreference.com/w/cpp/language/template_parameters"  target="_blank" rel="noopener"
+    >template parameter</a> of a scalar type;</li>
+</ul>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th></th>
+          <th></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>a <a class="link" href="https://en.cppreference.com/w/cpp/language/lambda"  target="_blank" rel="noopener"
+    >lambda expression</a>, such as [](int x){ return x * x; };</td>
+          <td>(since C++11)</td>
+      </tr>
+      <tr>
+          <td>a <a class="link" href="https://en.cppreference.com/w/cpp/language/constraints"  target="_blank" rel="noopener"
+    >requires-expression</a>, such as requires (T i) { typename T::type; };a specialization of a <a class="link" href="https://en.cppreference.com/w/cpp/language/constraints"  target="_blank" rel="noopener"
+    >concept</a>, such as <a class="link" href="http://en.cppreference.com/w/cpp/concepts/equality_comparable"  target="_blank" rel="noopener"
+    >std::equality_comparable</a><int>.</td>
+          <td>(since C++20)</td>
+      </tr>
+  </tbody>
+</table></div>
+<p>The following expressions are <em>xvalue expressions</em>:</p>
+<ul>
+<li>a.m, the <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_member_access_operators"  target="_blank" rel="noopener"
+    >member of object</a> expression, where a is an rvalue and <code>m</code> is a non-static data member of an object type;</li>
+<li>a.*mp, the <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_pointer-to-member_access_operators"  target="_blank" rel="noopener"
+    >pointer to member of object</a> expression, where a is an rvalue and <code>mp</code> is a pointer to data member;</li>
+<li>a, b, the built-in <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_other#Built-in_comma_operator"  target="_blank" rel="noopener"
+    >comma</a> expression, where b is an xvalue;</li>
+<li>a ? b : c, the <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_other#Conditional_operator"  target="_blank" rel="noopener"
+    >ternary conditional</a> expression for certain b and c (see <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_other#Conditional_operator"  target="_blank" rel="noopener"
+    >definition</a> for detail);</li>
+</ul>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th></th>
+          <th></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>a function call or an overloaded operator expression, whose return type is rvalue reference to object, such as std::move(x);a[n], the built-in <a class="link" href="https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_subscript_operator"  target="_blank" rel="noopener"
+    >subscript</a> expression, where one operand is an array rvalue;a cast expression to rvalue reference to object type, such as static_cast&lt;char&amp;&amp;&gt;(x);</td>
+          <td>(since C++11)</td>
+      </tr>
+      <tr>
+          <td>any expression that designates a temporary object, after <a class="link" href="https://en.cppreference.com/w/cpp/language/implicit_conversion#Temporary_materialization"  target="_blank" rel="noopener"
+    >temporary materialization</a>;</td>
+          <td>(since C++17)</td>
+      </tr>
+      <tr>
+          <td>a <a class="link" href="https://en.cppreference.com/w/cpp/language/value_category#Move-eligible_expressions"  target="_blank" rel="noopener"
+    >move-eligible expression</a>.</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table></div>
+<p>An <em>rvalue expression</em> is either prvalue or xvalue.</p>
+<p>Properties:</p>
+<ul>
+<li>Address of an rvalue cannot be taken by built-in address-of operator: &amp;int(), &amp;i++[<a class="link" href="https://en.cppreference.com/w/cpp/language/value_category#cite_note-3"  target="_blank" rel="noopener"
+    >3]</a>, &amp;42, and &amp;std::move(x) are invalid.</li>
+<li>An rvalue can&rsquo;t be used as the left-hand operand of the built-in assignment or compound assignment operators.</li>
+<li>An rvalue may be used to <a class="link" href="https://en.cppreference.com/w/cpp/language/reference_initialization"  target="_blank" rel="noopener"
+    >initialize a const lvalue reference</a>, in which case the lifetime of the temporary object identified by the rvalue is <a class="link" href="https://en.cppreference.com/w/cpp/language/reference_initialization#Lifetime_of_a_temporary"  target="_blank" rel="noopener"
+    >extended</a> until the scope of the reference ends</li>
+<li>An rvalue may be used to <a class="link" href="https://en.cppreference.com/w/cpp/language/reference_initialization"  target="_blank" rel="noopener"
+    >initialize an rvalue reference</a>, in which case the lifetime of the temporary object identified by the rvalue is <a class="link" href="https://en.cppreference.com/w/cpp/language/reference_initialization#Lifetime_of_a_temporary"  target="_blank" rel="noopener"
+    >extended</a> until the scope of the reference ends. (Since C++ 11)</li>
+<li>When used as a function argument and when <a class="link" href="https://en.cppreference.com/w/cpp/language/overload_resolution"  target="_blank" rel="noopener"
+    >two overloads</a> of the function are available, one taking rvalue reference parameter and the other taking lvalue reference to const parameter, an rvalue binds to the rvalue reference overload (thus, if both copy and move constructors are available, an rvalue argument invokes the <a class="link" href="https://en.cppreference.com/w/cpp/language/move_constructor"  target="_blank" rel="noopener"
+    >move constructor</a>, and likewise with copy and move assignment operators). (Since C++ 11)</li>
+</ul>
+<p>Here you only need a basic understanding of lvalues and rvalues, and we may do a more in-depth discussion later with references.</p>
+</li>
+<li>
+<p><em><strong>array</strong></em></p>
+<p>​	An <em>array</em> is a data form that can hold several values,all of one type. Each value is stored in a separate array element, and the computer stores all the elements of an array consecutively in memory.</p>
+<p>​	To create an array, you use a declaration statement. An array declaration should indicate three things:</p>
+<ul>
+<li>
+<p>The type of value to be stored in each element</p>
+</li>
+<li>
+<p>The name of the array</p>
+</li>
+<li>
+<p>The number of elements in the array</p>
+<p>Each element, in essence, is a variable that you can treat as a simple variable.</p>
+<p>This is the general form for declaring an array</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">typeName</span> <span class="n">arrayName</span><span class="p">[</span><span class="n">arraySize</span><span class="p">];</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	The expression <code>arraySize</code>, which is the number of elements, must be an integer constant, such as 10 or a const value, or a constant expression, such as 8 * sizeof (int), for which all values are known at the time compilation takes place. In particular, arraySize cannot be a variable whose value is set while the program is running. How ever, later in this chapter you’ll learn how to use the new operator to get around that restriction.</p>
+<blockquote>
+<pre><code>	For C language, before the C99 standard, the size of the array must be a constant or a constant expression (sizeof() is regarded as an integer constant), and the array length must be specified in the source code. But after the introduction of VLA in C99, you can use variables to specify the array length. But notice that VLA could not be initialized, we'll talk about later.
+	
+	As for C++, in fact, the C++ standard does not provide any support for VLA. If your compilation can pass, it is an extension added by the compiler (GCC, Clang++). If you are using VS, then in MSVC The admiral failed to compile. If you wanna really really wanna use it, you can use const or constexpr keyword, and maybe the better idea is to use std::vector or std::array.
+</code></pre></blockquote>
+<p>​	An array is called a <em>compound type</em> because it is built from some other type. You can’t simply declare that something is an array; it always has to be an array of some particular type. There is no generalized array type. Instead, there are many specific array types, such as array of char or array of long.   For example, consider this declaration:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">float</span> <span class="n">loans</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="n">T</span> <span class="o">=</span> <span class="k">decltype</span><span class="p">(</span><span class="n">loans</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	The <code>T</code> not “array”; rather, it is “array of float.” This emphasizes that the loans array is built from the float type.</p>
+<p>​	You can access array elements individually. The way to do this is to use a <em>subscript</em>, or an <em>index</em>, to number the elements. C++ array numbering starts with <em><strong>zero</strong></em>(not one).  C++ uses a bracket notation with the index to specify an array element. . Note that the index of the last element is one less than the size of the array. Thus,an array declaration enables you to create a lot of variables with a single declaration,and you can then use an index to identify and access individual elements.</p>
+<p><img src="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/array.png"
+	width="1058"
+	height="734"
+	srcset="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/array_hu_2a72d233eb8e6648.png 480w, /p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/array_hu_581355c5ca92b29e.png 1024w"
+	loading="lazy"
+	
+		alt="Array"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="144"
+		data-flex-basis="345px"
+	
+></p>
+<blockquote>
+<h2 id="the-importance-of-valid-subscript-values">The Importance of Valid Subscript Values
+</h2><p>The compiler does not check to see if you use a valid subscript. For instance, the compiler won’t complain if you assign a value to the nonexistent element months[101]. But that assignment could cause problems when the program runs, possibly corrupting data or code, possibly causing the program to abort. So it is your responsibility to make sure that your program uses only valid subscript values.</p></blockquote>
+<ul>
+<li>
+<p><strong>Initialize rules</strong></p>
+<p>​	C++ has several rules about initializing arrays. They restrict when you can do it,and they determine what happens if the number of array elements doesn’t match the number of values in the initializer. Let’s examine these rules.</p>
+<p>​	You can use the initialization form <em>only</em> when defining the array. You cannot use it later, and you cannot assign one array wholesale to another, and for VLA in C, initialize is not allowed:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">cards</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">};</span> 				<span class="c1">// okay
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">hand</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span> 								<span class="c1">// okay
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">hand</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">};</span> 					<span class="c1">// not allowed
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">hand</span> <span class="o">=</span> <span class="n">cards</span><span class="p">;</span> 								<span class="c1">// not allowed
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">char</span> <span class="n">arr</span><span class="p">[</span><span class="n">size</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="sc">&#39;h&#39;</span><span class="p">,</span> <span class="sc">&#39;e&#39;</span><span class="p">,</span> <span class="sc">&#39;l&#39;</span><span class="p">,</span> <span class="sc">&#39;l&#39;</span><span class="p">,</span> <span class="sc">&#39;o&#39;</span><span class="p">};</span> <span class="c1">// not allowed in C
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>											<span class="c1">// but allowed in GCC/Clang++
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	However, you can use subscripts and assign values to the elements of an array individually. When initializing an array, you can provide fewer values than array elements. If you partially initialize an array, the compiler sets the remaining elements to zero (&rsquo;\0&rsquo; for char array). If you leave the square brackets ([]) empty when you initialize an array, the C++ compiler counts the elements for you. Suppose, for example, that you make this declaration, the compiler makes things an array of four elements:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">short</span> <span class="n">things</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>How to get the amount of array&rsquo;s elements?</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">arr</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">num_elements</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">things</span><span class="p">)</span> <span class="o">/</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">short</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
+</li>
+<li>
+<p><strong>C++11 Array Initialization</strong></p>
+<p>​	First, you can drop the = sign when initializing an array:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">double</span> <span class="n">earnings</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="p">{</span><span class="mf">1.2e4</span><span class="p">,</span> <span class="mf">1.6e4</span><span class="p">,</span> <span class="mf">1.1e4</span><span class="p">,</span> <span class="mf">1.7e4</span><span class="p">};</span> <span class="c1">// okay with C++11
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	Second, you can use empty braces to set all the elements to 0 (&rsquo;\0&rsquo; in char array):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">counts</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">=</span> <span class="p">{};</span> <span class="c1">// all elements set to 0
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p><em><strong>string</strong></em></p>
+<p>​	A <em>string</em> is a series of characters stored in consecutive bytes of memory. C++ has two ways of dealing with strings. The first, taken from C and often called a <em>C-style string</em>, and alternative method based on a string class library. Here we only discuss the second method. As for the first, it is the job of your C language teacher.</p>
+<p>​	The ISO/ANSI C++98 Standard expanded the C++ library by adding a string class. So now, instead of using a character array to hold a string, you can use a type string variable (or object, to use C++ terminology).As you’ll see, the string class is simpler to use than the array and also provides a truer representation of a string as a type.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"> </span><span class="c1">// make string class available
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="n">charr1</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span> 				<span class="c1">// create an empty array
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">char</span> <span class="n">charr2</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#34;jaguar&#34;</span><span class="p">;</span> 	<span class="c1">// create an initialized array
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str1</span><span class="p">;</span> 				<span class="c1">// create an empty string object
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str2</span> <span class="o">=</span> <span class="s">&#34;panther&#34;</span><span class="p">;</span>  	<span class="c1">// create an initialized string
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Enter a kind of feline: &#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">charr1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Enter another kind of feline: &#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">str1</span><span class="p">;</span> 								<span class="c1">// use cin for input
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Here are some felines:</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">charr1</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">charr2</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span>
+</span></span><span class="line"><span class="cl">    		  <span class="o">&lt;&lt;</span> <span class="n">str1</span>   <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">str2</span> 				<span class="c1">// use cout for output
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    		  <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;The third letter in &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">charr2</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; is &#34;</span>
+</span></span><span class="line"><span class="cl">    	 	  <span class="o">&lt;&lt;</span> <span class="n">charr2</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;The third letter in &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">str2</span>   <span class="o">&lt;&lt;</span> <span class="s">&#34; is &#34;</span>
+</span></span><span class="line"><span class="cl">    	 	  <span class="o">&lt;&lt;</span> <span class="n">str2</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span> 						<span class="c1">// use array notation
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	You should learn from this example that, in many ways, you can use a string object in the same manner as a character array:</p>
+<ul>
+<li>
+<p>You can initialize a string object to a C-style string.</p>
+</li>
+<li>
+<p>You can use cin to store keyboard input in a string object.</p>
+</li>
+<li>
+<p>You can use cout to display a string object.</p>
+</li>
+<li>
+<p>You can use array notation to access individual characters stored in a string object</p>
+<p>The main difference between string objects and character arrays is that you declare a string object as a simple variable, not as an array.  Using a string object both more convenient and safer than using an array. Conceptually, one thinks of an array of char as a collection of char storage units used to store a string but of a string class variable as a single entity representing the string.</p>
+<p>String initialization is as same as char array.</p>
+</li>
+</ul>
+<p><strong>Assignment, Concatenation, and Appending</strong></p>
+<p>​	The string class makes some operations simpler than is the case for arrays. For example, you can’t simply assign one array to another. You can only use strcpy/strncpy (in &lt;string.h&gt; or <cstring>) to copy an array to another, which is considered not safe. But you can assign one string object to another:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">char</span> <span class="n">charr1</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span> 			<span class="c1">// create an empty array
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">char</span> <span class="n">charr2</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#34;jaguar&#34;</span><span class="p">;</span> <span class="c1">// create an initialized array
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">string</span> <span class="n">str1</span><span class="p">;</span> 				<span class="c1">// create an empty string object
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">string</span> <span class="n">str2</span> <span class="o">=</span> <span class="s">&#34;panther&#34;</span><span class="p">;</span>	<span class="c1">// create an initialized string
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">charr1</span> <span class="o">=</span> <span class="n">charr2</span><span class="p">;</span> 			<span class="c1">// INVALID, no array assignment
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">str1</span> <span class="o">=</span> <span class="n">str2</span><span class="p">;</span> 				<span class="c1">// VALID, object assignment ok
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	The string class simplifies combining strings. In C, you need to use strcat/strncat (in &lt;string.h&gt; or <cstring>) which is also unsafe. In C++, you can use the + operator to add two string objects together and the += operator to tack on a string to the end of an existing string object. Continuing with the preceding code, we have the following possibilities:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">string</span> <span class="n">str3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">str3</span> <span class="o">=</span> <span class="n">str1</span> <span class="o">+</span> <span class="n">str2</span><span class="p">;</span> <span class="c1">// assign str3 the joined strings
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">str1</span> <span class="o">+=</span> <span class="n">str2</span><span class="p">;</span> 		<span class="c1">// add str2 to the end of str1
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	The string class can automatic resizing as necessary, is you wanna get the length of a string object at that time, use std::string::size() or std::string::length().</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">char</span> <span class="n">arr</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#34;Let us all unite!&#34;</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str</span> <span class="o">=</span> <span class="s">&#34;Let us all unite!&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">str</span><span class="p">.</span><span class="n">size</span><span class="p">()</span>   <span class="o">&lt;&lt;</span> <span class="sc">&#39; &#39;</span>
+</span></span><span class="line"><span class="cl">    	  <span class="o">&lt;&lt;</span> <span class="n">str</span><span class="p">.</span><span class="n">length</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39; &#39;</span>
+</span></span><span class="line"><span class="cl">    	  <span class="o">&lt;&lt;</span> <span class="n">strlen</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>  <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><em>We will learn more about its features when we study STL (Standard Template Library) later.</em></p>
+</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/c&#43;&#43;/">C&#43;&#43;</a>
+        
+            <a href="/tags/learningnote/">LearningNote</a>
+        
+            <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">实验室 C&#43;&#43; 基础课程 · 第二章第三节</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">实验室 C&#43;&#43; 基础课程 · 第二章第二节</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">实验室 C&#43;&#43; 基础课程 · 第一章第三节</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">实验室 C&#43;&#43; 基础课程 · 第一章第二节</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">实验室 C&#43;&#43; 基础课程 · 第一章第一节</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="EvanWonghere/EvanWonghere.github.io"
+    data-repo-id="R_kgDOPzgwzg"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOPzgwzs4Cvsti"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="light"
+    data-lang="en"
+    data-loading=""
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('dark_dimmed');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 EvanWong
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.31.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.f140b912c7d07b398f639499ee39741023a15cbd08b0dbb13257b83dfbf08989.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

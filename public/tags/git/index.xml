@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Git on 蜂窝</title>
+        <link>http://localhost:1313/tags/git/</link>
+        <description>Recent content in Git on 蜂窝</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor>
+        <webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster>
+        <copyright>EvanWong</copyright>
+        <lastBuildDate>Tue, 17 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/git/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>实验室 C&#43;&#43; 基础课程 · 第零章第一节</title>
+        <link>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/</link>
+        <pubDate>Tue, 17 Oct 2023 00:00:00 +0000</pubDate>
+        <author>yufenghuang009@gmail.com (Evan Wong)</author>
+        <guid>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/</guid>
+        <description>&lt;h2 id=&#34;第零章工欲善其事必先利其器&#34;&gt;第零章——工欲善其事必先利其器
+&lt;/h2&gt;&lt;h3 id=&#34;0提前说明&#34;&gt;0.提前说明
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;本课程均以 &lt;code&gt;Windows 11&lt;/code&gt; 系统作为示例，若为 &lt;code&gt;Linux&lt;/code&gt; 或者 &lt;code&gt;MacOS&lt;/code&gt; 可另外课外提问或自己查阅资料。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;个人建议，少用百度，能则 &lt;code&gt;Google&lt;/code&gt;，不行的话 &lt;code&gt;Bing&lt;/code&gt; 体验也不错。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;第一节git-及-githubgitee-的使用&#34;&gt;第一节——Git 及 Github/Gitee 的使用
+&lt;/h3&gt;&lt;h4 id=&#34;0-0自主学习&#34;&gt;0. 0自主学习
+&lt;/h4&gt;&lt;p&gt;你也可以通过 GitHub 官方文档&lt;a class=&#34;link&#34; href=&#34;https://docs.github.com/zh/get-started/quickstart&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;快速入门&lt;/a&gt;或者其他有关网站来自主学习。&lt;/p&gt;
+&lt;p&gt;如果不想使用 CLI，你也可以下载并安装 &lt;a class=&#34;link&#34; href=&#34;https://desktop.github.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GitHub Desktop&lt;/a&gt; 客户端，请参照 GitHub 官方文档 &lt;a class=&#34;link&#34; href=&#34;https://docs.github.com/zh/desktop/overview/getting-started-with-github-desktop&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GitHub Desktop 使用入门&lt;/a&gt;自主学习，本课程对此不作教学。&lt;/p&gt;
+&lt;h4 id=&#34;01-为什么是git&#34;&gt;0.1 为什么是Git？
+&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;版本管理：&lt;/strong&gt; Git 允许开发人员追踪项目的不同版本和修改，以便可以随时回退到之前的版本，查看修改历史，比较不同版本之间的差异，以及解决冲突。这对于协作开发和维护软件项目非常重要。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;协作：&lt;/strong&gt; Git 是分布式版本控制系统，允许多个开发人员同时在同一项目上工作。开发人员可以在各自的本地仓库上工作，然后将其更改推送到共享的远程仓库。这使得团队协作更加高效，每个人都可以独立工作，而不会干扰其他人的工作。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;分支管理：&lt;/strong&gt; Git 使得创建、合并和管理分支变得非常容易。开发人员可以创建新分支来开展新的功能开发或修复问题，而不会影响主分支。一旦工作完成，可以将分支合并回主分支。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;备份和恢复：&lt;/strong&gt; Git 提供了对项目的完整历史记录的备份。即使在本地计算机出现故障或远程服务器遇到问题时，您仍可以从备份中恢复项目状态。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;分布式架构：&lt;/strong&gt; Git 的分布式性质使得每个开发人员都有整个项目的拷贝，这降低了对中央服务器的依赖。即使中央服务器出现故障，开发人员仍然可以继续工作。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;开源社区：&lt;/strong&gt; Git 是许多开源项目的首选版本控制系统，因此学习Git可以更容易地参与和贡献开源项目。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;跨平台支持：&lt;/strong&gt; Git 可在多种操作系统上运行，包括 Windows、Linux 和 MacOS，因此可以满足不同开发环境的需求。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;顺应潮流：&lt;/strong&gt; 聪明的开发人员应该顺应潮流。Git 正在被越来越多的知名公司和开源项目所使用，如 Ruby On Rails，jQuery，Perl，Debian，Linux 内核等等。拥有一个大型的用户群体是一个很大优势，因为往往会存在很多系统去推动他的发展。大量的教程，工具和服务，这让 Git 更加具有吸引力。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;1-安装git&#34;&gt;1. 安装Git
+&lt;/h4&gt;&lt;p&gt;进入&lt;a class=&#34;link&#34; href=&#34;https://git-scm.com/downloads&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;官网&lt;/a&gt;，根据自己的系统选择下载即可，如果下载太慢可以下载群文件里的。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/download_git.png&#34;
+	width=&#34;3012&#34;
+	height=&#34;1674&#34;
+	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/download_git_hu_6eb591af218fc0a7.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/download_git_hu_e0c791a853dccebc.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Download Git&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;179&#34;
+		data-flex-basis=&#34;431px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;注意在 &lt;code&gt;Select Components&lt;/code&gt; 时一定要选上 &lt;code&gt;Git Bash Here&lt;/code&gt;（其实会自动勾选）。&lt;/p&gt;
+&lt;h4 id=&#34;2-创建-githubgitee-账户&#34;&gt;2. 创建 GitHub/Gitee 账户
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Github 账户的创建&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果你能创建 GitHub 账户，那么大概率你能翻墙了，想必也不用多教了，如果你不能翻墙，那你创建GitHub 账户也没什么用。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/sign_up_github.png&#34;
+	width=&#34;3012&#34;
+	height=&#34;1674&#34;
+	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/sign_up_github_hu_1b3cc87643cfd699.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/sign_up_github_hu_8ebfa360a585c1ee.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Sign Up GitHub&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;179&#34;
+		data-flex-basis=&#34;431px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Gitee 账户的创建&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;官网自行注册即可&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/sign_up_gitee.png&#34;
+	width=&#34;3012&#34;
+	height=&#34;1674&#34;
+	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/sign_up_gitee_hu_619e0df6f89c0c5b.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/sign_up_gitee_hu_a41c4e00d60ef8.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Sign Up Gitee&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;179&#34;
+		data-flex-basis=&#34;431px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;3-git-基础命令的使用&#34;&gt;3. Git 基础命令的使用
+&lt;/h4&gt;&lt;p&gt;&lt;em&gt;&lt;strong&gt;接下来请紧跟步骤尝试自己创建并上传一个仓库，在此过程中熟悉Git的基础使用。&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;配置信息，这些信息将出现在你的 Git 提交中&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;git config &amp;ndash;global user.name &amp;ldquo;Your Name&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;git config &amp;ndash;global user.email &amp;ldquo;&lt;a class=&#34;link&#34; href=&#34;mailto:youremail@example.com&#34; &gt;youremail@example.com&lt;/a&gt;&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;创建仓库&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;对于 Windows 系统，创建一个新的文件夹，右键选择&lt;code&gt;显示更多选项&lt;/code&gt;-&lt;code&gt;Git Bash Here&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;对于 MacOS 或 Linux 系统，打开 &lt;code&gt;terminal&lt;/code&gt; 即可&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/git_bash.png&#34;
+	width=&#34;610&#34;
+	height=&#34;1058&#34;
+	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/git_bash_hu_6f8c0e42d96f7317.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/git_bash_hu_44c585529f67522f.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Git Bash&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;57&#34;
+		data-flex-basis=&#34;138px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;直接输入&lt;code&gt;git&lt;/code&gt;，你可以看到常用指令及用处&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/git_instructions.png&#34;
+	width=&#34;1310&#34;
+	height=&#34;1394&#34;
+	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/git_instructions_hu_5d70a6c69cfbb359.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/git_instructions_hu_eda5da7214af3732.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Git Instructions&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;93&#34;
+		data-flex-basis=&#34;225px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;输入 &lt;code&gt;git init&lt;/code&gt; 以创建一个空的git repo。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;创建一个 &lt;code&gt;README.md&lt;/code&gt;，随便向其写入内容，使用 &lt;code&gt;git add&lt;/code&gt; 指令将其添加到暂存区（Staging Area）中。你可以使用 &lt;code&gt;git add filename&lt;/code&gt; 将单个指定文件添加到 git repo 中，或者使用 &lt;code&gt;git add .&lt;/code&gt; 将所有新修改文件添加到暂存区（Staging Area）中，或者使用 &lt;code&gt;git add directory/&lt;/code&gt; 添加指定目录下的所有修改文件到暂存区（Staging Area）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;使用 &lt;code&gt;git commit&lt;/code&gt; 命令将在暂存区（Staging Area）中的文件快照保存到本地仓库中，每个 &lt;code&gt;git commit&lt;/code&gt; 创建的提交对象都有一个唯一的哈希值，用于标识版本。这使得你可以随时回滚到先前的版本，比较不同版本之间的差异，以及追踪代码的演变。具体用法为 &lt;code&gt;git commit -m &amp;quot;commit message&amp;quot;&lt;/code&gt;，提交信息用于描述本次提交的目的，这十分有用。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;你也可以使用 &lt;code&gt;-a&lt;/code&gt; 选项来跳过 &lt;code&gt;git add&lt;/code&gt; 步骤，将工作目录中的所有更改（包括已被跟踪的文件）添加到暂存区并提交，但要小心使用它，因为它不会包含新添加的未跟踪文件。具体用法为 &lt;code&gt;git commit -a -m &amp;quot;Commit message&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;你可以使用 &lt;code&gt;git status&lt;/code&gt; 显示当前工作目录和暂存区的状态，以便你了解哪些文件已被修改、添加到暂存区或尚未被跟踪。接下来修改 &lt;code&gt;README.md&lt;/code&gt; 的内容，创建 &lt;code&gt;casually1.txt&lt;/code&gt;，&lt;code&gt;casully2.txt&lt;/code&gt; 两个文件，将 &lt;code&gt;casually1.txt&lt;/code&gt; 添加到暂存区。此时使用 &lt;code&gt;git status&lt;/code&gt;，你就可以查看到三种状态 &lt;code&gt;Changes to be committed&lt;/code&gt;, &lt;code&gt;Changes not staged for commit&lt;/code&gt;, &lt;code&gt;Untracked files&lt;/code&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;未跟踪的文件 (Untracked files)&lt;/strong&gt;：这是工作目录中未被 Git 跟踪的文件。这些文件不在 Git 的版本控制之下。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;已修改的文件 (Changes not staged for commit)&lt;/strong&gt;：这是工作目录中已被修改但尚未添加到暂存区的文件。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;已暂存的文件 (Changes to be committed)&lt;/strong&gt;：这是已经添加到暂存区，等待被提交的文件。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/git_status.png&#34;
+	width=&#34;1678&#34;
+	height=&#34;712&#34;
+	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/git_status_hu_14a2f69f13054b56.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/git_status_hu_5c3ba011f49cb8f6.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Git Status&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;235&#34;
+		data-flex-basis=&#34;565px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;使用 &lt;code&gt;git log&lt;/code&gt; 指令打印仓库提交日志。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/git_log.png&#34;
+	width=&#34;1506&#34;
+	height=&#34;394&#34;
+	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/git_log_hu_51358cfb5243d7b6.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/git_log_hu_19dfc3cd6a851fd6.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Git Log&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;382&#34;
+		data-flex-basis=&#34;917px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;git 分支指令可能对你们目前来说暂时使用较少，本课程暂时不涉及。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;你可以在&lt;a class=&#34;link&#34; href=&#34;https://learngitbranching.js.org/?locale=zh_CN&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;此网站&lt;/a&gt;以游戏的方式学习并巩固你的 git 指令。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/git_game.png&#34;
+	width=&#34;3012&#34;
+	height=&#34;1674&#34;
+	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/git_game_hu_51b4adbe6efb1f37.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/git_game_hu_ce043a97d860614c.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Git Game&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;179&#34;
+		data-flex-basis=&#34;431px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;使用 SSH 完成 Git 与 GitHub/Gitee 的绑定&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;在 &lt;code&gt;Git Bash&lt;/code&gt; 中输入 &lt;code&gt;ssh&lt;/code&gt;，可以查看指令及参数。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/ssh.png&#34;
+	width=&#34;1146&#34;
+	height=&#34;328&#34;
+	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/ssh_hu_a57248cb0b8ec2f8.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/ssh_hu_9f82e00f0cea6a20.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;SSH&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;349&#34;
+		data-flex-basis=&#34;838px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;输入 &lt;code&gt;ssh-keygen -t rsa&lt;/code&gt; 指定 RSA 算法生成密钥，然后敲三次回车键。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;使用 &lt;code&gt;cat ~/.ssh/id_rsa.pub&lt;/code&gt; 获取公钥。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如果你是用的是 GitHub，在 &lt;code&gt;Settings -- SSH and GPG keys&lt;/code&gt; 处选择 &lt;code&gt;New SSH key&lt;/code&gt;，输入 &lt;code&gt;title&lt;/code&gt; 和 &lt;code&gt;key&lt;/code&gt; 即可，&lt;code&gt;title&lt;/code&gt; 可随意。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/github_ssh_key.png&#34;
+	width=&#34;3012&#34;
+	height=&#34;1674&#34;
+	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/github_ssh_key_hu_9357f87b39f93fdf.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/github_ssh_key_hu_59fd2090bc32d555.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;GitHub SSH Key&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;179&#34;
+		data-flex-basis=&#34;431px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如果你使用的是 Gitee，在&lt;code&gt;设置-安全设置-SSH公钥&lt;/code&gt;处添加。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/gitee_ssh_key.png&#34;
+	width=&#34;3012&#34;
+	height=&#34;1674&#34;
+	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/gitee_ssh_key_hu_5ea1f0876f3af9f5.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/gitee_ssh_key_hu_f8a6dac9a57180e6.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Gitee SSH Key&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;179&#34;
+		data-flex-basis=&#34;431px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;将本地仓库推送到 Github/Gitee&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;在 GitHub/Gitee 创建新仓库&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;GitHub 可在主页或者 Repositories 处找到 &lt;code&gt;new&lt;/code&gt; 按钮&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/github_dashboard_new.png&#34;
+	width=&#34;3012&#34;
+	height=&#34;1674&#34;
+	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/github_dashboard_new_hu_56205ae180daf2c3.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/github_dashboard_new_hu_59a8ce8ee06eea98.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;GitHub DashBoard New&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;179&#34;
+		data-flex-basis=&#34;431px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/github_repo_new.png&#34;
+	width=&#34;3012&#34;
+	height=&#34;1674&#34;
+	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/github_repo_new_hu_c26547c87d495a47.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/github_repo_new_hu_8da21c290bd77b7d.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;GitHub Repo New&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;179&#34;
+		data-flex-basis=&#34;431px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Gitee可在点击主页右上角加号找到&lt;code&gt;新建仓库&lt;/code&gt;按钮&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/gitee_new.png&#34;
+	width=&#34;3012&#34;
+	height=&#34;1674&#34;
+	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/gitee_new_hu_a17d91d520b3620f.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/gitee_new_hu_c68763169b7e2c47.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Gitee New&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;179&#34;
+		data-flex-basis=&#34;431px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;推送本地仓库，执行 GitHub/Gitee 给出的官方指令即可&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/github_push_local.png&#34;
+	width=&#34;1374&#34;
+	height=&#34;974&#34;
+	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/github_push_local_hu_f6d63a3755b40a50.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/github_push_local_hu_3619095b634ec580.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;GitHub Push Local&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;141&#34;
+		data-flex-basis=&#34;338px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/gitee_push_local.png&#34;
+	width=&#34;1360&#34;
+	height=&#34;884&#34;
+	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/gitee_push_local_hu_6583bd8f2eb69183.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/gitee_push_local_hu_5a65f2a033378e2e.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Gitee Push Local&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;153&#34;
+		data-flex-basis=&#34;369px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;推送本地更新&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当你更改了本地仓库之后，需要将本地仓库同步到 GitHub/Gitee 上。具体步骤为&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git add filename / git add .
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git commit -m &lt;span class=&#34;s2&#34;&gt;&amp;#34;Updated nothing&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git pull
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git push
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;git pull&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git pull&lt;/code&gt; 用于从远程仓库拉取（获取）更新并将其合并到你的当前本地分支。它执行以下操作：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;检查当前所在分支。&lt;/li&gt;
+&lt;li&gt;从远程仓库获取最新的提交。&lt;/li&gt;
+&lt;li&gt;将这些提交合并到你的当前分支。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;基本语法如下：&lt;code&gt;git pull remote_repo &amp;quot;branch&amp;quot;&lt;/code&gt;。如果不指定远程仓库和分支，&lt;code&gt;git pull&lt;/code&gt; 将默认拉取与当前本地分支关联的远程分支的更新。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;git push&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git push&lt;/code&gt; 用于将本地的提交推送到远程仓库。它执行以下操作：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;将本地的提交上传到远程仓库。&lt;/li&gt;
+&lt;li&gt;更新远程仓库中的分支，以包含你的提交。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;基本语法如下：&lt;code&gt;git push [远程仓库] [本地分支]:[远程分支]&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;[远程仓库]&lt;/code&gt; 是远程 Git 仓库的名称（通常是别名，如 &lt;code&gt;origin&lt;/code&gt;）。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;[本地分支]&lt;/code&gt; 是你要推送的本地分支。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;[远程分支]&lt;/code&gt; 是你要将本地分支的提交推送到的远程分支。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;例如，要将当前分支的更改推送到远程仓库的同名分支，你可以使用：&lt;code&gt;git push origin my-branch&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;这将把 &lt;code&gt;my-branch&lt;/code&gt; 的更改推送到 &lt;code&gt;origin&lt;/code&gt; 远程仓库的 &lt;code&gt;my-branch&lt;/code&gt; 分支上。&lt;/p&gt;
+&lt;p&gt;默认情况下，&lt;code&gt;git push&lt;/code&gt; 命令将推送当前分支的更改到与之关联的远程分支。这意味着 Git 将尝试将你当前所在的分支的提交推送到远程仓库中同名的分支。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;克隆仓库&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;尝试将本课程的仓库克隆到本地&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;创建一个新的目录，并且在该目录打开&lt;code&gt;Git Bash&lt;/code&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;克隆GitHub仓库&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;GitHub仓库地址：&lt;a class=&#34;link&#34; href=&#34;https://github.com/EvanWonghere/211LabLectures&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/EvanWonghere/211LabLectures&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;选择&lt;code&gt;Code - Local - Clone - SSH&lt;/code&gt;然后复制。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/github_clone.png&#34;
+	width=&#34;1228&#34;
+	height=&#34;640&#34;
+	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/github_clone_hu_a1f0d6e4e533012.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/github_clone_hu_3160f3099867f8a.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;GitHub Clone&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;191&#34;
+		data-flex-basis=&#34;460px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在&lt;code&gt;Git Bash&lt;/code&gt;输入&lt;code&gt;git clone git@github.com:EvanWonghere/211LabLectures.git&lt;/code&gt;即可。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;克隆Gitee仓库&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Gitee仓库地址：&lt;a class=&#34;link&#34; href=&#34;https://gitee.com/yufenghuang/211LabLectures&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://gitee.com/yufenghuang/211LabLectures&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;选择`克隆/下载 - SSH - 复制。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/gitee_clone.png&#34;
+	width=&#34;1218&#34;
+	height=&#34;640&#34;
+	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/gitee_clone_hu_f91000577af773f9.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/gitee_clone_hu_347184a8e7cfff4f.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Gitee Clone&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;190&#34;
+		data-flex-basis=&#34;456px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在&lt;code&gt;Git Bash&lt;/code&gt;输入&lt;code&gt;git clone git@gitee.com:yufenghuang/211LabLectures.git&lt;/code&gt;即可。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
