@@ -1,0 +1,978 @@
+---
+title: "PEP8 和 PEP257 中文翻译版"
+date:  2023-06-09
+description: "这是为我所在的实验室而准备的代码风格指南~"
+tags: ["Python"]
+---
+
+# PEP8 和 PEP257 中文翻译版
+
+[TOC]
+
+## 说在前面
+
+这是为我所在的实验室而准备的代码风格指南~
+
+本代码风格指南此版本基本完全基于 $PEP8$、$PEP257$，未涉及部分都以其为准。
+
+本代码风格指南默认为 $Python3$，对 $Python2$ 若有差异则会特殊声明。
+
+## 代码布局
+
+### 缩进
+
+每级缩进为 $4$ 个空格
+
+- 续行缩进有两种方式：括号内隐式垂直对齐或者悬挂缩进。
+
+  在使用悬挂缩进时，第一行不应该有参数，且应该用进一步的缩进来明确区分自己是续行。
+
+  ```python
+  # 正确:
+  
+  # 括号隐式对齐
+  foo = long_function_name(var_one, var_two,
+                           var_three, var_four)
+  
+  # 进一步缩进以区分
+  def long_function_name(
+          var_one, var_two, var_three,
+          var_four):
+      print(var_one)
+  
+  # 悬挂缩进
+  foo = long_function_name(
+      var_one, var_two,
+      var_three, var_four)
+  ```
+
+  ```python
+  # 错误:
+  
+  # 第一行有参数时应该使用括号内隐式对齐
+  foo = long_function_name(var_one, var_two,
+      var_three, var_four)
+  
+  # 悬挂缩进需要进一步缩进以区分
+  def long_function_name(
+      var_one, var_two, var_three,
+      var_four):
+      print(var_one)
+  ```
+
+- 对于悬挂缩进，$4$ 空格缩进规则是可选的
+
+  ```python
+  # 悬挂缩进并不一定要 4 个空格
+  foo = long_function_name(
+    var_one, var_two,
+    var_three, var_four)
+  ```
+
+- 当 $if$ 语句的条件部分长到需要分行书写时，有多种规范可选
+
+  ```python
+  # 不额外缩进
+  if (this_is_one_thing and
+      that_is_another_thing):
+      do_something()
+  
+  # 使用注释区分
+  # 支持语法高亮
+  if (this_is_one_thing and
+      that_is_another_thing):
+      # 如果条件都为真，那么我们可以 frobnicate
+      do_something()
+  
+  # 续行增加额外缩进
+  if (this_is_one_thing
+          and that_is_another_thing):
+      do_something()
+  ```
+
+- 多行结构的结尾小括号/中括号/花括号可以放在一行的开头，也可以进行缩进
+
+  ```python
+  my_list = [
+      1, 2, 3,
+      4, 5, 6,
+      ]
+  result = some_function_that_takes_arguments(
+      'a', 'b', 'c',
+      'd', 'e', 'f',
+      )
+  ```
+
+  ```python
+  my_list = [
+      1, 2, 3,
+      4, 5, 6,
+  ]
+  result = some_function_that_takes_arguments(
+      'a', 'b', 'c',
+      'd', 'e', 'f',
+  )
+  ```
+
+### 制表符（$Tab$）还是空格？
+
+空格是推荐的缩进方式，除非原项目使用 $Tab$ 否则不应该使用。
+
+禁止空格与 $Tab$ 混用。
+
+但如今市面上大多数 $IDE$ 会将 $Tab$ 替换成 $4$ 个空格，使用时需注意即可。
+
+### 最大行长度
+
+所有行不应该超过 79 个字符。
+
+对于结果限制较少的流长文本块（$docstring$ 或注释），行长应限制在 72 个字符。
+
+包装长行的首选方式是使用括号自带的隐含续行符。
+
+通过用括号包装表达式，可以将长行分成多行。应优先使用这些括号，而不是使用反斜线续行。
+
+有时仍需使用反斜杠，比如在 $Python 3.10$ 之前，多重 `with-statements` 长语句不能使用隐式续码，因此在这种情况下可以使用反斜线：
+
+```python
+with open('/path/to/some/file/you/want/to/read') as file_1, \
+     open('/path/to/some/file/being/written', 'w') as file_2:
+    file_2.write(file_1.read())
+```
+
+除此之外还有断言语句 $assert$。
+
+### 二元运算符处的换行
+
+在二元运算符之前换行
+
+```python
+# 错误:
+# 操作符离操作数太远了
+income = (gross_wages +
+          taxable_interest +
+          (dividends - qualified_dividends) -
+          ira_deduction -
+          student_loan_interest)
+```
+
+```python
+# 正确:
+# 操作符与操作数很容易匹配起来
+income = (gross_wages
+          + taxable_interest
+          + (dividends - qualified_dividends)
+          - ira_deduction
+          - student_loan_interest)
+```
+
+### 空行
+
+- 用两行空行将顶级函数和类的定义围起来
+- 类内方法定义用一个空行包围
+- 可少量使用额外空行来分割函数组
+- 在函数中使用少量空行指示逻辑部分
+- 总而言之，空行的作用就是使代码结构层次分明
+
+### 源文件编码
+
+$Python 2$ 默认 $ASCII$，$Python 3$ 默认 $UTF-8$。
+
+对于 $Python3$ 无需指明代码，对于 $Python2$ 需指定编码格式为 $UTF-8$，
+
+需要在文件顶端插入
+
+```python
+# -*- coding: UTF-8 -*-
+```
+
+或者
+
+```python
+# coding=utf-8
+```
+
+### $import$
+
+- 应该单行 $import$
+
+  ```python
+  # 正确:
+  import os
+  import sys
+  ```
+
+  ```python
+  # 错误:
+  import sys, os
+  ```
+
+  但对于 `from-import` 则可以单行
+
+  ```python
+  # 正确:
+  from subprocess import Popen, PIPE
+  ```
+
+- $import$ 应该放在文件的顶部，在模块注释和 $docstring$ 之后，在模块全局和常量之前
+
+- $import$ 应该遵循以下顺序分组
+
+  1. 标准库 $import$
+  2. 相关第三方库 $import$
+  3. 本地应用/库 $import$
+
+  每组之间应该用一行空格分隔。
+
+- 推荐使用绝对导入，因为它们通常更具可读性，而且在导入系统配置不正确的情况下（如软件包内的目录最终出现在 `sys.path`），往往会表现得更好（或至少给出更好的错误信息）
+
+  ```python
+  import mypkg.sibling
+  from mypkg import sibling
+  from mypkg.sibling import example
+  ```
+
+  ***但应该避免复杂的布局并总是使用绝对导入***
+
+  当从模块中导入类时，应该
+
+  ```python
+  from myclass import MyClass
+  from foo.bar.yourclass import YourClass
+  ```
+
+   如果这样导致与本地命名冲突，则应该
+
+  ```python
+  import myclass
+  import foo.bar.yourclass
+  ```
+
+  并且使用 `myclass.MyClass`和`foo.bar.yourclass.YourClass`
+
+- 避免使用通配符导入，就像避免使用 `using namespace` 那样
+
+  ```python
+  # 避免使用
+  from <module> import *
+  ```
+
+### 模块级别 Dunder 名称
+
+模块级别"$dunders$"（被两对下划线包裹的名称）应该被放在模块的 $docstring$ 和其他所有 $import$ 前，除了$ from  \hspace{0.5em} \_\_future\_\_ \hspace{0.5em} import $，$Python$强制规定 `future-imports` 必须出现在除了 $docstring$ 外所有代码之前。
+
+```python
+"""This is the example module.
+
+This module does stuff.
+"""
+
+from __future__ import barry_as_FLUFL
+
+__all__ = ['a', 'b', 'c']
+__version__ = '0.1'
+__author__ = 'Cardinal Biggles'
+
+import os
+import sys
+```
+
+## 字符串引号
+
+在 Python 中，单引号字符串和双引号字符串是一样的。但是，当字符串包含单引号和双引号字符时，使用另一种引号以避免字符串中出现反斜线。这样可以提高可读性。
+
+对于三重引号字符串，应始终使用双引号字符。
+
+## 表达式和语句中的空格
+
+### $Pet \hspace{0.5em} Peeves$
+
+以下情况中避免使用多余的空格：
+
+- 紧靠圆括号`()`、方括号`[]`、花括号`{}`
+
+  ```python
+  # Correct:
+  spam(ham[1], {eggs: 2})
+  
+  # Wrong:
+  spam( ham[ 1 ], { eggs: 2 } )
+  ```
+
+- 括号与逗号之间
+
+  ```python
+  # Correct:
+  foo = (0,)
+  
+  # Wrong:
+  bar = (0, )
+  ```
+
+- 逗号`,`、分号`;`、冒号`:`前
+
+  ```python
+  # Correct:
+  if x == 4: print(x, y); x, y = y, x
+  
+  # Wrong:
+  if x == 4 : print(x , y) ; x , y = y , x
+  ```
+
+- 例外的是，在切片中，冒号的作用类似于二进制运算符，两边的数量应该相等（将其视为优先级最低的运算符）。在扩展切片中，两个冒号必须有相同的间距。例外：当省略片段参数时，空格也会被省略：
+
+  ```python
+  # Correct:
+  ham[1:9], ham[1:9:3], ham[:9:3], ham[1::3], ham[1:9:]
+  ham[lower:upper], ham[lower:upper:], ham[lower::step]
+  ham[lower+offset : upper+offset]
+  ham[: upper_fn(x) : step_fn(x)], ham[:: step_fn(x)]
+  ham[lower + offset : upper + offset]
+  
+  # Wrong:
+  ham[lower + offset:upper + offset]
+  ham[1: 9], ham[1 :9], ham[1:9 :3]
+  ham[lower : : step]
+  ham[ : upper]
+  ```
+
+- 在函数调用的参数列表开头括号之前
+
+  ```python
+  # Correct:
+  spam(1)
+  
+  # Wrong:
+  spam (1)
+  ```
+
+- 开始索引的括号之前
+
+  ```python
+  # Correct:
+  dct['key'] = lst[index]
+  
+  # Wrong:
+  dct ['key'] = lst [index]
+  ```
+
+- 赋值（或其他）运算符之前
+
+  ```python
+  # Correct:
+  x = 1
+  y = 2
+  long_variable = 3
+  
+  # Wrong:
+  x             = 1
+  y             = 2
+  long_variable = 3
+  ```
+
+### 其他建议
+
+- 避免在任何地方出现 `trailing whitespace`，结尾不要有多余的空白。
+
+- 这些二进制运算符的两边总是用一个空格包围：赋值 (`=`)、增强赋值 (`+=`, `-=` 等)、比较 (`==`, `<`, `>`, `!=`, `<>`, `<=`, `>=`, `in`, `not in`, `is`, `is not`)、布尔运算 (`and`, `or`, `not`)。
+
+- 如果使用不同优先级的运算符，可以考虑在优先级最低的运算符周围添加空格。不过，请自行判断，切勿使用一个以上的空格，而且二进制运算符两边的空格数量一定要相同：
+
+  ```python
+  # Correct:
+  i = i + 1
+  submitted += 1
+  x = x*2 - 1
+  hypot2 = x*x + y*y
+  c = (a+b) * (a-b)
+  
+  # Wrong:
+  i=i+1
+  submitted +=1
+  x = x * 2 - 1
+  hypot2 = x * x + y * y
+  c = (a + b) * (a - b)
+  ```
+
+- 函数注释应使用正常的冒号规则，如果存在 `->` 箭头，则其周围必须有空格。
+
+  ```python
+  # Correct:
+  def munge(input: AnyStr): ...
+  def munge() -> PosInt: ...
+  
+  # Wrong:
+  def munge(input:AnyStr): ...
+  def munge()->PosInt: ...
+  ```
+
+- 当 `=` 符号用于表示关键字参数时，或用于表示未注明函数参数的默认值时，不要在其周围使用空格：
+
+  ```python
+  # Correct:
+  def complex(real, imag=0.0):
+      return magic(r=real, i=imag)
+      
+  # Wrong:
+  def complex(real, imag = 0.0):
+      return magic(r = real, i = imag)
+  ```
+
+  不过，在将参数注释与默认值相结合时，请在 `=` 符号周围使用空格：
+
+  ```python
+   Correct:
+  def munge(sep: AnyStr = None): ...
+  def munge(input: AnyStr, sep: AnyStr = None, limit=1000): ...
+  
+  # Wrong:
+  def munge(input: AnyStr=None): ...
+  def munge(input: AnyStr, limit = 1000): ...
+  ```
+
+- 不鼓励使用复合语句（一行多个语句）
+
+  ```python
+  # Correct:
+  if foo == 'blah':
+      do_blah_thing()
+  do_one()
+  do_two()
+  do_three()
+  
+  # Wrong:
+  if foo == 'blah': do_blah_thing()
+  do_one(); do_two(); do_three()
+  ```
+
+- 有时候，如果 if/for/while 语句的主体很小，可以将它们放在同一行。但是，对于包含多个子句的语句，不应该这样做。应该避免将过长的行折叠成多行。
+
+  不要这样：
+
+  ```python
+  # Wrong:
+  if foo == 'blah': do_blah_thing()
+  for x in lst: total += x
+  while t < 10: t = delay()
+  ```
+
+  绝对不要这样：
+
+  ```python
+  # Wrong:
+  if foo == 'blah': do_blah_thing()
+  else: do_non_blah_thing()
+  
+  try: something()
+  finally: cleanup()
+  
+  do_one(); do_two(); do_three(long, argument,
+                               list, like, this)
+  
+  if foo == 'blah': one(); two(); three()
+  ```
+
+  
+
+## 何时使用 $Trailing \hspace{0.5em} Commas$
+
+$Trailing \hspace{0.5em} Commas$ 通常是可选的，但在组成一个元素的元组时，$Trailing \hspace{0.5em} Commas$ 是必须的。为了清晰起见，建议用括号（从技术上讲是多余的）将后者包围起来：
+
+```python
+# Correct:
+FILES = ('setup.cfg',)
+
+# Wrong:
+FILES = 'setup.cfg',
+```
+
+如果 $Trailing \hspace{0.5em} Commas$ 是多余的，那么在使用版本控制系统（如 $Git$）时，当预期值、参数或导入项的列表会随着时间的推移而扩展时，$Trailing \hspace{0.5em} Commas$ 通常会很有用。通常的做法是，将每个值（等）单独放在一行，始终加上一个 $Trailing \hspace{0.5em} Commas$，然后在下一行加上封闭括号/小括号/大括号。但是，将尾逗号与关闭分隔符放在同一行是不合理的（上述单元组的情况除外）：
+
+```python
+# Correct:
+FILES = [
+    'setup.cfg',
+    'tox.ini',
+    ]
+initialize(FILES,
+           error=True,
+           )
+           
+# Wrong:
+FILES = ['setup.cfg', 'tox.ini',]
+initialize(FILES, error=True,)
+```
+
+## 注释
+
+与代码相矛盾的注释比没有注释还要糟糕！当代码改变时总是先修改注释！
+
+注释应该是完整的句子，以大写字母开头（除非是标识符）。
+
+块注释通常由一或多段完整的句子构成，每个句子以句号结尾。
+
+### 块注释
+
+块注释通常适用于跟在它们后面的一些（或全部）代码，且与该代码有相同的缩进级别。块注释的每一行都以一个`#`和一个空格开始（除非它是注释内的缩进文本）。
+
+块注释内的段落之间通过包含单个`#`的行进行分隔。
+
+### 行注释
+
+行内注释应该谨慎使用。
+
+行内注释是在与语句相同的行上的注释。行内注释应至少与语句间隔两个空格。它们应以`#`和一个空格开始。
+
+如果行内注释陈述的是显而易见的事情，那么它们就没有必要，甚至会分散注意力。不要这样：
+
+```python
+x = x + 1                 # Increment x
+```
+
+但有时候这是有用的：
+
+```python
+x = x + 1                 # Compensate for border
+```
+
+### $Documentaton \hspace{0.5em} Strings$
+
+$docstring$ 是作为模块、函数、类或方法定义中第一条语句出现的字符串字面量。这样的 $docstring$ 将成为该对象的 $\_\_doc\_\_$ 特殊属性。
+
+所有模块，以及模块导出的所有函数和类都应有$docstring$。
+
+本指南不涉及 $attribute \hspace{0.5em} docstrings$ 和 $additional \hspace{0.5em} docstrings$，如有需要请参考[PEP 258](https://peps.python.org/pep-0258/)。
+
+为保持一致，在 $docstring$ 周围使用`"""三重双引号"""`；如果要在 $docstring$ 中使用`\反斜线`，使用`r"""raw三重双引号"""`；如果是 $Unicode \hspace{0.5em} docstring$，使用 `u"""unicode三重双引号"""`。
+
+#### 单行 $docstring$
+
+单行 $docstring$ 适用于很简单很显然的情况
+
+```python
+def kos_root():
+    """Return the pathname of the KOS root directory."""
+    global _kos_root
+    if _kos_root: return _kos_root
+    ...
+```
+
+需要注意：
+
+- 即使 $docstring$ 只需要一行，也应该使用`"""三重双引号"""`，方便日后拓展；
+
+- """对于单行 $docstring$，三重双引号的开头和结尾应该在同一行"""
+
+- 函数/方法的单行 $docstring$的前后都没有空行
+
+- 应用祈使句的形式来规定函数或方法的效果（比如 `Do this`, `Return that`），而不是使用单纯的描述
+
+- 单行 $docstring$ 不应该重申函数/方法的参数（可通过内省获得），**不要这么做：**
+
+  ```python
+  def function(a, b):
+      """function(a, b) -> list"""
+  ```
+
+  这种 $docstring$ 的最佳形式应该是：
+
+  ```python
+  def function(a, b):
+      """Do X and return a list."""
+  ```
+
+  （`Do X` 应被替换为有用的描述）
+
+#### 多行 $docstring$
+
+多行 $docstring$由摘要行（$summary \hspace{0.5em} line$）、空行和更详细的说明组成。摘要行可能会被自动索引工具使用；重要的是，摘要行必须在一行内，并用空行与文档字符串的其他部分隔开。摘要行可以与开头引号在同一行，也可以在下一行。整个文档字符串的缩进与第一行的引号相同。
+
+在所有描述类的 $docstring$ 后插入一个空行，也就是说，类 $docstring$ 和第一个方法之间要有一行空行。
+
+脚本/独立程序的 $docstrig$ 应作为其使用信息使用，当脚本/独立程序被调用时，如果出现参数错误/缺失或者使用了 `-h` 选项，该 $docstring$ 会被打印出来。该 $docstring$ 应记录有脚本/独立程序的功能、命令行语法、环境变量和文件。使用信息可以相当详尽，应足以让新用户正确使用命令，并为老用户提供所有选项和参数的完整快速参考。简单地说，脚本/独立程序的 $docstrig$ 应作为其使用指南来写。
+
+模块的 $docstring$ 应该列出该模块导出的类、错误、方法以及任何其他对象，并对每个类、异常和函数给出一行摘要。(这些摘要所提供的细节通常少于对象的 $docstring$ 中的摘要行）。包的 $docstring$（包的 `__init__.py` 中的 $docstring$ ）应列出软件包导出的模块和子包。
+
+函数或方法的 $docstring$ 应概述其行为，并记录其参数、返回值、副作用、异常情况以及调用时间限制（如适用）。应注明可选参数。应记录关键字参数是否是接口的一部分。
+
+类的$docstring$应概述其行为，并列出公共方法和实例变量。如果该类打算被子类化（可被继承），并为子类提供了额外的接口，则应在文档中单独列出该接口。类的构造函数（`__init__` 方法）应该在其自身的文档字符串中进行说明。单个方法应由它们自己的 $docstring$ 记录。
+
+如果一个类继承自另一个类，并且其行为大部分继承自基类，那么其$docstring$应该提及这一点，并总结其中的区别，同时正确使用 `override` 和 `extand`。
+
+**不使用 $Emac$ 命名约定**（不使用大写字母来表示函数或方法的参数）。Python 是区分大小写的，参数名可以用于关键字参数，所以文档字符串应该记录正确的参数名。在 $docstring$ 中，每个参数最好单独成行。例如：
+
+```python
+def complex(real=0.0, imag=0.0):
+    """Form a complex number.
+
+    Keyword arguments:
+    real -- the real part (default 0.0)
+    imag -- the imaginary part (default 0.0)
+    """
+    if imag == 0.0 and real == 0.0:
+        return complex_zero
+    ...
+```
+
+除非整个文档字符串可以放在一行中，否则请将结尾引号单独放在一行中。这样，就可以使用 Emacs 的 fill-paragraph 命令。
+
+## 命名约定
+
+### 首要原则
+
+对用户可见的 API 的公共部分的命名应遵循反映使用情况而非实现的约定。也就是说，根据 API 的用途和功能来命名而不是内部实现。
+
+### 描述性：命名风格
+
+常见的命名风格有：
+
+- `b` (单个小写字母)
+
+- `B` (单个大写字母)
+
+- `lowercase`（小写）
+
+- `lower_case_with_underscores`（小写下划线）
+
+- `UPPERCASE`（大写）
+
+- `UPPER_CASE_WITH_UNDERSCORES`（大写下划线）
+
+- `CapitalizedWords`（大驼峰命名法，用此命名风格使用缩略词时，缩略词的所有字母都要大写。因此，HTTPServerError 好于 HttpServerError。）
+
+- `mixedCase`（小驼峰命名法）
+
+- `Capitalized_Words_With_Underscores`（丑！）
+
+- `_single_leading_underscore`（前缀单下划线）：弱 "内部使用 "指示符。例如，从 M import * 不能导入名称以下划线开头的对象。
+
+- `single_trailing_underscore_`（后缀单下划线）：通常用于避免与关键字冲突，如
+
+  ```python
+  tkinter.Toplevel(master, class_='ClassName')
+  ```
+
+- `__double_leading_underscore`（前缀双下划线）：用于命名类属性，调用时这个命名会被改变（在类FooBar中，类属性 `__boo` 会变成 `_FooBar__boo`，详见下文）。
+
+- `__double_leading_and_trailing_underscore__`（前后双下划线）：魔术对象或属性，存活于用户控制的命名空间内。比如 `__init__`，`__import__`，和 `__file__`。 **永远不要**自己起这样的命名。这些命名应仅在文档中使用。
+
+### 规范：命名约定
+
+#### 应避免的命名
+
+永远不要使用小写字母 `l`（el）、大写字母 `O`（oh）、大写字母 `I`（eye）作为单字母变量名！！！
+
+#### 包名和模块名
+
+模块名应该是简短、全小写的名称，如果名称中是用下划线可以提高可读性，那么可以加入。
+
+包名也应该是简短、全小写的名称，但是不鼓励使用下划线。
+
+当 C/C++ 编写的扩展模块伴随一个提供更高级别接口的 $Python$ 模块时，$C/C++$ 模块命名应该以下划线开头(例如，`_socket`)。
+
+#### 类名
+
+类名应该使用大驼峰命名法（$CapWords$）。
+
+如果类的接口主要是作为一个可调用的对象（主要调用 `__call__()`），那么该类的命名也可使用函数的命名规范，也就是全部小写、单词之间用下划线隔开。
+
+#### 类型变量名
+
+***NOT READY***
+
+#### 异常名
+
+因为异常一般是类，因此也适用类的命名规则。但是当异常是个错误时，则需要添加 `Error` 后缀.
+
+#### 全局变量名
+
+（仅讨论只用于模块内部的全局变量）
+
+其命名约定应与函数一致。
+
+以 `from M import *` 的方式进行导入的模块应当使用 `__all__` 机制来防止导入全局变量。或者采用旧版的约定，给模块中的全局变量增加一个先导下划线（表示该变量是仅限于模块内部全局使用，是非公共的）。
+
+#### 函数和变量名
+
+函数名应该全小写，必要时是用下划线分割单词以提高可读性。
+
+变量名与函数名遵守相同的命名约定。
+
+除非项目本身使用的是小驼峰命名法，否则不使用。
+
+#### 函数和方法的参数
+
+实例的方法的第一个参数总应该是 `self`。
+
+类的方法的第一个参数总是 `cls`。
+
+如果函数参数的名称与关键字冲突，如前文所述，应在参数名称后面加一个下划线。
+
+#### 方法名与实例变量
+
+方法名与实例变量名称与函数命名规则一致即可。
+
+使用前缀单下划线表示 `non-public` 的方法和实例变量。
+
+如果为了避免和子类冲突，可以加前缀双下划线，这样在调用时会触发 $Python$ 的命名重整。
+
+Python 中使用类名进行命名重整：如果 Foo 类有一个属性 `__a`，则调用时不能采用 `Foo.__a` 的形式（当然，如果硬要访问该属性，可以采用 `Foo._Foo__a` 的方式获取访问权）。一般来说，双前导下划线仅用于防止基类和子类的属性产生命名冲突。
+
+#### 常量
+
+常量通常在模块级别定义，名称使用全大写并使用下划线分割单词。
+
+#### 继承的设计
+
+设计时考虑方法和属性应该是 `public` 还是 `non-public` 。如果不能确定就按 `non-public` 设计，因为 `non-public` 转`public` 会更简单些。
+
+$Python$ 中并没有真正的 `private` 属性，我们只会说 `non-public`。
+
+设计时要明确好哪些是 `public`，哪些是子类的，哪些是仅限于基类的。
+
+据以上内容，给出以下指南：
+
+- `public` 属性不应该使用前缀下划线
+- 如果 `public` 属性和关键字冲突，可添加后缀单下划线
+- 对于简单的 `public` 数据属性，最好直接公开属性名。$Python$ 提供了一个很方便的东西：修饰器。这种情况下，可以使用 `@property` 来把函数实现隐藏在简单的公共属性后面
+  - 尽量在实现功能是避免副作用，尽管缓存之类的副作用没什么大问题。
+  - 避免对计算开销大的操作使用 `property`，这个属性标记会让调用者误以为是开销（相对）较低的操作。
+- 如果你设计的类用于被继承，并且你希望一些属性不会被子类使用，可以在命名时采取双前缀下划线的方式。当该属性调用时会自动触发 Python 的命名重整，把类名放在属性名前面。这样即使我们无意中在子类使用了相同的名称，也可以避免属性名的冲突。
+  - 需要注意命名重整只是简单地利用了类名，所以如果子类类名和基类类名仍相同时，还是会构成命名冲突。
+  - 命名重整会使某些使用，比如调试和使用 `__getattr__()` 不太方便。但有详细的文档说明和且很好手动操作。
+  - 不是所有人都喜欢命名重整，需要尝试平衡好避免命名冲突和被高级调用者调用这二者的需求。
+
+#### 公共接口和内部接口
+
+只有公共接口才能保证向后兼容性。因此，用户能够清楚地区分公共和内部接口是很重要的。
+
+有文档说明的接口被认为是公共的，除非文档明确声明它们是临时的或内部的，不受通常的向后兼容性保证的限制。所有没有文档说明的接口都应该被认为是内部的。
+
+为了更好地支持自省，模块应该使用 `__all__` 属性来明确声明它们的公共API中的名字。将 `__all__` 设置为空列表表示该模块没有公共API。
+
+即使 `__all__` 设置得恰当，内部接口（包，模块，类，函数，属性或其他名字）仍然应该以单个下划线作为前缀。
+
+如果包含一个接口的命名空间（包，模块或类）被认为是内部的，那么该接口也被认为是内部的。
+
+导入的名字应该始终被认为是实现细节。其他模块不应该依赖于对这些导入名字的间接访问，除非它们是包含模块的API的明确文档化的一部分，比如os.path或者一个包的 `__init__` 模块，它暴露了子模块的功能。
+
+## 编程建议
+
+- 代码的编写应该有利于其他 $Python$ 实现（PyPy, Jython, IronPython, Cython, Psyco 等等）。
+
+  - 例如，不要依赖于$CPython$对 `a += b`或`a = a + b` 这样形式的字符串拼接语句的高效实现。这种优化即使在$CPython$中也是很脆弱的（只对某些类型有效），而且不是所有的Python实现都支持引用计数的。对于性能敏感的代码段，采用 `''.join()` 形式能保证在不同的Python实现中都可以在线性时间内完成字符串拼接。
+
+- 与单例比如 `None` 的比较，使用 `is` 或 `is not` 而不是等号和不等号
+
+  并且需要注意，当你的意思是 `if x is not None` 时，不要写 `if x`，这并不等价。
+
+- 使用 `is not` 运算符而不是 `not .. is` ，即使在功能上是一致的，但是前者具有更好的可读性
+
+  ```python
+  # Correct:
+  if foo is not None:
+  
+  # Wrong:
+  if not foo is None:
+  ```
+
+- 在实现富比较排序操作是，最好把六种比较操作全部实现（`__eq__`, `__ne__`, `__lt__`, `__le__`, `__gt__`, `__ge__`），而不是只依赖于某一种特定的比较操作。
+
+  为最小化工作，$Python$ 提供 `functools.total_ordering()` 装饰器，用于自动生成缺少的比较方法。
+
+  这么做是因为解释器有可能会调换参数的位置，比如把 `y > x` 替换为 `x < y`。
+
+- 总是使用 `def` 语句将 `lambda` 与标识符绑定而不是使用赋值语句。
+
+  ```python
+  # Correct:
+  def f(x): return 2*x
+  
+  # Wrong:
+  f = lambda x: 2*x
+  ```
+
+  第一种形式表示生成的函数对象的名称是 "`f`"，而不是通用的"`<lambda>`"。这对一般的回溯和字符串表示更有用。与显式 `def` 语句相比，赋值语句的使用消除了 lambda 表达式的唯一优点（即可以嵌入到更大的表达式中）。
+
+- 从 `Exception` 类而不是 `BaseException` 类派生异常。从 BaseException 直接继承只适用于捕获异常几乎总是错误的异常。
+
+  根据捕获异常的代码可能需要的区别来设计异常层次，而不是异常发生的位置。力求以编程方式回答 "出了什么问题？"的问题，而不是仅仅说明 "出现了一个问题"。（可参阅[PEP 3151](https://peps.python.org/pep-3151/)）
+
+- 应在不丢失原始回溯的情况下使用 `raise X from Y` 来表示显式替换。
+  在有意替换内部异常（使用 `raise X from None`）时，应确保相关细节被转移到新异常中（例如在将 `KeyError` 转换为 `AttributeError` 时保留属性名称，或在新异常消息中嵌入原始异常的文本）
+
+- 捕获异常时，尽可能提及具体的异常，而不是使用简单的 `except:` 子句：
+
+  ```python
+  try:
+      import platform_specific_module
+  except ImportError:
+      platform_specific_module = None
+  ```
+
+  空的 `except:` 子句将捕获 `SystemExit` 和 `KeyboardInterrupt` 异常，这将使 `Control-C` 中断程序变得更加困难，还会掩盖其他问题。如果想捕获所有提示程序错误的异常，使用 `except Exception`（空的 `except:` 子句相当于 `except BaseException:`）。
+
+
+  一个好的经验法则是将空 `except:` 子句的使用限制在以下两种情况中：
+
+  1. 如果 `exception handler` 将打印或 log 记录回溯，至少让用户知道错误发生了。
+  2. 如果代码需要做一些清理工作，但又要用 `raise` 将异常向上传播。不过 `try...finally` 会是处理这种情况的更好方式。
+
+- 当捕获 $OS$ 错误时，最好使用 $Python 3.3$ 中引入的显式异常层次结构，而不是内省 `errno` 值。
+
+- 对于所有的 `try/except` 子句，将 `try` 子句限制在所需代码量的绝对最小值，这样可以避免掩盖错误。
+
+  ```python
+  # Correct:
+  try:
+      value = collection[key]
+  except KeyError:
+      return key_not_found(key)
+  else:
+      return handle_value(value)
+      
+  # Wrong:
+  try:
+      # Too broad!
+      return handle_value(collection[key])
+  except KeyError:
+      # Will also catch KeyError raised by handle_value()
+      return key_not_found(key)
+  ```
+
+- 当资源是代码中某一特定部分的本地资源时，应使用 `with` 语句来确保资源在使用后被及时可靠地清理。也可以使用 `try/finally` 语句。
+
+- 上下文管理器除了获取和释放资源外，还应通过单独的函数或方法来调用：
+
+  ```python
+  # Correct:
+  with conn.begin_transaction():
+      do_stuff_in_transaction(conn)
+      
+  # Wrong:
+  with conn:
+      do_stuff_in_transaction(conn)
+  ```
+
+  后一个示例没有提供任何信息来说明 `__enter__` 和 `__exit__` 方法除了在事务结束后关闭连接外，还在做其他事情。在这种情况下，明确的信息非常重要。
+
+- `return` 语句要一致。函数中的 `return` 语句要么就都返回表达式，要么就都不返回。如果都要返回表达式，但是没有返回值的 `return` 语句，应当 `return None`，并且在函数末尾（如果能抵达）也应该指明 `return` 语句。
+
+  ```python
+  # Correct:
+  
+  def foo(x):
+      if x >= 0:
+          return math.sqrt(x)
+      else:
+          return None
+  
+  def bar(x):
+      if x < 0:
+          return None
+      return math.sqrt(x)
+  ```
+
+  ```python
+  # Wrong:
+  
+  def foo(x):
+      if x >= 0:
+          return math.sqrt(x)
+  
+  def bar(x):
+      if x < 0:
+          return
+      return math.sqrt(x)
+  ```
+
+- 使用 `''.startswith()` 和 `''.endswith()` 来替代使用切片来检查前缀和后缀。这样更简洁，也更不容易出错。
+
+  ```python
+  # Correct:
+  if foo.startswith('bar'):
+  
+  # Wrong:
+  if foo[:3] == 'bar':
+  ```
+
+- 对象类型比较应始终使用 `isinstance()` 而不是直接比较类型：
+
+  ```python
+  # Correct:
+  if isinstance(obj, int):
+  
+  # Wrong:
+  if type(obj) is type(1):
+  ```
+
+- 对于序列（`str`, `List`, `Tuple`），利用空序列为 `False` 这一事实：
+
+  ```python
+  # Correct:
+  if not seq:
+  if seq:
+  
+  # Wrong:
+  if len(seq):
+  if not len(seq):
+  ```
+
+- 拒绝 `trailing whitespace`
+
+- 不要使用 `==` 将布尔值和 `True` 或 `False` 比较：
+
+  ```python
+  # Correct:
+  if greeting:
+  
+  # Wrong:
+  if greeting == True:
+  
+  # Worse:
+  if greeting is True:
+  ```
+
+- 不鼓励在 try...finally 的 finally 套件中使用流程控制语句 return/break/continue，因为这样会使流程控制语句跳转到 finally 套件之外。这是因为此类语句将隐式地取消通过 finally 套件传播的任何活动异常：
+
+  ```python
+  # Wrong:
+  def foo():
+      try:
+          1 / 0
+      finally:
+          return 42
+  ```
+
+### 函数注解
+
+这部分很重要，但篇幅有限这里写不下了，详细请参阅 [PEP 484](https://peps.python.org/pep-0484/)。
+
+### 类型注解
+
+这部分很重要，但篇幅有限只能写下一小部分，详细请参阅 [PEP 526](https://peps.python.org/pep-0526/) 和 [PEP 484](https://peps.python.org/pep-0484/)，但 $PEP \hspace{0.5em} 484$ 应是首选语法。
+
+- 模块级变量、类和实例变量以及局部变量的注解应在冒号后留一个空格，冒号前不需要空格。
+
+- 如果右边有赋值，那么类型注解的两边各有一个空格
+
+  ```python
+  # Correct:
+  
+  code: int
+  
+  class Point:
+      coords: Tuple[int, int]
+      label: str = '<unknown>'
+      
+  ```
+
+  ```python
+  # Wrong:
+  
+  code:int  # No space after colon
+  code : int  # Space before colon
+  
+  class Test:
+      result: int=0  # No spaces around equality sign
+  ```
