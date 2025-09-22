@@ -105,22 +105,31 @@
     <loc>http://localhost:1313/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/</loc>
     <lastmod>2024-04-26T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>http://localhost:1313/tags/git/</loc>
+    <lastmod>2024-04-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/learningnote/</loc>
+    <lastmod>2024-04-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-git-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E8%8A%82/</loc>
+    <lastmod>2024-04-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/series/%E5%AE%9E%E9%AA%8C%E5%AE%A4%E8%AF%BE%E7%A8%8B/</loc>
+    <lastmod>2024-04-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2024-04-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2024-04-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-git-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E8%8A%82/</loc>
+    <lastmod>2024-04-20T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>http://localhost:1313/tags/c&#43;&#43;/</loc>
     <lastmod>2023-10-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/learningnote/</loc>
-    <lastmod>2023-10-27T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/</loc>
-    <lastmod>2023-10-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/series/%E5%AE%9E%E9%AA%8C%E5%AE%A4%E8%AF%BE%E7%A8%8B/</loc>
-    <lastmod>2023-10-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2023-10-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2023-10-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/</loc>
@@ -141,18 +150,11 @@
     <loc>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/</loc>
     <lastmod>2023-10-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/git/</loc>
-    <lastmod>2023-10-17T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/</loc>
     <lastmod>2023-10-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/archives/</loc>
     <lastmod>2019-05-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/p/</loc>
-  </url><url>
-    <loc>http://localhost:1313/p/</loc>
   </url><url>
     <loc>http://localhost:1313/p/</loc>
   </url><url>

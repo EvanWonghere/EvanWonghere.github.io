@@ -9,7 +9,490 @@
         <managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor>
         <webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster>
         <copyright>EvanWong</copyright>
-        <lastBuildDate>Fri, 27 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/series/%E5%AE%9E%E9%AA%8C%E5%AE%A4%E8%AF%BE%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 21 Apr 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/series/%E5%AE%9E%E9%AA%8C%E5%AE%A4%E8%AF%BE%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>实验室 Git 基础课程 · 第二节</title>
+        <link>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-git-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E8%8A%82/</link>
+        <pubDate>Sun, 21 Apr 2024 00:00:00 +0000</pubDate>
+        <author>yufenghuang009@gmail.com (Evan Wong)</author>
+        <guid>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-git-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E8%8A%82/</guid>
+        <description>&lt;h1 id=&#34;git-lesson-2--git-basics&#34;&gt;Git Lesson 2 &amp;ndash; Git Basics
+&lt;/h1&gt;&lt;h2 id=&#34;git-basics&#34;&gt;Git Basics
+&lt;/h2&gt;&lt;h3 id=&#34;well-well-well&#34;&gt;well well well
+&lt;/h3&gt;&lt;p&gt;实际上，很大可能，在相当长的一段时间里，你只会使用到本节课所学习到的 &lt;code&gt;git commands&lt;/code&gt;，因此这节课是最基础，同时也是最重要的一节课。&lt;/p&gt;
+&lt;h3 id=&#34;getting-a-git-repository&#34;&gt;Getting a Git Repository
+&lt;/h3&gt;&lt;h4 id=&#34;what-is-a--git-repository&#34;&gt;What is a  Git repository?
+&lt;/h4&gt;&lt;p&gt;&lt;code&gt;Repository&lt;/code&gt;，有时简称&lt;code&gt;repo&lt;/code&gt;，如其名所述，这是一个仓库/版本库，用于追踪并保存 Git 项目文件中的所有更改历史，然后把所有数据保存在 &lt;code&gt;.git&lt;/code&gt;,文件中。我们通过 Git 来进行版本控制，用户可以在此删除或复制已有的版本库或为现有的项目创建新的版本库。&lt;/p&gt;
+&lt;p&gt;上一节课说过，对于&lt;em&gt;&lt;strong&gt;DVCS&lt;/strong&gt;&lt;/em&gt;，在服务器端存储有一份项目代码仓库，这个叫做&lt;strong&gt;远程仓库&lt;/strong&gt;，而每个开发者本机项目代码仓库，叫做&lt;strong&gt;本地仓库&lt;/strong&gt;，将远程仓库整个拷贝到本机的操作，我们称之为&lt;strong&gt;克隆&lt;/strong&gt;（&lt;code&gt;clone&lt;/code&gt;），本地仓库可以向远程仓库&lt;strong&gt;推送&lt;/strong&gt;（&lt;code&gt;push&lt;/code&gt;）文件，也可以从远程仓库&lt;strong&gt;拉取&lt;/strong&gt;（&lt;code&gt;pull&lt;/code&gt;）。&lt;/p&gt;
+&lt;h4 id=&#34;initializing-a-repository-in-an-existing-directory&#34;&gt;Initializing a Repository in an Existing Directory
+&lt;/h4&gt;&lt;p&gt;如果你有一个尚未进行版本控制的项目目录，想要用 Git 来控制它，那么首先需要进入该项目目录中。 对于 &lt;code&gt;Windows&lt;/code&gt;，请在 &lt;code&gt;Git Bash&lt;/code&gt; 中进入到项目目录，&lt;code&gt;Linux&lt;/code&gt; 和 &lt;code&gt;Mac&lt;/code&gt; 在 &lt;code&gt;CLI&lt;/code&gt; 中进入即可。&lt;/p&gt;
+&lt;p&gt;随后执行指令 &lt;code&gt;git init&lt;/code&gt;，该命令将你的项目文件夹转变成 &lt;code&gt;Git Repository&lt;/code&gt;，并创建一个名为 &lt;code&gt;.git&lt;/code&gt; 的子目录，这个子目录含有你初始化的 Git 仓库中所有的必须文件，这些文件是 Git 仓库的骨干（我们并不会深入地学习 &lt;code&gt;Git&lt;/code&gt; 的原理，因此你无需理解 &lt;code&gt;.git&lt;/code&gt; 里的文件的作用）。 但是，在这个时候，我们仅仅是做了一个初始化的操作，你的项目里的文件还没有被跟踪（&lt;code&gt;tracked&lt;/code&gt;）。&lt;/p&gt;
+&lt;p&gt;如果你的项目文件夹本身是一个非空目录且想要进行版本控制，那么你应该开始跟踪这些文件并且初始提交，你可以通过 &lt;code&gt;git add&lt;/code&gt; 命令来指定所需的文件来进行追踪，然后执行 &lt;code&gt;git commit&lt;/code&gt; ：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git add *
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git commit -m &lt;span class=&#34;s1&#34;&gt;&amp;#39;initial commit&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;稍后我们再逐一解释这些指令的行为。 现在，你已经得到了一个存在被追踪文件与初始提交的 Git 仓库。&lt;/p&gt;
+&lt;h4 id=&#34;cloning-an-existing-repository&#34;&gt;Cloning an Existing Repository
+&lt;/h4&gt;&lt;p&gt;如果你想获得一份已经存在了的 Git 仓库的拷贝，比如说，你想为某个开源项目贡献自己的一份力，这时就要用到 &lt;code&gt;git clone&lt;/code&gt; 命令。Git 克隆的是该 Git 仓库服务器上的几乎所有数据，而不是仅仅复制完成你的工作所需要文件。 当你执行 &lt;code&gt;git clone&lt;/code&gt; 命令的时候，默认配置下远程 Git 仓库中的每一个文件的每一个版本都将被拉取下来。&lt;/p&gt;
+&lt;p&gt;克隆仓库的命令是 &lt;code&gt;git clone &amp;lt;url&amp;gt;&lt;/code&gt; 。 比如，要克隆 eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 的库 &lt;code&gt;eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&lt;/code&gt;，可以用下面的命令：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git clone https://github.com/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee.git
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这会在当前目录下创建一个名为 “eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee” 的目录，并在这个目录下初始化一个 &lt;code&gt;.git&lt;/code&gt; 文件夹， 从远程仓库拉取下所有数据放入 &lt;code&gt;.git&lt;/code&gt; 文件夹，然后从中读取最新版本的文件的拷贝。 如果你进入到这个新建的 &lt;code&gt;eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&lt;/code&gt; 文件夹，你会发现所有的项目文件已经在里面了，准备就绪等待后续的开发和使用。&lt;/p&gt;
+&lt;p&gt;如果你想在克隆远程仓库的时候，自定义本地仓库的名字，你可以通过额外的参数指定新的目录名：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git clone https://github.com/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee.git eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Git 支持多种数据传输协议。 上面的例子使用的是 &lt;code&gt;https&lt;/code&gt; 协议，不过你也可以使用 &lt;code&gt;SSH&lt;/code&gt; 传输协议，比如&lt;code&gt;git@github.com:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee.git&lt;/code&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;recording-changes-to-the-repository&#34;&gt;Recording Changes to the Repository
+&lt;/h3&gt;&lt;p&gt;首先，除了&lt;strong&gt;版本库&lt;/strong&gt;外，你还需要掌握两个概念：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;工作区/工作目录&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;简单来说，就是你能够看到的文件夹&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;暂存区（&lt;em&gt;Staging area&lt;/em&gt;）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;暂存区是位于Git仓库内部的一个中间区域，也就是版本库 &lt;code&gt;.git&lt;/code&gt; 目录下的 &lt;code&gt;index&lt;/code&gt; 文件。暂存区的含义是，在对项目文件进行修改后，这些修改并不会立即被提交到版本库中。相反，你需要将这些修改先添加到暂存区，然后才能将其作为一个整体提交到版本库中。其中包含了项目文件。当对项目文件进行修改时，这些修改只存在于工作目录中，并没有被Git跟踪。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果你暂时没有理解以上两个概念，没关系，先记住，马上就会了解了。&lt;/p&gt;
+&lt;p&gt;此时，你应该已经在本地计算机上有了一个真正的 Git 仓库，并有了它所有文件的签出或工作副本。通常情况下，每当项目达到你想要记录的状态时，你就会开始进行修改，并将这些修改的快照提交到仓库中。&lt;/p&gt;
+&lt;p&gt;请记住，工作目录中的每个文件都有两种状态：&lt;strong&gt;已跟踪&lt;/strong&gt;或&lt;strong&gt;未跟踪&lt;/strong&gt;。跟踪文件是上次快照中的文件，以及任何新缓存的文件；它们可以是未修改的、已修改的或已缓存的。简而言之，&lt;em&gt;&lt;strong&gt;跟踪文件就是 Git 知道的文件&lt;/strong&gt;&lt;/em&gt;。&lt;/p&gt;
+&lt;p&gt;未跟踪文件指的是&lt;strong&gt;其他所有文件&lt;/strong&gt;&amp;ndash;工作目录中的任何文件，这些文件&lt;em&gt;既不在上次快照中，也不在暂存区域中&lt;/em&gt;。当你第一次克隆一个仓库时，所有文件都会被跟踪且未修改，因为 Git 刚刚签出了它们，你还没有编辑过任何东西。&lt;/p&gt;
+&lt;p&gt;当你编辑文件时，Git 会将它们视为修改过的文件，因为你在上次提交后已经修改了它们。在工作过程中，你会选择性地对这些修改过的文件进行阶段化，然后提交所有这些阶段化的修改，如此循环往复。&lt;/p&gt;
+&lt;img src=&#34;lifecycle.png&#34; alt=&#34;Git File Lifecycle&#34; style=&#34;zoom: 67%;&#34; /&gt;
+&lt;h4 id=&#34;checking-the-status-of-your-files&#34;&gt;Checking the Status of Your Files
+&lt;/h4&gt;&lt;p&gt;正如上图所示，文件的状态有 &lt;code&gt;untracked&lt;/code&gt;, &lt;code&gt;unmodified&lt;/code&gt;, &lt;code&gt;modified&lt;/code&gt;, &lt;code&gt;staged&lt;/code&gt;，想要查看哪些文件处于什么状态，你可以使用 &lt;code&gt;git status&lt;/code&gt; 指令。&lt;/p&gt;
+&lt;img src=&#34;status.png&#34; alt=&#34;Git Status&#34; style=&#34;zoom: 25%;&#34; /&gt;
+&lt;h4 id=&#34;tracking-new-files&#34;&gt;Tracking New Files
+&lt;/h4&gt;&lt;p&gt;Git并不会自动跟踪新文件，除非你明确地告诉它“我需要跟踪该文件”。 这样的处理让你不必担心将生成的二进制文件或其它不想被跟踪的文件包含进来。现在假设我们新建了一个 &lt;code&gt;README.md&lt;/code&gt;，并想要跟踪它，那么可以使用命令 &lt;code&gt;git add&lt;/code&gt; 开始跟踪，运行过后此时再运行 &lt;code&gt;git status&lt;/code&gt; 命令，会看到 &lt;code&gt;README.md&lt;/code&gt; 文件已被跟踪，并处于暂存状态。&lt;/p&gt;
+&lt;img src=&#34;add.png&#34; alt=&#34;Git Add&#34; style=&#34;zoom: 50%;&#34; /&gt;
+&lt;p&gt;只要在 &lt;code&gt;Changes to be committed&lt;/code&gt; 这行下面的，就说明是已暂存状态。 如果此时提交，那么该文件在你运行 &lt;code&gt;git add&lt;/code&gt; 时的版本将被留存在后续的历史记录中。&lt;code&gt;git add&lt;/code&gt; 命令使用文件或目录的路径作为参数；如果参数是目录的路径，该命令将递归地跟踪该目录下的所有文件。例如 &lt;code&gt;git add *&lt;/code&gt; 就是对当前目录下所有可执行该命令的文件执行 &lt;code&gt;git add&lt;/code&gt;。&lt;/p&gt;
+&lt;h4 id=&#34;staging-modified-files&#34;&gt;Staging Modified Files
+&lt;/h4&gt;&lt;p&gt;现在我们来修改一个已被跟踪的文件。 如果你修改了一个名为 &lt;code&gt;DONNOTMODIFY.md&lt;/code&gt; 的已被跟踪的文件，然后运行 &lt;code&gt;git status&lt;/code&gt; 命令&lt;/p&gt;
+&lt;img src=&#34;modified.png&#34; alt=&#34;Modified File&#34; style=&#34;zoom: 33%;&#34; /&gt;
+&lt;p&gt;文件 &lt;code&gt;DONNOTMODIFY.md&lt;/code&gt; 出现在 &lt;code&gt;Changes not staged for commit&lt;/code&gt; 这行下面，说明已跟踪文件的内容发生了变化，但还没有放到暂存区。 要暂存这次更新，需要运行 &lt;code&gt;git add&lt;/code&gt; 命令。 这是个多功能命令：&lt;em&gt;可以用它开始跟踪新文件，或者把已跟踪的文件放到暂存区，还能用于合并时把有冲突的文件标记为已解决状态等&lt;/em&gt;。 &lt;em&gt;&lt;strong&gt;将这个命令理解为“精确地将内容添加到下一次提交中”而不是“将一个文件添加到项目中”要更加合适&lt;/strong&gt;&lt;/em&gt;。 现在让我们运行 &lt;code&gt;git add&lt;/code&gt; 将&lt;code&gt;DONNOTMODIFY.md&lt;/code&gt;放到暂存区，然后再看看 &lt;code&gt;git status&lt;/code&gt; 的输出：&lt;/p&gt;
+&lt;img src=&#34;addModified.png&#34; alt=&#34;Add Modified File&#34; style=&#34;zoom: 33%;&#34; /&gt;
+&lt;p&gt;现在&lt;code&gt;DONNOTMODIFY.md&lt;/code&gt; 和&lt;code&gt;README.md&lt;/code&gt;都已暂存，下次提交时就会一并记录到仓库。 假设此时，你想要在 &lt;code&gt;DONNOTMODIFY.md&lt;/code&gt; 里再加条注释。 重新编辑存盘后，准备好提交。 不过且慢，再运行 &lt;code&gt;git status&lt;/code&gt; 看看：&lt;/p&gt;
+&lt;img src=&#34;modifiedAdd.png&#34; alt=&#34;Modified Unstaged&#34; style=&#34;zoom:33%;&#34; /&gt;
+&lt;p&gt;你会发现 &lt;code&gt;DONNOTMODIFY.md&lt;/code&gt; 文件同时出现在暂存区和非暂存区。 这是怎么回事？实际上 Git 只不过暂存了你运行 &lt;code&gt;git add&lt;/code&gt; 命令时的版本。 如果你现在提交，&lt;code&gt;DONNOTMODIFY.md&lt;/code&gt; 的版本是你最后一次运行 &lt;code&gt;git add&lt;/code&gt; 命令时的那个版本，而不是你运行 &lt;code&gt;git commit&lt;/code&gt; （后面会讲这个指令）时，在工作目录中的当前版本。 所以，运行了 &lt;code&gt;git add&lt;/code&gt; 之后又作了修订的文件，需要重新运行 &lt;code&gt;git add&lt;/code&gt; 把最新版本重新暂存起来：&lt;/p&gt;
+&lt;img src=&#34;addadd.png&#34; alt=&#34;Add Modified Unstaged&#34; style=&#34;zoom:33%;&#34; /&gt;
+&lt;h4 id=&#34;short-status&#34;&gt;Short Status
+&lt;/h4&gt;&lt;p&gt;&lt;code&gt;git status&lt;/code&gt; 命令的输出十分详细，但其用语有些繁琐。 Git 有一个选项可以帮你缩短状态命令的输出，这样可以以简洁的方式查看更改。 如果你使用 &lt;code&gt;git status -s&lt;/code&gt; 命令或 &lt;code&gt;git status --short&lt;/code&gt; 命令，你将得到一种格式更为紧凑的输出。&lt;/p&gt;
+&lt;img src=&#34;shortstatus.png&#34; alt=&#34;Git Status&#34; style=&#34;zoom: 50%;&#34; /&gt;
+&lt;p&gt;未跟踪文件前面有 &lt;code&gt;??&lt;/code&gt; 标记，新添加到暂存区中的文件前面有 &lt;code&gt;A&lt;/code&gt; 标记，修改过的文件前面有 &lt;code&gt;M&lt;/code&gt; 标记。 输出中有两栏，左栏指明了暂存区的状态，右栏指明了工作区的状态（注意到有两个&lt;code&gt;M&lt;/code&gt;，分别在左栏和右栏，左栏右栏&lt;code&gt;M&lt;/code&gt;其实也可以同时出现在一个文件）。&lt;/p&gt;
+&lt;h4 id=&#34;ignoring-files&#34;&gt;Ignoring Files
+&lt;/h4&gt;&lt;p&gt;一般我们总会有些文件无需纳入 Git 的管理，也不希望它们总出现在未跟踪文件列表。  在这种情况下，我们可以创建一个名为 &lt;code&gt;.gitignore&lt;/code&gt; 的文件，列出要忽略的文件的模式。 来看一个 &lt;code&gt;.gitignore&lt;/code&gt; 的例子：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ignore.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Git Ignore&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;第一行告诉 Git 忽略所有以 &lt;code&gt;.o&lt;/code&gt; 或 &lt;code&gt;.a&lt;/code&gt; 结尾的文件。一般这类对象文件和存档文件都是编译过程中出现的。 第二行告诉 Git 忽略所有名字以波浪符（~）结尾的文件，许多文本编辑软件（比如 Emacs）都用这样的文件名保存副本。 此外，你可能还需要忽略 log，tmp 或者 pid 目录，以及自动生成的文档等等。 要养成一开始就为你的新仓库设置好 &lt;code&gt;.gitignore&lt;/code&gt; 文件的习惯，以免将来误提交这类无用的文件。&lt;/p&gt;
+&lt;p&gt;文件 &lt;code&gt;.gitignore&lt;/code&gt; 的格式规范如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;所有空行或者以 &lt;code&gt;#&lt;/code&gt; 开头的行都会被 Git 忽略。&lt;/li&gt;
+&lt;li&gt;可以使用标准的 glob 模式匹配，它会递归地应用在整个工作区中。&lt;/li&gt;
+&lt;li&gt;匹配模式可以以（&lt;code&gt;/&lt;/code&gt;）开头防止递归。&lt;/li&gt;
+&lt;li&gt;匹配模式可以以（&lt;code&gt;/&lt;/code&gt;）结尾指定目录。&lt;/li&gt;
+&lt;li&gt;要忽略指定模式以外的文件或目录，可以在模式前加上叹号（&lt;code&gt;!&lt;/code&gt;）取反。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;所谓的 glob 模式是指 shell 所使用的简化了的正则表达式。 星号（&lt;code&gt;*&lt;/code&gt;）匹配零个或多个任意字符；&lt;code&gt;[abc]&lt;/code&gt; 匹配任何一个列在方括号中的字符 （这个例子要么匹配一个 a，要么匹配一个 b，要么匹配一个 c）； 问号（&lt;code&gt;?&lt;/code&gt;）只匹配一个任意字符；如果在方括号中使用短划线分隔两个字符， 表示所有在这两个字符范围内的都可以匹配（比如 &lt;code&gt;[0-9]&lt;/code&gt; 表示匹配所有 0 到 9 的数字）。 使用两个星号（&lt;code&gt;**&lt;/code&gt;）表示匹配任意中间目录，比如 &lt;code&gt;a/**/z&lt;/code&gt; 可以匹配 &lt;code&gt;a/z&lt;/code&gt; 、 &lt;code&gt;a/b/z&lt;/code&gt; 或 &lt;code&gt;a/b/c/z&lt;/code&gt; 等。&lt;/p&gt;
+&lt;p&gt;我们再看一个 &lt;code&gt;.gitignore&lt;/code&gt; 文件的例子：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 忽略所有的 .a 文件
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;*.a
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 但跟踪所有的 lib.a，即便你在前面忽略了 .a 文件
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;!lib.a
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 只忽略当前目录下的 TODO 文件，而不忽略 subdir/TODO
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;/TODO
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 忽略任何目录下名为 build 的文件夹
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;build/
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 忽略 doc/notes.txt，但不忽略 doc/server/arch.txt
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;doc/*.txt
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 忽略 doc/ 目录及其所有子目录下的 .pdf 文件
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;doc/**/*.pdf
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;GitHub 有一个十分详细的针对数十种项目及语言的 &lt;code&gt;.gitignore&lt;/code&gt; 文件列表， 你可以在 &lt;a class=&#34;link&#34; href=&#34;https://github.com/github/gitignore&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/github/gitignore&lt;/a&gt; 找到它。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h4 id=&#34;viewing-your-staged-and-unstaged-changes&#34;&gt;Viewing Your Staged and Unstaged Changes
+&lt;/h4&gt;&lt;p&gt;如果你更想知道具体文件修改了什么地方，那么 &lt;code&gt;git status&lt;/code&gt; 的输出内容就有些太过于简略了，那么你可以使用 &lt;code&gt;git diff&lt;/code&gt; 指令。你通常可能会用它来回答这两个问题：当前做的哪些更新尚未暂存？ 有哪些更新已暂存并准备好下次提交？ 虽然 &lt;code&gt;git status&lt;/code&gt; 已经通过在相应栏下列出文件名的方式回答了这个问题，但 &lt;code&gt;git diff&lt;/code&gt; 能通过文件补丁的格式更加具体地显示哪些行发生了改变。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;不加参数的 &lt;code&gt;git diff&lt;/code&gt;，比较的是工作目录中当前文件和暂存区域快照之间的差异。 也就是修改之后还没有暂存起来的变化内容。&lt;/li&gt;
+&lt;li&gt;若要查看已暂存的将要添加到下次提交里的内容，可以用 &lt;code&gt;git diff --staged&lt;/code&gt; 命令。 这条命令将比对已暂存文件与最后一次提交的文件差异。&lt;/li&gt;
+&lt;li&gt;用 &lt;code&gt;git diff --cached&lt;/code&gt; 可以查看已经暂存起来的变化。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/diff.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Git Diff&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;committing-your-changes&#34;&gt;Committing Your Changes
+&lt;/h4&gt;&lt;p&gt;现在的暂存区已经准备就绪，可以提交了。 在此之前，请务必确认还有什么已修改或新建的文件还没有 &lt;code&gt;git add&lt;/code&gt; 过， 否则提交的时候不会记录这些尚未暂存的变化。 这些已修改但未暂存的文件只会保留在本地磁盘。 所以，每次准备提交前，先用 &lt;code&gt;git status&lt;/code&gt; 看下，你所需要的文件是不是都已暂存起来了， 然后再运行提交命令 &lt;code&gt;git commit&lt;/code&gt;，这样会触发你配置时选择的文本编辑器来输入提交说明，如下图即&lt;code&gt;vim&lt;/code&gt;：&lt;/p&gt;
+&lt;img src=&#34;commitMessage.png&#34; alt=&#34;Git Commit Message&#34; style=&#34;zoom: 33%;&#34; /&gt;
+&lt;p&gt;可以看到，默认的提交消息包含最后一次运行 &lt;code&gt;git status&lt;/code&gt; 的输出，放在注释行里，另外开头还有一个空行，供你输入提交说明。 你完全可以去掉这些注释行，不过留着也没关系，多少能帮你回想起这次更新的内容有哪些。退出编辑器时，Git 会丢弃注释行，用你输入的提交说明生成一次提交。&lt;/p&gt;
+&lt;img src=&#34;afterCommit.png&#34; alt=&#34;Git Status After Commit&#34; style=&#34;zoom: 33%;&#34; /&gt;
+&lt;p&gt;你也可以在 &lt;code&gt;commit&lt;/code&gt; 命令后添加 &lt;code&gt;-m&lt;/code&gt; 选项，将提交信息与命令放在同一行，这样可能会更加便捷：&lt;/p&gt;
+&lt;img src=&#34;commitm.png&#34; alt=&#34;git commit -m&#34; style=&#34;zoom:33%;&#34; /&gt;
+&lt;p&gt;可以看到，提交后它会告诉你，当前是在哪个分支（&lt;code&gt;master&lt;/code&gt;）提交的，本次提交的完整 SHA-1 校验和是什么，以及在本次提交中，有多少文件修订过，多少行添加和删改过。&lt;/p&gt;
+&lt;p&gt;请记住，提交时记录的是放在暂存区域的快照。 任何还未暂存文件的仍然保持已修改状态，可以在下次提交时纳入版本管理。 每一次运行提交操作，都是对你项目作一次快照，以后可以回到这个状态，或者进行比较。&lt;/p&gt;
+&lt;p&gt;之前的两处演示都是提交部分文件，如果你直接键入 &lt;code&gt;git commit&lt;/code&gt; 或者 &lt;code&gt;git commit -m &amp;quot;message&amp;quot;&lt;/code&gt;，那么将会提交所有已暂存文件。&lt;/p&gt;
+&lt;h4 id=&#34;skipping-the-staging-area&#34;&gt;Skipping the Staging Area
+&lt;/h4&gt;&lt;p&gt;尽管使用暂存区域的方式可以精心准备要提交的细节，但有时候这么做略显繁琐。 Git 提供了一个跳过使用暂存区域的方式， 只要在提交的时候，给 &lt;code&gt;git commit&lt;/code&gt; 加上 &lt;code&gt;-a&lt;/code&gt; 选项，Git 就会自动把所有已经跟踪过的文件暂存起来一并提交，从而跳过 &lt;code&gt;git add&lt;/code&gt; 步骤。&lt;/p&gt;
+&lt;p&gt;也就是说，使用该指令的话，再提交之前就不用再添加到暂存区了，因为 &lt;code&gt;-a&lt;/code&gt; 选项使本次提交包含了所有修改过的文件。 这很方便，但是要小心，有时这个选项会将不需要的文件添加到提交中或者提交暂时不想要提交的修改。&lt;/p&gt;
+&lt;h4 id=&#34;removing-files&#34;&gt;Removing Files
+&lt;/h4&gt;&lt;p&gt;要从 Git 中移除某个文件，就必须要从已跟踪文件清单中移除（确切地说，是从暂存区域移除），然后提交。 可以用 &lt;code&gt;git rm&lt;/code&gt; 命令完成此项工作，并连带从工作目录中删除指定的文件，这样以后就不会出现在未跟踪文件清单中了。&lt;/p&gt;
+&lt;p&gt;如果只是简单地从工作目录中手工删除文件，运行 &lt;code&gt;git status&lt;/code&gt; 时就会在 “Changes not staged for commit” 部分（也就是 &lt;em&gt;未暂存清单&lt;/em&gt;）看到：&lt;/p&gt;
+&lt;img src=&#34;rm.png&#34; alt=&#34;Delete File&#34; style=&#34;zoom: 50%;&#34; /&gt;
+&lt;p&gt;我们需要再运行 &lt;code&gt;git rm&lt;/code&gt; 记录此次移除文件的操作：&lt;/p&gt;
+&lt;img src=&#34;gitrm.png&#34; alt=&#34;git rm&#34; style=&#34;zoom:50%;&#34; /&gt;
+&lt;p&gt;下一次提交时，该文件就不再纳入版本管理了。 如果要删除之前修改过或已经放到暂存区的文件，则必须使用强制删除选项 &lt;code&gt;-f&lt;/code&gt;（即 force）。 这是一种安全特性，用于防止误删尚未添加到快照的数据，这样的数据不能被 Git 恢复。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git rm&lt;/code&gt; 和 &lt;code&gt;git rm -f&lt;/code&gt; 的主要区别在于它们处理已修改但未提交的文件的方式。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;git rm&lt;/code&gt;：如果文件自上次提交后已被修改，&lt;code&gt;git rm&lt;/code&gt; 会拒绝删除该文件。这是因为 &lt;code&gt;git rm&lt;/code&gt; 默认要求要删除的文件必须与分支的最新提交保持一致，并且在索引中不能有对其内容的更新。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git rm -f&lt;/code&gt;：即使文件自上次提交后已被修改，&lt;code&gt;git rm -f&lt;/code&gt; 也会强制删除该文件。这是因为 &lt;code&gt;-f&lt;/code&gt; 参数可以覆盖对文件删除的安全检查。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;img src=&#34;rmf.png&#34; alt=&#34;Git Force Remove&#34; style=&#34;zoom: 50%;&#34; /&gt;
+&lt;p&gt;另外一种情况是，我们想把文件从 Git 仓库中删除（亦即从暂存区域移除），但仍然希望保留在当前工作目录中。 换句话说，你想让文件保留在磁盘，但是并不想让 Git 继续跟踪。 当你忘记添加 &lt;code&gt;.gitignore&lt;/code&gt; 文件，不小心把一个很大的日志文件或一堆 &lt;code&gt;.a&lt;/code&gt; 这样的编译生成文件添加到暂存区时，这一做法尤其有用。 为达到这一目的，使用 &lt;code&gt;--cached&lt;/code&gt; 选项：&lt;/p&gt;
+&lt;img src=&#34;ramcached.png&#34; alt=&#34;Git Remove Cached&#34; style=&#34;zoom: 50%;&#34; /&gt;
+&lt;p&gt;&lt;code&gt;git rm&lt;/code&gt; 命令后面可以列出文件或者目录的名字，也可以使用 &lt;code&gt;glob&lt;/code&gt; 模式。&lt;/p&gt;
+&lt;h4 id=&#34;moving-files&#34;&gt;Moving Files
+&lt;/h4&gt;&lt;p&gt;不像其它的 VCS 系统，Git 并不显式跟踪文件移动操作。 如果在 Git 中重命名了某个文件，仓库中存储的元数据并不会体现出这是一次改名操作。 不过 Git 非常聪明，它会推断出究竟发生了什么，至于具体是如何做到的，别问我就对了。&lt;/p&gt;
+&lt;p&gt;要在 Git 中对文件改名，可以这么做：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git mv file_from file_to
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;它会恰如预期般正常工作。 实际上，即便此时查看状态信息，也会明白无误地看到关于重命名操作的说明：&lt;/p&gt;
+&lt;img src=&#34;renamed.png&#34; alt=&#34;Git Move File&#34; style=&#34;zoom: 33%;&#34; /&gt;
+&lt;p&gt;其实，运行 &lt;code&gt;git mv&lt;/code&gt; 就相当于运行了下面三条命令：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mv file_from file_to
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git rm file_from
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git add file_to
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;如此分开操作，Git 也会意识到这是一次重命名，所以不管何种方式结果都一样。 两者唯一的区别在于，&lt;code&gt;git mv&lt;/code&gt; 是一条命令而非三条命令，直接使用 &lt;code&gt;git mv&lt;/code&gt; 方便得多。 不过在使用其他工具重命名文件时，记得在提交前 &lt;code&gt;git rm&lt;/code&gt; 删除旧文件名，再 &lt;code&gt;git add&lt;/code&gt; 添加新文件名。&lt;/p&gt;
+&lt;h4 id=&#34;viewing-the-commit-history&#34;&gt;Viewing the Commit History
+&lt;/h4&gt;&lt;p&gt;在提交了若干更新，又或者克隆了某个项目之后，你也许想回顾下提交历史。 完成这个任务最简单而又有效的工具是 &lt;code&gt;git log&lt;/code&gt; 命令。&lt;/p&gt;
+&lt;img src=&#34;gitlog.png&#34; alt=&#34;Git Commit History&#34; style=&#34;zoom:50%;&#34; /&gt;
+&lt;p&gt;不传入任何参数的默认情况下，&lt;code&gt;git log&lt;/code&gt; 会按时间先后顺序列出所有的提交，最近的更新排在最上面。 正如你所看到的，这个命令会列出每个提交的 SHA-1 校验和、作者的名字和电子邮件地址、提交时间以及提交说明。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git log&lt;/code&gt; 有许多选项可以帮助你搜寻你所要找的提交， 下面我们会介绍几个最常用的选项。&lt;/p&gt;
+&lt;p&gt;其中一个比较有用的选项是 &lt;code&gt;-p&lt;/code&gt; 或 &lt;code&gt;--patch&lt;/code&gt; ，它会显示每次提交所引入的差异（按 &lt;strong&gt;补丁&lt;/strong&gt; 的格式输出）。 你也可以限制显示的日志条目数量，例如使用 &lt;code&gt;-2&lt;/code&gt; 选项来只显示最近的两次提交：&lt;/p&gt;
+&lt;img src=&#34;logp2.png&#34; alt=&#34;Latest 2 Git Commit&#34; style=&#34;zoom: 33%;&#34; /&gt;
+&lt;p&gt;该选项除了显示基本信息之外，还附带了每次提交的变化。 当进行代码审查，或者快速浏览某个搭档的提交所带来的变化的时候，这个参数就非常有用了。 你也可以为 &lt;code&gt;git log&lt;/code&gt; 附带一系列的总结性选项。 比如你想看到每次提交的简略统计信息，可以使用 &lt;code&gt;--stat&lt;/code&gt; 选项：&lt;/p&gt;
+&lt;img src=&#34;logstat.png&#34; alt=&#34;Git Commit Stats&#34; style=&#34;zoom: 50%;&#34; /&gt;
+&lt;p&gt;正如你所看到的，&lt;code&gt;--stat&lt;/code&gt; 选项在每次提交的下面列出所有被修改过的文件、有多少文件被修改了以及被修改过的文件的哪些行被移除或是添加了。 在每次提交的最后还有一个总结。&lt;/p&gt;
+&lt;p&gt;另一个非常有用的选项是 &lt;code&gt;--pretty&lt;/code&gt;。 这个选项可以使用不同于默认格式的方式展示提交历史。 这个选项有一些内建的子选项供你使用。 比如 &lt;code&gt;oneline&lt;/code&gt; 会将每个提交放在一行显示，在浏览大量的提交时非常有用。 另外还有 &lt;code&gt;short&lt;/code&gt;，&lt;code&gt;full&lt;/code&gt; 和 &lt;code&gt;fuller&lt;/code&gt; 选项，它们展示信息的格式基本一致，但是详尽程度不一：&lt;/p&gt;
+&lt;img src=&#34;logpretty.png&#34; alt=&#34;Git Log Preety&#34; style=&#34;zoom: 40%;&#34; /&gt;
+&lt;p&gt;对于&lt;code&gt;pretty&lt;/code&gt;更详尽的使用描述参见&lt;a class=&#34;link&#34; href=&#34;https://git-scm.com/docs/pretty-formats&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;这里&lt;/a&gt;，我们不过多说明。&lt;/p&gt;
+&lt;p&gt;除了定制输出格式的选项之外，&lt;code&gt;git log&lt;/code&gt; 还有许多非常实用的限制输出长度的选项，也就是只输出一部分的提交。 之前你已经看到过 &lt;code&gt;-2&lt;/code&gt; 选项了，它只会显示最近的两条提交， 实际上，你可以使用类似 &lt;code&gt;-&amp;lt;n&amp;gt;&lt;/code&gt; 的选项，其中的 &lt;code&gt;n&lt;/code&gt; 可以是任何整数，表示仅显示最近的 &lt;code&gt;n&lt;/code&gt; 条提交。 不过实践中这个选项不是很常用，因为 Git 默认会将所有的输出传送到分页程序中，所以你一次只会看到一页的内容。&lt;/p&gt;
+&lt;p&gt;更多的输出控制选项，参见&lt;a class=&#34;link&#34; href=&#34;https://git-scm.com/docs/git-log&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;此处&lt;/a&gt;，我们不过多说明。&lt;/p&gt;
+&lt;h4 id=&#34;undoing-things&#34;&gt;Undoing Things
+&lt;/h4&gt;&lt;h5 id=&#34;undoing-commit&#34;&gt;Undoing Commit
+&lt;/h5&gt;&lt;p&gt;在任何一个阶段，你都有可能想要撤消某些操作。 有时候我们提交完了才发现漏掉了几个文件没有添加，或者提交信息写错了。 此时，可以运行带有 &lt;code&gt;--amend&lt;/code&gt; 选项的提交命令来重新提交，这个命令会将暂存区中的文件提交。 如果自上次提交以来你还未做任何修改（例如，在上次提交后马上执行了此命令）， 那么快照会保持不变，而你所修改的只是提交信息。&lt;/p&gt;
+&lt;p&gt;文本编辑器启动后，可以看到之前的提交信息。 编辑后保存会覆盖原来的提交信息。&lt;/p&gt;
+&lt;img src=&#34;commitamend.png&#34; alt=&#34;Undoing Commit&#34; style=&#34;zoom:50%;&#34; /&gt;
+&lt;p&gt;最终你只会有一个提交——第二次提交将代替第一次提交的结果。&lt;/p&gt;
+&lt;img src=&#34;onecommit.png&#34; alt=&#34;Final Commit&#34; style=&#34;zoom:50%;&#34; /&gt;
+&lt;h5 id=&#34;undoing-staged-file&#34;&gt;Undoing Staged File
+&lt;/h5&gt;&lt;p&gt;假设你已经修改了两个文件并且想要将它们作为两次独立的修改提交， 但是却意外地输入 &lt;code&gt;git add *&lt;/code&gt; 暂存了它们两个。如何只取消暂存两个中的一个呢？ &lt;code&gt;git status&lt;/code&gt; 命令提示了你：&lt;/p&gt;
+&lt;img src=&#34;statushint.png&#34; alt=&#34;Undoing Staged File&#34; style=&#34;zoom: 50%;&#34; /&gt;
+&lt;p&gt;在 “Changes to be committed” 文字正下方，提示使用 &lt;code&gt;git restore --staged &amp;lt;file&amp;gt;…&lt;/code&gt; 来取消暂存。这条指令会从暂存区域删除文件，但保留实际修改内容。&lt;/p&gt;
+&lt;h5 id=&#34;unmodifying-a-modified-file&#34;&gt;Unmodifying a Modified File
+&lt;/h5&gt;&lt;p&gt;如果你并不想保留文件的修改怎么办？ 你该如何方便地撤消修改——将它还原成上次提交时的样子（或者刚克隆完的样子，或者刚把它放入工作目录时的样子）？ 幸运的是，&lt;code&gt;git status&lt;/code&gt; 也告诉了你应该如何做：&lt;/p&gt;
+&lt;img src=&#34;statushintmodified.png&#34; alt=&#34;Unmodifying A Modified File&#34; style=&#34;zoom:50%;&#34; /&gt;
+&lt;p&gt;使用指令 &lt;code&gt;git restore &amp;lt;file&amp;gt;…&lt;/code&gt; 来放弃修改。&lt;/p&gt;
+&lt;p&gt;最后，记住，在 Git 中任何 &lt;strong&gt;已提交&lt;/strong&gt; 的东西几乎总是可以恢复的。 甚至那些被删除的分支中的提交或使用 &lt;code&gt;--amend&lt;/code&gt; 选项覆盖的提交也可以恢复 。 然而，任何你未提交的东西丢失后很可能再也找不到了。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>实验室 Git 基础课程 · 第一节</title>
+        <link>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-git-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E8%8A%82/</link>
+        <pubDate>Sat, 20 Apr 2024 00:00:00 +0000</pubDate>
+        <author>yufenghuang009@gmail.com (Evan Wong)</author>
+        <guid>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-git-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E8%8A%82/</guid>
+        <description>&lt;h1 id=&#34;git-lesson-1--introduction-to-version-control-system--git&#34;&gt;Git Lesson 1 &amp;ndash; Introduction to Version Control System &amp;amp; Git
+&lt;/h1&gt;&lt;h2 id=&#34;version-control&#34;&gt;Version Control
+&lt;/h2&gt;&lt;h3 id=&#34;what-is-version-control&#34;&gt;What is Version Control?
+&lt;/h3&gt;&lt;p&gt;版本控制是一种记录一个或若干文件内容变化，以便将来查阅特定版本修订情况的系统，简称 $VSC$。&lt;/p&gt;
+&lt;h3 id=&#34;why-use-version-control&#34;&gt;Why use Version Control?
+&lt;/h3&gt;&lt;p&gt;有了它你就可以将某个文件回溯到之前的状态，甚至将整个项目都回退到过去某个时间点的状态，你可以比较文件的变化细节，查出最后是谁修改了哪个地方，从而找出导致怪异问题出现的原因，又是谁在何时报告了某个功能缺陷等等，让团队可以协作和快速迭代项目的源代码。&lt;/p&gt;
+&lt;p&gt;使用版本控制系统通常还意味着，就算你乱来一气把整个项目中的文件改的改删的删，你也照样可以轻松恢复到原先的样子。 但额外增加的工作量却微乎其微。&lt;/p&gt;
+&lt;p&gt;原因还有很多，总的来说：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;协作&lt;/strong&gt;：版本控制系统允许多人同时在同一个项目上工作。每个人都可以在自己的分支上工作，然后合并他们的更改，解决冲突。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;版本历史&lt;/strong&gt;：所有的更改和历史版本都被保存，因此你可以查看特定版本的文件，或者查看文件的历史更改。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;备份和恢复&lt;/strong&gt;：如果文件被误删除或者损坏，可以从版本控制系统中恢复。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;追踪问题&lt;/strong&gt;：通过查看代码历史，可以找出何时何人引入了一个问题。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;实验新功能&lt;/strong&gt;：可以在分支上尝试新功能，如果实验成功，可以合并到主分支；如果失败，可以放弃分支，而不会影响主分支。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;等等等等，等你自己挖掘。&lt;/p&gt;
+&lt;h3 id=&#34;local-version-control-system-lvcs&#34;&gt;Local Version Control System, LVCS
+&lt;/h3&gt;&lt;p&gt;本地版本控制系统是最简单的版本控制形式，主要由单独的开发者而不是团队使用。通过本地版本控制，如 &lt;em&gt;Revision Control System&lt;/em&gt;($RCS$​​)，所有项目数据都存储在单个计算机上，对项目文件所做的更改存储为补丁。每个补丁仅包含自上一个补丁以来实施的更新。如果项目的特定版本出现问题，必须检查整个补丁集将项目文件凑在一起，从而了解项目在特定时刻的状态并且诊断问题。人们很久以前就开发了许多种本地版本控制系统，大多都是采用某种简单的数据库来记录文件的历次更新差异。&lt;/p&gt;
+&lt;img src=&#34;local.png&#34; alt=&#34;Local Version Control System&#34; style=&#34;zoom:50%;&#34; /&gt;
+&lt;h3 id=&#34;centralized-version-control-system-cvcs&#34;&gt;Centralized Version Control System, CVCS
+&lt;/h3&gt;&lt;p&gt;对于集中式版本控制系统，诸如 &lt;em&gt;Concurrent Versions System&lt;/em&gt;($CVS$)、&lt;em&gt;Subversion(SVN)&lt;/em&gt; 等，都有一个单一的集中管理的服务器，保存所有文件的修订版本，而协同工作的人们都通过客户端连到这台服务器，取出最新的文件或者提交更新。&lt;/p&gt;
+&lt;p&gt;集中式版本控制系统使用签入/推送工作流程连接到主服务器。对源代码的任何更改或更新都会作为新版本自动存储在代码仓库中。集中式版本控制系统具有强大的分支和合并功能，不需要将代码仓库克隆到多个计算机上。从这个意义上说，它可能更安全。&lt;/p&gt;
+&lt;p&gt;集中式版本控制系统需要网络连接。因为团队处理的是存储在一个服务器上的单个项目版本，所以服务中断会严重影响开发速度，如果服务器宕机一小时，那么在这一小时内，谁都无法提交更新，也就无法协同工作，甚至如果中心数据库所在的磁盘发生损坏，又没有做恰当备份，毫无疑问你将丢失所有数据——包括项目的整个变更历史，只剩下人们在各自机器上保留的单独快照。集中式版本控制的另一个缺点是扩展性很差。参与项目的开发者越多，在稳定环境中推送更改的机会就越少，这可能导致合并冲突等问题。&lt;/p&gt;
+&lt;img src=&#34;centralized.png&#34; alt=&#34;Centralized Version Control System&#34; style=&#34;zoom: 50%;&#34; /&gt;
+&lt;h3 id=&#34;distributed-version-control-system-dvsc&#34;&gt;Distributed Version Control System, DVSC
+&lt;/h3&gt;&lt;p&gt;在这类系统中，像 &lt;em&gt;Git&lt;/em&gt;、&lt;em&gt;Mercurial&lt;/em&gt;、&lt;em&gt;Bazaar&lt;/em&gt; 以及 &lt;em&gt;Darcs&lt;/em&gt; 等，客户端并不只提取最新版本的文件快照，而是把代码仓库完整地镜像下来。 这么一来，任何一处协同工作用的服务器发生故障，事后都可以用任何一个镜像出来的本地仓库恢复。 因为每一次的克隆操作，实际上都是一次对代码仓库的完整备份。&lt;/p&gt;
+&lt;p&gt;通过分布式版本控制系统，无需连接到主服务器即可签入、分支和合并。每个贡献者都从存储在云中的克隆代码仓库工作。其主要优势是团队成员可以快速独立地工作，而不必担心网络或 VPN 速度慢。甚至可以离线处理项目，但仍然需要互联网连接来推送或拉取更新。&lt;/p&gt;
+&lt;p&gt;更进一步，许多这类系统都可以指定和若干不同的远端代码仓库进行交互。籍此，你就可以在同一个项目中，分别和不同工作小组的人相互协作。 你可以根据需要设定不同的协作流程，比如层次模型式的工作流，而这在以前的集中式系统中是无法实现的。&lt;/p&gt;
+&lt;img src=&#34;distributed.png&#34; alt=&#34;Distributed Version Control System&#34; style=&#34;zoom: 67%;&#34; /&gt;
+&lt;h2 id=&#34;git&#34;&gt;Git
+&lt;/h2&gt;&lt;h3 id=&#34;what-is-git&#34;&gt;What is Git
+&lt;/h3&gt;&lt;p&gt;迄今为止，Git 是世界上使用最广泛的现代版本控制系统。Git 是一个成熟的、积极维护的开源项目，最初由著名的 Linux 操作系统内核创建者 Linus Torvalds 于 2005 年开发。&lt;/p&gt;
+&lt;p&gt;依靠 Git 进行版本控制的软件项目数量惊人，其中包括商业项目和开源项目。使用过 Git 的开发人员在现有的软件开发人才库中占有相当大的比例，而且它在各种操作系统和集成开发环境（IDE）上都能很好地运行。&lt;/p&gt;
+&lt;p&gt;Git 采用分布式架构，是 DVCS（即分布式版本控制系统）的典范。与 CVS 或 Subversion（也称 SVN）等曾经流行的版本控制系统不同的是，在 Git 中，每个开发人员的代码工作副本也是一个版本库，其中包含所有更改的完整历史记录。&lt;/p&gt;
+&lt;p&gt;除了分布式之外，Git 的设计还考虑到了性能、安全性和灵活性。&lt;/p&gt;
+&lt;h4 id=&#34;performance&#34;&gt;Performance
+&lt;/h4&gt;&lt;p&gt;与许多其他工具相比，Git 的原始性能非常强大。提交新的修改、分支、合并和比较过去的版本，这些操作都经过了性能优化。Git 内部的算法利用了关于真实源代码文件树的常见属性、随着时间推移文件树通常如何修改以及访问模式的深入知识。&lt;/p&gt;
+&lt;p&gt;与某些版本控制软件不同，Git 在确定文件树的存储和版本历史时，不会被文件名所迷惑，而是专注于文件内容本身。毕竟，源代码文件经常会被重命名、拆分和重新排列。Git 仓库文件的对象格式结合使用了 delta 编码（存储内容差异）和压缩，并明确存储了目录内容和版本元数据对象。&lt;/p&gt;
+&lt;p&gt;分布式设计还能带来显著的性能优势。&lt;/p&gt;
+&lt;p&gt;例如，开发人员 Alice 修改了源代码，为即将发布的 2.0 版本添加了一项功能，然后提交了这些修改，并附上了描述性信息。然后，她又对第二个功能进行了修改，并提交了这些修改。当然，这些改动会作为单独的工作片段存储在版本历史中。然后，Alice 切换到同一软件的 1.3 版本分支，修复一个只影响该旧版本的错误。这样做的目的是让 Alice 的团队能够在 2.0 版本准备就绪之前发布一个错误修复版本 1.3.1。然后，Alice 可以返回到 2.0 分支，继续开发 2.0 的新功能，所有这些都可以在没有任何网络接入的情况下进行，因此既快速又可靠。她甚至可以在飞机上完成这些工作。当她准备好将所有单独提交的修改发送到远程版本库时，Alice 可以用一条命令将它们 &amp;ldquo;push&amp;quot;出去。&lt;/p&gt;
+&lt;h4 id=&#34;security&#34;&gt;Security
+&lt;/h4&gt;&lt;p&gt;Git 在设计之初就把管理源代码的完整性放在首位。Git 仓库中的文件内容、文件和目录之间的真实关系、版本、标签和提交，所有这些对象都使用一种名为 SHA1 的加密安全哈希算法来保护。这可以保护代码和更改历史，防止意外和恶意更改，并确保历史完全可追溯。&lt;/p&gt;
+&lt;p&gt;有了 Git，您就能确保拥有真实的源代码内容历史。&lt;/p&gt;
+&lt;p&gt;而其他一些版本控制系统则无法防止日后的秘密更改。这对于任何依赖软件开发的组织来说都是一个严重的信息安全漏洞。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-git-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E8%8A%82/hashcode.png&#34;
+	width=&#34;2560&#34;
+	height=&#34;1263&#34;
+	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-git-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E8%8A%82/hashcode_hu_484e51cdf7e6648.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-git-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E8%8A%82/hashcode_hu_a3e0fcabd400a645.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;HashCode of Historical Commits&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;202&#34;
+		data-flex-basis=&#34;486px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;flexibility&#34;&gt;Flexibility
+&lt;/h4&gt;&lt;p&gt;灵活性是 Git 的主要设计目标之一。Git 的灵活性体现在以下几个方面：支持各种非线性开发工作流；在小型和大型项目中都能保持高效；与许多现有系统和协议兼容。&lt;/p&gt;
+&lt;p&gt;Git 在设计上把分支和标记作为一等公民来支持（与 SVN 不同），影响分支和标记的操作（如合并或还原）也作为变更历史的一部分存储。并非所有版本控制系统都具备这种级别的跟踪功能。&lt;/p&gt;
+&lt;h4 id=&#34;version-control-with-git&#34;&gt;Version control with Git
+&lt;/h4&gt;&lt;p&gt;Git 是当今大多数软件团队的最佳选择。虽然每个团队的情况不同，应该进行自己的分析，但以下是 Git 版本控制优于其他版本控制的主要原因：&lt;/p&gt;
+&lt;h5 id=&#34;git-is-good&#34;&gt;Git is good
+&lt;/h5&gt;&lt;p&gt;Git 拥有大多数团队和个人开发者所需的功能、性能、安全性和灵活性。上文详细介绍了 Git 的这些特性。在与其他大多数替代方案的并列比较中，许多团队发现 Git 非常有利。&lt;/p&gt;
+&lt;h5 id=&#34;git-is-fast&#34;&gt;Git is fast
+&lt;/h5&gt;&lt;p&gt;Git 使用 SHA 压缩，因此速度非常快。&lt;/p&gt;
+&lt;h5 id=&#34;git-is-able-merge-conflicts&#34;&gt;Git is able merge conflicts
+&lt;/h5&gt;&lt;p&gt;Git 可以处理合并冲突，这意味着&lt;strong&gt;多人可以同时处理同一个文件&lt;/strong&gt;。集中式版本控制无法做到这一点，而 Git 却能做到。你可以访问整个项目，如果你正在某个分支上工作，你可以做任何你需要做的事，并且知道你的改动是安全的。&lt;/p&gt;
+&lt;h5 id=&#34;git-is-easy-to-roll-back&#34;&gt;Git is easy to roll back
+&lt;/h5&gt;&lt;p&gt;如果你犯了错误，没关系！提交是不可变的，也就是说无法更改。(注意：你可以更改历史，但它会创建新的替换提交，而不是编辑现有提交。稍后详述）这意味着如果你犯了错误，即使是在像主分支这样的重要分支上，也没关系。你可以很容易地恢复更改，或将分支指针回滚到一切正常的提交。&lt;/p&gt;
+&lt;p&gt;这样做的好处怎么强调都不为过。它不仅为项目和代码创造了一个更安全的环境，还为开发人员营造了一个更勇敢的开发环境，让他们相信 Git 会支持他们。&lt;/p&gt;
+&lt;h5 id=&#34;git-is-a-de-facto-standard&#34;&gt;Git is a de facto standard
+&lt;/h5&gt;&lt;p&gt;Git 是同类工具中应用最广泛的。这使得 Git 具有以下吸引力。&lt;/p&gt;
+&lt;p&gt;大量开发人员已经拥有使用 Git 的经验，而相当一部分大学毕业生可能只拥有使用 Git 的经验。虽然有些组织在从其他版本控制系统迁移到 Git 时可能需要攀登学习曲线，但许多现有和未来的开发人员并不需要接受 Git 培训。&lt;/p&gt;
+&lt;p&gt;除了庞大的人才库之外，Git 的优势还在于许多第三方软件工具和服务已经与 Git 集成，包括集成开发环境，以及我们自己的工具，如 DVCS 桌面客户端 Sourcetree、问题和项目跟踪软件 Jira 和代码托管服务 Bitbucket。&lt;/p&gt;
+&lt;p&gt;如果你是一名缺乏经验的开发人员，希望在软件开发工具中积累宝贵的技能，那么在版本控制方面，Git 应该是你的首选。&lt;/p&gt;
+&lt;h5 id=&#34;git-is-a-quality-open-source-project&#34;&gt;Git is a quality open source project
+&lt;/h5&gt;&lt;p&gt;Git 是一个支持非常完善的开源项目，十多年来一直得到稳固的管理。项目维护者展现了平衡的判断力和成熟的方法，通过定期发布改进可用性和功能的版本来满足用户的长期需求。开源软件的质量很容易被检验，无数企业都非常依赖这种质量。&lt;/p&gt;
+&lt;p&gt;Git 拥有强大的社区支持和庞大的用户群。Git 文档优秀且丰富，包括书籍、教程和专门网站。此外还有播客和视频教程。&lt;/p&gt;
+&lt;p&gt;开放源代码降低了业余开发者使用 Git 的成本，因为他们无需支付任何费用。对于开源项目而言，Git 无疑是前几代成功的开源版本控制系统 SVN 和 CVS 的继承者。&lt;/p&gt;
+&lt;h5 id=&#34;criticism-of-git&#34;&gt;Criticism of Git
+&lt;/h5&gt;&lt;p&gt;对 Git 的一个常见批评是它很难学习。例如，Git 中的 revert 与 SVN 或 CVS 中的 revert 意义不同。尽管如此，Git 的功能非常强大，能为用户提供很多强大的功能。学习使用这些功能可能需要一些时间，但一旦学会，团队就能利用这些功能提高开发速度。&lt;/p&gt;
+&lt;p&gt;对于那些来自非分布式 VCS 的团队来说，拥有一个中央仓库似乎是一件他们不想失去的好事。不过，虽然 Git 是作为分布式版本控制系统（DVCS）设计的，但使用 Git，你仍然可以拥有一个官方的、规范的版本库，软件的所有改动都必须存储在这个版本库中。有了 Git，由于每个开发人员的版本库都是完整的，他们的工作就不必受到 &amp;ldquo;中央 &amp;ldquo;服务器的可用性和性能的限制。在断电或离线时，开发人员仍可查阅完整的项目历史记录。由于 Git 既灵活又是分布式的，因此你可以按照自己习惯的方式工作，同时还能获得 Git 带来的额外好处，有些好处你可能还没意识到。&lt;/p&gt;
+&lt;h3 id=&#34;why-use-git&#34;&gt;Why use Git
+&lt;/h3&gt;&lt;h4 id=&#34;feature-branch-workflow&#34;&gt;Feature branch workflow
+&lt;/h4&gt;&lt;p&gt;Git 最大的优势之一就是它的分支功能。与集中式版本控制系统不同，Git 的分支成本低廉且易于合并。这为许多 Git 用户喜爱的特性分支工作流程提供了便利。&lt;/p&gt;
+&lt;p&gt;特性分支为代码库的每次变更提供了一个隔离的环境。当开发人员想开始工作时，无论事情大小，他们都会创建一个新的分支。这样就能确保主分支始终包含生产质量的代码。&lt;/p&gt;
+&lt;p&gt;使用特性分支不仅比直接编辑生产代码更可靠，还能带来组织上的好处。它们可以让你以与敏捷积压工作相同的粒度来表示开发工作。例如，您可以实施一项政策，让每个 Jira 票据都在自己的特性分支中处理。&lt;/p&gt;
+&lt;img src=&#34;FeatureWorkFlow.png&#34; alt=&#34;Feature Branch Workflow&#34; style=&#34;zoom: 67%;&#34; /&gt;
+&lt;h4 id=&#34;distributed-development&#34;&gt;Distributed development
+&lt;/h4&gt;&lt;p&gt;在 SVN 中，每个开发人员都会得到一个工作拷贝，并指向一个中央版本库。而 Git 是一个分布式版本控制系统。每个开发人员获得的不是一个工作副本，而是他们自己的本地版本库，其中包含完整的提交历史。&lt;/p&gt;
+&lt;p&gt;有了完整的本地历史记录，Git 就能快速运行，因为这意味着你不需要网络连接就能创建提交、检查文件的先前版本或在提交之间执行差异。&lt;/p&gt;
+&lt;p&gt;分布式开发还能让工程团队更容易扩展。在 SVN 中，如果有人破坏了生产分支，其他开发人员就无法签入他们的改动，直到改动被修复为止。有了 Git，这种阻塞就不存在了。每个人都可以在自己的本地仓库中继续开展工作。&lt;/p&gt;
+&lt;p&gt;与特性分支类似，分布式开发也创造了一个更可靠的环境。即使开发人员抹去了自己的仓库，他们也可以简单地克隆别人的仓库，然后重新开始。&lt;/p&gt;
+&lt;img src=&#34;DistributedDevelopment.png&#34; alt=&#34;Distributed Development&#34; style=&#34;zoom:67%;&#34; /&gt;
+&lt;h4 id=&#34;pull-requests-pr&#34;&gt;Pull requests, PR
+&lt;/h4&gt;&lt;p&gt;许多源代码管理工具（如 Bitbucket）都通过拉取请求增强了 Git 的核心功能。拉取请求是一种请求其他开发人员将你的某个分支合并到他们的仓库中的方式。这不仅能让项目负责人更轻松地跟踪变更，还能让开发人员在将自己的工作整合到代码库的其他部分之前，围绕其工作展开讨论。&lt;/p&gt;
+&lt;p&gt;由于拉取请求本质上是附加在功能分支上的评论线程，因此它的用途非常广泛。当开发人员遇到棘手问题时，他们可以打开拉取请求，向团队其他成员寻求帮助。另外，初级开发人员也可以将拉取请求视为正式的代码审查，从而确保自己不会破坏整个项目。&lt;/p&gt;
+&lt;img src=&#34;PR.png&#34; alt=&#34;Pull Request&#34; style=&#34;zoom:67%;&#34; /&gt;
+&lt;h4 id=&#34;community&#34;&gt;Community
+&lt;/h4&gt;&lt;p&gt;在许多圈子里，Git 已成为新项目的预期版本控制系统。如果您的团队正在使用 Git，您很可能不必对新员工进行工作流程培训，因为他们已经熟悉了分布式开发。&lt;/p&gt;
+&lt;p&gt;此外，Git 在开源项目中非常受欢迎。这意味着可以轻松利用第三方库并鼓励其他人克隆您自己的开源代码。&lt;/p&gt;
+&lt;img src=&#34;Community.png&#34; alt=&#34;Community&#34; style=&#34;zoom:67%;&#34; /&gt;
+&lt;h4 id=&#34;faster-release-cycle&#34;&gt;Faster release cycle
+&lt;/h4&gt;&lt;p&gt;功能分支、分布式开发、拉取请求和稳定社区的最终结果是更快的发布周期。这些功能促进了敏捷的工作流程，鼓励开发人员更频繁地共享较小的变更。反过来，与集中式版本控制系统常见的单一版本相比，变更可以更快地推送到部署管道中。&lt;/p&gt;
+&lt;p&gt;正如您所预料的那样，Git 在持续集成和持续交付环境中运行得很好。Git hooks允许您在存储库内发生某些事件时运行脚本，这使您可以自动部署到您想要的内容。您甚至可以从特定分支构建代码或将代码部署到不同的服务器。&lt;/p&gt;
+&lt;p&gt;例如，您可能需要配置 Git，以便在有人将拉取请求合并到测试服务器时，将最新的提交从开发分支部署到测试服务器。将这种构建自动化与同行评审相结合，意味着在代码从开发到暂存再到生产的过程中，您可以极大地放心。&lt;/p&gt;
+&lt;img src=&#34;FasterReleaseCycle.png&#34; alt=&#34;Fast Release Cycle&#34; style=&#34;zoom:67%;&#34; /&gt;
+&lt;h3 id=&#34;command-line-interface-cli&#34;&gt;Command Line Interface, CLI
+&lt;/h3&gt;&lt;p&gt;Git 有多种使用方式。 你可以使用原生的命令行模式，也可以使用 GUI 模式，这些 GUI 软件也能提供多种功能。 在本书中，我们将使用命令行模式。 这是因为首先，只有在命令行模式下你才能执行 Git 的 &lt;strong&gt;所有&lt;/strong&gt; 命令，而大多数的 GUI 软件只实现了 Git 所有功能的一个子集以降低操作难度。 如果你学会了在命令行下如何操作，那么你在操作 GUI 软件时应该也不会遇到什么困难，但是，反之则不成立。因此，课程之后的所有演示和介绍都将会是命令行模式下的。&lt;/p&gt;
+&lt;h3 id=&#34;install-git&#34;&gt;Install Git
+&lt;/h3&gt;&lt;p&gt;Git 可以安装在 Windows、Mac 和 Linux 等最常见的操作系统上。事实上，大多数 Mac 和 Linux 机器都默认安装了 Git！&lt;/p&gt;
+&lt;p&gt;要检查是否已有安装Git，打开设备CLI，输入 &lt;code&gt;git version&lt;/code&gt;，如已经安装 Git 则会显示安装的Git版本，否则提示 &lt;code&gt;git is an unknown command.&lt;/code&gt;&lt;/p&gt;
+&lt;h4 id=&#34;install-git-on-windows&#34;&gt;Install Git on Windows
+&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;前往&lt;a class=&#34;link&#34; href=&#34;https://git-scm.com/download/win&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;此页面&lt;/a&gt;下载最新版Git。&lt;/li&gt;
+&lt;li&gt;安装程序启动后，按照 Git 安装向导屏幕上的提示操作，直至安装完成。&lt;/li&gt;
+&lt;li&gt;打开 &lt;strong&gt;Git Bash&lt;/strong&gt; 或 &lt;em&gt;Windows 命令提示符&lt;/em&gt;，键入 &lt;code&gt;git version&lt;/code&gt; 验证是否安装成功。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;install-git-on-macos&#34;&gt;Install Git on MacOS
+&lt;/h4&gt;&lt;p&gt;大多数 MacOS 版本都已安装了 Git，你可以通过终端使用 &lt;code&gt;git version&lt;/code&gt; 激活它。不过，如果由于某种原因没有安装 Git，也可以通过以下几种常用方法安装最新版本的 Git：&lt;/p&gt;
+&lt;h5 id=&#34;homebrew&#34;&gt;Homebrew
+&lt;/h5&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;brew install git
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h5 id=&#34;macport&#34;&gt;MacPort
+&lt;/h5&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo port install git
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;install-git-on-linuxunix&#34;&gt;Install Git on Linux/Unix
+&lt;/h4&gt;&lt;p&gt;你可以通过发行版自带的软件包管理工具在 Linux 上安装 Git。&lt;/p&gt;
+&lt;h5 id=&#34;debianubuntu&#34;&gt;Debian/Ubuntu
+&lt;/h5&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt-get update
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt-get install git-all
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h5 id=&#34;fedora&#34;&gt;Fedora
+&lt;/h5&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo dnf install git-all
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h5 id=&#34;arch-linux&#34;&gt;Arch Linux
+&lt;/h5&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pacman -S git
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h5 id=&#34;red-hat-enterprise-linux-oracle-linux-centos-scientific-linux-alibaba-cloud-linux-et-al&#34;&gt;Red Hat Enterprise Linux, Oracle Linux, CentOS, Scientific Linux, Alibaba Cloud Linux, et al.
+&lt;/h5&gt;&lt;p&gt;RHEL 及其衍生版本通常会附带较旧版本的 Git。你可以&lt;a class=&#34;link&#34; href=&#34;https://www.kernel.org/pub/software/scm/git/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;下载一个压缩包&lt;/a&gt;并从源代码开始构建，或者使用第三方软件源（如 &lt;a class=&#34;link&#34; href=&#34;https://ius.io/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;IUS Community Project&lt;/a&gt;）来获取最新版本的 Git。可能需要较为娴熟的相关工具使用和一定的网络环境要求，新手不推荐，或者你想挑战自己的话。&lt;/p&gt;
+&lt;h3 id=&#34;git-config&#34;&gt;Git Config
+&lt;/h3&gt;&lt;p&gt;既然已经在系统上安装了 Git，你会想要做几件事来定制你的 Git 环境。 每台计算机上只需要配置一次，程序升级时会保留配置信息。 你可以在任何时候再次通过运行命令来修改它们。&lt;/p&gt;
+&lt;p&gt;Git 自带一个 &lt;code&gt;git config&lt;/code&gt; 的工具来帮助设置控制 Git 外观和行为的配置变量。 这些变量存储在三个不同的位置：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;/etc/gitconfig&lt;/code&gt; 文件: 包含系统上每一个用户及他们仓库的通用配置。 如果使用带有 &lt;code&gt;--system&lt;/code&gt; 选项的 &lt;code&gt;git config&lt;/code&gt; 时，它会从此文件读写配置变量。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;~/.gitconfig&lt;/code&gt; 或 &lt;code&gt;~/.config/git/config&lt;/code&gt; 文件：只针对当前用户。 可以传递 &lt;code&gt;--global&lt;/code&gt; 选项让 Git 读写此文件。&lt;/li&gt;
+&lt;li&gt;当前使用仓库的 Git 目录中的 &lt;code&gt;config&lt;/code&gt; 文件（就是 &lt;code&gt;.git/config&lt;/code&gt;）：针对该仓库。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;每一个级别覆盖上一级别的配置，所以 &lt;code&gt;.git/config&lt;/code&gt; 的配置变量会覆盖 &lt;code&gt;/etc/gitconfig&lt;/code&gt; 中的配置变量。&lt;/p&gt;
+&lt;p&gt;在 Windows 系统中，Git 会查找 &lt;code&gt;$HOME&lt;/code&gt; 目录下（一般情况下是 &lt;code&gt;C:\Users\$USER&lt;/code&gt;）的 &lt;code&gt;.gitconfig&lt;/code&gt; 文件。 Git 同样也会寻找 &lt;code&gt;/etc/gitconfig&lt;/code&gt; 文件，但只限于 MSys 的根目录下，即安装 Git 时所选的目标位置。&lt;/p&gt;
+&lt;h4 id=&#34;user-information&#34;&gt;User Information
+&lt;/h4&gt;&lt;p&gt;当安装完 Git 应该做的第一件事就是设置你的用户名称与邮件地址。 这样做很重要，因为每一个 Git 的提交都会使用这些信息，并且它会写入到你的每一次提交中，不可更改：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git config --global user.name &lt;span class=&#34;s2&#34;&gt;&amp;#34;John Doe&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git config --global user.email johndoe@example.com
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;再次强调，如果使用了 &lt;code&gt;--global&lt;/code&gt; 选项，那么该命令只需要运行一次，因为之后无论你在该系统上做任何事情， Git 都会使用那些信息。 当你想针对特定项目使用不同的用户名称与邮件地址时，可以在那个项目目录下运行没有 &lt;code&gt;--global&lt;/code&gt; 选项的命令来配置。&lt;/p&gt;
+&lt;h4 id=&#34;text-editor&#34;&gt;Text Editor
+&lt;/h4&gt;&lt;p&gt;既然用户信息已经设置完毕，你可以配置默认文本编辑器了，当 Git 需要你输入信息时会调用它。 如果未配置，Git 会使用操作系统默认的文本编辑器，通常是 Vim。 如果你想使用不同的文本编辑器，例如 Emacs，可以这样做：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git config --global core.editor emacs
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;check-configure&#34;&gt;Check Configure
+&lt;/h4&gt;&lt;p&gt;如果想要检查你的配置，可以使用 &lt;code&gt;git config --list&lt;/code&gt; 命令来列出所有 Git 当时能找到的配置。&lt;/p&gt;
+&lt;p&gt;也可以通过输入 &lt;code&gt;git config &amp;lt;key&amp;gt;&lt;/code&gt;： 来检查 Git 的某一项配置。&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>实验室 C&#43;&#43; 基础课程 · 第二章第三节</title>
         <link>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/</link>
         <pubDate>Fri, 27 Oct 2023 00:00:00 +0000</pubDate>
