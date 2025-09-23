@@ -2,27 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/page/</loc>
-    <lastmod>2025-09-20T23:50:00+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/</loc>
-    <lastmod>2025-09-20T23:50:00+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="http://localhost:1313/"
-                />
-  </url><url>
-    <loc>http://localhost:1313/about/</loc>
-    <lastmod>2025-09-20T23:50:00+08:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2025-01-21T00:00:00+00:00</lastmod>
+    <lastmod>2025-09-23T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -35,16 +16,16 @@
                 />
   </url><url>
     <loc>http://localhost:1313/tags/game-designer/</loc>
-    <lastmod>2025-01-21T00:00:00+00:00</lastmod>
+    <lastmod>2025-09-23T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/post/</loc>
-    <lastmod>2025-01-21T00:00:00+00:00</lastmod>
+    <lastmod>2025-09-23T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/readingnote/</loc>
-    <lastmod>2025-01-21T00:00:00+00:00</lastmod>
+    <lastmod>2025-09-23T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/series/</loc>
-    <lastmod>2025-01-21T00:00:00+00:00</lastmod>
+    <lastmod>2025-09-23T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -57,7 +38,7 @@
                 />
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2025-01-21T00:00:00+00:00</lastmod>
+    <lastmod>2025-09-23T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -70,18 +51,40 @@
                 />
   </url><url>
     <loc>http://localhost:1313/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2025-01-21T00:00:00+00:00</lastmod>
+    <lastmod>2025-09-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2025-09-23T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="http://localhost:1313/"
+                />
   </url><url>
     <loc>http://localhost:1313/categories/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/</loc>
-    <lastmod>2025-01-21T00:00:00+00:00</lastmod>
+    <lastmod>2025-09-23T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/series/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82/</loc>
-    <lastmod>2025-01-21T00:00:00+00:00</lastmod>
+    <lastmod>2025-09-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0%E9%A2%9D%E5%A4%96%E7%AF%87/</loc>
-    <lastmod>2025-01-21T00:00:00+00:00</lastmod>
+    <loc>http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/</loc>
+    <lastmod>2025-09-23T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E5%B8%88/</loc>
+    <lastmod>2025-09-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/page/</loc>
+    <lastmod>2025-09-20T23:50:00+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/about/</loc>
+    <lastmod>2025-09-20T23:50:00+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0%E9%A2%9D%E5%A4%96%E7%AF%87/</loc>
     <lastmod>2025-01-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0/</loc>
@@ -156,6 +159,18 @@
     <loc>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/</loc>
     <lastmod>2023-10-17T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>http://localhost:1313/tags/robotics/</loc>
+    <lastmod>2023-07-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/series/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6/</loc>
+    <lastmod>2023-07-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6/</loc>
+    <lastmod>2023-07-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/</loc>
+    <lastmod>2023-07-17T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>http://localhost:1313/tags/c%23/</loc>
     <lastmod>2023-07-15T00:00:00+00:00</lastmod>
   </url><url>
@@ -176,8 +191,6 @@
   </url><url>
     <loc>http://localhost:1313/archives/</loc>
     <lastmod>2019-05-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/p/</loc>
   </url><url>
     <loc>http://localhost:1313/p/</loc>
   </url><url>

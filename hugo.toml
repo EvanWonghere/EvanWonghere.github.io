@@ -45,6 +45,7 @@ mainSections = [ "post" ]
 featuredImageField = "image"
 rssFullContent = true
 favicon = "/favicon.ico"
+math = true
 
   [params.author] # This defines author as an object
   name = "Evan Wong"
@@ -67,7 +68,6 @@ favicon = "/favicon.ico"
     src = "img/avatar.png"
 
   [params.article]
-  math = false
   toc = true
   readingTime = true
 
@@ -231,8 +231,10 @@ toLower = false
 enable = true
 
   [markup.goldmark.extensions.passthrough.delimiters]
-  block = [ [ "\\[", "\\]" ], [ "$$", "$$" ] ]
-  inline = [ [ "\\(", "\\)" ] ]
+  # block = [ [ "\\[", "\\]" ], [ "$$", "$$" ] ]
+  # inline = [ [ "\\(", "\\)" ] ]
+  block = [['\[', '\]'], ['$$', '$$']]
+  inline = [['\(', '\)']]
 
 [markup.goldmark.renderer]
 unsafe = true
