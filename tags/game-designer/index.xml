@@ -163,11 +163,15 @@
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;资源 Resources&lt;/td&gt;
-&lt;td&gt;起着与现实世界一样的作用，可以用于实现某种目标。&lt;/td&gt;
+&lt;td&gt;起着与现实世界一样的作用，可以用于实现某种目标&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;冲突 Conflict&lt;/td&gt;
 &lt;td&gt;设计在游戏之中的、阻止玩家直接完成他们的目标的&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;边界 Boundaries&lt;/td&gt;
+&lt;td&gt;将非游戏内容与游戏分开的东西&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;结果 Outcome&lt;/td&gt;
