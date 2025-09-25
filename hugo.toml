@@ -164,7 +164,7 @@ enabled = true
 [menu]
   [[menu.main]]
   identifier = "home"
-  name = "Home"
+  name = "主页"
   url = "/"
   weight = -100
 
@@ -173,7 +173,7 @@ enabled = true
 
   [[menu.main]]
   identifier = "archives"
-  name = "Archives"
+  name = "归档"
   url = "/archives/"
   weight = -90
 
@@ -182,7 +182,7 @@ enabled = true
 
   [[menu.main]]
   identifier = "search"
-  name = "Search"
+  name = "搜索"
   url = "/search/"
   weight = -60
 
@@ -191,12 +191,20 @@ enabled = true
 
   [[menu.main]]
   identifier = "about"
-  name = "About"
+  name = "关于"
   url = "/about/"
   weight = -80
 
   [menu.main.params]
   icon = "user"
+
+  [[menu.main]]
+  identifier = "quotes"
+  name = "采撷集" # 或者你喜欢的名字
+  url = "/quotes/"
+  weight = -70 # 调整 weight 来控制菜单顺序
+  [menu.main.params]
+    icon = "quote" # Stack 主题恰好有 "quote" 图标
 
   [[menu.social]]
   identifier = "github"

@@ -16,8 +16,7 @@
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
         <guid>http://localhost:1313/p/pep8-%E5%92%8C-pep257-%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91%E7%89%88/</guid>
         <description>&lt;h1 id=&#34;pep8-和-pep257-中文翻译版&#34;&gt;PEP8 和 PEP257 中文翻译版
-&lt;/h1&gt;&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h2 id=&#34;说在前面&#34;&gt;说在前面
+&lt;/h1&gt;&lt;h2 id=&#34;说在前面&#34;&gt;说在前面
 &lt;/h2&gt;&lt;p&gt;这是为我所在的实验室而准备的代码风格指南~&lt;/p&gt;
 &lt;p&gt;本代码风格指南此版本基本完全基于 $PEP8$、$PEP257$，未涉及部分都以其为准。&lt;/p&gt;
 &lt;p&gt;本代码风格指南默认为 $Python3$，对 $Python2$ 若有差异则会特殊声明。&lt;/p&gt;

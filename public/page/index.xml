@@ -9,7 +9,15 @@
         <managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor>
         <webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster>
         <copyright>EvanWong</copyright>
-        <lastBuildDate>Sat, 20 Sep 2025 23:50:00 +0800</lastBuildDate><atom:link href="http://localhost:1313/page/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 25 Sep 2025 16:10:46 +0800</lastBuildDate><atom:link href="http://localhost:1313/page/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Quotes</title>
+        <link>http://localhost:1313/quotes/</link>
+        <pubDate>Thu, 25 Sep 2025 16:10:46 +0800</pubDate>
+        <author>yufenghuang009@gmail.com (Evan Wong)</author>
+        <guid>http://localhost:1313/quotes/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>关于我</title>
         <link>http://localhost:1313/about/</link>
         <pubDate>Sat, 20 Sep 2025 23:50:00 +0800</pubDate>

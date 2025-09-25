@@ -1,0 +1,90 @@
+{{ define "main" }}
+    <article class="main-content">
+        <header class="main-header">
+            <h1>{{ .Title }}</h1>
+        </header>
+        <div class="main-content-body">
+            {{ .Content }}
+
+            <div class="quotes-list-elegant">
+                
+                {{ range .Site.Data.quotes.prose_quotes }}
+                    {{ partial "quote-card.html" . }}
+                {{ end }}
+
+                {{ range .Site.Data.quotes.poetry_and_passages }}
+                    {{ partial "quote-card.html" . }}
+                {{ end }}
+
+            </div>
+
+            <div class="section-divider">
+                <span class="divider-text">文章收藏</span>
+            </div>
+
+            <div class="articles-list">
+                {{ range .Site.Data.quotes.articles }}
+                    <div class="quote-card article-card">
+                        <h3 class="article-title">{{ .title }}</h3>
+                        <p class="article-excerpt">{{ .excerpt | markdownify }}</p>
+                        <footer class="quote-author">
+                            — {{ if .author }}{{ .author }}{{ end }}
+                            {{ if .source }}<cite>《{{ .source }}》</cite>{{ end }}
+                        </footer>
+                        <a href="{{ .link }}" class="read-more-btn" target="_blank" rel="noopener noreferrer">
+                            阅读原文 →
+                        </a>
+                    </div>
+                {{ end }}
+            </div>
+
+        </div>
+    </article>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&display=swap');
+        
+        /* --- 通用卡片与布局 --- */
+        .quotes-list-elegant, .articles-list { padding-top: 1rem; }
+        .quote-card { position: relative; margin: 2.5rem 0; padding: 2rem 2.5rem; background: var(--card-background); border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: all 0.3s ease-in-out; overflow: hidden; }
+        .quote-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        
+        /* --- 摘抄/诗歌卡片专属 --- */
+        .quote-mark { position: absolute; top: -1rem; left: 0.5rem; font-size: 8rem; font-family: 'Lora', serif; color: var(--card-border-color); opacity: 0.5; z-index: 1; }
+        .quote-content { position: relative; font-family: 'Lora', serif; font-size: 1.25rem; line-height: 1.8; z-index: 2; margin: 0; }
+        pre.quote-content { white-space: pre-wrap; word-wrap: break-word; font-family: 'Lora', serif; background: transparent; border: none; padding: 0; }
+        .quote-author { position: relative; text-align: right; margin-top: 1rem; font-size: 1rem; color: var(--secondary-text-color); z-index: 2; }
+        .quote-divider { position: relative; border: none; height: 1px; background-image: linear-gradient(to right, rgba(0,0,0,0), var(--card-border-color), rgba(0,0,0,0)); margin: 1.5rem 0; z-index: 2; }
+        .quote-thoughts { position: relative; font-size: 0.95rem; line-height: 1.7; color: var(--primary-text-color); font-style: italic; z-index: 2; padding: 1rem; background: var(--code-background); border-left: 3px solid var(--theme-color); border-radius: 0 4px 4px 0; }
+        .quote-thoughts p { margin-bottom: 0; }
+        .source-link { color: inherit; text-decoration: underline; text-decoration-color: var(--card-border-color); text-decoration-thickness: 1px; text-underline-offset: 2px; transition: all 0.2s ease; }
+        .source-link:hover { color: var(--accent-color); text-decoration-color: var(--accent-color); }
+
+        /* --- 文章卡片专属 --- */
+        .article-card { border-left: 4px solid var(--theme-color); }
+        .article-title { font-size: 1.5rem; margin-top: 0; margin-bottom: 1rem; color: var(--primary-text-color); }
+        .article-excerpt { font-size: 0.95rem; color: var(--secondary-text-color); line-height: 1.7; }
+        .read-more-btn { display: inline-block; margin-top: 1.5rem; padding: 0.5rem 1.2rem; background: var(--theme-color); color: var(--button-text-color); border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 0.9rem; transition: background 0.2s ease; }
+        .read-more-btn:hover { background: var(--theme-color-hover); }
+
+        /* --- ‼️ 新增的区域分隔线样式 --- */
+        .section-divider {
+            text-align: center;
+            margin: 4rem 0 2rem;
+            color: var(--secondary-text-color);
+            display: flex;
+            align-items: center;
+        }
+        .section-divider::before,
+        .section-divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .section-divider .divider-text {
+            padding: 0 1.5em;
+            font-size: 1.1rem;
+            letter-spacing: 0.1em;
+        }
+    </style>
+{{ end }}

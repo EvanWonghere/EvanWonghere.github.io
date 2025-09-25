@@ -180,11 +180,15 @@
       &lt;/tr&gt;
       &lt;tr&gt;
           &lt;td&gt;资源 Resources&lt;/td&gt;
-          &lt;td&gt;起着与现实世界一样的作用，可以用于实现某种目标。&lt;/td&gt;
+          &lt;td&gt;起着与现实世界一样的作用，可以用于实现某种目标&lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
           &lt;td&gt;冲突 Conflict&lt;/td&gt;
           &lt;td&gt;设计在游戏之中的、阻止玩家直接完成他们的目标的&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;边界 Boundaries&lt;/td&gt;
+          &lt;td&gt;将非游戏内容与游戏分开的东西&lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
           &lt;td&gt;结果 Outcome&lt;/td&gt;
@@ -199,7 +203,7 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;em&gt;带来灵感的游戏&lt;/em&gt;
 &lt;ul&gt;
-&lt;li&gt;《模拟城市 3000》里模拟的丰富层次和和它们的作用让其第一次认识到游戏的底层。&lt;/li&gt;
+&lt;li&gt;《模拟城市 3000》里模拟的丰富层次和它们的作用让其第一次认识到游戏的底层。&lt;/li&gt;
 &lt;li&gt;系统直接如何彼此协作、如何让玩家了解这些相互作用，构成了其许多设计思路的基础。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -283,7 +287,7 @@
 &lt;li&gt;作为玩家，我们对这个世界有一个预期模型。&lt;/li&gt;
 &lt;li&gt;一款游戏展示了与那个世界相同的模型，但是那个模型有着它自己的属性，和玩家心目中的模型很可能不同。&lt;/li&gt;
 &lt;li&gt;但我们把这两个模型放在一起时，我们能看到他们的相同点和不同点——这是当我们评判性地玩游戏时所做的事情。&lt;/li&gt;
-&lt;li&gt;这样的游戏会引起玩家的深思，不是通过提出一些让玩家很舒服、很习惯的观点么事提出引发争议的陌生观点。&lt;/li&gt;
+&lt;li&gt;这样的游戏会引起玩家的深思，不是通过提出一些让玩家很舒服、很习惯的观点，而是提出引发争议的陌生观点。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -426,7 +430,7 @@
       &lt;/tr&gt;
       &lt;tr&gt;
           &lt;td&gt;生命值&lt;/td&gt;
-          &lt;td&gt;《塞尔达传说：荒野之息》&lt;/td&gt;
+          &lt;td&gt;《塞尔达传说：旷野之息》&lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
           &lt;td&gt;货币&lt;/td&gt;
@@ -438,7 +442,7 @@
       &lt;/tr&gt;
       &lt;tr&gt;
           &lt;td&gt;能力加强&lt;/td&gt;
-          &lt;td&gt;《马里奥赛车》&lt;/td&gt;
+          &lt;td&gt;《马里奥卡丁车》&lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
           &lt;td&gt;物品&lt;/td&gt;
@@ -6916,8 +6920,7 @@ $$ \epsilon_{1}^{2} + \epsilon_{2}^{2} + \epsilon_{3}^{2} + \epsilon_{4}^{2} = 1
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
         <guid>http://localhost:1313/p/pep8-%E5%92%8C-pep257-%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91%E7%89%88/</guid>
         <description>&lt;h1 id=&#34;pep8-和-pep257-中文翻译版&#34;&gt;PEP8 和 PEP257 中文翻译版
-&lt;/h1&gt;&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h2 id=&#34;说在前面&#34;&gt;说在前面
+&lt;/h1&gt;&lt;h2 id=&#34;说在前面&#34;&gt;说在前面
 &lt;/h2&gt;&lt;p&gt;这是为我所在的实验室而准备的代码风格指南~&lt;/p&gt;
 &lt;p&gt;本代码风格指南此版本基本完全基于 $PEP8$、$PEP257$，未涉及部分都以其为准。&lt;/p&gt;
 &lt;p&gt;本代码风格指南默认为 $Python3$，对 $Python2$ 若有差异则会特殊声明。&lt;/p&gt;

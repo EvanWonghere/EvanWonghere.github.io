@@ -1,0 +1,191 @@
+# ---------------------------------
+# 1. 文学摘录 (Prose Quotes)
+# 精炼、深刻的单句或短小的段落
+# ---------------------------------
+prose_quotes:
+  - content: "人生一事无所为则嫌长，有所为则恨短。我只在口头卖弄这些警句，可事实是，唯恐暴露才华不足的卑怯的畏惧，和厌恶钻研刻苦的惰怠，就是我的全部了。"
+    author: "中島 敦"
+    source: "山月記"
+  - content: "也许头脑会出错，但是血脉不会。"
+    author: "中島 敦"
+    source: "光と風と夢"
+    thoughts: "《文豪野犬》里印象最深的一句话。"
+  - content: "从前，我不曾为自己的所做所为而后悔过，唯独对于没做的事，总是后悔莫及。"
+    author: "中島 敦"
+    source: "光と風と夢"
+    thoughts: "《文豪野犬》里印象最深的话之一。"
+  - content: "后来他“死了”，他那淡淡的形象也就消失，仿佛水消失在水中。"
+    author: "Jorge Luis Borges"
+    source: "Las ruinas circulares"
+    thoughts: "天才般的比喻。这就是死亡，这就是消失。"
+
+# ---------------------------------
+# 2. 诗歌与段落 (Poetry & Passages)
+# 格式需要保留的诗歌，以及较长的段落
+# ---------------------------------
+poetry_and_passages:
+  - content: |
+      我深怕自己本非美玉，故而不敢加以辛苦琢磨，却又半信自己是块美玉，故又不肯庸庸碌碌，与瓦砾为伍。
+      于是我渐渐地脱离凡尘，疏远世人，结果便是——任愤懑与羞恨日益助长内心那怯懦的自尊心。
+      每个人都是驯兽者，而各自的性情，便是那猛兽。
+    author: "中島 敦"
+    source: "山月記"
+    is_poem: true
+    thoughts: "这么多年了，月下兽还在追我......"
+  - content: |
+      我既不和他们一起喝啤酒，又不跟他们打台球。他们便说我顽固不化、道貌岸然，并且还嘲笑我、嫉妒我。
+      其实这一切都源于他们不了解我。唉，连我自己尚且不了解自己，别人又怎能了解得了呢？！我的心宛如一颗处女的心，又似合欢树上的叶儿，一碰到什么便要退缩躲闪。
+      我自幼便遵从长者的教诲，不论求学还是供职，都非出于自己的本意。即便表面看来好像是靠毅力和苦学，其实那也是自欺欺人，我只不过是跟着前人亦步亦趋而已。
+      我之所以能清心寡欲，不受外界诱惑，并非因为有律己的勇气，只是因为对外界感到恐惧，自己约束自己罢了。
+    author: "森 鷗外"
+    source: "舞姫"
+    is_poem: true
+  - content: |
+      What can I hold you with?
+      I offer you lean streets, desperate sunsets, the
+        moon of the jagged suburbs.
+      I offer you the bitterness of a man who has looked
+        long and long at the lonely moon.
+      I offer you my ancestors, my dead men, the ghosts
+        that living men have honoured in bronze:
+        my father's father killed in the frontier of
+        Buenos Aires, two bullets through his lungs,
+        bearded and dead, wrapped by his soldiers in
+        the hide of a cow; my mother's grandfather
+        - just twentyfour - heading a charge of
+        three hundred men in Peru, now ghosts on
+        vanished horses.
+      I offer you whatever insight my books may hold, 
+        whatever manliness or humour my life.
+      I offer you the loyalty of a man who has never
+        been loyal.
+      I offer you that kernel of myself that I have saved,
+        somehow --the central heart that deals not
+        in words, traffics not with dreams, and is
+        untouched by time, by joy, by adversities.
+      I offer you the memory of a yellow rose seen at
+        sunset, years before you were born.
+      I offer you explanations of yourself, theories about
+        yourself, authentic and surprising news of 
+        yourself.
+      I can give you my loneliness, my darkness, the
+        hunger of my heart; I am trying to bribe you 
+        with uncertainty, with danger, with defeat.
+    author: "Jorge Luis Borges"
+    source: "Offer"
+    is_poem: true
+    thoughts: "博尔赫斯献给英格丽褒曼的情诗，充满了深刻的矛盾与真诚。他献出的不是世俗的美好，而是他存在的全部真实——包括所有的孤独、黑暗与失败。这是一种更为本质的给予。"
+  - content: |
+      米兰昆德拉说过这么一句话：“人一旦沉醉于自身的软弱，就会一味地软弱下去。会在众目睽睽中倒下，倒在街头，倒在比地面更低的地方。”
+      这也正是我不喜欢太宰治的理由。
+      《人间失格》里那个“为人的资格”到底是什么？
+      在我看来，那就是尼采之所谓“权力意志”、海德格尔之所谓“超验性”，是那个“采取行动的可能性本身”。
+      当我们面对困境的时候，我们会迸发出反抗的力量，以至将环境改变。乃至身周的一切生命，都有这样采取行动的力量，把困境改变。
+      书中的主角把它失却了，我感到很恼火。书的最后，作者借主角的语气叩问：不反抗难道是一种罪吗？
+      难道不是吗？不是吗？啊？！
+      从我自己来说，反抗就意味着一切，甚至胜利本身都不重要。推石头的西西弗斯是幸福的，因为“存在”无非就是这样的一种东西。
+      在《活着》的最后，经受了一生苦难的富贵，把自己的积蓄换了一头将死的老牛。“牛”这个意象在小说中非常鲜明，它代表着对未来的希望、对美好生活的追求。
+      直到故事的最后，垂暮将死的富贵，仍旧没有放弃抗争。那是生的力量，那让我热泪盈眶。
+      在电影《斗牛》的最后，黄渤衣衫褴褛、坐在山头，对着身后那头奶牛笑着说：“别怕，什么都能过去。”我第一时间便想到了《活着》最后的富贵和老牛。
+      那是力量。权力，超验，自由，无限的可能。那是《人间失格》里主角失却的东西，直到临死前富贵都还紧紧地攥着。
+      我读太宰治，你让我读什么？
+      难道说，有些人天然就不具备这样的力量？
+      我不想认可。我更愿意认为，是有人把它丢失了而已。
+      三岛由纪夫说太宰治的作品是一种“自我戏剧化”，是一种沉湎，是一种对悲剧的矫饰。我认同这个说法，发自内心地认同。
+      可我同样也觉得，似乎三岛由纪夫对太宰治的讨厌，是一种近乎惊厥和畏惧的讨厌，是一种定要划分界限的憎恶。三岛说，“太宰治故意把我最想隐藏的那一部分暴露了出来”。我认同这个说法，发自内心地认同。
+      丧失掉“资格”，即是人最惨痛的悲剧。因其早早地死去了，却又不得不佯装活着。那种僵直令我骨冷。
+      因骨冷而畏惧，因畏惧而愤怒。
+      米兰昆德拉在书中说，“人一旦沉醉于自身的软弱，就会一味地软弱下去。会在众目睽睽中倒下，倒在街头，倒在比地面更低的地方。”
+      “你反抗啊！反抗啊！”
+      也许被人掐着脖子怒吼的，既是书中的主角，也是我自己罢。
+    author: "李烂树"
+    source: "知乎问题：为什么不喜欢太宰治？"
+    is_poem: true
+    thoughts: "这是当年在知乎看到的回答，很震撼我，于是便摘抄下来。如今答主已经删除了，便无法贴链接只得将原文字直接发出来了。"
+  - content: |
+      用眼睛说
+      宫泽贤治
+
+      不行了，停不下来啊，
+      因为咕嘟咕嘟涌出来了。
+      从昨夜起就睡不着，
+      因为血一直在流。
+      那里青恻恻的，
+      我好像马上就要死了。
+      可是多好的风啊，
+      清明已经很近了。
+      枫树的嫩芽和毛茸茸的花上，
+      起伏着秋草般的波浪，
+      就像从蓝天奔涌而来似的——
+      那是清新的风啊。
+      不知道您是否从医学会回来，
+      身着黑色长礼服；
+      承蒙您如此真心多方照顾，
+      就算就这样死了我也绝无怨言。
+      虽然还在出血，
+      却悠然不觉痛苦。
+      是灵魂开始离开身体了吗？
+      真可惜，由于失血，
+      我确实说不清那种感觉。
+      在您看来，这大概是非常凄惨的景象；
+      而我所见的，
+      仍是满眼美丽的蓝天，
+      和清澈透明的风。
+    author: "宮沢賢治"
+    source: "疾中"
+    is_poem: true
+    source_link: "https://www.aozora.gr.jp/cards/000081/files/471_19937.html"
+    thoughts: "最初是在坂口安吾的《堕落论》中的《教祖の文学》一节当中看到，一读到我就被这坦然面对死亡风度给吸引住了。"
+  - content: |
+      O Captain! My Captain!
+
+      O Captain! my Captain! our fearful trip is done,
+      The ship has weather’d every rack, the prize we sought is won,
+      The port is near, the bells I hear, the people all exulting,
+      While follow eyes the steady keel, the vessel grim and daring;
+                             But O heart! heart! heart!
+                                O the bleeding drops of red,
+                                   Where on the deck my Captain lies,
+                                      Fallen cold and dead.
+
+      O Captain! my Captain! rise up and hear the bells;
+      Rise up—for you the flag is flung—for you the bugle trills,
+      For you bouquets and ribbon’d wreaths—for you the shores a-crowding,
+      For you they call, the swaying mass, their eager faces turning;
+                             Here Captain! dear father!
+                                This arm beneath your head!
+                                   It is some dream that on the deck,
+                                     You’ve fallen cold and dead.
+
+      My Captain does not answer, his lips are pale and still,
+      My father does not feel my arm, he has no pulse nor will,
+      The ship is anchor’d safe and sound, its voyage closed and done,
+      From fearful trip the victor ship comes in with object won;
+                             Exult O shores, and ring O bells!
+                                But I with mournful tread,
+                                   Walk the deck my Captain lies,
+                                      Fallen cold and dead.
+    author: "Walt Whitman"
+    source: "Leaves of Grass (David McKay, 1891)"
+    is_poem: true
+
+# ---------------------------------
+# 3. 文章收藏 (Article Collection)
+# 有价值、希望日后重读的文章链接
+# ---------------------------------
+articles:
+  - title: "永不道别"
+    author: "威廉·C·博伊尔斯"
+    source: "原文出处不详"
+    excerpt: "记得貌似是在某个小杂志上读到的，文字简单，但是很让我触动。"
+    link: "https://www.sohu.com/a/497846473_121124705"
+  - title: "“人民幸福是党和政府恩赐”错了"
+    author: "汪洋"
+    source: "中国青年报"
+    excerpt: "望诸君共勉之。"
+    link: "https://politics.rmlt.com.cn/2012/0510/35535.shtml"
+  - title: "月，阙也"
+    author: "张晓风"
+    source: "发表源头不详"
+    excerpt: "最早貌似是在语文试卷当中看到，这篇散文文字质朴，但是极具思考韵味。"
+    link: "https://read.99csw.com/book/438/15351.html"

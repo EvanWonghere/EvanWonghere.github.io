@@ -1,0 +1,32 @@
+<div class="quote-card">
+    <span class="quote-mark">“</span>
+    {{/* 判断是否为诗歌，以决定渲染方式 */}}
+    {{ if .is_poem }}
+        <pre class="quote-content">{{ .content }}</pre>
+    {{ else }}
+        <p class="quote-content">{{ .content | markdownify }}</p>
+    {{ end }}
+
+    <footer class="quote-author">
+        — {{ if .author }}{{ .author }}{{ end }}
+        {{ if .source }}
+            <cite>
+            《{{/* 如果有来源链接，则创建链接 */}}
+            {{- if .source_link -}}
+                <a href="{{ .source_link }}" class="source-link" target="_blank" rel="noopener noreferrer">{{ .source }}</a>
+            {{- else -}}
+                {{ .source }}
+            {{- end -}}
+            》
+            </cite>
+        {{ end }}
+    </footer>
+
+    {{/* 如果有个人思索，则显示 */}}
+    {{ if .thoughts }}
+    <hr class="quote-divider">
+    <div class="quote-thoughts">
+        {{ .thoughts | markdownify }}
+    </div>
+    {{ end }}
+</div>
