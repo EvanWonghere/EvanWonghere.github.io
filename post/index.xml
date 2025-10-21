@@ -1,4 +1,142 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 蜂窝</title><link>https://yufenghuang.tech/post/</link><description>Recent content in Posts on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Tue, 21 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://yufenghuang.tech/post/index.xml" rel="self" type="application/rss+xml"/><item><title>游戏设计梦工厂，第一篇第四章</title><link>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/</link><pubDate>Tue, 21 Oct 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/</guid><description>&lt;img src="https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/cover.png" alt="Featured image of post 游戏设计梦工厂，第一篇第四章" /&gt;&lt;h1 id="-运用-dramatic-elements"&gt;📖 运用 Dramatic Elements
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 蜂窝</title><link>https://yufenghuang.tech/post/</link><description>Recent content in Posts on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Tue, 21 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://yufenghuang.tech/post/index.xml" rel="self" type="application/rss+xml"/><item><title>使用 FDD 框架分析《The Case of the Golden Idol》</title><link>https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-fdd-%E6%A1%86%E6%9E%B6%E5%88%86%E6%9E%90the-case-of-the-golden-idol/</link><pubDate>Tue, 21 Oct 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-fdd-%E6%A1%86%E6%9E%B6%E5%88%86%E6%9E%90the-case-of-the-golden-idol/</guid><description>&lt;img src="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-fdd-%E6%A1%86%E6%9E%B6%E5%88%86%E6%9E%90the-case-of-the-golden-idol/cover.jpeg" alt="Featured image of post 使用 FDD 框架分析《The Case of the Golden Idol》" /&gt;&lt;h1 id="使用-fdd-框架分析the-case-of-the-golden-idol"&gt;使用 FDD 框架分析《The Case of the Golden Idol》
+&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;《The Case of the Golden Idol》是一款以“观察与推理”为核心的叙事解谜游戏。它没有动态的剧情演出，也没有直接的文本叙事，却让玩家在一幅幅凝固的画面中拼出一连串离奇的谋杀事件。本文将使用 FDD（Formal, Dramatic, Dynamic）框架，分析这款作品如何通过“语言与观察”构建出独特的叙事体验。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id="formal-elements形式正规元素"&gt;Formal Elements（形式/正规元素）
+&lt;/h2&gt;&lt;h3 id="player-and-objectives"&gt;Player and Objectives
+&lt;/h3&gt;&lt;p&gt;玩家面对一个静态的场景，需要推断出画面中的人物身份、事件经过与动机。&lt;/p&gt;
+&lt;p&gt;在这一过程中，玩家更像是一位&lt;strong&gt;考古学家&lt;/strong&gt;——通过对零碎线索的主动挖掘与整理，逐步还原隐藏在定格瞬间背后的真相。&lt;/p&gt;
+&lt;h3 id="procedure-and-rules"&gt;Procedure and Rules
+&lt;/h3&gt;&lt;p&gt;游戏分为两个部分：&lt;strong&gt;Exploring&lt;/strong&gt; 与 &lt;strong&gt;Thinking&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;在 Exploring 部分，玩家可以点击可交互的物品或人物，查看相关信息、拾取可收集词语；
+在 Thinking 部分，玩家将这些词语填入相应的空格中，以完成事件重构。&lt;/p&gt;
+&lt;p&gt;游戏会在所有空格被填满后进行验证，并反馈正确性。&lt;/p&gt;
+&lt;p&gt;对于填词验证机制，整个 Thinking 部分又按照内容分为几个子部分，但子部分的空格被填满后系统会自动验证该部分的填空是否完全正确，如果错误的话是否错误在两个以内。这是在「变相透题」，如果错误多于两个，说明推理与事实差距较大，鼓励玩家重新进行推理；如果错误在两个以内，说明推理与事实十分相近离真相已不远，鼓励玩家重新审视自己的推理。这样的机制从一定程度上防止了玩家使用「试错法」，而是尝试进行「深度思考」。&lt;/p&gt;
+&lt;h3 id="resources"&gt;Resources
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;玩家的主要资源是从场景中获得的&lt;strong&gt;可收集词语&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;这些词语分为人名、地名、物品名、动词等类型，并分别对应 Thinking 部分中的不同栏位。
+语言在此被物化为“信息碎片”，是理解与表达的双重媒介。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;除此之外，玩家的&lt;strong&gt;认知资源&lt;/strong&gt;也是主要资源&lt;/p&gt;
+&lt;p&gt;系统通过提升信息的饱和度来消耗这些资源、提升玩家认知负荷、 Conflict 和 Challenge 的强度。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="conflict"&gt;Conflict
+&lt;/h3&gt;&lt;p&gt;核心冲突并非角色之间的对抗，而是玩家自身的&lt;strong&gt;认知冲突&lt;/strong&gt;——
+你的推断是否正确？你对线索的理解是否偏离事实？
+这种内在冲突构成了游戏最持续的张力。&lt;/p&gt;
+&lt;h3 id="boundaries"&gt;Boundaries
+&lt;/h3&gt;&lt;p&gt;除了最后两案，玩家每次探索的区域局限于本案地图，并且探索画面局限于近乎静止的画面。&lt;/p&gt;
+&lt;p&gt;但后期案件通过回顾过去案件实现跨案连结，这也促成宏叙事连贯。&lt;/p&gt;
+&lt;h3 id="outcome"&gt;Outcome
+&lt;/h3&gt;&lt;p&gt;当玩家正确还原事件、完成全部填词后，系统即判定“胜利”。
+每一次正确的推理不仅是谜题的解答，也象征着一次成功的“理解行为”。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="dramatic-elements戏剧元素"&gt;Dramatic Elements（戏剧元素）
+&lt;/h2&gt;&lt;h3 id="premise"&gt;Premise
+&lt;/h3&gt;&lt;p&gt;某日，两个探险家发现了一尊神秘的金偶像。
+从那一刻起，一连串围绕“偶像”的阴谋与死亡开始上演。&lt;/p&gt;
+&lt;h3 id="character"&gt;Character
+&lt;/h3&gt;&lt;p&gt;每个案件都有不同的角色，但玩家并不扮演或控制他们。
+角色们更像是&lt;strong&gt;定格在瞬间的符号&lt;/strong&gt;，通过姿态、物品与环境暗示出他们的关系与动机。&lt;/p&gt;
+&lt;h3 id="story"&gt;Story
+&lt;/h3&gt;&lt;p&gt;随着玩家逐案还原，故事逐步展开。
+虽然玩法无法改变剧情，但玩家的推理过程&lt;strong&gt;重建了叙事本身&lt;/strong&gt;。
+在这层意义上，玩家并非编剧或表演者，而是“叙事的考古学家”。&lt;/p&gt;
+&lt;h3 id="dramatic-arc"&gt;Dramatic Arc
+&lt;/h3&gt;&lt;p&gt;每个独立案件大致遵循“震惊 → 疑惑 → 假设 → 验证 → 恍然大悟”的情绪曲线。&lt;/p&gt;
+&lt;p&gt;而从整体来看，游戏的宏观结构也呈现相似的波动：&lt;/p&gt;
+&lt;p&gt;“兄弟会”案件构成第一个高潮，最终案件达到全剧顶点，“尾声”则让一切谜团落幕。&lt;/p&gt;
+&lt;p&gt;这种情绪节奏让玩家在不断的认知落差与顿悟中获得戏剧体验。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="dynamic-elements动态元素"&gt;Dynamic Elements（动态元素）
+&lt;/h2&gt;&lt;h3 id="系统组成"&gt;系统组成
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;物品&lt;/strong&gt;：包括角色、随身物、场景可交互物件、可收集线索、词库与填词框。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;属性&lt;/strong&gt;：如是否可交互、可收集、词语类别（人名、物品名、动词等）及是否正确填入等。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;行为&lt;/strong&gt;：点击调查、收集词语、拖拽填词、切换场景。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;关系&lt;/strong&gt;：词语与填词框形成多对一或一对多关系，同一词语可重复使用。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;信息结构&lt;/strong&gt;：信息半公开，玩家需主动探索才能获取。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;反馈&lt;/strong&gt;：系统在区域填满后统一验证，并提示错误数量是否小于两处。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="信息流"&gt;信息流
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;flowchart LR
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; A[可交互点（场景物）] --&amp;gt;|点击| B(信息文本/描述)
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; B --&amp;gt;|包含可收集词语| C[词库（Word Bank）]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; C --&amp;gt;|拖拽| D[Thinking 区域]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; D --&amp;gt;|填充完整| E{验证判定}
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; E --&amp;gt;|全部正确| F[案件解锁 / 叙事推进]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; E --&amp;gt;|错误&amp;lt;=2| G[提示：接近正确]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; E --&amp;gt;|错误&amp;gt;2| H[提示：重审线索]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="核心循环"&gt;核心循环
+&lt;/h3&gt;&lt;p&gt;观察画面 → 初步猜测 → 收集线索 → 进一步推理 → 填词验证 → 修正推理 → 还原事件。&lt;/p&gt;
+&lt;p&gt;整个循环是一种认知行为：从感知到理解，再到自我校正，直至构建出连贯的真相。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;flowchart TD
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; subgraph 玩家认知与叙事重构流
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; direction TB
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; A[视觉输入：定格场景与破碎线索&amp;lt;br/&amp;gt;→ Premise / Context] --&amp;gt; B{注意力分配：搜索可交互点};
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; B --&amp;gt; C[信息提取：描述文字、可收集词语&amp;lt;br/&amp;gt;→ Resources];
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; C --&amp;gt; D[语义建模：建立人物、物品、动作间关联&amp;lt;br/&amp;gt;→ Character / Rules];
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; D --&amp;gt; E{假设生成：构建初步事件模型};
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; E --&amp;gt; F[验证行动：填词并触发系统反馈];
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; F --&amp;gt; G{系统反馈与冲突&amp;lt;br/&amp;gt;→ Conflict / Challenge};
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; G -- 错误数量 &amp;gt; 2 --&amp;gt; H[认知重组：推翻假设，重新检索线索];
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; G -- 错误数量 ≤ 2 --&amp;gt; I[局部修正：微调关键词语];
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; H --&amp;gt; D;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; I --&amp;gt; J[突触重构：整合全部线索，触发顿悟&amp;lt;br/&amp;gt;→ Aha! / Aesthetic];
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; J --&amp;gt; K[叙事重构完成：获得完整事件模型&amp;lt;br/&amp;gt;→ Outcome];
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; end
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; K --&amp;gt; L(循环至下一案件，重置认知负荷);
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="summary"&gt;Summary
+&lt;/h2&gt;&lt;p&gt;《The Case of the Golden Idol》的独特之处，在于它几乎剥离了所有传统的戏剧表演，却仍然构建出强烈的戏剧张力。
+叙事不再被“讲述”，而是被&lt;strong&gt;理解&lt;/strong&gt;；
+戏剧不在角色行动中上演，而在玩家的思考过程中重生。&lt;/p&gt;
+&lt;p&gt;这款游戏让玩家成为“考古学家”，在语言、图像与逻辑的碎片中发掘过去的故事。
+它所探索的，不仅是推理的边界，更是一个深层问题：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;当叙事被彻底静止，玩家的理解是否仍能让它重新活过来？&lt;/p&gt;
+&lt;/blockquote&gt;</description></item><item><title>游戏设计梦工厂，第一篇第四章</title><link>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/</link><pubDate>Tue, 21 Oct 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/</guid><description>&lt;img src="https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/cover.png" alt="Featured image of post 游戏设计梦工厂，第一篇第四章" /&gt;&lt;h1 id="-运用-dramatic-elements"&gt;📖 运用 Dramatic Elements
 &lt;/h1&gt;&lt;h2 id="-阅读目的"&gt;🎯 阅读目的
 &lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;在了解完游戏的骨架 —— Formal Elements 后，开始了解游戏的骨肉、能让玩家投入情感的元素—— Dramatic Elements。学习这些元素是如何结合并形成投入感的。&lt;/p&gt;
