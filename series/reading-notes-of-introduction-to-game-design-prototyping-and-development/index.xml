@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT on 蜂窝</title><link>https://yufenghuang.tech/series/reading-notes-of-introduction-to-game-design-prototyping-and-development/</link><description>Recent content in Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Mon, 03 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://yufenghuang.tech/series/reading-notes-of-introduction-to-game-design-prototyping-and-development/index.xml" rel="self" type="application/rss+xml"/><item><title>Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 3</title><link>https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/</link><pubDate>Mon, 03 Jun 2024 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/</guid><description>&lt;img src="https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/cover.png" alt="Featured image of post Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 3" /&gt;&lt;h2 id="chapter-3-the-layered-tetrad"&gt;Chapter 3 The Layered Tetrad
 &lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;分层四元法帮助你分析你爱的游戏，并且帮助能能够以一个总体的视角去看待你的游戏，让你不仅是了解游戏的机制，更包括他们的游玩的含义、社会属性、意义和文化的实现。&lt;/em&gt;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;em&gt;分层四元法帮助你分析你爱的游戏，并且帮助能能够以一个总体的视角去看待你的游戏，让你不仅是了解游戏的机制，更包括他们的游玩的含义、社会属性、意义和文化的实现。&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;​ 分层四元法是前面所提的三个框架的理念的拓展和组合。分层四元法并不定义什么是游戏，而是一个帮助你理解所有制作游戏需要设计的不同元素，和它们在游戏内外的意义。&lt;/p&gt;
 &lt;p&gt;​ 分层四元法由 Schell 的四元法中的四个元素组成，但这些元素通过三个层次来体验。&lt;/p&gt;
 &lt;p&gt;​ 前两个为&lt;strong&gt;内嵌层&lt;/strong&gt; (&lt;em&gt;inscribed&lt;/em&gt;) 和&lt;strong&gt;动态层&lt;/strong&gt; (&lt;em&gt;dynamic&lt;/em&gt;) ，基于 Fullerton 的形式元素 (formal elements) 和动态元素 (dynamic elements) 来划分。第三个是&lt;strong&gt;文化层&lt;/strong&gt; (&lt;em&gt;culture&lt;/em&gt;)，涵盖了游戏的生命 (game&amp;rsquo;s life) 和游玩之外的影响，还提供了链接游戏和文化的纽带，这对我们成为有意义的艺术创作者和负责人的游戏设计师极其重要。&lt;/p&gt;
@@ -12,7 +13,8 @@ loading="lazy"
 alt="img"
 &gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;内嵌层&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;内嵌层&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Mechanics&lt;/strong&gt;&lt;/p&gt;
@@ -40,7 +42,8 @@ alt="img"
 &gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;内嵌层 + 动态层&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;通过游玩游戏，玩家从内嵌层中生成动态层。&lt;/em&gt;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;em&gt;通过游玩游戏，玩家从内嵌层中生成动态层。&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;​ 正如图中所示，玩家从静态的内嵌层（inscribed layer）中构建出动态层（dynamic layer）。动态层中的一切都通过游玩产生，并且动态层由玩家直接控制的元素和玩家和内嵌层元素产生的交互一同构成。动态层是涌现（&lt;strong&gt;emergence&lt;/strong&gt;）的领域，即从看似简单的规则中产生复杂的行为的现象。游戏的涌现行为通常很难预测，但是你将会反复构建的一个游戏设计中的强大技能就是去预测涌现行为的能力，或者至少做出相当不错的猜测。&lt;/p&gt;
 &lt;p&gt;动态层中的四个动态元素是：&lt;/p&gt;
 &lt;ul&gt;
@@ -72,7 +75,8 @@ loading="lazy"
 alt="img"
 &gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;玩家社区和社会的碰撞产生了文化层&lt;/em&gt;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;em&gt;玩家社区和社会的碰撞产生了文化层&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;​ 在文化层中四个元素之间更加模糊，但是仍值得从四个元素的角度来解读。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -98,7 +102,8 @@ alt="img"
 &lt;/h3&gt;&lt;p&gt;​ 所有设计师都明白他们对游戏内嵌层的责任。很明显，游戏开发必须具有清晰的规则、有趣的美术等鼓励玩家进行游戏。&lt;/p&gt;
 &lt;p&gt;​ 到了动态层，设计师们就更不清楚（muddier）自己的责任了。游戏设计师会惊叹于他们的游戏的涌现并且想把该行为的责任推卸给玩家，但其实设计师仍要对玩家在动态层于设计师设计的系统的影响中的体验（the experiences of players at the dynamic layer through the implications of the systems they designed）负责。事实上，游戏设计最重要的一方面就是预测并打造动态层体验。这当然是个很艰难的任务，但也正是它有趣的部分原因。&lt;/p&gt;
 &lt;p&gt;​ 那么，设计师在文化层上的责任是什么呢？简短来说，你要对你的游戏产生的社会影响和对玩家造成的影响负责，我们有责任通过游戏促进亲社会和thoughtful的行为，并且尊重玩家以及他们花费在体验我们所创造的上的时间，而不是损坏游戏在社会上的形象，如诱骗小孩充巨资（书上就有，不是我影射某公司）。&lt;/p&gt;</description></item><item><title>Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 1 &amp; 2</title><link>https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/</link><pubDate>Fri, 26 Apr 2024 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/</guid><description>&lt;img src="https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/cover.png" alt="Featured image of post Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 1 &amp; 2" /&gt;&lt;blockquote&gt;
-&lt;p&gt;长文预警！！！另外其实笔者并不咋会做笔记，基本可以看作翻译和吐槽&amp;hellip;&amp;hellip;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;长文预警！！！另外其实笔者并不咋会做笔记，基本可以看作翻译和吐槽&amp;hellip;&amp;hellip;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h2 id="chapter-1-thinking-like-a-designers"&gt;Chapter 1 Thinking Like a Designers
 &lt;/h2&gt;&lt;p&gt;​ 本章首先以Bartok游戏为例，简单讲解如何设计并迭代一个游戏，其实应该说讲的是如何迭代一个经过基本设计的游戏。&lt;/p&gt;
 &lt;h3 id="playtesting"&gt;Playtesting
@@ -203,7 +208,8 @@ alt="img"
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
-&lt;p&gt;在第一版中，以上三点都只有从论文中摘抄下来的部分，也就是只有第一句，故中文版第一版也只翻译了第一句。（我说这翻译怎么都只翻译一半）&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;在第一版中，以上三点都只有从论文中摘抄下来的部分，也就是只有第一句，故中文版第一版也只翻译了第一句。（我说这翻译怎么都只翻译一半）&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;​ MDA对美学的定义是很独特的，没有其他的框架会如此定义。美学通常指的是哲学上的一个分支，和美、丑等概念有关。而更通俗地说，设计美学（design aesthetic）是设计的一种统一意图。（讲道理，我觉得这并不“colloquially”，因为其实我并没有看懂，还是 po 出原文吧&amp;quot;And, more colloquially, a design aesthetic is the cohesive intent of a design.&amp;quot;）&lt;/p&gt;
 &lt;h5 id="designer-and-player-views-of-a-game"&gt;Designer and Player Views of a Game
 &lt;/h5&gt;&lt;p&gt;​ 基于 MDA，设计者应该首先从美学视角看待游戏，考虑游玩时要给玩家如何的情感体验。再回过头寻找能够产生那些情感的动态，再最终寻找能够创造这些动态的机制。而玩家倾向于以一个相反的方向看待游戏，首先体验到游戏的机制（经常是通过阅读游戏规则），然后在游玩中体验到动态，最后（希望）体验到设计师一开始预想的美学。&lt;/p&gt;

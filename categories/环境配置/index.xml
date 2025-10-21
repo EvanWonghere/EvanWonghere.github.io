@@ -132,7 +132,8 @@ data-flex-basis="426px"
 &lt;/div&gt;&lt;/blockquote&gt;
 &lt;blockquote&gt;
 &lt;p&gt;后记：&lt;/p&gt;
-&lt;p&gt;​ 有一说一，我感觉用VS都方便很多呢&amp;hellip;&amp;hellip;&lt;/p&gt;&lt;/blockquote&gt;</description></item><item><title>使用 Visual Studio 部署 Boost::Python</title><link>https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/</link><pubDate>Fri, 09 Jun 2023 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/</guid><description>&lt;h1 id="环境"&gt;环境
+&lt;p&gt;​ 有一说一，我感觉用VS都方便很多呢&amp;hellip;&amp;hellip;&lt;/p&gt;
+&lt;/blockquote&gt;</description></item><item><title>使用 Visual Studio 部署 Boost::Python</title><link>https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/</link><pubDate>Fri, 09 Jun 2023 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/</guid><description>&lt;h1 id="环境"&gt;环境
 &lt;/h1&gt;&lt;p&gt;笔者的环境是：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Windows 11 64 bit&lt;/li&gt;
@@ -268,7 +269,8 @@ data-flex-basis="206px"
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/configuration.png"
 width="533"
 height="1178"
@@ -403,4 +405,5 @@ data-flex-basis="434px"
 &lt;p&gt;&lt;a class="link" href="https://zhuanlan.zhihu.com/p/60215378" target="_blank" rel="noopener"
 &gt;https://zhuanlan.zhihu.com/p/60215378&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class="link" href="https://blog.csdn.net/HaleyPKU/article/details/82911669" target="_blank" rel="noopener"
-&gt;https://blog.csdn.net/HaleyPKU/article/details/82911669&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;</description></item></channel></rss>
+&gt;https://blog.csdn.net/HaleyPKU/article/details/82911669&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description></item></channel></rss>

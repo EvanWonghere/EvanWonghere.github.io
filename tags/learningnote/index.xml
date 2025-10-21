@@ -391,7 +391,8 @@ data-flex-basis="1962px"
 &lt;/div&gt;
 &lt;/div&gt;&lt;blockquote&gt;
 &lt;p&gt;GitHub 有一个十分详细的针对数十种项目及语言的 &lt;code&gt;.gitignore&lt;/code&gt; 文件列表， 你可以在 &lt;a class="link" href="https://github.com/github/gitignore" target="_blank" rel="noopener"
-&gt;https://github.com/github/gitignore&lt;/a&gt; 找到它。&lt;/p&gt;&lt;/blockquote&gt;
+&gt;https://github.com/github/gitignore&lt;/a&gt; 找到它。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h4 id="viewing-your-staged-and-unstaged-changes"&gt;Viewing Your Staged and Unstaged Changes
 &lt;/h4&gt;&lt;p&gt;如果你更想知道具体文件修改了什么地方，那么 &lt;code&gt;git status&lt;/code&gt; 的输出内容就有些太过于简略了，那么你可以使用 &lt;code&gt;git diff&lt;/code&gt; 指令。你通常可能会用它来回答这两个问题：当前做的哪些更新尚未暂存？ 有哪些更新已暂存并准备好下次提交？ 虽然 &lt;code&gt;git status&lt;/code&gt; 已经通过在相应栏下列出文件名的方式回答了这个问题，但 &lt;code&gt;git diff&lt;/code&gt; 能通过文件补丁的格式更加具体地显示哪些行发生了改变。&lt;/p&gt;
 &lt;ul&gt;
@@ -1893,7 +1894,8 @@ return a + b;
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt; For C language, before the C99 standard, the size of the array must be a constant or a constant expression (sizeof() is regarded as an integer constant), and the array length must be specified in the source code. But after the introduction of VLA in C99, you can use variables to specify the array length. But notice that VLA could not be initialized, we'll talk about later.
 As for C++, in fact, the C++ standard does not provide any support for VLA. If your compilation can pass, it is an extension added by the compiler (GCC, Clang++). If you are using VS, then in MSVC The admiral failed to compile. If you wanna really really wanna use it, you can use const or constexpr keyword, and maybe the better idea is to use std::vector or std::array.
-&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;​ An array is called a &lt;em&gt;compound type&lt;/em&gt; because it is built from some other type. You can’t simply declare that something is an array; it always has to be an array of some particular type. There is no generalized array type. Instead, there are many specific array types, such as array of char or array of long. For example, consider this declaration:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
@@ -1919,7 +1921,8 @@ data-flex-basis="345px"
 &gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;h2 id="the-importance-of-valid-subscript-values"&gt;The Importance of Valid Subscript Values
-&lt;/h2&gt;&lt;p&gt;The compiler does not check to see if you use a valid subscript. For instance, the compiler won’t complain if you assign a value to the nonexistent element months[101]. But that assignment could cause problems when the program runs, possibly corrupting data or code, possibly causing the program to abort. So it is your responsibility to make sure that your program uses only valid subscript values.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;/h2&gt;&lt;p&gt;The compiler does not check to see if you use a valid subscript. For instance, the compiler won’t complain if you assign a value to the nonexistent element months[101]. But that assignment could cause problems when the program runs, possibly corrupting data or code, possibly causing the program to abort. So it is your responsibility to make sure that your program uses only valid subscript values.&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Initialize rules&lt;/strong&gt;&lt;/p&gt;
@@ -3397,7 +3400,8 @@ data-flex-basis="277px"
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;smart_function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;​ Other control statements, such as if and while, are treated similarly to for. This serves to visually reinforce the distinction between a control statement and a function call.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;/div&gt;&lt;p&gt;​ Other control statements, such as if and while, are treated similarly to for. This serves to visually reinforce the distinction between a control statement and a function call.&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;em&gt;&lt;strong&gt;while&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
@@ -3496,7 +3500,8 @@ data-flex-basis="279px"
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Because for loops and while loops are nearly equivalent, the one you use is largely a matter of style.&lt;/p&gt;
-&lt;p&gt;Keep in mind the following guidelines when you design a loop:&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;Keep in mind the following guidelines when you design a loop:&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
@@ -3504,7 +3509,8 @@ data-flex-basis="279px"
 &lt;li&gt;Identify the condition that terminates loop execution.&lt;/li&gt;
 &lt;li&gt;Initialize that condition before the first test.&lt;/li&gt;
 &lt;li&gt;Update the condition in each loop cycle before the condition is tested again.&lt;/li&gt;
-&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;em&gt;&lt;strong&gt;do while&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
@@ -4284,7 +4290,8 @@ data-flex-basis="376px"
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
-&lt;p&gt;以上的这些选项，也可以在设置-&amp;gt;C/C++中寻找相同的选项进行配置，我觉得会更加友好。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;以上的这些选项，也可以在设置-&amp;gt;C/C++中寻找相同的选项进行配置，我觉得会更加友好。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
