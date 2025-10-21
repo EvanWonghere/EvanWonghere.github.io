@@ -75,6 +75,9 @@ math = true
     enabled = true
     default = "Licensed under CC BY-NC-SA 4.0"
 
+    [params.article.mermaid]
+    enable = true
+
   [params.comments]
   enabled = true
   provider = "giscus"
