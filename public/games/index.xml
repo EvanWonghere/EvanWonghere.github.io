@@ -158,6 +158,27 @@
 </description>
         </item>
         <item>
+        <title>国际象棋 (Chess)</title>
+        <link>http://localhost:1313/games/chess/</link>
+        <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
+        <author>yufenghuang009@gmail.com (Evan Wong)</author>
+        <guid>http://localhost:1313/games/chess/</guid>
+        <description>&lt;h4 id=&#34;游戏说明&#34;&gt;游戏说明
+&lt;/h4&gt;&lt;p&gt;这是一款经典的&lt;strong&gt;双人对弈&lt;/strong&gt;游戏。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;白方先行&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;操作&lt;/strong&gt;：点击棋子选择，点击高亮位置移动。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;特殊规则支持&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;王车易位 (Castling)&lt;/strong&gt;：当王和车之间没有阻碍且未移动过时，点击王的目标位置（移动两格）即可触发。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;兵升变&lt;/strong&gt;：兵走到底线会自动升变为“后” (Queen)。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;逼和 (Stalemate)&lt;/strong&gt;：当一方无路可走且未被将军时，判定为平局。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
         <title>扫雷 (Minesweeper)</title>
         <link>http://localhost:1313/games/minesweeper/</link>
         <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
@@ -184,6 +205,21 @@
 &lt;li&gt;&lt;strong&gt;AI 非常聪明&lt;/strong&gt;，请小心应对！&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;em&gt;小提示：点击“悔棋”可以回退两步（你的一步和 AI 的一步）。&lt;/em&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>中国象棋 (Xiangqi)</title>
+        <link>http://localhost:1313/games/xiangqi/</link>
+        <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
+        <author>yufenghuang009@gmail.com (Evan Wong)</author>
+        <guid>http://localhost:1313/games/xiangqi/</guid>
+        <description>&lt;h4 id=&#34;游戏说明&#34;&gt;游戏说明
+&lt;/h4&gt;&lt;p&gt;这是一款&lt;strong&gt;双人对弈&lt;/strong&gt;游戏（Hotseat模式），适合与朋友在同一台设备上切磋，或者自己左右互搏研究棋谱。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;红方先手&lt;/strong&gt;：游戏开始默认红方先行。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;规则完备&lt;/strong&gt;：内置了马撇脚、象飞田、老将照面等经典规则检测。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;悔棋功能&lt;/strong&gt;：下错了？点击底部“悔棋”即可回退一步。&lt;/li&gt;
+&lt;/ul&gt;
 </description>
         </item>
         

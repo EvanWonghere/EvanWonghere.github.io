@@ -42,10 +42,16 @@
     <loc>http://localhost:1313/games/typing-rain/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>http://localhost:1313/games/chess/</loc>
+    <lastmod>2025-11-19T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>http://localhost:1313/games/minesweeper/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/games/gomoku/</loc>
+    <lastmod>2025-11-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/games/xiangqi/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>

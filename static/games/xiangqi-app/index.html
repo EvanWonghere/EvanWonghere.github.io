@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chinese Chess Pro</title>
+    <style>
+        :root {
+            --bg-color: #222;
+            --text-color: #eee;
+            --accent-gold: #f0c050;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            font-family: "LiSu", "Kaiti", "STKaiti", serif;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* 头部信息 */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 95vw;
+            max-width: 500px;
+            margin-bottom: 10px;
+            z-index: 2;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--accent-gold);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+            letter-spacing: 4px;
+        }
+
+        .turn-badge {
+            padding: 5px 15px;
+            background: #333;
+            border: 1px solid #555;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            transition: all 0.3s ease;
+        }
+        .turn-badge.active-red { border-color: #e04040; box-shadow: 0 0 12px rgba(224, 64, 64, 0.4); background: #2a1a1a; }
+        .turn-badge.active-black { border-color: #aaa; box-shadow: 0 0 12px rgba(255, 255, 255, 0.2); background: #1a1a1a; }
+
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot.red { background: #ff4d4d; }
+        .dot.black { background: #ccc; }
+
+        /* 棋盘 */
+        .board-container {
+            position: relative;
+            padding: 12px;
+            background: #4d3319;
+            border-radius: 6px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+        }
+
+        canvas {
+            display: block;
+            cursor: default;
+            border-radius: 2px;
+            /* 默认背景，会被Canvas绘制覆盖 */
+            background: #deb887; 
+        }
+
+        /* 控制按钮 */
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 20px;
+        }
+
+        button {
+            padding: 10px 24px;
+            font-family: inherit;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            background: linear-gradient(to bottom, #e6cfa5, #c6a572);
+            color: #3e2723;
+            border-bottom: 4px solid #8b6914;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+            transition: all 0.1s;
+        }
+        button:active {
+            transform: translateY(3px);
+            border-bottom: 1px solid #8b6914;
+        }
+
+        /* 结算弹窗 */
+        #overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+            backdrop-filter: blur(4px);
+        }
+        #overlay.show { opacity: 1; pointer-events: auto; }
+        
+        .win-text {
+            font-size: 4rem;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(240, 192, 80, 0.6);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>中国象棋</h1>
+    <div id="turn-badge" class="turn-badge active-red">
+        <span class="dot red" id="turn-dot"></span>
+        <span id="turn-text">红方执棋</span>
+    </div>
+</div>
+
+<div class="board-container">
+    <canvas id="board"></canvas>
+    <div id="overlay">
+        <div class="win-text" id="win-title">红方胜</div>
+        <button onclick="initGame()">再战一局</button>
+    </div>
+</div>
+
+<div class="controls">
+    <button onclick="undo()">悔棋</button>
+    <button onclick="initGame()">重置</button>
+</div>
+
+<script>
+    // --- 音效管理器 ---
+    const AudioSys = {
+        ctx: null,
+        init: function() { if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); },
+        play: function(type) {
+            if (!this.ctx) this.init();
+            if (this.ctx.state === 'suspended') this.ctx.resume();
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            const now = this.ctx.currentTime;
+            
+            if (type === 'select') {
+                osc.frequency.setValueAtTime(600, now);
+                osc.frequency.exponentialRampToValueAtTime(300, now + 0.1);
+                gain.gain.setValueAtTime(0.05, now);
+                gain.gain.linearRampToValueAtTime(0, now + 0.1);
+                osc.start(now); osc.stop(now + 0.1);
+            } else if (type === 'move') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(150, now);
+                osc.frequency.exponentialRampToValueAtTime(40, now + 0.15);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.linearRampToValueAtTime(0, now + 0.15);
+                osc.start(now); osc.stop(now + 0.15);
+            } else if (type === 'capture') {
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(200, now);
+                osc.frequency.linearRampToValueAtTime(50, now + 0.2);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.linearRampToValueAtTime(0, now + 0.2);
+                osc.start(now); osc.stop(now + 0.2);
+            } else if (type === 'check') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(300, now);
+                osc.frequency.linearRampToValueAtTime(200, now + 0.3);
+                gain.gain.setValueAtTime(0.05, now);
+                gain.gain.linearRampToValueAtTime(0, now + 0.3);
+                osc.start(now); osc.stop(now + 0.3);
+            }
+        }
+    };
+
+    // --- 核心变量 ---
+    const canvas = document.getElementById('board');
+    const ctx = canvas.getContext('2d');
+    const turnBadge = document.getElementById('turn-badge');
+    const turnText = document.getElementById('turn-text');
+    const turnDot = document.getElementById('turn-dot');
+    const overlay = document.getElementById('overlay');
+    const winTitle = document.getElementById('win-title');
+
+    const ROLES = { RED: 'red', BLACK: 'black' };
+    const CHARS = {
+        red: { k: '帅', a: '仕', b: '相', n: '马', r: '车', c: '炮', p: '兵' },
+        black: { k: '将', a: '士', b: '象', n: '马', r: '车', c: '炮', p: '卒' }
+    };
+    const INITIAL_LAYOUT = [
+        ['r', 'n', 'b', 'a', 'k', 'a', 'b', 'n', 'r'],
+        ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
+        ['.', 'c', '.', '.', '.', '.', '.', 'c', '.'],
+        ['p', '.', 'p', '.', 'p', '.', 'p', '.', 'p'],
+        ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
+        ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
+        ['P', '.', 'P', '.', 'P', '.', 'P', '.', 'P'],
+        ['.', 'C', '.', '.', '.', '.', '.', 'C', '.'],
+        ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
+        ['R', 'N', 'B', 'A', 'K', 'A', 'B', 'N', 'R']
+    ];
+
+    let CELL_SIZE = 0, OFFSET_X = 0, OFFSET_Y = 0;
+    let board = [];
+    let selected = null; 
+    let possibleMoves = []; 
+    let isRedTurn = true;
+    let history = [];
+    let isGameOver = false;
+    let checkPos = null; // 将军位置
+    
+    // 动画相关
+    let animatingPiece = null; // { piece, fromR, fromC, toR, toC, progress, captured }
+    let lastFrameTime = 0;
+
+    // --- 初始化 ---
+    function resize() {
+        const maxW = window.innerWidth - 24;
+        const maxH = window.innerHeight - 160;
+        let w = Math.min(maxW, 520);
+        let h = w * (10/9) + 40;
+
+        if (h > maxH) {
+            h = maxH;
+            w = (h - 40) * (9/10);
+        }
+
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        canvas.style.width = w + 'px';
+        canvas.style.height = h + 'px';
+        ctx.scale(dpr, dpr);
+
+        CELL_SIZE = w / 10;
+        OFFSET_X = CELL_SIZE;
+        OFFSET_Y = CELL_SIZE;
+
+        // 触发一次重绘
+        requestAnimationFrame(loop);
+    }
+    window.addEventListener('resize', resize);
+
+    function initGame() {
+        board = Array(10).fill(null).map(() => Array(9).fill(null));
+        history = [];
+        isRedTurn = true;
+        isGameOver = false;
+        selected = null;
+        possibleMoves = [];
+        checkPos = null;
+        animatingPiece = null;
+        
+        overlay.classList.remove('show');
+        updateTurnUI();
+
+        for(let r=0; r<10; r++) {
+            for(let c=0; c<9; c++) {
+                const char = INITIAL_LAYOUT[r][c];
+                if (char !== '.') {
+                    const isRed = char === char.toUpperCase();
+                    board[r][c] = { type: char.toLowerCase(), color: isRed ? ROLES.RED : ROLES.BLACK };
+                }
+            }
+        }
+        
+        if (CELL_SIZE === 0) resize();
+    }
+
+    // --- 游戏循环 (用于动画) ---
+    function loop(timestamp) {
+        if (!lastFrameTime) lastFrameTime = timestamp;
+        const dt = timestamp - lastFrameTime;
+        lastFrameTime = timestamp;
+
+        updateAnimation(dt);
+        draw();
+        
+        requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+
+    function updateAnimation(dt) {
+        if (animatingPiece) {
+            // 动画持续时间 200ms
+            animatingPiece.progress += dt / 200; 
+            if (animatingPiece.progress >= 1) {
+                // 动画结束
+                finalizeMove(animatingPiece);
+                animatingPiece = null;
+            }
+        }
+    }
+
+    // --- 绘制系统 ---
+    function draw() {
+        if (CELL_SIZE === 0) return;
+        const w = canvas.width / (window.devicePixelRatio || 1);
+        const h = canvas.height / (window.devicePixelRatio || 1);
+
+        // 1. 背景
+        const wood = ctx.createLinearGradient(0,0,w,h);
+        wood.addColorStop(0, "#E6CFA5"); wood.addColorStop(1, "#C6A572");
+        ctx.fillStyle = wood; ctx.fillRect(0,0,w,h);
+
+        // 2. 网格线
+        ctx.lineWidth = 2; ctx.strokeStyle = "#5E3C1E"; ctx.beginPath();
+        for(let r=0; r<10; r++) { ctx.moveTo(OFFSET_X, OFFSET_Y+r*CELL_SIZE); ctx.lineTo(OFFSET_X+8*CELL_SIZE, OFFSET_Y+r*CELL_SIZE); }
+        for(let c=0; c<9; c++) { 
+            ctx.moveTo(OFFSET_X+c*CELL_SIZE, OFFSET_Y); ctx.lineTo(OFFSET_X+c*CELL_SIZE, OFFSET_Y+4*CELL_SIZE);
+            ctx.moveTo(OFFSET_X+c*CELL_SIZE, OFFSET_Y+5*CELL_SIZE); ctx.lineTo(OFFSET_X+c*CELL_SIZE, OFFSET_Y+9*CELL_SIZE);
+        }
+        ctx.moveTo(OFFSET_X, OFFSET_Y+4*CELL_SIZE); ctx.lineTo(OFFSET_X, OFFSET_Y+5*CELL_SIZE);
+        ctx.moveTo(OFFSET_X+8*CELL_SIZE, OFFSET_Y+4*CELL_SIZE); ctx.lineTo(OFFSET_X+8*CELL_SIZE, OFFSET_Y+5*CELL_SIZE);
+        // 九宫
+        ctx.moveTo(OFFSET_X+3*CELL_SIZE, OFFSET_Y); ctx.lineTo(OFFSET_X+5*CELL_SIZE, OFFSET_Y+2*CELL_SIZE);
+        ctx.moveTo(OFFSET_X+5*CELL_SIZE, OFFSET_Y); ctx.lineTo(OFFSET_X+3*CELL_SIZE, OFFSET_Y+2*CELL_SIZE);
+        ctx.moveTo(OFFSET_X+3*CELL_SIZE, OFFSET_Y+9*CELL_SIZE); ctx.lineTo(OFFSET_X+5*CELL_SIZE, OFFSET_Y+7*CELL_SIZE);
+        ctx.moveTo(OFFSET_X+5*CELL_SIZE, OFFSET_Y+9*CELL_SIZE); ctx.lineTo(OFFSET_X+3*CELL_SIZE, OFFSET_Y+7*CELL_SIZE);
+        ctx.stroke();
+
+        // 3. 标记点与文字
+        drawMarks();
+        drawText();
+
+        // 4. 历史痕迹
+        if (history.length > 0) {
+            const last = history[history.length - 1];
+            drawFocusBrackets(last.from.r, last.from.c, "rgba(0,0,0,0.2)");
+            drawFocusBrackets(last.to.r, last.to.c, "rgba(0,0,0,0.2)");
+        }
+
+        // 5. 将军光环
+        if (checkPos) drawGlow(checkPos.r, checkPos.c, "rgba(255, 0, 0, 0.5)");
+
+        // 6. 绘制棋子 (跳过正在移动的棋子)
+        for(let r=0; r<10; r++) {
+            for(let c=0; c<9; c++) {
+                if (animatingPiece && animatingPiece.toR === r && animatingPiece.toC === c) continue; // 目标位暂不画
+                const p = board[r][c];
+                if(p) drawPiece(p, r, c, selected && selected.r === r && selected.c === c);
+            }
+        }
+
+        // 7. 绘制移动中的棋子 (顶层)
+        if (animatingPiece) {
+            const { piece, fromR, fromC, toR, toC, progress } = animatingPiece;
+            // 缓动函数 easeOutCubic
+            const t = 1 - Math.pow(1 - progress, 3);
+            const currR = fromR + (toR - fromR) * t;
+            const currC = fromC + (toC - fromC) * t;
+            drawPiece(piece, currR, currC, true); // 移动中保持高亮
+        }
+
+        // 8. 提示点 (最顶层)
+        if (selected && !animatingPiece) drawHints();
+    }
+
+    function drawMarks() {
+        const marks = [[2,1],[2,7],[7,1],[7,7],[3,0],[3,2],[3,4],[3,6],[3,8],[6,0],[6,2],[6,4],[6,6],[6,8]];
+        ctx.lineWidth=2; ctx.strokeStyle="#5E3C1E";
+        marks.forEach(([r,c]) => {
+            const x=OFFSET_X+c*CELL_SIZE, y=OFFSET_Y+r*CELL_SIZE, g=4, l=8;
+            if(c>0) { ctx.beginPath(); ctx.moveTo(x-g,y-g-l); ctx.lineTo(x-g,y-g); ctx.lineTo(x-g-l,y-g); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x-g,y+g+l); ctx.lineTo(x-g,y+g); ctx.lineTo(x-g-l,y+g); ctx.stroke(); }
+            if(c<8) { ctx.beginPath(); ctx.moveTo(x+g,y-g-l); ctx.lineTo(x+g,y-g); ctx.lineTo(x+g+l,y-g); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x+g,y+g+l); ctx.lineTo(x+g,y+g); ctx.lineTo(x+g+l,y+g); ctx.stroke(); }
+        });
+    }
+
+    function drawText() {
+        ctx.font = `bold ${CELL_SIZE*0.6}px "LiSu", serif`; ctx.fillStyle="#5E3C1E"; ctx.textAlign="center"; ctx.textBaseline="middle";
+        ctx.save(); ctx.translate(OFFSET_X+2*CELL_SIZE, OFFSET_Y+4.5*CELL_SIZE); ctx.fillText("楚 河",0,0); ctx.restore();
+        ctx.save(); ctx.translate(OFFSET_X+6*CELL_SIZE, OFFSET_Y+4.5*CELL_SIZE); ctx.fillText("汉 界",0,0); ctx.restore();
+    }
+
+    function drawPiece(p, r, c, isSelected) {
+        const x = OFFSET_X + c * CELL_SIZE;
+        const y = OFFSET_Y + r * CELL_SIZE;
+        const size = CELL_SIZE * 0.45;
+
+        // 阴影
+        ctx.shadowColor = "rgba(0,0,0,0.4)"; ctx.shadowBlur = 6; ctx.shadowOffsetX = 2; ctx.shadowOffsetY = 4;
+        
+        // 实体
+        ctx.beginPath(); ctx.arc(x, y, size, 0, Math.PI*2);
+        const grad = ctx.createRadialGradient(x-size/3, y-size/3, size/5, x, y, size);
+        grad.addColorStop(0, "#fdf5e6"); grad.addColorStop(1, "#deb887");
+        ctx.fillStyle = grad; ctx.fill();
+        ctx.shadowColor = "transparent"; // reset
+
+        // 边框
+        ctx.lineWidth = 3; ctx.strokeStyle = p.color === ROLES.RED ? "#b22222" : "#333";
+        ctx.beginPath(); ctx.arc(x, y, size-2, 0, Math.PI*2); ctx.stroke();
+        ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, size-6, 0, Math.PI*2); ctx.stroke();
+
+        // 选中光环
+        if(isSelected) {
+            ctx.save();
+            ctx.shadowColor = "#fff"; ctx.shadowBlur = 15;
+            ctx.strokeStyle = "rgba(255,255,255,0.9)"; ctx.lineWidth = 3;
+            ctx.beginPath(); ctx.arc(x, y, size+3, 0, Math.PI*2); ctx.stroke();
+            ctx.restore();
+        }
+
+        // 字
+        ctx.font = `bold ${CELL_SIZE*0.55}px "LiSu", serif`; ctx.fillStyle = p.color === ROLES.RED ? "#b22222" : "#111";
+        ctx.shadowColor="rgba(255,255,255,0.5)"; ctx.shadowOffsetX=1; ctx.shadowOffsetY=1; ctx.shadowBlur=0;
+        ctx.fillText(CHARS[p.color][p.type], x, y+3);
+        ctx.shadowColor="transparent";
+    }
+
+    function drawHints() {
+        possibleMoves.forEach(m => {
+            const x = OFFSET_X + m.c * CELL_SIZE;
+            const y = OFFSET_Y + m.r * CELL_SIZE;
+            ctx.lineWidth = 3;
+
+            if (m.type === 'safe') {
+                ctx.fillStyle = "rgba(0, 200, 0, 0.5)";
+                ctx.beginPath(); ctx.arc(x, y, CELL_SIZE*0.15, 0, Math.PI*2); ctx.fill();
+            } else if (m.type === 'capture') {
+                // 红色空心圆
+                ctx.strokeStyle = "rgba(220, 20, 60, 0.7)";
+                ctx.beginPath(); ctx.arc(x, y, CELL_SIZE*0.42, 0, Math.PI*2); ctx.stroke();
+            } else if (m.type === 'danger') {
+                // 黄色实心点
+                ctx.fillStyle = "rgba(255, 200, 0, 0.8)";
+                ctx.beginPath(); ctx.arc(x, y, CELL_SIZE*0.15, 0, Math.PI*2); ctx.fill();
+            } else if (m.type === 'exchange') {
+                // 红色边框 + 黄色心 (兑子)
+                ctx.strokeStyle = "rgba(220, 20, 60, 0.7)";
+                ctx.beginPath(); ctx.arc(x, y, CELL_SIZE*0.42, 0, Math.PI*2); ctx.stroke();
+                ctx.fillStyle = "rgba(255, 200, 0, 0.8)";
+                ctx.beginPath(); ctx.arc(x, y, CELL_SIZE*0.12, 0, Math.PI*2); ctx.fill();
+            }
+        });
+    }
+
+    function drawFocusBrackets(r, c, color) {
+        const x=OFFSET_X+c*CELL_SIZE, y=OFFSET_Y+r*CELL_SIZE, s=CELL_SIZE*0.8, len=s*0.25, h=s/2;
+        ctx.strokeStyle=color; ctx.lineWidth=3; ctx.lineCap="round";
+        ctx.beginPath();
+        ctx.moveTo(x-h, y-h+len); ctx.lineTo(x-h,y-h); ctx.lineTo(x-h+len,y-h);
+        ctx.moveTo(x+h-len, y-h); ctx.lineTo(x+h,y-h); ctx.lineTo(x+h,y-h+len);
+        ctx.moveTo(x+h, y+h-len); ctx.lineTo(x+h,y+h); ctx.lineTo(x+h-len,y+h);
+        ctx.moveTo(x-h+len, y+h); ctx.lineTo(x-h,y+h); ctx.lineTo(x-h,y+h-len);
+        ctx.stroke();
+    }
+
+    function drawGlow(r, c, color) {
+        const x=OFFSET_X+c*CELL_SIZE, y=OFFSET_Y+r*CELL_SIZE;
+        const g = ctx.createRadialGradient(x,y,CELL_SIZE*0.2, x,y,CELL_SIZE*0.8);
+        g.addColorStop(0, color); g.addColorStop(1, "rgba(0,0,0,0)");
+        ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,CELL_SIZE*0.8,0,Math.PI*2); ctx.fill();
+    }
+
+    // --- 交互与逻辑 ---
+    canvas.addEventListener('mousedown', handleInput);
+    canvas.addEventListener('touchstart', e => { e.preventDefault(); handleInput(e.touches[0]); }, {passive:false});
+    
+    // 光标样式
+    canvas.addEventListener('mousemove', e => {
+        if (isGameOver) return;
+        const c = getCoord(e);
+        if (!c) { canvas.style.cursor='default'; return; }
+        const p = board[c.r][c.c];
+        const myColor = isRedTurn ? ROLES.RED : ROLES.BLACK;
+        
+        let canInteract = false;
+        if (p && p.color === myColor) canInteract = true;
+        else if (selected && possibleMoves.some(m => m.r===c.r && m.c===c.c)) canInteract = true;
+        
+        canvas.style.cursor = canInteract ? 'pointer' : 'default';
+    });
+
+    function getCoord(e) {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left, y = e.clientY - rect.top;
+        const c = Math.round((x - OFFSET_X) / CELL_SIZE);
+        const r = Math.round((y - OFFSET_Y) / CELL_SIZE);
+        if (r>=0 && r<10 && c>=0 && c<9) return {r,c};
+        return null;
+    }
+
+    function handleInput(e) {
+        if (isGameOver || animatingPiece) return; // 动画中不可操作
+        const coord = getCoord(e);
+        if (!coord) return;
+        const {r, c} = coord;
+
+        const p = board[r][c];
+        const myColor = isRedTurn ? ROLES.RED : ROLES.BLACK;
+
+        // 1. 选中己方
+        if (p && p.color === myColor) {
+            selected = {r, c};
+            calculateHints(r, c);
+            AudioSys.play('select');
+            return;
+        }
+
+        // 2. 移动
+        if (selected) {
+            const move = possibleMoves.find(m => m.r === r && m.c === c);
+            if (move) {
+                startMoveAnimation(selected, {r, c});
+            }
+        }
+    }
+
+    // --- 动画与移动处理 ---
+    function startMoveAnimation(from, to) {
+        const piece = board[from.r][from.c];
+        // 立即从源位置移除，防止重绘
+        board[from.r][from.c] = null;
+        
+        animatingPiece = {
+            piece: piece,
+            fromR: from.r, fromC: from.c,
+            toR: to.r, toC: to.c,
+            progress: 0
+        };
+        
+        selected = null;
+        possibleMoves = [];
+        AudioSys.play('move');
+    }
+
+    function finalizeMove(anim) {
+        const { piece, fromR, fromC, toR, toC } = anim;
+        const captured = board[toR][toC];
+
+        // 记录历史
+        history.push({ from:{r:fromR,c:fromC}, to:{r:toR,c:toC}, piece:piece, captured:captured });
+        
+        // 落地
+        board[toR][toC] = piece;
+
+        if (captured) AudioSys.play('capture');
+        
+        // 胜负判定
+        if (captured && captured.type === 'k') {
+            isGameOver = true;
+            winTitle.innerText = (isRedTurn ? "红方" : "黑方") + " 胜";
+            overlay.classList.add('show');
+        }
+
+        // 检查将军
+        const enemyColor = isRedTurn ? ROLES.BLACK : ROLES.RED;
+        if (isInCheck(enemyColor)) {
+            AudioSys.play('check');
+            checkPos = findKing(enemyColor);
+        } else {
+            checkPos = null;
+        }
+
+        // 切换回合
+        isRedTurn = !isRedTurn;
+        updateTurnUI();
+    }
+
+    // --- 智能提示核心 (仿真) ---
+    function calculateHints(r, c) {
+        possibleMoves = [];
+        const myColor = isRedTurn ? ROLES.RED : ROLES.BLACK;
+
+        for (let i=0; i<10; i++) {
+            for (let j=0; j<9; j++) {
+                // 1. 基础规则检查
+                if (isValidMove({r,c}, {r:i, c:j})) {
+                    // 2. 模拟移动，检查是否送将 (自杀)
+                    if (isSuicide({r,c}, {r:i, c:j}, myColor)) continue;
+
+                    // 3. 判定类型
+                    const target = board[i][j];
+                    let type = 'safe';
+                    
+                    // 模拟：我过去后，会不会被吃？
+                    const isDanger = isSpotDangerous({r:i, c:j}, myColor, {r,c}); // 传入from防止原位置干扰
+
+                    if (target) {
+                        type = isDanger ? 'exchange' : 'capture';
+                    } else {
+                        type = isDanger ? 'danger' : 'safe';
+                    }
+                    
+                    possibleMoves.push({r:i, c:j, type: type});
+                }
+            }
+        }
+    }
+
+    // 检查某一步是否导致己方老将被吃
+    function isSuicide(from, to, myColor) {
+        const backupP = board[to.r][to.c];
+        const movingP = board[from.r][from.c];
+        
+        // 模拟
+        board[to.r][to.c] = movingP;
+        board[from.r][from.c] = null;
+        
+        const inCheck = isInCheck(myColor);
+        
+        // 还原
+        board[from.r][from.c] = movingP;
+        board[to.r][to.c] = backupP;
+        
+        return inCheck;
+    }
+
+    // 检查某个位置是否会被敌人攻击 (假设 board 上该位置已经是己方棋子)
+    // ignorePos: 移动前的原位置 (视为空)
+    function isSpotDangerous(pos, myColor, ignorePos) {
+        const enemyColor = myColor === ROLES.RED ? ROLES.BLACK : ROLES.RED;
+        
+        // 备份并模拟移动完成的状态
+        const backupFrom = board[ignorePos.r][ignorePos.c];
+        const backupTo = board[pos.r][pos.c];
+        
+        board[pos.r][pos.c] = backupFrom; // 假设我移过去了
+        board[ignorePos.r][ignorePos.c] = null; // 原地空了
+
+        let dangerous = false;
+        
+        // 遍历所有敌人
+        for(let r=0; r<10; r++) {
+            for(let c=0; c<9; c++) {
+                const p = board[r][c];
+                if (p && p.color === enemyColor) {
+                    if (isValidMove({r,c}, pos)) {
+                        dangerous = true;
+                        break; 
+                    }
+                }
+            }
+            if(dangerous) break;
+        }
+
+        // 还原
+        board[ignorePos.r][ignorePos.c] = backupFrom;
+        board[pos.r][pos.c] = backupTo;
+
+        return dangerous;
+    }
+
+    // 检查某方老将是否被将军
+    function isInCheck(color) {
+        const king = findKing(color);
+        if (!king) return true; // 王没了算输
+        // 检查是否有敌人能走到 king 的位置
+        const enemyColor = color === ROLES.RED ? ROLES.BLACK : ROLES.RED;
+        for(let r=0; r<10; r++) {
+            for(let c=0; c<9; c++) {
+                const p = board[r][c];
+                if (p && p.color === enemyColor) {
+                    if (isValidMove({r,c}, king)) return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    function findKing(color) {
+        for(let r=0; r<10; r++) {
+            for(let c=0; c<9; c++) {
+                const p = board[r][c];
+                if (p && p.type === 'k' && p.color === color) return {r,c};
+            }
+        }
+        return null;
+    }
+
+    // --- 基础规则 ---
+    function isValidMove(from, to) {
+        const p = board[from.r][from.c];
+        if(!p) return false;
+        const dr = to.r-from.r, dc = to.c-from.c;
+        const absDr = Math.abs(dr), absDc = Math.abs(dc);
+        const target = board[to.r][to.c];
+        if(target && target.color === p.color) return false;
+
+        switch(p.type) {
+            case 'k': // 将
+                if(to.c<3 || to.c>5) return false;
+                if(p.color===ROLES.RED ? to.r<7 : to.r>2) return false;
+                if(absDr+absDc===1) return true;
+                // 飞将
+                if(target && target.type==='k' && from.c===to.c) return countObstacles(from,to)===0;
+                return false;
+            case 'a': // 士
+                if(to.c<3 || to.c>5) return false;
+                if(p.color===ROLES.RED ? to.r<7 : to.r>2) return false;
+                return absDr===1 && absDc===1;
+            case 'b': // 象
+                if(p.color===ROLES.RED ? to.r<5 : to.r>4) return false;
+                if(absDr!==2 || absDc!==2) return false;
+                if(board[from.r+dr/2][from.c+dc/2]) return false;
+                return true;
+            case 'n': // 马
+                if(!((absDr===2&&absDc===1)||(absDr===1&&absDc===2))) return false;
+                if(absDr===2) { if(board[from.r+dr/2][from.c]) return false; }
+                else { if(board[from.r][from.c+dc/2]) return false; }
+                return true;
+            case 'r': // 车
+                if(from.r!==to.r && from.c!==to.c) return false;
+                return countObstacles(from,to)===0;
+            case 'c': // 炮
+                if(from.r!==to.r && from.c!==to.c) return false;
+                const obs = countObstacles(from,to);
+                if(target) return obs===1;
+                return obs===0;
+            case 'p': // 兵
+                if(p.color===ROLES.RED ? dr>0 : dr<0) return false;
+                const crossed = p.color===ROLES.RED ? from.r<=4 : from.r>=5;
+                if(!crossed) return absDc===0 && absDr===1;
+                return absDr+absDc===1;
+        }
+        return false;
+    }
+
+    function countObstacles(from, to) {
+        let count=0;
+        if(from.r===to.r) {
+            const min=Math.min(from.c,to.c), max=Math.max(from.c,to.c);
+            for(let c=min+1; c<max; c++) if(board[from.r][c]) count++;
+        } else {
+            const min=Math.min(from.r,to.r), max=Math.max(from.r,to.r);
+            for(let r=min+1; r<max; r++) if(board[r][from.c]) count++;
+        }
+        return count;
+    }
+
+    function undo() {
+        if(history.length===0 || isGameOver || animatingPiece) return;
+        const last = history.pop();
+        board[last.from.r][last.from.c] = last.piece;
+        board[last.to.r][last.to.c] = last.captured;
+        isRedTurn = !isRedTurn;
+        selected = null; possibleMoves = []; checkPos = null;
+        updateTurnUI();
+        // 检查悔棋后是否将军状态恢复
+        const myColor = isRedTurn ? ROLES.RED : ROLES.BLACK;
+        if(isInCheck(myColor)) checkPos = findKing(myColor);
+    }
+
+    function updateTurnUI() {
+        turnText.innerText = isRedTurn ? "红方执棋" : "黑方执棋";
+        turnBadge.className = `turn-badge ${isRedTurn ? 'active-red' : 'active-black'}`;
+        turnDot.className = `dot ${isRedTurn ? 'red' : 'black'}`;
+    }
+
+    // Start
+    initGame();
+
+</script>
+</body>
+</html>
