@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Modern Tetris</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- 基础布局 --- */
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.5s, color 0.5s;
+            font-family: 'Roboto', sans-serif;
+            touch-action: none;
+        }
+
+        #game-layout {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            transform: scale(1); /* 用于响应式缩放 */
+        }
+
+        .side-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100px;
+        }
+
+        .panel-box {
+            border-radius: 4px;
+            padding: 10px;
+            text-align: center;
+            transition: border 0.5s, background 0.5s, box-shadow 0.5s;
+        }
+
+        .label { font-size: 12px; margin-bottom: 5px; opacity: 0.8; }
+        .value { font-size: 18px; font-weight: bold; }
+
+        canvas {
+            display: block;
+            transition: box-shadow 0.5s, border 0.5s;
+        }
+
+        /* 主样式选择器 */
+        .style-selector {
+            position: absolute;
+            top: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+        
+        .style-btn {
+            padding: 8px 16px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 20px;
+            opacity: 0.7;
+            transition: all 0.3s;
+        }
+        .style-btn.active { opacity: 1; transform: scale(1.1); }
+
+        /* --- 主题定义 --- */
+
+        /* 1. Neon (霓虹) */
+        body.theme-neon {
+            background-color: #050505;
+            color: #00ffea;
+            font-family: 'Roboto', sans-serif;
+        }
+        body.theme-neon canvas {
+            border: 2px solid #333;
+            box-shadow: 0 0 20px rgba(0, 255, 234, 0.2);
+            background-color: rgba(0,0,0,0.8);
+        }
+        body.theme-neon .panel-box {
+            border: 1px solid #333;
+            background: rgba(255,255,255,0.05);
+        }
+        body.theme-neon .style-btn { background: #333; color: #fff; border: 1px solid #555; }
+        body.theme-neon .style-btn.active { background: #00ffea; color: #000; box-shadow: 0 0 15px #00ffea; }
+
+        /* 2. 3D (拟物) */
+        body.theme-3d {
+            background-color: #e0e5ec;
+            color: #444;
+            font-family: 'Roboto', sans-serif;
+        }
+        body.theme-3d canvas {
+            border: 8px solid #e0e5ec;
+            border-radius: 4px;
+            box-shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px rgba(255,255,255, 0.5);
+            background-color: #dcdfe5;
+        }
+        body.theme-3d .panel-box {
+            background: #e0e5ec;
+            box-shadow: inset 6px 6px 10px 0 rgba(163,177,198, 0.7), inset -6px -6px 10px 0 rgba(255,255,255, 0.8);
+            border-radius: 10px;
+        }
+        body.theme-3d .style-btn { background: #e0e5ec; color: #666; box-shadow: 5px 5px 10px #babecc, -5px -5px 10px #ffffff; }
+        body.theme-3d .style-btn.active { color: #007bff; box-shadow: inset 5px 5px 10px #babecc, inset -5px -5px 10px #ffffff; }
+
+        /* 3. Retro (经典) */
+        body.theme-retro {
+            background-color: #9bbc0f; /* Gameboy Green */
+            color: #0f380f;
+            font-family: 'Press Start 2P', cursive; /* 像素字体 */
+        }
+        body.theme-retro canvas {
+            border: 4px solid #0f380f;
+            background-color: #8bac0f;
+            box-shadow: none;
+        }
+        body.theme-retro .panel-box {
+            border: 2px solid #0f380f;
+            background: transparent;
+        }
+        body.theme-retro .style-btn {
+            background: #0f380f; color: #9bbc0f; border: none; border-radius: 0;
+        }
+        body.theme-retro .style-btn.active {
+            background: #8bac0f; color: #0f380f; border: 2px solid #0f380f;
+        }
+
+        /* 移动端控制 */
+        #mobile-controls {
+            display: none;
+            margin-top: 20px;
+            gap: 15px;
+            width: 100%;
+            max-width: 300px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .ctrl-row { width: 100%; display: flex; justify-content: center; gap: 20px; }
+        .ctrl-btn {
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid currentColor;
+            color: inherit;
+            font-size: 24px;
+            display: flex; justify-content: center; align-items: center;
+            user-select: none;
+            cursor: pointer;
+        }
+        .ctrl-btn:active { background: currentColor; color: var(--bg-color); }
+
+        @media (max-width: 600px) {
+            #game-layout { flex-direction: column; align-items: center; gap: 10px; }
+            .side-panel { flex-direction: row; width: 100%; justify-content: center; }
+            .panel-box { flex: 1; }
+            #mobile-controls { display: flex; }
+            .style-selector { top: 10px; font-size: 0.8rem; }
+            canvas#board { height: 50vh; width: auto; aspect-ratio: 10/20; }
+        }
+    </style>
+</head>
+<body class="theme-neon">
+
+    <div class="style-selector">
+        <button class="style-btn active" onclick="setTheme('neon')">NEON</button>
+        <button class="style-btn" onclick="setTheme('3d')">3D</button>
+        <button class="style-btn" onclick="setTheme('retro')">RETRO</button>
+    </div>
+
+    <div id="game-layout">
+        <div class="side-panel">
+            <div class="panel-box">
+                <div class="label">HOLD</div>
+                <canvas id="hold" width="80" height="80"></canvas>
+            </div>
+            <div class="panel-box">
+                <div class="label">SCORE</div>
+                <div class="value" id="score">0</div>
+            </div>
+        </div>
+
+        <canvas id="board" width="200" height="400"></canvas>
+
+        <div class="side-panel">
+            <div class="panel-box">
+                <div class="label">NEXT</div>
+                <canvas id="next" width="80" height="80"></canvas>
+            </div>
+            <div class="panel-box">
+                <div class="label">LEVEL</div>
+                <div class="value" id="level">1</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="mobile-controls">
+        <div class="ctrl-row">
+            <div class="ctrl-btn" id="btn-rotate">↻</div>
+        </div>
+        <div class="ctrl-row">
+            <div class="ctrl-btn" id="btn-left">←</div>
+            <div class="ctrl-btn" id="btn-down">↓</div>
+            <div class="ctrl-btn" id="btn-right">→</div>
+        </div>
+        <div class="ctrl-row">
+            <div class="ctrl-btn" id="btn-drop">⤓</div>
+        </div>
+    </div>
+
+<script>
+    const canvas = document.getElementById('board');
+    const ctx = canvas.getContext('2d');
+    const nextCanvas = document.getElementById('next');
+    const nextCtx = nextCanvas.getContext('2d');
+    const holdCanvas = document.getElementById('hold');
+    const holdCtx = holdCanvas.getContext('2d');
+
+    // --- 配置 ---
+    const COLS = 10;
+    const ROWS = 20;
+    const BLOCK_SIZE = 20;
+    
+    // 主题配色池
+    const PALETTES = {
+        neon: ['#FF0055', '#00FF55', '#0099FF', '#FFFF00', '#FF00FF', '#00FFFF', '#FFAA00'],
+        '3d': ['#e74c3c', '#2ecc71', '#3498db', '#f1c40f', '#9b59b6', '#1abc9c', '#e67e22'],
+        retro: ['#0f380f', '#0f380f', '#0f380f', '#0f380f', '#0f380f', '#0f380f', '#0f380f'] // Retro 全是一个色，靠纹理
+    };
+
+    // 方块形状 (I, J, L, O, S, T, Z)
+    const SHAPES = [
+        [[1, 1, 1, 1]], // I
+        [[1, 0, 0], [1, 1, 1]], // J
+        [[0, 0, 1], [1, 1, 1]], // L
+        [[1, 1], [1, 1]], // O
+        [[0, 1, 1], [1, 1, 0]], // S
+        [[0, 1, 0], [1, 1, 1]], // T
+        [[1, 1, 0], [0, 1, 1]]  // Z
+    ];
+
+    // 游戏状态
+    let board = Array(ROWS).fill().map(() => Array(COLS).fill(0));
+    let currentTheme = 'neon';
+    let score = 0;
+    let level = 1;
+    let dropCounter = 0;
+    let dropInterval = 1000;
+    let lastTime = 0;
+    let isPaused = false;
+    let isGameOver = false;
+
+    // 玩家控制的块
+    let piece = null;
+    let nextPieceType = null;
+    let holdPieceType = null;
+    let canHold = true;
+
+    // --- 渲染引擎 (核心：多风格绘制) ---
+    function drawBlock(ctx, x, y, colorIndex, style, size) {
+        if (colorIndex === 0) return; // 空
+        const color = PALETTES[style][colorIndex - 1];
+        
+        if (style === 'neon') {
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = color;
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+            ctx.strokeRect(x * size + 2, y * size + 2, size - 4, size - 4);
+            
+            // 内部填充一点点透明度
+            ctx.fillStyle = color + '33'; // 20% opacity hex
+            ctx.fillRect(x * size + 4, y * size + 4, size - 8, size - 8);
+            ctx.shadowBlur = 0;
+        } 
+        else if (style === '3d') {
+            // 基础色
+            ctx.fillStyle = color;
+            ctx.fillRect(x * size, y * size, size, size);
+            
+            // 高光 (Top/Left)
+            ctx.fillStyle = 'rgba(255,255,255,0.4)';
+            ctx.beginPath();
+            ctx.moveTo(x * size, y * size + size);
+            ctx.lineTo(x * size, y * size);
+            ctx.lineTo(x * size + size, y * size);
+            ctx.lineTo(x * size + size - 4, y * size + 4);
+            ctx.lineTo(x * size + 4, y * size + 4);
+            ctx.lineTo(x * size + 4, y * size + size - 4);
+            ctx.fill();
+
+            // 阴影 (Bottom/Right)
+            ctx.fillStyle = 'rgba(0,0,0,0.2)';
+            ctx.beginPath();
+            ctx.moveTo(x * size, y * size + size);
+            ctx.lineTo(x * size + size, y * size + size);
+            ctx.lineTo(x * size + size, y * size);
+            ctx.lineTo(x * size + size - 4, y * size + 4);
+            ctx.lineTo(x * size + size - 4, y * size + size - 4);
+            ctx.lineTo(x * size + 4, y * size + size - 4);
+            ctx.fill();
+            
+            // 内部凹陷感
+            ctx.fillStyle = 'rgba(0,0,0,0.1)';
+            ctx.fillRect(x*size + 6, y*size + 6, size-12, size-12);
+        } 
+        else if (style === 'retro') {
+            // 像素风
+            ctx.fillStyle = color; // Gameboy dark green
+            ctx.fillRect(x * size + 2, y * size + 2, size - 4, size - 4);
+            // 边框
+            ctx.strokeStyle = '#0f380f';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(x * size + 2, y * size + 2, size - 4, size - 4);
+            // 内部点缀
+            ctx.fillStyle = '#8bac0f';
+            ctx.fillRect(x * size + 6, y * size + 6, size - 12, size - 12);
+            ctx.fillStyle = '#0f380f';
+            ctx.fillRect(x * size + 8, y * size + 8, size - 16, size - 16);
+        }
+    }
+
+    function drawBoard() {
+        // 1. 清空
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // 2. 画已固定的方块
+        for (let y = 0; y < ROWS; y++) {
+            for (let x = 0; x < COLS; x++) {
+                if (board[y][x]) {
+                    drawBlock(ctx, x, y, board[y][x], currentTheme, BLOCK_SIZE);
+                }
+            }
+        }
+
+        if (!piece) return;
+
+        // 3. 画 Ghost Piece (落点预测)
+        let ghostY = piece.y;
+        while (!collide(board, piece.shape, piece.x, ghostY + 1)) {
+            ghostY++;
+        }
+        
+        // 只有在 Neon 和 3D 模式下才画 Ghost，复古模式不画以保持原味
+        if (currentTheme !== 'retro') {
+            ctx.globalAlpha = 0.2;
+            piece.shape.forEach((row, dy) => {
+                row.forEach((val, dx) => {
+                    if (val) drawBlock(ctx, piece.x + dx, ghostY + dy, piece.colorIdx, currentTheme, BLOCK_SIZE);
+                });
+            });
+            ctx.globalAlpha = 1.0;
+        }
+
+        // 4. 画当前方块
+        piece.shape.forEach((row, dy) => {
+            row.forEach((val, dx) => {
+                if (val) drawBlock(ctx, piece.x + dx, piece.y + dy, piece.colorIdx, currentTheme, BLOCK_SIZE);
+            });
+        });
+    }
+
+    function drawPreview(ctxToDraw, shapeIdx) {
+        ctxToDraw.clearRect(0, 0, 80, 80);
+        if (shapeIdx === null) return;
+        
+        const shape = SHAPES[shapeIdx];
+        // 居中计算
+        const offsetX = (4 - shape[0].length) / 2; 
+        const offsetY = (4 - shape.length) / 2;
+        
+        shape.forEach((row, dy) => {
+            row.forEach((val, dx) => {
+                if (val) drawBlock(ctxToDraw, offsetX + dx, offsetY + dy, shapeIdx + 1, currentTheme, 20);
+            });
+        });
+    }
+
+    // --- 游戏逻辑 ---
+    function createPiece(typeIdx) {
+        const shape = SHAPES[typeIdx];
+        return {
+            shape: shape,
+            colorIdx: typeIdx + 1,
+            x: Math.floor(COLS / 2) - Math.floor(shape[0].length / 2),
+            y: 0
+        };
+    }
+
+    function resetGame() {
+        board = Array(ROWS).fill().map(() => Array(COLS).fill(0));
+        score = 0;
+        level = 1;
+        dropInterval = 1000;
+        isGameOver = false;
+        holdPieceType = null;
+        nextPieceType = Math.floor(Math.random() * SHAPES.length);
+        spawnPiece();
+        updateUI();
+    }
+
+    function spawnPiece() {
+        const type = nextPieceType;
+        nextPieceType = Math.floor(Math.random() * SHAPES.length);
+        piece = createPiece(type);
+        piece.typeIdx = type; // 保存类型索引以便 Hold
+        canHold = true;
+        
+        // 检查生成即碰撞 (Game Over)
+        if (collide(board, piece.shape, piece.x, piece.y)) {
+            isGameOver = true;
+            alert("Game Over! Score: " + score);
+            resetGame();
+        }
+        
+        drawPreview(nextCtx, nextPieceType);
+    }
+
+    function hold() {
+        if (!canHold || isGameOver) return;
+        
+        if (holdPieceType === null) {
+            holdPieceType = piece.typeIdx;
+            spawnPiece();
+        } else {
+            const temp = piece.typeIdx;
+            piece = createPiece(holdPieceType);
+            piece.typeIdx = holdPieceType;
+            holdPieceType = temp;
+        }
+        
+        canHold = false;
+        drawPreview(holdCtx, holdPieceType);
+    }
+
+    function rotate(dir) {
+        const oldShape = piece.shape;
+        // 矩阵旋转算法
+        const newShape = piece.shape[0].map((val, index) => 
+            piece.shape.map(row => row[index]).reverse()
+        );
+        
+        piece.shape = newShape;
+        
+        // 踢墙 (Wall Kick) - 简单版：尝试左右平移
+        if (collide(board, piece.shape, piece.x, piece.y)) {
+            piece.x > COLS / 2 ? piece.x-- : piece.x++;
+            if (collide(board, piece.shape, piece.x, piece.y)) {
+                piece.shape = oldShape; // 旋转失败，还原
+                piece.x = piece.x > COLS / 2 ? piece.x+1 : piece.x-1;
+            }
+        }
+    }
+
+    function collide(scene, shape, offsetX, offsetY) {
+        for (let y = 0; y < shape.length; y++) {
+            for (let x = 0; x < shape[y].length; x++) {
+                if (shape[y][x] !== 0) {
+                    const newX = x + offsetX;
+                    const newY = y + offsetY;
+                    if (newX < 0 || newX >= COLS || newY >= ROWS) return true;
+                    if (newY >= 0 && scene[newY][newX] !== 0) return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    function merge() {
+        piece.shape.forEach((row, dy) => {
+            row.forEach((val, dx) => {
+                if (val) board[piece.y + dy][piece.x + dx] = piece.colorIdx;
+            });
+        });
+    }
+
+    function clearLines() {
+        let linesCleared = 0;
+        outer: for (let y = ROWS - 1; y >= 0; y--) {
+            for (let x = 0; x < COLS; x++) {
+                if (board[y][x] === 0) continue outer;
+            }
+            // 消除一行
+            const row = board.splice(y, 1)[0].fill(0);
+            board.unshift(row);
+            linesCleared++;
+            y++; // 重新检查当前行 (因为上面的下来了)
+        }
+        
+        if (linesCleared > 0) {
+            score += linesCleared * 100 * linesCleared; // 100, 400, 900, 1600
+            level = Math.floor(score / 500) + 1;
+            dropInterval = Math.max(100, 1000 - (level - 1) * 50);
+            updateUI();
+        }
+    }
+
+    function drop() {
+        piece.y++;
+        if (collide(board, piece.shape, piece.x, piece.y)) {
+            piece.y--;
+            merge();
+            clearLines();
+            spawnPiece();
+        }
+        dropCounter = 0;
+    }
+
+    function hardDrop() {
+        while (!collide(board, piece.shape, piece.x, piece.y + 1)) {
+            piece.y++;
+        }
+        drop();
+    }
+
+    function update(time = 0) {
+        if (isGameOver) return;
+
+        const deltaTime = time - lastTime;
+        lastTime = time;
+
+        dropCounter += deltaTime;
+        if (dropCounter > dropInterval) {
+            drop();
+        }
+
+        drawBoard();
+        requestAnimationFrame(update);
+    }
+
+    function updateUI() {
+        document.getElementById('score').innerText = score;
+        document.getElementById('level').innerText = level;
+    }
+
+    // --- 主题切换 ---
+    window.setTheme = function(theme) {
+        document.body.className = `theme-${theme}`;
+        currentTheme = theme;
+        
+        // 更新按钮状态
+        document.querySelectorAll('.style-btn').forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+        
+        // 重绘预览窗口
+        drawPreview(nextCtx, nextPieceType);
+        drawPreview(holdCtx, holdPieceType);
+        drawBoard();
+        
+        // 移除焦点，防止键盘控制干扰
+        event.target.blur();
+    }
+
+    // --- 输入监听 ---
+    document.addEventListener('keydown', event => {
+        if (isGameOver) return;
+        
+        // 阻止方向键滚动页面
+        if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight", " "].indexOf(event.key) > -1) {
+            event.preventDefault();
+        }
+
+        if (event.key === 'ArrowLeft') {
+            piece.x--;
+            if (collide(board, piece.shape, piece.x, piece.y)) piece.x++;
+        } else if (event.key === 'ArrowRight') {
+            piece.x++;
+            if (collide(board, piece.shape, piece.x, piece.y)) piece.x--;
+        } else if (event.key === 'ArrowDown') {
+            drop();
+        } else if (event.key === 'ArrowUp') {
+            rotate(1);
+        } else if (event.key === ' ') { // Space Hard Drop
+            hardDrop();
+        } else if (event.key === 'c' || event.key === 'C') {
+            hold();
+        }
+    });
+
+    // 移动端按钮绑定
+    document.getElementById('btn-left').addEventListener('touchstart', (e) => { e.preventDefault(); piece.x--; if (collide(board, piece.shape, piece.x, piece.y)) piece.x++; });
+    document.getElementById('btn-right').addEventListener('touchstart', (e) => { e.preventDefault(); piece.x++; if (collide(board, piece.shape, piece.x, piece.y)) piece.x--; });
+    document.getElementById('btn-down').addEventListener('touchstart', (e) => { e.preventDefault(); drop(); });
+    document.getElementById('btn-rotate').addEventListener('touchstart', (e) => { e.preventDefault(); rotate(1); });
+    document.getElementById('btn-drop').addEventListener('touchstart', (e) => { e.preventDefault(); hardDrop(); });
+
+    // 启动
+    resetGame();
+    update();
+
+</script>
+</body>
+</html>

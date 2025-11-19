@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Game of Life</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --grid-line: #1f242c;
+            --cell-color: #39d353; /* GitHub Green style */
+            --cell-shadow: #39d353;
+            --panel-bg: rgba(13, 17, 23, 0.85);
+            --text-color: #c9d1d9;
+            --btn-border: #30363d;
+            --btn-hover: #21262d;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            touch-action: none;
+        }
+
+        /* 游戏画布 */
+        canvas {
+            display: block;
+            cursor: crosshair;
+        }
+
+        /* 悬浮控制面板 */
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--panel-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--btn-border);
+            border-radius: 12px;
+            padding: 10px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 10;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        /* 顶部标题/状态 */
+        .status-bar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            pointer-events: none;
+            font-family: monospace;
+            font-size: 14px;
+            opacity: 0.7;
+            text-shadow: 0 1px 2px black;
+        }
+        h1 {
+            margin: 0 0 5px 0;
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--cell-color);
+        }
+
+        /* 按钮样式 */
+        button {
+            background: transparent;
+            border: 1px solid var(--btn-border);
+            color: var(--text-color);
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        button:hover { background: var(--btn-hover); border-color: #8b949e; }
+        button:active { transform: scale(0.95); }
+        button.primary { background: #238636; border-color: #238636; color: white; }
+        button.primary:hover { background: #2ea043; }
+
+        /* 滑块样式 */
+        .slider-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+        input[type=range] {
+            width: 80px;
+            accent-color: var(--cell-color);
+        }
+
+        /* 预设菜单 */
+        .presets {
+            display: flex;
+            gap: 5px;
+            padding-left: 10px;
+            border-left: 1px solid var(--btn-border);
+        }
+        
+        @media (max-width: 600px) {
+            .controls { padding: 10px; bottom: 10px; }
+            .presets { display: none; /* 手机上隐藏预设，节省空间 */ }
+            .slider-group { display: none; }
+        }
+        
+        /* 移动端专用菜单按钮 */
+        .mobile-menu-btn {
+            display: none;
+        }
+        @media (max-width: 600px) {
+            .mobile-menu-btn { display: block; }
+        }
+        
+        /* 移动端预设弹窗 */
+        #mobile-presets {
+            display: none;
+            position: absolute;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--panel-bg);
+            border: 1px solid var(--btn-border);
+            padding: 10px;
+            border-radius: 8px;
+            flex-wrap: wrap;
+            gap: 5px;
+            justify-content: center;
+        }
+        #mobile-presets.show { display: flex; }
+
+    </style>
+</head>
+<body>
+
+<div class="status-bar">
+    <h1>LIFE_OS v1.0</h1>
+    <div>GEN: <span id="gen-count">0</span></div>
+    <div>POP: <span id="pop-count">0</span></div>
+</div>
+
+<canvas id="gridCanvas"></canvas>
+
+<div id="mobile-presets">
+    <button onclick="loadPreset('glider')">滑翔机</button>
+    <button onclick="loadPreset('pulsar')">脉冲星</button>
+    <button onclick="loadPreset('gun')">滑翔机枪</button>
+    <button onclick="randomize()">随机</button>
+</div>
+
+<div class="controls">
+    <button id="play-btn" class="primary" onclick="togglePlay()">▶ 运行</button>
+    <button onclick="step()">👣 单步</button>
+    <button onclick="clearGrid()">🗑️ 清空</button>
+    
+    <div class="slider-group">
+        <span>速度</span>
+        <input type="range" min="1" max="60" value="30" id="speed-range" oninput="updateSpeed(this.value)">
+    </div>
+
+    <div class="presets">
+        <button onclick="loadPreset('glider')">滑翔机</button>
+        <button onclick="loadPreset('pulsar')">脉冲星</button>
+        <button onclick="loadPreset('gun')">滑翔机枪</button>
+        <button onclick="randomize()">随机化</button>
+    </div>
+
+    <button class="mobile-menu-btn" onclick="toggleMobilePresets()">📂 预设</button>
+</div>
+
+<script>
+    const canvas = document.getElementById('gridCanvas');
+    const ctx = canvas.getContext('2d');
+    const genCountEl = document.getElementById('gen-count');
+    const popCountEl = document.getElementById('pop-count');
+    const playBtn = document.getElementById('play-btn');
+    const mobilePresets = document.getElementById('mobile-presets');
+
+    // 配置
+    const CELL_SIZE = 10; // 格子大小 (像素)
+    let COLS, ROWS;
+    let grid = [];
+    let nextGrid = [];
+    
+    let isPlaying = false;
+    let generation = 0;
+    let population = 0;
+    let animationId;
+    let lastFrameTime = 0;
+    let fps = 30;
+    let frameInterval = 1000 / fps;
+
+    // --- 初始化 ---
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        COLS = Math.ceil(canvas.width / CELL_SIZE);
+        ROWS = Math.ceil(canvas.height / CELL_SIZE);
+        
+        // 重置网格时尽量保留原内容 (如果是扩容)
+        // 为简单起见，这里直接重置
+        initGrids();
+        draw();
+    }
+
+    function initGrids() {
+        grid = createEmptyGrid();
+        nextGrid = createEmptyGrid();
+        generation = 0;
+        population = 0;
+        updateUI();
+        
+        // 初始加载一个随机图
+        randomize();
+    }
+
+    function createEmptyGrid() {
+        return new Array(COLS).fill(null).map(() => new Array(ROWS).fill(0));
+    }
+
+    window.addEventListener('resize', resize);
+
+    // --- 核心逻辑 ---
+    function update() {
+        population = 0;
+        let activity = false; // 检测是否有变化
+
+        // 交换数组 (ping-pong buffer)
+        // 为了不重新分配内存，我们直接复用 nextGrid，但需要清零吗？
+        // 其实直接计算覆盖即可。
+        
+        // 康威规则：
+        // 1. < 2 活邻居 -> 死 (孤独)
+        // 2. 2 或 3 活邻居 -> 活 (存活)
+        // 3. > 3 活邻居 -> 死 (拥挤)
+        // 4. 3 活邻居 -> 生 (繁殖)
+        
+        for (let col = 0; col < COLS; col++) {
+            for (let row = 0; row < ROWS; row++) {
+                const cell = grid[col][row];
+                let numNeighbors = countNeighbors(grid, col, row);
+                
+                let nextState = 0;
+                if (cell === 1 && (numNeighbors < 2 || numNeighbors > 3)) {
+                    nextState = 0;
+                } else if (cell === 0 && numNeighbors === 3) {
+                    nextState = 1;
+                } else {
+                    nextState = cell;
+                }
+
+                nextGrid[col][row] = nextState;
+                
+                if (nextState === 1) population++;
+                if (nextState !== cell) activity = true;
+            }
+        }
+
+        // 将 nextGrid 拷贝回 grid (或者交换引用)
+        // 交换引用更高效
+        let temp = grid;
+        grid = nextGrid;
+        nextGrid = temp; // nextGrid 变成了旧的 grid，下一次循环会被覆盖
+
+        if (activity) generation++;
+        updateUI();
+    }
+
+    function countNeighbors(grid, x, y) {
+        let sum = 0;
+        for (let i = -1; i < 2; i++) {
+            for (let j = -1; j < 2; j++) {
+                // 环面拓扑 (Toroidal array): 走出边界会从另一边回来
+                let col = (x + i + COLS) % COLS;
+                let row = (y + j + ROWS) % ROWS;
+                sum += grid[col][row];
+            }
+        }
+        sum -= grid[x][y]; // 减去自己
+        return sum;
+    }
+
+    // --- 渲染 ---
+    function draw() {
+        // 背景
+        ctx.fillStyle = '#0d1117';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // 网格线 (可选，太密了可以不画，或者画淡一点)
+        /*
+        ctx.strokeStyle = '#161b22';
+        ctx.beginPath();
+        for (let i = 0; i < COLS; i++) ctx.moveTo(i * CELL_SIZE, 0), ctx.lineTo(i * CELL_SIZE, canvas.height);
+        for (let j = 0; j < ROWS; j++) ctx.moveTo(0, j * CELL_SIZE), ctx.lineTo(canvas.width, j * CELL_SIZE);
+        ctx.stroke();
+        */
+
+        // 细胞
+        ctx.fillStyle = '#39d353';
+        ctx.shadowBlur = 5; // 发光效果
+        ctx.shadowColor = '#39d353';
+        
+        for (let col = 0; col < COLS; col++) {
+            for (let row = 0; row < ROWS; row++) {
+                if (grid[col][row] === 1) {
+                    ctx.fillRect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE - 1, CELL_SIZE - 1);
+                }
+            }
+        }
+        ctx.shadowBlur = 0; // 重置
+    }
+
+    function loop(timestamp) {
+        if (!isPlaying) return;
+
+        const elapsed = timestamp - lastFrameTime;
+
+        if (elapsed > frameInterval) {
+            lastFrameTime = timestamp - (elapsed % frameInterval);
+            update();
+            draw();
+        }
+
+        animationId = requestAnimationFrame(loop);
+    }
+
+    // --- 控制 ---
+    function togglePlay() {
+        isPlaying = !isPlaying;
+        playBtn.textContent = isPlaying ? '⏸ 暂停' : '▶ 运行';
+        playBtn.className = isPlaying ? '' : 'primary';
+        
+        if (isPlaying) {
+            lastFrameTime = performance.now();
+            loop();
+        } else {
+            cancelAnimationFrame(animationId);
+        }
+    }
+
+    function step() {
+        if (isPlaying) togglePlay();
+        update();
+        draw();
+    }
+
+    function clearGrid() {
+        grid = createEmptyGrid();
+        nextGrid = createEmptyGrid();
+        generation = 0;
+        population = 0;
+        if (isPlaying) togglePlay();
+        updateUI();
+        draw();
+    }
+
+    function randomize() {
+        clearGrid();
+        for (let col = 0; col < COLS; col++) {
+            for (let row = 0; row < ROWS; row++) {
+                grid[col][row] = Math.random() > 0.85 ? 1 : 0; // 15% 的存活率
+            }
+        }
+        draw();
+    }
+
+    function updateSpeed(val) {
+        fps = parseInt(val);
+        frameInterval = 1000 / fps;
+    }
+    
+    function toggleMobilePresets() {
+        mobilePresets.classList.toggle('show');
+    }
+
+    function updateUI() {
+        genCountEl.textContent = generation;
+        popCountEl.textContent = population;
+    }
+
+    // --- 交互绘制 ---
+    let isDrawing = false;
+
+    function getCellFromEvent(e) {
+        const rect = canvas.getBoundingClientRect();
+        const x = (e.clientX || e.touches[0].clientX) - rect.left;
+        const y = (e.clientY || e.touches[0].clientY) - rect.top;
+        const col = Math.floor(x / CELL_SIZE);
+        const row = Math.floor(y / CELL_SIZE);
+        return { col, row };
+    }
+
+    function toggleCell(e) {
+        const { col, row } = getCellFromEvent(e);
+        if (col >= 0 && col < COLS && row >= 0 && row < ROWS) {
+            grid[col][row] = 1; // 鼠标经过变活
+            draw();
+        }
+    }
+
+    canvas.addEventListener('mousedown', (e) => {
+        isDrawing = true;
+        toggleCell(e);
+    });
+    canvas.addEventListener('mousemove', (e) => {
+        if (isDrawing) toggleCell(e);
+    });
+    window.addEventListener('mouseup', () => isDrawing = false);
+
+    // 触摸支持
+    canvas.addEventListener('touchstart', (e) => {
+        isDrawing = true;
+        toggleCell(e);
+        e.preventDefault();
+    }, {passive: false});
+    canvas.addEventListener('touchmove', (e) => {
+        if (isDrawing) toggleCell(e);
+        e.preventDefault();
+    }, {passive: false});
+    window.addEventListener('touchend', () => isDrawing = false);
+
+    // --- 预设图案 ---
+    function loadPreset(type) {
+        // clearGrid(); // 不清空，允许叠加
+        mobilePresets.classList.remove('show');
+        
+        const cx = Math.floor(COLS / 2);
+        const cy = Math.floor(ROWS / 2);
+
+        if (type === 'glider') {
+            const pattern = [[0,1], [1,2], [2,0], [2,1], [2,2]];
+            drawPattern(pattern, 5, 5); // 左上角发射
+        } else if (type === 'pulsar') {
+            // 简化的脉冲星太难画了，画个简单的 R-pentomino 吧，它能演化很久
+            const pattern = [[0,1], [0,2], [1,0], [1,1], [2,1]]; 
+            drawPattern(pattern, cx, cy);
+        } else if (type === 'gun') {
+            // Gosper Glider Gun
+            const gun = [
+                [0,4], [0,5], [1,4], [1,5],
+                [10,4], [10,5], [10,6],
+                [11,3], [11,7],
+                [12,2], [12,8],
+                [13,2], [13,8],
+                [14,5],
+                [15,3], [15,7],
+                [16,4], [16,5], [16,6],
+                [17,5],
+                [20,2], [20,3], [20,4],
+                [21,2], [21,3], [21,4],
+                [22,1], [22,5],
+                [24,0], [24,1], [24,5], [24,6],
+                [34,2], [34,3], [35,2], [35,3]
+            ];
+            drawPattern(gun, 2, 10);
+        }
+        draw();
+    }
+
+    function drawPattern(coords, offsetX, offsetY) {
+        coords.forEach(([x, y]) => {
+            if (offsetX + x < COLS && offsetY + y < ROWS) {
+                grid[offsetX + x][offsetY + y] = 1;
+            }
+        });
+    }
+
+    // 启动
+    resize(); // 初始化尺寸并开始
+
+</script>
+</body>
+</html>
