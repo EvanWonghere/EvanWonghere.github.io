@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Minesweeper</title>
+    <style>
+        :root {
+            --bg-color: #c0c0c0;
+            --border-light: #ffffff;
+            --border-dark: #808080;
+            --face-bg: #c0c0c0;
+            --text-color: #000;
+            --num-1: #0000ff; --num-2: #008000; --num-3: #ff0000; --num-4: #000080;
+            --num-5: #800000; --num-6: #008080; --num-7: #000000; --num-8: #808080;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #2c2c2e;
+                --border-light: #48484a;
+                --border-dark: #1c1c1e;
+                --face-bg: #3a3a3c;
+                --text-color: #e5e5e7;
+                /* 深色模式下数字颜色微调亮一点 */
+                --num-1: #66b2ff; --num-2: #90ee90; --num-3: #ff6666; --num-4: #aaaaff;
+                --num-5: #ffb3b3; --num-6: #80e5e5; --num-7: #e0e0e0; --num-8: #a0a0a0;
+            }
+        }
+
+        body {
+            background-color: #1a1a1a; /* 网页背景深色，突出中间的游戏机 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: "Courier New", Courier, monospace;
+            user-select: none;
+            -webkit-user-select: none;
+            overflow: hidden;
+        }
+
+        /* 游戏主容器 (经典的 Windows 95 浮雕风格) */
+        .game-window {
+            background-color: var(--bg-color);
+            border: 3px solid;
+            border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
+            padding: 6px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            max-width: 95vw;
+            max-height: 95vh;
+        }
+
+        /* 头部信息栏 */
+        .header {
+            border: 3px solid;
+            border-color: var(--border-dark) var(--border-light) var(--border-light) var(--border-dark);
+            padding: 6px;
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-color);
+        }
+
+        /* LED 数字显示 */
+        .counter {
+            background: #000;
+            color: #ff0000;
+            font-size: 26px;
+            font-weight: bold;
+            padding: 2px 4px;
+            border: 2px solid;
+            border-color: var(--border-dark) var(--border-light) var(--border-light) var(--border-dark);
+            width: 50px;
+            text-align: right;
+            line-height: 1;
+        }
+
+        /* 笑脸重置按钮 */
+        .face-btn {
+            width: 36px;
+            height: 36px;
+            border: 2px solid;
+            border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
+            background-color: var(--face-bg);
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .face-btn:active {
+            border-color: var(--border-dark) var(--border-light) var(--border-light) var(--border-dark);
+            transform: translateY(1px);
+        }
+
+        /* 游戏棋盘区域 */
+        .board-container {
+            border: 3px solid;
+            border-color: var(--border-dark) var(--border-light) var(--border-light) var(--border-dark);
+            overflow: auto; /* 如果格子太多允许滚动 */
+            position: relative;
+        }
+
+        #grid {
+            display: grid;
+            background-color: var(--border-dark); /* 格子缝隙颜色 */
+            gap: 1px; 
+        }
+
+        .cell {
+            width: 24px;
+            height: 24px;
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: default;
+        }
+
+        /* 未挖掘状态：凸起效果 */
+        .cell.closed {
+            border: 2px solid;
+            border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
+            box-sizing: border-box;
+        }
+        .cell.closed:active {
+            border: none; /* 按下效果 */
+            background-color: #b0b0b0;
+        }
+
+        /* 已挖掘状态：平坦 */
+        .cell.opened {
+            border: none;
+            background-color: var(--bg-color);
+        }
+
+        /* 各种标记 */
+        .cell.flagged { color: red; }
+        .cell.mine { background-color: #ff4d4d; } /* 踩雷红色背景 */
+        .cell.mine-revealed { background-color: var(--bg-color); } /* 游戏结束显示的雷 */
+
+        /* 数字颜色 */
+        .val-1 { color: var(--num-1); }
+        .val-2 { color: var(--num-2); }
+        .val-3 { color: var(--num-3); }
+        .val-4 { color: var(--num-4); }
+        .val-5 { color: var(--num-5); }
+        .val-6 { color: var(--num-6); }
+        .val-7 { color: var(--num-7); }
+        .val-8 { color: var(--num-8); }
+
+        /* 底部控制栏 (难度 + 模式切换) */
+        .controls {
+            margin-top: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        select {
+            padding: 5px;
+            font-family: inherit;
+            border-radius: 0;
+            border: 2px solid;
+            border-color: var(--border-dark) var(--border-light) var(--border-light) var(--border-dark);
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* 移动端专用：挖掘/插旗 切换按钮 */
+        .mode-switch {
+            flex: 1;
+            height: 30px;
+            border: 2px solid;
+            border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        .mode-switch.flag-mode {
+            background: #ddd;
+            border-color: var(--border-dark) var(--border-light) var(--border-light) var(--border-dark);
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<div class="game-window">
+    <div class="header">
+        <div class="counter" id="mine-count">000</div>
+        <div class="face-btn" id="face-btn" onclick="initGame()">😊</div>
+        <div class="counter" id="timer">000</div>
+    </div>
+
+    <div class="board-container" oncontextmenu="return false;">
+        <div id="grid"></div>
+    </div>
+
+    <div class="controls">
+        <select id="difficulty" onchange="changeDifficulty()">
+            <option value="easy">简单 (9x9)</option>
+            <option value="medium" selected>中等 (16x16)</option>
+            <option value="hard">困难 (30x16)</option>
+        </select>
+        <button class="mode-switch" id="mode-btn" onclick="toggleMode()">
+            ⛏️ 挖掘模式
+        </button>
+    </div>
+</div>
+
+<script>
+    // 游戏配置
+    const PRESETS = {
+        easy: { rows: 9, cols: 9, mines: 10 },
+        medium: { rows: 16, cols: 16, mines: 40 },
+        hard: { rows: 16, cols: 30, mines: 99 } // 手机上可能需要横屏或滚动
+    };
+
+    // 状态变量
+    let config = PRESETS.medium;
+    let board = []; // 存储每个格子的数据 { isMine, isOpen, isFlag, value }
+    let gameStarted = false;
+    let gameOver = false;
+    let minesLeft = 0;
+    let timeElapsed = 0;
+    let timerInterval;
+    let isFlagMode = false; // false: 挖掘, true: 插旗
+
+    // DOM 元素
+    const gridEl = document.getElementById('grid');
+    const mineCountEl = document.getElementById('mine-count');
+    const timerEl = document.getElementById('timer');
+    const faceBtn = document.getElementById('face-btn');
+    const modeBtn = document.getElementById('mode-btn');
+
+    // 初始化
+    function initGame() {
+        // 停止计时器
+        clearInterval(timerInterval);
+        timeElapsed = 0;
+        gameStarted = false;
+        gameOver = false;
+        
+        // 重置 UI
+        updateTimer();
+        faceBtn.textContent = '😊';
+        minesLeft = config.mines;
+        updateMineCount();
+        
+        // 生成空白数据
+        board = [];
+        for (let r = 0; r < config.rows; r++) {
+            const row = [];
+            for (let c = 0; c < config.cols; c++) {
+                row.push({
+                    r, c,
+                    isMine: false,
+                    isOpen: false,
+                    isFlag: false,
+                    value: 0 // 周围雷数
+                });
+            }
+            board.push(row);
+        }
+
+        renderGrid();
+    }
+
+    function changeDifficulty() {
+        const diff = document.getElementById('difficulty').value;
+        config = PRESETS[diff];
+        initGame();
+    }
+
+    function renderGrid() {
+        gridEl.innerHTML = '';
+        gridEl.style.gridTemplateColumns = `repeat(${config.cols}, 24px)`;
+        gridEl.style.gridTemplateRows = `repeat(${config.rows}, 24px)`;
+
+        for (let r = 0; r < config.rows; r++) {
+            for (let c = 0; c < config.cols; c++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell', 'closed');
+                cell.id = `cell-${r}-${c}`;
+                
+                // 鼠标左键 / 触摸点击
+                cell.onclick = () => handleClick(r, c);
+                // 鼠标右键插旗
+                cell.onmousedown = (e) => {
+                    if (e.button === 2) handleFlag(r, c);
+                };
+                
+                gridEl.appendChild(cell);
+            }
+        }
+    }
+
+    // 核心逻辑：放置地雷 (初见防杀：排除掉第一次点击的位置及其周围)
+    function placeMines(excludeR, excludeC) {
+        let minesPlaced = 0;
+        while (minesPlaced < config.mines) {
+            const r = Math.floor(Math.random() * config.rows);
+            const c = Math.floor(Math.random() * config.cols);
+
+            // 排除第一次点击的区域 (3x3)
+            if (Math.abs(r - excludeR) <= 1 && Math.abs(c - excludeC) <= 1) continue;
+
+            if (!board[r][c].isMine) {
+                board[r][c].isMine = true;
+                minesPlaced++;
+            }
+        }
+
+        // 计算数字
+        for (let r = 0; r < config.rows; r++) {
+            for (let c = 0; c < config.cols; c++) {
+                if (!board[r][c].isMine) {
+                    board[r][c].value = countNeighbors(r, c);
+                }
+            }
+        }
+    }
+
+    function countNeighbors(r, c) {
+        let count = 0;
+        for (let i = -1; i <= 1; i++) {
+            for (let j = -1; j <= 1; j++) {
+                const nr = r + i, nc = c + j;
+                if (nr >= 0 && nr < config.rows && nc >= 0 && nc < config.cols) {
+                    if (board[nr][nc].isMine) count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    // 处理点击
+    function handleClick(r, c) {
+        if (gameOver) return;
+
+        // 插旗模式下，点击等同于插旗
+        if (isFlagMode) {
+            handleFlag(r, c);
+            return;
+        }
+
+        const cellData = board[r][c];
+        
+        // 已插旗不能点
+        if (cellData.isFlag) return;
+
+        // 已打开的格子：支持双击快速开图 (Chording)
+        if (cellData.isOpen) {
+            handleChord(r, c);
+            return;
+        }
+
+        // 第一次点击？生成地雷并开始计时
+        if (!gameStarted) {
+            gameStarted = true;
+            placeMines(r, c);
+            timerInterval = setInterval(() => {
+                timeElapsed++;
+                updateTimer();
+            }, 1000);
+        }
+
+        openCell(r, c);
+    }
+
+    function handleFlag(r, c) {
+        if (gameOver || !gameStarted && !isFlagMode) return; // 没开始前不能插旗
+        if (!gameStarted) {
+            // 如果还没开始就插旗，也算开始游戏（不生成雷，但开始UI状态）
+             // 实际上扫雷通常要求第一下必须是挖，所以这里如果不允许插旗体验更好
+             return; 
+        }
+
+        const cellData = board[r][c];
+        if (cellData.isOpen) return;
+
+        cellData.isFlag = !cellData.isFlag;
+        minesLeft += cellData.isFlag ? -1 : 1;
+        updateMineCount();
+        
+        const el = document.getElementById(`cell-${r}-${c}`);
+        if (cellData.isFlag) {
+            el.classList.add('flagged');
+            el.textContent = '🚩';
+        } else {
+            el.classList.remove('flagged');
+            el.textContent = '';
+        }
+    }
+
+    // 打开格子
+    function openCell(r, c) {
+        const cellData = board[r][c];
+        if (cellData.isOpen || cellData.isFlag) return;
+
+        cellData.isOpen = true;
+        const el = document.getElementById(`cell-${r}-${c}`);
+        el.classList.remove('closed');
+        el.classList.add('opened');
+
+        if (cellData.isMine) {
+            // 踩雷！
+            el.classList.add('mine');
+            el.textContent = '💣';
+            endGame(false);
+        } else {
+            // 安全
+            if (cellData.value > 0) {
+                el.textContent = cellData.value;
+                el.classList.add(`val-${cellData.value}`);
+            } else {
+                // 空白格，递归打开周围
+                el.textContent = '';
+                for (let i = -1; i <= 1; i++) {
+                    for (let j = -1; j <= 1; j++) {
+                        const nr = r + i, nc = c + j;
+                        if (nr >= 0 && nr < config.rows && nc >= 0 && nc < config.cols) {
+                            openCell(nr, nc);
+                        }
+                    }
+                }
+            }
+            checkWin();
+        }
+    }
+
+    // 双击开图逻辑 (Chording)
+    function handleChord(r, c) {
+        const cellData = board[r][c];
+        if (cellData.value === 0) return; // 空白格没有邻居雷
+
+        // 计算周围旗子数量
+        let flagCount = 0;
+        for (let i = -1; i <= 1; i++) {
+            for (let j = -1; j <= 1; j++) {
+                const nr = r + i, nc = c + j;
+                if (nr >= 0 && nr < config.rows && nc >= 0 && nc < config.cols) {
+                    if (board[nr][nc].isFlag) flagCount++;
+                }
+            }
+        }
+
+        // 如果旗子数量等于数字，自动打开周围未插旗的格子
+        if (flagCount === cellData.value) {
+            for (let i = -1; i <= 1; i++) {
+                for (let j = -1; j <= 1; j++) {
+                    const nr = r + i, nc = c + j;
+                    if (nr >= 0 && nr < config.rows && nc >= 0 && nc < config.cols) {
+                        if (!board[nr][nc].isOpen && !board[nr][nc].isFlag) {
+                            openCell(nr, nc);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    function checkWin() {
+        let openedCount = 0;
+        for (let r = 0; r < config.rows; r++) {
+            for (let c = 0; c < config.cols; c++) {
+                if (board[r][c].isOpen) openedCount++;
+            }
+        }
+        
+        if (openedCount === (config.rows * config.cols - config.mines)) {
+            endGame(true);
+        }
+    }
+
+    function endGame(win) {
+        gameOver = true;
+        clearInterval(timerInterval);
+        faceBtn.textContent = win ? '😎' : '😵';
+        
+        if (!win) {
+            // 失败：显示所有地雷
+            for (let r = 0; r < config.rows; r++) {
+                for (let c = 0; c < config.cols; c++) {
+                    if (board[r][c].isMine && !board[r][c].isFlag) {
+                        const el = document.getElementById(`cell-${r}-${c}`);
+                        el.classList.remove('closed');
+                        el.classList.add('mine-revealed');
+                        el.textContent = '💣';
+                    }
+                    // 标错的雷
+                    if (!board[r][c].isMine && board[r][c].isFlag) {
+                        const el = document.getElementById(`cell-${r}-${c}`);
+                        el.textContent = '❌';
+                    }
+                }
+            }
+        } else {
+            // 胜利：插满所有旗子
+            minesLeft = 0;
+            updateMineCount();
+        }
+    }
+
+    function updateTimer() {
+        timerEl.textContent = timeElapsed.toString().padStart(3, '0');
+    }
+
+    function updateMineCount() {
+        mineCountEl.textContent = minesLeft.toString().padStart(3, '0');
+    }
+
+    // 切换操作模式 (手机端用)
+    function toggleMode() {
+        isFlagMode = !isFlagMode;
+        if (isFlagMode) {
+            modeBtn.classList.add('flag-mode');
+            modeBtn.textContent = '🚩 插旗模式';
+        } else {
+            modeBtn.classList.remove('flag-mode');
+            modeBtn.textContent = '⛏️ 挖掘模式';
+        }
+    }
+
+    // 启动
+    initGame();
+
+</script>
+</body>
+</html>

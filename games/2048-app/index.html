@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2048</title>
+    <style>
+        :root {
+            --bg-color: #faf8ef;
+            --text-color: #776e65;
+            --grid-bg: #bbada0;
+            --cell-empty: #cdc1b4;
+            --button-bg: #8f7a66;
+            --button-text: #f9f6f2;
+            
+            /* 方块颜色定义 */
+            --tile-2: #eee4da; --text-2: #776e65;
+            --tile-4: #ede0c8; --text-4: #776e65;
+            --tile-8: #f2b179; --text-8: #f9f6f2;
+            --tile-16: #f59563; --text-16: #f9f6f2;
+            --tile-32: #f67c5f; --text-32: #f9f6f2;
+            --tile-64: #f65e3b; --text-64: #f9f6f2;
+            --tile-128: #edcf72; --text-128: #f9f6f2;
+            --tile-256: #edcc61; --text-256: #f9f6f2;
+            --tile-512: #edc850; --text-512: #f9f6f2;
+            --tile-1024: #edc53f; --text-1024: #f9f6f2;
+            --tile-2048: #edc22e; --text-2048: #f9f6f2;
+            --tile-super: #3c3a32; --text-super: #f9f6f2;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #121213;
+                --text-color: #f9f6f2;
+                --grid-bg: #3c3a32; /* 深色背景下的网格色 */
+                --cell-empty: #4a4641; /* 空格子的颜色 */
+                
+                /* 数字块在深色模式下稍微调整一下亮度，保持原味即可 */
+            }
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            touch-action: none; /* 禁止浏览器默认的滚动行为 */
+        }
+
+        /* 头部区域 */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 300px; /* 移动端基础宽度 */
+            margin-top: 20px;
+        }
+
+        h1 { font-size: 40px; margin: 0; font-weight: bold; }
+
+        .scores-container {
+            display: flex;
+            gap: 5px;
+        }
+
+        .score-box {
+            background: var(--grid-bg);
+            padding: 5px 15px;
+            border-radius: 3px;
+            color: white;
+            text-align: center;
+            min-width: 50px;
+        }
+
+        .score-label { font-size: 10px; text-transform: uppercase; color: #eee4da; }
+        .score-val { font-size: 18px; font-weight: bold; }
+
+        .above-game {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 300px;
+            margin: 10px 0;
+        }
+
+        .game-intro { font-size: 14px; color: var(--text-color); opacity: 0.8; margin: 0; }
+        
+        .restart-btn {
+            background: var(--button-bg);
+            color: var(--button-text);
+            border: none;
+            border-radius: 3px;
+            padding: 0 15px;
+            height: 35px;
+            line-height: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* 游戏棋盘 */
+        .game-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            padding: 10px;
+            background: var(--grid-bg);
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        .grid-container {
+            position: absolute;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 10px;
+            width: 280px;
+            height: 280px;
+        }
+
+        .grid-cell {
+            background: var(--cell-empty);
+            border-radius: 3px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .tile-container {
+            position: absolute;
+            z-index: 2;
+            top: 10px; left: 10px; /* 对应 padding */
+            width: 280px; height: 280px;
+        }
+
+        .tile {
+            position: absolute;
+            width: 62.5px; /* (280 - 3*10) / 4 */
+            height: 62.5px;
+            border-radius: 3px;
+            background: #eee4da;
+            text-align: center;
+            font-weight: bold;
+            z-index: 10;
+            font-size: 30px;
+            line-height: 62.5px;
+            transition: transform 100ms ease-in-out;
+            /* 初始位置由 JS 计算 transform */
+        }
+
+        /* 动画类 */
+        .tile-new { animation: appear 200ms ease; }
+        .tile-merged { animation: pop 200ms ease; z-index: 20; }
+
+        @keyframes appear {
+            0% { opacity: 0; transform: scale(0); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* 不同数字的颜色 */
+        .tile.val-2 { background: var(--tile-2); color: var(--text-2); }
+        .tile.val-4 { background: var(--tile-4); color: var(--text-4); }
+        .tile.val-8 { background: var(--tile-8); color: var(--text-8); }
+        .tile.val-16 { background: var(--tile-16); color: var(--text-16); }
+        .tile.val-32 { background: var(--tile-32); color: var(--text-32); }
+        .tile.val-64 { background: var(--tile-64); color: var(--text-64); }
+        .tile.val-128 { background: var(--tile-128); color: var(--text-128); font-size: 24px; }
+        .tile.val-256 { background: var(--tile-256); color: var(--text-256); font-size: 24px; }
+        .tile.val-512 { background: var(--tile-512); color: var(--text-512); font-size: 24px; }
+        .tile.val-1024 { background: var(--tile-1024); color: var(--text-1024); font-size: 18px; }
+        .tile.val-2048 { background: var(--tile-2048); color: var(--text-2048); font-size: 18px; }
+        .tile.val-super { background: var(--tile-super); color: var(--text-super); font-size: 16px; }
+
+        /* 游戏结束/胜利 遮罩 */
+        .game-message {
+            display: none;
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(238, 228, 218, 0.73);
+            z-index: 100;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-radius: 6px;
+        }
+        @media (prefers-color-scheme: dark) {
+            .game-message { background: rgba(0, 0, 0, 0.7); }
+        }
+
+        .game-message.game-over { display: flex; }
+        .game-message p { font-size: 40px; font-weight: bold; margin: 0 0 20px 0; color: #776e65; }
+        @media (prefers-color-scheme: dark) { .game-message p { color: #f9f6f2; } }
+
+        /* 响应式放大：在大屏幕上稍微大一点 */
+        @media (min-width: 500px) {
+            .header-container, .above-game, .game-container { width: 400px; }
+            .game-container { height: 400px; padding: 15px; }
+            .grid-container { width: 370px; height: 370px; gap: 15px; }
+            .tile-container { width: 370px; height: 370px; top: 15px; left: 15px; }
+            .tile { width: 81.25px; height: 81.25px; line-height: 81.25px; font-size: 45px; }
+            .tile.val-128, .tile.val-256, .tile.val-512 { font-size: 36px; }
+            .tile.val-1024, .tile.val-2048 { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header-container">
+    <h1>2048</h1>
+    <div class="scores-container">
+        <div class="score-box">
+            <div class="score-label">SCORE</div>
+            <div class="score-val" id="score">0</div>
+        </div>
+        <div class="score-box">
+            <div class="score-label">BEST</div>
+            <div class="score-val" id="best-score">0</div>
+        </div>
+    </div>
+</div>
+
+<div class="above-game">
+    <p class="game-intro">合并方块以达到 <strong>2048!</strong></p>
+    <button class="restart-btn" onclick="restartGame()">新游戏</button>
+</div>
+
+<div class="game-container">
+    <div class="game-message" id="game-message">
+        <p id="game-msg-text"></p>
+        <button class="restart-btn" onclick="restartGame()">再来一局</button>
+    </div>
+
+    <div class="grid-container">
+        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+    </div>
+
+    <div class="tile-container" id="tile-container">
+        </div>
+</div>
+
+<script>
+    // 游戏配置
+    const SIZE = 4;
+    let board = [];
+    let score = 0;
+    let bestScore = localStorage.getItem('2048-best') || 0;
+    let won = false;
+    let gameOver = false;
+
+    const tileContainer = document.getElementById('tile-container');
+    const scoreEl = document.getElementById('score');
+    const bestScoreEl = document.getElementById('best-score');
+    const msgContainer = document.getElementById('game-message');
+    const msgText = document.getElementById('game-msg-text');
+
+    bestScoreEl.textContent = bestScore;
+
+    // 初始化
+    function init() {
+        board = Array(SIZE).fill(null).map(() => Array(SIZE).fill(0));
+        score = 0;
+        won = false;
+        gameOver = false;
+        updateScore(0);
+        
+        msgContainer.classList.remove('game-over');
+        tileContainer.innerHTML = '';
+
+        addRandomTile();
+        addRandomTile();
+        renderBoard();
+    }
+
+    function restartGame() {
+        init();
+    }
+
+    // 核心逻辑：移动
+    function move(direction) {
+        if (gameOver) return;
+
+        // direction: 0:Up, 1:Right, 2:Down, 3:Left
+        let moved = false;
+        let scoreGain = 0;
+
+        // 为了统一逻辑，我们将面板旋转到统一方向（向左）处理，处理完再转回去
+        // 向左: 0旋, 向右: 2旋, 向上: 3旋(逆时针), 向下: 1旋
+        // 但为了保持坐标映射简单，我们分别处理四个方向的遍历逻辑
+        
+        // 向量：Up(-1,0), Right(0,1), Down(1,0), Left(0,-1)
+        const vectors = [
+            {r: -1, c: 0}, // Up
+            {r: 0, c: 1},  // Right
+            {r: 1, c: 0},  // Down
+            {r: 0, c: -1}  // Left
+        ];
+        const vector = vectors[direction];
+
+        // 遍历顺序：
+        // Up: r从1到3, c从0到3
+        // Right: c从2到0, r从0到3
+        // Down: r从2到0, c从0到3
+        // Left: c从1到3, r从0到3
+        
+        // 简化：我们创建一个临时的 merged 标记数组，防止一次移动中重复合并
+        let merged = Array(SIZE).fill(null).map(() => Array(SIZE).fill(false));
+
+        // 构建遍历序列
+        let traversals = { r: [], c: [] };
+        for (let pos = 0; pos < SIZE; pos++) {
+            traversals.r.push(pos);
+            traversals.c.push(pos);
+        }
+
+        // 如果是向右或向下，需要反向遍历
+        if (direction === 1) traversals.c.reverse(); // Right
+        if (direction === 2) traversals.r.reverse(); // Down
+
+        traversals.r.forEach(r => {
+            traversals.c.forEach(c => {
+                if (board[r][c] === 0) return;
+
+                let cell = { r: r, c: c };
+                let next = null;
+                let tileValue = board[r][c];
+
+                // 寻找最远的空位
+                let farthest = cell;
+                while (true) {
+                    next = { r: farthest.r + vector.r, c: farthest.c + vector.c };
+                    if (!withinBounds(next) || board[next.r][next.c] !== 0) break;
+                    farthest = next;
+                }
+
+                // next 是边界外或者有方块的位置
+                // 检查 next 是否可合并
+                let nextCell = next;
+                
+                if (withinBounds(nextCell) && board[nextCell.r][nextCell.c] === tileValue && !merged[nextCell.r][nextCell.c]) {
+                    // 合并！
+                    board[nextCell.r][nextCell.c] *= 2;
+                    board[r][c] = 0;
+                    merged[nextCell.r][nextCell.c] = true;
+                    scoreGain += board[nextCell.r][nextCell.c];
+                    
+                    // 视觉动画：这里简单处理，直接重新渲染会带出 new/merge 类
+                    moved = true;
+                    
+                    if (board[nextCell.r][nextCell.c] === 2048 && !won) {
+                        won = true;
+                        setTimeout(() => alert("🎉 你达到了 2048! 但你可以继续挑战更高分。"), 100);
+                    }
+                } else if (farthest.r !== r || farthest.c !== c) {
+                    // 仅仅是移动
+                    board[farthest.r][farthest.c] = tileValue;
+                    board[r][c] = 0;
+                    moved = true;
+                }
+            });
+        });
+
+        if (moved) {
+            updateScore(score + scoreGain);
+            addRandomTile();
+            renderBoard();
+            if (!movesAvailable()) {
+                gameOver = true;
+                showGameOver(false);
+            }
+        }
+    }
+
+    function withinBounds(pos) {
+        return pos.r >= 0 && pos.r < SIZE && pos.c >= 0 && pos.c < SIZE;
+    }
+
+    function movesAvailable() {
+        for (let r = 0; r < SIZE; r++) {
+            for (let c = 0; c < SIZE; c++) {
+                if (board[r][c] === 0) return true;
+                if (c < SIZE - 1 && board[r][c] === board[r][c + 1]) return true;
+                if (r < SIZE - 1 && board[r][c] === board[r + 1][c]) return true;
+            }
+        }
+        return false;
+    }
+
+    function addRandomTile() {
+        let emptyCells = [];
+        for (let r = 0; r < SIZE; r++) {
+            for (let c = 0; c < SIZE; c++) {
+                if (board[r][c] === 0) emptyCells.push({r, c});
+            }
+        }
+        if (emptyCells.length > 0) {
+            let rand = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+            board[rand.r][rand.c] = Math.random() < 0.9 ? 2 : 4;
+            
+            // 标记这个位置是新生成的，用于渲染动画
+            return {r: rand.r, c: rand.c, isNew: true};
+        }
+    }
+
+    function updateScore(newScore) {
+        score = newScore;
+        scoreEl.textContent = score;
+        if (score > bestScore) {
+            bestScore = score;
+            bestScoreEl.textContent = bestScore;
+            localStorage.setItem('2048-best', bestScore);
+        }
+    }
+
+    function showGameOver(win) {
+        msgText.textContent = win ? "You Win!" : "Game Over!";
+        msgContainer.classList.add('game-over');
+    }
+
+    // 渲染逻辑
+    // 注意：为了简化单文件逻辑，这里采用“全量刷新 DOM”的方式。
+    // 虽然不如 React/Vue 的 Diff 算法高效，但对于 16 个格子来说，肉眼无法察觉卡顿，且能通过 CSS 动画实现很好的效果。
+    function renderBoard() {
+        tileContainer.innerHTML = '';
+        
+        // 计算格子大小和间距，用于绝对定位
+        // 默认移动端: 容器280px, 间距10px, 格子62.5px
+        // 大屏: 容器370px, 间距15px, 格子81.25px
+        const isBig = window.innerWidth >= 500;
+        const gap = isBig ? 15 : 10;
+        const size = isBig ? 81.25 : 62.5;
+
+        for (let r = 0; r < SIZE; r++) {
+            for (let c = 0; c < SIZE; c++) {
+                if (board[r][c] !== 0) {
+                    const tile = document.createElement('div');
+                    const val = board[r][c];
+                    tile.textContent = val;
+                    tile.className = `tile val-${val > 2048 ? 'super' : val}`;
+                    
+                    // 计算位置
+                    const left = c * (size + gap);
+                    const top = r * (size + gap);
+                    
+                    // 应用位置
+                    tile.style.transform = `translate(${left}px, ${top}px)`;
+                    
+                    // 这里我们无法简单的判断 "new" 或 "merged" 状态，因为我们每次都清空了。
+                    // 为了保证动画，真实的高性能 2048 会维护 DOM 节点不删除，只更新 class 和 transform。
+                    // 简化版妥协：我们只给新生成的数字加 appear 动画（依靠CSS），移动动画则没有平滑过渡。
+                    // 不过 2048 的核心在于数字变化的 pop 动画，这里简单处理。
+                    
+                    tileContainer.appendChild(tile);
+                }
+            }
+        }
+    }
+
+    // --- 输入监听 ---
+    
+    // 键盘
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowUp') { e.preventDefault(); move(0); }
+        else if (e.key === 'ArrowRight') { e.preventDefault(); move(1); }
+        else if (e.key === 'ArrowDown') { e.preventDefault(); move(2); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); move(3); }
+    });
+
+    // 触摸 (Swipe)
+    let touchStartX = 0;
+    let touchStartY = 0;
+    const gameContainer = document.querySelector('.game-container');
+
+    gameContainer.addEventListener('touchstart', (e) => {
+        if (e.touches.length > 1) return;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        e.preventDefault(); // 防止滚动
+    }, {passive: false});
+
+    gameContainer.addEventListener('touchmove', (e) => {
+        e.preventDefault(); // 关键：防止滑动游戏时页面滚动
+    }, {passive: false});
+
+    gameContainer.addEventListener('touchend', (e) => {
+        if (e.changedTouches.length > 0) {
+            let touchEndX = e.changedTouches[0].clientX;
+            let touchEndY = e.changedTouches[0].clientY;
+
+            let dx = touchEndX - touchStartX;
+            let dy = touchEndY - touchStartY;
+
+            if (Math.max(Math.abs(dx), Math.abs(dy)) > 30) { // 阈值
+                if (Math.abs(dx) > Math.abs(dy)) {
+                    // 水平
+                    move(dx > 0 ? 1 : 3);
+                } else {
+                    // 垂直
+                    move(dy > 0 ? 2 : 0);
+                }
+            }
+        }
+    });
+
+    init();
+    
+    // 窗口大小改变时重新渲染以适配坐标
+    window.addEventListener('resize', renderBoard);
+
+</script>
+</body>
+</html>
