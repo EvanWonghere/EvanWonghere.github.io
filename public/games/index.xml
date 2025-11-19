@@ -15,7 +15,7 @@
         <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
         <guid>http://localhost:1313/games/wordle/</guid>
-        <description>&lt;img src="http://localhost:1313/wordle_cover.png" alt="Featured image of post Wordle" /&gt;&lt;ul&gt;
+        <description>&lt;ul&gt;
 &lt;li&gt;绿色代表字母位置正确&lt;/li&gt;
 &lt;li&gt;黄色代表包含字母但位置不对&lt;/li&gt;
 &lt;li&gt;灰色代表不包含该字母&lt;/li&gt;
