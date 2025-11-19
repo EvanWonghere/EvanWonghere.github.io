@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Wordle</title>
+    <style>
+        :root {
+            --correct: #6aaa64;
+            --present: #c9b458;
+            --absent: #787c7e;
+            --default-border: #d3d6da;
+            --filled-border: #878a8c;
+            --bg: #ffffff;
+            --text: #000000;
+            --key-bg: #d3d6da;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #121213;
+                --text: #ffffff;
+                --default-border: #3a3a3c;
+                --filled-border: #565758;
+                --key-bg: #818384;
+            }
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            border-bottom: 1px solid var(--default-border);
+            width: 100%;
+            gap: 10px;
+        }
+
+        h1 { margin: 0; font-size: 1.5rem; letter-spacing: 2px; }
+
+        select {
+            padding: 5px;
+            font-size: 1rem;
+            border-radius: 5px;
+        }
+
+        button.restart-btn {
+            padding: 5px 10px;
+            cursor: pointer;
+            background: var(--correct);
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        #game-board {
+            display: grid;
+            grid-gap: 5px;
+            padding: 10px;
+            box-sizing: border-box;
+            flex-grow: 1;
+            align-content: center;
+            max-height: 65vh;
+        }
+
+        .tile {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border: 2px solid var(--default-border);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            user-select: none;
+        }
+
+        /* 动态调整格子大小，防止太小或太大 */
+        @media (max-height: 600px) { .tile { font-size: 1.5rem; } }
+
+        .tile[data-state='active'] { border-color: var(--filled-border); animation: pop 0.1s; }
+        .tile[data-state='correct'] { background-color: var(--correct); border-color: var(--correct); color: white; }
+        .tile[data-state='present'] { background-color: var(--present); border-color: var(--present); color: white; }
+        .tile[data-state='absent'] { background-color: var(--absent); border-color: var(--absent); color: white; }
+        
+        /* 翻转动画 */
+        .tile.flip { animation: flip 0.5s ease forwards; }
+
+        @keyframes pop { 50% { transform: scale(1.1); } }
+        @keyframes flip {
+            0% { transform: rotateX(0); }
+            50% { transform: rotateX(90deg); }
+            100% { transform: rotateX(0); }
+        }
+
+        #keyboard {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 20px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .keyboard-row { display: flex; gap: 6px; width: 95%; justify-content: center; }
+        .key {
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-transform: uppercase;
+            background-color: var(--key-bg);
+            color: var(--text); /* 适配深色模式文字 */
+            height: 58px;
+            flex: 1;
+            font-size: 1.2rem;
+            user-select: none;
+        }
+        .key[data-key='Enter'], .key[data-key='Backspace'] { flex: 1.5; font-size: 0.8rem; }
+        .key[data-state='correct'] { background-color: var(--correct); color: white; }
+        .key[data-state='present'] { background-color: var(--present); color: white; }
+        .key[data-state='absent'] { background-color: var(--absent); color: white; }
+
+        #message-container {
+            position: fixed;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+        .message {
+            background-color: rgba(0, 0, 0, 0.85);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            opacity: 1;
+            transition: opacity 0.5s;
+        }
+
+        .loading { opacity: 0.5; pointer-events: none; }
+    </style>
+</head>
+<body>
+
+<header>
+    <select id="length-selector">
+        <option value="3">3 字母</option>
+        <option value="4">4 字母</option>
+        <option value="5" selected>5 字母</option>
+        <option value="6">6 字母</option>
+        <option value="7">7 字母</option>
+    </select>
+    <h1>WORDLE</h1>
+    <button class="restart-btn" onclick="initGame()">重置</button>
+</header>
+
+<div id="message-container"></div>
+
+<div id="game-board"></div>
+
+<div id="keyboard">
+    <div class="keyboard-row" id="row-1"></div>
+    <div class="keyboard-row" id="row-2"></div>
+    <div class="keyboard-row" id="row-3"></div>
+</div>
+
+<script>
+    // --- 配置区 ---
+    const KEYS = [
+        ['q','w','e','r','t','y','u','i','o','p'],
+        ['a','s','d','f','g','h','j','k','l'],
+        ['Enter','z','x','c','v','b','n','m','Backspace']
+    ];
+    
+    // 简单的内置词库，确保游戏离线也能玩。
+    // 实际校验会使用在线 API，这里只作为“答案”库。
+    const TARGET_WORDS = {
+        3: ["cat", "dog", "sun", "run", "sky", "box", "fox", "joy", "top", "art"],
+        4: ["book", "love", "hope", "code", "data", "moon", "star", "fish", "bird", "game"],
+        5: ["apple", "world", "hello", "smile", "happy", "music", "ocean", "space", "dream", "light"],
+        6: ["planet", "friend", "banana", "orange", "guitar", "summer", "winter", "doctor", "family", "nature"],
+        7: ["freedom", "journey", "history", "mystery", "silence", "perfect", "awesome", "morning", "station", "welcome"]
+    };
+
+    let wordLength = 5;
+    let maxGuesses = 6; // wordLength + 1
+    let currentTarget = "";
+    let currentRow = 0;
+    let currentTile = 0;
+    let isGameOver = false;
+    let isLoading = false; // 校验 API 时防止输入
+    let guesses = []; // 存储每一行的字母
+
+    // --- 初始化 ---
+    const board = document.getElementById('game-board');
+    const keyboardContainer = document.getElementById('keyboard');
+    const lengthSelector = document.getElementById('length-selector');
+
+    lengthSelector.addEventListener('change', (e) => {
+        wordLength = parseInt(e.target.value);
+        initGame();
+    });
+
+    // 创建键盘
+    function createKeyboard() {
+        const rows = ['row-1', 'row-2', 'row-3'];
+        rows.forEach((rowId, index) => {
+            const rowEl = document.getElementById(rowId);
+            rowEl.innerHTML = '';
+            KEYS[index].forEach(key => {
+                const button = document.createElement('div');
+                button.textContent = key === 'Backspace' ? '⌫' : key;
+                button.classList.add('key');
+                button.setAttribute('data-key', key);
+                button.addEventListener('click', () => handleInput(key));
+                rowEl.appendChild(button);
+            });
+        });
+    }
+
+    // 初始化游戏
+    function initGame() {
+        // 1. 重置变量
+        maxGuesses = wordLength + 1;
+        currentRow = 0;
+        currentTile = 0;
+        isGameOver = false;
+        guesses = Array(maxGuesses).fill(null).map(() => Array(wordLength).fill(''));
+        board.innerHTML = '';
+        document.querySelectorAll('.key').forEach(k => k.removeAttribute('data-state'));
+        
+        // 2. 随机选择答案
+        const list = TARGET_WORDS[wordLength];
+        currentTarget = list[Math.floor(Math.random() * list.length)].toLowerCase();
+        console.log("Target (Debug):", currentTarget); // 方便调试
+
+        // 3. 生成网格
+        board.style.gridTemplateColumns = `repeat(${wordLength}, 1fr)`;
+        board.style.width = `${wordLength * 60}px`; // 动态宽度
+        board.style.maxWidth = '95%';
+
+        for (let i = 0; i < maxGuesses * wordLength; i++) {
+            const tile = document.createElement('div');
+            tile.classList.add('tile');
+            tile.id = `tile-${Math.floor(i / wordLength)}-${i % wordLength}`;
+            board.appendChild(tile);
+        }
+    }
+
+    // --- 核心逻辑 ---
+
+    // 处理输入
+    function handleInput(key) {
+        if (isGameOver || isLoading) return;
+
+        if (key === 'Backspace') {
+            if (currentTile > 0) {
+                currentTile--;
+                const tile = document.getElementById(`tile-${currentRow}-${currentTile}`);
+                tile.textContent = '';
+                tile.removeAttribute('data-state');
+                guesses[currentRow][currentTile] = '';
+            }
+        } else if (key === 'Enter') {
+            if (currentTile === wordLength) {
+                checkGuess();
+            } else {
+                showMessage('单词长度不够');
+            }
+        } else {
+            // 输入字母
+            if (currentTile < wordLength && /^[a-z]$/i.test(key)) {
+                const tile = document.getElementById(`tile-${currentRow}-${currentTile}`);
+                tile.textContent = key;
+                tile.setAttribute('data-state', 'active');
+                guesses[currentRow][currentTile] = key.toLowerCase();
+                currentTile++;
+            }
+        }
+    }
+
+    // 物理键盘监听
+    document.addEventListener('keydown', (e) => {
+        let key = e.key;
+        if (key === 'Enter' || key === 'Backspace') {
+            handleInput(key);
+        } else if (/^[a-zA-Z]$/.test(key)) {
+            handleInput(key.toLowerCase());
+        }
+    });
+
+    // 校验猜测
+    async function checkGuess() {
+        const guessWord = guesses[currentRow].join('');
+        
+        // 规则5：校验是否为合法单词 (使用 Dictionary API)
+        isLoading = true;
+        document.body.classList.add('loading');
+        
+        const isValid = await validateWord(guessWord);
+        
+        document.body.classList.remove('loading');
+        isLoading = false;
+
+        if (!isValid) {
+            showMessage('不是合法的单词');
+            shakeRow();
+            return;
+        }
+
+        // 翻转动画与颜色判定
+        flipTiles(guessWord);
+    }
+
+    // 调用免费 API 验证单词
+    async function validateWord(word) {
+        // 如果刚好猜中答案，直接返回 true，避免 API 网络问题
+        if (word === currentTarget) return true; 
+
+        try {
+            const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+            return response.ok; // 200 OK 表示单词存在
+        } catch (error) {
+            console.error("API Error, falling back to simple validation", error);
+            return true; // 如果 API 挂了，为了不卡住玩家，默认通过
+        }
+    }
+
+    function flipTiles(guessWord) {
+        const rowTiles = [];
+        for (let i = 0; i < wordLength; i++) {
+            rowTiles.push(document.getElementById(`tile-${currentRow}-${i}`));
+        }
+
+        // 颜色逻辑 (规则4)
+        const targetChars = currentTarget.split('');
+        const guessChars = guessWord.split('');
+        const states = Array(wordLength).fill('absent'); // 默认为灰
+
+        // 第一轮：找绿色 (完全匹配)
+        guessChars.forEach((char, i) => {
+            if (char === targetChars[i]) {
+                states[i] = 'correct';
+                targetChars[i] = null; // 标记已处理
+                guessChars[i] = null;
+            }
+        });
+
+        // 第二轮：找黄色 (存在但位置不对)
+        guessChars.forEach((char, i) => {
+            if (char !== null && targetChars.includes(char)) {
+                states[i] = 'present';
+                // 移除 targetChars 中的该字母，防止重复标记
+                targetChars[targetChars.indexOf(char)] = null; 
+            }
+        });
+
+        // 执行动画和上色
+        rowTiles.forEach((tile, i) => {
+            setTimeout(() => {
+                tile.classList.add('flip');
+                tile.setAttribute('data-state', states[i]);
+                
+                // 更新键盘颜色
+                const keyChar = guesses[currentRow][i];
+                const keyEl = document.querySelector(`.key[data-key='${keyChar}']`);
+                const oldState = keyEl.getAttribute('data-state');
+                
+                // 颜色优先级：correct > present > absent
+                if (states[i] === 'correct') {
+                    keyEl.setAttribute('data-state', 'correct');
+                } else if (states[i] === 'present' && oldState !== 'correct') {
+                    keyEl.setAttribute('data-state', 'present');
+                } else if (states[i] === 'absent' && oldState !== 'correct' && oldState !== 'present') {
+                    keyEl.setAttribute('data-state', 'absent');
+                }
+
+            }, i * 250);
+        });
+
+        // 动画结束后判断胜负
+        setTimeout(() => {
+            if (guessWord === currentTarget) {
+                showMessage('🎉 恭喜你猜对了！', 2000);
+                isGameOver = true;
+            } else {
+                if (currentRow >= maxGuesses - 1) {
+                    showMessage(`游戏结束！答案是: ${currentTarget.toUpperCase()}`, -1); // -1 表示不自动消失
+                    isGameOver = true;
+                } else {
+                    currentRow++;
+                    currentTile = 0;
+                }
+            }
+        }, wordLength * 250);
+    }
+
+    // 辅助功能：显示消息
+    function showMessage(text, duration = 1000) {
+        const msgContainer = document.getElementById('message-container');
+        const msg = document.createElement('div');
+        msg.classList.add('message');
+        msg.textContent = text;
+        msgContainer.appendChild(msg);
+        
+        if (duration > 0) {
+            setTimeout(() => {
+                msg.style.opacity = 0;
+                setTimeout(() => msgContainer.removeChild(msg), 500);
+            }, duration);
+        }
+    }
+
+    // 辅助功能：行抖动 (错误输入时)
+    function shakeRow() {
+        const rowTiles = [];
+        for (let i = 0; i < wordLength; i++) {
+            const tile = document.getElementById(`tile-${currentRow}-${i}`);
+            tile.style.animation = 'shake 0.5s';
+            tile.addEventListener('animationend', () => tile.style.animation = '', {once: true});
+        }
+        // 需要在 CSS 加 shake 动画 keyframes，这里简化处理直接用 active 样式提示
+    }
+
+    // 启动
+    createKeyboard();
+    initGame();
+</script>
+<style>
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        20% { transform: translateX(-5px); }
+        40% { transform: translateX(5px); }
+        60% { transform: translateX(-5px); }
+        80% { transform: translateX(5px); }
+    }
+</style>
+</body>
+</html>
