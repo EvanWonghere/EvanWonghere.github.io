@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>International Chess Pro</title>
+    <style>
+        :root {
+            --bg-color: #262421;
+            --text-color: #c0c0c0;
+            --accent-gold: #d4af37;
+            --board-light: #f0d9b5;
+            --board-dark: #b58863;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+            touch-action: none;
+            user-select: none;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 95vw;
+            max-width: 500px;
+            margin-bottom: 10px;
+            z-index: 2;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--accent-gold);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .turn-badge {
+            padding: 5px 15px;
+            background: #333;
+            border: 1px solid #555;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            transition: all 0.3s ease;
+        }
+        .turn-badge.white-turn { background: #e0e0e0; color: #333; border-color: #fff; }
+        .turn-badge.black-turn { background: #111; color: #ccc; border-color: #000; }
+
+        .square-indicator { width: 12px; height: 12px; border-radius: 2px; border: 1px solid rgba(0,0,0,0.2); }
+        .white-turn .square-indicator { background: #fff; }
+        .black-turn .square-indicator { background: #000; border-color: #555; }
+
+        /* 棋盘容器 */
+        .board-container {
+            position: relative;
+            padding: 12px;
+            background: #3a3a3a;
+            border-radius: 4px;
+            box-shadow: 
+                0 15px 40px rgba(0,0,0,0.6),
+                inset 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        canvas {
+            display: block;
+            cursor: default;
+            border-radius: 2px;
+            background: var(--board-light);
+        }
+
+        /* 控制栏 */
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            background: #4a4a4a;
+            color: #eee;
+            border-bottom: 3px solid #2a2a2a;
+            transition: all 0.1s;
+        }
+        button:active {
+            transform: translateY(2px);
+            border-bottom: 1px solid #2a2a2a;
+        }
+        button.primary {
+            background: var(--accent-gold);
+            color: #3e2723;
+            border-bottom-color: #8b6914;
+        }
+
+        /* 结算弹窗 */
+        #overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+            backdrop-filter: blur(4px);
+        }
+        #overlay.show { opacity: 1; pointer-events: auto; }
+        
+        .win-text {
+            font-size: 3.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(240, 192, 80, 0.6);
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>CHESS</h1>
+    <div id="turn-badge" class="turn-badge white-turn">
+        <div class="square-indicator"></div>
+        <span id="turn-text">White's Turn</span>
+    </div>
+</div>
+
+<div class="board-container">
+    <canvas id="board"></canvas>
+    <div id="overlay">
+        <div class="win-text" id="win-title">Checkmate</div>
+        <button class="primary" onclick="initGame()">Play Again</button>
+    </div>
+</div>
+
+<div class="controls">
+    <button onclick="undo()">Undo</button>
+    <button onclick="initGame()">Reset</button>
+</div>
+
+<script>
+    // --- 音效系统 ---
+    const AudioSys = {
+        ctx: null,
+        init: function() { if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); },
+        play: function(type) {
+            if (!this.ctx) this.init();
+            if (this.ctx.state === 'suspended') this.ctx.resume();
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.connect(gain); gain.connect(this.ctx.destination);
+            const now = this.ctx.currentTime;
+            
+            if (type === 'move') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(200, now);
+                osc.frequency.exponentialRampToValueAtTime(50, now + 0.1);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.linearRampToValueAtTime(0, now + 0.1);
+                osc.start(now); osc.stop(now + 0.1);
+            } else if (type === 'capture') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(100, now);
+                osc.frequency.linearRampToValueAtTime(300, now + 0.05);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.linearRampToValueAtTime(0, now + 0.15);
+                osc.start(now); osc.stop(now + 0.15);
+            } else if (type === 'check') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(400, now);
+                osc.frequency.linearRampToValueAtTime(200, now + 0.3);
+                gain.gain.setValueAtTime(0.05, now);
+                gain.gain.linearRampToValueAtTime(0, now + 0.3);
+                osc.start(now); osc.stop(now + 0.3);
+            }
+        }
+    };
+
+    // --- 游戏常量与状态 ---
+    const canvas = document.getElementById('board');
+    const ctx = canvas.getContext('2d');
+    const turnBadge = document.getElementById('turn-badge');
+    const turnText = document.getElementById('turn-text');
+    const overlay = document.getElementById('overlay');
+    const winTitle = document.getElementById('win-title');
+
+    const BOARD_SIZE = 8;
+    const COLORS = { WHITE: 'white', BLACK: 'black' };
+    const PIECES = {
+        p: '♟', r: '♜', n: '♞', b: '♝', q: '♛', k: '♚'
+    };
+
+    // 初始布局
+    const INITIAL_FEN = [
+        ['r','n','b','q','k','b','n','r'],
+        ['p','p','p','p','p','p','p','p'],
+        [null,null,null,null,null,null,null,null],
+        [null,null,null,null,null,null,null,null],
+        [null,null,null,null,null,null,null,null],
+        [null,null,null,null,null,null,null,null],
+        ['P','P','P','P','P','P','P','P'],
+        ['R','N','B','Q','K','B','N','R']
+    ];
+
+    let CELL_SIZE = 0;
+    let board = []; // 8x8
+    let turn = COLORS.WHITE;
+    let selected = null; // {r, c}
+    let possibleMoves = [];
+    let history = [];
+    let isGameOver = false;
+    let animatingPiece = null;
+    let lastFrameTime = 0;
+
+    // --- 初始化 ---
+    function resize() {
+        const maxW = window.innerWidth - 20;
+        const maxH = window.innerHeight - 160;
+        let s = Math.min(maxW, maxH, 500);
+        
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = s * dpr;
+        canvas.height = s * dpr;
+        canvas.style.width = s + 'px';
+        canvas.style.height = s + 'px';
+        ctx.scale(dpr, dpr);
+
+        CELL_SIZE = s / 8;
+        // 立即触发一次重绘
+        requestAnimationFrame(loop);
+    }
+    window.addEventListener('resize', resize);
+
+    function initGame() {
+        board = Array(8).fill(null).map(() => Array(8).fill(null));
+        history = [];
+        turn = COLORS.WHITE;
+        isGameOver = false;
+        selected = null;
+        possibleMoves = [];
+        overlay.classList.remove('show');
+        
+        // 解析初始布局
+        for(let r=0; r<8; r++) {
+            for(let c=0; c<8; c++) {
+                const char = INITIAL_FEN[r][c];
+                if (char) {
+                    const color = char === char.toUpperCase() ? COLORS.WHITE : COLORS.BLACK;
+                    board[r][c] = { type: char.toLowerCase(), color: color, hasMoved: false };
+                }
+            }
+        }
+        
+        updateUI();
+        if (CELL_SIZE === 0) resize();
+    }
+
+    // --- 游戏循环 ---
+    function loop(timestamp) {
+        if (!lastFrameTime) lastFrameTime = timestamp;
+        const dt = timestamp - lastFrameTime;
+        lastFrameTime = timestamp;
+
+        if (animatingPiece) {
+            animatingPiece.progress += dt / 200; // 200ms 动画
+            if (animatingPiece.progress >= 1) {
+                finalizeMove(animatingPiece);
+                animatingPiece = null;
+            }
+        }
+        draw();
+        requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+
+    // --- 绘制逻辑 ---
+    // --- 绘制逻辑 (已修复崩溃并增加危险提示) ---
+    function draw() {
+        if (CELL_SIZE === 0) return;
+        
+        // 1. 绘制棋盘
+        for(let r=0; r<8; r++) {
+            for(let c=0; c<8; c++) {
+                const isDark = (r + c) % 2 === 1;
+                ctx.fillStyle = isDark ? '#b58863' : '#f0d9b5';
+                ctx.fillRect(c * CELL_SIZE, r * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                
+                // 坐标标记
+                if (c === 0) {
+                    ctx.fillStyle = isDark ? '#f0d9b5' : '#b58863';
+                    ctx.font = '10px Arial';
+                    ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+                    ctx.fillText(8-r, c*CELL_SIZE + 2, r*CELL_SIZE + 2);
+                }
+                if (r === 7) {
+                    ctx.fillStyle = isDark ? '#f0d9b5' : '#b58863';
+                    ctx.font = '10px Arial';
+                    ctx.textAlign = 'right'; ctx.textBaseline = 'bottom';
+                    ctx.fillText(String.fromCharCode(97+c), (c+1)*CELL_SIZE - 2, (r+1)*CELL_SIZE - 2);
+                }
+            }
+        }
+
+        // 2. 上一步高亮
+        if (history.length > 0) {
+            const last = history[history.length - 1];
+            highlightSquare(last.from.r, last.from.c, "rgba(255, 255, 0, 0.3)");
+            highlightSquare(last.to.r, last.to.c, "rgba(255, 255, 0, 0.3)");
+        }
+
+        // 3. 选中高亮
+        if (selected) {
+            highlightSquare(selected.r, selected.c, "rgba(100, 255, 100, 0.5)");
+        }
+
+        // 4. 将军高亮 (红色)
+        // [修复]：增加了 kingPos 是否存在的检查，防止王在移动动画中消失导致崩溃
+        const kingPos = findKing(turn);
+        if (kingPos && isKingInCheck(turn)) {
+            drawGradientGlow(kingPos.r, kingPos.c, "rgba(255, 0, 0, 0.6)");
+        }
+
+        // 5. 绘制棋子
+        for(let r=0; r<8; r++) {
+            for(let c=0; c<8; c++) {
+                if (animatingPiece && animatingPiece.toR === r && animatingPiece.toC === c) continue;
+                const p = board[r][c];
+                if(p) drawPiece(p, r, c);
+            }
+        }
+
+        // 6. 绘制动画中的棋子
+        if (animatingPiece) {
+            const { piece, fromR, fromC, toR, toC, progress } = animatingPiece;
+            const t = progress * (2 - progress);
+            const currR = fromR + (toR - fromR) * t;
+            const currC = fromC + (toC - fromC) * t;
+            drawPiece(piece, currR, currC, true);
+        }
+
+        // 7. 提示点 (包含危险预测)
+        if (selected && !animatingPiece) {
+            // [新增]：确定敌方颜色，用于计算危险区域
+            const enemyColor = turn === COLORS.WHITE ? COLORS.BLACK : COLORS.WHITE;
+
+            possibleMoves.forEach(m => {
+                const x = m.c * CELL_SIZE + CELL_SIZE/2;
+                const y = m.r * CELL_SIZE + CELL_SIZE/2;
+
+                // [新增]：检测该位置是否受敌方攻击
+                const isDangerous = isSquareAttacked(m.r, m.c, enemyColor);
+                
+                // 危险则用橙红色，安全则用原色/绿色
+                const indicatorColor = isDangerous ? "rgba(255, 100, 50, 0.8)" : "rgba(0, 0, 0, 0.2)";
+                const ringColor = isDangerous ? "rgba(255, 69, 0, 0.8)" : "rgba(0, 0, 0, 0.2)";
+
+                ctx.beginPath();
+                if (board[m.r][m.c]) {
+                    // 吃子：光环
+                    ctx.strokeStyle = ringColor;
+                    ctx.lineWidth = 4;
+                    ctx.arc(x, y, CELL_SIZE * 0.4, 0, Math.PI*2);
+                    ctx.stroke();
+                } else {
+                    // 移动：圆点
+                    ctx.fillStyle = indicatorColor;
+                    ctx.arc(x, y, CELL_SIZE * 0.15, 0, Math.PI*2);
+                    ctx.fill();
+                }
+            });
+        }
+    }
+
+    function drawPiece(p, r, c, isFloating = false) {
+        const cx = c * CELL_SIZE + CELL_SIZE / 2;
+        const cy = r * CELL_SIZE + CELL_SIZE / 2;
+        const size = CELL_SIZE * 0.8;
+
+        ctx.font = `${size}px "Segoe UI Symbol", Arial`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        // 阴影效果 (模拟立体)
+        const shadowOffset = isFloating ? 8 : 3;
+        ctx.fillStyle = "rgba(0,0,0,0.3)";
+        ctx.fillText(PIECES[p.type], cx + shadowOffset*0.4, cy + shadowOffset);
+
+        // 实体
+        if (p.color === COLORS.WHITE) {
+            // 白棋：白色填充，黑色描边
+            ctx.fillStyle = "#ffffff";
+            ctx.fillText(PIECES[p.type], cx, cy);
+            // 增加一点光泽
+            ctx.fillStyle = "rgba(0,0,0,0.1)"; // 纹理感
+            ctx.fillText(PIECES[p.type], cx, cy);
+        } else {
+            // 黑棋：深灰色填充，黑色描边
+            ctx.fillStyle = "#333333";
+            ctx.fillText(PIECES[p.type], cx, cy);
+        }
+    }
+
+    function highlightSquare(r, c, color) {
+        ctx.fillStyle = color;
+        ctx.fillRect(c * CELL_SIZE, r * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+    }
+
+    function drawGradientGlow(r, c, color) {
+        const x = c * CELL_SIZE + CELL_SIZE/2;
+        const y = r * CELL_SIZE + CELL_SIZE/2;
+        const g = ctx.createRadialGradient(x, y, CELL_SIZE*0.2, x, y, CELL_SIZE*0.6);
+        g.addColorStop(0, color);
+        g.addColorStop(1, "rgba(0,0,0,0)");
+        ctx.fillStyle = g;
+        ctx.fillRect(c*CELL_SIZE, r*CELL_SIZE, CELL_SIZE, CELL_SIZE);
+    }
+
+    // --- 交互逻辑 ---
+    canvas.addEventListener('mousedown', handleInput);
+    canvas.addEventListener('touchstart', e => { e.preventDefault(); handleInput(e.touches[0]); }, {passive:false});
+
+    function handleInput(e) {
+        if (isGameOver || animatingPiece) return;
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        // 直接除以 CELL_SIZE，因为 CELL_SIZE 是基于 CSS 像素计算的
+        const c = Math.floor(x / CELL_SIZE);
+        const r = Math.floor(y / CELL_SIZE);
+
+        if (r >= 0 && r < 8 && c >= 0 && c < 8) {
+            handleClick(r, c);
+        }
+    }
+
+    function handleClick(r, c) {
+        const p = board[r][c];
+        
+        // 1. 移动/吃子
+        if (selected) {
+            const move = possibleMoves.find(m => m.r === r && m.c === c);
+            if (move) {
+                startMove(selected, move);
+                return;
+            }
+        }
+
+        // 2. 选中
+        if (p && p.color === turn) {
+            selected = {r, c};
+            possibleMoves = getValidMoves(r, c);
+            draw();
+        } else {
+            // 点击空白处取消选中
+            selected = null;
+            possibleMoves = [];
+            draw();
+        }
+    }
+
+    function startMove(from, to) {
+        const piece = board[from.r][from.c];
+        board[from.r][from.c] = null; // 提起来
+        
+        animatingPiece = {
+            piece: piece,
+            fromR: from.r, fromC: from.c,
+            toR: to.r, toC: to.c,
+            progress: 0,
+            special: to.special // castle, promotion
+        };
+        selected = null;
+        possibleMoves = [];
+        AudioSys.play('move');
+    }
+
+    function finalizeMove(anim) {
+        const { piece, fromR, fromC, toR, toC, special } = anim;
+        const captured = board[toR][toC];
+        
+        // 记录
+        history.push({
+            boardState: JSON.parse(JSON.stringify(board)),
+            turn: turn,
+            movedPiece: piece,
+            from: {r:fromR, c:fromC},
+            to: {r:toR, c:toC}
+        });
+
+        // 放置
+        board[toR][toC] = piece;
+        piece.hasMoved = true;
+        if (captured) AudioSys.play('capture');
+
+        // 处理特殊规则
+        if (special === 'castle-king') {
+            // 搬运车：车从 h 列移到 f 列 (col 7 -> 5)
+            const rook = board[toR][7];
+            board[toR][5] = rook;
+            board[toR][7] = null;
+            rook.hasMoved = true;
+        } else if (special === 'castle-queen') {
+            // 搬运车：车从 a 列移到 d 列 (col 0 -> 3)
+            const rook = board[toR][0];
+            board[toR][3] = rook;
+            board[toR][0] = null;
+            rook.hasMoved = true;
+        } else if (special === 'promotion') {
+            piece.type = 'q'; // 自动升变为后
+        }
+
+        // 切换回合
+        turn = turn === COLORS.WHITE ? COLORS.BLACK : COLORS.WHITE;
+        updateUI();
+
+        // 检查胜负/将军
+        if (isKingInCheck(turn)) {
+            AudioSys.play('check');
+            if (isCheckmate(turn)) {
+                isGameOver = true;
+                winTitle.textContent = (turn === COLORS.WHITE ? "Black" : "White") + " Wins!";
+                overlay.classList.add('show');
+            }
+        } else if (isStalemate(turn)) {
+            isGameOver = true;
+            winTitle.textContent = "Draw";
+            overlay.classList.add('show');
+        }
+    }
+
+    function undo() {
+        if (history.length === 0 || animatingPiece || isGameOver) return;
+        const last = history.pop();
+        board = last.boardState; // 暴力恢复状态，最稳妥
+        turn = last.turn;
+        isGameOver = false;
+        overlay.classList.remove('show');
+        selected = null;
+        possibleMoves = [];
+        updateUI();
+        draw();
+    }
+
+    function updateUI() {
+        turnText.textContent = turn === COLORS.WHITE ? "White's Turn" : "Black's Turn";
+        turnBadge.className = `turn-badge ${turn === COLORS.WHITE ? 'white-turn' : 'black-turn'}`;
+    }
+
+    // --- 规则逻辑 ---
+    function getValidMoves(r, c, checkSafety = true) {
+        const p = board[r][c];
+        if (!p) return [];
+        
+        let moves = [];
+        const forward = p.color === COLORS.WHITE ? -1 : 1;
+
+        // 辅助：检查位置是否在界内
+        const inBounds = (r, c) => r>=0 && r<8 && c>=0 && c<8;
+        // 辅助：添加移动 (如果是 enemies 或者是空)
+        const tryAdd = (tr, tc) => {
+            if (!inBounds(tr, tc)) return false; // 出界
+            const target = board[tr][tc];
+            if (target) {
+                if (target.color !== p.color) moves.push({r:tr, c:tc});
+                return false; // 撞到了（无论敌我），停止射线
+            }
+            moves.push({r:tr, c:tc});
+            return true; // 继续射线
+        };
+
+        if (p.type === 'p') { // 兵
+            // 直走
+            if (inBounds(r+forward, c) && !board[r+forward][c]) {
+                let isPromo = (p.color === COLORS.WHITE && r+forward === 0) || (p.color === COLORS.BLACK && r+forward === 7);
+                moves.push({r:r+forward, c:c, special: isPromo ? 'promotion' : null});
+                // 第一步可以走两格
+                if (!p.hasMoved && inBounds(r+forward*2, c) && !board[r+forward*2][c]) {
+                    moves.push({r:r+forward*2, c:c});
+                }
+            }
+            // 吃子 (斜向)
+            [[r+forward, c-1], [r+forward, c+1]].forEach(([tr, tc]) => {
+                if (inBounds(tr, tc)) {
+                    const target = board[tr][tc];
+                    if (target && target.color !== p.color) {
+                        let isPromo = (p.color === COLORS.WHITE && tr === 0) || (p.color === COLORS.BLACK && tr === 7);
+                        moves.push({r:tr, c:tc, special: isPromo ? 'promotion' : null});
+                    }
+                }
+            });
+        } 
+        else if (p.type === 'n') { // 马
+            const offsets = [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]];
+            offsets.forEach(([dr, dc]) => tryAdd(r+dr, c+dc));
+        } 
+        else if (p.type === 'k') { // 王
+            // 周围8格
+            for(let dr=-1; dr<=1; dr++) {
+                for(let dc=-1; dc<=1; dc++) {
+                    if(dr!==0 || dc!==0) tryAdd(r+dr, c+dc);
+                }
+            }
+            // 王车易位 (Castling)
+            if (!p.hasMoved && checkSafety && !isKingInCheck(p.color)) {
+                // 短易位 (King Side)
+                const kr = board[r][7]; // King-side Rook
+                if (kr && kr.type === 'r' && !kr.hasMoved && !board[r][5] && !board[r][6]) {
+                    // 检查路径是否被攻击
+                    if (!isSquareAttacked(r, 5, p.color === COLORS.WHITE ? COLORS.BLACK : COLORS.WHITE) &&
+                        !isSquareAttacked(r, 6, p.color === COLORS.WHITE ? COLORS.BLACK : COLORS.WHITE)) {
+                        moves.push({r:r, c:6, special: 'castle-king'});
+                    }
+                }
+                // 长易位 (Queen Side)
+                const qr = board[r][0]; // Queen-side Rook
+                if (qr && qr.type === 'r' && !qr.hasMoved && !board[r][1] && !board[r][2] && !board[r][3]) {
+                    if (!isSquareAttacked(r, 3, p.color === COLORS.WHITE ? COLORS.BLACK : COLORS.WHITE)) { // 只需要检查经过的点
+                        moves.push({r:r, c:2, special: 'castle-queen'});
+                    }
+                }
+            }
+        } 
+        else { // 车、象、后 (射线移动)
+            const dirs = [];
+            if (p.type === 'r' || p.type === 'q') dirs.push([0,1],[0,-1],[1,0],[-1,0]);
+            if (p.type === 'b' || p.type === 'q') dirs.push([1,1],[1,-1],[-1,1],[-1,-1]);
+            
+            dirs.forEach(([dr, dc]) => {
+                let i = 1;
+                while (tryAdd(r+dr*i, c+dc*i)) { i++; }
+            });
+        }
+
+        // 过滤掉会导致自己被将军的步子 (Suicide Check)
+        if (checkSafety) {
+            moves = moves.filter(m => {
+                // 模拟移动
+                const originalTarget = board[m.r][m.c];
+                board[m.r][m.c] = p;
+                board[r][c] = null;
+                
+                const safe = !isKingInCheck(p.color);
+                
+                // 还原
+                board[r][c] = p;
+                board[m.r][m.c] = originalTarget;
+                
+                return safe;
+            });
+        }
+
+        return moves;
+    }
+
+    function findKing(color) {
+        for(let r=0; r<8; r++) {
+            for(let c=0; c<8; c++) {
+                if (board[r][c] && board[r][c].type === 'k' && board[r][c].color === color) return {r, c};
+            }
+        }
+        return null;
+    }
+
+    // 检查某方是否被将军
+    function isKingInCheck(color) {
+        const kingPos = findKing(color);
+        if (!kingPos) return true; // 理论上不会发生
+        const enemyColor = color === COLORS.WHITE ? COLORS.BLACK : COLORS.WHITE;
+        return isSquareAttacked(kingPos.r, kingPos.c, enemyColor);
+    }
+
+    // 检查格子是否被指定颜色的棋子攻击
+    // 检查格子是否被指定颜色的棋子攻击
+    // [修复]：兵的直走不算攻击，王车易位不算攻击
+    function isSquareAttacked(r, c, attackerColor) {
+        for(let i=0; i<8; i++) {
+            for(let j=0; j<8; j++) {
+                const p = board[i][j];
+                // 找到一个敌方棋子
+                if (p && p.color === attackerColor) {
+                    
+                    // --- 1. 特殊处理：兵 (Pawn) ---
+                    // 兵只能攻击斜前方，直走不算攻击
+                    if (p.type === 'p') {
+                        const forward = p.color === COLORS.WHITE ? -1 : 1;
+                        // 攻击位置必须是：行+forward，列±1
+                        if (i + forward === r && (Math.abs(j - c) === 1)) {
+                            return true;
+                        }
+                    } 
+                    
+                    // --- 2. 特殊处理：王 (King) ---
+                    // 王只能攻击周围一圈，王车易位(跳两格)不算攻击
+                    else if (p.type === 'k') {
+                        if (Math.abs(i - r) <= 1 && Math.abs(j - c) <= 1) {
+                            return true;
+                        }
+                    }
+
+                    // --- 3. 其他棋子 (车、马、象、后) ---
+                    // 它们的移动范围即攻击范围，继续复用 getValidMoves
+                    else {
+                        // 注意：第二个参数 false 表示不检查"Move会导致自杀"，防止无限递归
+                        const moves = getValidMoves(i, j, false);
+                        if (moves.some(m => m.r === r && m.c === c)) return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    function isCheckmate(color) {
+        // 如果所有棋子都没有合法移动，且正在被将军，则将死
+        for(let r=0; r<8; r++) {
+            for(let c=0; c<8; c++) {
+                const p = board[r][c];
+                if (p && p.color === color) {
+                    if (getValidMoves(r, c).length > 0) return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    function isStalemate(color) {
+        // 没被将军，但无路可走
+        return !isKingInCheck(color) && isCheckmate(color); // 借用 checkmate 的遍历逻辑
+    }
+
+    initGame();
+</script>
+</body>
+</html>
