@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ .Title }} - {{ .Site.Title }} 游戏厅</title>
+    <style>
+        /* 沉浸式重置样式 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000; /* 黑色背景，更有游戏感 */
+            overflow: hidden; /* 禁止页面滚动 */
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 顶部简单的导航条 (可选，方便用户返回) */
+        .game-nav {
+            height: 40px;
+            background: #1a1a1a;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+        .game-nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            font-family: sans-serif;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        .game-nav a:hover { opacity: 1; }
+        .game-title { margin-left: auto; font-size: 14px; font-weight: bold; }
+
+        /* 游戏容器 */
+        .game-container {
+            flex: 1; /* 占满剩余空间 */
+            width: 100%;
+            position: relative;
+        }
+        
+        /* 全屏 iframe */
+        iframe {
+            border: none;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-nav">
+        <a href="/games/">← 返回游戏大厅</a>
+        <span class="game-title">正在游玩：{{ .Title }}</span>
+    </div>
+
+    <div class="game-container">
+        <iframe src="{{ .Params.game_url }}" title="{{ .Title }}" allowfullscreen></iframe>
+    </div>
+
+</body>
+</html>
