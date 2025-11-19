@@ -10,6 +10,20 @@
         <webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster>
         <copyright>EvanWong</copyright>
         <lastBuildDate>Wed, 19 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Sudoku</title>
+        <link>http://localhost:1313/games/sudoku/</link>
+        <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
+        <author>yufenghuang009@gmail.com (Evan Wong)</author>
+        <guid>http://localhost:1313/games/sudoku/</guid>
+        <description>&lt;p&gt;数独游戏规则：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在 9x9 的方格内填入数字 1-9。&lt;/li&gt;
+&lt;li&gt;每一行、每一列、每一个粗线围成的 3x3 宫内，数字 1-9 均不能重复。&lt;/li&gt;
+&lt;li&gt;点击 &lt;strong&gt;✎ 笔记&lt;/strong&gt; 按钮可以切换到草稿模式，标记可能的数字。&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        </item>
+        <item>
         <title>Wordle</title>
         <link>http://localhost:1313/games/wordle/</link>
         <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
