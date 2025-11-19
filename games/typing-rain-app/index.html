@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Typing Rain</title>
+    <style>
+        :root {
+            --bg-color: #0c0c0c;
+            --text-color: #00ff41; /* Matrix Green */
+            --target-color: #fff;
+            --highlight-color: #ff0055;
+            --laser-color: #00ff41;
+            --ui-bg: rgba(0, 20, 0, 0.8);
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            user-select: none;
+        }
+
+        /* 背景代码雨特效层 */
+        #matrix-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0;
+            opacity: 0.3;
+        }
+
+        canvas {
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* UI 界面 */
+        .ui-layer {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-shadow: 0 0 5px var(--text-color);
+        }
+
+        .health-bar-container {
+            width: 100%;
+            height: 10px;
+            background: #333;
+            margin-top: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .health-bar {
+            width: 100%;
+            height: 100%;
+            background: var(--highlight-color);
+            transition: width 0.2s;
+            box-shadow: 0 0 10px var(--highlight-color);
+        }
+
+        /* 游戏结束/开始菜单 */
+        #overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            backdrop-filter: blur(5px);
+            pointer-events: auto;
+        }
+        #overlay.hidden { display: none; }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            text-shadow: 0 0 20px var(--text-color);
+            text-transform: uppercase;
+        }
+
+        .btn {
+            background: transparent;
+            color: var(--text-color);
+            border: 2px solid var(--text-color);
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-family: inherit;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin-top: 20px;
+            transition: all 0.2s;
+            box-shadow: 0 0 10px var(--text-color);
+        }
+        .btn:hover {
+            background: var(--text-color);
+            color: #000;
+        }
+
+        .hint {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        .loading { color: #fff; animation: blink 1s infinite; }
+
+        @keyframes blink { 50% { opacity: 0.5; } }
+
+        /* 移动端提示 */
+        @media (hover: none) {
+            .mobile-warning {
+                display: block !important;
+                color: var(--highlight-color);
+                margin-top: 10px;
+                text-align: center;
+            }
+        }
+        .mobile-warning { display: none; }
+
+    </style>
+</head>
+<body>
+
+<canvas id="matrix-bg"></canvas>
+<canvas id="gameCanvas"></canvas>
+
+<div class="ui-layer">
+    <div>
+        <div class="stats">
+            <div>SCORE: <span id="score">0</span></div>
+            <div>WPM: <span id="wpm">0</span></div>
+        </div>
+        <div class="health-bar-container">
+            <div class="health-bar" id="health"></div>
+        </div>
+    </div>
+</div>
+
+<div id="overlay">
+    <h1>Typing Rain</h1>
+    <div id="loading-msg" class="loading">Connecting to Wordle Database...</div>
+    <div id="start-menu" style="display: none; text-align: center;">
+        <p>Type words to destroy them before they hit the bottom.</p>
+        <button class="btn" onclick="startGame()">INITIALIZE</button>
+        <div class="mobile-warning">⚠️ 此游戏需要实体键盘</div>
+    </div>
+    <div id="game-over-menu" style="display: none; text-align: center;">
+        <h2 style="color: var(--highlight-color)">SYSTEM FAILURE</h2>
+        <p>Final Score: <span id="final-score">0</span></p>
+        <button class="btn" onclick="startGame()">REBOOT SYSTEM</button>
+    </div>
+</div>
+
+<script>
+    // --- 共享配置 ---
+    // 🔥 这里直接去读 Wordle 的词库文件
+    // 如果您的 Wordle 路径不是这个，请修改这里的 URL
+    const WORD_URL = '/games/wordle-app/words.txt';
+    
+    // 备用词库 (防止 fetch 失败)
+    const BACKUP_WORDS = ["system", "hacker", "matrix", "code", "java", "linux", "hugo", "blog", "typing", "rain", "laser", "neon", "cyber", "punk", "data"];
+
+    // --- 游戏变量 ---
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const bgCanvas = document.getElementById('matrix-bg');
+    const bgCtx = bgCanvas.getContext('2d');
+    
+    let wordsPool = [];
+    let activeWords = []; // 屏幕上下落的词
+    let particles = [];   // 爆炸粒子
+    let lasers = [];      // 激光束
+    let targetWordIndex = -1; // 当前锁定的单词索引 (-1 表示未锁定)
+    
+    let score = 0;
+    let health = 100;
+    let gameRunning = false;
+    let lastTime = 0;
+    let spawnTimer = 0;
+    let spawnInterval = 2000; // 生成间隔 (毫秒)
+    let fallSpeed = 0.5;      // 下落速度
+    
+    // WPM 统计
+    let typedChars = 0;
+    let startTime = 0;
+
+    // --- 初始化 ---
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        bgCanvas.width = window.innerWidth;
+        bgCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // 加载词库
+    async function loadDictionary() {
+        try {
+            const response = await fetch(WORD_URL);
+            if (!response.ok) throw new Error("Fetch failed");
+            const text = await response.text();
+            // 过滤：只取长度 3-10 的纯字母单词
+            wordsPool = text.split('\n')
+                .map(w => w.trim().toLowerCase())
+                .filter(w => w && /^[a-z]{3,10}$/.test(w));
+            
+            if (wordsPool.length === 0) throw new Error("Empty list");
+            console.log(`Loaded ${wordsPool.length} words from shared library.`);
+        } catch (e) {
+            console.warn("Failed to load Wordle dict, using backup.", e);
+            wordsPool = BACKUP_WORDS;
+        }
+        
+        document.getElementById('loading-msg').style.display = 'none';
+        document.getElementById('start-menu').style.display = 'block';
+    }
+
+    loadDictionary();
+
+    // --- 游戏循环 ---
+    function startGame() {
+        document.getElementById('overlay').classList.add('hidden');
+        document.getElementById('start-menu').style.display = 'none';
+        document.getElementById('game-over-menu').style.display = 'none';
+        
+        activeWords = [];
+        particles = [];
+        lasers = [];
+        targetWordIndex = -1;
+        score = 0;
+        health = 100;
+        spawnInterval = 2000;
+        fallSpeed = 0.5; // 像素/帧 (约 30px/s)
+        typedChars = 0;
+        startTime = Date.now();
+        
+        gameRunning = true;
+        lastTime = performance.now();
+        updateUI();
+        requestAnimationFrame(loop);
+    }
+
+    function gameOver() {
+        gameRunning = false;
+        document.getElementById('overlay').classList.remove('hidden');
+        document.getElementById('game-over-menu').style.display = 'block';
+        document.getElementById('final-score').textContent = score;
+    }
+
+    function loop(timestamp) {
+        if (!gameRunning) return;
+        
+        // 简单的增量时间控制 (假设 60fps)
+        // 在更复杂的项目中应使用 deltaTime
+        
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // 1. 生成单词
+        spawnTimer += 16.6; // ~1 frame ms
+        if (spawnTimer > spawnInterval) {
+            spawnWord();
+            spawnTimer = 0;
+            // 难度随分数动态增加
+            if (spawnInterval > 600) spawnInterval -= 10;
+            if (fallSpeed < 3) fallSpeed += 0.01;
+        }
+
+        // 2. 更新实体
+        updateEntities();
+        
+        // 3. 渲染
+        drawEntities();
+        drawMatrixBg(); // 背景特效
+        
+        // 4. 更新 UI (WPM)
+        const elapsedMin = (Date.now() - startTime) / 60000;
+        const wpm = elapsedMin > 0 ? Math.floor((typedChars / 5) / elapsedMin) : 0;
+        document.getElementById('wpm').textContent = wpm;
+
+        requestAnimationFrame(loop);
+    }
+
+    // --- 实体逻辑 ---
+    class WordEntity {
+        constructor(text) {
+            this.text = text;
+            this.typedLen = 0; // 已经打对了几个字母
+            this.x = Math.random() * (canvas.width - 150) + 50;
+            this.y = -30;
+            this.color = '#00ff41';
+        }
+
+        draw(ctx, isTarget) {
+            ctx.font = "bold 24px 'Courier New'";
+            
+            // 绘制已输入部分 (红色/高亮)
+            if (this.typedLen > 0) {
+                ctx.fillStyle = '#ff0055'; // Highlight color
+                const typedStr = this.text.substring(0, this.typedLen);
+                ctx.fillText(typedStr, this.x, this.y);
+                
+                // 计算宽度以便绘制未输入部分
+                const typedWidth = ctx.measureText(typedStr).width;
+                
+                ctx.fillStyle = this.color;
+                ctx.fillText(this.text.substring(this.typedLen), this.x + typedWidth, this.y);
+            } else {
+                // 普通状态
+                ctx.fillStyle = isTarget ? '#fff' : this.color;
+                ctx.fillText(this.text, this.x, this.y);
+            }
+            
+            // 锁定标记
+            if (isTarget) {
+                ctx.strokeStyle = '#ff0055';
+                ctx.lineWidth = 2;
+                const width = ctx.measureText(this.text).width;
+                ctx.strokeRect(this.x - 5, this.y - 24, width + 10, 30);
+                
+                // 连线到玩家位置 (屏幕底部中间)
+                ctx.beginPath();
+                ctx.moveTo(canvas.width / 2, canvas.height);
+                ctx.lineTo(this.x + width/2, this.y + 5);
+                ctx.strokeStyle = 'rgba(0, 255, 65, 0.1)';
+                ctx.stroke();
+            }
+        }
+    }
+
+    function spawnWord() {
+        const text = wordsPool[Math.floor(Math.random() * wordsPool.length)];
+        activeWords.push(new WordEntity(text));
+    }
+
+    function updateEntities() {
+        // 更新单词
+        for (let i = activeWords.length - 1; i >= 0; i--) {
+            let w = activeWords[i];
+            w.y += fallSpeed;
+            
+            // 触底扣血
+            if (w.y > canvas.height) {
+                takeDamage(10);
+                activeWords.splice(i, 1);
+                if (targetWordIndex === i) targetWordIndex = -1; // 丢失目标
+                else if (targetWordIndex > i) targetWordIndex--; // 索引修正
+            }
+        }
+
+        // 更新粒子
+        for (let i = particles.length - 1; i >= 0; i--) {
+            particles[i].life -= 0.02;
+            particles[i].x += particles[i].vx;
+            particles[i].y += particles[i].vy;
+            if (particles[i].life <= 0) particles.splice(i, 1);
+        }
+
+        // 更新激光
+        for (let i = lasers.length - 1; i >= 0; i--) {
+            lasers[i].life -= 0.05;
+            if (lasers[i].life <= 0) lasers.splice(i, 1);
+        }
+    }
+
+    function takeDamage(amount) {
+        health -= amount;
+        health = Math.max(0, health);
+        updateUI();
+        // 屏幕闪红
+        document.body.style.boxShadow = "inset 0 0 50px red";
+        setTimeout(() => document.body.style.boxShadow = "none", 100);
+        
+        if (health <= 0) gameOver();
+    }
+
+    function updateUI() {
+        document.getElementById('score').textContent = score;
+        document.getElementById('health').style.width = health + "%";
+        if (health < 30) document.getElementById('health').style.background = "red";
+        else document.getElementById('health').style.background = "#ff0055";
+    }
+
+    function drawEntities() {
+        // 画单词
+        activeWords.forEach((w, index) => {
+            w.draw(ctx, index === targetWordIndex);
+        });
+
+        // 画粒子
+        particles.forEach(p => {
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = p.life;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 3, 0, Math.PI*2);
+            ctx.fill();
+        });
+        ctx.globalAlpha = 1;
+
+        // 画激光
+        ctx.lineWidth = 2;
+        lasers.forEach(l => {
+            ctx.strokeStyle = `rgba(0, 255, 65, ${l.life})`;
+            ctx.beginPath();
+            ctx.moveTo(l.sx, l.sy);
+            ctx.lineTo(l.tx, l.ty);
+            ctx.stroke();
+        });
+    }
+
+    // --- 输入处理 ---
+    document.addEventListener('keydown', (e) => {
+        if (!gameRunning) return;
+        
+        const key = e.key.toLowerCase();
+        if (!/^[a-z]$/.test(key)) return; // 只处理字母
+
+        // 如果已经锁定了目标
+        if (targetWordIndex !== -1) {
+            const word = activeWords[targetWordIndex];
+            const nextChar = word.text[word.typedLen];
+            
+            if (key === nextChar) {
+                hitWord(word, targetWordIndex);
+            } else {
+                // 打错了：重置锁定 (或者扣分/音效，这里简单处理为重置)
+                // 也可以设计为必须打完当前词
+                // 经典 ZType 模式：打错不重置，只是无法消除
+            }
+        } else {
+            // 还没锁定，寻找首字母匹配的单词
+            // 优先找位置最低的 (y 最大)
+            let candidates = [];
+            activeWords.forEach((w, i) => {
+                if (w.text.startsWith(key)) candidates.push({idx: i, y: w.y});
+            });
+            
+            if (candidates.length > 0) {
+                // 排序找出 y 最大的 (最紧急的)
+                candidates.sort((a, b) => b.y - a.y);
+                targetWordIndex = candidates[0].idx;
+                hitWord(activeWords[targetWordIndex], targetWordIndex);
+            }
+        }
+    });
+
+    function hitWord(word, index) {
+        word.typedLen++;
+        typedChars++;
+        score += 10;
+        updateUI();
+
+        // 视觉特效
+        const charWidth = 14.4; // 近似宽
+        const tx = word.x + (word.typedLen * charWidth) - (charWidth/2);
+        const ty = word.y - 5;
+        
+        // 发射激光
+        lasers.push({
+            sx: canvas.width / 2, sy: canvas.height,
+            tx: tx, ty: ty,
+            life: 1.0
+        });
+        
+        // 击中粒子
+        spawnParticles(tx, ty, '#00ff41');
+
+        // 单词打完
+        if (word.typedLen === word.text.length) {
+            destroyWord(index);
+        }
+    }
+
+    function destroyWord(index) {
+        const word = activeWords[index];
+        score += word.text.length * 10; // 额外奖励
+        spawnParticles(word.x + 20, word.y - 10, '#ff0055', 20); // 大爆炸
+        
+        activeWords.splice(index, 1);
+        targetWordIndex = -1; // 解锁
+    }
+
+    function spawnParticles(x, y, color, count = 5) {
+        for (let i = 0; i < count; i++) {
+            particles.push({
+                x: x, y: y,
+                vx: (Math.random() - 0.5) * 5,
+                vy: (Math.random() - 0.5) * 5,
+                life: 1.0,
+                color: color
+            });
+        }
+    }
+
+    // --- 背景代码雨特效 (纯视觉装饰) ---
+    const drops = [];
+    const fontSize = 14;
+    const columns = window.innerWidth / fontSize;
+    for(let x = 0; x < columns; x++) drops[x] = 1;
+
+    function drawMatrixBg() {
+        bgCtx.fillStyle = "rgba(12, 12, 12, 0.1)"; // 拖尾效果
+        bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
+
+        bgCtx.fillStyle = "#0F0"; // 绿色字体
+        bgCtx.font = fontSize + "px monospace";
+
+        for(let i = 0; i < drops.length; i++) {
+            // 随机字符
+            const text = String.fromCharCode(0x30A0 + Math.random() * 96);
+            bgCtx.fillText(text, i*fontSize, drops[i]*fontSize);
+
+            if(drops[i]*fontSize > bgCanvas.height && Math.random() > 0.975)
+                drops[i] = 0;
+            drops[i]++;
+        }
+    }
+
+</script>
+</body>
+</html>

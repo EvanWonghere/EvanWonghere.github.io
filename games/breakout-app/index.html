@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Breakout Prism</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Fredoka+One&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <style>
+        /* --- 基础布局 --- */
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            touch-action: none;
+            transition: background 0.5s;
+        }
+
+        #ui-container {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            box-sizing: border-box;
+            z-index: 10;
+            pointer-events: none; /* 让点击穿透到 Canvas */
+        }
+
+        .score-box {
+            text-align: center;
+            transition: color 0.3s;
+        }
+        .score-label { font-size: 14px; opacity: 0.8; }
+        .score-val { font-size: 24px; font-weight: bold; }
+
+        /* 主题切换器 (可点击) */
+        .theme-selector {
+            pointer-events: auto;
+            display: flex;
+            gap: 10px;
+            background: rgba(255,255,255,0.1);
+            padding: 5px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .theme-btn {
+            border: none;
+            padding: 5px 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+            opacity: 0.6;
+            transition: all 0.3s;
+        }
+        .theme-btn.active { opacity: 1; transform: scale(1.1); }
+
+        canvas {
+            display: block;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: border 0.5s, box-shadow 0.5s;
+            cursor: none; /* 隐藏鼠标，用挡板代替 */
+        }
+
+        /* 游戏开始/结束 覆盖层 */
+        #overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            backdrop-filter: blur(4px);
+            transition: opacity 0.3s;
+        }
+        #overlay.hidden { opacity: 0; pointer-events: none; }
+        
+        h1 { font-size: 3rem; margin-bottom: 10px; color: white; text-transform: uppercase; }
+        .btn-start {
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 50px;
+            background: white;
+            color: black;
+            font-weight: bold;
+            transition: transform 0.1s;
+        }
+        .btn-start:active { transform: scale(0.95); }
+
+        /* --- 主题样式 --- */
+
+        /* 1. Neon (默认) */
+        body.theme-neon {
+            background: #050505;
+            color: #0ff;
+            font-family: 'Orbitron', sans-serif;
+        }
+        body.theme-neon canvas {
+            border: 2px solid #333;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+        body.theme-neon .theme-btn { background: #333; color: #fff; }
+        body.theme-neon .theme-btn.active { background: #0ff; color: #000; box-shadow: 0 0 10px #0ff; }
+
+        /* 2. Candy */
+        body.theme-candy {
+            background: #fff0f5; /* Lavender Blush */
+            color: #ff6b6b;
+            font-family: 'Fredoka One', cursive;
+        }
+        body.theme-candy canvas {
+            border: 8px solid #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+            background: #ffeaa7;
+        }
+        body.theme-candy .theme-btn { background: #fff; color: #ff6b6b; }
+        body.theme-candy .theme-btn.active { background: #ff6b6b; color: #fff; }
+        body.theme-candy #overlay { background: rgba(255, 255, 255, 0.8); }
+        body.theme-candy h1 { color: #ff6b6b; text-shadow: 2px 2px 0px #fff; }
+        body.theme-candy .btn-start { background: #ff6b6b; color: white; box-shadow: 0 5px 0 #e05555; }
+
+        /* 3. Retro */
+        body.theme-retro {
+            background: #333;
+            color: #42f54b; /* Terminal Green */
+            font-family: 'VT323', monospace;
+        }
+        body.theme-retro canvas {
+            border: 4px solid #42f54b;
+            background: #000;
+            box-shadow: none;
+        }
+        body.theme-retro .theme-selector { border: 1px solid #42f54b; background: black; border-radius: 0; }
+        body.theme-retro .theme-btn { background: black; color: #42f54b; border: 1px solid #42f54b; border-radius: 0; }
+        body.theme-retro .theme-btn.active { background: #42f54b; color: black; }
+        body.theme-retro #overlay { background: rgba(0,0,0,0.9); }
+        body.theme-retro h1 { font-family: 'VT323', monospace; color: #42f54b; text-shadow: 2px 2px #000; }
+        body.theme-retro .btn-start { background: #000; color: #42f54b; border: 2px solid #42f54b; border-radius: 0; }
+
+        /* CRT 扫描线 (仅 Retro 模式) */
+        body.theme-retro::after {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            background-size: 100% 4px;
+            z-index: 5;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="theme-neon">
+
+    <div id="ui-container">
+        <div class="score-box">
+            <div class="score-label">SCORE</div>
+            <div class="score-val" id="score">0</div>
+        </div>
+        
+        <div class="theme-selector">
+            <button class="theme-btn active" onclick="setTheme('neon')">NEON</button>
+            <button class="theme-btn" onclick="setTheme('candy')">CANDY</button>
+            <button class="theme-btn" onclick="setTheme('retro')">RETRO</button>
+        </div>
+        
+        <div class="score-box">
+            <div class="score-label">LIVES</div>
+            <div class="score-val" id="lives">3</div>
+        </div>
+    </div>
+
+    <canvas id="gameCanvas"></canvas>
+
+    <div id="overlay">
+        <h1 id="title-text">BREAKOUT</h1>
+        <button class="btn-start" onclick="startGame()">START GAME</button>
+    </div>
+
+<script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const overlay = document.getElementById('overlay');
+    const titleText = document.getElementById('title-text');
+    const btnStart = document.querySelector('.btn-start');
+
+    // 游戏配置
+    let theme = 'neon';
+    let isRunning = false;
+    let score = 0;
+    let lives = 3;
+    let level = 1;
+
+    // 实体
+    let paddle = { x: 0, y: 0, w: 100, h: 15, color: '#fff' };
+    let balls = [];
+    let bricks = [];
+    let powerups = [];
+    let particles = [];
+    let lasers = []; // 激光子弹
+
+    // 状态增益
+    let paddleWidthMult = 1;
+    let stickyPaddle = false;
+    let hasLaser = false;
+    let fireBallActive = false;
+    let isInteractingUI = false; // 标记是否正在操作 UI
+
+    // 主题配色池
+    const PALETTES = {
+        neon: { paddle: '#0ff', ball: '#fff', bg: 'rgba(0,0,0,0.2)', bricks: ['#f0f', '#f00', '#ff0', '#0f0', '#00f'] },
+        candy: { paddle: '#ff6b6b', ball: '#333', bg: '#ffeaa7', bricks: ['#a29bfe', '#74b9ff', '#81ecec', '#55efc4', '#fab1a0'] },
+        retro: { paddle: '#42f54b', ball: '#42f54b', bg: '#000', bricks: ['#42f54b', '#42f54b', '#42f54b', '#42f54b', '#42f54b'] }
+    };
+
+    // --- 初始化 ---
+    function resize() {
+        canvas.width = Math.min(window.innerWidth, 600);
+        canvas.height = Math.min(window.innerHeight, 800);
+        if (paddle.y === 0) resetPaddle();
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function setTheme(newTheme) {
+        theme = newTheme;
+        document.body.className = `theme-${theme}`;
+        
+        // 不再依赖 event.target，而是遍历按钮匹配文本
+        document.querySelectorAll('.theme-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.textContent.toLowerCase() === newTheme) {
+                btn.classList.add('active');
+            }
+        });
+    }
+
+    function resetPaddle() {
+        paddle.w = 100;
+        paddle.h = 15;
+        paddle.x = canvas.width / 2 - paddle.w / 2;
+        paddle.y = canvas.height - 50;
+        paddleWidthMult = 1;
+        hasLaser = false;
+        stickyPaddle = false;
+    }
+
+    function initLevel() {
+        bricks = [];
+        const rows = 5 + level; // 难度随关卡增加
+        const cols = 8;
+        const padding = 10;
+        const w = (canvas.width - padding * (cols + 1)) / cols;
+        const h = 25;
+        
+        for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+                // 留出顶部空间
+                const brickY = 60 + r * (h + padding);
+                // 随机跳过一些砖块，增加趣味性
+                if (Math.random() > 0.1) {
+                    bricks.push({
+                        x: padding + c * (w + padding),
+                        y: brickY,
+                        w: w, h: h,
+                        val: Math.ceil((rows - r) / 2), // 分数
+                        colorIdx: r % 5,
+                        status: 1
+                    });
+                }
+            }
+        }
+    }
+
+    function spawnBall(x, y, speed = 5) {
+        balls.push({
+            x: x || paddle.x + paddle.w * paddleWidthMult / 2,
+            y: y || paddle.y - 20,
+            dx: speed * (Math.random() > 0.5 ? 1 : -1),
+            dy: -speed,
+            r: 6,
+            active: true
+        });
+    }
+
+    function startGame() {
+        score = 0;
+        lives = 3;
+        level = 1;
+        updateUI();
+        
+        resetPaddle();
+        initLevel();
+        balls = [];
+        powerups = [];
+        particles = [];
+        spawnBall();
+        
+        isRunning = true;
+        overlay.classList.add('hidden');
+        loop();
+    }
+
+    function updateUI() {
+        document.getElementById('score').innerText = score;
+        document.getElementById('lives').innerText = lives;
+    }
+
+    // --- 核心循环 ---
+    function loop() {
+        if (!isRunning) return;
+
+        // --- 修改处：如果正在操作 UI，只渲染不更新逻辑（暂停） ---
+        if (theme === 'neon') {
+            ctx.fillStyle = 'rgba(5, 5, 5, 0.3)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        } else {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // 只有不在操作 UI 时，才更新球和挡板的位置
+        if (!isInteractingUI) {
+            updateLogic();
+        }
+        
+        draw();
+        requestAnimationFrame(loop);
+    }
+
+    // --- 逻辑更新 ---
+    function updateLogic() {
+        // 移动挡板 (鼠标/触摸)
+        // 已通过事件监听器更新 paddle.x
+        
+        // 限制挡板范围
+        if (paddle.x < 0) paddle.x = 0;
+        if (paddle.x + paddle.w * paddleWidthMult > canvas.width) paddle.x = canvas.width - paddle.w * paddleWidthMult;
+
+        // 激光子弹
+        lasers.forEach((l, i) => {
+            l.y -= 10;
+            if (l.y < 0) lasers.splice(i, 1);
+            else {
+                // 激光碰撞砖块
+                bricks.forEach(b => {
+                    if (b.status === 1 && rectIntersect(l.x, l.y, 4, 10, b.x, b.y, b.w, b.h)) {
+                        hitBrick(b);
+                        lasers.splice(i, 1);
+                    }
+                });
+            }
+        });
+
+        // 球运动
+        for (let i = balls.length - 1; i >= 0; i--) {
+            let b = balls[i];
+            if (!b.active) continue;
+
+            b.x += b.dx;
+            b.y += b.dy;
+
+            // 墙壁碰撞
+            if (b.x + b.r > canvas.width || b.x - b.r < 0) {
+                b.dx *= -1;
+                spawnParticles(b.x, b.y, '#fff', 3);
+            }
+            if (b.y - b.r < 0) {
+                b.dy *= -1;
+                spawnParticles(b.x, b.y, '#fff', 3);
+            }
+            // 掉落
+            if (b.y - b.r > canvas.height) {
+                balls.splice(i, 1);
+                continue;
+            }
+
+            // 挡板碰撞
+            if (circleRectIntersect(b.x, b.y, b.r, paddle.x, paddle.y, paddle.w * paddleWidthMult, paddle.h)) {
+                // 计算反弹角度：根据击中挡板的位置
+                let hitPoint = b.x - (paddle.x + paddle.w * paddleWidthMult / 2);
+                // 归一化 -1 到 1
+                hitPoint = hitPoint / (paddle.w * paddleWidthMult / 2);
+                
+                let angle = hitPoint * (Math.PI / 3); // 最大 60 度
+                let speed = Math.sqrt(b.dx*b.dx + b.dy*b.dy);
+                
+                // 稍微加速
+                speed = Math.min(speed * 1.02, 12);
+
+                b.dx = speed * Math.sin(angle);
+                b.dy = -speed * Math.cos(angle);
+                b.y = paddle.y - b.r - 1; // 防止粘连
+
+                spawnParticles(b.x, b.y, PALETTES[theme].paddle, 5);
+            }
+
+            // 砖块碰撞
+            for (let j = 0; j < bricks.length; j++) {
+                let br = bricks[j];
+                if (br.status === 1) {
+                    if (circleRectIntersect(b.x, b.y, b.r, br.x, br.y, br.w, br.h)) {
+                        if (!fireBallActive) {
+                            // 简单反弹逻辑：判断是撞了横边还是竖边
+                            // (这里简化处理，直接反转 Y，大部分情况够用)
+                            b.dy *= -1; 
+                        }
+                        hitBrick(br);
+                        break; // 一帧只撞一块，防止穿透
+                    }
+                }
+            }
+        }
+
+        // 检查死球
+        if (balls.length === 0) {
+            lives--;
+            fireBallActive = false;
+            paddleWidthMult = 1;
+            hasLaser = false;
+            updateUI();
+            if (lives > 0) {
+                spawnBall();
+            } else {
+                gameOver(false);
+            }
+        }
+        
+        // 检查关卡胜利
+        if (bricks.every(b => b.status === 0)) {
+            level++;
+            fireBallActive = false; // 过关重置强力道具
+            initLevel();
+            spawnBall();
+        }
+
+        // 道具移动
+        for (let i = powerups.length - 1; i >= 0; i--) {
+            let p = powerups[i];
+            p.y += 3;
+            if (p.y > canvas.height) {
+                powerups.splice(i, 1);
+            } else if (rectIntersect(p.x, p.y, 20, 20, paddle.x, paddle.y, paddle.w * paddleWidthMult, paddle.h)) {
+                activatePowerup(p.type);
+                powerups.splice(i, 1);
+            }
+        }
+
+        // 粒子
+        for (let i = particles.length - 1; i >= 0; i--) {
+            particles[i].x += particles[i].vx;
+            particles[i].y += particles[i].vy;
+            particles[i].life -= 0.03;
+            if (particles[i].life <= 0) particles.splice(i, 1);
+        }
+    }
+
+    function hitBrick(brick) {
+        brick.status = 0;
+        score += brick.val * 10;
+        updateUI();
+        
+        // 粒子爆炸
+        spawnParticles(brick.x + brick.w/2, brick.y + brick.h/2, PALETTES[theme].bricks[brick.colorIdx], 8);
+        
+        // 屏幕震动
+        shakeScreen(3);
+
+        // 随机掉落道具 (15% 几率)
+        if (Math.random() < 0.15) {
+            const types = ['multi', 'wide', 'fire', 'laser'];
+            const type = types[Math.floor(Math.random() * types.length)];
+            powerups.push({ x: brick.x + brick.w/2, y: brick.y, type: type });
+        }
+    }
+
+    function activatePowerup(type) {
+        if (type === 'multi') {
+            // 分裂所有球
+            let len = balls.length;
+            for(let i=0; i<len; i++) {
+                spawnBall(balls[i].x, balls[i].y, 6);
+            }
+        } else if (type === 'wide') {
+            paddleWidthMult = 1.5;
+            setTimeout(() => paddleWidthMult = 1, 10000); // 10秒后恢复
+        } else if (type === 'fire') {
+            fireBallActive = true;
+            setTimeout(() => fireBallActive = false, 8000);
+        } else if (type === 'laser') {
+            hasLaser = true;
+            // 20发子弹或限时
+            setTimeout(() => hasLaser = false, 8000);
+        }
+    }
+
+    // --- 绘制 ---
+    function draw() {
+        // 画砖块
+        bricks.forEach(b => {
+            if (b.status === 1) {
+                const color = PALETTES[theme].bricks[b.colorIdx];
+                ctx.fillStyle = color;
+                
+                if (theme === 'candy') {
+                    roundRect(ctx, b.x, b.y, b.w, b.h, 5, true, false);
+                } else if (theme === 'retro') {
+                    ctx.fillRect(b.x + 2, b.y + 2, b.w - 4, b.h - 4);
+                    ctx.strokeStyle = color; ctx.lineWidth = 2;
+                    ctx.strokeRect(b.x + 2, b.y + 2, b.w - 4, b.h - 4);
+                } else { // Neon
+                    ctx.shadowBlur = 10; ctx.shadowColor = color;
+                    ctx.fillRect(b.x, b.y, b.w, b.h);
+                    ctx.shadowBlur = 0;
+                }
+            }
+        });
+
+        // 画挡板
+        const pColor = PALETTES[theme].paddle;
+        ctx.fillStyle = pColor;
+        const pw = paddle.w * paddleWidthMult;
+        if (theme === 'candy') {
+            roundRect(ctx, paddle.x, paddle.y, pw, paddle.h, 8, true, false);
+        } else if (theme === 'neon') {
+            ctx.shadowBlur = 15; ctx.shadowColor = pColor;
+            ctx.fillRect(paddle.x, paddle.y, pw, paddle.h);
+            ctx.shadowBlur = 0;
+        } else {
+            ctx.fillRect(paddle.x, paddle.y, pw, paddle.h);
+        }
+        
+        // 画激光炮台
+        if (hasLaser) {
+            ctx.fillStyle = pColor;
+            ctx.fillRect(paddle.x, paddle.y - 10, 5, 10);
+            ctx.fillRect(paddle.x + pw - 5, paddle.y - 10, 5, 10);
+        }
+
+        // 画球
+        balls.forEach(b => {
+            ctx.beginPath();
+            ctx.arc(b.x, b.y, b.r, 0, Math.PI*2);
+            ctx.fillStyle = fireBallActive ? '#ff4d4d' : PALETTES[theme].ball;
+            if (theme === 'neon') {
+                ctx.shadowBlur = 10; 
+                ctx.shadowColor = ctx.fillStyle;
+            }
+            ctx.fill();
+            ctx.shadowBlur = 0;
+            
+            if (fireBallActive) {
+                // 火球拖尾
+                spawnParticles(b.x, b.y, '#ff4d4d', 1);
+            }
+        });
+
+        // 画道具
+        powerups.forEach(p => {
+            ctx.fillStyle = '#fff';
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 10, 0, Math.PI*2);
+            ctx.fill();
+            // 图标
+            ctx.fillStyle = '#000';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            let icon = p.type === 'multi' ? 'M' : p.type === 'wide' ? 'W' : p.type === 'fire' ? 'F' : 'L';
+            ctx.fillText(icon, p.x, p.y + 4);
+        });
+
+        // 画激光
+        ctx.fillStyle = '#f00';
+        lasers.forEach(l => ctx.fillRect(l.x, l.y, 4, 10));
+
+        // 画粒子
+        particles.forEach(p => {
+            ctx.globalAlpha = p.life;
+            ctx.fillStyle = p.color;
+            ctx.fillRect(p.x, p.y, p.size, p.size);
+        });
+        ctx.globalAlpha = 1;
+
+        if (isInteractingUI && isRunning) {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 30px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText("GAME PAUSED", canvas.width / 2, canvas.height / 2);
+        ctx.font = '16px Arial';
+        ctx.fillText("Select a theme...", canvas.width / 2, canvas.height / 2 + 30);
+    }
+    }
+
+    // --- 辅助函数 ---
+    function spawnParticles(x, y, color, count) {
+        for(let i=0; i<count; i++) {
+            particles.push({
+                x: x, y: y,
+                vx: (Math.random() - 0.5) * 5,
+                vy: (Math.random() - 0.5) * 5,
+                life: 1.0,
+                color: color,
+                size: Math.random() * 3 + 2
+            });
+        }
+    }
+
+    function shakeScreen(power) {
+        // 简单的画布偏移震动
+        const canvasEl = document.getElementById('gameCanvas');
+        canvasEl.style.transform = `translate(${Math.random()*power-power/2}px, ${Math.random()*power-power/2}px)`;
+        setTimeout(() => canvasEl.style.transform = 'none', 50);
+    }
+
+    function circleRectIntersect(cx, cy, cr, rx, ry, rw, rh) {
+        let testX = cx;
+        let testY = cy;
+        if (cx < rx) testX = rx;
+        else if (cx > rx + rw) testX = rx + rw;
+        if (cy < ry) testY = ry;
+        else if (cy > ry + rh) testY = ry + rh;
+        let distX = cx - testX;
+        let distY = cy - testY;
+        return (distX*distX + distY*distY) <= (cr*cr);
+    }
+
+    function rectIntersect(x1, y1, w1, h1, x2, y2, w2, h2) {
+        return x2 < x1 + w1 && x2 + w2 > x1 && y2 < y1 + h1 && y2 + h2 > y1;
+    }
+
+    function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
+        if (typeof stroke === 'undefined') stroke = true;
+        if (typeof radius === 'undefined') radius = 5;
+        if (typeof radius === 'number') radius = {tl: radius, tr: radius, br: radius, bl: radius};
+        ctx.beginPath();
+        ctx.moveTo(x + radius.tl, y);
+        ctx.lineTo(x + width - radius.tr, y);
+        ctx.quadraticCurveTo(x + width, y, x + width, y + radius.tr);
+        ctx.lineTo(x + width, y + height - radius.br);
+        ctx.quadraticCurveTo(x + width, y + height, x + width - radius.br, y + height);
+        ctx.lineTo(x + radius.bl, y + height);
+        ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
+        ctx.lineTo(x, y + radius.tl);
+        ctx.quadraticCurveTo(x, y, x + radius.tl, y);
+        ctx.closePath();
+        if (fill) ctx.fill();
+        if (stroke) ctx.stroke();
+    }
+
+    function gameOver(win) {
+        isRunning = false;
+        overlay.classList.remove('hidden');
+        titleText.innerText = win ? "YOU WIN" : "GAME OVER";
+        btnStart.innerText = "RESTART";
+    }
+
+    // --- 输入控制 (升级版) ---
+
+    // 1. 鼠标移动逻辑优化
+    document.addEventListener('mousemove', (e) => {
+        // 如果游戏没开始，或者正在操作UI，或者游戏结束，不移动挡板
+        if (!isRunning || isInteractingUI) return;
+
+        const rect = canvas.getBoundingClientRect();
+        
+        // 🔒 安全区检查：只有当鼠标在 Canvas 内部或下方时才控制挡板
+        // 如果鼠标移到了 Canvas 上方（去点按钮了），则忽略移动
+        if (e.clientY < rect.top) return;
+
+        const rootX = e.clientX - rect.left;
+        const scaleX = canvas.width / rect.width;
+        
+        paddle.x = rootX * scaleX - (paddle.w * paddleWidthMult / 2);
+    });
+
+    // 2. UI 容器的交互监听 (自动暂停)
+    const uiContainer = document.getElementById('ui-container');
+    
+    uiContainer.addEventListener('mouseenter', () => {
+        if (isRunning) isInteractingUI = true;
+    });
+    
+    uiContainer.addEventListener('mouseleave', () => {
+        isInteractingUI = false;
+    });
+    
+    // 防止在 UI 上点击触发 Canvas 的意外行为
+    uiContainer.addEventListener('mousedown', (e) => e.stopPropagation());
+
+
+    // 3. 触摸支持 (保持不变)
+    document.addEventListener('touchmove', (e) => {
+        if (isInteractingUI) return; // 如果手指在 UI 上，不动挡板
+        e.preventDefault();
+        const rect = canvas.getBoundingClientRect();
+        const rootX = e.touches[0].clientX - rect.left;
+        const scaleX = canvas.width / rect.width;
+        paddle.x = rootX * scaleX - (paddle.w * paddleWidthMult / 2);
+    }, {passive: false});
+
+    // 4. 键盘支持 (新增快捷键)
+    document.addEventListener('keydown', (e) => {
+        // 激光射击
+        if (e.code === 'Space' && hasLaser) {
+            lasers.push({x: paddle.x, y: paddle.y});
+            lasers.push({x: paddle.x + paddle.w * paddleWidthMult, y: paddle.y});
+        }
+        
+        // 主题快捷键 (1, 2, 3)
+        if (e.key === '1') manualSetTheme('neon');
+        if (e.key === '2') manualSetTheme('candy');
+        if (e.key === '3') manualSetTheme('retro');
+    });
+    
+    // 辅助函数：手动触发主题切换（模拟点击按钮的效果）
+    function manualSetTheme(name) {
+        // 找到对应的按钮并模拟点击逻辑
+        const btns = document.querySelectorAll('.theme-btn');
+        btns.forEach(btn => {
+            if (btn.textContent.toLowerCase() === name) {
+                // 调用现有的 setTheme
+                // 构造一个伪造的 event 对象，因为 setTheme 依赖 event.target
+                const mockEvent = { target: btn };
+                // 临时替换全局 event (或者修改 setTheme 函数不依赖 event)
+                // 这里为了不改动上面代码，建议您微调一下上面的 setTheme 函数:
+                // 将 `event.target.classList.add` 改为通过选择器查找
+            }
+        });
+        // 其实最简单的是直接调用逻辑：
+        setTheme(name);
+        // 手动更新按钮样式
+        document.querySelectorAll('.theme-btn').forEach(b => {
+            b.classList.remove('active');
+            if(b.textContent.toLowerCase() === name) b.classList.add('active');
+        });
+    }
+
+    // 自动射击
+    setInterval(() => {
+        if (isRunning && !isInteractingUI && hasLaser) {
+            lasers.push({x: paddle.x, y: paddle.y});
+            lasers.push({x: paddle.x + paddle.w * paddleWidthMult - 5, y: paddle.y});
+        }
+    }, 500);
+
+</script>
+</body>
+</html>

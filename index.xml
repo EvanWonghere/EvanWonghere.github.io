@@ -3,7 +3,37 @@
 &lt;li&gt;&lt;strong&gt;滑动屏幕&lt;/strong&gt; (或使用方向键) 移动所有方块。&lt;/li&gt;
 &lt;li&gt;当两个具有&lt;strong&gt;相同数字&lt;/strong&gt;的方块碰撞时，它们会&lt;strong&gt;合并&lt;/strong&gt;成一个新的方块。&lt;/li&gt;
 &lt;li&gt;目标是合成出 &lt;strong&gt;2048&lt;/strong&gt;！&lt;/li&gt;
-&lt;/ol&gt;</description></item><item><title>Neon Snake</title><link>https://yufenghuang.tech/games/snake/</link><pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/snake/</guid><description>&lt;h4 id="游戏说明"&gt;游戏说明
+&lt;/ol&gt;</description></item><item><title>Breakout Prism</title><link>https://yufenghuang.tech/games/breakout/</link><pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/breakout/</guid><description>&lt;h4 id="游戏特色"&gt;游戏特色
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;三大主题&lt;/strong&gt;：点击顶部按钮切换 &lt;strong&gt;Neon&lt;/strong&gt;（赛博风）、&lt;strong&gt;Candy&lt;/strong&gt;（可爱风）、&lt;strong&gt;Retro&lt;/strong&gt;（像素风）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;强力道具&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;🔥 火球&lt;/strong&gt;：无视碰撞，直接穿透砖块。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;🔫 激光&lt;/strong&gt;：自动发射子弹辅助攻击。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;🔴 多球&lt;/strong&gt;：分裂出更多的小球。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;操作方式&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;电脑&lt;/strong&gt;：移动鼠标控制挡板，空格键发射激光。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;手机&lt;/strong&gt;：左右滑动屏幕即可，激光会自动发射。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>Conway's Game of Life</title><link>https://yufenghuang.tech/games/life/</link><pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/life/</guid><description>&lt;h4 id="什么是生命游戏"&gt;什么是生命游戏？
+&lt;/h4&gt;&lt;p&gt;这是由英国数学家约翰·康威发明的“零玩家游戏”。你不需要操作它，你只需要设置初始状态，然后观察它的演化。&lt;/p&gt;
+&lt;h4 id="规则"&gt;规则
+&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;孤独&lt;/strong&gt;：活细胞周围少于 2 个活邻居 -&amp;gt; 死。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;拥挤&lt;/strong&gt;：活细胞周围多于 3 个活邻居 -&amp;gt; 死。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;生存&lt;/strong&gt;：活细胞周围有 2 或 3 个活邻居 -&amp;gt; 活。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;繁殖&lt;/strong&gt;：死细胞周围正好有 3 个活邻居 -&amp;gt; 变活。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id="怎么玩"&gt;怎么玩？
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;绘制&lt;/strong&gt;：直接用鼠标在屏幕上点击或拖动，画出你的“生物”。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;预设&lt;/strong&gt;：点击下方的“滑翔机”或“滑翔机枪”来生成经典的图案。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;观察&lt;/strong&gt;：点击“运行”，看看它们如何繁衍、碰撞和消亡。&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>Neon Snake</title><link>https://yufenghuang.tech/games/snake/</link><pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/snake/</guid><description>&lt;h4 id="游戏说明"&gt;游戏说明
 &lt;/h4&gt;&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;操作&lt;/strong&gt;：使用 WASD、方向键或手指滑动来控制方向。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;加速&lt;/strong&gt;：按住空格键可以加速（冲刺）。&lt;/li&gt;
@@ -14,10 +44,36 @@
 &lt;li&gt;在 9x9 的方格内填入数字 1-9。&lt;/li&gt;
 &lt;li&gt;每一行、每一列、每一个粗线围成的 3x3 宫内，数字 1-9 均不能重复。&lt;/li&gt;
 &lt;li&gt;点击 &lt;strong&gt;✎ 笔记&lt;/strong&gt; 按钮可以切换到草稿模式，标记可能的数字。&lt;/li&gt;
-&lt;/ol&gt;</description></item><item><title>Wordle</title><link>https://yufenghuang.tech/games/wordle/</link><pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/wordle/</guid><description>&lt;ul&gt;
+&lt;/ol&gt;</description></item><item><title>Tetris Chameleon</title><link>https://yufenghuang.tech/games/tetris/</link><pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/tetris/</guid><description>&lt;h4 id="风格说明"&gt;风格说明
+&lt;/h4&gt;&lt;p&gt;点击顶部的按钮可以实时切换游戏引擎：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;NEON&lt;/strong&gt;: 赛博朋克风，发光粒子，适合夜间游玩。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;3D&lt;/strong&gt;: 拟物化风格，具有立体的高光和阴影。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;RETRO&lt;/strong&gt;: 致敬 Gameboy 的像素风格，还原童年回忆。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="操作指南"&gt;操作指南
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;移动&lt;/strong&gt;: 方向键 ← / →&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;旋转&lt;/strong&gt;: 方向键 ↑&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;加速下落&lt;/strong&gt;: 方向键 ↓&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;直接落底 (Hard Drop)&lt;/strong&gt;: 空格键 Space&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;暂存方块 (Hold)&lt;/strong&gt;: C 键&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>Wordle</title><link>https://yufenghuang.tech/games/wordle/</link><pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/wordle/</guid><description>&lt;ul&gt;
 &lt;li&gt;绿色代表字母位置正确&lt;/li&gt;
 &lt;li&gt;黄色代表包含字母但位置不对&lt;/li&gt;
 &lt;li&gt;灰色代表不包含该字母&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>单词雨 (Typing Rain)</title><link>https://yufenghuang.tech/games/typing-rain/</link><pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/typing-rain/</guid><description>&lt;h4 id="系统接入中"&gt;系统接入中&amp;hellip;
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;词库来源&lt;/strong&gt;：直接读取 Wordle 游戏的本地词库 (&lt;code&gt;words.txt&lt;/code&gt;)，所以你在 Wordle 里背的单词，这里也会考到！&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;操作&lt;/strong&gt;：直接键盘输入屏幕上下落的单词首字母来锁定目标。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;机制&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;只有锁定了一个单词（变红）后，才能输入它的剩余字母。&lt;/li&gt;
+&lt;li&gt;如果单词触底，防火墙（生命值）会受损。&lt;/li&gt;
+&lt;li&gt;连击速度越快，得分越高。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;警告&lt;/strong&gt;：此游戏需要实体键盘，不支持触屏设备游玩。&lt;/li&gt;
 &lt;/ul&gt;</description></item><item><title>扫雷 (Minesweeper)</title><link>https://yufenghuang.tech/games/minesweeper/</link><pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/minesweeper/</guid><description>&lt;h4 id="操作指南"&gt;操作指南
 &lt;/h4&gt;&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;电脑端&lt;/strong&gt;：左键点击挖掘，右键点击插旗。&lt;/li&gt;
