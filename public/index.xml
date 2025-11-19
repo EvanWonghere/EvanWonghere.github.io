@@ -10,6 +10,35 @@
         <webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster>
         <copyright>EvanWong</copyright>
         <lastBuildDate>Wed, 19 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>2048</title>
+        <link>http://localhost:1313/games/2048/</link>
+        <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
+        <author>yufenghuang009@gmail.com (Evan Wong)</author>
+        <guid>http://localhost:1313/games/2048/</guid>
+        <description>&lt;h4 id=&#34;游戏规则&#34;&gt;游戏规则
+&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;滑动屏幕&lt;/strong&gt; (或使用方向键) 移动所有方块。&lt;/li&gt;
+&lt;li&gt;当两个具有&lt;strong&gt;相同数字&lt;/strong&gt;的方块碰撞时，它们会&lt;strong&gt;合并&lt;/strong&gt;成一个新的方块。&lt;/li&gt;
+&lt;li&gt;目标是合成出 &lt;strong&gt;2048&lt;/strong&gt;！&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        </item>
+        <item>
+        <title>Neon Snake</title>
+        <link>http://localhost:1313/games/snake/</link>
+        <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
+        <author>yufenghuang009@gmail.com (Evan Wong)</author>
+        <guid>http://localhost:1313/games/snake/</guid>
+        <description>&lt;h4 id=&#34;游戏说明&#34;&gt;游戏说明
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;操作&lt;/strong&gt;：使用 WASD、方向键或手指滑动来控制方向。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;加速&lt;/strong&gt;：按住空格键可以加速（冲刺）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;穿墙&lt;/strong&gt;：这是一款“无限边界”的游戏，撞墙会从另一侧出来，只有撞到自己才会结束。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;高能预警&lt;/strong&gt;：随着蛇身变长，速度会越来越快！&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
         <title>Sudoku</title>
         <link>http://localhost:1313/games/sudoku/</link>
         <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
@@ -34,6 +63,35 @@
 &lt;li&gt;黄色代表包含字母但位置不对&lt;/li&gt;
 &lt;li&gt;灰色代表不包含该字母&lt;/li&gt;
 &lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>扫雷 (Minesweeper)</title>
+        <link>http://localhost:1313/games/minesweeper/</link>
+        <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
+        <author>yufenghuang009@gmail.com (Evan Wong)</author>
+        <guid>http://localhost:1313/games/minesweeper/</guid>
+        <description>&lt;h4 id=&#34;操作指南&#34;&gt;操作指南
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;电脑端&lt;/strong&gt;：左键点击挖掘，右键点击插旗。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;手机端&lt;/strong&gt;：点击下方的“挖掘/插旗”按钮切换模式。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;高级技巧&lt;/strong&gt;：点击已翻开的数字，如果周围旗子数量正确，可自动翻开周围所有格子（Chording）。&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>五子棋 (Gomoku)</title>
+        <link>http://localhost:1313/games/gomoku/</link>
+        <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
+        <author>yufenghuang009@gmail.com (Evan Wong)</author>
+        <guid>http://localhost:1313/games/gomoku/</guid>
+        <description>&lt;h4 id=&#34;游戏规则&#34;&gt;游戏规则
+&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;黑棋先手&lt;/strong&gt;，双方轮流落子。&lt;/li&gt;
+&lt;li&gt;最先在横、竖、斜任一方向连成 &lt;strong&gt;5&lt;/strong&gt; 个同色棋子者获胜。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AI 非常聪明&lt;/strong&gt;，请小心应对！&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;em&gt;小提示：点击“悔棋”可以回退两步（你的一步和 AI 的一步）。&lt;/em&gt;&lt;/p&gt;
 </description>
         </item>
         <item>

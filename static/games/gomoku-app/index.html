@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gomoku AI</title>
+    <style>
+        :root {
+            --bg-color: #f0f0f0;
+            --board-bg: #eecfa1;
+            --text-color: #333;
+            --btn-bg: #fff;
+            --btn-shadow: rgba(0,0,0,0.1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #1a1a1a;
+                --board-bg: #cca46d; /* 深色模式下棋盘稍微暗一点 */
+                --text-color: #e0e0e0;
+                --btn-bg: #333;
+                --btn-shadow: rgba(0,0,0,0.5);
+            }
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            overflow: hidden;
+            touch-action: none; /* 禁止移动端拖动页面 */
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 95vw;
+            max-width: 450px;
+            margin-bottom: 10px;
+        }
+
+        h1 { font-size: 1.5rem; margin: 0; }
+
+        .status {
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 15px;
+            background: var(--btn-bg);
+            box-shadow: 0 2px 5px var(--btn-shadow);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .status-dot {
+            width: 12px; height: 12px; border-radius: 50%; display: inline-block;
+        }
+        .status.black .status-dot { background: #000; border: 1px solid #fff; }
+        .status.white .status-dot { background: #fff; border: 1px solid #ccc; }
+
+        /* 棋盘容器 */
+        .board-wrapper {
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border-radius: 4px;
+            background: var(--board-bg);
+            /* 木纹理效果 */
+            background-image: linear-gradient(45deg, rgba(0,0,0,0.03) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.03) 75%, rgba(0,0,0,0.03)), 
+                              linear-gradient(45deg, rgba(0,0,0,0.03) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.03) 75%, rgba(0,0,0,0.03));
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+        }
+
+        canvas {
+            display: block;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .controls {
+            margin-top: 15px;
+            display: flex;
+            gap: 15px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 20px;
+            background: var(--btn-bg);
+            color: var(--text-color);
+            box-shadow: 0 2px 5px var(--btn-shadow);
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        button:active { transform: scale(0.95); }
+        
+        /* 胜利/思考中 浮层 */
+        .overlay {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+        }
+        .overlay.show { opacity: 1; }
+
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>五子棋 AI</h1>
+    <div class="status black" id="status">
+        <span class="status-dot"></span>
+        <span id="status-text">玩家回合</span>
+    </div>
+</div>
+
+<div class="board-wrapper">
+    <canvas id="board"></canvas>
+    <div class="overlay" id="msg-overlay"></div>
+</div>
+
+<div class="controls">
+    <button onclick="undo()">悔棋</button>
+    <button onclick="restartGame()">重新开始</button>
+</div>
+
+<script>
+    const canvas = document.getElementById('board');
+    const ctx = canvas.getContext('2d');
+    const statusEl = document.getElementById('status');
+    const statusText = document.getElementById('status-text');
+    const overlay = document.getElementById('msg-overlay');
+
+    // 游戏配置
+    const GRID_SIZE = 15;
+    let CELL_SIZE = 30; // 给个默认值防止计算前报错
+    let PADDING = 30;
+    
+    // 状态
+    let board = []; 
+    let history = []; 
+    let isPlayerTurn = true;
+    let isGameOver = false;
+    let lastMove = null; 
+
+    // 初始化 Canvas 尺寸
+    function resize() {
+        const maxWidth = Math.min(window.innerWidth * 0.95, 450);
+        const size = Math.floor(maxWidth);
+        
+        // 处理高清屏 (Retina)
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = size * dpr;
+        canvas.height = size * dpr;
+        canvas.style.width = size + 'px';
+        canvas.style.height = size + 'px';
+        
+        ctx.scale(dpr, dpr);
+        
+        CELL_SIZE = size / (GRID_SIZE + 1);
+        PADDING = CELL_SIZE;
+        
+        drawBoard();
+    }
+
+    function initGame() {
+        // 初始化 15x15 的二维数组
+        board = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(0));
+        history = [];
+        isPlayerTurn = true;
+        isGameOver = false;
+        lastMove = null;
+        updateStatus("玩家回合 (黑棋)", true);
+        overlay.classList.remove('show');
+        
+        // 只有当尺寸计算过（PADDING有意义）时才绘制，避免初始化的无效绘制
+        if (PADDING) drawBoard();
+    }
+
+    // --- 绘制系统 ---
+    function drawBoard() {
+        // 🔥 关键修复：如果 board 还没初始化，直接退出，防止报错
+        if (!board || board.length === 0) return;
+
+        // 清空
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // 1. 画网格线
+        ctx.beginPath();
+        ctx.strokeStyle = "#5e401a";
+        ctx.lineWidth = 1;
+        
+        for (let i = 0; i < GRID_SIZE; i++) {
+            const pos = PADDING + i * CELL_SIZE;
+            // 横线
+            ctx.moveTo(PADDING, pos);
+            ctx.lineTo(PADDING + (GRID_SIZE - 1) * CELL_SIZE, pos);
+            // 竖线
+            ctx.moveTo(pos, PADDING);
+            ctx.lineTo(pos, PADDING + (GRID_SIZE - 1) * CELL_SIZE);
+        }
+        ctx.stroke();
+
+        // 2. 画天元和星位
+        const stars = [3, 7, 11];
+        ctx.fillStyle = "#5e401a";
+        for (let r of stars) {
+            for (let c of stars) {
+                ctx.beginPath();
+                ctx.arc(PADDING + c * CELL_SIZE, PADDING + r * CELL_SIZE, 3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // 3. 画棋子
+        for (let r = 0; r < GRID_SIZE; r++) {
+            for (let c = 0; c < GRID_SIZE; c++) {
+                if (board[r][c] !== 0) {
+                    drawPiece(r, c, board[r][c]);
+                }
+            }
+        }
+
+        // 4. 高亮最后一手
+        if (lastMove) {
+            const cx = PADDING + lastMove.c * CELL_SIZE;
+            const cy = PADDING + lastMove.r * CELL_SIZE;
+            ctx.beginPath();
+            ctx.strokeStyle = "red";
+            ctx.lineWidth = 2;
+            const len = CELL_SIZE * 0.2;
+            ctx.moveTo(cx - len, cy); ctx.lineTo(cx + len, cy);
+            ctx.moveTo(cx, cy - len); ctx.lineTo(cx, cy + len);
+            ctx.stroke();
+        }
+    }
+
+    function drawPiece(r, c, type) {
+        const cx = PADDING + c * CELL_SIZE;
+        const cy = PADDING + r * CELL_SIZE;
+        const radius = CELL_SIZE * 0.4;
+
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+
+        const gradient = ctx.createRadialGradient(
+            cx - radius/3, cy - radius/3, radius/10,
+            cx, cy, radius
+        );
+
+        if (type === 1) { // 黑棋
+            gradient.addColorStop(0, "#666");
+            gradient.addColorStop(1, "#000");
+        } else { // 白棋
+            gradient.addColorStop(0, "#fff");
+            gradient.addColorStop(1, "#ddd");
+        }
+
+        ctx.fillStyle = gradient;
+        ctx.shadowColor = "rgba(0,0,0,0.3)";
+        ctx.shadowBlur = 3;
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
+        ctx.fill();
+        
+        ctx.shadowColor = "transparent";
+        ctx.shadowBlur = 0;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 0;
+    }
+
+    // --- 交互逻辑 ---
+    canvas.addEventListener('click', (e) => {
+        if (isGameOver || !isPlayerTurn) return;
+
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const c = Math.round((x - PADDING) / CELL_SIZE);
+        const r = Math.round((y - PADDING) / CELL_SIZE);
+
+        // 校验有效性 (这里 board 已经初始化，不会报错了)
+        if (r >= 0 && r < GRID_SIZE && c >= 0 && c < GRID_SIZE && board[r][c] === 0) {
+            placePiece(r, c, 1);
+        }
+    });
+
+    function placePiece(r, c, role) {
+        board[r][c] = role;
+        lastMove = {r, c};
+        history.push({r, c, role});
+        drawBoard();
+
+        if (checkWin(r, c, role)) {
+            isGameOver = true;
+            showMsg(role === 1 ? "你赢了！🎉" : "AI 赢了！🤖");
+            return;
+        }
+
+        if (role === 1) {
+            isPlayerTurn = false;
+            updateStatus("AI 思考中...", false);
+            setTimeout(aiMove, 100); 
+        } else {
+            isPlayerTurn = true;
+            updateStatus("玩家回合 (黑棋)", true);
+        }
+    }
+
+    function undo() {
+        if (history.length === 0 || isGameOver) return;
+        if (history.length >= 2) {
+            const m1 = history.pop();
+            board[m1.r][m1.c] = 0;
+            const m2 = history.pop();
+            board[m2.r][m2.c] = 0;
+            
+            lastMove = history.length > 0 ? {r: history[history.length-1].r, c: history[history.length-1].c} : null;
+            isPlayerTurn = true;
+            isGameOver = false;
+            updateStatus("玩家回合 (黑棋)", true);
+            drawBoard();
+        }
+    }
+
+    function restartGame() {
+        initGame();
+        // 重启时重新绘制一下，确保清除棋盘
+        drawBoard();
+    }
+
+    function updateStatus(text, isBlack) {
+        statusText.textContent = text;
+        statusEl.className = isBlack ? 'status black' : 'status white';
+    }
+
+    function showMsg(text) {
+        overlay.textContent = text;
+        overlay.classList.add('show');
+    }
+
+    // --- AI 核心逻辑 ---
+    function aiMove() {
+        let maxScore = -Infinity;
+        let bestPoint = null;
+        
+        if (history.length === 0) {
+            bestPoint = {r: 7, c: 7};
+        } else {
+            for(let r=0; r<GRID_SIZE; r++) {
+                for(let c=0; c<GRID_SIZE; c++) {
+                    if(board[r][c] === 0) {
+                        if(!hasNeighbor(r, c)) continue;
+                        const scoreAttack = evaluatePoint(r, c, 2); 
+                        const scoreDefense = evaluatePoint(r, c, 1); 
+                        const totalScore = scoreAttack + scoreDefense;
+
+                        if (totalScore > maxScore) {
+                            maxScore = totalScore;
+                            bestPoint = {r, c};
+                        } else if (totalScore === maxScore) {
+                            if(Math.random() > 0.5) bestPoint = {r, c};
+                        }
+                    }
+                }
+            }
+        }
+
+        if (bestPoint) {
+            placePiece(bestPoint.r, bestPoint.c, 2);
+        } else {
+            showMsg("平局！");
+        }
+    }
+
+    function hasNeighbor(r, c) {
+        const dist = 2;
+        for(let i = r-dist; i <= r+dist; i++) {
+            for(let j = c-dist; j <= c+dist; j++) {
+                if(i>=0 && i<GRID_SIZE && j>=0 && j<GRID_SIZE) {
+                    if(board[i][j] !== 0) return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    function evaluatePoint(r, c, role) {
+        let score = 0;
+        board[r][c] = role;
+        
+        score += getLineScore(r, c, 1, 0, role);
+        score += getLineScore(r, c, 0, 1, role);
+        score += getLineScore(r, c, 1, 1, role);
+        score += getLineScore(r, c, 1, -1, role);
+
+        board[r][c] = 0;
+        return score;
+    }
+
+    function getLineScore(r, c, dr, dc, role) {
+        let count = 1;
+        let emptyHead = false;
+        let emptyTail = false;
+
+        let i = 1;
+        while(true) {
+            let nr = r + dr*i, nc = c + dc*i;
+            if(nr<0 || nr>=GRID_SIZE || nc<0 || nc>=GRID_SIZE) break;
+            if(board[nr][nc] === role) { count++; } 
+            else if(board[nr][nc] === 0) { emptyHead = true; break; } 
+            else { break; }
+            i++;
+        }
+
+        i = 1;
+        while(true) {
+            let nr = r - dr*i, nc = c - dc*i;
+            if(nr<0 || nr>=GRID_SIZE || nc<0 || nc>=GRID_SIZE) break;
+            if(board[nr][nc] === role) { count++; } 
+            else if(board[nr][nc] === 0) { emptyTail = true; break; } 
+            else { break; }
+            i++;
+        }
+
+        if (count >= 5) return 100000;
+        if (count === 4) {
+            if (emptyHead && emptyTail) return 10000;
+            if (emptyHead || emptyTail) return 1000;
+        }
+        if (count === 3) {
+            if (emptyHead && emptyTail) return 1000;
+            if (emptyHead || emptyTail) return 100;
+        }
+        if (count === 2) {
+            if (emptyHead && emptyTail) return 100;
+            if (emptyHead || emptyTail) return 10;
+        }
+        return 0;
+    }
+
+    function checkWin(r, c, role) {
+        const dirs = [[1,0], [0,1], [1,1], [1,-1]];
+        for (let [dr, dc] of dirs) {
+            let count = 1;
+            let i = 1;
+            while(true) {
+                let nr = r + dr*i, nc = c + dc*i;
+                if(nr<0 || nr>=GRID_SIZE || nc<0 || nc>=GRID_SIZE || board[nr][nc] !== role) break;
+                count++; i++;
+            }
+            i = 1;
+            while(true) {
+                let nr = r - dr*i, nc = c - dc*i;
+                if(nr<0 || nr>=GRID_SIZE || nc<0 || nc>=GRID_SIZE || board[nr][nc] !== role) break;
+                count++; i++;
+            }
+            if (count >= 5) return true;
+        }
+        return false;
+    }
+
+    // 🔥 关键修复：调整执行顺序
+    // 1. 先初始化游戏数据 (让 board 变成数组，不再是空)
+    initGame();
+    
+    // 2. 再绑定 Resize 事件
+    window.addEventListener('resize', resize);
+    
+    // 3. 最后计算尺寸并绘制 (这时候 board 已经有数据了，drawBoard 不会报错)
+    resize();
+
+</script>
+</body>
+</html>
