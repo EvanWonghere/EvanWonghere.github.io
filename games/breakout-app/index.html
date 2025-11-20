@@ -161,6 +161,32 @@
             z-index: 5;
             pointer-events: none;
         }
+
+        /* 难度按钮样式 */
+        .diff-btn {
+            padding: 8px 16px;
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            font-family: inherit;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: 0.3s;
+        }
+        .diff-btn:hover { opacity: 1; }
+        .diff-btn.active {
+            background: white;
+            color: black;
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        /* 适配 Retro 主题 */
+        body.theme-retro .diff-btn { border-color: #42f54b; color: #42f54b; }
+        body.theme-retro .diff-btn.active { background: #42f54b; color: black; }
+        /* 适配 Candy 主题 */
+        body.theme-candy .diff-btn { border-color: #ff6b6b; color: #ff6b6b; }
+        body.theme-candy .diff-btn.active { background: #ff6b6b; color: white; }
     </style>
 </head>
 <body class="theme-neon">
@@ -187,6 +213,13 @@
 
     <div id="overlay">
         <h1 id="title-text">BREAKOUT</h1>
+        
+        <div style="margin-bottom: 20px; display: flex; gap: 10px;">
+            <button class="diff-btn" onclick="setDifficulty('easy')">EASY</button>
+            <button class="diff-btn active" onclick="setDifficulty('normal')">NORMAL</button>
+            <button class="diff-btn" onclick="setDifficulty('hard')">HARD</button>
+        </div>
+
         <button class="btn-start" onclick="startGame()">START GAME</button>
     </div>
 
@@ -203,6 +236,25 @@
     let score = 0;
     let lives = 3;
     let level = 1;
+
+    // --- 难度配置 ---
+    const DIFFICULTY_SETTINGS = {
+        easy:   { paddleW: 120, ballSpeed: 4, dropRate: 0.25, lives: 5, speedInc: 1.01 },
+        normal: { paddleW: 100, ballSpeed: 6, dropRate: 0.15, lives: 3, speedInc: 1.02 },
+        hard:   { paddleW: 70,  ballSpeed: 9, dropRate: 0.08, lives: 2, speedInc: 1.04 }
+    };
+    let currentDiff = 'normal'; // 默认难度
+
+    // 切换难度函数
+    function setDifficulty(diff) {
+        currentDiff = diff;
+        // 更新按钮 UI
+        document.querySelectorAll('.diff-btn').forEach(btn => {
+            btn.classList.remove('active');
+            // 简单的文本匹配检查
+            if (btn.textContent.toLowerCase() === diff) btn.classList.add('active');
+        });
+    }
 
     // 实体
     let paddle = { x: 0, y: 0, w: 100, h: 15, color: '#fff' };
@@ -249,7 +301,8 @@
     }
 
     function resetPaddle() {
-        paddle.w = 100;
+        // [修改]：根据难度设置初始宽度
+        paddle.w = DIFFICULTY_SETTINGS[currentDiff].paddleW;
         paddle.h = 15;
         paddle.x = canvas.width / 2 - paddle.w / 2;
         paddle.y = canvas.height - 50;
@@ -285,12 +338,15 @@
         }
     }
 
-    function spawnBall(x, y, speed = 5) {
+    function spawnBall(x, y, speed) {
+        // [修改]：如果没有指定速度，使用当前难度的默认速度
+        const baseSpeed = speed || DIFFICULTY_SETTINGS[currentDiff].ballSpeed;
+        
         balls.push({
             x: x || paddle.x + paddle.w * paddleWidthMult / 2,
             y: y || paddle.y - 20,
-            dx: speed * (Math.random() > 0.5 ? 1 : -1),
-            dy: -speed,
+            dx: baseSpeed * (Math.random() > 0.5 ? 1 : -1),
+            dy: -baseSpeed,
             r: 6,
             active: true
         });
@@ -298,7 +354,8 @@
 
     function startGame() {
         score = 0;
-        lives = 3;
+        // [修改]：根据难度设置初始生命
+        lives = DIFFICULTY_SETTINGS[currentDiff].lives;
         level = 1;
         updateUI();
         
@@ -307,7 +364,7 @@
         balls = [];
         powerups = [];
         particles = [];
-        spawnBall();
+        spawnBall(); // spawnBall 内部会自动读取速度配置
         
         isRunning = true;
         overlay.classList.add('hidden');
@@ -342,6 +399,20 @@
 
     // --- 逻辑更新 ---
     function updateLogic() {
+        // --- 新增：射击冷却控制 ---
+        // 定义一个静态变量或全局变量来记录冷却（为了简单，这里直接挂在 window 上或作为全局变量）
+        if (typeof window.laserCooldown === 'undefined') window.laserCooldown = 0;
+
+        if (hasLaser) {
+            window.laserCooldown--;
+            if (window.laserCooldown <= 0) {
+                // 发射子弹
+                lasers.push({x: paddle.x, y: paddle.y});
+                lasers.push({x: paddle.x + paddle.w * paddleWidthMult - 5, y: paddle.y});
+                window.laserCooldown = 30; // 每30帧发射一次（约0.5秒）
+            }
+        }
+
         // 移动挡板 (鼠标/触摸)
         // 已通过事件监听器更新 paddle.x
         
@@ -394,11 +465,12 @@
                 // 归一化 -1 到 1
                 hitPoint = hitPoint / (paddle.w * paddleWidthMult / 2);
                 
-                let angle = hitPoint * (Math.PI / 3); // 最大 60 度
+                let angle = hitPoint * (Math.PI / 3); 
                 let speed = Math.sqrt(b.dx*b.dx + b.dy*b.dy);
                 
-                // 稍微加速
-                speed = Math.min(speed * 1.02, 12);
+                // [修改]：根据难度决定球加速的幅度
+                // 困难模式下，球会越来越快，更加刺激
+                speed = Math.min(speed * DIFFICULTY_SETTINGS[currentDiff].speedInc, 18); 
 
                 b.dx = speed * Math.sin(angle);
                 b.dy = -speed * Math.cos(angle);
@@ -474,12 +546,10 @@
         
         // 粒子爆炸
         spawnParticles(brick.x + brick.w/2, brick.y + brick.h/2, PALETTES[theme].bricks[brick.colorIdx], 8);
-        
-        // 屏幕震动
         shakeScreen(3);
 
-        // 随机掉落道具 (15% 几率)
-        if (Math.random() < 0.15) {
+        // [修改]：根据难度设置道具掉落率
+        if (Math.random() < DIFFICULTY_SETTINGS[currentDiff].dropRate) {
             const types = ['multi', 'wide', 'fire', 'laser'];
             const type = types[Math.floor(Math.random() * types.length)];
             powerups.push({ x: brick.x + brick.w/2, y: brick.y, type: type });
@@ -488,9 +558,14 @@
 
     function activatePowerup(type) {
         if (type === 'multi') {
+            // [优化]：设置最大球数量限制 (例如 50 个)
+            if (balls.length > 50) return; 
+
             // 分裂所有球
             let len = balls.length;
             for(let i=0; i<len; i++) {
+                // 再次检查，防止瞬间爆炸
+                if (balls.length > 50) break;
                 spawnBall(balls[i].x, balls[i].y, 6);
             }
         } else if (type === 'wide') {
@@ -550,20 +625,31 @@
         }
 
         // 画球
+        // 画球
+        // [优化]：如果球的数量超过 10 个，为了保流畅，关闭 Neon 模式的阴影
+        const enableShadows = theme === 'neon' && balls.length < 10;
+
         balls.forEach(b => {
             ctx.beginPath();
             ctx.arc(b.x, b.y, b.r, 0, Math.PI*2);
             ctx.fillStyle = fireBallActive ? '#ff4d4d' : PALETTES[theme].ball;
-            if (theme === 'neon') {
+            
+            if (enableShadows) {
                 ctx.shadowBlur = 10; 
                 ctx.shadowColor = ctx.fillStyle;
             }
+            
             ctx.fill();
-            ctx.shadowBlur = 0;
+            
+            if (enableShadows) {
+                ctx.shadowBlur = 0;
+            }
             
             if (fireBallActive) {
-                // 火球拖尾
-                spawnParticles(b.x, b.y, '#ff4d4d', 1);
+                // [优化]：火球拖尾只有在粒子数不多时才生成
+                if (particles.length < 100) {
+                    spawnParticles(b.x, b.y, '#ff4d4d', 1);
+                }
             }
         });
 
@@ -608,7 +694,15 @@
 
     // --- 辅助函数 ---
     function spawnParticles(x, y, color, count) {
+        // [优化]：如果粒子总数超过 150，就不再生成新粒子，或者移除旧的
+        if (particles.length > 150) {
+            // 移除最早生成的 count 个粒子，保持数组精简
+            particles.splice(0, count); 
+        }
+
         for(let i=0; i<count; i++) {
+            // [优化]：减少粒子寿命，让它们消失得更快 (life 从 1.0 减到 0.03 需要 33帧)
+            // 我们可以稍微增加减少的速度
             particles.push({
                 x: x, y: y,
                 vx: (Math.random() - 0.5) * 5,
@@ -751,12 +845,12 @@
     }
 
     // 自动射击
-    setInterval(() => {
-        if (isRunning && !isInteractingUI && hasLaser) {
-            lasers.push({x: paddle.x, y: paddle.y});
-            lasers.push({x: paddle.x + paddle.w * paddleWidthMult - 5, y: paddle.y});
-        }
-    }, 500);
+    // setInterval(() => {
+    //     if (isRunning && !isInteractingUI && hasLaser) {
+    //         lasers.push({x: paddle.x, y: paddle.y});
+    //         lasers.push({x: paddle.x + paddle.w * paddleWidthMult - 5, y: paddle.y});
+    //     }
+    // }, 500);
 
 </script>
 </body>

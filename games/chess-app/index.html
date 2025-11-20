@@ -403,27 +403,33 @@
         const cy = r * CELL_SIZE + CELL_SIZE / 2;
         const size = CELL_SIZE * 0.8;
 
-        ctx.font = `${size}px "Segoe UI Symbol", Arial`;
+        // [修复关键]：添加 \uFE0E 后缀，强制手机浏览器使用"文本模式"而非"Emoji模式"渲染
+        // 这样颜色设置才会生效
+        const pieceChar = PIECES[p.type] + '\uFE0E';
+
+        // 优化字体栈，增加系统默认无衬线字体确保兼容
+        ctx.font = `${size}px "Segoe UI Symbol", "DejaVu Sans", sans-serif`;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
 
-        // 阴影效果 (模拟立体)
+        // 1. 绘制阴影 (模拟立体感)
         const shadowOffset = isFloating ? 8 : 3;
         ctx.fillStyle = "rgba(0,0,0,0.3)";
-        ctx.fillText(PIECES[p.type], cx + shadowOffset*0.4, cy + shadowOffset);
+        ctx.fillText(pieceChar, cx + shadowOffset*0.4, cy + shadowOffset);
 
-        // 实体
+        // 2. 绘制实体
         if (p.color === COLORS.WHITE) {
-            // 白棋：白色填充，黑色描边
+            // 白棋：纯白填充
             ctx.fillStyle = "#ffffff";
-            ctx.fillText(PIECES[p.type], cx, cy);
-            // 增加一点光泽
-            ctx.fillStyle = "rgba(0,0,0,0.1)"; // 纹理感
-            ctx.fillText(PIECES[p.type], cx, cy);
+            ctx.fillText(pieceChar, cx, cy);
+            
+            // 增加微弱的内部纹理，让白色看起来更有质感
+            ctx.fillStyle = "rgba(0,0,0,0.05)";
+            ctx.fillText(pieceChar, cx, cy);
         } else {
-            // 黑棋：深灰色填充，黑色描边
+            // 黑棋：深灰填充
             ctx.fillStyle = "#333333";
-            ctx.fillText(PIECES[p.type], cx, cy);
+            ctx.fillText(pieceChar, cx, cy);
         }
     }
 
