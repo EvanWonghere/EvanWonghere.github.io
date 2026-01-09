@@ -1452,7 +1452,7 @@
 &gt;https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/&lt;/a&gt;，截至此博客发布时最新版本为1.82。笔者下载的版本是 boost_1_82_0.zip&lt;img src="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/DownloadZIP.png"
 width="929"
 height="940"
-srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/DownloadZIP_hu_9afbfe91da898e8e.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/DownloadZIP_hu_fd9e84180f75731a.png 1024w"
+srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/DownloadZIP_hu_feb2197b1f94962c.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/DownloadZIP_hu_4b458fd7d07add4d.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="98"
@@ -1461,7 +1461,7 @@ data-flex-basis="237px"
 &lt;p&gt;​ 下载并解压后，执行 &lt;code&gt;booststrap.bat&lt;/code&gt;，会发现文件夹中多了一个 &lt;code&gt;b2.exe&lt;/code&gt;，这是一个编译工具。接下来我们进入编译工作。&lt;img src="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/booststrap2b2.png"
 width="1029"
 height="1185"
-srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/booststrap2b2_hu_5e727a17394b440b.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/booststrap2b2_hu_5188c75f4a46ff26.png 1024w"
+srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/booststrap2b2_hu_46b9748046b92a46.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/booststrap2b2_hu_a55b703630756af3.png 1024w"
 loading="lazy"
 alt="readyToCompile"
 class="gallery-image"
@@ -1472,7 +1472,7 @@ data-flex-basis="208px"
 &lt;/h3&gt;&lt;p&gt;​ 你可以在 &lt;code&gt;\\tool\\build\\example\\user-config.jam&lt;/code&gt;&lt;img src="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/user_config.png"
 width="1022"
 height="1189"
-srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/user_config_hu_cfd6542a28ba1af.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/user_config_hu_8c1730ac6b132dd.png 1024w"
+srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/user_config_hu_5a644e36250d5cca.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/user_config_hu_3aa953adeedfdddd.png 1024w"
 loading="lazy"
 alt="\\pathToBoost\\tool\\build\\example\\user-config.jam"
 class="gallery-image"
@@ -1579,7 +1579,7 @@ data-flex-basis="206px"
 &lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/configuration.png"
 width="533"
 height="1178"
-srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/configuration_hu_6d29ff811d063d98.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/configuration_hu_5c000499d700b892.png 1024w"
+srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/configuration_hu_2f6630077ec94efa.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/configuration_hu_1a082ac8256ecfa7.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="45"
@@ -1588,7 +1588,7 @@ data-flex-basis="108px"
 &lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config1.png"
 width="1182"
 height="819"
-srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config1_hu_a4321d7fbf69e5a9.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config1_hu_5f4f57735c5391b2.png 1024w"
+srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config1_hu_468cf3a2dc164925.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config1_hu_6c764293c62a9d60.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="144"
@@ -1597,7 +1597,7 @@ data-flex-basis="346px"
 &lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config2.png"
 width="1182"
 height="819"
-srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config2_hu_ba9fbcb941a2614e.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config2_hu_f16fe331c9ab071e.png 1024w"
+srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config2_hu_a01a74e8279ef226.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config2_hu_bd236c6d9bc7bf88.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="144"
@@ -1606,7 +1606,7 @@ data-flex-basis="346px"
 &lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config3.png"
 width="1182"
 height="819"
-srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config3_hu_9ec2276eaa5d494f.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config3_hu_f75b353b2a54e6e3.png 1024w"
+srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config3_hu_1397d2f3bef7ba28.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config3_hu_b4eef74121a67df9.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="144"
@@ -1647,11 +1647,11 @@ data-flex-basis="346px"
 &lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-c++" data-lang="c++"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// File : main.cpp
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// 不在 #include &amp;lt;boost/python/...&amp;gt; 之前加上下面的宏定义的话
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// 编译器会默认使用 Boost::Python 的动态链接库
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;&lt;/span&gt;&lt;span class="cp"&gt;#define BOOST_PYTHON_STATIC_LIB
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#define BOOST_PYTHON_STATIC_LIB
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;boost/python/module.hpp&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;boost/python/def.hpp&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="nf"&gt;hello_boost&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;Hello Boost::Python!&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -1664,7 +1664,7 @@ data-flex-basis="346px"
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// 此处 Hello_Boost 应该与之前设置的目标文件扩展名一致
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// 否则想知道后果的话请自行尝试 ╮(╯▽╰)╭
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;&lt;/span&gt;&lt;span class="n"&gt;BOOST_PYTHON_MODULE&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Hello_Boost&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;BOOST_PYTHON_MODULE&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Hello_Boost&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;using&lt;/span&gt; &lt;span class="k"&gt;namespace&lt;/span&gt; &lt;span class="n"&gt;boost&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;def&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;hello_boost&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;hello_boost&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;def&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;hello_world&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;hello_world&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
@@ -1676,7 +1676,7 @@ data-flex-basis="346px"
 &lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/sourceFile.png"
 width="1029"
 height="413"
-srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/sourceFile_hu_988e7524af155a9c.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/sourceFile_hu_8e378f3b1593a71d.png 1024w"
+srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/sourceFile_hu_d41899bd2fd35e88.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/sourceFile_hu_4beb152f62a2f984.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="249"
@@ -1687,7 +1687,7 @@ data-flex-basis="597px"
 &lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/path2pyd.png"
 width="1029"
 height="667"
-srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/path2pyd_hu_756eddef885592aa.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/path2pyd_hu_c0cb38695f2ec85f.png 1024w"
+srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/path2pyd_hu_ec567941f4bf9d1e.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/path2pyd_hu_6dd61bf1291fb95b.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="154"
@@ -1697,7 +1697,7 @@ data-flex-basis="370px"
 &lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/testBoostPython.png"
 width="1734"
 height="957"
-srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/testBoostPython_hu_d5f34fbe67cf303.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/testBoostPython_hu_7f6e370384ce1591.png 1024w"
+srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/testBoostPython_hu_daceaec2ac6fab53.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/testBoostPython_hu_b5cb6250574d8854.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="181"
