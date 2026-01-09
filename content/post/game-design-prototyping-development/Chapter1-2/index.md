@@ -1,7 +1,6 @@
 ---
 title: "Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 1 & 2"
 date: 2024-04-26
-image: "cover.png"
 tags: ["ReadingNote", "读书笔记", "Game Analysis Framework", "游戏分析框架"]
 categories: ["游戏设计"]
 series: ["Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT"] 
