@@ -17,7 +17,8 @@
         <guid>http://localhost:1313/p/%E4%BD%BF%E7%94%A8-fdd-%E6%A1%86%E6%9E%B6%E5%88%86%E6%9E%90the-case-of-the-golden-idol/</guid>
         <description>&lt;img src="http://localhost:1313/p/%E4%BD%BF%E7%94%A8-fdd-%E6%A1%86%E6%9E%B6%E5%88%86%E6%9E%90the-case-of-the-golden-idol/cover.jpeg" alt="Featured image of post 使用 FDD 框架分析《The Case of the Golden Idol》" /&gt;&lt;h1 id=&#34;使用-fdd-框架分析the-case-of-the-golden-idol&#34;&gt;使用 FDD 框架分析《The Case of the Golden Idol》
 &lt;/h1&gt;&lt;blockquote&gt;
-&lt;p&gt;《The Case of the Golden Idol》是一款以“观察与推理”为核心的叙事解谜游戏。它没有动态的剧情演出，也没有直接的文本叙事，却让玩家在一幅幅凝固的画面中拼出一连串离奇的谋杀事件。本文将使用 FDD（Formal, Dramatic, Dynamic）框架，分析这款作品如何通过“语言与观察”构建出独特的叙事体验。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;《The Case of the Golden Idol》是一款以“观察与推理”为核心的叙事解谜游戏。它没有动态的剧情演出，也没有直接的文本叙事，却让玩家在一幅幅凝固的画面中拼出一连串离奇的谋杀事件。本文将使用 FDD（Formal, Dramatic, Dynamic）框架，分析这款作品如何通过“语言与观察”构建出独特的叙事体验。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;hr&gt;
 &lt;h2 id=&#34;formal-elements形式正规元素&#34;&gt;Formal Elements（形式/正规元素）
 &lt;/h2&gt;&lt;h3 id=&#34;player-and-objectives&#34;&gt;Player and Objectives
@@ -151,7 +152,8 @@
 &lt;p&gt;这款游戏让玩家成为“考古学家”，在语言、图像与逻辑的碎片中发掘过去的故事。
 它所探索的，不仅是推理的边界，更是一个深层问题：&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;当叙事被彻底静止，玩家的理解是否仍能让它重新活过来？&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;当叙事被彻底静止，玩家的理解是否仍能让它重新活过来？&lt;/p&gt;
+&lt;/blockquote&gt;
 </description>
         </item>
         

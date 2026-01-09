@@ -9,7 +9,23 @@
         <managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor>
         <webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster>
         <copyright>EvanWong</copyright>
-        <lastBuildDate>Tue, 21 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 09 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Philosophy</title>
+        <link>http://localhost:1313/tags/philosophy/</link>
+        <pubDate>Fri, 09 Jan 2026 00:00:00 +0000</pubDate>
+        <author>yufenghuang009@gmail.com (Evan Wong)</author>
+        <guid>http://localhost:1313/tags/philosophy/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>哲学</title>
+        <link>http://localhost:1313/tags/%E5%93%B2%E5%AD%A6/</link>
+        <pubDate>Fri, 09 Jan 2026 00:00:00 +0000</pubDate>
+        <author>yufenghuang009@gmail.com (Evan Wong)</author>
+        <guid>http://localhost:1313/tags/%E5%93%B2%E5%AD%A6/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>FDD</title>
         <link>http://localhost:1313/tags/fdd/</link>
         <pubDate>Tue, 21 Oct 2025 00:00:00 +0000</pubDate>

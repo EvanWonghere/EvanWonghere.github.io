@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pixel Logic</title>
+    <style>
+        :root {
+            --bg-color: #f4f4f9;
+            --grid-color: #333;
+            --cell-bg: #fff;
+            --filled-color: #2c3e50;
+            --cross-color: #e74c3c;
+            --hint-bg: #e0e0e0;
+            --hint-text: #555;
+            --highlight: #a29bfe;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #1e1e1e;
+                --grid-color: #888;
+                --cell-bg: #2d2d2d;
+                --filled-color: #a29bfe; /* 亮紫色 */
+                --cross-color: #ff7675;
+                --hint-bg: #333;
+                --hint-text: #ccc;
+            }
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            user-select: none;
+            touch-action: manipulation;
+        }
+
+        h1 { margin: 0 0 10px; color: var(--filled-color); font-size: 1.5rem; }
+
+        .controls {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        select, button {
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: 1px solid var(--grid-color);
+            background: var(--cell-bg);
+            color: var(--filled-color);
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        /* 游戏区域容器 */
+        .game-container {
+            display: grid;
+            /* 动态定义 grid-template-columns/rows */
+            gap: 1px;
+            background: var(--grid-color);
+            border: 2px solid var(--grid-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cell {
+            background: var(--cell-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+        }
+
+        /* 提示区 */
+        .hint-row, .hint-col {
+            background: var(--hint-bg);
+            color: var(--hint-text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            line-height: 1.2;
+        }
+        .hint-row { flex-direction: row; gap: 5px; padding: 0 5px; justify-content: flex-end; }
+        .hint-col { flex-direction: column; gap: 2px; padding: 5px 0; justify-content: flex-end; }
+        .hint-done { color: #aaa; text-decoration: line-through; }
+
+        /* 格子状态 */
+        .filled { background-color: var(--filled-color) !important; }
+        .crossed::after { content: "×"; color: var(--cross-color); font-size: 20px; }
+        .cell:hover { filter: brightness(0.9); }
+
+        /* 粗线分割 (5x5) */
+        .border-right { border-right: 2px solid var(--grid-color); }
+        .border-bottom { border-bottom: 2px solid var(--grid-color); }
+
+        /* 移动端切换按钮 */
+        .mode-switch {
+            margin-top: 20px;
+            display: flex;
+            gap: 0;
+            border: 1px solid var(--filled-color);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .mode-btn {
+            padding: 10px 30px;
+            border: none;
+            background: transparent;
+            color: var(--filled-color);
+            border-radius: 0;
+            font-weight: bold;
+        }
+        .mode-btn.active {
+            background: var(--filled-color);
+            color: #fff;
+        }
+
+        /* 胜利弹窗 */
+        #overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            z-index: 100;
+        }
+        #overlay.show { display: flex; }
+        .win-msg { font-size: 2rem; margin-bottom: 20px; color: #00ff88; }
+
+    </style>
+</head>
+<body>
+
+<h1>Pixel Logic</h1>
+
+<div class="controls">
+    <select id="level-select" onchange="changeLevel()">
+        <option value="heart">❤️ Heart (5x5)</option>
+        <option value="smile">😊 Smile (5x5)</option>
+        <option value="duck">🦆 Duck (10x10)</option>
+        <option value="invader">👾 Invader (10x10)</option>
+        <option value="coffee">☕ Coffee (10x10)</option>
+        <option value="house">🏠 House (15x15)</option>
+    </select>
+    <button onclick="resetGame()">Reset</button>
+</div>
+
+<div id="game-wrapper"></div>
+
+<div class="mode-switch">
+    <button class="mode-btn active" id="mode-fill" onclick="setMode('fill')">⬛ 填色</button>
+    <button class="mode-btn" id="mode-cross" onclick="setMode('cross')">❌ 标记</button>
+</div>
+
+<div id="overlay">
+    <div class="win-msg">Puzzle Solved!</div>
+    <button onclick="nextLevel()" style="font-size: 1.2rem; padding: 10px 30px;">Next Level</button>
+</div>
+
+<script>
+    // --- 关卡数据 (0:空, 1:填) ---
+    const LEVELS = {
+        heart: [
+            [0,1,0,1,0],
+            [1,1,1,1,1],
+            [1,1,1,1,1],
+            [0,1,1,1,0],
+            [0,0,1,0,0]
+        ],
+        smile: [
+            [0,1,1,1,0],
+            [1,0,1,0,1],
+            [1,0,0,0,1],
+            [1,1,0,1,1],
+            [0,1,1,1,0]
+        ],
+        duck: [
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,1,1,0,0,0,0,0],
+            [0,0,1,1,1,0,0,0,0,0],
+            [0,0,0,1,1,0,0,0,0,0],
+            [0,0,1,1,1,1,1,0,0,0],
+            [0,1,1,1,1,1,1,1,0,0],
+            [1,1,1,1,1,1,1,1,1,0],
+            [0,0,1,1,1,1,1,0,0,0],
+            [0,0,1,1,0,1,1,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0]
+        ],
+        invader: [
+            [0,0,1,0,0,0,0,0,1,0],
+            [0,0,0,1,0,0,0,1,0,0],
+            [0,0,1,1,1,1,1,1,1,0],
+            [0,1,1,0,1,1,1,0,1,1],
+            [1,1,1,1,1,1,1,1,1,1],
+            [1,0,1,1,1,1,1,1,1,1],
+            [1,0,1,0,0,0,0,0,1,0],
+            [0,0,0,1,1,0,1,1,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0]
+        ],
+        coffee: [
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,1,0,1,0,0,0,0,0],
+            [0,0,1,0,1,0,0,0,0,0],
+            [0,1,1,1,1,1,1,0,0,0],
+            [0,1,1,1,1,1,1,1,0,0],
+            [0,1,1,1,1,1,1,0,1,0],
+            [0,0,1,1,1,1,0,0,1,0],
+            [0,0,0,1,1,0,0,0,0,0],
+            [0,0,1,1,1,1,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0]
+        ],
+        house: [
+            [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,1,1,1,0,0,0,0,0,0],
+            [0,0,0,0,0,1,1,1,1,1,0,0,0,0,0],
+            [0,0,0,0,1,1,1,1,1,1,1,0,0,0,0],
+            [0,0,0,1,1,1,1,1,1,1,1,1,0,0,0],
+            [0,0,1,1,1,1,1,1,1,1,1,1,1,0,0],
+            [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [0,1,1,1,1,1,1,1,1,1,1,1,1,0],
+            [0,1,1,0,0,0,1,1,1,0,0,0,1,0],
+            [0,1,1,0,1,0,1,1,1,0,1,0,1,0],
+            [0,1,1,0,1,0,1,1,1,0,1,0,1,0],
+            [0,1,1,0,0,0,1,1,1,0,0,0,1,0],
+            [0,1,1,1,1,1,1,1,1,1,1,1,1,0],
+            [0,1,1,1,1,1,1,1,1,1,1,1,1,0]
+        ]
+    };
+
+    let currentGrid = []; // 用户当前状态 0:空, 1:填, 2:X
+    let solutionGrid = [];
+    let size = 5;
+    let isDragging = false;
+    let dragMode = 1; // 1: fill, 2: cross, 0: erase
+    let currentTool = 'fill'; // UI选择的工具
+
+    function changeLevel() {
+        const key = document.getElementById('level-select').value;
+        loadLevel(LEVELS[key]);
+    }
+
+    function loadLevel(data) {
+        solutionGrid = data;
+        size = data.length;
+        currentGrid = Array(size).fill(null).map(() => Array(size).fill(0));
+        
+        document.getElementById('overlay').classList.remove('show');
+        renderGame();
+    }
+
+    // 计算提示数字
+    function getHints(arr) {
+        let hints = [];
+        let count = 0;
+        for (let val of arr) {
+            if (val === 1) count++;
+            else if (count > 0) { hints.push(count); count = 0; }
+        }
+        if (count > 0) hints.push(count);
+        if (hints.length === 0) hints.push(0);
+        return hints;
+    }
+
+    function renderGame() {
+        const container = document.getElementById('game-wrapper');
+        container.innerHTML = '';
+        
+        // 动态计算 Grid 布局： (1 + size) x (1 + size)
+        // 第一行是列提示，第一列是行提示
+        const wrapper = document.createElement('div');
+        wrapper.className = 'game-container';
+        wrapper.style.gridTemplateColumns = `50px repeat(${size}, 25px)`; // 提示列宽50，格子宽25
+        wrapper.style.gridTemplateRows = `50px repeat(${size}, 25px)`;
+
+        // 1. 左上角空白
+        wrapper.appendChild(createDiv('cell'));
+
+        // 2. 顶部列提示
+        for (let c = 0; c < size; c++) {
+            const colData = solutionGrid.map(row => row[c]);
+            const hints = getHints(colData);
+            const div = createDiv('hint-col');
+            div.innerHTML = hints.join('<br>'); // 竖向排列
+            div.id = `hint-col-${c}`;
+            if((c+1)%5===0 && c!==size-1) div.classList.add('border-right'); // 5格分割线
+            wrapper.appendChild(div);
+        }
+
+        // 3. 每一行：左侧提示 + 格子
+        for (let r = 0; r < size; r++) {
+            // 左侧行提示
+            const hints = getHints(solutionGrid[r]);
+            const hintDiv = createDiv('hint-row');
+            hintDiv.innerText = hints.join(' ');
+            hintDiv.id = `hint-row-${r}`;
+            if((r+1)%5===0 && r!==size-1) hintDiv.classList.add('border-bottom');
+            wrapper.appendChild(hintDiv);
+
+            // 格子
+            for (let c = 0; c < size; c++) {
+                const cell = createDiv('cell');
+                cell.dataset.r = r;
+                cell.dataset.c = c;
+                cell.id = `cell-${r}-${c}`;
+                
+                // 交互事件
+                cell.addEventListener('mousedown', onMouseDown);
+                cell.addEventListener('mouseenter', onMouseEnter);
+                // 禁止右键菜单
+                cell.addEventListener('contextmenu', e => e.preventDefault());
+                
+                if((c+1)%5===0 && c!==size-1) cell.classList.add('border-right');
+                if((r+1)%5===0 && r!==size-1) cell.classList.add('border-bottom');
+                
+                wrapper.appendChild(cell);
+            }
+        }
+
+        container.appendChild(wrapper);
+    }
+
+    function createDiv(cls) {
+        const d = document.createElement('div');
+        d.className = cls;
+        return d;
+    }
+
+    // --- 交互逻辑 ---
+    function onMouseDown(e) {
+        e.preventDefault();
+        const r = parseInt(this.dataset.r);
+        const c = parseInt(this.dataset.c);
+        
+        // 确定模式：左键用 currentTool，右键强制 Cross
+        let tool = currentTool;
+        if (e.button === 2) tool = 'cross';
+
+        const currentVal = currentGrid[r][c];
+        // 如果当前格已经符合工具，则变成橡皮擦
+        if (tool === 'fill') dragMode = (currentVal === 1) ? 0 : 1;
+        else dragMode = (currentVal === 2) ? 0 : 2;
+
+        isDragging = true;
+        updateCell(r, c);
+        
+        window.addEventListener('mouseup', onMouseUp);
+    }
+
+    function onMouseEnter(e) {
+        if (!isDragging) return;
+        const r = parseInt(this.dataset.r);
+        const c = parseInt(this.dataset.c);
+        updateCell(r, c);
+    }
+
+    function onMouseUp() {
+        isDragging = false;
+        window.removeEventListener('mouseup', onMouseUp);
+        checkWin();
+    }
+
+    function updateCell(r, c) {
+        if (currentGrid[r][c] === dragMode) return;
+        
+        // 保护逻辑：如果我想填色，但格子已经是X，通常不覆盖，除非先擦除
+        // 这里简化逻辑：直接覆盖
+        currentGrid[r][c] = dragMode;
+        
+        const cell = document.getElementById(`cell-${r}-${c}`);
+        cell.className = 'cell'; // 重置基础类
+        if((c+1)%5===0 && c!==size-1) cell.classList.add('border-right'); // 补回边框
+        if((r+1)%5===0 && r!==size-1) cell.classList.add('border-bottom');
+
+        if (dragMode === 1) cell.classList.add('filled');
+        if (dragMode === 2) cell.classList.add('crossed');
+        
+        checkHints(r, c);
+    }
+
+    // 检查提示是否完成（变灰）
+    function checkHints(r, c) {
+        // 检查行
+        const rowState = currentGrid[r].map(v => v === 1 ? 1 : 0);
+        const rowSol = solutionGrid[r];
+        const rowHint = document.getElementById(`hint-row-${r}`);
+        if (JSON.stringify(rowState) === JSON.stringify(rowSol)) rowHint.classList.add('hint-done');
+        else rowHint.classList.remove('hint-done');
+
+        // 检查列
+        const colState = currentGrid.map(row => row[c] === 1 ? 1 : 0);
+        const colSol = solutionGrid.map(row => row[c]);
+        const colHint = document.getElementById(`hint-col-${c}`);
+        if (JSON.stringify(colState) === JSON.stringify(colSol)) colHint.classList.add('hint-done');
+        else colHint.classList.remove('hint-done');
+    }
+
+    function checkWin() {
+        // 只比对填色格子 (1)，X (2) 和 空 (0) 都视为非填色
+        for (let r = 0; r < size; r++) {
+            for (let c = 0; c < size; c++) {
+                const userFill = currentGrid[r][c] === 1 ? 1 : 0;
+                if (userFill !== solutionGrid[r][c]) return;
+            }
+        }
+        
+        // 胜利
+        document.getElementById('overlay').classList.add('show');
+    }
+
+    function setMode(mode) {
+        currentTool = mode;
+        document.getElementById('mode-fill').classList.toggle('active', mode==='fill');
+        document.getElementById('mode-cross').classList.toggle('active', mode==='cross');
+    }
+
+    function resetGame() {
+        const key = document.getElementById('level-select').value;
+        loadLevel(LEVELS[key]);
+    }
+    
+    function nextLevel() {
+        const select = document.getElementById('level-select');
+        if (select.selectedIndex < select.options.length - 1) {
+            select.selectedIndex++;
+            changeLevel();
+        } else {
+            alert("全关卡通关！恭喜！");
+            document.getElementById('overlay').classList.remove('show');
+        }
+    }
+
+    // 启动
+    changeLevel();
+
+</script>
+</body>
+</html>

@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/'>
 
-<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="实验室 C++ 基础课程 · 第二章第一节">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="实验室 C++ 基础课程 · 第二章第一节">
 <meta property='og:description' content="这是当年在实验室给新生培训的课件，也顺便搬过来了。做了点微小修订，也懒得全部更新了。当年为了给新生上压力，使用了全英文的课件。">
 <meta property='og:url' content='http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/'>
 <meta property='og:site_name' content='蜂窝'>
@@ -797,7 +797,8 @@ constexpr int add(int a, int b) {  // A compile-time addition function
 <pre><code>	For C language, before the C99 standard, the size of the array must be a constant or a constant expression (sizeof() is regarded as an integer constant), and the array length must be specified in the source code. But after the introduction of VLA in C99, you can use variables to specify the array length. But notice that VLA could not be initialized, we'll talk about later.
 	
 	As for C++, in fact, the C++ standard does not provide any support for VLA. If your compilation can pass, it is an extension added by the compiler (GCC, Clang++). If you are using VS, then in MSVC The admiral failed to compile. If you wanna really really wanna use it, you can use const or constexpr keyword, and maybe the better idea is to use std::vector or std::array.
-</code></pre></blockquote>
+</code></pre>
+</blockquote>
 <p>​	An array is called a <em>compound type</em> because it is built from some other type. You can’t simply declare that something is an array; it always has to be an array of some particular type. There is no generalized array type. Instead, there are many specific array types, such as array of char or array of long.   For example, consider this declaration:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -827,7 +828,8 @@ constexpr int add(int a, int b) {  // A compile-time addition function
 ></p>
 <blockquote>
 <h2 id="the-importance-of-valid-subscript-values">The Importance of Valid Subscript Values
-</h2><p>The compiler does not check to see if you use a valid subscript. For instance, the compiler won’t complain if you assign a value to the nonexistent element months[101]. But that assignment could cause problems when the program runs, possibly corrupting data or code, possibly causing the program to abort. So it is your responsibility to make sure that your program uses only valid subscript values.</p></blockquote>
+</h2><p>The compiler does not check to see if you use a valid subscript. For instance, the compiler won’t complain if you assign a value to the nonexistent element months[101]. But that assignment could cause problems when the program runs, possibly corrupting data or code, possibly causing the program to abort. So it is your responsibility to make sure that your program uses only valid subscript values.</p>
+</blockquote>
 <ul>
 <li>
 <p><strong>Initialize rules</strong></p>
@@ -1206,7 +1208,7 @@ constexpr int add(int a, int b) {  // A compile-time addition function
         
             2020 - 
         
-        2025 EvanWong
+        2026 EvanWong
     </section>
     
     <section class="powerby">

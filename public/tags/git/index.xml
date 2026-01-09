@@ -421,7 +421,8 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;blockquote&gt;
 &lt;p&gt;GitHub 有一个十分详细的针对数十种项目及语言的 &lt;code&gt;.gitignore&lt;/code&gt; 文件列表， 你可以在 &lt;a class=&#34;link&#34; href=&#34;https://github.com/github/gitignore&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://github.com/github/gitignore&lt;/a&gt; 找到它。&lt;/p&gt;&lt;/blockquote&gt;
+    &gt;https://github.com/github/gitignore&lt;/a&gt; 找到它。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h4 id=&#34;viewing-your-staged-and-unstaged-changes&#34;&gt;Viewing Your Staged and Unstaged Changes
 &lt;/h4&gt;&lt;p&gt;如果你更想知道具体文件修改了什么地方，那么 &lt;code&gt;git status&lt;/code&gt; 的输出内容就有些太过于简略了，那么你可以使用 &lt;code&gt;git diff&lt;/code&gt; 指令。你通常可能会用它来回答这两个问题：当前做的哪些更新尚未暂存？ 有哪些更新已暂存并准备好下次提交？ 虽然 &lt;code&gt;git status&lt;/code&gt; 已经通过在相应栏下列出文件名的方式回答了这个问题，但 &lt;code&gt;git diff&lt;/code&gt; 能通过文件补丁的格式更加具体地显示哪些行发生了改变。&lt;/p&gt;
 &lt;ul&gt;
