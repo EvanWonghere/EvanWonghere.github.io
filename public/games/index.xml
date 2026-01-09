@@ -1,21 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-    <channel>
-        <title>独立游戏厅 on 蜂窝</title>
-        <link>https://yufenghuang.tech/games/</link>
-        <description>Recent content in 独立游戏厅 on 蜂窝</description>
-        <generator>Hugo -- gohugo.io</generator>
-        <language>zh-cn</language>
-        <managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor>
-        <webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster>
-        <copyright>EvanWong</copyright>
-        <lastBuildDate>Sun, 23 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://yufenghuang.tech/games/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>数织 (Pixel Logic)</title>
-        <link>https://yufenghuang.tech/games/nonogram/</link>
-        <pubDate>Sun, 23 Nov 2025 00:00:00 +0000</pubDate>
-        <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>https://yufenghuang.tech/games/nonogram/</guid>
-        <description>&lt;h4 id=&#34;游戏规则&#34;&gt;游戏规则
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>独立游戏厅 on 蜂窝</title><link>https://yufenghuang.tech/games/</link><description>Recent content in 独立游戏厅 on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Sun, 23 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://yufenghuang.tech/games/index.xml" rel="self" type="application/rss+xml"/><item><title>数织 (Pixel Logic)</title><link>https://yufenghuang.tech/games/nonogram/</link><pubDate>Sun, 23 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/nonogram/</guid><description>&lt;h4 id="游戏规则"&gt;游戏规则
 &lt;/h4&gt;&lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;数字含义&lt;/strong&gt;：行或列旁边的数字表示该行/列中&lt;strong&gt;连续填充&lt;/strong&gt;的方块数量。例如 &lt;code&gt;2 1&lt;/code&gt; 表示有 2 个连续黑格，之后至少有一个空格，然后是 1 个黑格。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;操作&lt;/strong&gt;：
@@ -26,58 +9,22 @@
 &lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;目标&lt;/strong&gt;：根据提示还原隐藏的图案。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;em&gt;提示：如果一行已经全部推导完成，提示数字会自动变灰。&lt;/em&gt;&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>Dino Run</title>
-        <link>https://yufenghuang.tech/games/dino/</link>
-        <pubDate>Thu, 20 Nov 2025 00:00:00 +0000</pubDate>
-        <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>https://yufenghuang.tech/games/dino/</guid>
-        <description>&lt;h4 id=&#34;游戏说明&#34;&gt;游戏说明
+&lt;p&gt;&lt;em&gt;提示：如果一行已经全部推导完成，提示数字会自动变灰。&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Dino Run</title><link>https://yufenghuang.tech/games/dino/</link><pubDate>Thu, 20 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/dino/</guid><description>&lt;h4 id="游戏说明"&gt;游戏说明
 &lt;/h4&gt;&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;跳跃&lt;/strong&gt;：空格键 / 方向键 ↑ / 点击屏幕&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;下蹲&lt;/strong&gt;：方向键 ↓&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;风格切换&lt;/strong&gt;：点击左上角的按钮，体验赛博朋克风格的“夜跑”。&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        </item>
-        <item>
-        <title>Flappy Emoji</title>
-        <link>https://yufenghuang.tech/games/flappy/</link>
-        <pubDate>Thu, 20 Nov 2025 00:00:00 +0000</pubDate>
-        <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>https://yufenghuang.tech/games/flappy/</guid>
-        <description>&lt;h4 id=&#34;游戏说明&#34;&gt;游戏说明
+&lt;/ul&gt;</description></item><item><title>Flappy Emoji</title><link>https://yufenghuang.tech/games/flappy/</link><pubDate>Thu, 20 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/flappy/</guid><description>&lt;h4 id="游戏说明"&gt;游戏说明
 &lt;/h4&gt;&lt;ul&gt;
 &lt;li&gt;点击屏幕、鼠标左键或空格键跳跃。&lt;/li&gt;
 &lt;li&gt;撞到管子或地面即失败。&lt;/li&gt;
 &lt;li&gt;开局前选择不同的角色，手感（心理上）可能会不一样哦！&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        </item>
-        <item>
-        <title>2048</title>
-        <link>https://yufenghuang.tech/games/2048/</link>
-        <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-        <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>https://yufenghuang.tech/games/2048/</guid>
-        <description>&lt;h4 id=&#34;游戏规则&#34;&gt;游戏规则
+&lt;/ul&gt;</description></item><item><title>2048</title><link>https://yufenghuang.tech/games/2048/</link><pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/2048/</guid><description>&lt;h4 id="游戏规则"&gt;游戏规则
 &lt;/h4&gt;&lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;滑动屏幕&lt;/strong&gt; (或使用方向键) 移动所有方块。&lt;/li&gt;
 &lt;li&gt;当两个具有&lt;strong&gt;相同数字&lt;/strong&gt;的方块碰撞时，它们会&lt;strong&gt;合并&lt;/strong&gt;成一个新的方块。&lt;/li&gt;
 &lt;li&gt;目标是合成出 &lt;strong&gt;2048&lt;/strong&gt;！&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-        </item>
-        <item>
-        <title>Breakout Prism</title>
-        <link>https://yufenghuang.tech/games/breakout/</link>
-        <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-        <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>https://yufenghuang.tech/games/breakout/</guid>
-        <description>&lt;h4 id=&#34;游戏特色&#34;&gt;游戏特色
+&lt;/ol&gt;</description></item><item><title>Breakout Prism</title><link>https://yufenghuang.tech/games/breakout/</link><pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/breakout/</guid><description>&lt;h4 id="游戏特色"&gt;游戏特色
 &lt;/h4&gt;&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;三大主题&lt;/strong&gt;：点击顶部按钮切换 &lt;strong&gt;Neon&lt;/strong&gt;（赛博风）、&lt;strong&gt;Candy&lt;/strong&gt;（可爱风）、&lt;strong&gt;Retro&lt;/strong&gt;（像素风）。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;强力道具&lt;/strong&gt;：
@@ -93,104 +40,50 @@
 &lt;li&gt;&lt;strong&gt;手机&lt;/strong&gt;：左右滑动屏幕即可，激光会自动发射。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        </item>
-        <item>
-        <title>Conway&#39;s Game of Life</title>
-        <link>https://yufenghuang.tech/games/life/</link>
-        <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-        <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>https://yufenghuang.tech/games/life/</guid>
-        <description>&lt;h4 id=&#34;什么是生命游戏&#34;&gt;什么是生命游戏？
+&lt;/ul&gt;</description></item><item><title>Conway's Game of Life</title><link>https://yufenghuang.tech/games/life/</link><pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/life/</guid><description>&lt;h4 id="什么是生命游戏"&gt;什么是生命游戏？
 &lt;/h4&gt;&lt;p&gt;这是由英国数学家约翰·康威发明的“零玩家游戏”。你不需要操作它，你只需要设置初始状态，然后观察它的演化。&lt;/p&gt;
-&lt;h4 id=&#34;规则&#34;&gt;规则
+&lt;h4 id="规则"&gt;规则
 &lt;/h4&gt;&lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;孤独&lt;/strong&gt;：活细胞周围少于 2 个活邻居 -&amp;gt; 死。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;拥挤&lt;/strong&gt;：活细胞周围多于 3 个活邻居 -&amp;gt; 死。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;生存&lt;/strong&gt;：活细胞周围有 2 或 3 个活邻居 -&amp;gt; 活。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;繁殖&lt;/strong&gt;：死细胞周围正好有 3 个活邻居 -&amp;gt; 变活。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h4 id=&#34;怎么玩&#34;&gt;怎么玩？
+&lt;h4 id="怎么玩"&gt;怎么玩？
 &lt;/h4&gt;&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;绘制&lt;/strong&gt;：直接用鼠标在屏幕上点击或拖动，画出你的“生物”。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;预设&lt;/strong&gt;：点击下方的“滑翔机”或“滑翔机枪”来生成经典的图案。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;观察&lt;/strong&gt;：点击“运行”，看看它们如何繁衍、碰撞和消亡。&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        </item>
-        <item>
-        <title>Neon Snake</title>
-        <link>https://yufenghuang.tech/games/snake/</link>
-        <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-        <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>https://yufenghuang.tech/games/snake/</guid>
-        <description>&lt;h4 id=&#34;游戏说明&#34;&gt;游戏说明
+&lt;/ul&gt;</description></item><item><title>Neon Snake</title><link>https://yufenghuang.tech/games/snake/</link><pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/snake/</guid><description>&lt;h4 id="游戏说明"&gt;游戏说明
 &lt;/h4&gt;&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;操作&lt;/strong&gt;：使用 WASD、方向键或手指滑动来控制方向。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;加速&lt;/strong&gt;：按住空格键可以加速（冲刺）。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;穿墙&lt;/strong&gt;：这是一款“无限边界”的游戏，撞墙会从另一侧出来，只有撞到自己才会结束。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;高能预警&lt;/strong&gt;：随着蛇身变长，速度会越来越快！&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        </item>
-        <item>
-        <title>Sudoku</title>
-        <link>https://yufenghuang.tech/games/sudoku/</link>
-        <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-        <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>https://yufenghuang.tech/games/sudoku/</guid>
-        <description>&lt;p&gt;数独游戏规则：&lt;/p&gt;
+&lt;/ul&gt;</description></item><item><title>Sudoku</title><link>https://yufenghuang.tech/games/sudoku/</link><pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/sudoku/</guid><description>&lt;p&gt;数独游戏规则：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;在 9x9 的方格内填入数字 1-9。&lt;/li&gt;
 &lt;li&gt;每一行、每一列、每一个粗线围成的 3x3 宫内，数字 1-9 均不能重复。&lt;/li&gt;
 &lt;li&gt;点击 &lt;strong&gt;✎ 笔记&lt;/strong&gt; 按钮可以切换到草稿模式，标记可能的数字。&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-        </item>
-        <item>
-        <title>Tetris Chameleon</title>
-        <link>https://yufenghuang.tech/games/tetris/</link>
-        <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-        <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>https://yufenghuang.tech/games/tetris/</guid>
-        <description>&lt;h4 id=&#34;风格说明&#34;&gt;风格说明
+&lt;/ol&gt;</description></item><item><title>Tetris Chameleon</title><link>https://yufenghuang.tech/games/tetris/</link><pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/tetris/</guid><description>&lt;h4 id="风格说明"&gt;风格说明
 &lt;/h4&gt;&lt;p&gt;点击顶部的按钮可以实时切换游戏引擎：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;NEON&lt;/strong&gt;: 赛博朋克风，发光粒子，适合夜间游玩。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;3D&lt;/strong&gt;: 拟物化风格，具有立体的高光和阴影。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;RETRO&lt;/strong&gt;: 致敬 Gameboy 的像素风格，还原童年回忆。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4 id=&#34;操作指南&#34;&gt;操作指南
+&lt;h4 id="操作指南"&gt;操作指南
 &lt;/h4&gt;&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;移动&lt;/strong&gt;: 方向键 ← / →&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;旋转&lt;/strong&gt;: 方向键 ↑&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;加速下落&lt;/strong&gt;: 方向键 ↓&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;直接落底 (Hard Drop)&lt;/strong&gt;: 空格键 Space&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;暂存方块 (Hold)&lt;/strong&gt;: C 键&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        </item>
-        <item>
-        <title>Wordle</title>
-        <link>https://yufenghuang.tech/games/wordle/</link>
-        <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-        <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>https://yufenghuang.tech/games/wordle/</guid>
-        <description>&lt;ul&gt;
+&lt;/ul&gt;</description></item><item><title>Wordle</title><link>https://yufenghuang.tech/games/wordle/</link><pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/wordle/</guid><description>&lt;ul&gt;
 &lt;li&gt;绿色代表字母位置正确&lt;/li&gt;
 &lt;li&gt;黄色代表包含字母但位置不对&lt;/li&gt;
 &lt;li&gt;灰色代表不包含该字母&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        </item>
-        <item>
-        <title>单词雨 (Typing Rain)</title>
-        <link>https://yufenghuang.tech/games/typing-rain/</link>
-        <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-        <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>https://yufenghuang.tech/games/typing-rain/</guid>
-        <description>&lt;h4 id=&#34;系统接入中&#34;&gt;系统接入中&amp;hellip;
+&lt;/ul&gt;</description></item><item><title>单词雨 (Typing Rain)</title><link>https://yufenghuang.tech/games/typing-rain/</link><pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/typing-rain/</guid><description>&lt;h4 id="系统接入中"&gt;系统接入中&amp;hellip;
 &lt;/h4&gt;&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;词库来源&lt;/strong&gt;：直接读取 Wordle 游戏的本地词库 (&lt;code&gt;words.txt&lt;/code&gt;)，所以你在 Wordle 里背的单词，这里也会考到！&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;操作&lt;/strong&gt;：直接键盘输入屏幕上下落的单词首字母来锁定目标。&lt;/li&gt;
@@ -202,16 +95,7 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;警告&lt;/strong&gt;：此游戏需要实体键盘，不支持触屏设备游玩。&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        </item>
-        <item>
-        <title>国际象棋 (Chess)</title>
-        <link>https://yufenghuang.tech/games/chess/</link>
-        <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-        <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>https://yufenghuang.tech/games/chess/</guid>
-        <description>&lt;h4 id=&#34;游戏说明&#34;&gt;游戏说明
+&lt;/ul&gt;</description></item><item><title>国际象棋 (Chess)</title><link>https://yufenghuang.tech/games/chess/</link><pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/chess/</guid><description>&lt;h4 id="游戏说明"&gt;游戏说明
 &lt;/h4&gt;&lt;p&gt;这是一款经典的&lt;strong&gt;双人对弈&lt;/strong&gt;游戏。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;白方先行&lt;/strong&gt;。&lt;/li&gt;
@@ -223,53 +107,21 @@
 &lt;li&gt;&lt;strong&gt;逼和 (Stalemate)&lt;/strong&gt;：当一方无路可走且未被将军时，判定为平局。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        </item>
-        <item>
-        <title>扫雷 (Minesweeper)</title>
-        <link>https://yufenghuang.tech/games/minesweeper/</link>
-        <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-        <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>https://yufenghuang.tech/games/minesweeper/</guid>
-        <description>&lt;h4 id=&#34;操作指南&#34;&gt;操作指南
+&lt;/ul&gt;</description></item><item><title>扫雷 (Minesweeper)</title><link>https://yufenghuang.tech/games/minesweeper/</link><pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/minesweeper/</guid><description>&lt;h4 id="操作指南"&gt;操作指南
 &lt;/h4&gt;&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;电脑端&lt;/strong&gt;：左键点击挖掘，右键点击插旗。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;手机端&lt;/strong&gt;：点击下方的“挖掘/插旗”按钮切换模式。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;高级技巧&lt;/strong&gt;：点击已翻开的数字，如果周围旗子数量正确，可自动翻开周围所有格子（Chording）。&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        </item>
-        <item>
-        <title>五子棋 (Gomoku)</title>
-        <link>https://yufenghuang.tech/games/gomoku/</link>
-        <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-        <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>https://yufenghuang.tech/games/gomoku/</guid>
-        <description>&lt;h4 id=&#34;游戏规则&#34;&gt;游戏规则
+&lt;/ul&gt;</description></item><item><title>五子棋 (Gomoku)</title><link>https://yufenghuang.tech/games/gomoku/</link><pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/gomoku/</guid><description>&lt;h4 id="游戏规则"&gt;游戏规则
 &lt;/h4&gt;&lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;黑棋先手&lt;/strong&gt;，双方轮流落子。&lt;/li&gt;
 &lt;li&gt;最先在横、竖、斜任一方向连成 &lt;strong&gt;5&lt;/strong&gt; 个同色棋子者获胜。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;AI 非常聪明&lt;/strong&gt;，请小心应对！&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;em&gt;小提示：点击“悔棋”可以回退两步（你的一步和 AI 的一步）。&lt;/em&gt;&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>中国象棋 (Xiangqi)</title>
-        <link>https://yufenghuang.tech/games/xiangqi/</link>
-        <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-        <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>https://yufenghuang.tech/games/xiangqi/</guid>
-        <description>&lt;h4 id=&#34;游戏说明&#34;&gt;游戏说明
+&lt;p&gt;&lt;em&gt;小提示：点击“悔棋”可以回退两步（你的一步和 AI 的一步）。&lt;/em&gt;&lt;/p&gt;</description></item><item><title>中国象棋 (Xiangqi)</title><link>https://yufenghuang.tech/games/xiangqi/</link><pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/xiangqi/</guid><description>&lt;h4 id="游戏说明"&gt;游戏说明
 &lt;/h4&gt;&lt;p&gt;这是一款&lt;strong&gt;双人对弈&lt;/strong&gt;游戏（Hotseat模式），适合与朋友在同一台设备上切磋，或者自己左右互搏研究棋谱。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;红方先手&lt;/strong&gt;：游戏开始默认红方先行。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;规则完备&lt;/strong&gt;：内置了马撇脚、象飞田、老将照面等经典规则检测。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;悔棋功能&lt;/strong&gt;：下错了？点击底部“悔棋”即可回退一步。&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        </item>
-        
-    </channel>
-</rss>
+&lt;/ul&gt;</description></item></channel></rss>
