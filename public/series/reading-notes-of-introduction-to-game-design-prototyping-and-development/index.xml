@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT on 蜂窝</title>
-        <link>http://localhost:1313/series/reading-notes-of-introduction-to-game-design-prototyping-and-development/</link>
+        <link>https://yufenghuang.tech/series/reading-notes-of-introduction-to-game-design-prototyping-and-development/</link>
         <description>Recent content in Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT on 蜂窝</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor>
         <webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster>
         <copyright>EvanWong</copyright>
-        <lastBuildDate>Mon, 03 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/series/reading-notes-of-introduction-to-game-design-prototyping-and-development/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 03 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://yufenghuang.tech/series/reading-notes-of-introduction-to-game-design-prototyping-and-development/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 3</title>
-        <link>http://localhost:1313/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/</link>
+        <link>https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/</link>
         <pubDate>Mon, 03 Jun 2024 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/</guid>
-        <description>&lt;img src="http://localhost:1313/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/cover.png" alt="Featured image of post Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 3" /&gt;&lt;h2 id=&#34;chapter-3-the-layered-tetrad&#34;&gt;Chapter 3 The Layered Tetrad
+        <guid>https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/</guid>
+        <description>&lt;img src="https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/cover.png" alt="Featured image of post Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 3" /&gt;&lt;h2 id=&#34;chapter-3-the-layered-tetrad&#34;&gt;Chapter 3 The Layered Tetrad
 &lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;&lt;em&gt;分层四元法帮助你分析你爱的游戏，并且帮助能能够以一个总体的视角去看待你的游戏，让你不仅是了解游戏的机制，更包括他们的游玩的含义、社会属性、意义和文化的实现。&lt;/em&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -141,11 +141,11 @@
         </item>
         <item>
         <title>Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 1 &amp; 2</title>
-        <link>http://localhost:1313/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/</link>
+        <link>https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/</link>
         <pubDate>Fri, 26 Apr 2024 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/</guid>
-        <description>&lt;img src="http://localhost:1313/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/cover.png" alt="Featured image of post Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 1 &amp; 2" /&gt;&lt;blockquote&gt;
+        <guid>https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/</guid>
+        <description>&lt;img src="https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/cover.png" alt="Featured image of post Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 1 &amp; 2" /&gt;&lt;blockquote&gt;
 &lt;p&gt;长文预警！！！另外其实笔者并不咋会做笔记，基本可以看作翻译和吐槽&amp;hellip;&amp;hellip;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;chapter-1-thinking-like-a-designers&#34;&gt;Chapter 1 Thinking Like a Designers
@@ -257,10 +257,10 @@
 &lt;p&gt;​	MDA对美学的定义是很独特的，没有其他的框架会如此定义。美学通常指的是哲学上的一个分支，和美、丑等概念有关。而更通俗地说，设计美学（design aesthetic）是设计的一种统一意图。（讲道理，我觉得这并不“colloquially”，因为其实我并没有看懂，还是 po 出原文吧&amp;quot;And, more colloquially, a design aesthetic is the cohesive intent of a design.&amp;quot;）&lt;/p&gt;
 &lt;h5 id=&#34;designer-and-player-views-of-a-game&#34;&gt;Designer and Player Views of a Game
 &lt;/h5&gt;&lt;p&gt;​	基于 MDA，设计者应该首先从美学视角看待游戏，考虑游玩时要给玩家如何的情感体验。再回过头寻找能够产生那些情感的动态，再最终寻找能够创造这些动态的机制。而玩家倾向于以一个相反的方向看待游戏，首先体验到游戏的机制（经常是通过阅读游戏规则），然后在游玩中体验到动态，最后（希望）体验到设计师一开始预想的美学。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/MDA.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/MDA.png&#34;
 	width=&#34;466&#34;
 	height=&#34;171&#34;
-	srcset=&#34;http://localhost:1313/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/MDA_hu_8f0c4a0a868153a5.png 480w, http://localhost:1313/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/MDA_hu_2242ab2e98780c9e.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/MDA_hu_8f0c4a0a868153a5.png 480w, https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/MDA_hu_2242ab2e98780c9e.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;MDA&#34;

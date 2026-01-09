@@ -2,12 +2,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Hive</title>
-        <link>http://localhost:1313/en/</link>
+        <link>https://yufenghuang.tech/en/</link>
         <description>Recent content on Hive</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor>
         <webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster>
-        <copyright>EvanWong</copyright><atom:link href="http://localhost:1313/en/index.xml" rel="self" type="application/rss+xml" />
+        <copyright>EvanWong</copyright><atom:link href="https://yufenghuang.tech/en/index.xml" rel="self" type="application/rss+xml" />
     </channel>
 </rss>

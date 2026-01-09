@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>独立游戏厅 on 蜂窝</title>
-        <link>http://localhost:1313/games/</link>
+        <link>https://yufenghuang.tech/games/</link>
         <description>Recent content in 独立游戏厅 on 蜂窝</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor>
         <webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster>
         <copyright>EvanWong</copyright>
-        <lastBuildDate>Sun, 23 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/games/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 23 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://yufenghuang.tech/games/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>数织 (Pixel Logic)</title>
-        <link>http://localhost:1313/games/nonogram/</link>
+        <link>https://yufenghuang.tech/games/nonogram/</link>
         <pubDate>Sun, 23 Nov 2025 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/games/nonogram/</guid>
+        <guid>https://yufenghuang.tech/games/nonogram/</guid>
         <description>&lt;h4 id=&#34;游戏规则&#34;&gt;游戏规则
 &lt;/h4&gt;&lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;数字含义&lt;/strong&gt;：行或列旁边的数字表示该行/列中&lt;strong&gt;连续填充&lt;/strong&gt;的方块数量。例如 &lt;code&gt;2 1&lt;/code&gt; 表示有 2 个连续黑格，之后至少有一个空格，然后是 1 个黑格。&lt;/li&gt;
@@ -31,10 +31,10 @@
         </item>
         <item>
         <title>Dino Run</title>
-        <link>http://localhost:1313/games/dino/</link>
+        <link>https://yufenghuang.tech/games/dino/</link>
         <pubDate>Thu, 20 Nov 2025 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/games/dino/</guid>
+        <guid>https://yufenghuang.tech/games/dino/</guid>
         <description>&lt;h4 id=&#34;游戏说明&#34;&gt;游戏说明
 &lt;/h4&gt;&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;跳跃&lt;/strong&gt;：空格键 / 方向键 ↑ / 点击屏幕&lt;/li&gt;
@@ -45,10 +45,10 @@
         </item>
         <item>
         <title>Flappy Emoji</title>
-        <link>http://localhost:1313/games/flappy/</link>
+        <link>https://yufenghuang.tech/games/flappy/</link>
         <pubDate>Thu, 20 Nov 2025 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/games/flappy/</guid>
+        <guid>https://yufenghuang.tech/games/flappy/</guid>
         <description>&lt;h4 id=&#34;游戏说明&#34;&gt;游戏说明
 &lt;/h4&gt;&lt;ul&gt;
 &lt;li&gt;点击屏幕、鼠标左键或空格键跳跃。&lt;/li&gt;
@@ -59,10 +59,10 @@
         </item>
         <item>
         <title>2048</title>
-        <link>http://localhost:1313/games/2048/</link>
+        <link>https://yufenghuang.tech/games/2048/</link>
         <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/games/2048/</guid>
+        <guid>https://yufenghuang.tech/games/2048/</guid>
         <description>&lt;h4 id=&#34;游戏规则&#34;&gt;游戏规则
 &lt;/h4&gt;&lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;滑动屏幕&lt;/strong&gt; (或使用方向键) 移动所有方块。&lt;/li&gt;
@@ -73,10 +73,10 @@
         </item>
         <item>
         <title>Breakout Prism</title>
-        <link>http://localhost:1313/games/breakout/</link>
+        <link>https://yufenghuang.tech/games/breakout/</link>
         <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/games/breakout/</guid>
+        <guid>https://yufenghuang.tech/games/breakout/</guid>
         <description>&lt;h4 id=&#34;游戏特色&#34;&gt;游戏特色
 &lt;/h4&gt;&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;三大主题&lt;/strong&gt;：点击顶部按钮切换 &lt;strong&gt;Neon&lt;/strong&gt;（赛博风）、&lt;strong&gt;Candy&lt;/strong&gt;（可爱风）、&lt;strong&gt;Retro&lt;/strong&gt;（像素风）。&lt;/li&gt;
@@ -98,10 +98,10 @@
         </item>
         <item>
         <title>Conway&#39;s Game of Life</title>
-        <link>http://localhost:1313/games/life/</link>
+        <link>https://yufenghuang.tech/games/life/</link>
         <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/games/life/</guid>
+        <guid>https://yufenghuang.tech/games/life/</guid>
         <description>&lt;h4 id=&#34;什么是生命游戏&#34;&gt;什么是生命游戏？
 &lt;/h4&gt;&lt;p&gt;这是由英国数学家约翰·康威发明的“零玩家游戏”。你不需要操作它，你只需要设置初始状态，然后观察它的演化。&lt;/p&gt;
 &lt;h4 id=&#34;规则&#34;&gt;规则
@@ -121,10 +121,10 @@
         </item>
         <item>
         <title>Neon Snake</title>
-        <link>http://localhost:1313/games/snake/</link>
+        <link>https://yufenghuang.tech/games/snake/</link>
         <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/games/snake/</guid>
+        <guid>https://yufenghuang.tech/games/snake/</guid>
         <description>&lt;h4 id=&#34;游戏说明&#34;&gt;游戏说明
 &lt;/h4&gt;&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;操作&lt;/strong&gt;：使用 WASD、方向键或手指滑动来控制方向。&lt;/li&gt;
@@ -136,10 +136,10 @@
         </item>
         <item>
         <title>Sudoku</title>
-        <link>http://localhost:1313/games/sudoku/</link>
+        <link>https://yufenghuang.tech/games/sudoku/</link>
         <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/games/sudoku/</guid>
+        <guid>https://yufenghuang.tech/games/sudoku/</guid>
         <description>&lt;p&gt;数独游戏规则：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;在 9x9 的方格内填入数字 1-9。&lt;/li&gt;
@@ -150,10 +150,10 @@
         </item>
         <item>
         <title>Tetris Chameleon</title>
-        <link>http://localhost:1313/games/tetris/</link>
+        <link>https://yufenghuang.tech/games/tetris/</link>
         <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/games/tetris/</guid>
+        <guid>https://yufenghuang.tech/games/tetris/</guid>
         <description>&lt;h4 id=&#34;风格说明&#34;&gt;风格说明
 &lt;/h4&gt;&lt;p&gt;点击顶部的按钮可以实时切换游戏引擎：&lt;/p&gt;
 &lt;ul&gt;
@@ -173,10 +173,10 @@
         </item>
         <item>
         <title>Wordle</title>
-        <link>http://localhost:1313/games/wordle/</link>
+        <link>https://yufenghuang.tech/games/wordle/</link>
         <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/games/wordle/</guid>
+        <guid>https://yufenghuang.tech/games/wordle/</guid>
         <description>&lt;ul&gt;
 &lt;li&gt;绿色代表字母位置正确&lt;/li&gt;
 &lt;li&gt;黄色代表包含字母但位置不对&lt;/li&gt;
@@ -186,10 +186,10 @@
         </item>
         <item>
         <title>单词雨 (Typing Rain)</title>
-        <link>http://localhost:1313/games/typing-rain/</link>
+        <link>https://yufenghuang.tech/games/typing-rain/</link>
         <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/games/typing-rain/</guid>
+        <guid>https://yufenghuang.tech/games/typing-rain/</guid>
         <description>&lt;h4 id=&#34;系统接入中&#34;&gt;系统接入中&amp;hellip;
 &lt;/h4&gt;&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;词库来源&lt;/strong&gt;：直接读取 Wordle 游戏的本地词库 (&lt;code&gt;words.txt&lt;/code&gt;)，所以你在 Wordle 里背的单词，这里也会考到！&lt;/li&gt;
@@ -207,10 +207,10 @@
         </item>
         <item>
         <title>国际象棋 (Chess)</title>
-        <link>http://localhost:1313/games/chess/</link>
+        <link>https://yufenghuang.tech/games/chess/</link>
         <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/games/chess/</guid>
+        <guid>https://yufenghuang.tech/games/chess/</guid>
         <description>&lt;h4 id=&#34;游戏说明&#34;&gt;游戏说明
 &lt;/h4&gt;&lt;p&gt;这是一款经典的&lt;strong&gt;双人对弈&lt;/strong&gt;游戏。&lt;/p&gt;
 &lt;ul&gt;
@@ -228,10 +228,10 @@
         </item>
         <item>
         <title>扫雷 (Minesweeper)</title>
-        <link>http://localhost:1313/games/minesweeper/</link>
+        <link>https://yufenghuang.tech/games/minesweeper/</link>
         <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/games/minesweeper/</guid>
+        <guid>https://yufenghuang.tech/games/minesweeper/</guid>
         <description>&lt;h4 id=&#34;操作指南&#34;&gt;操作指南
 &lt;/h4&gt;&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;电脑端&lt;/strong&gt;：左键点击挖掘，右键点击插旗。&lt;/li&gt;
@@ -242,10 +242,10 @@
         </item>
         <item>
         <title>五子棋 (Gomoku)</title>
-        <link>http://localhost:1313/games/gomoku/</link>
+        <link>https://yufenghuang.tech/games/gomoku/</link>
         <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/games/gomoku/</guid>
+        <guid>https://yufenghuang.tech/games/gomoku/</guid>
         <description>&lt;h4 id=&#34;游戏规则&#34;&gt;游戏规则
 &lt;/h4&gt;&lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;黑棋先手&lt;/strong&gt;，双方轮流落子。&lt;/li&gt;
@@ -257,10 +257,10 @@
         </item>
         <item>
         <title>中国象棋 (Xiangqi)</title>
-        <link>http://localhost:1313/games/xiangqi/</link>
+        <link>https://yufenghuang.tech/games/xiangqi/</link>
         <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/games/xiangqi/</guid>
+        <guid>https://yufenghuang.tech/games/xiangqi/</guid>
         <description>&lt;h4 id=&#34;游戏说明&#34;&gt;游戏说明
 &lt;/h4&gt;&lt;p&gt;这是一款&lt;strong&gt;双人对弈&lt;/strong&gt;游戏（Hotseat模式），适合与朋友在同一台设备上切磋，或者自己左右互搏研究棋谱。&lt;/p&gt;
 &lt;ul&gt;

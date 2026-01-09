@@ -2,27 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>C# on 蜂窝</title>
-        <link>http://localhost:1313/tags/c%23/</link>
+        <link>https://yufenghuang.tech/tags/c%23/</link>
         <description>Recent content in C# on 蜂窝</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor>
         <webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster>
         <copyright>EvanWong</copyright>
-        <lastBuildDate>Sat, 15 Jul 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/c%23/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 15 Jul 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://yufenghuang.tech/tags/c%23/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>利用VSCode配置CSharp运行环境</title>
-        <link>http://localhost:1313/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/</link>
+        <link>https://yufenghuang.tech/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/</link>
         <pubDate>Sat, 15 Jul 2023 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/</guid>
+        <guid>https://yufenghuang.tech/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/</guid>
         <description>&lt;h1 id=&#34;准备工作&#34;&gt;准备工作
 &lt;/h1&gt;&lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;下载 C# 拓展&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/CSharpExtension.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/CSharpExtension.png&#34;
 	width=&#34;2560&#34;
 	height=&#34;1440&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/CSharpExtension_hu_9816f1b5c1fe13c8.png 480w, http://localhost:1313/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/CSharpExtension_hu_a0765bb36bc4f488.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/CSharpExtension_hu_9816f1b5c1fe13c8.png 480w, https://yufenghuang.tech/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/CSharpExtension_hu_a0765bb36bc4f488.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -35,10 +35,10 @@
 &lt;li&gt;
 &lt;p&gt;下载&lt;a class=&#34;link&#34; href=&#34;https://dotnet.microsoft.com/zh-cn/download&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;.NET7 SDK&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/NET7SDK.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/NET7SDK.png&#34;
 	width=&#34;2560&#34;
 	height=&#34;1440&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/NET7SDK_hu_24cadf6be275b81a.png 480w, http://localhost:1313/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/NET7SDK_hu_a9e128b7705417a7.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/NET7SDK_hu_24cadf6be275b81a.png 480w, https://yufenghuang.tech/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/NET7SDK_hu_a9e128b7705417a7.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	

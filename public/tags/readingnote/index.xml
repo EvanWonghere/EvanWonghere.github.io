@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>ReadingNote on 蜂窝</title>
-        <link>http://localhost:1313/tags/readingnote/</link>
+        <link>https://yufenghuang.tech/tags/readingnote/</link>
         <description>Recent content in ReadingNote on 蜂窝</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor>
         <webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster>
         <copyright>EvanWong</copyright>
-        <lastBuildDate>Tue, 21 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/readingnote/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 21 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://yufenghuang.tech/tags/readingnote/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>游戏设计梦工厂，第一篇第四章</title>
-        <link>http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/</link>
+        <link>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/</link>
         <pubDate>Tue, 21 Oct 2025 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/</guid>
-        <description>&lt;img src="http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/cover.png" alt="Featured image of post 游戏设计梦工厂，第一篇第四章" /&gt;&lt;h1 id=&#34;-运用-dramatic-elements&#34;&gt;📖 运用 Dramatic Elements
+        <guid>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/</guid>
+        <description>&lt;img src="https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/cover.png" alt="Featured image of post 游戏设计梦工厂，第一篇第四章" /&gt;&lt;h1 id=&#34;-运用-dramatic-elements&#34;&gt;📖 运用 Dramatic Elements
 &lt;/h1&gt;&lt;h2 id=&#34;-阅读目的&#34;&gt;🎯 阅读目的
 &lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;在了解完游戏的骨架 —— Formal Elements 后，开始了解游戏的骨肉、能让玩家投入情感的元素—— Dramatic Elements。学习这些元素是如何结合并形成投入感的。&lt;/p&gt;
@@ -91,10 +91,10 @@
 &lt;/ol&gt;
 &lt;p&gt;玩有很多面，玩并不是任何一个东西，而是一种思维状态、一种活动的方式。一个玩的方式可以被运用在即使是最严肃或最难的主题上，因为可玩是一种思维状态，而不是一种行为。&lt;/p&gt;
 &lt;p&gt;Roger Caillois 提出了以下玩的分类：
-&lt;img src=&#34;http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/plays.png&#34;
+&lt;img src=&#34;https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/plays.png&#34;
 	width=&#34;1104&#34;
 	height=&#34;544&#34;
-	srcset=&#34;http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/plays_hu_512cc413975ff4d5.png 480w, http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/plays_hu_3c383d9a07dbcafe.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/plays_hu_512cc413975ff4d5.png 480w, https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/plays_hu_3c383d9a07dbcafe.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;玩的分类&#34;
@@ -338,11 +338,11 @@
         </item>
         <item>
         <title>游戏设计梦工厂，第一篇第三章</title>
-        <link>http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/</link>
+        <link>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/</link>
         <pubDate>Tue, 23 Sep 2025 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/</guid>
-        <description>&lt;img src="http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/cover.png" alt="Featured image of post 游戏设计梦工厂，第一篇第三章" /&gt;&lt;h2 id=&#34;-使用-formal-elements&#34;&gt;📖 使用 Formal Elements
+        <guid>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/</guid>
+        <description>&lt;img src="https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/cover.png" alt="Featured image of post 游戏设计梦工厂，第一篇第三章" /&gt;&lt;h2 id=&#34;-使用-formal-elements&#34;&gt;📖 使用 Formal Elements
 &lt;/h2&gt;&lt;h3 id=&#34;-阅读目的&#34;&gt;🎯 阅读目的
 &lt;/h3&gt;&lt;blockquote&gt;
 &lt;p&gt;更加深入了解 Formal Element，能够使用其来分析现有游戏和设计自己的游戏。&lt;/p&gt;
@@ -817,11 +817,11 @@
         </item>
         <item>
         <title>游戏设计梦工厂，第一篇第二章额外篇</title>
-        <link>http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0%E9%A2%9D%E5%A4%96%E7%AF%87/</link>
+        <link>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0%E9%A2%9D%E5%A4%96%E7%AF%87/</link>
         <pubDate>Tue, 21 Jan 2025 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0%E9%A2%9D%E5%A4%96%E7%AF%87/</guid>
-        <description>&lt;img src="http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0%E9%A2%9D%E5%A4%96%E7%AF%87/cover.png" alt="Featured image of post 游戏设计梦工厂，第一篇第二章额外篇" /&gt;&lt;pre&gt;&lt;code&gt;阅读时间：2025-01-21
+        <guid>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0%E9%A2%9D%E5%A4%96%E7%AF%87/</guid>
+        <description>&lt;img src="https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0%E9%A2%9D%E5%A4%96%E7%AF%87/cover.png" alt="Featured image of post 游戏设计梦工厂，第一篇第二章额外篇" /&gt;&lt;pre&gt;&lt;code&gt;阅读时间：2025-01-21
 阅读目标：了解何为谜题、解密游戏和其他游戏的区别、如何设计好的谜题。
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;本篇摘要&#34;&gt;本篇摘要
@@ -922,11 +922,11 @@
         </item>
         <item>
         <title>游戏设计梦工厂，第一篇第二章</title>
-        <link>http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0/</link>
+        <link>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0/</link>
         <pubDate>Sun, 19 Jan 2025 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0/</guid>
-        <description>&lt;img src="http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0/cover.png" alt="Featured image of post 游戏设计梦工厂，第一篇第二章" /&gt;&lt;pre&gt;&lt;code&gt;阅读时间：2025-01-19
+        <guid>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0/</guid>
+        <description>&lt;img src="https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0/cover.png" alt="Featured image of post 游戏设计梦工厂，第一篇第二章" /&gt;&lt;pre&gt;&lt;code&gt;阅读时间：2025-01-19
 阅读目标：了解游戏如何运转及为什么玩家会玩游戏
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;本章摘要&#34;&gt;本章摘要
@@ -1135,11 +1135,11 @@
         </item>
         <item>
         <title>游戏设计梦工厂，第一篇第一章</title>
-        <link>http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%80%E7%AB%A0/</link>
+        <link>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%80%E7%AB%A0/</link>
         <pubDate>Sat, 18 Jan 2025 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%80%E7%AB%A0/</guid>
-        <description>&lt;img src="http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%80%E7%AB%A0/cover.png" alt="Featured image of post 游戏设计梦工厂，第一篇第一章" /&gt;&lt;pre&gt;&lt;code&gt;阅读时间：2025 年 1 月 18 日
+        <guid>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%80%E7%AB%A0/</guid>
+        <description>&lt;img src="https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%80%E7%AB%A0/cover.png" alt="Featured image of post 游戏设计梦工厂，第一篇第一章" /&gt;&lt;pre&gt;&lt;code&gt;阅读时间：2025 年 1 月 18 日
 阅读目标：探寻如何成为一名游戏设计师以及需要的技能等。
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;本章摘要&#34;&gt;本章摘要
@@ -1323,11 +1323,11 @@ Game development strikes a balance between the two; each needs good advocates fo
         </item>
         <item>
         <title>Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 3</title>
-        <link>http://localhost:1313/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/</link>
+        <link>https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/</link>
         <pubDate>Mon, 03 Jun 2024 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/</guid>
-        <description>&lt;img src="http://localhost:1313/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/cover.png" alt="Featured image of post Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 3" /&gt;&lt;h2 id=&#34;chapter-3-the-layered-tetrad&#34;&gt;Chapter 3 The Layered Tetrad
+        <guid>https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/</guid>
+        <description>&lt;img src="https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/cover.png" alt="Featured image of post Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 3" /&gt;&lt;h2 id=&#34;chapter-3-the-layered-tetrad&#34;&gt;Chapter 3 The Layered Tetrad
 &lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;&lt;em&gt;分层四元法帮助你分析你爱的游戏，并且帮助能能够以一个总体的视角去看待你的游戏，让你不仅是了解游戏的机制，更包括他们的游玩的含义、社会属性、意义和文化的实现。&lt;/em&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -1453,11 +1453,11 @@ Game development strikes a balance between the two; each needs good advocates fo
         </item>
         <item>
         <title>Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 1 &amp; 2</title>
-        <link>http://localhost:1313/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/</link>
+        <link>https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/</link>
         <pubDate>Fri, 26 Apr 2024 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/</guid>
-        <description>&lt;img src="http://localhost:1313/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/cover.png" alt="Featured image of post Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 1 &amp; 2" /&gt;&lt;blockquote&gt;
+        <guid>https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/</guid>
+        <description>&lt;img src="https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/cover.png" alt="Featured image of post Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 1 &amp; 2" /&gt;&lt;blockquote&gt;
 &lt;p&gt;长文预警！！！另外其实笔者并不咋会做笔记，基本可以看作翻译和吐槽&amp;hellip;&amp;hellip;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;chapter-1-thinking-like-a-designers&#34;&gt;Chapter 1 Thinking Like a Designers
@@ -1569,10 +1569,10 @@ Game development strikes a balance between the two; each needs good advocates fo
 &lt;p&gt;​	MDA对美学的定义是很独特的，没有其他的框架会如此定义。美学通常指的是哲学上的一个分支，和美、丑等概念有关。而更通俗地说，设计美学（design aesthetic）是设计的一种统一意图。（讲道理，我觉得这并不“colloquially”，因为其实我并没有看懂，还是 po 出原文吧&amp;quot;And, more colloquially, a design aesthetic is the cohesive intent of a design.&amp;quot;）&lt;/p&gt;
 &lt;h5 id=&#34;designer-and-player-views-of-a-game&#34;&gt;Designer and Player Views of a Game
 &lt;/h5&gt;&lt;p&gt;​	基于 MDA，设计者应该首先从美学视角看待游戏，考虑游玩时要给玩家如何的情感体验。再回过头寻找能够产生那些情感的动态，再最终寻找能够创造这些动态的机制。而玩家倾向于以一个相反的方向看待游戏，首先体验到游戏的机制（经常是通过阅读游戏规则），然后在游玩中体验到动态，最后（希望）体验到设计师一开始预想的美学。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/MDA.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/MDA.png&#34;
 	width=&#34;466&#34;
 	height=&#34;171&#34;
-	srcset=&#34;http://localhost:1313/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/MDA_hu_8f0c4a0a868153a5.png 480w, http://localhost:1313/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/MDA_hu_2242ab2e98780c9e.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/MDA_hu_8f0c4a0a868153a5.png 480w, https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/MDA_hu_2242ab2e98780c9e.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;MDA&#34;

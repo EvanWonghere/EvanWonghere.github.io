@@ -2,27 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>环境配置 on 蜂窝</title>
-        <link>http://localhost:1313/categories/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</link>
+        <link>https://yufenghuang.tech/categories/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</link>
         <description>Recent content in 环境配置 on 蜂窝</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor>
         <webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster>
         <copyright>EvanWong</copyright>
-        <lastBuildDate>Sat, 15 Jul 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 15 Jul 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://yufenghuang.tech/categories/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>利用VSCode配置CSharp运行环境</title>
-        <link>http://localhost:1313/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/</link>
+        <link>https://yufenghuang.tech/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/</link>
         <pubDate>Sat, 15 Jul 2023 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/</guid>
+        <guid>https://yufenghuang.tech/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/</guid>
         <description>&lt;h1 id=&#34;准备工作&#34;&gt;准备工作
 &lt;/h1&gt;&lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;下载 C# 拓展&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/CSharpExtension.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/CSharpExtension.png&#34;
 	width=&#34;2560&#34;
 	height=&#34;1440&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/CSharpExtension_hu_9816f1b5c1fe13c8.png 480w, http://localhost:1313/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/CSharpExtension_hu_a0765bb36bc4f488.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/CSharpExtension_hu_9816f1b5c1fe13c8.png 480w, https://yufenghuang.tech/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/CSharpExtension_hu_a0765bb36bc4f488.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -35,10 +35,10 @@
 &lt;li&gt;
 &lt;p&gt;下载&lt;a class=&#34;link&#34; href=&#34;https://dotnet.microsoft.com/zh-cn/download&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;.NET7 SDK&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/NET7SDK.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/NET7SDK.png&#34;
 	width=&#34;2560&#34;
 	height=&#34;1440&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/NET7SDK_hu_24cadf6be275b81a.png 480w, http://localhost:1313/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/NET7SDK_hu_a9e128b7705417a7.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/NET7SDK_hu_24cadf6be275b81a.png 480w, https://yufenghuang.tech/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/NET7SDK_hu_a9e128b7705417a7.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -161,10 +161,10 @@
         </item>
         <item>
         <title>使用 Visual Studio 部署 Boost::Python</title>
-        <link>http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/</link>
+        <link>https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/</link>
         <pubDate>Fri, 09 Jun 2023 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/</guid>
+        <guid>https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/</guid>
         <description>&lt;h1 id=&#34;环境&#34;&gt;环境
 &lt;/h1&gt;&lt;p&gt;笔者的环境是：&lt;/p&gt;
 &lt;ol&gt;
@@ -176,10 +176,10 @@
 &lt;h1 id=&#34;下载并编译&#34;&gt;下载并编译
 &lt;/h1&gt;&lt;h2 id=&#34;下载&#34;&gt;下载
 &lt;/h2&gt;&lt;p&gt;​        官网下载地址为 &lt;a class=&#34;link&#34; href=&#34;https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/&lt;/a&gt;，截至此博客发布时最新版本为1.82。笔者下载的版本是 boost_1_82_0.zip&lt;img src=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/DownloadZIP.png&#34;
+    &gt;https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/&lt;/a&gt;，截至此博客发布时最新版本为1.82。笔者下载的版本是 boost_1_82_0.zip&lt;img src=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/DownloadZIP.png&#34;
 	width=&#34;929&#34;
 	height=&#34;940&#34;
-	srcset=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/DownloadZIP_hu_9afbfe91da898e8e.png 480w, http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/DownloadZIP_hu_fd9e84180f75731a.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/DownloadZIP_hu_9afbfe91da898e8e.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/DownloadZIP_hu_fd9e84180f75731a.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -188,10 +188,10 @@
 		data-flex-basis=&#34;237px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;​		下载并解压后，执行 &lt;code&gt;booststrap.bat&lt;/code&gt;，会发现文件夹中多了一个 &lt;code&gt;b2.exe&lt;/code&gt;，这是一个编译工具。接下来我们进入编译工作。&lt;img src=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/booststrap2b2.png&#34;
+&lt;p&gt;​		下载并解压后，执行 &lt;code&gt;booststrap.bat&lt;/code&gt;，会发现文件夹中多了一个 &lt;code&gt;b2.exe&lt;/code&gt;，这是一个编译工具。接下来我们进入编译工作。&lt;img src=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/booststrap2b2.png&#34;
 	width=&#34;1029&#34;
 	height=&#34;1185&#34;
-	srcset=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/booststrap2b2_hu_5e727a17394b440b.png 480w, http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/booststrap2b2_hu_5188c75f4a46ff26.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/booststrap2b2_hu_5e727a17394b440b.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/booststrap2b2_hu_5188c75f4a46ff26.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;readyToCompile&#34;
@@ -203,10 +203,10 @@
 	
 &gt;&lt;/p&gt;
 &lt;h3 id=&#34;配置-user_configjam&#34;&gt;配置 user_config.jam
-&lt;/h3&gt;&lt;p&gt;​		你可以在 &lt;code&gt;\\tool\\build\\example\\user-config.jam&lt;/code&gt;&lt;img src=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/user_config.png&#34;
+&lt;/h3&gt;&lt;p&gt;​		你可以在 &lt;code&gt;\\tool\\build\\example\\user-config.jam&lt;/code&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/user_config.png&#34;
 	width=&#34;1022&#34;
 	height=&#34;1189&#34;
-	srcset=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/user_config_hu_cfd6542a28ba1af.png 480w, http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/user_config_hu_8c1730ac6b132dd.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/user_config_hu_cfd6542a28ba1af.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/user_config_hu_8c1730ac6b132dd.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;\\pathToBoost\\tool\\build\\example\\user-config.jam&#34;
@@ -314,10 +314,10 @@
 &lt;/div&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/configuration.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/configuration.png&#34;
 	width=&#34;533&#34;
 	height=&#34;1178&#34;
-	srcset=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/configuration_hu_6d29ff811d063d98.png 480w, http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/configuration_hu_5c000499d700b892.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/configuration_hu_6d29ff811d063d98.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/configuration_hu_5c000499d700b892.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -326,10 +326,10 @@
 		data-flex-basis=&#34;108px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config1.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config1.png&#34;
 	width=&#34;1182&#34;
 	height=&#34;819&#34;
-	srcset=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config1_hu_a4321d7fbf69e5a9.png 480w, http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config1_hu_5f4f57735c5391b2.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config1_hu_a4321d7fbf69e5a9.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config1_hu_5f4f57735c5391b2.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -338,10 +338,10 @@
 		data-flex-basis=&#34;346px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config2.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config2.png&#34;
 	width=&#34;1182&#34;
 	height=&#34;819&#34;
-	srcset=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config2_hu_ba9fbcb941a2614e.png 480w, http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config2_hu_f16fe331c9ab071e.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config2_hu_ba9fbcb941a2614e.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config2_hu_f16fe331c9ab071e.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -350,10 +350,10 @@
 		data-flex-basis=&#34;346px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config3.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config3.png&#34;
 	width=&#34;1182&#34;
 	height=&#34;819&#34;
-	srcset=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config3_hu_9ec2276eaa5d494f.png 480w, http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config3_hu_f75b353b2a54e6e3.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config3_hu_9ec2276eaa5d494f.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config3_hu_f75b353b2a54e6e3.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -423,10 +423,10 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;h3 id=&#34;小提示&#34;&gt;小提示
 &lt;/h3&gt;&lt;p&gt;​		记得源代码要右键源代码然后添加啊不然就会像我一样以为没配置好环境一直再搞啊啊啊！！！&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/sourceFile.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/sourceFile.png&#34;
 	width=&#34;1029&#34;
 	height=&#34;413&#34;
-	srcset=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/sourceFile_hu_988e7524af155a9c.png 480w, http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/sourceFile_hu_8e378f3b1593a71d.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/sourceFile_hu_988e7524af155a9c.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/sourceFile_hu_8e378f3b1593a71d.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -437,10 +437,10 @@
 &gt;&lt;/p&gt;
 &lt;h2 id=&#34;python测试&#34;&gt;Python测试
 &lt;/h2&gt;&lt;p&gt;​		如果你执行的是 &lt;code&gt;release&lt;/code&gt;，进入目录 &lt;code&gt;file2project\\x64\\release\\&lt;/code&gt;，否则进入 &lt;code&gt;file2project\\x64\\debug\\&lt;/code&gt;，你能看到一个文件 &lt;code&gt;Hello_Boost.pyd&lt;/code&gt;，这就是刚才的 C++ 源代码生成的 Python 模块。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/path2pyd.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/path2pyd.png&#34;
 	width=&#34;1029&#34;
 	height=&#34;667&#34;
-	srcset=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/path2pyd_hu_756eddef885592aa.png 480w, http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/path2pyd_hu_c0cb38695f2ec85f.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/path2pyd_hu_756eddef885592aa.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/path2pyd_hu_c0cb38695f2ec85f.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -450,10 +450,10 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;​		我们 &lt;code&gt;open in terminal&lt;/code&gt;，进入 Python，检测 &lt;code&gt;import&lt;/code&gt; 及函数调用是否正常&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/testBoostPython.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/testBoostPython.png&#34;
 	width=&#34;1734&#34;
 	height=&#34;957&#34;
-	srcset=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/testBoostPython_hu_d5f34fbe67cf303.png 480w, http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/testBoostPython_hu_7f6e370384ce1591.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/testBoostPython_hu_d5f34fbe67cf303.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/testBoostPython_hu_7f6e370384ce1591.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	

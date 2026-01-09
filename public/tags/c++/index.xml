@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>C&#43;&#43; on 蜂窝</title>
-        <link>http://localhost:1313/tags/c&#43;&#43;/</link>
+        <link>https://yufenghuang.tech/tags/c&#43;&#43;/</link>
         <description>Recent content in C&#43;&#43; on 蜂窝</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor>
         <webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster>
         <copyright>EvanWong</copyright>
-        <lastBuildDate>Fri, 27 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/c++/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 27 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://yufenghuang.tech/tags/c++/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>实验室 C&#43;&#43; 基础课程 · 第二章第三节</title>
-        <link>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/</link>
+        <link>https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/</link>
         <pubDate>Fri, 27 Oct 2023 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/</guid>
+        <guid>https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/</guid>
         <description>&lt;h1 id=&#34;c-basic-course&#34;&gt;C++ Basic Course
 &lt;/h1&gt;&lt;h2 id=&#34;chapter-2--dealing-with-data&#34;&gt;Chapter 2 —— Dealing with data
 &lt;/h2&gt;&lt;ul&gt;
@@ -129,10 +129,10 @@
 &lt;/div&gt;&lt;p&gt;​	Here, the reference rodents plays the same role as the expression *prats.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;&lt;strong&gt;References as Function Parameters&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;​	Most often, references are used as function parameters, making a variable name in a function an alias for a variable in the calling program. This method of passing arguments is called &lt;em&gt;passing by reference&lt;/em&gt;. Passing by reference allows a called function to access variables in the calling function. C++’s addition of the feature is a break from C, which only passes by value. Passing by value, recall results in the called function working with copies of values from the calling program.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/passing.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/passing.png&#34;
 	width=&#34;1134&#34;
 	height=&#34;1144&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/passing_hu_84be4081eae2d8af.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/passing_hu_cbcbea975f3bd5a5.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/passing_hu_84be4081eae2d8af.png 480w, https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/passing_hu_cbcbea975f3bd5a5.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Passing by Value or Reference&#34;
@@ -395,10 +395,10 @@
         </item>
         <item>
         <title>实验室 C&#43;&#43; 基础课程 · 第二章第二节</title>
-        <link>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/</link>
+        <link>https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/</link>
         <pubDate>Thu, 26 Oct 2023 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/</guid>
+        <guid>https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/</guid>
         <description>&lt;h1 id=&#34;c-basic-course&#34;&gt;C++ Basic Course
 &lt;/h1&gt;&lt;h2 id=&#34;chapter-2--dealing-with-data&#34;&gt;Chapter 2 —— Dealing with data
 &lt;/h2&gt;&lt;ul&gt;
@@ -406,10 +406,10 @@
 &lt;p&gt;&lt;em&gt;&lt;strong&gt;pointer&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;​	Today we&amp;rsquo;ll deals with the basic language mechanisms for referring to memory. Obviously, we can refer to  object by name, but in C++ (most) objects “have identity.” That is, they reside at a specific address in memory, and an object can be accessed if you know its address and its type. The language constructs for holding and using addresses are pointers and references.&lt;/p&gt;
 &lt;p&gt;​	Pointers, which are variables that store addresses of values rather than the values themselves. But before discussing pointers, let’s talk about how to explicitly find addresses for ordinary variables. You just apply the address operator, represented by &amp;amp;, to a variable to get its location; the name of the pointer represents the location. Applying the * operator, called the &lt;em&gt;indirect value&lt;/em&gt; or the &lt;em&gt;dereferencing&lt;/em&gt; operator, yields the value at the location. (Yes, this is the same * symbol used for multiplication; C++ uses the context to determine whether you mean multiplication or dereferencing.)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/pointer_and_reference.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/pointer_and_reference.png&#34;
 	width=&#34;1006&#34;
 	height=&#34;530&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/pointer_and_reference_hu_ac530dd4a3200faa.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/pointer_and_reference_hu_b5b8770d42b2cce0.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/pointer_and_reference_hu_ac530dd4a3200faa.png 480w, https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/pointer_and_reference_hu_b5b8770d42b2cce0.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Pointer and Reference&#34;
@@ -484,10 +484,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;​	This states that the combination * p_updates is type int. Because you use the * operator by applying it to a pointer, the p_updates variable itself must &lt;em&gt;be&lt;/em&gt; a pointer. We say that p_updates points to type int. We also say that the type for p_updates is pointer-to-int or, more concisely, int *.To repeat: p_updates is a pointer (an address),and *p_updates is an int and not a pointer.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/memory_address.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/memory_address.png&#34;
 	width=&#34;1374&#34;
 	height=&#34;1032&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/memory_address_hu_e33796475082bfa4.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/memory_address_hu_10612ff47c7c25fc.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/memory_address_hu_e33796475082bfa4.png 480w, https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/memory_address_hu_10612ff47c7c25fc.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Pointer and Value&#34;
@@ -880,10 +880,10 @@
         </item>
         <item>
         <title>实验室 C&#43;&#43; 基础课程 · 第二章第一节</title>
-        <link>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/</link>
+        <link>https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/</link>
         <pubDate>Wed, 25 Oct 2023 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/</guid>
+        <guid>https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/</guid>
         <description>&lt;h1 id=&#34;c-basic-course&#34;&gt;C++ Basic Course
 &lt;/h1&gt;&lt;h2 id=&#34;chapter-2--dealing-with-data&#34;&gt;Chapter 2 —— Dealing with data
 &lt;/h2&gt;&lt;ul&gt;
@@ -1253,10 +1253,10 @@ constexpr int add(int a, int b) {  // A compile-time addition function
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;​	The &lt;code&gt;T&lt;/code&gt; not “array”; rather, it is “array of float.” This emphasizes that the loans array is built from the float type.&lt;/p&gt;
 &lt;p&gt;​	You can access array elements individually. The way to do this is to use a &lt;em&gt;subscript&lt;/em&gt;, or an &lt;em&gt;index&lt;/em&gt;, to number the elements. C++ array numbering starts with &lt;em&gt;&lt;strong&gt;zero&lt;/strong&gt;&lt;/em&gt;(not one).  C++ uses a bracket notation with the index to specify an array element. . Note that the index of the last element is one less than the size of the array. Thus,an array declaration enables you to create a lot of variables with a single declaration,and you can then use an index to identify and access individual elements.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/array.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/array.png&#34;
 	width=&#34;1058&#34;
 	height=&#34;734&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/array_hu_2a72d233eb8e6648.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/array_hu_581355c5ca92b29e.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/array_hu_2a72d233eb8e6648.png 480w, https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/array_hu_581355c5ca92b29e.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Array&#34;
@@ -1478,10 +1478,10 @@ constexpr int add(int a, int b) {  // A compile-time addition function
         </item>
         <item>
         <title>实验室 C&#43;&#43; 基础课程 · 第一章第三节</title>
-        <link>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/</link>
+        <link>https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/</link>
         <pubDate>Tue, 24 Oct 2023 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/</guid>
+        <guid>https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/</guid>
         <description>&lt;h1 id=&#34;c-basic-course&#34;&gt;C++ Basic Course
 &lt;/h1&gt;&lt;h2 id=&#34;chapter-1--hello-c&#34;&gt;Chapter 1 —— Hello, C++!
 &lt;/h2&gt;&lt;h3 id=&#34;basic-syntax&#34;&gt;Basic syntax
@@ -1982,10 +1982,10 @@ constexpr int add(int a, int b) {  // A compile-time addition function
 &lt;p&gt;​	For ordinary functions, when the function is called, the program will jump to the function to continue execution, and then jump back after executing the function. Jumping back and forth and keeping track of where to jump means that there is an overhead in elapsed time to using functions.&lt;/p&gt;
 &lt;p&gt;​	C++ inline functions provide an alternative. In an inline function, the compiled code is “in line” with the other code in the program. That is, the compiler replaces the function call with the corresponding function code. With inline code, the program doesn’t have to jump to another location to execute the code and then jump back.&lt;/p&gt;
 &lt;p&gt;​	Inline functions thus run a little faster than regular functions, but they come with a memory penalty. If a program calls an inline function at ten separate locations, then the program winds up with ten copies of the function inserted into the code.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/inline.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/inline.png&#34;
 	width=&#34;1316&#34;
 	height=&#34;1276&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/inline_hu_e1f953deb7b4c494.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/inline_hu_4c07aba0936224e1.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/inline_hu_e1f953deb7b4c494.png 480w, https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/inline_hu_4c07aba0936224e1.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;inline Function&#34;
@@ -2265,10 +2265,10 @@ constexpr int add(int a, int b) {  // A compile-time addition function
         </item>
         <item>
         <title>实验室 C&#43;&#43; 基础课程 · 第一章第二节</title>
-        <link>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/</link>
+        <link>https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/</link>
         <pubDate>Mon, 23 Oct 2023 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/</guid>
+        <guid>https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/</guid>
         <description>&lt;h1 id=&#34;c-basic-course&#34;&gt;C++ Basic Course
 &lt;/h1&gt;&lt;h2 id=&#34;chapter-1--hello-c&#34;&gt;Chapter 1 —— Hello, C++!
 &lt;/h2&gt;&lt;h3 id=&#34;what-is-c&#34;&gt;What is C++?
@@ -2660,10 +2660,10 @@ operator that requires three operands. The general form looks like this:&lt;/p&g
 &lt;li&gt;
 &lt;p&gt;&lt;em&gt;&lt;strong&gt;continue / break&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;​	The break and continue statements enable a program to skip over parts of the code. You can use the break statement in a switch statement and in any of the loops. It causes program execution to pass to the next statement following the switch or the loop. The continue statement is used in loops and causes a program to skip the rest of the body of the loop and then start a new loop cycle.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/continue_break.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/continue_break.png&#34;
 	width=&#34;1078&#34;
 	height=&#34;1268&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/continue_break_hu_a9e810a5a00b41ca.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/continue_break_hu_b27d58325ee37a53.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/continue_break_hu_a9e810a5a00b41ca.png 480w, https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/continue_break_hu_b27d58325ee37a53.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Continue and Break&#34;
@@ -2750,10 +2750,10 @@ operator that requires three operands. The general form looks like this:&lt;/p&g
 ​	The for loop is an &lt;em&gt;&lt;strong&gt;entry-condition loop&lt;/strong&gt;&lt;/em&gt;. This means the test expression is evaluated before each loop cycle. The loop never executes the loop body when the test expression is false.
 ​     
 ​	Update-expression is evaluated at the end of the loop, after the body has been executed. Typically, it’s used to increase or decrease the value of the variable keeping track of the number of loop cycles. However, it can be any valid C++ expression, as can the other control expressions. This makes the for loop capable of much more than simply counting.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/for_loop.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/for_loop.png&#34;
 	width=&#34;1106&#34;
 	height=&#34;956&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/for_loop_hu_f58e877e51218fe1.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/for_loop_hu_655fcd3e3f1c426e.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/for_loop_hu_f58e877e51218fe1.png 480w, https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/for_loop_hu_655fcd3e3f1c426e.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;For Loop&#34;
@@ -2798,10 +2798,10 @@ operator that requires three operands. The general form looks like this:&lt;/p&g
 &lt;/div&gt;&lt;p&gt;​	First, a program evaluates the parenthesized test-condition expression. If the expression evaluates to true, the program executes the statement(s) in the body.&lt;/p&gt;
 &lt;p&gt;​	As with a for loop, the body consists of a single statement or a block defined by paired braces. After it finishes with the body, the program returns to the test condition and re-evaluates it. If the condition is nonzero, the program executes the body again.&lt;/p&gt;
 &lt;p&gt;​	This cycle of testing and execution continues until the test condition evaluates to false Clearly, if you want the loop to terminate eventually, something within the loop body must do something to affect the test-condition expression&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/while_loop.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/while_loop.png&#34;
 	width=&#34;1186&#34;
 	height=&#34;1018&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/while_loop_hu_30cb93ecca49f945.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/while_loop_hu_7a54e5c0e992e06c.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/while_loop_hu_30cb93ecca49f945.png 480w, https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/while_loop_hu_7a54e5c0e992e06c.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;While Loop&#34;
@@ -2980,10 +2980,10 @@ while (test_expression)&lt;/p&gt;
         </item>
         <item>
         <title>实验室 C&#43;&#43; 基础课程 · 第一章第一节</title>
-        <link>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/</link>
+        <link>https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/</link>
         <pubDate>Sun, 22 Oct 2023 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/</guid>
+        <guid>https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/</guid>
         <description>&lt;h1 id=&#34;c-basic-course&#34;&gt;C++ Basic Course
 &lt;/h1&gt;&lt;h2 id=&#34;chapter-1hello-c&#34;&gt;Chapter 1——Hello, C++!
 &lt;/h2&gt;&lt;h3 id=&#34;why-c&#34;&gt;WHY C++?
@@ -2991,10 +2991,10 @@ while (test_expression)&lt;/p&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;em&gt;&lt;strong&gt;Popular&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;As a qualified programmer, you should know how to chase trends!&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/tiobe.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/tiobe.png&#34;
 	width=&#34;3012&#34;
 	height=&#34;1674&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/tiobe_hu_5ddc95221cb0e926.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/tiobe_hu_e0bc9b86797d10a2.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/tiobe_hu_5ddc95221cb0e926.png 480w, https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/tiobe_hu_e0bc9b86797d10a2.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;TIOBE Index for September 2025&#34;
@@ -3015,10 +3015,10 @@ while (test_expression)&lt;/p&gt;
 &lt;li&gt;its static type system, which reduces runtime overhead&lt;/li&gt;
 &lt;li&gt;and its ability to allow direct memory access and management, thereby reducing additional runtime costs.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/fast_lower.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/fast_lower.png&#34;
 	width=&#34;1351&#34;
 	height=&#34;649&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/fast_lower_hu_c9dd2413ba04dac1.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/fast_lower_hu_d1869f2ff2256beb.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/fast_lower_hu_c9dd2413ba04dac1.png 480w, https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/fast_lower_hu_d1869f2ff2256beb.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Fast and Lower Level Control&#34;
@@ -3216,10 +3216,10 @@ while (test_expression)&lt;/p&gt;
 &lt;li&gt;&lt;em&gt;&lt;strong&gt;Had high-level features&lt;/strong&gt;&lt;/em&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;c-history-evolution-of-c&#34;&gt;C++ History: Evolution of C++
-&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/evolution.png&#34;
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/evolution.png&#34;
 	width=&#34;1498&#34;
 	height=&#34;332&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/evolution_hu_d0aed7e74bc03101.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/evolution_hu_644271bd1b4270cd.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/evolution_hu_d0aed7e74bc03101.png 480w, https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%AC%AC%E4%B8%80%E8%8A%82/evolution_hu_644271bd1b4270cd.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Evolution of C&amp;#43;&amp;#43;&#34;
@@ -3270,10 +3270,10 @@ while (test_expression)&lt;/p&gt;
         </item>
         <item>
         <title>实验室 C&#43;&#43; 基础课程 · 第零章第二节</title>
-        <link>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/</link>
+        <link>https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/</link>
         <pubDate>Wed, 18 Oct 2023 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/</guid>
+        <guid>https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/</guid>
         <description>&lt;h1 id=&#34;c基础课程&#34;&gt;C++基础课程
 &lt;/h1&gt;&lt;h2 id=&#34;第零章工欲善其事必先利其器&#34;&gt;第零章——工欲善其事必先利其器
 &lt;/h2&gt;&lt;h3 id=&#34;0提前说明&#34;&gt;0.提前说明
@@ -3295,10 +3295,10 @@ while (test_expression)&lt;/p&gt;
 &lt;li&gt;
 &lt;p&gt;在&lt;a class=&#34;link&#34; href=&#34;https://visualstudio.microsoft.com/zh-hans/downloads/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;官网&lt;/a&gt;下载&lt;em&gt;&lt;strong&gt;Visual Studio 2022 Community Edition&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_vs.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_vs.png&#34;
 	width=&#34;3012&#34;
 	height=&#34;1674&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_vs_hu_911f0fb234ba1d.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_vs_hu_7f80a45d71028ffc.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_vs_hu_911f0fb234ba1d.png 480w, https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_vs_hu_7f80a45d71028ffc.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Download Visual Studio&#34;
@@ -3312,10 +3312,10 @@ while (test_expression)&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;只选择使用C++的桌面开发足够，之后也可在&lt;em&gt;&lt;strong&gt;Visual Studio Installer&lt;/strong&gt;&lt;/em&gt;中选择修改&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/install_vs.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/install_vs.png&#34;
 	width=&#34;1380&#34;
 	height=&#34;1508&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/install_vs_hu_3e4d5445c53fe361.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/install_vs_hu_778d74dede881ffa.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/install_vs_hu_3e4d5445c53fe361.png 480w, https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/install_vs_hu_778d74dede881ffa.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Install Visual Studio Components&#34;
@@ -3335,10 +3335,10 @@ while (test_expression)&lt;/p&gt;
 &lt;li&gt;
 &lt;p&gt;请注意，在使用 &lt;em&gt;&lt;strong&gt;CLion&lt;/strong&gt;&lt;/em&gt; 之前你可能需要在 &lt;em&gt;&lt;strong&gt;JetBrains&lt;/strong&gt;&lt;/em&gt; 官网&lt;a class=&#34;link&#34; href=&#34;https://www.jetbrains.com/shop/eform/students&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;申请&lt;/a&gt; &lt;em&gt;&lt;strong&gt;JetBrains Product Pack for Students&lt;/strong&gt;&lt;/em&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_clion.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_clion.png&#34;
 	width=&#34;3012&#34;
 	height=&#34;1674&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_clion_hu_c998bd982dfc1219.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_clion_hu_1dd96f337312e30c.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_clion_hu_c998bd982dfc1219.png 480w, https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_clion_hu_1dd96f337312e30c.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Download CLion&#34;
@@ -3353,10 +3353,10 @@ while (test_expression)&lt;/p&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.jetbrains.com/clion/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;官网&lt;/a&gt;下载安装好后登陆你的 JetBrains 账户激活 License 即可。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/clion_website.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/clion_website.png&#34;
 	width=&#34;3012&#34;
 	height=&#34;1674&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/clion_website_hu_5b57c62fe23b62d9.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/clion_website_hu_5b3bab20f8305627.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/clion_website_hu_5b57c62fe23b62d9.png 480w, https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/clion_website_hu_5b3bab20f8305627.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;CLion Official Website&#34;
@@ -3376,10 +3376,10 @@ while (test_expression)&lt;/p&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.codeblocks.org/downloads/binaries/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;官网&lt;/a&gt;下载即可，如果你本地已有编译器则下载 &lt;code&gt;codeblocks-25.03-setup.exe&lt;/code&gt; 即可，如果没有的话则下载 &lt;code&gt;codeblocks-25.03mingw-setup.exe&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_codeblocks.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_codeblocks.png&#34;
 	width=&#34;3012&#34;
 	height=&#34;1674&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_codeblocks_hu_dc1926cd8bf47d4c.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_codeblocks_hu_967977d6c2cbebf.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_codeblocks_hu_dc1926cd8bf47d4c.png 480w, https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_codeblocks_hu_967977d6c2cbebf.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Download Code::Blocks&#34;
@@ -3403,10 +3403,10 @@ while (test_expression)&lt;/p&gt;
 &lt;li&gt;
 &lt;p&gt;在&lt;a class=&#34;link&#34; href=&#34;https://www.mingw-w64.org/source/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;官网&lt;/a&gt;可以看到下载地址&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_mingw.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_mingw.png&#34;
 	width=&#34;3012&#34;
 	height=&#34;1674&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_mingw_hu_a0c1a2051df7ba80.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_mingw_hu_55053ead8d304ec8.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_mingw_hu_a0c1a2051df7ba80.png 480w, https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_mingw_hu_55053ead8d304ec8.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Download MinGW-w64&#34;
@@ -3421,10 +3421,10 @@ while (test_expression)&lt;/p&gt;
 &lt;li&gt;
 &lt;p&gt;下载好压缩包并解压后，windows 搜索“&lt;strong&gt;编辑系统环境变量&lt;/strong&gt;”，打开。&lt;/p&gt;
 &lt;p&gt;找到&lt;code&gt;系统变量 Path&lt;/code&gt;，新建变量，变量的值为刚才解压的文件夹的&lt;code&gt;bin&lt;/code&gt;目录的绝对路径。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/mingw_path.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/mingw_path.png&#34;
 	width=&#34;1376&#34;
 	height=&#34;558&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/mingw_path_hu_7952db48a863caef.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/mingw_path_hu_c2361242c4c3238e.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/mingw_path_hu_7952db48a863caef.png 480w, https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/mingw_path_hu_c2361242c4c3238e.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Path For MinGW&#34;
@@ -3438,10 +3438,10 @@ while (test_expression)&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;终端输入&lt;code&gt;g++ -v&lt;/code&gt;进行检测&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/test_mingw.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/test_mingw.png&#34;
 	width=&#34;1382&#34;
 	height=&#34;430&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/test_mingw_hu_6b0ecb04275eb33e.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/test_mingw_hu_8217e7f5140e92b9.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/test_mingw_hu_6b0ecb04275eb33e.png 480w, https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/test_mingw_hu_8217e7f5140e92b9.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Test MinGW&#34;
@@ -3467,10 +3467,10 @@ while (test_expression)&lt;/p&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://code.visualstudio.com/download&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;官网&lt;/a&gt;下载安装&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_vscode.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_vscode.png&#34;
 	width=&#34;3012&#34;
 	height=&#34;1674&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_vscode_hu_f987e02ee1f94474.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_vscode_hu_7f2f926bab8b9c2f.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_vscode_hu_f987e02ee1f94474.png 480w, https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_vscode_hu_7f2f926bab8b9c2f.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Download Visual Studio Code&#34;
@@ -3489,10 +3489,10 @@ while (test_expression)&lt;/p&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;em&gt;&lt;strong&gt;Chinese (Simplified) (简体中文) Language Pack for Visual Studio Code&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;如果你想锻炼英语的话，不推荐安装&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_chinese.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_chinese.png&#34;
 	width=&#34;3012&#34;
 	height=&#34;1918&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_chinese_hu_4246f8a01c4fa403.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_chinese_hu_4418db854dd8169d.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_chinese_hu_4246f8a01c4fa403.png 480w, https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_chinese_hu_4418db854dd8169d.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Chinese Simplified Extension&#34;
@@ -3507,10 +3507,10 @@ while (test_expression)&lt;/p&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;em&gt;&lt;strong&gt;C/C++&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;貌似内置了，不太清楚了&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_c&amp;#43;&amp;#43;.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_c&amp;#43;&amp;#43;.png&#34;
 	width=&#34;3012&#34;
 	height=&#34;1918&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_c&amp;#43;&amp;#43;_hu_5eb81b28c4376ad.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_c&amp;#43;&amp;#43;_hu_2f987dd5ea1b644d.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_c&amp;#43;&amp;#43;_hu_5eb81b28c4376ad.png 480w, https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_c&amp;#43;&amp;#43;_hu_2f987dd5ea1b644d.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;C/C&amp;#43;&amp;#43; Extension&#34;
@@ -3525,10 +3525,10 @@ while (test_expression)&lt;/p&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;em&gt;&lt;strong&gt;Code Runner&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Code Runner 的好处在于方便，不用编写配置的json文件&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_coderunner.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_coderunner.png&#34;
 	width=&#34;3012&#34;
 	height=&#34;1918&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_coderunner_hu_464dcc45dbfd543f.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_coderunner_hu_e1c05c3ed73e8325.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_coderunner_hu_464dcc45dbfd543f.png 480w, https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/extension_coderunner_hu_e1c05c3ed73e8325.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Code Runner Extension&#34;
@@ -3761,10 +3761,10 @@ while (test_expression)&lt;/p&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.sublimetext.com/download&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;官网&lt;/a&gt;下载安装&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_sublime.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_sublime.png&#34;
 	width=&#34;3012&#34;
 	height=&#34;1674&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_sublime_hu_86e616824c63c10c.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_sublime_hu_b320a4d9044d11a7.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_sublime_hu_86e616824c63c10c.png 480w, https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/download_sublime_hu_b320a4d9044d11a7.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Download Sublime Text&#34;
@@ -3799,10 +3799,10 @@ while (test_expression)&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/configure_sublime.png&#34;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/configure_sublime.png&#34;
 	width=&#34;1238&#34;
 	height=&#34;714&#34;
-	srcset=&#34;http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/configure_sublime_hu_1101532850de2314.png 480w, http://localhost:1313/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/configure_sublime_hu_257a87685f2a00d0.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/configure_sublime_hu_1101532850de2314.png 480w, https://yufenghuang.tech/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E9%9B%B6%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/configure_sublime_hu_257a87685f2a00d0.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Configure Sublime Text&#34;
@@ -3827,10 +3827,10 @@ while (test_expression)&lt;/p&gt;
         </item>
         <item>
         <title>使用 Visual Studio 部署 Boost::Python</title>
-        <link>http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/</link>
+        <link>https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/</link>
         <pubDate>Fri, 09 Jun 2023 00:00:00 +0000</pubDate>
         <author>yufenghuang009@gmail.com (Evan Wong)</author>
-        <guid>http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/</guid>
+        <guid>https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/</guid>
         <description>&lt;h1 id=&#34;环境&#34;&gt;环境
 &lt;/h1&gt;&lt;p&gt;笔者的环境是：&lt;/p&gt;
 &lt;ol&gt;
@@ -3842,10 +3842,10 @@ while (test_expression)&lt;/p&gt;
 &lt;h1 id=&#34;下载并编译&#34;&gt;下载并编译
 &lt;/h1&gt;&lt;h2 id=&#34;下载&#34;&gt;下载
 &lt;/h2&gt;&lt;p&gt;​        官网下载地址为 &lt;a class=&#34;link&#34; href=&#34;https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/&lt;/a&gt;，截至此博客发布时最新版本为1.82。笔者下载的版本是 boost_1_82_0.zip&lt;img src=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/DownloadZIP.png&#34;
+    &gt;https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/&lt;/a&gt;，截至此博客发布时最新版本为1.82。笔者下载的版本是 boost_1_82_0.zip&lt;img src=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/DownloadZIP.png&#34;
 	width=&#34;929&#34;
 	height=&#34;940&#34;
-	srcset=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/DownloadZIP_hu_9afbfe91da898e8e.png 480w, http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/DownloadZIP_hu_fd9e84180f75731a.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/DownloadZIP_hu_9afbfe91da898e8e.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/DownloadZIP_hu_fd9e84180f75731a.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -3854,10 +3854,10 @@ while (test_expression)&lt;/p&gt;
 		data-flex-basis=&#34;237px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;​		下载并解压后，执行 &lt;code&gt;booststrap.bat&lt;/code&gt;，会发现文件夹中多了一个 &lt;code&gt;b2.exe&lt;/code&gt;，这是一个编译工具。接下来我们进入编译工作。&lt;img src=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/booststrap2b2.png&#34;
+&lt;p&gt;​		下载并解压后，执行 &lt;code&gt;booststrap.bat&lt;/code&gt;，会发现文件夹中多了一个 &lt;code&gt;b2.exe&lt;/code&gt;，这是一个编译工具。接下来我们进入编译工作。&lt;img src=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/booststrap2b2.png&#34;
 	width=&#34;1029&#34;
 	height=&#34;1185&#34;
-	srcset=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/booststrap2b2_hu_5e727a17394b440b.png 480w, http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/booststrap2b2_hu_5188c75f4a46ff26.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/booststrap2b2_hu_5e727a17394b440b.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/booststrap2b2_hu_5188c75f4a46ff26.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;readyToCompile&#34;
@@ -3869,10 +3869,10 @@ while (test_expression)&lt;/p&gt;
 	
 &gt;&lt;/p&gt;
 &lt;h3 id=&#34;配置-user_configjam&#34;&gt;配置 user_config.jam
-&lt;/h3&gt;&lt;p&gt;​		你可以在 &lt;code&gt;\\tool\\build\\example\\user-config.jam&lt;/code&gt;&lt;img src=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/user_config.png&#34;
+&lt;/h3&gt;&lt;p&gt;​		你可以在 &lt;code&gt;\\tool\\build\\example\\user-config.jam&lt;/code&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/user_config.png&#34;
 	width=&#34;1022&#34;
 	height=&#34;1189&#34;
-	srcset=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/user_config_hu_cfd6542a28ba1af.png 480w, http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/user_config_hu_8c1730ac6b132dd.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/user_config_hu_cfd6542a28ba1af.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/user_config_hu_8c1730ac6b132dd.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;\\pathToBoost\\tool\\build\\example\\user-config.jam&#34;
@@ -3980,10 +3980,10 @@ while (test_expression)&lt;/p&gt;
 &lt;/div&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/configuration.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/configuration.png&#34;
 	width=&#34;533&#34;
 	height=&#34;1178&#34;
-	srcset=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/configuration_hu_6d29ff811d063d98.png 480w, http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/configuration_hu_5c000499d700b892.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/configuration_hu_6d29ff811d063d98.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/configuration_hu_5c000499d700b892.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -3992,10 +3992,10 @@ while (test_expression)&lt;/p&gt;
 		data-flex-basis=&#34;108px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config1.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config1.png&#34;
 	width=&#34;1182&#34;
 	height=&#34;819&#34;
-	srcset=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config1_hu_a4321d7fbf69e5a9.png 480w, http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config1_hu_5f4f57735c5391b2.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config1_hu_a4321d7fbf69e5a9.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config1_hu_5f4f57735c5391b2.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -4004,10 +4004,10 @@ while (test_expression)&lt;/p&gt;
 		data-flex-basis=&#34;346px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config2.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config2.png&#34;
 	width=&#34;1182&#34;
 	height=&#34;819&#34;
-	srcset=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config2_hu_ba9fbcb941a2614e.png 480w, http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config2_hu_f16fe331c9ab071e.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config2_hu_ba9fbcb941a2614e.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config2_hu_f16fe331c9ab071e.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -4016,10 +4016,10 @@ while (test_expression)&lt;/p&gt;
 		data-flex-basis=&#34;346px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config3.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config3.png&#34;
 	width=&#34;1182&#34;
 	height=&#34;819&#34;
-	srcset=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config3_hu_9ec2276eaa5d494f.png 480w, http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config3_hu_f75b353b2a54e6e3.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config3_hu_9ec2276eaa5d494f.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config3_hu_f75b353b2a54e6e3.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -4089,10 +4089,10 @@ while (test_expression)&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;h3 id=&#34;小提示&#34;&gt;小提示
 &lt;/h3&gt;&lt;p&gt;​		记得源代码要右键源代码然后添加啊不然就会像我一样以为没配置好环境一直再搞啊啊啊！！！&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/sourceFile.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/sourceFile.png&#34;
 	width=&#34;1029&#34;
 	height=&#34;413&#34;
-	srcset=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/sourceFile_hu_988e7524af155a9c.png 480w, http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/sourceFile_hu_8e378f3b1593a71d.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/sourceFile_hu_988e7524af155a9c.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/sourceFile_hu_8e378f3b1593a71d.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -4103,10 +4103,10 @@ while (test_expression)&lt;/p&gt;
 &gt;&lt;/p&gt;
 &lt;h2 id=&#34;python测试&#34;&gt;Python测试
 &lt;/h2&gt;&lt;p&gt;​		如果你执行的是 &lt;code&gt;release&lt;/code&gt;，进入目录 &lt;code&gt;file2project\\x64\\release\\&lt;/code&gt;，否则进入 &lt;code&gt;file2project\\x64\\debug\\&lt;/code&gt;，你能看到一个文件 &lt;code&gt;Hello_Boost.pyd&lt;/code&gt;，这就是刚才的 C++ 源代码生成的 Python 模块。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/path2pyd.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/path2pyd.png&#34;
 	width=&#34;1029&#34;
 	height=&#34;667&#34;
-	srcset=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/path2pyd_hu_756eddef885592aa.png 480w, http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/path2pyd_hu_c0cb38695f2ec85f.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/path2pyd_hu_756eddef885592aa.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/path2pyd_hu_c0cb38695f2ec85f.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -4116,10 +4116,10 @@ while (test_expression)&lt;/p&gt;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;​		我们 &lt;code&gt;open in terminal&lt;/code&gt;，进入 Python，检测 &lt;code&gt;import&lt;/code&gt; 及函数调用是否正常&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/testBoostPython.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/testBoostPython.png&#34;
 	width=&#34;1734&#34;
 	height=&#34;957&#34;
-	srcset=&#34;http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/testBoostPython_hu_d5f34fbe67cf303.png 480w, http://localhost:1313/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/testBoostPython_hu_7f6e370384ce1591.png 1024w&#34;
+	srcset=&#34;https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/testBoostPython_hu_d5f34fbe67cf303.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/testBoostPython_hu_7f6e370384ce1591.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
