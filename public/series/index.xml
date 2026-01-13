@@ -1,1 +1,62 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Series on 蜂窝</title><link>https://yufenghuang.tech/series/</link><description>Recent content in Series on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Fri, 09 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://yufenghuang.tech/series/index.xml" rel="self" type="application/rss+xml"/><item><title>西方哲学史</title><link>https://yufenghuang.tech/series/%E8%A5%BF%E6%96%B9%E5%93%B2%E5%AD%A6%E5%8F%B2/</link><pubDate>Fri, 09 Jan 2026 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/series/%E8%A5%BF%E6%96%B9%E5%93%B2%E5%AD%A6%E5%8F%B2/</guid><description/></item><item><title>游戏分析</title><link>https://yufenghuang.tech/series/%E6%B8%B8%E6%88%8F%E5%88%86%E6%9E%90/</link><pubDate>Tue, 21 Oct 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/series/%E6%B8%B8%E6%88%8F%E5%88%86%E6%9E%90/</guid><description/></item><item><title>游戏设计梦工厂</title><link>https://yufenghuang.tech/series/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82/</link><pubDate>Tue, 21 Oct 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/series/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82/</guid><description/></item><item><title>Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT</title><link>https://yufenghuang.tech/series/reading-notes-of-introduction-to-game-design-prototyping-and-development/</link><pubDate>Mon, 03 Jun 2024 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/series/reading-notes-of-introduction-to-game-design-prototyping-and-development/</guid><description/></item><item><title>实验室课程</title><link>https://yufenghuang.tech/series/%E5%AE%9E%E9%AA%8C%E5%AE%A4%E8%AF%BE%E7%A8%8B/</link><pubDate>Mon, 22 Apr 2024 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/series/%E5%AE%9E%E9%AA%8C%E5%AE%A4%E8%AF%BE%E7%A8%8B/</guid><description/></item><item><title>机器人学</title><link>https://yufenghuang.tech/series/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6/</link><pubDate>Mon, 17 Jul 2023 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/series/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6/</guid><description/></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Series on 蜂窝</title>
+        <link>http://localhost:1313/series/</link>
+        <description>Recent content in Series on 蜂窝</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor>
+        <webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster>
+        <copyright>EvanWong</copyright>
+        <lastBuildDate>Fri, 09 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/series/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>西方哲学史</title>
+        <link>http://localhost:1313/series/%E8%A5%BF%E6%96%B9%E5%93%B2%E5%AD%A6%E5%8F%B2/</link>
+        <pubDate>Fri, 09 Jan 2026 00:00:00 +0000</pubDate>
+        <author>yufenghuang009@gmail.com (Evan Wong)</author>
+        <guid>http://localhost:1313/series/%E8%A5%BF%E6%96%B9%E5%93%B2%E5%AD%A6%E5%8F%B2/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>游戏分析</title>
+        <link>http://localhost:1313/series/%E6%B8%B8%E6%88%8F%E5%88%86%E6%9E%90/</link>
+        <pubDate>Tue, 21 Oct 2025 00:00:00 +0000</pubDate>
+        <author>yufenghuang009@gmail.com (Evan Wong)</author>
+        <guid>http://localhost:1313/series/%E6%B8%B8%E6%88%8F%E5%88%86%E6%9E%90/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>游戏设计梦工厂</title>
+        <link>http://localhost:1313/series/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82/</link>
+        <pubDate>Tue, 21 Oct 2025 00:00:00 +0000</pubDate>
+        <author>yufenghuang009@gmail.com (Evan Wong)</author>
+        <guid>http://localhost:1313/series/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT</title>
+        <link>http://localhost:1313/series/reading-notes-of-introduction-to-game-design-prototyping-and-development/</link>
+        <pubDate>Mon, 03 Jun 2024 00:00:00 +0000</pubDate>
+        <author>yufenghuang009@gmail.com (Evan Wong)</author>
+        <guid>http://localhost:1313/series/reading-notes-of-introduction-to-game-design-prototyping-and-development/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>实验室课程</title>
+        <link>http://localhost:1313/series/%E5%AE%9E%E9%AA%8C%E5%AE%A4%E8%AF%BE%E7%A8%8B/</link>
+        <pubDate>Mon, 22 Apr 2024 00:00:00 +0000</pubDate>
+        <author>yufenghuang009@gmail.com (Evan Wong)</author>
+        <guid>http://localhost:1313/series/%E5%AE%9E%E9%AA%8C%E5%AE%A4%E8%AF%BE%E7%A8%8B/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>机器人学</title>
+        <link>http://localhost:1313/series/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6/</link>
+        <pubDate>Mon, 17 Jul 2023 00:00:00 +0000</pubDate>
+        <author>yufenghuang009@gmail.com (Evan Wong)</author>
+        <guid>http://localhost:1313/series/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6/</guid>
+        <description></description>
+        </item>
+        
+    </channel>
+</rss>

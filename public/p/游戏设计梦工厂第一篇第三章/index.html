@@ -1,26 +1,1275 @@
-<!doctype html><html lang=zh-cn dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="还是一不小心就会写好多，主要是感觉书上东西讲的挺多但也挺好，删减或者缩略的话感觉都会使得表达不够充分，还是一点点改吧......"><title>游戏设计梦工厂，第一篇第三章</title><link rel=canonical href=https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/><link rel=stylesheet href=/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css><meta property='og:title' content="游戏设计梦工厂，第一篇第三章"><meta property='og:description' content="还是一不小心就会写好多，主要是感觉书上东西讲的挺多但也挺好，删减或者缩略的话感觉都会使得表达不够充分，还是一点点改吧......"><meta property='og:url' content='https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/'><meta property='og:site_name' content='蜂窝'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='ReadingNote'><meta property='article:tag' content='读书笔记'><meta property='article:tag' content='Game Designer'><meta property='article:tag' content='游戏设计师'><meta property='article:published_time' content='2025-09-23T00:00:00+00:00'><meta property='article:modified_time' content='2025-09-23T00:00:00+00:00'><meta property='og:image' content='https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/cover.png'><meta name=twitter:title content="游戏设计梦工厂，第一篇第三章"><meta name=twitter:description content="还是一不小心就会写好多，主要是感觉书上东西讲的挺多但也挺好，删减或者缩略的话感觉都会使得表达不够充分，还是一点点改吧......"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content='https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/cover.png'><link rel="shortcut icon" href=/favicon.ico></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切换菜单>
-<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu_789ebd951ab60789.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
-</a><span class=emoji>🐝</span></figure><div class=site-meta><h1 class=site-name><a href=/>蜂窝</a></h1><h2 class=site-description>EvanWong的个人博客</h2></div></header><ol class=menu-social><li><a href=https://github.com/EvanWonghere/EvanWonghere.github.io target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://steamcommunity.com/profiles/76561198980535015/ target=_blank title=Steam rel=me><svg role="img" viewBox="0 0 24 24"><title>Steam</title><path d="M11.979.0C5.678.0.511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063.0.125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494.0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159.0 1.875-1.515 3.396-3.39 3.396-1.635.0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627.0 11.999-5.373 11.999-12S18.605.0 11.979.0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012H7.54zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665.0-3.015 1.353-3.015 3.015.0 1.665 1.35 3.015 3.015 3.015 1.663.0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249.0 2.266 1.014 2.266 2.266.0 1.251-1.017 2.265-2.266 2.265-1.253.0-2.265-1.014-2.265-2.265z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
-<span>主页</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
-<span>归档</span></a></li><li><a href=/about/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
-<span>关于</span></a></li><li><a href=/quotes/><svg fill="#000" width="800" height="800" viewBox="-6 0 32 32"><title>quote-right</title><path d="M3.44 22.8c-.32.0-.64-.2-.76-.52-.16-.44.04-.92.48-1.08 3.4-1.36 4.12-4.28 4.12-6.48.0-2.52-1.4-3.84-2.8-3.84-1.28.0-2.8.6-2.8 2.28.0.68.36 1.32.96 1.72.48.28 1.04.36 1.44.12.4-.2.92-.04 1.12.36s.04.92-.36 1.12c-.96.48-2.12.4-3.08-.2-1.12-.68-1.76-1.84-1.76-3.12.0-2.32 1.84-3.96 4.48-3.96 2.16.0 4.48 1.92 4.48 5.52.0 3.84-1.84 6.68-5.2 8.04-.08.0-.2.04-.32.04zM14 22.8c-.32.0-.64-.2-.76-.52-.16-.44.04-.92.48-1.08 3.4-1.36 4.12-4.28 4.12-6.48.0-2.52-1.4-3.84-2.8-3.84-1.28.0-2.8.6-2.8 2.28.0.68.36 1.32.96 1.72.48.28 1.04.36 1.44.12.4-.2.92-.04 1.12.36s.04.92-.36 1.12c-.96.48-2.12.4-3.08-.2-1.08-.68-1.76-1.84-1.76-3.12.0-2.32 1.84-3.96 4.48-3.96 2.16.0 4.48 1.92 4.48 5.52.0 3.84-1.84 6.68-5.2 8.04-.12.0-.24.04-.32.04z"/></svg>
-<span>采撷集</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
-<span>搜索</span></a></li><li><a href=/games/><!doctype html><svg height="800" width="800" id="_x32_" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><style>.st0{fill:#000}</style><g><path class="st0" d="M511.27 331.566c0-.009.0-.018.0-.026-.008-.052.0-.087-.008-.14h-.009c-6.682-88.65-27.159-154.403-55.948-198.846-14.412-22.221-30.968-39.115-49.041-50.507-18.048-11.401-37.649-17.198-57.388-17.18-14.551-.009-26.985 2.629-37.527 6.611-15.836 5.97-27.358 14.795-36.364 21.319-4.495 3.28-8.373 5.961-11.549 7.592-3.211 1.658-5.475 2.239-7.436 2.239-1.328-.009-2.725-.251-4.521-.92-3.115-1.137-7.288-3.732-12.278-7.332-7.531-5.354-16.885-12.764-29.223-18.846-12.339-6.092-27.766-10.69-46.855-10.664-19.739-.018-39.34 5.787-57.388 17.18-27.115 17.119-50.794 46.481-69.008 87.887C18.542 211.332 5.743 264.92.746 331.401H.738c-.009.052.0.096-.009.14.0.008.0.017.0.026C.243 336.981.0 342.247.0 347.358c-.009 25.058 5.77 46.455 16.651 63.141 10.846 16.694 26.863 28.347 45.614 33.822 6.43 1.892 13.068 2.811 19.757 2.811 19.445-.026 39.046-7.618 57.692-20.764 18.681-13.189 36.598-32.052 52.91-55.731 7.845-11.427 18.5-24.798 29.987-34.854 5.736-5.032 11.662-9.214 17.362-12.026 5.71-2.82 11.09-4.244 16.027-4.235 4.936-.009 10.317 1.414 16.026 4.235 8.555 4.199 17.588 11.558 25.787 20.112 8.226 8.538 15.67 18.196 21.562 26.76 16.312 23.688 34.23 42.55 52.902 55.739 18.655 13.146 38.255 20.738 57.7 20.764 6.69.0 13.328-.92 19.749-2.811 18.759-5.475 34.776-17.128 45.614-33.822C506.221 393.813 512 372.416 512 347.358 512 342.256 511.757 336.981 511.27 331.566zM476.737 398.36c-8.104 12.356-19.236 20.469-33.284 24.651-4.33 1.275-8.807 1.9-13.475 1.908-13.484.026-28.902-5.414-44.894-16.703-15.974-11.254-32.312-28.225-47.418-50.177-8.564-12.417-20.044-27.012-33.64-38.95-6.812-5.97-14.169-11.297-22.16-15.245-7.975-3.94-16.677-6.534-25.866-6.534-9.189.0-17.892 2.594-25.866 6.534-11.974 5.943-22.577 14.906-31.957 24.616-9.353 9.726-17.432 20.268-23.843 29.579-15.106 21.952-31.454 38.923-47.419 50.177-15.991 11.288-31.418 16.729-44.894 16.703-4.677-.009-9.145-.633-13.484-1.908-14.04-4.182-25.172-12.295-33.284-24.651-8.06-12.364-13.04-29.293-13.04-51.002.0-4.451.208-9.111.65-13.961v-.052l.009-.113c6.429-86.17 26.446-148.582 52.451-188.59 12.989-20.026 27.41-34.447 42.256-43.801 14.872-9.353 30.126-13.744 45.544-13.761 11.896.009 21.424 2.091 29.675 5.189 12.356 4.65 21.883 11.756 31.158 18.507 4.652 3.367 9.233 6.655 14.378 9.336 5.111 2.655 11.028 4.729 17.666 4.729 4.399.0 8.556-.928 12.286-2.325 6.56-2.482 12-6.213 17.422-10.065 8.113-5.831 16.208-12.14 26.091-16.981 9.883-4.833 21.449-8.364 37.076-8.39 15.418.017 30.672 4.408 45.545 13.761 22.264 14.005 43.6 39.532 60.511 78.03 16.92 38.464 29.354 89.735 34.195 154.36v.052l.009.113c.434 4.842.652 9.502.652 13.961C489.778 369.067 484.806 386.004 476.737 398.36z"/><polygon class="st0" points="161.232,178.126 122.29,178.126 122.29,213.631 86.785,213.631 86.785,252.573 122.29,252.573 122.29,288.079 161.232,288.079 161.232,252.573 196.737,252.573 196.737,213.631 161.232,213.631"/><path class="st0" d="M368.659 167.002c-11.331.0-20.52 9.189-20.52 20.538.0 11.341 9.189 20.538 20.52 20.538 11.35.0 20.538-9.197 20.538-20.538.0-11.349-9.18900000000002-20.538-20.538-20.538z"/><path class="st0" d="M368.659 266.247c-11.331.0-20.52 9.189-20.52 20.53.0 11.349 9.189 20.538 20.52 20.538 11.35.0 20.538-9.189 20.538-20.538C389.197 275.436 380.008 266.247 368.659 266.247z"/><path class="st0" d="M418.282 216.633c-11.341.0-20.538 9.189-20.538 20.53.0 11.349 9.197 20.529 20.538 20.529 11.35.0 20.538-9.18 20.538-20.529.0-11.341-9.18900000000002-20.53-20.538-20.53z"/><path class="st0" d="M319.054 216.633c-11.349.0-20.538 9.189-20.538 20.53.0 11.349 9.189 20.529 20.538 20.529 11.341.0 20.539-9.18 20.539-20.529C339.592 225.822 330.394 216.633 319.054 216.633z"/></g></svg>
-<span>游戏厅</span></a></li><li><a href><span>games</span></a></li><li class=menu-bottom-section><ol class=menu><li id=i18n-switch><svg class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg>
-<select name=language title=language onchange="window.location.href=this.selectedOptions[0].value"><option value=https://yufenghuang.tech/en/>English</option><option value=https://yufenghuang.tech/ selected>中文</option></select></li><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
-<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
-<span>暗色模式</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">目录</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#-使用-formal-elements>📖 使用 Formal Elements</a><ol><li><a href=#-阅读目的>🎯 阅读目的</a></li><li><a href=#-本章摘要>🧠 本章摘要</a></li><li><a href=#-核心内容整理>📌 核心内容整理</a><ol><li><a href=#-核心理念>✦ 核心理念</a></li><li><a href=#-关键技能概念>✦ 关键技能/概念</a></li></ol></li><li><a href=#-案例提炼>🎮 案例提炼</a></li><li><a href=#-我的思考--提问>🧩 我的思考 & 提问</a></li><li><a href=#-练习回应或个人实践>🛠️ 练习回应或个人实践</a></li><li><a href=#-精选语录摘录>💬 精选语录摘录</a></li><li><a href=#-小结--后续预期>🧾 小结 & 后续预期</a></li></ol></li></ol></nav></div></section></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/><img src=/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/cover_hu_e69e338c481bbf67.png srcset="/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/cover_hu_e69e338c481bbf67.png 800w, /p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/cover_hu_b3c33cb0b48d925f.png 1600w" width=800 height=1051 loading=lazy alt="Featured image of post 游戏设计梦工厂，第一篇第三章"></a></div><div class=article-details><header class=article-category><a href=/categories/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/>游戏设计</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/>游戏设计梦工厂，第一篇第三章</a></h2><h3 class=article-subtitle>还是一不小心就会写好多，主要是感觉书上东西讲的挺多但也挺好，删减或者缩略的话感觉都会使得表达不够充分，还是一点点改吧......</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
-<time class=article-time--published>Sep 23, 2025</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
-<time class=article-time--reading>阅读时长: 13 分钟</time></div></footer></div></header><section class=article-content><h2 id=-使用-formal-elements>📖 使用 Formal Elements</h2><h3 id=-阅读目的>🎯 阅读目的</h3><blockquote><p>更加深入了解 Formal Element，能够使用其来分析现有游戏和设计自己的游戏。</p></blockquote><hr><h3 id=-本章摘要>🧠 本章摘要</h3><blockquote><p>正规元素起作用时，就会构成我们所熟知的游戏，而有多种可能的方法将这些元素有机组合起来，来创造出更多、更广泛的游戏体验。</p></blockquote><hr><h3 id=-核心内容整理>📌 核心内容整理</h3><h4 id=-核心理念>✦ 核心理念</h4><ul><li><strong>玩家 Player</strong><ul><li>游戏是一种体验式设计，玩家必须自愿接受游戏的规则和约束。</li><li>当玩家接受了游戏的邀请，他们便踏入了先前提过的「魔法圈」。</li><li>需要设计的重要部分包括：<ul><li><em>游戏的邀请</em>（让玩家对玩你的游戏感兴趣）</li><li><em>玩家的数量</em>（为特定数量玩家所设计的游戏要考虑得更多）</li><li><em>玩家的角色</em>（巴图理论：成就者、探险家、社交者、杀手。玩家通常有一个符合他们目标的主要游戏风格）</li><li>玩家交互模式：<ul><li><em>单人 VS 系统</em>（游戏中没有其他人类玩家，通常倾向于使用谜题或其他形式来创造冲突）</li><li><em>多名独立玩家 VS 系统</em>（玩家之间没有直接的动作，也不需要参与者之间的联合，本质上是在多人游戏环境中进行单人游戏。适用于非竞争性又喜欢活动和社交的玩家，也适用于赌博游戏）</li><li><em>玩家 VS 玩家</em>（激烈的对抗代表这个模式是为专注充满白刃战的游戏准备的）</li><li><em>单边对抗</em>（二至多人与一人对抗，结合了合作以及竞争机制）</li><li><em>多边对抗</em>（三名以上玩家直接竞争）</li><li><em>协作游戏</em>（二至多人协作对抗游戏系统）</li><li><em>团队对抗</em>（二至更多团队竞争）</li></ul></li></ul></li></ul></li><li><strong>目标 Objectives</strong><ul><li>目标定义了玩家在游戏规则之内所尽力去完成的内容。</li><li>最佳情况下的目标，对于玩家来说十分具有挑战性，但是仍然可以实现。</li><li>游戏的目标还可以奠定游戏的基调。</li><li>有些游戏中不同的玩家拥有不同的目标，还有的游戏允许玩家在多个目标中选择。</li><li>一些目标的分类：<ul><li><em>掠夺</em>（夺取或摧毁对手的东西，同时避免被捕或被杀）</li><li><em>追捕</em>（抓住对手或躲避对手的抓捕）</li><li><em>竞速</em>（比其他玩家先实现目标）</li><li><em>排列</em>（按照某种空间构型排列你的游戏块，或者在不同类的游戏块间创造一种概念性的排列）</li><li><em>救援或脱逃</em>（是一个或多个单位达到安全状态）</li><li><em>行为禁止</em>（通过笑、谈话、放置、错误的移动或其他不应该做的事来破坏规则）</li><li><em>建设</em>（建造、维护和管理对象，多数情况下算是复杂版本的排列游戏）</li><li><em>探索</em>（探索游戏区域，通常与更有竞争性的目标结合在一起）</li><li><em>解谜</em>（在比赛结束前解决一个谜题）</li><li><em>益智</em>（获得或者使用知识来打败其他玩家。有的着重于拥有游戏外的知识，有的着重于获得或者使用游戏内的知识）</li></ul></li><li>游戏中最有趣的目标通常是将各种类型混合得到的。</li><li>读者可以将这些分类作为工具，来找到自己喜欢的游戏目标和不喜欢的游戏目标，以及如何在自己的游戏中设置目标。</li></ul></li><li><strong>操作 Procedure</strong><ul><li>玩家游戏的方法和为了实现游戏目标而采取的行动。</li><li>考虑操作的一种方法是：谁在哪儿？什么时候？做了什么？</li><li>常用的操作类型：<ul><li><em>开始操作</em>（如何开始一个游戏）</li><li><em>行动操作</em>（在游戏开始后进行的操作）</li><li><em>特殊操作</em>（首先与其他元素或者是游戏状态的操作</li><li><em>解决操作</em>（将游戏带往结束的操作）</li></ul></li><li>电子游戏中，操作通常与控制部分融为一体，这是区分操作和规则的非常重要的方法，因为在电子游戏中规则对玩家来说可能是隐藏的。</li><li>电子游戏比起非电子游戏，可以在背后运转多层次的系统操作以相应各种游戏状态和玩家行为，也就是可以包含更复杂的系统操作并且处理得更快。但是这并不意味着电子游戏比非电子游戏更加复杂。</li><li>操作从本质上受到物理约束的限制，作为设计师需要时刻注意这些约束并寻找到具有创造性且优雅的解决方案。</li></ul></li><li><strong>规则 Rules</strong><ul><li>规则定义游戏的对象和玩家可采取的行为。</li><li>在电子游戏中，规则会被写在游戏的说明中或隐含在程序里。</li><li>规则还可以堵上游戏的漏洞。</li><li>设计规则时，一定要时刻考虑和玩家之间的关系。太多的规则会令玩家难以理解，描述不明确或者沟通甚少的规则会让玩家迷惑甚至疏远游戏。</li><li>游戏中的对象都有一个独特的地位和意义，被定义为游戏规则集的一部分，既可以是完全虚构的也可以是基于现实世界对象的。在定义自己的游戏的对象和概念是，时刻考虑玩家将如何学习对象的本质是十分重要的。</li><li>规则限制行为。限制行为的规则可以以基本界线的形式出现。还可以避免游戏倾向于对某位玩家或者某些玩家有利而不平衡。</li><li>规则也可以产生结果。比如如果发生了什么事那么规则产生 xyz 的结果。这种类型的规则可以用于将游戏拉回自己的轨道。</li></ul></li><li><strong>资源 Resources</strong><ul><li>游戏中的资源起着与现实世界一样的作用，可以用于实现某种目标。</li><li>管理资源并且决定资源的产出方式和时机是游戏设计师的主要职责之一。</li><li>根据定义，游戏系统中的资源必须同时具有实用性和稀缺性。</li><li>常见的资源类型如下：<ul><li><em>命数</em>（最简单的模式设计：越多越好，无任何副作用）</li><li><em>单位</em></li><li><em>HP</em>（可以是独立的资源类型，也可以是个体生命的一个属性，有助于戏剧性地表现生命和单位的损失）</li><li><em>货币</em>（最有力的资源类型之一，不需要局限于标准的纸币系统）</li><li><em>行动</em>（玩家必须仔细规划行动，以免浪费任何可能的行动机会）</li><li><em>能力增强</em>（通常是临时的、数量有限的）</li><li><em>物品</em>（也称为“库存”）</li><li><em>特殊区域</em>（基于地图的系统中常见）</li><li><em>时间</em>（玩家必须抢时间完成工作，游戏会为游戏设计在情感方面加分）</li></ul></li></ul></li><li><strong>冲突 Conflict</strong><ul><li>当玩家试图在游戏的规则和边界之内实现目标时，冲突就显现了出来。</li><li>冲突是通过创建规则、过程（procedure）和各种情景而设计在游戏之中的，阻止玩家直接完成他们的目标。</li><li>经典的游戏冲突来源包括：<ul><li><em>障碍</em>（在单人游戏中发挥着更加重要的作用）</li><li><em>对手</em>（多人游戏中冲突的主要来源）</li><li><em>两难选择</em>（在单人游戏和多人游戏中都是强有力的冲突来源）</li></ul></li></ul></li><li><strong>边界 Boundaries</strong><ul><li>边界就是将非游戏内容与游戏分开的东西。</li><li>作为一名设计师，必须定义游戏的边界，并且定义玩家是如何进入和离开“魔法圈”的。</li><li>如果熟悉的游戏系统没有边界，那么你会发现这会使其变成完全不同的游戏——这并不是一件坏事，试着改变熟悉游戏的边界，然后观察游戏体验上的变化，这会带来有趣的设计经验。</li><li>设置游戏边界除了纯粹实用的原因以外，还有感性的因素。游戏的边界是将现实生活与游戏中的事件区分开来的一种方法。</li><li>边界是构建玩家体验的另一个工具，有些游戏的玩法非常自由，不需要精确定义的边界。</li></ul></li><li><strong>结果 Outcome</strong><ul><li>为了吸引玩家，游戏的结果必然是不确定的。这种不确定性通常通过可测量且唯一的结果来完成。</li><li>大多数的大型多人在线游戏、模拟游戏等并没有获胜者或者是结束状态的概念。这些游戏都被设计为可以无限地进行下去，并以其他形式（不是获胜或者结束游戏的形式）来奖励玩家。有些人认为其与基本定义不同而不将其称为游戏，但是我们认为没有必要将这些强力的游戏体验移除。相反，我们认为，扩大我们的定义或探索边界，有助于我们站在有趣且有效的角度去看待游戏。</li><li>很多游戏并不是零和游戏，非零和游戏的总收益以及总损失总是大于或者小于 0。</li></ul></li></ul><h4 id=-关键技能概念>✦ 关键技能/概念</h4><div class=table-wrapper><table><thead><tr><th>概念</th><th>简要定义</th></tr></thead><tbody><tr><td>玩家 Player</td><td>接受了游戏的邀请、自愿进入魔法圈的人</td></tr><tr><td>目标 Objectives</td><td>玩家在游戏规则之内所尽力去完成的内容</td></tr><tr><td>操作 Procedure</td><td>玩家游戏的方法和为了实现游戏目标而采取的行动</td></tr><tr><td>规则 Rules</td><td>定义了游戏的对象和玩家可采取的行为</td></tr><tr><td>资源 Resources</td><td>起着与现实世界一样的作用，可以用于实现某种目标</td></tr><tr><td>冲突 Conflict</td><td>设计在游戏之中的、阻止玩家直接完成他们的目标的</td></tr><tr><td>边界 Boundaries</td><td>将非游戏内容与游戏分开的东西</td></tr><tr><td>结果 Outcome</td><td>游戏最终达到的状态</td></tr></tbody></table></div><hr><h3 id=-案例提炼>🎮 案例提炼</h3><ul><li><strong>Tim LeTourneau 的设计师视角</strong><ul><li><em>带来灵感的游戏</em><ul><li>《模拟城市 3000》里模拟的丰富层次和它们的作用让其第一次认识到游戏的底层。</li><li>系统直接如何彼此协作、如何让玩家了解这些相互作用，构成了其许多设计思路的基础。</li></ul></li><li><em>关于设计流程</em><ul><li>通常通过一个问题开始：现实中有什么东西，让玩家在虚拟世界里玩起来会充满乐趣？能否将现实中的体验转变成在屏幕上容易理解并参与的体验？</li><li>流程通常开始于一次头脑风暴，参与者来自不同专业。第一次头脑风暴后建立一张思维导图，来看能够将这个灵感挖掘到多深。<ul><li>在思考模拟时，思维导图是非常有效的工具，可以开始在节点和规划之间连线，看看他们会怎么相互作用。<strong>互动即是游戏设计</strong>。</li></ul></li><li>开始制作核心互动的原型，关键在于做出一些可以做出反应的东西。原型帮助建立信念，这些信念推动游戏前进。</li><li>一旦建立起信念，就要开始思考如何真正把他们做出来。原型不是用完即弃的东西，是用来提供清楚的方向、学习的工具。</li><li>设计之外，技术和团队是做成或毁掉游戏的原因。“游戏是团队铸就的”。</li></ul></li><li><em>关于原型</em><ul><li>原型最重要的元素是你得非常清楚地知道你想从这个原型中获得什么。</li><li>最好的原型都来自于那些特别想证明一些事情，并且选择了最高效率的媒介的人。</li><li>原型的关键在于它们不是可丢弃的——他们是草稿，不是蓝图。</li></ul></li><li><em>关于一个特别困难的设计问题</em><ul><li>关于设计的沟通才是真正的挑战。</li><li>无论何时都不要惧怕砍掉某些无法生效的功能——伟大的设计往往是明智的取舍的结果。</li></ul></li><li><em>对设计师的建议</em><ul><li>优秀的设计师不仅仅要了解设计的艺术和工艺，还懂得制作游戏，懂得越多，那么把游戏变成现实的效率就越高。</li></ul></li></ul></li><li><strong>Matt Korba 的设计师视角</strong><ul><li><em>关于设计流程</em><ul><li>其游戏灵感往往来自游戏外的世界。</li><li>一旦灵感形成了，它的中心必须具有强大的游戏性。否则这个想法可能更适合一部微电影或者漫画书。</li><li>原型是把想法实现的关键。</li></ul></li><li><em>关于原型</em><ul><li>原型是制作流程中非常重要的一部分。其游戏都从非软件原型开始。</li><li>优秀的原型自己就是一种艺术形式。</li><li>制作软件的游戏原型并没有定式。</li><li>游戏制作非常贵、非常耗时，因此只要有可能，最好先用纸来弄清楚自己要做什么。</li></ul></li><li><em>给设计师的建议</em><ul><li>别等着，动手去做游戏。用任何你能拿到的东西做游戏：弹珠、顶针、线头。做出好游戏，剩下的都很简单。</li></ul></li></ul></li><li><strong>Ian Bogost：有说服力的游戏</strong><ul><li><em>视频游戏如何表达想法</em><ul><li>视频游戏擅长于表现各种系统的行为。我们将这样的系统叫作“源系统”。</li><li>代码建模了一系列符合同一个一般规则的可能输出的集合。这种表现形式可以叫作程序性。程序性指的是计算机执行以规则为基础的行为的能力。视频游戏是程序性的一种表现形式。</li><li>因此在视频游戏中，我们现在有了源系统和与之对应的程序性模型。游戏玩家需要和模型互动以使之运作——视频游戏是交互性的软件，他们需要玩家提供输入以使程序性模型运作起来。</li><li>源系统永远不会真的像这样存在。视频游戏固有的主观性制造了不和谐，设计师根据源系统设计的程序性模型和玩家的主观性之间，以及他们的预想和对模拟的既存理解之间，产生了鸿沟。</li><li>这就是视频游戏变得具有表达新的地方：他们鼓励玩家质疑，并且让他们自己的和在游戏中的世界模型调和起来。</li></ul></li><li><em>视频游戏如何说服</em><ul><li>大多数时候，视频游戏会创建一个幻想中生物的程序性模型，也能使用这种设计来邀请玩家以新或旧的方式去看现实世界。</li><li>以这个风格使用视频游戏的一种方式是用来说服：来提出一种对这个世界的运行方式的观点。</li></ul></li><li><em>引发争议的陌生观点</em><ul><li>有说服力的游戏根据设计师的主观想法对世界进行建模。</li><li>作为玩家，我们对这个世界有一个预期模型。</li><li>一款游戏展示了与那个世界相同的模型，但是那个模型有着它自己的属性，和玩家心目中的模型很可能不同。</li><li>但我们把这两个模型放在一起时，我们能看到他们的相同点和不同点——这是当我们评判性地玩游戏时所做的事情。</li><li>这样的游戏会引起玩家的深思，不是通过提出一些让玩家很舒服、很习惯的观点，而是提出引发争议的陌生观点。</li></ul></li></ul></li></ul><hr><h3 id=-我的思考--提问>🧩 我的思考 & 提问</h3><ul><li>✍️ 我的观点/感悟<ul><li>在 Tim LeTourneau 和 Matt Korba 关于「灵感」的表述中，都提到了一点，就是都来自「游戏外的世界」。有趣的地方在于，这总是让我想到一句佛家的话——「<em>先入世後出世</em>」。我觉得这两点实际上是相通的。佛家的话说的大概是：人要先在世间历练、体会种种境遇，才能真正理解、超越世俗。我觉得不仅是游戏设计，所有创造类的事情都是，需要体验足够的人事、现实、其他种类的艺术等等，才能真正做出脱胎于现实但是超越现实的东西。更详细的探讨可以留到之后专门讨论吧。</li><li>本章节还有一点有意思的在于，开头专门说了「没有 Formal Elements」游戏将不再是游戏，但是在具体的探讨这些元素时，在不同的地方都在鼓励「探索边界」，这两点似乎是矛盾的，为什么这么说？我认为应当是：「探索边界」与「承认边界存在」并不矛盾。探索边界的过程就是边界元素不断尝试进行重构、扭曲、弱化，这些元素始终存在，只是变换了形式而已，而这些形式到底可以变换成什么样子？这就是「探索边界」在做的事。就像是在写诗歌，文字始终都是文字，但是体裁、韵律等等却可以一直被挑战、创新。</li></ul></li><li>❓ 疑问或尚不理解的地方</li></ul><hr><h3 id=-练习回应或个人实践>🛠️ 练习回应或个人实践</h3><blockquote><ol><li><strong>创造一版可供三人游玩的《井字棋》</strong></li></ol><p>对于传统的 3x3 棋盘，三个人玩显然是空间太少了，拓展棋盘显然是首要任务。我认为还可以效仿「斗地主」引入团队对抗。为了给「地主」增加对抗能力，「地主」可以连续走两步。但这样的话若是还和原来的获胜规则——三个连成线——一样的话，就太容易赢了，因此需要修改获胜条件或者限制地主手段。以下为粗糙考虑版本：</p><p>新的棋盘具有 5x5 的大小，三个玩家被分为两个阵营：「地主」和「农民」。地主阵营一人，农民阵营两人，分配方式可由玩家自行决定。落子符号三名玩家各异，可由玩家自行决定。落子顺序为：地主-农民-农民，其中农民阵营的落子顺序可由农民阵营自行决定，农民在局中也可商量切换农民阵营中两人落子顺序。除了第一次落子外，其余地主落子回合地主都可最多连续落两子，若选择连续落两子，则两子不能在同一行/列的相邻位置。农民在农民落子回合只可落一子。地主获胜条件为：将四个自己的落子连为一条线。农民获胜条件为：两个农民都将三个自己的落子连为一条线。当棋局下满仍未有人成功连线时，棋局自动拓宽一行一列，直到有一方阵营获胜或者棋局拓宽次数达到三次时仍然下满，后者条件时判为平局。</p><p>后面有时间的话或许可以写个 demo 放博客里。</p><ol start=2><li><strong>对于文中介绍的每个交互模式，挑选喜欢的游戏列一个清单。如果想不起来某款类型的游戏，可以尝试搜索并游玩一下。</strong></li></ol></blockquote><div class=table-wrapper><table><thead><tr><th>类型</th><th>游戏</th></tr></thead><tbody><tr><td>单人玩家 VS 游戏系统</td><td>《艾尔登法环》</td></tr><tr><td>多名独立玩家 VS 游戏系统</td><td>《灵迹岛》（桌游，gemini 推荐，没玩过但看起来不错）</td></tr><tr><td>玩家 VS 玩家</td><td>《街头霸王》</td></tr><tr><td>单边对抗</td><td>《黎明杀机》</td></tr><tr><td>多边对抗</td><td>《狂野飙车》</td></tr><tr><td>协作游戏</td><td>《双人成行》</td></tr><tr><td>团队对抗</td><td>《DOTA》</td></tr></tbody></table></div><blockquote><p><strong>3. 列出十个你最喜欢的游戏，并且把他们的目标列出来。你看到它们的相似之处了嘛？试着确定吸引你的游戏类型。</strong></p></blockquote><div class=table-wrapper><table><thead><tr><th>游戏</th><th>目标</th></tr></thead><tbody><tr><td>《艾尔登法环》</td><td>即使引导早已破碎，也请您当上艾尔登之王。</td></tr><tr><td>《TOEM》</td><td>抵达山顶亲眼目睹 TOEM。</td></tr><tr><td>《Rusty Lake》</td><td>揭示锈湖、永生灵药以及各个家族之间错综复杂的秘密。</td></tr><tr><td>《赛博朋克 2077》</td><td>在V的意识被 Relic 彻底抹除之前，找到拯救自己的方法。</td></tr><tr><td>《暗喻幻想》</td><td>拯救王子，摧毁路易的阴谋，赢得王位争夺战称为新王。</td></tr><tr><td>《山河旅探》</td><td>揭开哥哥死亡的真相。</td></tr><tr><td>《疑案追声》</td><td>使用声探系统解决所有案件。</td></tr><tr><td>《我在七年后等着你》</td><td>回到七年前的约定之地，找回失去的记忆，揭开过去的真相。</td></tr><tr><td>《夏洛克福尔摩斯系列》</td><td>运用观察和演绎能力构建推理，揭开案件背后隐藏的真相。</td></tr><tr><td>《Ghost Trick》</td><td>在天亮之前找到自己死亡的真相。</td></tr><tr><td>我自认是比较喜欢解谜游戏和有相当自由度的 RPG 的。</td><td></td></tr></tbody></table></div><blockquote><p><strong>4. 对于描述的资源类型，创建一个使用了这些资源类型的列表。如果想不起来可以查找并游玩一下。</strong></p></blockquote><div class=table-wrapper><table><thead><tr><th>资源类型</th><th>游戏</th></tr></thead><tbody><tr><td>命数</td><td>《超级马里奥》</td></tr><tr><td>单位</td><td>《红色警戒》</td></tr><tr><td>生命值</td><td>《塞尔达传说：旷野之息》</td></tr><tr><td>货币</td><td>《维多利亚3》</td></tr><tr><td>行动</td><td>《火焰纹章：风花雪月》</td></tr><tr><td>能力加强</td><td>《马里奥卡丁车》</td></tr><tr><td>物品</td><td>《博德之门3》</td></tr><tr><td>特殊区域</td><td>《帝国时代6》</td></tr><tr><td>时间</td><td>《炉石传说》</td></tr></tbody></table></div><blockquote><p><strong>5. DnD 中的边界是什么？</strong>
-寻找边界，等价于寻找构建 DnD 的最小游戏元素集合。是什么使得 DnD 是 DnD 而不是其他的？我认为主要在于核心机制、游戏规则还有故事题材。具体的 DnD 机制我不是特别了解，就不写了。</p></blockquote><hr><h3 id=-精选语录摘录>💬 精选语录摘录</h3><blockquote><p>“游戏中最有趣的目标通常是将各种类型混合得到的。”</p><p>“操作从本质上受到物理约束的限制，作为设计师需要时刻注意这些约束并寻找到具有创造性且优雅的解决方案。”</p><p>“试着改变熟悉游戏的边界，然后观察游戏体验上的变化，这会带来有趣的设计经验。”</p><p>“游戏的边界是将现实生活与游戏中的事件区分开来的一种方法。”</p><p>“我们认为没有必要将这些强力的游戏体验移除。相反，我们认为，扩大我们的定义或探索边界，有助于我们站在有趣且有效的角度去看待游戏。”</p><p>“互动即是游戏设计。”</p><p>“游戏是团队铸就的。”</p><p>“伟大的设计往往是明智的取舍的结果。”</p><p>“一旦灵感形成了，它的中心必须具有强大的游戏性。否则这个想法可能更适合一部微电影或者漫画书。”</p><p>“别等着，动手去做游戏。”</p></blockquote><hr><h3 id=-小结--后续预期>🧾 小结 & 后续预期</h3><blockquote><p>本章过后，已经可以对一个游戏进行初步的框架剖析，或者在形式上推敲、构建一个游戏原型。后面章节将更详细了解戏剧元素和动态元素。在我看来基本的骨架已经了解了，后面两部分要开始填充血肉了。</p></blockquote></section><footer class=article-footer><section class=article-tags><a href=/tags/readingnote/>ReadingNote</a>
-<a href=/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/>读书笔记</a>
-<a href=/tags/game-designer/>Game Designer</a>
-<a href=/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E5%B8%88/>游戏设计师</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
-<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>相关文章</h2><div class=related-content><div class="flex article-list--tile"><article class=has-image><a href=/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/><div class=article-image><img src=/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/cover.41cf062f4552dbdad8ea4c648c04f955_hu_53f5e5e81943d114.png width=250 height=150 loading=lazy alt="Featured image of post 游戏设计梦工厂，第一篇第四章" data-hash="md5-Qc8GL0VS29rY6kxkjAT5VQ=="></div><div class=article-details><h2 class=article-title>游戏设计梦工厂，第一篇第四章</h2></div></a></article><article class=has-image><a href=/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0%E9%A2%9D%E5%A4%96%E7%AF%87/><div class=article-image><img src=/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0%E9%A2%9D%E5%A4%96%E7%AF%87/cover.41cf062f4552dbdad8ea4c648c04f955_hu_53f5e5e81943d114.png width=250 height=150 loading=lazy alt="Featured image of post 游戏设计梦工厂，第一篇第二章额外篇" data-hash="md5-Qc8GL0VS29rY6kxkjAT5VQ=="></div><div class=article-details><h2 class=article-title>游戏设计梦工厂，第一篇第二章额外篇</h2></div></a></article><article class=has-image><a href=/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0/><div class=article-image><img src=/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0/cover.41cf062f4552dbdad8ea4c648c04f955_hu_53f5e5e81943d114.png width=250 height=150 loading=lazy alt="Featured image of post 游戏设计梦工厂，第一篇第二章" data-hash="md5-Qc8GL0VS29rY6kxkjAT5VQ=="></div><div class=article-details><h2 class=article-title>游戏设计梦工厂，第一篇第二章</h2></div></a></article><article class=has-image><a href=/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%80%E7%AB%A0/><div class=article-image><img src=/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%80%E7%AB%A0/cover.41cf062f4552dbdad8ea4c648c04f955_hu_53f5e5e81943d114.png width=250 height=150 loading=lazy alt="Featured image of post 游戏设计梦工厂，第一篇第一章" data-hash="md5-Qc8GL0VS29rY6kxkjAT5VQ=="></div><div class=article-details><h2 class=article-title>游戏设计梦工厂，第一篇第一章</h2></div></a></article><article class=has-image><a href=/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/><div class=article-image><img src=/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/cover.da456e378c7ac915309618910711ca32_hu_d8adbaed82452526.png width=250 height=150 loading=lazy alt="Featured image of post Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 3" data-hash="md5-2kVuN4x6yRUwlhiRBxHKMg=="></div><div class=article-details><h2 class=article-title>Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 3</h2></div></a></article></div></div></aside><script src=https://giscus.app/client.js data-repo=EvanWonghere/EvanWonghere.github.io data-repo-id=R_kgDOPzgwzg data-category=Announcements data-category-id=DIC_kwDOPzgwzs4Cvsti data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=top data-theme=light data-lang=en data-loading crossorigin=anonymous async></script><script>function setGiscusTheme(e){let t=document.querySelector("iframe.giscus-frame");t&&t.contentWindow.postMessage({giscus:{setConfig:{theme:e}}},"https://giscus.app")}(function(){addEventListener("message",t=>{if(event.origin!=="https://giscus.app")return;e()}),window.addEventListener("onColorSchemeChange",e);function e(){setGiscusTheme(document.documentElement.dataset.scheme==="light"?"light":"dark_dimmed")}})()</script><footer class=site-footer><section class=copyright>&copy;
-2020 -
-2026 EvanWong</section><section class=powerby>使用 <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> 构建<br>主题 <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.31.0>Stack</a></b> 由 <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a> 设计</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-<button class="pswp__button pswp__button--share" title=Share></button>
-<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-</button>
-<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="还是一不小心就会写好多，主要是感觉书上东西讲的挺多但也挺好，删减或者缩略的话感觉都会使得表达不够充分，还是一点点改吧......">
+<title>游戏设计梦工厂，第一篇第三章</title>
+
+<link rel='canonical' href='http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/'>
+
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="游戏设计梦工厂，第一篇第三章">
+<meta property='og:description' content="还是一不小心就会写好多，主要是感觉书上东西讲的挺多但也挺好，删减或者缩略的话感觉都会使得表达不够充分，还是一点点改吧......">
+<meta property='og:url' content='http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/'>
+<meta property='og:site_name' content='蜂窝'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='ReadingNote' /><meta property='article:tag' content='读书笔记' /><meta property='article:tag' content='Game Designer' /><meta property='article:tag' content='游戏设计师' /><meta property='article:published_time' content='2025-09-23T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-09-23T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/cover.png' />
+<meta name="twitter:title" content="游戏设计梦工厂，第一篇第三章">
+<meta name="twitter:description" content="还是一不小心就会写好多，主要是感觉书上东西讲的挺多但也挺好，删减或者缩略的话感觉都会使得表达不够充分，还是一点点改吧......"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/cover.png' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_789ebd951ab60789.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🐝</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">蜂窝</a></h1>
+            <h2 class="site-description">EvanWong的个人博客</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/EvanWonghere/EvanWonghere.github.io'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://steamcommunity.com/profiles/76561198980535015/'
+                        target="_blank"
+                        title="Steam"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Steam</title><path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012H7.54zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.663 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.253 0-2.265-1.014-2.265-2.265z"/></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/quotes/' >
+                
+                
+                
+                    <?xml version="1.0" encoding="utf-8"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg fill="#000000" width="800px" height="800px" viewBox="-6 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<title>quote-right</title>
+<path d="M3.44 22.8c-0.32 0-0.64-0.2-0.76-0.52-0.16-0.44 0.040-0.92 0.48-1.080 3.4-1.36 4.12-4.28 4.12-6.48 0-2.52-1.4-3.84-2.8-3.84-1.28 0-2.8 0.6-2.8 2.28 0 0.68 0.36 1.32 0.96 1.72 0.48 0.28 1.040 0.36 1.44 0.12 0.4-0.2 0.92-0.040 1.12 0.36s0.040 0.92-0.36 1.12c-0.96 0.48-2.12 0.4-3.080-0.2-1.12-0.68-1.76-1.84-1.76-3.12 0-2.32 1.84-3.96 4.48-3.96 2.16 0 4.48 1.92 4.48 5.52 0 3.84-1.84 6.68-5.2 8.040-0.080 0-0.2 0.040-0.32 0.040zM14 22.8c-0.32 0-0.64-0.2-0.76-0.52-0.16-0.44 0.040-0.92 0.48-1.080 3.4-1.36 4.12-4.28 4.12-6.48 0-2.52-1.4-3.84-2.8-3.84-1.28 0-2.8 0.6-2.8 2.28 0 0.68 0.36 1.32 0.96 1.72 0.48 0.28 1.040 0.36 1.44 0.12 0.4-0.2 0.92-0.040 1.12 0.36s0.040 0.92-0.36 1.12c-0.96 0.48-2.12 0.4-3.080-0.2-1.080-0.68-1.76-1.84-1.76-3.12 0-2.32 1.84-3.96 4.48-3.96 2.16 0 4.48 1.92 4.48 5.52 0 3.84-1.84 6.68-5.2 8.040-0.12 0-0.24 0.040-0.32 0.040z"></path>
+</svg>
+                
+                <span>采撷集</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/games/' >
+                
+                
+                
+                    <?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg height="800px" width="800px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	 viewBox="0 0 512 512"  xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#000000;}
+</style>
+<g>
+	<path class="st0" d="M511.27,331.566L511.27,331.566c0-0.009,0-0.018,0-0.026c-0.008-0.052,0-0.087-0.008-0.14h-0.009
+		c-6.682-88.65-27.159-154.403-55.948-198.846c-14.412-22.221-30.968-39.115-49.041-50.507
+		c-18.048-11.401-37.649-17.198-57.388-17.18c-14.551-0.009-26.985,2.629-37.527,6.611c-15.836,5.97-27.358,14.795-36.364,21.319
+		c-4.495,3.28-8.373,5.961-11.549,7.592c-3.211,1.658-5.475,2.239-7.436,2.239c-1.328-0.009-2.725-0.251-4.521-0.92
+		c-3.115-1.137-7.288-3.732-12.278-7.332c-7.531-5.354-16.885-12.764-29.223-18.846c-12.339-6.092-27.766-10.69-46.855-10.664
+		c-19.739-0.018-39.34,5.787-57.388,17.18c-27.115,17.119-50.794,46.481-69.008,87.887C18.542,211.332,5.743,264.92,0.746,331.401
+		H0.738c-0.009,0.052,0,0.096-0.009,0.14c0,0.008,0,0.017,0,0.026l0,0C0.243,336.981,0,342.247,0,347.358
+		c-0.009,25.058,5.77,46.455,16.651,63.141c10.846,16.694,26.863,28.347,45.614,33.822c6.43,1.892,13.068,2.811,19.757,2.811
+		c19.445-0.026,39.046-7.618,57.692-20.764c18.681-13.189,36.598-32.052,52.91-55.731c7.845-11.427,18.5-24.798,29.987-34.854
+		c5.736-5.032,11.662-9.214,17.362-12.026c5.71-2.82,11.09-4.244,16.027-4.235c4.936-0.009,10.317,1.414,16.026,4.235
+		c8.555,4.199,17.588,11.558,25.787,20.112c8.226,8.538,15.67,18.196,21.562,26.76c16.312,23.688,34.23,42.55,52.902,55.739
+		c18.655,13.146,38.255,20.738,57.7,20.764c6.69,0,13.328-0.92,19.749-2.811c18.759-5.475,34.776-17.128,45.614-33.822
+		C506.221,393.813,512,372.416,512,347.358C512,342.256,511.757,336.981,511.27,331.566z M476.737,398.36
+		c-8.104,12.356-19.236,20.469-33.284,24.651c-4.33,1.275-8.807,1.9-13.475,1.908c-13.484,0.026-28.902-5.414-44.894-16.703
+		c-15.974-11.254-32.312-28.225-47.418-50.177c-8.564-12.417-20.044-27.012-33.64-38.95c-6.812-5.97-14.169-11.297-22.16-15.245
+		c-7.975-3.94-16.677-6.534-25.866-6.534c-9.189,0-17.892,2.594-25.866,6.534c-11.974,5.943-22.577,14.906-31.957,24.616
+		c-9.353,9.726-17.432,20.268-23.843,29.579c-15.106,21.952-31.454,38.923-47.419,50.177
+		c-15.991,11.288-31.418,16.729-44.894,16.703c-4.677-0.009-9.145-0.633-13.484-1.908c-14.04-4.182-25.172-12.295-33.284-24.651
+		c-8.06-12.364-13.04-29.293-13.04-51.002c0-4.451,0.208-9.111,0.65-13.961v-0.052l0.009-0.113
+		c6.429-86.17,26.446-148.582,52.451-188.59c12.989-20.026,27.41-34.447,42.256-43.801c14.872-9.353,30.126-13.744,45.544-13.761
+		c11.896,0.009,21.424,2.091,29.675,5.189c12.356,4.65,21.883,11.756,31.158,18.507c4.652,3.367,9.233,6.655,14.378,9.336
+		c5.111,2.655,11.028,4.729,17.666,4.729c4.399,0,8.556-0.928,12.286-2.325c6.56-2.482,12-6.213,17.422-10.065
+		c8.113-5.831,16.208-12.14,26.091-16.981c9.883-4.833,21.449-8.364,37.076-8.39c15.418,0.017,30.672,4.408,45.545,13.761
+		c22.264,14.005,43.6,39.532,60.511,78.03c16.92,38.464,29.354,89.735,34.195,154.36v0.052l0.009,0.113
+		c0.434,4.842,0.652,9.502,0.652,13.961C489.778,369.067,484.806,386.004,476.737,398.36z"/>
+	<polygon class="st0" points="161.232,178.126 122.29,178.126 122.29,213.631 86.785,213.631 86.785,252.573 122.29,252.573 
+		122.29,288.079 161.232,288.079 161.232,252.573 196.737,252.573 196.737,213.631 161.232,213.631 	"/>
+	<path class="st0" d="M368.659,167.002c-11.331,0-20.52,9.189-20.52,20.538c0,11.341,9.189,20.538,20.52,20.538
+		c11.35,0,20.538-9.197,20.538-20.538C389.197,176.191,380.008,167.002,368.659,167.002z"/>
+	<path class="st0" d="M368.659,266.247c-11.331,0-20.52,9.189-20.52,20.53c0,11.349,9.189,20.538,20.52,20.538
+		c11.35,0,20.538-9.189,20.538-20.538C389.197,275.436,380.008,266.247,368.659,266.247z"/>
+	<path class="st0" d="M418.282,216.633c-11.341,0-20.538,9.189-20.538,20.53c0,11.349,9.197,20.529,20.538,20.529
+		c11.35,0,20.538-9.18,20.538-20.529C438.82,225.822,429.631,216.633,418.282,216.633z"/>
+	<path class="st0" d="M319.054,216.633c-11.349,0-20.538,9.189-20.538,20.53c0,11.349,9.189,20.529,20.538,20.529
+		c11.341,0,20.539-9.18,20.539-20.529C339.592,225.822,330.394,216.633,319.054,216.633z"/>
+</g>
+</svg>
+                
+                <span>游戏厅</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='' >
+                
+                
+                
+                <span>games</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="http://localhost:1313/en/" >English</option>
+                                
+                                    <option value="http://localhost:1313/" selected>中文</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#-使用-formal-elements">📖 使用 Formal Elements</a>
+      <ol>
+        <li><a href="#-阅读目的">🎯 阅读目的</a></li>
+        <li><a href="#-本章摘要">🧠 本章摘要</a></li>
+        <li><a href="#-核心内容整理">📌 核心内容整理</a>
+          <ol>
+            <li><a href="#-核心理念">✦ 核心理念</a></li>
+            <li><a href="#-关键技能概念">✦ 关键技能/概念</a></li>
+          </ol>
+        </li>
+        <li><a href="#-案例提炼">🎮 案例提炼</a></li>
+        <li><a href="#-我的思考--提问">🧩 我的思考 &amp; 提问</a></li>
+        <li><a href="#-练习回应或个人实践">🛠️ 练习回应或个人实践</a></li>
+        <li><a href="#-精选语录摘录">💬 精选语录摘录</a></li>
+        <li><a href="#-小结--后续预期">🧾 小结 &amp; 后续预期</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/">
+                <img src="/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/cover_hu_e69e338c481bbf67.png"
+                        srcset="/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/cover_hu_e69e338c481bbf67.png 800w, /p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/cover_hu_b3c33cb0b48d925f.png 1600w"
+                        width="800" 
+                        height="1051" 
+                        loading="lazy"
+                        alt="Featured image of post 游戏设计梦工厂，第一篇第三章" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/" >
+                游戏设计
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/">游戏设计梦工厂，第一篇第三章</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            还是一不小心就会写好多，主要是感觉书上东西讲的挺多但也挺好，删减或者缩略的话感觉都会使得表达不够充分，还是一点点改吧......
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Sep 23, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 13 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    <h2 id="-使用-formal-elements">📖 使用 Formal Elements
+</h2><h3 id="-阅读目的">🎯 阅读目的
+</h3><blockquote>
+<p>更加深入了解 Formal Element，能够使用其来分析现有游戏和设计自己的游戏。</p>
+</blockquote>
+<hr>
+<h3 id="-本章摘要">🧠 本章摘要
+</h3><blockquote>
+<p>正规元素起作用时，就会构成我们所熟知的游戏，而有多种可能的方法将这些元素有机组合起来，来创造出更多、更广泛的游戏体验。</p>
+</blockquote>
+<hr>
+<h3 id="-核心内容整理">📌 核心内容整理
+</h3><h4 id="-核心理念">✦ 核心理念
+</h4><ul>
+<li><strong>玩家 Player</strong>
+<ul>
+<li>游戏是一种体验式设计，玩家必须自愿接受游戏的规则和约束。</li>
+<li>当玩家接受了游戏的邀请，他们便踏入了先前提过的「魔法圈」。</li>
+<li>需要设计的重要部分包括：
+<ul>
+<li><em>游戏的邀请</em>（让玩家对玩你的游戏感兴趣）</li>
+<li><em>玩家的数量</em>（为特定数量玩家所设计的游戏要考虑得更多）</li>
+<li><em>玩家的角色</em>（巴图理论：成就者、探险家、社交者、杀手。玩家通常有一个符合他们目标的主要游戏风格）</li>
+<li>玩家交互模式：
+<ul>
+<li><em>单人 VS 系统</em>（游戏中没有其他人类玩家，通常倾向于使用谜题或其他形式来创造冲突）</li>
+<li><em>多名独立玩家 VS 系统</em>（玩家之间没有直接的动作，也不需要参与者之间的联合，本质上是在多人游戏环境中进行单人游戏。适用于非竞争性又喜欢活动和社交的玩家，也适用于赌博游戏）</li>
+<li><em>玩家 VS 玩家</em>（激烈的对抗代表这个模式是为专注充满白刃战的游戏准备的）</li>
+<li><em>单边对抗</em>（二至多人与一人对抗，结合了合作以及竞争机制）</li>
+<li><em>多边对抗</em>（三名以上玩家直接竞争）</li>
+<li><em>协作游戏</em>（二至多人协作对抗游戏系统）</li>
+<li><em>团队对抗</em>（二至更多团队竞争）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>目标 Objectives</strong>
+<ul>
+<li>目标定义了玩家在游戏规则之内所尽力去完成的内容。</li>
+<li>最佳情况下的目标，对于玩家来说十分具有挑战性，但是仍然可以实现。</li>
+<li>游戏的目标还可以奠定游戏的基调。</li>
+<li>有些游戏中不同的玩家拥有不同的目标，还有的游戏允许玩家在多个目标中选择。</li>
+<li>一些目标的分类：
+<ul>
+<li><em>掠夺</em>（夺取或摧毁对手的东西，同时避免被捕或被杀）</li>
+<li><em>追捕</em>（抓住对手或躲避对手的抓捕）</li>
+<li><em>竞速</em>（比其他玩家先实现目标）</li>
+<li><em>排列</em>（按照某种空间构型排列你的游戏块，或者在不同类的游戏块间创造一种概念性的排列）</li>
+<li><em>救援或脱逃</em>（是一个或多个单位达到安全状态）</li>
+<li><em>行为禁止</em>（通过笑、谈话、放置、错误的移动或其他不应该做的事来破坏规则）</li>
+<li><em>建设</em>（建造、维护和管理对象，多数情况下算是复杂版本的排列游戏）</li>
+<li><em>探索</em>（探索游戏区域，通常与更有竞争性的目标结合在一起）</li>
+<li><em>解谜</em>（在比赛结束前解决一个谜题）</li>
+<li><em>益智</em>（获得或者使用知识来打败其他玩家。有的着重于拥有游戏外的知识，有的着重于获得或者使用游戏内的知识）</li>
+</ul>
+</li>
+<li>游戏中最有趣的目标通常是将各种类型混合得到的。</li>
+<li>读者可以将这些分类作为工具，来找到自己喜欢的游戏目标和不喜欢的游戏目标，以及如何在自己的游戏中设置目标。</li>
+</ul>
+</li>
+<li><strong>操作 Procedure</strong>
+<ul>
+<li>玩家游戏的方法和为了实现游戏目标而采取的行动。</li>
+<li>考虑操作的一种方法是：谁在哪儿？什么时候？做了什么？</li>
+<li>常用的操作类型：
+<ul>
+<li><em>开始操作</em>（如何开始一个游戏）</li>
+<li><em>行动操作</em>（在游戏开始后进行的操作）</li>
+<li><em>特殊操作</em>（首先与其他元素或者是游戏状态的操作</li>
+<li><em>解决操作</em>（将游戏带往结束的操作）</li>
+</ul>
+</li>
+<li>电子游戏中，操作通常与控制部分融为一体，这是区分操作和规则的非常重要的方法，因为在电子游戏中规则对玩家来说可能是隐藏的。</li>
+<li>电子游戏比起非电子游戏，可以在背后运转多层次的系统操作以相应各种游戏状态和玩家行为，也就是可以包含更复杂的系统操作并且处理得更快。但是这并不意味着电子游戏比非电子游戏更加复杂。</li>
+<li>操作从本质上受到物理约束的限制，作为设计师需要时刻注意这些约束并寻找到具有创造性且优雅的解决方案。</li>
+</ul>
+</li>
+<li><strong>规则 Rules</strong>
+<ul>
+<li>规则定义游戏的对象和玩家可采取的行为。</li>
+<li>在电子游戏中，规则会被写在游戏的说明中或隐含在程序里。</li>
+<li>规则还可以堵上游戏的漏洞。</li>
+<li>设计规则时，一定要时刻考虑和玩家之间的关系。太多的规则会令玩家难以理解，描述不明确或者沟通甚少的规则会让玩家迷惑甚至疏远游戏。</li>
+<li>游戏中的对象都有一个独特的地位和意义，被定义为游戏规则集的一部分，既可以是完全虚构的也可以是基于现实世界对象的。在定义自己的游戏的对象和概念是，时刻考虑玩家将如何学习对象的本质是十分重要的。</li>
+<li>规则限制行为。限制行为的规则可以以基本界线的形式出现。还可以避免游戏倾向于对某位玩家或者某些玩家有利而不平衡。</li>
+<li>规则也可以产生结果。比如如果发生了什么事那么规则产生 xyz 的结果。这种类型的规则可以用于将游戏拉回自己的轨道。</li>
+</ul>
+</li>
+<li><strong>资源 Resources</strong>
+<ul>
+<li>游戏中的资源起着与现实世界一样的作用，可以用于实现某种目标。</li>
+<li>管理资源并且决定资源的产出方式和时机是游戏设计师的主要职责之一。</li>
+<li>根据定义，游戏系统中的资源必须同时具有实用性和稀缺性。</li>
+<li>常见的资源类型如下：
+<ul>
+<li><em>命数</em>（最简单的模式设计：越多越好，无任何副作用）</li>
+<li><em>单位</em></li>
+<li><em>HP</em>（可以是独立的资源类型，也可以是个体生命的一个属性，有助于戏剧性地表现生命和单位的损失）</li>
+<li><em>货币</em>（最有力的资源类型之一，不需要局限于标准的纸币系统）</li>
+<li><em>行动</em>（玩家必须仔细规划行动，以免浪费任何可能的行动机会）</li>
+<li><em>能力增强</em>（通常是临时的、数量有限的）</li>
+<li><em>物品</em>（也称为“库存”）</li>
+<li><em>特殊区域</em>（基于地图的系统中常见）</li>
+<li><em>时间</em>（玩家必须抢时间完成工作，游戏会为游戏设计在情感方面加分）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>冲突 Conflict</strong>
+<ul>
+<li>当玩家试图在游戏的规则和边界之内实现目标时，冲突就显现了出来。</li>
+<li>冲突是通过创建规则、过程（procedure）和各种情景而设计在游戏之中的，阻止玩家直接完成他们的目标。</li>
+<li>经典的游戏冲突来源包括：
+<ul>
+<li><em>障碍</em>（在单人游戏中发挥着更加重要的作用）</li>
+<li><em>对手</em>（多人游戏中冲突的主要来源）</li>
+<li><em>两难选择</em>（在单人游戏和多人游戏中都是强有力的冲突来源）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>边界 Boundaries</strong>
+<ul>
+<li>边界就是将非游戏内容与游戏分开的东西。</li>
+<li>作为一名设计师，必须定义游戏的边界，并且定义玩家是如何进入和离开“魔法圈”的。</li>
+<li>如果熟悉的游戏系统没有边界，那么你会发现这会使其变成完全不同的游戏——这并不是一件坏事，试着改变熟悉游戏的边界，然后观察游戏体验上的变化，这会带来有趣的设计经验。</li>
+<li>设置游戏边界除了纯粹实用的原因以外，还有感性的因素。游戏的边界是将现实生活与游戏中的事件区分开来的一种方法。</li>
+<li>边界是构建玩家体验的另一个工具，有些游戏的玩法非常自由，不需要精确定义的边界。</li>
+</ul>
+</li>
+<li><strong>结果 Outcome</strong>
+<ul>
+<li>为了吸引玩家，游戏的结果必然是不确定的。这种不确定性通常通过可测量且唯一的结果来完成。</li>
+<li>大多数的大型多人在线游戏、模拟游戏等并没有获胜者或者是结束状态的概念。这些游戏都被设计为可以无限地进行下去，并以其他形式（不是获胜或者结束游戏的形式）来奖励玩家。有些人认为其与基本定义不同而不将其称为游戏，但是我们认为没有必要将这些强力的游戏体验移除。相反，我们认为，扩大我们的定义或探索边界，有助于我们站在有趣且有效的角度去看待游戏。</li>
+<li>很多游戏并不是零和游戏，非零和游戏的总收益以及总损失总是大于或者小于 0。</li>
+</ul>
+</li>
+</ul>
+<h4 id="-关键技能概念">✦ 关键技能/概念
+</h4><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>概念</th>
+          <th>简要定义</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>玩家 Player</td>
+          <td>接受了游戏的邀请、自愿进入魔法圈的人</td>
+      </tr>
+      <tr>
+          <td>目标 Objectives</td>
+          <td>玩家在游戏规则之内所尽力去完成的内容</td>
+      </tr>
+      <tr>
+          <td>操作 Procedure</td>
+          <td>玩家游戏的方法和为了实现游戏目标而采取的行动</td>
+      </tr>
+      <tr>
+          <td>规则 Rules</td>
+          <td>定义了游戏的对象和玩家可采取的行为</td>
+      </tr>
+      <tr>
+          <td>资源 Resources</td>
+          <td>起着与现实世界一样的作用，可以用于实现某种目标</td>
+      </tr>
+      <tr>
+          <td>冲突 Conflict</td>
+          <td>设计在游戏之中的、阻止玩家直接完成他们的目标的</td>
+      </tr>
+      <tr>
+          <td>边界 Boundaries</td>
+          <td>将非游戏内容与游戏分开的东西</td>
+      </tr>
+      <tr>
+          <td>结果 Outcome</td>
+          <td>游戏最终达到的状态</td>
+      </tr>
+  </tbody>
+</table></div>
+<hr>
+<h3 id="-案例提炼">🎮 案例提炼
+</h3><ul>
+<li><strong>Tim LeTourneau 的设计师视角</strong>
+<ul>
+<li><em>带来灵感的游戏</em>
+<ul>
+<li>《模拟城市 3000》里模拟的丰富层次和它们的作用让其第一次认识到游戏的底层。</li>
+<li>系统直接如何彼此协作、如何让玩家了解这些相互作用，构成了其许多设计思路的基础。</li>
+</ul>
+</li>
+<li><em>关于设计流程</em>
+<ul>
+<li>通常通过一个问题开始：现实中有什么东西，让玩家在虚拟世界里玩起来会充满乐趣？能否将现实中的体验转变成在屏幕上容易理解并参与的体验？</li>
+<li>流程通常开始于一次头脑风暴，参与者来自不同专业。第一次头脑风暴后建立一张思维导图，来看能够将这个灵感挖掘到多深。
+<ul>
+<li>在思考模拟时，思维导图是非常有效的工具，可以开始在节点和规划之间连线，看看他们会怎么相互作用。<strong>互动即是游戏设计</strong>。</li>
+</ul>
+</li>
+<li>开始制作核心互动的原型，关键在于做出一些可以做出反应的东西。原型帮助建立信念，这些信念推动游戏前进。</li>
+<li>一旦建立起信念，就要开始思考如何真正把他们做出来。原型不是用完即弃的东西，是用来提供清楚的方向、学习的工具。</li>
+<li>设计之外，技术和团队是做成或毁掉游戏的原因。“游戏是团队铸就的”。</li>
+</ul>
+</li>
+<li><em>关于原型</em>
+<ul>
+<li>原型最重要的元素是你得非常清楚地知道你想从这个原型中获得什么。</li>
+<li>最好的原型都来自于那些特别想证明一些事情，并且选择了最高效率的媒介的人。</li>
+<li>原型的关键在于它们不是可丢弃的——他们是草稿，不是蓝图。</li>
+</ul>
+</li>
+<li><em>关于一个特别困难的设计问题</em>
+<ul>
+<li>关于设计的沟通才是真正的挑战。</li>
+<li>无论何时都不要惧怕砍掉某些无法生效的功能——伟大的设计往往是明智的取舍的结果。</li>
+</ul>
+</li>
+<li><em>对设计师的建议</em>
+<ul>
+<li>优秀的设计师不仅仅要了解设计的艺术和工艺，还懂得制作游戏，懂得越多，那么把游戏变成现实的效率就越高。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Matt Korba 的设计师视角</strong>
+<ul>
+<li><em>关于设计流程</em>
+<ul>
+<li>其游戏灵感往往来自游戏外的世界。</li>
+<li>一旦灵感形成了，它的中心必须具有强大的游戏性。否则这个想法可能更适合一部微电影或者漫画书。</li>
+<li>原型是把想法实现的关键。</li>
+</ul>
+</li>
+<li><em>关于原型</em>
+<ul>
+<li>原型是制作流程中非常重要的一部分。其游戏都从非软件原型开始。</li>
+<li>优秀的原型自己就是一种艺术形式。</li>
+<li>制作软件的游戏原型并没有定式。</li>
+<li>游戏制作非常贵、非常耗时，因此只要有可能，最好先用纸来弄清楚自己要做什么。</li>
+</ul>
+</li>
+<li><em>给设计师的建议</em>
+<ul>
+<li>别等着，动手去做游戏。用任何你能拿到的东西做游戏：弹珠、顶针、线头。做出好游戏，剩下的都很简单。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Ian Bogost：有说服力的游戏</strong>
+<ul>
+<li><em>视频游戏如何表达想法</em>
+<ul>
+<li>视频游戏擅长于表现各种系统的行为。我们将这样的系统叫作“源系统”。</li>
+<li>代码建模了一系列符合同一个一般规则的可能输出的集合。这种表现形式可以叫作程序性。程序性指的是计算机执行以规则为基础的行为的能力。视频游戏是程序性的一种表现形式。</li>
+<li>因此在视频游戏中，我们现在有了源系统和与之对应的程序性模型。游戏玩家需要和模型互动以使之运作——视频游戏是交互性的软件，他们需要玩家提供输入以使程序性模型运作起来。</li>
+<li>源系统永远不会真的像这样存在。视频游戏固有的主观性制造了不和谐，设计师根据源系统设计的程序性模型和玩家的主观性之间，以及他们的预想和对模拟的既存理解之间，产生了鸿沟。</li>
+<li>这就是视频游戏变得具有表达新的地方：他们鼓励玩家质疑，并且让他们自己的和在游戏中的世界模型调和起来。</li>
+</ul>
+</li>
+<li><em>视频游戏如何说服</em>
+<ul>
+<li>大多数时候，视频游戏会创建一个幻想中生物的程序性模型，也能使用这种设计来邀请玩家以新或旧的方式去看现实世界。</li>
+<li>以这个风格使用视频游戏的一种方式是用来说服：来提出一种对这个世界的运行方式的观点。</li>
+</ul>
+</li>
+<li><em>引发争议的陌生观点</em>
+<ul>
+<li>有说服力的游戏根据设计师的主观想法对世界进行建模。</li>
+<li>作为玩家，我们对这个世界有一个预期模型。</li>
+<li>一款游戏展示了与那个世界相同的模型，但是那个模型有着它自己的属性，和玩家心目中的模型很可能不同。</li>
+<li>但我们把这两个模型放在一起时，我们能看到他们的相同点和不同点——这是当我们评判性地玩游戏时所做的事情。</li>
+<li>这样的游戏会引起玩家的深思，不是通过提出一些让玩家很舒服、很习惯的观点，而是提出引发争议的陌生观点。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="-我的思考--提问">🧩 我的思考 &amp; 提问
+</h3><ul>
+<li>✍️ 我的观点/感悟
+<ul>
+<li>在 Tim LeTourneau 和 Matt Korba 关于「灵感」的表述中，都提到了一点，就是都来自「游戏外的世界」。有趣的地方在于，这总是让我想到一句佛家的话——「<em>先入世後出世</em>」。我觉得这两点实际上是相通的。佛家的话说的大概是：人要先在世间历练、体会种种境遇，才能真正理解、超越世俗。我觉得不仅是游戏设计，所有创造类的事情都是，需要体验足够的人事、现实、其他种类的艺术等等，才能真正做出脱胎于现实但是超越现实的东西。更详细的探讨可以留到之后专门讨论吧。</li>
+<li>本章节还有一点有意思的在于，开头专门说了「没有 Formal Elements」游戏将不再是游戏，但是在具体的探讨这些元素时，在不同的地方都在鼓励「探索边界」，这两点似乎是矛盾的，为什么这么说？我认为应当是：「探索边界」与「承认边界存在」并不矛盾。探索边界的过程就是边界元素不断尝试进行重构、扭曲、弱化，这些元素始终存在，只是变换了形式而已，而这些形式到底可以变换成什么样子？这就是「探索边界」在做的事。就像是在写诗歌，文字始终都是文字，但是体裁、韵律等等却可以一直被挑战、创新。</li>
+</ul>
+</li>
+<li>❓ 疑问或尚不理解的地方</li>
+</ul>
+<hr>
+<h3 id="-练习回应或个人实践">🛠️ 练习回应或个人实践
+</h3><blockquote>
+<ol>
+<li><strong>创造一版可供三人游玩的《井字棋》</strong></li>
+</ol>
+<p>对于传统的 3x3 棋盘，三个人玩显然是空间太少了，拓展棋盘显然是首要任务。我认为还可以效仿「斗地主」引入团队对抗。为了给「地主」增加对抗能力，「地主」可以连续走两步。但这样的话若是还和原来的获胜规则——三个连成线——一样的话，就太容易赢了，因此需要修改获胜条件或者限制地主手段。以下为粗糙考虑版本：</p>
+<p>新的棋盘具有 5x5 的大小，三个玩家被分为两个阵营：「地主」和「农民」。地主阵营一人，农民阵营两人，分配方式可由玩家自行决定。落子符号三名玩家各异，可由玩家自行决定。落子顺序为：地主-农民-农民，其中农民阵营的落子顺序可由农民阵营自行决定，农民在局中也可商量切换农民阵营中两人落子顺序。除了第一次落子外，其余地主落子回合地主都可最多连续落两子，若选择连续落两子，则两子不能在同一行/列的相邻位置。农民在农民落子回合只可落一子。地主获胜条件为：将四个自己的落子连为一条线。农民获胜条件为：两个农民都将三个自己的落子连为一条线。当棋局下满仍未有人成功连线时，棋局自动拓宽一行一列，直到有一方阵营获胜或者棋局拓宽次数达到三次时仍然下满，后者条件时判为平局。</p>
+<p>后面有时间的话或许可以写个 demo 放博客里。</p>
+<ol start="2">
+<li><strong>对于文中介绍的每个交互模式，挑选喜欢的游戏列一个清单。如果想不起来某款类型的游戏，可以尝试搜索并游玩一下。</strong></li>
+</ol>
+</blockquote>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>类型</th>
+          <th>游戏</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>单人玩家 VS 游戏系统</td>
+          <td>《艾尔登法环》</td>
+      </tr>
+      <tr>
+          <td>多名独立玩家 VS 游戏系统</td>
+          <td>《灵迹岛》（桌游，gemini 推荐，没玩过但看起来不错）</td>
+      </tr>
+      <tr>
+          <td>玩家 VS 玩家</td>
+          <td>《街头霸王》</td>
+      </tr>
+      <tr>
+          <td>单边对抗</td>
+          <td>《黎明杀机》</td>
+      </tr>
+      <tr>
+          <td>多边对抗</td>
+          <td>《狂野飙车》</td>
+      </tr>
+      <tr>
+          <td>协作游戏</td>
+          <td>《双人成行》</td>
+      </tr>
+      <tr>
+          <td>团队对抗</td>
+          <td>《DOTA》</td>
+      </tr>
+  </tbody>
+</table></div>
+<blockquote>
+<p><strong>3. 列出十个你最喜欢的游戏，并且把他们的目标列出来。你看到它们的相似之处了嘛？试着确定吸引你的游戏类型。</strong></p>
+</blockquote>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>游戏</th>
+          <th>目标</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>《艾尔登法环》</td>
+          <td>即使引导早已破碎，也请您当上艾尔登之王。</td>
+      </tr>
+      <tr>
+          <td>《TOEM》</td>
+          <td>抵达山顶亲眼目睹 TOEM。</td>
+      </tr>
+      <tr>
+          <td>《Rusty Lake》</td>
+          <td>揭示锈湖、永生灵药以及各个家族之间错综复杂的秘密。</td>
+      </tr>
+      <tr>
+          <td>《赛博朋克 2077》</td>
+          <td>在V的意识被 Relic 彻底抹除之前，找到拯救自己的方法。</td>
+      </tr>
+      <tr>
+          <td>《暗喻幻想》</td>
+          <td>拯救王子，摧毁路易的阴谋，赢得王位争夺战称为新王。</td>
+      </tr>
+      <tr>
+          <td>《山河旅探》</td>
+          <td>揭开哥哥死亡的真相。</td>
+      </tr>
+      <tr>
+          <td>《疑案追声》</td>
+          <td>使用声探系统解决所有案件。</td>
+      </tr>
+      <tr>
+          <td>《我在七年后等着你》</td>
+          <td>回到七年前的约定之地，找回失去的记忆，揭开过去的真相。</td>
+      </tr>
+      <tr>
+          <td>《夏洛克福尔摩斯系列》</td>
+          <td>运用观察和演绎能力构建推理，揭开案件背后隐藏的真相。</td>
+      </tr>
+      <tr>
+          <td>《Ghost Trick》</td>
+          <td>在天亮之前找到自己死亡的真相。</td>
+      </tr>
+      <tr>
+          <td>我自认是比较喜欢解谜游戏和有相当自由度的 RPG 的。</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table></div>
+<blockquote>
+<p><strong>4. 对于描述的资源类型，创建一个使用了这些资源类型的列表。如果想不起来可以查找并游玩一下。</strong></p>
+</blockquote>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>资源类型</th>
+          <th>游戏</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>命数</td>
+          <td>《超级马里奥》</td>
+      </tr>
+      <tr>
+          <td>单位</td>
+          <td>《红色警戒》</td>
+      </tr>
+      <tr>
+          <td>生命值</td>
+          <td>《塞尔达传说：旷野之息》</td>
+      </tr>
+      <tr>
+          <td>货币</td>
+          <td>《维多利亚3》</td>
+      </tr>
+      <tr>
+          <td>行动</td>
+          <td>《火焰纹章：风花雪月》</td>
+      </tr>
+      <tr>
+          <td>能力加强</td>
+          <td>《马里奥卡丁车》</td>
+      </tr>
+      <tr>
+          <td>物品</td>
+          <td>《博德之门3》</td>
+      </tr>
+      <tr>
+          <td>特殊区域</td>
+          <td>《帝国时代6》</td>
+      </tr>
+      <tr>
+          <td>时间</td>
+          <td>《炉石传说》</td>
+      </tr>
+  </tbody>
+</table></div>
+<blockquote>
+<p><strong>5. DnD 中的边界是什么？</strong>
+寻找边界，等价于寻找构建 DnD 的最小游戏元素集合。是什么使得 DnD 是 DnD 而不是其他的？我认为主要在于核心机制、游戏规则还有故事题材。具体的 DnD 机制我不是特别了解，就不写了。</p>
+</blockquote>
+<hr>
+<h3 id="-精选语录摘录">💬 精选语录摘录
+</h3><blockquote>
+<p>“游戏中最有趣的目标通常是将各种类型混合得到的。”</p>
+<p>“操作从本质上受到物理约束的限制，作为设计师需要时刻注意这些约束并寻找到具有创造性且优雅的解决方案。”</p>
+<p>“试着改变熟悉游戏的边界，然后观察游戏体验上的变化，这会带来有趣的设计经验。”</p>
+<p>“游戏的边界是将现实生活与游戏中的事件区分开来的一种方法。”</p>
+<p>“我们认为没有必要将这些强力的游戏体验移除。相反，我们认为，扩大我们的定义或探索边界，有助于我们站在有趣且有效的角度去看待游戏。”</p>
+<p>“互动即是游戏设计。”</p>
+<p>“游戏是团队铸就的。”</p>
+<p>“伟大的设计往往是明智的取舍的结果。”</p>
+<p>“一旦灵感形成了，它的中心必须具有强大的游戏性。否则这个想法可能更适合一部微电影或者漫画书。”</p>
+<p>“别等着，动手去做游戏。”</p>
+</blockquote>
+<hr>
+<h3 id="-小结--后续预期">🧾 小结 &amp; 后续预期
+</h3><blockquote>
+<p>本章过后，已经可以对一个游戏进行初步的框架剖析，或者在形式上推敲、构建一个游戏原型。后面章节将更详细了解戏剧元素和动态元素。在我看来基本的骨架已经了解了，后面两部分要开始填充血肉了。</p>
+</blockquote>
+
+</section>
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/readingnote/">ReadingNote</a>
+        
+            <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+        
+            <a href="/tags/game-designer/">Game Designer</a>
+        
+            <a href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E5%B8%88/">游戏设计师</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/cover.41cf062f4552dbdad8ea4c648c04f955_hu_53f5e5e81943d114.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 游戏设计梦工厂，第一篇第四章"
+                        
+                        data-hash="md5-Qc8GL0VS29rY6kxkjAT5VQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">游戏设计梦工厂，第一篇第四章</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0%E9%A2%9D%E5%A4%96%E7%AF%87/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0%E9%A2%9D%E5%A4%96%E7%AF%87/cover.41cf062f4552dbdad8ea4c648c04f955_hu_53f5e5e81943d114.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 游戏设计梦工厂，第一篇第二章额外篇"
+                        
+                        data-hash="md5-Qc8GL0VS29rY6kxkjAT5VQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">游戏设计梦工厂，第一篇第二章额外篇</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0/cover.41cf062f4552dbdad8ea4c648c04f955_hu_53f5e5e81943d114.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 游戏设计梦工厂，第一篇第二章"
+                        
+                        data-hash="md5-Qc8GL0VS29rY6kxkjAT5VQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">游戏设计梦工厂，第一篇第二章</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%80%E7%AB%A0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%80%E7%AB%A0/cover.41cf062f4552dbdad8ea4c648c04f955_hu_53f5e5e81943d114.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 游戏设计梦工厂，第一篇第一章"
+                        
+                        data-hash="md5-Qc8GL0VS29rY6kxkjAT5VQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">游戏设计梦工厂，第一篇第一章</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/">
+        
+        
+            <div class="article-image">
+                <img src="/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/cover.4c54945307b7e723a4c8da8af8aabd47_hu_c20503c5a569752.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 3"
+                        
+                        data-hash="md5-TFSUUwe35yOkyNqK&#43;Kq9Rw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 3</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="EvanWonghere/EvanWonghere.github.io"
+    data-repo-id="R_kgDOPzgwzg"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOPzgwzs4Cvsti"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="light"
+    data-lang="en"
+    data-loading=""
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('dark_dimmed');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2026 EvanWong
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.31.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.f140b912c7d07b398f639499ee39741023a15cbd08b0dbb13257b83dfbf08989.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

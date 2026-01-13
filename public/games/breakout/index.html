@@ -1,2 +1,70 @@
-<!doctype html><html lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Breakout Prism - 蜂窝 游戏厅</title><style>body,html{margin:0;padding:0;width:100%;height:100%;background-color:#000;overflow:hidden;display:flex;flex-direction:column}.game-nav{height:40px;background:#1a1a1a;color:#fff;display:flex;align-items:center;padding:0 20px;box-shadow:0 2px 5px rgba(0,0,0,.5);z-index:10}.game-nav a{color:#fff;text-decoration:none;font-size:14px;font-family:sans-serif;opacity:.7;transition:opacity .3s}.game-nav a:hover{opacity:1}.game-title{margin-left:auto;font-size:14px;font-weight:700}.game-container{flex:1;width:100%;position:relative}iframe{border:none;width:100%;height:100%;display:block}</style></head><body><div class=game-nav><a href=/games/>← 返回游戏大厅</a>
-<span class=game-title>正在游玩：Breakout Prism</span></div><div class=game-container><iframe src=/games/breakout-app/index.html title="Breakout Prism" allowfullscreen></iframe></div></body></html>
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breakout Prism - 蜂窝 游戏厅</title>
+    <style>
+         
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;  
+            overflow: hidden;  
+            display: flex;
+            flex-direction: column;
+        }
+
+         
+        .game-nav {
+            height: 40px;
+            background: #1a1a1a;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+        .game-nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            font-family: sans-serif;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        .game-nav a:hover { opacity: 1; }
+        .game-title { margin-left: auto; font-size: 14px; font-weight: bold; }
+
+         
+        .game-container {
+            flex: 1;  
+            width: 100%;
+            position: relative;
+        }
+        
+         
+        iframe {
+            border: none;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-nav">
+        <a href="/games/">← 返回游戏大厅</a>
+        <span class="game-title">正在游玩：Breakout Prism</span>
+    </div>
+
+    <div class="game-container">
+        <iframe src="/games/breakout-app/index.html" title="Breakout Prism" allowfullscreen></iframe>
+    </div>
+
+</body>
+</html>
