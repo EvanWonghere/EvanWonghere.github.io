@@ -215,6 +215,9 @@ enabled = true
   url = "/quiz/"
   weight = -65
 
+  [menu.main.params]
+  icon = "device-gamepad"
+
   [[menu.social]]
   identifier = "github"
   name = "GitHub"
