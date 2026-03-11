@@ -215,9 +215,6 @@ enabled = true
   url = "/quiz/"
   weight = -65
 
-  [menu.main.params]
-  icon = "pencil"
-
   [[menu.social]]
   identifier = "github"
   name = "GitHub"
