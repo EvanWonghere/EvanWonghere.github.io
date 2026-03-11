@@ -209,6 +209,15 @@ enabled = true
   [menu.main.params]
     icon = "quote" # Stack 主题恰好有 "quote" 图标
 
+  [[menu.main]]
+  identifier = "quiz"
+  name = "面试刷题"
+  url = "/quiz/"
+  weight = -65
+
+  [menu.main.params]
+  icon = "pencil"
+
   [[menu.social]]
   identifier = "github"
   name = "GitHub"
