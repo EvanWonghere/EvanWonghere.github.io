@@ -2,4 +2,5 @@
 */.vscode
 */.idea
 .DS_Store
+.history
 .history/
