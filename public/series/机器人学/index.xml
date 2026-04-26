@@ -1,4 +1,21 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>机器人学 on 蜂窝</title><link>https://yufenghuang.tech/series/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6/</link><description>Recent content in 机器人学 on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Mon, 17 Jul 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://yufenghuang.tech/series/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6/index.xml" rel="self" type="application/rss+xml"/><item><title>机器人学——学习笔记2(Fixed Angles&amp;Euler Angles)</title><link>https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/</link><pubDate>Mon, 17 Jul 2023 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/</guid><description>&lt;h2 id="1-复习关于-rotation-matrix"&gt;1. 复习：关于 Rotation Matrix
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>机器人学 on 蜂窝</title>
+        <link>http://localhost:1313/series/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6/</link>
+        <description>Recent content in 机器人学 on 蜂窝</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor>
+        <webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster>
+        <copyright>EvanWong</copyright>
+        <lastBuildDate>Mon, 17 Jul 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/series/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>机器人学——学习笔记2(Fixed Angles&amp;Euler Angles)</title>
+        <link>http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/</link>
+        <pubDate>Mon, 17 Jul 2023 00:00:00 +0000</pubDate>
+        <author>yufenghuang009@gmail.com (Evan Wong)</author>
+        <guid>http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/</guid>
+        <description>&lt;h2 id=&#34;1-复习关于-rotation-matrix&#34;&gt;1. 复习：关于 Rotation Matrix
 &lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;&lt;u&gt;三个用法&lt;/u&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -22,27 +39,31 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id="2-fixed-angles"&gt;2. Fixed Angles
-&lt;/h2&gt;&lt;h3 id="21-x-y-z-fixed-angles"&gt;2.1 &lt;strong&gt;X-Y-Z Fixed Angles&lt;/strong&gt;
-&lt;/h3&gt;&lt;h3 id="由-angles-推算旋转矩阵-r三次旋转分别针对-xyz-轴来做xyz-轴是固定不动的如下图蓝色坐标系逆时针为正"&gt;&lt;strong&gt;由 angles 推算旋转矩阵 R（三次旋转分别针对 X,Y,Z 轴来做，X,Y,Z 轴是固定不动的，如下图蓝色坐标系&lt;/strong&gt;）(逆时针为正）
-&lt;/h3&gt;&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/%E4%BB%8E%E5%B7%A6%E5%88%B0%E5%8F%B3%EF%BC%9A%E7%BB%95X_A%E6%97%8B%E8%BD%AC%EF%BC%8C%E7%BB%95Y_A%E6%97%8B%E8%BD%AC%EF%BC%8C%E7%BB%95Z_A%E6%97%8B%E8%BD%AC.png"
-width="674"
-height="191"
-srcset="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/%E4%BB%8E%E5%B7%A6%E5%88%B0%E5%8F%B3%EF%BC%9A%E7%BB%95X_A%E6%97%8B%E8%BD%AC%EF%BC%8C%E7%BB%95Y_A%E6%97%8B%E8%BD%AC%EF%BC%8C%E7%BB%95Z_A%E6%97%8B%E8%BD%AC_hu_98a323a813f210be.png 480w, https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/%E4%BB%8E%E5%B7%A6%E5%88%B0%E5%8F%B3%EF%BC%9A%E7%BB%95X_A%E6%97%8B%E8%BD%AC%EF%BC%8C%E7%BB%95Y_A%E6%97%8B%E8%BD%AC%EF%BC%8C%E7%BB%95Z_A%E6%97%8B%E8%BD%AC_hu_8744aafa2d812536.png 1024w"
-loading="lazy"
-alt="从左到右：绕X_A旋转，绕Y_A旋转，绕Z_A旋转"
-class="gallery-image"
-data-flex-grow="352"
-data-flex-basis="846px"
+&lt;h2 id=&#34;2-fixed-angles&#34;&gt;2. Fixed Angles
+&lt;/h2&gt;&lt;h3 id=&#34;21-x-y-z-fixed-angles&#34;&gt;2.1 &lt;strong&gt;X-Y-Z Fixed Angles&lt;/strong&gt;
+&lt;/h3&gt;&lt;h3 id=&#34;由-angles-推算旋转矩阵-r三次旋转分别针对-xyz-轴来做xyz-轴是固定不动的如下图蓝色坐标系逆时针为正&#34;&gt;&lt;strong&gt;由 angles 推算旋转矩阵 R（三次旋转分别针对 X,Y,Z 轴来做，X,Y,Z 轴是固定不动的，如下图蓝色坐标系&lt;/strong&gt;）(逆时针为正）
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/%E4%BB%8E%E5%B7%A6%E5%88%B0%E5%8F%B3%EF%BC%9A%E7%BB%95X_A%E6%97%8B%E8%BD%AC%EF%BC%8C%E7%BB%95Y_A%E6%97%8B%E8%BD%AC%EF%BC%8C%E7%BB%95Z_A%E6%97%8B%E8%BD%AC.png&#34;
+	width=&#34;674&#34;
+	height=&#34;191&#34;
+	srcset=&#34;http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/%E4%BB%8E%E5%B7%A6%E5%88%B0%E5%8F%B3%EF%BC%9A%E7%BB%95X_A%E6%97%8B%E8%BD%AC%EF%BC%8C%E7%BB%95Y_A%E6%97%8B%E8%BD%AC%EF%BC%8C%E7%BB%95Z_A%E6%97%8B%E8%BD%AC_hu_98a323a813f210be.png 480w, http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/%E4%BB%8E%E5%B7%A6%E5%88%B0%E5%8F%B3%EF%BC%9A%E7%BB%95X_A%E6%97%8B%E8%BD%AC%EF%BC%8C%E7%BB%95Y_A%E6%97%8B%E8%BD%AC%EF%BC%8C%E7%BB%95Z_A%E6%97%8B%E8%BD%AC_hu_8744aafa2d812536.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;从左到右：绕X_A旋转，绕Y_A旋转，绕Z_A旋转&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;352&#34;
+		data-flex-basis=&#34;846px&#34;
+	
 &gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;span style="color: gray; font-size: 15px;"&gt;从左到右：绕X_A旋转，绕Y_A旋转，绕Z_A旋转&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;​ 如何由三个角度推算出 Rotation Matrix?&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;span style=&#34;color: gray; font-size: 15px;&#34;&gt;从左到右：绕X_A旋转，绕Y_A旋转，绕Z_A旋转&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;​		如何由三个角度推算出 Rotation Matrix?&lt;/p&gt;
 &lt;div&gt;
 $$
 \begin{aligned}
 \prescript{A}{B}{R}_{XYZ}(\gamma, \beta, \alpha) &amp;= R_{Z}(\alpha)R_{Y}(\beta)R_{X}(\gamma)
 \hspace{14em}
-\textcolor{green}{v^{'} = \prescript{A}{B}{Rv} = R_{3}R_{2}R{_1}v}
+\textcolor{green}{v^{&#39;} = \prescript{A}{B}{Rv} = R_{3}R_{2}R{_1}v}
 \\
 &amp;= \begin{bmatrix}
 c\alpha &amp; -s\alpha &amp; 0 \\
@@ -72,29 +93,37 @@ s\alpha c\beta &amp; s\alpha s\beta s\gamma + c\alpha c\gamma &amp; s\alpha s\be
 \end{aligned}
 $$&lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;EX1:&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX1.png"
-width="851"
-height="256"
-srcset="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX1_hu_5556ab4cdcc806fd.png 480w, https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX1_hu_5c5bf72da040a7b9.png 1024w"
-loading="lazy"
-alt="EX1"
-class="gallery-image"
-data-flex-grow="332"
-data-flex-basis="797px"
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX1.png&#34;
+	width=&#34;851&#34;
+	height=&#34;256&#34;
+	srcset=&#34;http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX1_hu_5556ab4cdcc806fd.png 480w, http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX1_hu_5c5bf72da040a7b9.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;EX1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;332&#34;
+		data-flex-basis=&#34;797px&#34;
+	
 &gt;&lt;/p&gt;
 &lt;p&gt;可以发现，更换转动顺序后，旋转矩阵数值与frame姿态都不相同，即是转动角度相同，顺序不同，最后的状态不同。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/AS1.png"
-width="833"
-height="159"
-srcset="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/AS1_hu_87f922e212538977.png 480w, https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/AS1_hu_5fbd80aade8cba3a.png 1024w"
-loading="lazy"
-alt="ANS1"
-class="gallery-image"
-data-flex-grow="523"
-data-flex-basis="1257px"
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/AS1.png&#34;
+	width=&#34;833&#34;
+	height=&#34;159&#34;
+	srcset=&#34;http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/AS1_hu_87f922e212538977.png 480w, http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/AS1_hu_5fbd80aade8cba3a.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;ANS1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;523&#34;
+		data-flex-basis=&#34;1257px&#34;
+	
 &gt;&lt;/p&gt;
-&lt;h3 id="22-x-y-z-fixed-angles由-r-推算-angles"&gt;2.2 X-Y-Z Fixed Angles——由 R 推算 angles
-&lt;/h3&gt;&lt;h1 id="endbmatrix"&gt;$$
+&lt;h3 id=&#34;22-x-y-z-fixed-angles由-r-推算-angles&#34;&gt;2.2 X-Y-Z Fixed Angles——由 R 推算 angles
+&lt;/h3&gt;&lt;h1 id=&#34;endbmatrix&#34;&gt;$$
 \prescript{A}{B}{R}_{XYZ}(\gamma, \beta, \alpha) =
 \begin{bmatrix}
 c\alpha c\beta &amp;amp; c\alpha s\beta s\gamma - s\alpha c\gamma &amp;amp; c\alpha s\beta c\gamma + s\alpha s\gamma \
@@ -107,45 +136,57 @@ r_{21} &amp;amp; r_{22} &amp;amp; r_{23} \
 r_{31} &amp;amp; r_{32} &amp;amp; r_{33} \
 \end{bmatrix}
 $$&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/beta.png"
-width="537"
-height="264"
-srcset="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/beta_hu_664c24a3151e6839.png 480w, https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/beta_hu_330d8d6cafc546cb.png 1024w"
-loading="lazy"
-alt="solution"
-class="gallery-image"
-data-flex-grow="203"
-data-flex-basis="488px"
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/beta.png&#34;
+	width=&#34;537&#34;
+	height=&#34;264&#34;
+	srcset=&#34;http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/beta_hu_664c24a3151e6839.png 480w, http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/beta_hu_330d8d6cafc546cb.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;solution&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;203&#34;
+		data-flex-basis=&#34;488px&#34;
+	
 &gt;&lt;/p&gt;
-&lt;h3 id="ex1先给旋转矩阵内容计算三个角度"&gt;EX1:先给旋转矩阵内容，计算三个角度
-&lt;/h3&gt;&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX21.png"
-width="677"
-height="328"
-srcset="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX21_hu_cb4334dd9edfa8ed.png 480w, https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX21_hu_6f9f0f3e4a287e2f.png 1024w"
-loading="lazy"
-alt="EX21"
-class="gallery-image"
-data-flex-grow="206"
-data-flex-basis="495px"
+&lt;h3 id=&#34;ex1先给旋转矩阵内容计算三个角度&#34;&gt;EX1:先给旋转矩阵内容，计算三个角度
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX21.png&#34;
+	width=&#34;677&#34;
+	height=&#34;328&#34;
+	srcset=&#34;http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX21_hu_cb4334dd9edfa8ed.png 480w, http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX21_hu_6f9f0f3e4a287e2f.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;EX21&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;206&#34;
+		data-flex-basis=&#34;495px&#34;
+	
 &gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;span style="color: gray; font-size: 15px;"&gt;先对X转60°，再对Y转30°，没有对Z转&lt;/span&gt;&lt;/p&gt;
-&lt;h2 id="3-euler-angles"&gt;3. Euler Angles
-&lt;/h2&gt;&lt;h3 id="31-z-y-x-euler-angles-由-angles-推算-r-绕被转动转轴去做旋转"&gt;3.1 Z-Y-X Euler Angles-由 angles 推算 R (绕被转动转轴去做旋转)
-&lt;/h3&gt;&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/3.11.png"
-width="637"
-height="182"
-srcset="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/3.11_hu_5544aceb3024e250.png 480w, https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/3.11_hu_7e68c7ae1766dca3.png 1024w"
-loading="lazy"
-alt="3.11"
-class="gallery-image"
-data-flex-grow="350"
-data-flex-basis="840px"
+&lt;p align=&#34;center&#34;&gt;&lt;span style=&#34;color: gray; font-size: 15px;&#34;&gt;先对X转60°，再对Y转30°，没有对Z转&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;3-euler-angles&#34;&gt;3. Euler Angles
+&lt;/h2&gt;&lt;h3 id=&#34;31-z-y-x-euler-angles-由-angles-推算-r-绕被转动转轴去做旋转&#34;&gt;3.1 Z-Y-X Euler Angles-由 angles 推算 R (绕被转动转轴去做旋转)
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/3.11.png&#34;
+	width=&#34;637&#34;
+	height=&#34;182&#34;
+	srcset=&#34;http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/3.11_hu_5544aceb3024e250.png 480w, http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/3.11_hu_7e68c7ae1766dca3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;3.11&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;350&#34;
+		data-flex-basis=&#34;840px&#34;
+	
 &gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;span style="color: gray; font-size: 15px;"&gt;从左到右：先根据 Z_B转，在根据Y_B转，最后根据X_B转&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;span style=&#34;color: gray; font-size: 15px;&#34;&gt;从左到右：先根据 Z_B转，在根据Y_B转，最后根据X_B转&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;如何由三个角度推出 &lt;em&gt;Rotation Matrix&lt;/em&gt;?
 &lt;/p&gt;
 $$
-\prescript{A}{B}{R}_{z^{'}Y^{'}X^{'}}(\alpha, \beta, \gamma) = \prescript{A}{B^{'}}{R}\prescript{B^{'}}{B^{''}}{R}\prescript{B^{''}}{B}{R} = R_{Z^{'}}(\alpha)R_{Y^{'}(\beta)}R_{X^{'}}(\gamma)
+\prescript{A}{B}{R}_{z^{&#39;}Y^{&#39;}X^{&#39;}}(\alpha, \beta, \gamma) = \prescript{A}{B^{&#39;}}{R}\prescript{B^{&#39;}}{B^{&#39;&#39;}}{R}\prescript{B^{&#39;&#39;}}{B}{R} = R_{Z^{&#39;}}(\alpha)R_{Y^{&#39;}(\beta)}R_{X^{&#39;}}(\gamma)
 $$&lt;p&gt;
 先转的放【前面】：以 &lt;strong&gt;mapping&lt;/strong&gt; 来想，对某一个向量，从&lt;strong&gt;最后一个 frame&lt;/strong&gt;【逐渐转动或移动】来回到第一个 frame：
 &lt;/p&gt;
@@ -173,45 +214,57 @@ c\beta &amp; 0 &amp; s\beta \\
 \end{aligned}
 \\
 \textcolor{green}{和X-Y-Z \hspace{0.4em} Fixed \hspace{0.4em} angle得到一样的R}
-$$&lt;p align="center"&gt;&lt;span style="color: gray; font-size: 15px;"&gt;欧拉angle与Fixed Angle具有简单对应&lt;/span&gt;&lt;/p&gt;
-&lt;h3 id="ex1"&gt;EX1:
-&lt;/h3&gt;&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX31.png"
-width="773"
-height="360"
-srcset="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX31_hu_edef60f5ce384edb.png 480w, https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX31_hu_55d87bfff6e2971b.png 1024w"
-loading="lazy"
-alt="EX1"
-class="gallery-image"
-data-flex-grow="214"
-data-flex-basis="515px"
+$$&lt;p align=&#34;center&#34;&gt;&lt;span style=&#34;color: gray; font-size: 15px;&#34;&gt;欧拉angle与Fixed Angle具有简单对应&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;ex1&#34;&gt;EX1:
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX31.png&#34;
+	width=&#34;773&#34;
+	height=&#34;360&#34;
+	srcset=&#34;http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX31_hu_edef60f5ce384edb.png 480w, http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX31_hu_55d87bfff6e2971b.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;EX1&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;214&#34;
+		data-flex-basis=&#34;515px&#34;
+	
 &gt;&lt;/p&gt;
-&lt;h3 id="ex2-eulery30x60-vs-fixedx60y30"&gt;EX2: Euler(Y30,X60) v.s. Fixed(X60,Y30)
-&lt;/h3&gt;&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX32.png"
-width="541"
-height="322"
-srcset="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX32_hu_597283469c6e31b9.png 480w, https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX32_hu_103895e5a4de7944.png 1024w"
-loading="lazy"
-alt="EX2"
-class="gallery-image"
-data-flex-grow="168"
-data-flex-basis="403px"
+&lt;h3 id=&#34;ex2-eulery30x60-vs-fixedx60y30&#34;&gt;EX2: Euler(Y30,X60) v.s. Fixed(X60,Y30)
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX32.png&#34;
+	width=&#34;541&#34;
+	height=&#34;322&#34;
+	srcset=&#34;http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX32_hu_597283469c6e31b9.png 480w, http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX32_hu_103895e5a4de7944.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;EX2&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;168&#34;
+		data-flex-basis=&#34;403px&#34;
+	
 &gt;&lt;/p&gt;
-&lt;h3 id="32-z-y-z-euler-angles---由-angles-推算-rotation-matrix"&gt;3.2 Z-Y-Z Euler Angles - 由 angles 推算 Rotation Matrix
-&lt;/h3&gt;&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/3.2.1.png"
-width="623"
-height="200"
-srcset="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/3.2.1_hu_72476b00ec678310.png 480w, https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/3.2.1_hu_8817e77e78fd21dd.png 1024w"
-loading="lazy"
-alt="321"
-class="gallery-image"
-data-flex-grow="311"
-data-flex-basis="747px"
+&lt;h3 id=&#34;32-z-y-z-euler-angles---由-angles-推算-rotation-matrix&#34;&gt;3.2 Z-Y-Z Euler Angles - 由 angles 推算 Rotation Matrix
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/3.2.1.png&#34;
+	width=&#34;623&#34;
+	height=&#34;200&#34;
+	srcset=&#34;http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/3.2.1_hu_72476b00ec678310.png 480w, http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/3.2.1_hu_8817e77e78fd21dd.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;321&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;311&#34;
+		data-flex-basis=&#34;747px&#34;
+	
 &gt;&lt;/p&gt;
 &lt;p&gt;旋转矩阵表达法：先转放前面，后转放后面（反向 mapping）
 &lt;/p&gt;
 $$
 \begin{aligned}
-\prescript{A}{B}{R}_{z^{'}Y^{'}X^{'}}(\alpha, \beta, \gamma) &amp;= R_{Z^{'}}(\alpha)R_{Y^{'}(\beta)}R_{X^{'}}(\gamma)
+\prescript{A}{B}{R}_{z^{&#39;}Y^{&#39;}X^{&#39;}}(\alpha, \beta, \gamma) &amp;= R_{Z^{&#39;}}(\alpha)R_{Y^{&#39;}(\beta)}R_{X^{&#39;}}(\gamma)
 \\
 \textcolor{green}{先转的放「前面」}
 \\
@@ -222,46 +275,62 @@ s\alpha c\beta c\gamma + c\alpha s\gamma &amp; -s\alpha c\beta s\gamma + c\alpha
 \end{bmatrix}
 \end{aligned}
 $$&lt;p&gt;
-&lt;img src="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/33.png"
-width="648"
-height="217"
-srcset="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/33_hu_6c2e2a5d69b53009.png 480w, https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/33_hu_d66b60617dade21f.png 1024w"
-loading="lazy"
-class="gallery-image"
-data-flex-grow="298"
-data-flex-basis="716px"
+&lt;img src=&#34;http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/33.png&#34;
+	width=&#34;648&#34;
+	height=&#34;217&#34;
+	srcset=&#34;http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/33_hu_6c2e2a5d69b53009.png 480w, http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/33_hu_d66b60617dade21f.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;298&#34;
+		data-flex-basis=&#34;716px&#34;
+	
 &gt;&lt;/p&gt;
-&lt;h3 id="ex-revisit-euler-angles-2-的范例"&gt;EX: Revisit Euler Angles-2 的范例
-&lt;/h3&gt;&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX33.png"
-width="785"
-height="311"
-srcset="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX33_hu_c0dd2ef8317d2742.png 480w, https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX33_hu_2d6bbf586857b280.png 1024w"
-loading="lazy"
-alt="以此ZYZ旋转矩阵转出的状态和之前的状态一样"
-class="gallery-image"
-data-flex-grow="252"
-data-flex-basis="605px"
+&lt;h3 id=&#34;ex-revisit-euler-angles-2-的范例&#34;&gt;EX: Revisit Euler Angles-2 的范例
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX33.png&#34;
+	width=&#34;785&#34;
+	height=&#34;311&#34;
+	srcset=&#34;http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX33_hu_c0dd2ef8317d2742.png 480w, http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX33_hu_2d6bbf586857b280.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;以此ZYZ旋转矩阵转出的状态和之前的状态一样&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;252&#34;
+		data-flex-basis=&#34;605px&#34;
+	
 &gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;span style="color: gray; font-size: 15px;"&gt;以此ZYZ旋转矩阵转出的状态和之前的状态一样&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;span style=&#34;color: gray; font-size: 15px;&#34;&gt;以此ZYZ旋转矩阵转出的状态和之前的状态一样&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;争取一个特定的 R，&lt;strong&gt;有多种的拆解组合&lt;/strong&gt;:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;12 种 Euler Angles 和 12 种 Fixed Angles;&lt;/li&gt;
 &lt;li&gt;存在 Duality &amp;mdash;共 12 种对 Principal Axes 连 3 次转动的拆解方法；&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id="4-angle-axis-表达法"&gt;4. Angle-Axis 表达法
-&lt;/h2&gt;&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/Angle-axis.png"
-width="488"
-height="124"
-srcset="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/Angle-axis_hu_fef403653c875ccf.png 480w, https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/Angle-axis_hu_f29f8c9efe3187d6.png 1024w"
-loading="lazy"
-alt="k是单位向量，vector有2个参量，再加上转角，也是3Dofs"
-class="gallery-image"
-data-flex-grow="393"
-data-flex-basis="944px"
+&lt;h2 id=&#34;4-angle-axis-表达法&#34;&gt;4. Angle-Axis 表达法
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/Angle-axis.png&#34;
+	width=&#34;488&#34;
+	height=&#34;124&#34;
+	srcset=&#34;http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/Angle-axis_hu_fef403653c875ccf.png 480w, http://localhost:1313/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/Angle-axis_hu_f29f8c9efe3187d6.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;k是单位向量，vector有2个参量，再加上转角，也是3Dofs&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;393&#34;
+		data-flex-basis=&#34;944px&#34;
+	
 &gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;span style="color: gray; font-size: 15px;"&gt;k是单位向量，vector有2个参量，再加上转角，也是3Dofs&lt;/span&gt;&lt;/p&gt;
-&lt;h2 id="5-quaternion-四元数表达法"&gt;5. Quaternion (四元数)表达法
+&lt;p align=&#34;center&#34;&gt;&lt;span style=&#34;color: gray; font-size: 15px;&#34;&gt;k是单位向量，vector有2个参量，再加上转角，也是3Dofs&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;5-quaternion-四元数表达法&#34;&gt;5. Quaternion (四元数)表达法
 &lt;/h2&gt;$$
 q \hspace{0.5em} = \hspace{0.5em} \epsilon_{4} + \epsilon_{1}\overline{l} + \epsilon_{2}\overline{j} + \epsilon_{3}\overline{k} \hspace{0.5em} = \hspace{0.5em} \cos \frac{\theta}{2} + \sin \frac{\theta}{2}(k_{x}\overline{l} + k_{y}\overline{j} + k_{z}\overline{k})
 $$&lt;p&gt;其中：&lt;/p&gt;
-$$ \epsilon_{1}^{2} + \epsilon_{2}^{2} + \epsilon_{3}^{2} + \epsilon_{4}^{2} = 1 $$&lt;p&gt;这里，四个参数加一个条件约束，也为 3DOFs。&lt;/p&gt;</description></item></channel></rss>
+$$ \epsilon_{1}^{2} + \epsilon_{2}^{2} + \epsilon_{3}^{2} + \epsilon_{4}^{2} = 1 $$&lt;p&gt;这里，四个参数加一个条件约束，也为 3DOFs。&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
