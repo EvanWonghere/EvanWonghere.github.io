@@ -45,7 +45,6 @@ mainSections = [ "post" ]
 featuredImageField = "image"
 rssFullContent = true
 favicon = "/favicon.ico"
-math = true
 
   [params.author] # This defines author as an object
   name = "Evan Wong"
@@ -70,6 +69,7 @@ math = true
   [params.article]
   toc = true
   readingTime = true
+  math = true
 
     [params.article.license]
     enabled = true

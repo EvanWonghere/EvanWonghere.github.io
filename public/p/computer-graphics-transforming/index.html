@@ -1,0 +1,323 @@
+<!doctype html><html lang=zh-cn dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="Computer Graphics — Transforming [TOC]\n2D Transforming Scale 对于一个 2D 空间的缩放，我们可以认为所有的横 X 坐标都变为了原来的 \\(s_x\\) 倍，所有的纵坐标 Y 都变为原来的 \\(s_y\\) 倍。也就是说我们定义一个缩放函数 \\(scale(s_x, s_y, x, y)\\)，那么有：\n"><title>Computer Graphics — Transforming</title><link rel=canonical href=https://yufenghuang.tech/p/computer-graphics-transforming/><link rel=stylesheet href=/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css><meta property='og:title' content="Computer Graphics — Transforming"><meta property='og:description' content="Computer Graphics — Transforming [TOC]\n2D Transforming Scale 对于一个 2D 空间的缩放，我们可以认为所有的横 X 坐标都变为了原来的 \\(s_x\\) 倍，所有的纵坐标 Y 都变为原来的 \\(s_y\\) 倍。也就是说我们定义一个缩放函数 \\(scale(s_x, s_y, x, y)\\)，那么有：\n"><meta property='og:url' content='https://yufenghuang.tech/p/computer-graphics-transforming/'><meta property='og:site_name' content='蜂窝'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='ComputerGraphics'><meta property='article:tag' content='计算机图形学'><meta property='article:tag' content='LinearAlgebra'><meta property='article:tag' content='线性代数'><meta property='article:tag' content='LearningNote'><meta property='article:tag' content='学习笔记'><meta property='article:published_time' content='2026-04-26T18:16:00+08:00'><meta property='article:modified_time' content='2026-04-26T18:16:00+08:00'><meta property='og:image' content='https://yufenghuang.tech/p/computer-graphics-transforming/cover.png'><meta name=twitter:title content="Computer Graphics — Transforming"><meta name=twitter:description content="Computer Graphics — Transforming [TOC]\n2D Transforming Scale 对于一个 2D 空间的缩放，我们可以认为所有的横 X 坐标都变为了原来的 \\(s_x\\) 倍，所有的纵坐标 Y 都变为原来的 \\(s_y\\) 倍。也就是说我们定义一个缩放函数 \\(scale(s_x, s_y, x, y)\\)，那么有：\n"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content='https://yufenghuang.tech/p/computer-graphics-transforming/cover.png'><link rel="shortcut icon" href=/favicon.ico></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切换菜单>
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu_789ebd951ab60789.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🐝</span></figure><div class=site-meta><h1 class=site-name><a href=/>蜂窝</a></h1><h2 class=site-description>EvanWong的个人博客</h2></div></header><ol class=menu-social><li><a href=https://github.com/EvanWonghere/EvanWonghere.github.io target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://steamcommunity.com/profiles/76561198980535015/ target=_blank title=Steam rel=me><svg role="img" viewBox="0 0 24 24"><title>Steam</title><path d="M11.979.0C5.678.0.511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063.0.125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494.0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159.0 1.875-1.515 3.396-3.39 3.396-1.635.0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627.0 11.999-5.373 11.999-12S18.605.0 11.979.0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012H7.54zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665.0-3.015 1.353-3.015 3.015.0 1.665 1.35 3.015 3.015 3.015 1.663.0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249.0 2.266 1.014 2.266 2.266.0 1.251-1.017 2.265-2.266 2.265-1.253.0-2.265-1.014-2.265-2.265z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>主页</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>归档</span></a></li><li><a href=/about/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>关于</span></a></li><li><a href=/quotes/><svg fill="#000" width="800" height="800" viewBox="-6 0 32 32"><title>quote-right</title><path d="M3.44 22.8c-.32.0-.64-.2-.76-.52-.16-.44.04-.92.48-1.08 3.4-1.36 4.12-4.28 4.12-6.48.0-2.52-1.4-3.84-2.8-3.84-1.28.0-2.8.6-2.8 2.28.0.68.36 1.32.96 1.72.48.28 1.04.36 1.44.12.4-.2.92-.04 1.12.36s.04.92-.36 1.12c-.96.48-2.12.4-3.08-.2-1.12-.68-1.76-1.84-1.76-3.12.0-2.32 1.84-3.96 4.48-3.96 2.16.0 4.48 1.92 4.48 5.52.0 3.84-1.84 6.68-5.2 8.04-.08.0-.2.04-.32.04zM14 22.8c-.32.0-.64-.2-.76-.52-.16-.44.04-.92.48-1.08 3.4-1.36 4.12-4.28 4.12-6.48.0-2.52-1.4-3.84-2.8-3.84-1.28.0-2.8.6-2.8 2.28.0.68.36 1.32.96 1.72.48.28 1.04.36 1.44.12.4-.2.92-.04 1.12.36s.04.92-.36 1.12c-.96.48-2.12.4-3.08-.2-1.08-.68-1.76-1.84-1.76-3.12.0-2.32 1.84-3.96 4.48-3.96 2.16.0 4.48 1.92 4.48 5.52.0 3.84-1.84 6.68-5.2 8.04-.12.0-.24.04-.32.04z"/></svg>
+<span>采撷集</span></a></li><li><a href=/quiz/><!doctype html><svg height="800" width="800" id="_x32_" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><style>.st0{fill:#000}</style><g><path class="st0" d="M511.27 331.566c0-.009.0-.018.0-.026-.008-.052.0-.087-.008-.14h-.009c-6.682-88.65-27.159-154.403-55.948-198.846-14.412-22.221-30.968-39.115-49.041-50.507-18.048-11.401-37.649-17.198-57.388-17.18-14.551-.009-26.985 2.629-37.527 6.611-15.836 5.97-27.358 14.795-36.364 21.319-4.495 3.28-8.373 5.961-11.549 7.592-3.211 1.658-5.475 2.239-7.436 2.239-1.328-.009-2.725-.251-4.521-.92-3.115-1.137-7.288-3.732-12.278-7.332-7.531-5.354-16.885-12.764-29.223-18.846-12.339-6.092-27.766-10.69-46.855-10.664-19.739-.018-39.34 5.787-57.388 17.18-27.115 17.119-50.794 46.481-69.008 87.887C18.542 211.332 5.743 264.92.746 331.401H.738c-.009.052.0.096-.009.14.0.008.0.017.0.026C.243 336.981.0 342.247.0 347.358c-.009 25.058 5.77 46.455 16.651 63.141 10.846 16.694 26.863 28.347 45.614 33.822 6.43 1.892 13.068 2.811 19.757 2.811 19.445-.026 39.046-7.618 57.692-20.764 18.681-13.189 36.598-32.052 52.91-55.731 7.845-11.427 18.5-24.798 29.987-34.854 5.736-5.032 11.662-9.214 17.362-12.026 5.71-2.82 11.09-4.244 16.027-4.235 4.936-.009 10.317 1.414 16.026 4.235 8.555 4.199 17.588 11.558 25.787 20.112 8.226 8.538 15.67 18.196 21.562 26.76 16.312 23.688 34.23 42.55 52.902 55.739 18.655 13.146 38.255 20.738 57.7 20.764 6.69.0 13.328-.92 19.749-2.811 18.759-5.475 34.776-17.128 45.614-33.822C506.221 393.813 512 372.416 512 347.358 512 342.256 511.757 336.981 511.27 331.566zM476.737 398.36c-8.104 12.356-19.236 20.469-33.284 24.651-4.33 1.275-8.807 1.9-13.475 1.908-13.484.026-28.902-5.414-44.894-16.703-15.974-11.254-32.312-28.225-47.418-50.177-8.564-12.417-20.044-27.012-33.64-38.95-6.812-5.97-14.169-11.297-22.16-15.245-7.975-3.94-16.677-6.534-25.866-6.534-9.189.0-17.892 2.594-25.866 6.534-11.974 5.943-22.577 14.906-31.957 24.616-9.353 9.726-17.432 20.268-23.843 29.579-15.106 21.952-31.454 38.923-47.419 50.177-15.991 11.288-31.418 16.729-44.894 16.703-4.677-.009-9.145-.633-13.484-1.908-14.04-4.182-25.172-12.295-33.284-24.651-8.06-12.364-13.04-29.293-13.04-51.002.0-4.451.208-9.111.65-13.961v-.052l.009-.113c6.429-86.17 26.446-148.582 52.451-188.59 12.989-20.026 27.41-34.447 42.256-43.801 14.872-9.353 30.126-13.744 45.544-13.761 11.896.009 21.424 2.091 29.675 5.189 12.356 4.65 21.883 11.756 31.158 18.507 4.652 3.367 9.233 6.655 14.378 9.336 5.111 2.655 11.028 4.729 17.666 4.729 4.399.0 8.556-.928 12.286-2.325 6.56-2.482 12-6.213 17.422-10.065 8.113-5.831 16.208-12.14 26.091-16.981 9.883-4.833 21.449-8.364 37.076-8.39 15.418.017 30.672 4.408 45.545 13.761 22.264 14.005 43.6 39.532 60.511 78.03 16.92 38.464 29.354 89.735 34.195 154.36v.052l.009.113c.434 4.842.652 9.502.652 13.961C489.778 369.067 484.806 386.004 476.737 398.36z"/><polygon class="st0" points="161.232,178.126 122.29,178.126 122.29,213.631 86.785,213.631 86.785,252.573 122.29,252.573 122.29,288.079 161.232,288.079 161.232,252.573 196.737,252.573 196.737,213.631 161.232,213.631"/><path class="st0" d="M368.659 167.002c-11.331.0-20.52 9.189-20.52 20.538.0 11.341 9.189 20.538 20.52 20.538 11.35.0 20.538-9.197 20.538-20.538.0-11.349-9.18900000000002-20.538-20.538-20.538z"/><path class="st0" d="M368.659 266.247c-11.331.0-20.52 9.189-20.52 20.53.0 11.349 9.189 20.538 20.52 20.538 11.35.0 20.538-9.189 20.538-20.538C389.197 275.436 380.008 266.247 368.659 266.247z"/><path class="st0" d="M418.282 216.633c-11.341.0-20.538 9.189-20.538 20.53.0 11.349 9.197 20.529 20.538 20.529 11.35.0 20.538-9.18 20.538-20.529.0-11.341-9.18900000000002-20.53-20.538-20.53z"/><path class="st0" d="M319.054 216.633c-11.349.0-20.538 9.189-20.538 20.53.0 11.349 9.189 20.529 20.538 20.529 11.341.0 20.539-9.18 20.539-20.529C339.592 225.822 330.394 216.633 319.054 216.633z"/></g></svg>
+<span>面试刷题</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>搜索</span></a></li><li><a href=/games/><!doctype html><svg height="800" width="800" id="_x32_" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><style>.st0{fill:#000}</style><g><path class="st0" d="M511.27 331.566c0-.009.0-.018.0-.026-.008-.052.0-.087-.008-.14h-.009c-6.682-88.65-27.159-154.403-55.948-198.846-14.412-22.221-30.968-39.115-49.041-50.507-18.048-11.401-37.649-17.198-57.388-17.18-14.551-.009-26.985 2.629-37.527 6.611-15.836 5.97-27.358 14.795-36.364 21.319-4.495 3.28-8.373 5.961-11.549 7.592-3.211 1.658-5.475 2.239-7.436 2.239-1.328-.009-2.725-.251-4.521-.92-3.115-1.137-7.288-3.732-12.278-7.332-7.531-5.354-16.885-12.764-29.223-18.846-12.339-6.092-27.766-10.69-46.855-10.664-19.739-.018-39.34 5.787-57.388 17.18-27.115 17.119-50.794 46.481-69.008 87.887C18.542 211.332 5.743 264.92.746 331.401H.738c-.009.052.0.096-.009.14.0.008.0.017.0.026C.243 336.981.0 342.247.0 347.358c-.009 25.058 5.77 46.455 16.651 63.141 10.846 16.694 26.863 28.347 45.614 33.822 6.43 1.892 13.068 2.811 19.757 2.811 19.445-.026 39.046-7.618 57.692-20.764 18.681-13.189 36.598-32.052 52.91-55.731 7.845-11.427 18.5-24.798 29.987-34.854 5.736-5.032 11.662-9.214 17.362-12.026 5.71-2.82 11.09-4.244 16.027-4.235 4.936-.009 10.317 1.414 16.026 4.235 8.555 4.199 17.588 11.558 25.787 20.112 8.226 8.538 15.67 18.196 21.562 26.76 16.312 23.688 34.23 42.55 52.902 55.739 18.655 13.146 38.255 20.738 57.7 20.764 6.69.0 13.328-.92 19.749-2.811 18.759-5.475 34.776-17.128 45.614-33.822C506.221 393.813 512 372.416 512 347.358 512 342.256 511.757 336.981 511.27 331.566zM476.737 398.36c-8.104 12.356-19.236 20.469-33.284 24.651-4.33 1.275-8.807 1.9-13.475 1.908-13.484.026-28.902-5.414-44.894-16.703-15.974-11.254-32.312-28.225-47.418-50.177-8.564-12.417-20.044-27.012-33.64-38.95-6.812-5.97-14.169-11.297-22.16-15.245-7.975-3.94-16.677-6.534-25.866-6.534-9.189.0-17.892 2.594-25.866 6.534-11.974 5.943-22.577 14.906-31.957 24.616-9.353 9.726-17.432 20.268-23.843 29.579-15.106 21.952-31.454 38.923-47.419 50.177-15.991 11.288-31.418 16.729-44.894 16.703-4.677-.009-9.145-.633-13.484-1.908-14.04-4.182-25.172-12.295-33.284-24.651-8.06-12.364-13.04-29.293-13.04-51.002.0-4.451.208-9.111.65-13.961v-.052l.009-.113c6.429-86.17 26.446-148.582 52.451-188.59 12.989-20.026 27.41-34.447 42.256-43.801 14.872-9.353 30.126-13.744 45.544-13.761 11.896.009 21.424 2.091 29.675 5.189 12.356 4.65 21.883 11.756 31.158 18.507 4.652 3.367 9.233 6.655 14.378 9.336 5.111 2.655 11.028 4.729 17.666 4.729 4.399.0 8.556-.928 12.286-2.325 6.56-2.482 12-6.213 17.422-10.065 8.113-5.831 16.208-12.14 26.091-16.981 9.883-4.833 21.449-8.364 37.076-8.39 15.418.017 30.672 4.408 45.545 13.761 22.264 14.005 43.6 39.532 60.511 78.03 16.92 38.464 29.354 89.735 34.195 154.36v.052l.009.113c.434 4.842.652 9.502.652 13.961C489.778 369.067 484.806 386.004 476.737 398.36z"/><polygon class="st0" points="161.232,178.126 122.29,178.126 122.29,213.631 86.785,213.631 86.785,252.573 122.29,252.573 122.29,288.079 161.232,288.079 161.232,252.573 196.737,252.573 196.737,213.631 161.232,213.631"/><path class="st0" d="M368.659 167.002c-11.331.0-20.52 9.189-20.52 20.538.0 11.341 9.189 20.538 20.52 20.538 11.35.0 20.538-9.197 20.538-20.538.0-11.349-9.18900000000002-20.538-20.538-20.538z"/><path class="st0" d="M368.659 266.247c-11.331.0-20.52 9.189-20.52 20.53.0 11.349 9.189 20.538 20.52 20.538 11.35.0 20.538-9.189 20.538-20.538C389.197 275.436 380.008 266.247 368.659 266.247z"/><path class="st0" d="M418.282 216.633c-11.341.0-20.538 9.189-20.538 20.53.0 11.349 9.197 20.529 20.538 20.529 11.35.0 20.538-9.18 20.538-20.529.0-11.341-9.18900000000002-20.53-20.538-20.53z"/><path class="st0" d="M319.054 216.633c-11.349.0-20.538 9.189-20.538 20.53.0 11.349 9.189 20.529 20.538 20.529 11.341.0 20.539-9.18 20.539-20.529C339.592 225.822 330.394 216.633 319.054 216.633z"/></g></svg>
+<span>游戏厅</span></a></li><li><a href><span>games</span></a></li><li class=menu-bottom-section><ol class=menu><li id=i18n-switch><svg class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg>
+<select name=language title=language onchange="window.location.href=this.selectedOptions[0].value"><option value=https://yufenghuang.tech/en/>English</option><option value=https://yufenghuang.tech/ selected>中文</option></select></li><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>暗色模式</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">目录</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#2d-transforming>2D Transforming</a><ol><li><a href=#scale>Scale</a></li><li><a href=#rotate>Rotate</a></li><li><a href=#shear>Shear</a></li><li><a href=#reflect>Reflect</a></li><li><a href=#composition-and-decomposition>Composition and Decomposition</a><ol><li><a href=#composition>Composition</a></li><li><a href=#decomposition>Decomposition</a></li></ol></li><li><a href=#translation>Translation</a></li><li><a href=#transformation-matrix>Transformation Matrix</a><ol><li><a href=#translation-matrix>Translation Matrix?</a></li><li><a href=#transformation-matrix-1>Transformation Matrix!</a></li></ol></li></ol></li><li><a href=#3d-transforming>3D Transforming</a><ol><li><a href=#scale-1>Scale</a></li><li><a href=#rotation>Rotation</a></li><li><a href=#shear-1>Shear</a></li><li><a href=#translation-1>Translation</a></li><li><a href=#extra>Extra</a></li><li><a href=#normal-transformation>Normal Transformation</a></li></ol></li></ol></nav></div></section></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/p/computer-graphics-transforming/><img src=/p/computer-graphics-transforming/cover_hu_33faf8eec51b72d9.png srcset="/p/computer-graphics-transforming/cover_hu_33faf8eec51b72d9.png 800w, /p/computer-graphics-transforming/cover_hu_3d1728b045f816a5.png 1600w" width=800 height=783 loading=lazy alt="Featured image of post Computer Graphics — Transforming"></a></div><div class=article-details><header class=article-category><a href=/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/>学习笔记</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/p/computer-graphics-transforming/>Computer Graphics — Transforming</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Apr 26, 2026</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>阅读时长: 12 分钟</time></div></footer></div></header><section class=article-content><h1 id=computer-graphics--transforming>Computer Graphics — Transforming</h1><p>[TOC]</p><h2 id=2d-transforming>2D Transforming</h2><h3 id=scale>Scale</h3><p>对于一个 2D 空间的缩放，我们可以认为所有的横 X 坐标都变为了原来的 \(s_x\) 倍，所有的纵坐标 Y 都变为原来的 \(s_y\) 倍。也就是说我们定义一个缩放函数 \(scale(s_x, s_y, x, y)\)，那么有：</p><div class=math-display>$$
+scale(s_x, s_y, x, y) =
+\begin{bmatrix}
+s_x & 0 \\
+0 & s_y
+\end{bmatrix}
+\begin{bmatrix}
+x \\
+y
+\end{bmatrix}
+=
+\begin{bmatrix}
+s_xx \\
+s_yy
+\end{bmatrix}
+$$</div><h3 id=rotate>Rotate</h3><p>对于一个二维平面上的点 \(A(x_a, y_a)\)，我们将其旋转 \(\phi\) 角度到点 \(B(x_b, y_b)\)。不妨设线段 \(OA\) 与横坐标轴的夹角为 \(\alpha\)，长度为 \(r\)，于是有：</p><div class=math-display>$$
+\begin{cases}
+r = \sqrt{x_a^2 + y_a^2} \\
+x_a = r\cos\alpha \\
+y_a = r\sin\alpha \\
+x_b = r\cos(\alpha+\phi) = r\cos\alpha\cos\phi - r\sin\alpha\sin\phi = x_a\cos\phi - y_a\sin\phi \\
+y_b = r\sin(\alpha+\phi) = r\cos\alpha\sin\phi + r\sin\alpha\cos\phi = x_a\sin\phi + x_a\cos\phi \\
+\end{cases}
+$$</div><p>由此我们可以定义一个旋转函数 \(rotate(x, y, \phi)\)，那么有：</p><div class=math-display>$$
+rotate(x, y, \phi) =
+\begin{bmatrix}
+\cos\phi & -\sin\phi \\
+\sin\phi & \cos\phi
+\end{bmatrix}
+\begin{bmatrix}
+x \\
+y
+\end{bmatrix}
+=
+\begin{bmatrix}
+x\cos\phi - y\sin\phi \\
+x\sin\phi + x\cos\phi
+\end{bmatrix}
+$$</div><h3 id=shear>Shear</h3><p>Shear 剪切是一种仿射变换，它将每个点沿固定方向移动，移动量与其到给定直线的有符号距离成正比，该直线平行于该方向。在平面 \(\mathbb{R}^{2}=\mathbb{R} \times \mathbb{R}\) 中，水平剪切（或沿 x 轴的剪切）是一个函数，它将具有坐标 \((x, y)\) 的任意点映射到点 \((x+my, y)\) ；其中 \(m\) 是一个固定参数，称为剪切因子。</p><p>故我们可以定义两个剪切函数 \(shear_x(x, y, m), shear_y(x, y, m)\)，那么有：</p><div class=math-display>$$
+shear_x(x, y, m) =
+\begin{bmatrix}
+1 & m \\
+0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+x \\
+y
+\end{bmatrix}
+=
+\begin{bmatrix}
+x + my \\
+y
+\end{bmatrix}
+\\
+shear_y(x, y, m) =
+\begin{bmatrix}
+1 & 0 \\
+m & 1
+\end{bmatrix}
+\begin{bmatrix}
+x \\
+y
+\end{bmatrix}
+=
+\begin{bmatrix}
+x \\
+mx + y
+\end{bmatrix}
+$$</div><p>有一点有趣的地方在于，可以通过切变来得到旋转:</p><div class=math-display>$$
+\begin{align}
+rotate(\phi) &=
+\begin{bmatrix}
+\cos\phi & -\sin\phi \\
+\sin\phi & \cos\phi
+\end{bmatrix} \\
+&=
+\begin{bmatrix}
+1 & \frac{\cos\phi-1}{\sin\phi} \\
+0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+1 & 0 \\
+\sin\phi & 1
+\end{bmatrix}
+\begin{bmatrix}
+1 & \frac{\cos\phi-1}{\sin\phi} \\
+0 & 1
+\end{bmatrix} \\
+&= shear_x(\frac{\cos\phi-1}{\sin\phi}) \ shear_y(\sin\phi) \ shear_x(\frac{\cos\phi-1}{\sin\phi})
+\end{align}
+$$</div><p>这意味着任何二维平面上的旋转都可以等同为三次对应切变。</p><h3 id=reflect>Reflect</h3><p>反射变换，或者叫翻转变换，实际上就是 \(-1\) 倍的缩放变换。但是注意只能翻转一个轴，否则的话就等同于旋转了。</p><h3 id=composition-and-decomposition>Composition and Decomposition</h3><h4 id=composition>Composition</h4><p>注意到以上变换都可以使用二维矩阵表示，于是连续的变换就可以通过矩阵乘法表现出来，例如：</p><div class=math-display>$$
+\begin{align}
+&scale(0.5, 0.5) \text{ then } rotate(\frac{\pi}{4})\\
+&=
+\begin{bmatrix}
+\cos\frac{\pi}{4} & -\sin\frac{\pi}{4} \\
+\sin\frac{\pi}{4} & \cos\frac{\pi}{4}
+\end{bmatrix}
+\begin{bmatrix}
+0.5 & 0 \\
+0 & 0.5
+\end{bmatrix}
+\begin{bmatrix}
+x \\
+y
+\end{bmatrix}
+\\
+&=
+\begin{bmatrix}
+\frac{\sqrt{2}}{4} & -\frac{\sqrt{2}}{4} \\
+\frac{\sqrt{2}}{4} & \frac{\sqrt{2}}{4}
+\end{bmatrix}
+\begin{bmatrix}
+x \\
+y
+\end{bmatrix}
+\\
+&=
+\begin{bmatrix}
+\frac{\sqrt{2}}{4}x - \frac{\sqrt{2}}{4}y \\
+\frac{\sqrt{2}}{4}x + \frac{\sqrt{2}}{4}y
+\end{bmatrix}
+\end{align}
+$$</div><p>需要注意的在于，根据矩阵乘法的定义，变换应该按顺序左乘，也就是按照变换顺序从右往左写变换矩阵。</p><p>还有一点就是，矩阵乘法具有结合律，因此我们可以先将所有变换矩阵相乘，得到混合的、总的变换矩阵。</p><h4 id=decomposition>Decomposition</h4><p>既然变换矩阵是可以组合在一起呢，那么给出一个组合起来的矩阵，我们如何知道进行了哪些变换呢？</p><p>假设有线性变换核心矩阵 \(A\)：</p><div class=math-display>$$
+A = \begin{bmatrix} m_{00} & m_{01} \\ m_{10} & m_{11} \end{bmatrix}
+$$</div><p>根据不同的数学原理和应用场景，有以下五种核心的分解方法：</p><ol><li><strong>直接代数提取法 (Direct TRS Extraction)</strong></li></ol><p>这是游戏引擎中最基础、计算性能最高的方法，前提是<strong>假设矩阵不包含错切（Shear）</strong>。</p><ul><li><p><strong>提取逻辑</strong>（列向量标准下）：</p><ul><li><p><strong>缩放 (Scale)</strong>：基向量的模长。</p><div class=math-display>$$
+Scale_x = \sqrt{m_{00}^2 + m_{10}^2}, \quad Scale_y = \sqrt{m_{01}^2 + m_{11}^2}
+$$</div></li><li><p><strong>旋转 (Rotation)</strong>：归一化基向量后，通过反三角函数求角。</p><div class=math-display>$$
+\theta = \text{atan2}(m_{10}, m_{00})
+$$</div></li></ul></li><li><p><strong>局限性</strong>：如果经过非等比缩放后再旋转（产生错切），或者存在镜像（负缩放），直接提取会导致结果错误。</p></li><li><p><strong>应用场景</strong>：常规 Transform 组件的 TRS 参数同步与重构。</p></li></ul><ol start=2><li><strong>QR 分解 (QR Decomposition)</strong></li></ol><p>将矩阵分解为一个正交矩阵 \(Q\) 和一个上三角矩阵 \(R\)：</p><div class=math-display>$$
+A = Q \cdot R
+$$</div><ul><li><strong>几何意义</strong>：<ul><li>\(Q\)（正交矩阵）：代表<strong>旋转</strong>（可能含镜像）。</li><li>\(R\)（上三角矩阵）：代表<strong>缩放和错切</strong>。</li><li>操作顺序等价于：<strong>先缩放，再错切，最后旋转</strong>。</li></ul></li><li><strong>应用场景</strong>：UI 动画系统（如 CSS3 / SVG Matrix 规范），需要精确剥离并处理错切参数的场景。</li></ul><ol start=3><li><strong>极分解 (Polar Decomposition)</strong></li></ol><p>将矩阵分解为一个正交矩阵 \(U\) 和一个对称半正定矩阵 \(P\)：</p><div class=math-display>$$
+A = U \cdot P
+$$</div><ul><li><strong>几何意义</strong>：<ul><li>\(U\)（正交矩阵）：代表最近似的纯刚体<strong>旋转</strong>。</li><li>\(P\)（对称矩阵）：代表所有的非刚体形变（<strong>拉伸与错切</strong>）。</li></ul></li><li><strong>应用场景</strong>：<strong>骨骼动画系统与矩阵插值</strong>。剥离出纯旋转进行球面线性插值（Slerp），形变部分进行线性插值（Lerp），能有效防止动画过渡时出现诡异的体积扭曲。</li></ul><ol start=4><li><strong>奇异值分解 (SVD, Singular Value Decomposition)</strong></li></ol><p>最彻底、最具普适性的代数分解方法。任何实矩阵皆可分解：</p><div class=math-display>$$
+A = U \cdot \Sigma \cdot V^T
+$$</div><ul><li><strong>几何意义</strong>：<ul><li>\(V^T\)：第一次<strong>局部旋转</strong>。</li><li>\(\Sigma\)（对角矩阵）：沿着局部坐标轴的<strong>非等比缩放</strong>。</li><li>\(U\)：第二次<strong>全局旋转</strong>。</li><li>操作顺序等价于：转到一个特定角度 \(\rightarrow\) 沿 XY 轴正交拉伸 \(\rightarrow\) 再转到一个新角度。</li></ul></li><li><strong>应用场景</strong>：物理引擎碰撞与形变处理、病态矩阵求逆、高级数学分析。</li></ul><ol start=5><li><strong>特征分解 / 谱分解 (Eigendecomposition)</strong></li></ol><p>将矩阵分解为旋转、对角缩放、逆旋转：</p><div class=math-display>$$
+A = R \cdot S \cdot R^T
+$$</div><ul><li><strong>先决条件</strong>：矩阵 \(A\) 必须是<strong>对称矩阵</strong>（\(A = A^T\)），即不包含全局旋转。</li><li><strong>几何意义</strong>：<ul><li>\(R^T\)：将受力方向对齐到局部坐标轴。</li><li>\(S\)：在局部空间进行纯对角缩放（特征值即缩放比例）。</li><li>\(R\)：旋转回世界空间。</li><li>本质是<strong>局部坐标系下的非等比缩放</strong>。</li></ul></li><li><strong>应用场景</strong>：作为 SVD 和极分解的底层推导（例如对极分解中的形变矩阵 \(P\) 求解具体拉伸轴向），以及碰撞检测中的 OBB（方向包围盒）协方差矩阵分析。</li></ul><div class=table-wrapper><table><thead><tr><th><strong>分解方法</strong></th><th><strong>公式</strong></th><th><strong>提取出的几何分量</strong></th><th><strong>核心应用领域</strong></th></tr></thead><tbody><tr><td><strong>直接法 (TRS)</strong></td><td>代数公式</td><td>缩放、旋转</td><td>游戏对象基础变换，逻辑层 Transform 同步</td></tr><tr><td><strong>QR 分解</strong></td><td>\(A = QR\)</td><td>旋转、缩放、错切</td><td>前端渲染、带错切的 2D UI 变形动画</td></tr><tr><td><strong>极分解 (Polar)</strong></td><td>\(A = UP\)</td><td>刚体旋转、拉伸形变</td><td>骨骼蒙皮、消除扭曲的矩阵平滑插值</td></tr><tr><td><strong>SVD</strong></td><td>\(A = U\Sigma V^T\)</td><td>旋转1、轴向缩放、旋转2</td><td>物理引擎形变计算、高鲁棒性底层算法</td></tr><tr><td><strong>特征分解</strong></td><td>\(A = RSR^T\)</td><td>局部轴向缩放</td><td>仅限对称矩阵，用于解析形变轴向、包围盒生成</td></tr></tbody></table></div><h3 id=translation>Translation</h3><p>Translation 平移是很简单的变换，但也是最特殊的变换，因为它并不是平移变换。我们定义一个平移函数 \(translation(x, y, dx, dy)\)，有：</p><div class=math-display>$$
+translation(x, y, dx, dy) = (x+dx, y+dy)
+$$</div><p>由于并不是线性变换，因此无法使用同纬度的矩阵来表示，这就意味着无法把所有变换合并成一个单一的变换矩阵</p><p>吗？</p><h3 id=transformation-matrix>Transformation Matrix</h3><h4 id=translation-matrix>Translation Matrix?</h4><p>为了解决将所有变换都合并起来的问题，数学家们使用了一个很 tricky 的方法：</p><p>引入齐次坐标，通过升维操作，将二维的平移转换成三维的错切 shear，具体来说是，我们将一个二维点坐标 \((x, y)\) 补充一个 \(w\) 分量，升维成使用三维向量 \([x \ y \ w]^T\) 表示。为了方便起见一般设 \(w=1\)，并且约定 \(w \neq 0\) 时 \([\frac{x}{w} \ \frac{y}{w} \ 1]^T\) 与 \([x \ y \ w]\) 表示的是同一个点；\(w = 0\) 时我们则认为表示的就是一个向量，而不是一个点，这么做的原因是确保二维向量经过平移变换后仍然是不变的，这一点将在后面证明。</p><p>想象一个左下角在原点、两条边紧贴横轴与纵轴的矩形。在二维 Shear 变换中，我们将每个点沿一个固定方向移动，不妨设为纵轴正方向。我们可以得知：紧贴着纵轴的边是不变的，与纵轴平行的边依旧平行且长度不变。这在直觉上相当于：这条边沿着纵轴正方向<strong>平移</strong>了！</p><p>我们可以从坐标变换中更清晰地看出这一点：</p><div class=math-display>$$
+\begin{bmatrix} 1 & 0 \\ k & 1 \end{bmatrix} \begin{bmatrix} x \\ y \end{bmatrix} = \begin{bmatrix} x \\ kx + y \end{bmatrix}
+$$</div><p>对于一条平行于 \(y\) 轴的直线 \(x=c\)，其线上的点在 shear 变换后的坐标为 \(\begin{bmatrix} c & kc + y \end{bmatrix}^T\)，对于这条线段本身而言，它的 \(x\) 坐标没变，形状没变，只是整体在 \(y\) 轴上增加了 \(kc\) 的距离。<strong>在它的 1D 视角里，它确确实实只是做了一次一维平移</strong>。</p><p>于是，我们将这个思想继续应用到三维 shear，如果我们以 <strong>\(z = 0\) 平面为固定底座</strong>进行三维 shear，那么在 <strong>\(z = w\) 这个截面上</strong>，我们看到的就应该是 2D 图形的大小形状不变，且整体进行着平移变换！因此我们可以反推出变换矩阵，我们目前坐标为 \((x, y, w)^T\)，期望平移变换到点 \((x+t_x, y+t_y, w)^T\) 上，不难推出该变换矩阵：</p><div class=math-display>$$
+\begin{bmatrix}
+1 & 0 & t_x \\
+0 & 1 & t_y \\
+0 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+x \\
+y \\
+w
+\end{bmatrix}
+=
+\begin{bmatrix}
+x + t_xw \\
+y + t_yw \\
+w
+\end{bmatrix}
+$$</div><p>只要我们令 \(w = 1\)，那么 \(t_x, t_y\) 就直接是对应的偏移量了，这也是前面说的“一般设 \(w=1\)”的原因。此外这还能解释为什么“\(w = 0\) 时我们则认为表示的就是一个向量”，因为此时变换前后的坐标值并没有变化，这正符合<strong>向量的平移不变性</strong>！</p><h4 id=transformation-matrix-1>Transformation Matrix!</h4><p>我们虽然成功将 Translation 变换使用矩阵表示了出来，但是Translation 变换要使用三维矩阵，其他的线性变换却都是二维矩阵，这意味着无法通过矩阵乘法将它们进行结合。</p><p>然而若使用分块矩阵的思想，这个问题其实不难解决，我们将 Translation 变换矩阵进行分块可以得到：</p><div class=math-display>$$
+\left[
+\begin{array}{cc|c}
+1 & 0 & tx \\
+0 & 1 & ty \\
+\hline
+0 & 0 & 1
+\end{array}
+\right]
+$$</div><p>按从左上到右下的顺序，以此命名为区域 \(I, II, III, IV\)。区域 \(III, IV\) 我们可以先不管（<em>区域 III \(\begin{bmatrix} 0 & 0 \end{bmatrix}\) 代表了<strong>投影分量（Projection）</strong>。正是因为它严格为 \(\begin{bmatrix} 0 & 0 \end{bmatrix}\)，才保证了变换后的 \(w\) 依然是 \(1\)；区域 IV 的 \(1\) 代表全局缩放系数，如果不为 \(1\)，整个坐标系会被等比放大或缩小</em>）。区域 \(II\) 表示的是平移偏移量，注意到区域 \(I\) 正好是 Identity Matrix，如果我们只看这一部分，那么其对二维上的点的影响是什么呢？我们将区域 \(I\) 替换成 \(\begin{bmatrix} a & b \\ c & d \end{bmatrix}\)，代入矩阵乘法中得到：</p><div class=math-display>$$
+\begin{bmatrix}
+a & b & t_x \\
+c & d & t_y \\
+0 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+x \\
+y \\
+w
+\end{bmatrix}
+=
+\begin{bmatrix}
+ax + by + t_xw \\
+cx + dy + t_yw \\
+w
+\end{bmatrix}
+$$</div><p>不难注意到区域 \(I\) 代表的正是对 \((x, y)\) 进行线性变换！也就是说，我们完全可以将区域 \(I\) 替换成先前的聚合变换矩阵！这样修改后的矩阵的作用相当于<strong>先进行线性变换，再进行平移变换</strong>，这样问题便解决了，解决的办法就是通过一个矩阵将线性变换和平移结合起来，并且这样得到的矩阵本身是可以再聚合的。</p><p>最终我们得到的同时包含了线性映射与平移的矩阵，我们称之为 Affine Transformation Matrix（仿射变换矩阵），而区域 \(I\) 称为线性变换区域，区域 \(II\) 称为平移变换区域，区域 \(III, IV\) 在实际存储中可以省略（恒为 \(\begin{bmatrix} 0 & 0 & 1 \end{bmatrix}\)），使用时再补齐。</p><h2 id=3d-transforming>3D Transforming</h2><p>在充分理解了 2D 变换的基础上，3D 变换并不难理解，其实基本相同。</p><h3 id=scale-1>Scale</h3><div class=math-display>$$
+scale(s_x, s_y, s_z) =
+\begin{bmatrix}
+s_x & 0 & 0 \\
+0 & s_y & 0 \\
+0 & 0 & s_z
+\end{bmatrix}
+$$</div><h3 id=rotation>Rotation</h3><div class=math-display>$$
+rotate_z(\phi) =
+\begin{bmatrix}
+\cos\phi & -\sin\phi & 0 \\
+\sin\phi & \cos\phi & 0 \\
+0 & 0 & 1
+\end{bmatrix}
+\\ \\
+rotate_x(\phi) =
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & \cos\phi & -\sin\phi \\
+0 & \sin\phi & \cos\phi
+\end{bmatrix}
+\\ \\
+rotate_y(\phi) =
+\begin{bmatrix}
+\cos\phi & 0 & \sin\phi \\
+0 & 1 & 0 \\
+-\sin\phi & 0 & \cos\phi
+\end{bmatrix}
+$$</div><p>注意到绕 \(y\) 轴旋转似乎有些特殊，其旋转分量拆分出来是 \(\begin{bmatrix} cos\phi & \sin\phi \\ -\sin\phi & \cos\phi \end{bmatrix}\)，按另外的都是 \(\begin{bmatrix} cos\phi & -\sin\phi \\ \sin\phi & \cos\phi \end{bmatrix}\)，这实际上是旋转对称性带来的错觉。我们将点 \((x, y, z)^T\) 变换后的坐标分别写出来，得到：</p><div class=math-display>$$
+\begin{bmatrix}
+x\cos\phi - y\sin\phi \\
+x\sin\phi + y\cos\phi \\
+z
+\end{bmatrix},
+\begin{bmatrix}
+x \\
+y\cos\phi - z\sin\phi \\
+y\sin\phi + z\cos\phi \\
+\end{bmatrix},
+\begin{bmatrix}
+x\cos\phi + z\sin\phi \\
+y \\
+-x\sin\phi + z\cos\phi \\
+\end{bmatrix}
+$$</div><p>可以看出其形式是完全相同的，只是我们在写的时候由于 \(x\) 分量在上，因此要将 \(x\) 项提前，因此破坏了轮转。</p><p>然而现在的旋转只能局限于坐标轴的三个方向，如果我希望绕着任意一个方向向量旋转呢？**罗德里格斯旋转公式（Rodrigues&rsquo; Rotation Formula）**将给你答案，下面我们进行该公式的推导。</p><p>首先先明确我们的问题，给定空间中任意一个单位向量作为旋转轴 \(\mathbf{u}\)，以及一个旋转角度 \(\phi\)，要求计算出空间中任意一点（或向量）\(\mathbf{v}\) 绕该轴旋转后的新位置 \(\mathbf{v}'\)。</p><p>我们首先将目标向量 \(\mathbf{v}\) 分解为平行于旋转轴 \(\mathbf{u}\) 的分量 \(\mathbf{v}_{\parallel}\) 和 垂直的分量 \(\mathbf{v}_{\perp}\)，这是因为平行分量再旋转后是不变的，因此后续只需要讨论垂直分量。平行分量可以通过点乘得到，而垂直分量可以通过作差得到：</p><div class=math-display>$$
+\mathbf{v}_{\parallel} = (\mathbf{v} \cdot \mathbf{u})\mathbf{u} \\
+\mathbf{v}_{\perp} = \mathbf{v} - \mathbf{v}_{\parallel} = \mathbf{v} - (\mathbf{v} \cdot \mathbf{u})\mathbf{u} = -\mathbf{u} \times (\mathbf{u} \times \mathbf{v})
+$$</div><p>表示出来了之后，我们开始考垂直分量 \(\mathbf{v}_{\perp}\) 的旋转，由于其与旋转轴 \(\mathbf{u}\) 相互垂直，那么其旋转实际上就是垂直平面上的二维旋转，为了描述这个垂直平面，我们还需要一个基向量</p><div class=math-display>$$
+\mathbf{w} = \mathbf{u} \times \mathbf{v} = \mathbf{u} \times (\mathbf{v}_{\parallel} + \mathbf{v}_{\perp}) = \mathbf{u} \times \mathbf{v}_{\parallel} + \mathbf{u} \times \mathbf{v}_{\perp} = \mathbf{u} \times \mathbf{v}_{\perp}
+$$</div><p>由于 \(\mathbf{v}_{\perp}\) 和 \(\mathbf{w}\) 就是垂直平面的基向量，且 \(||\mathbf{w}|| = ||\mathbf{u} \times \mathbf{v}_{\perp}|| = ||\mathbf{u}|| \cdot ||\mathbf{v}_{\perp}|| \cdot \sin\frac{\pi}{2} = ||\mathbf{v}_{\perp}||\)，因此我们很容易可以得到 \(\mathbf{v}_{\perp}\) 旋转后的向量为：</p><div class=math-display>$$
+\mathbf{v}_{\perp}' = \cos\phi \cdot \mathbf{v}_{\perp} + \sin\phi \cdot \mathbf{w}
+$$</div><p>现在只要再加上平行分量 \(\mathbf{v}_{\parallel}\) 就能得到旋转后的最终向量：</p><div class=math-display>$$
+\begin{align}
+\mathbf{v}' &= \mathbf{v}_{\parallel}' + \mathbf{v}_{\perp}' \\
+&= \mathbf{v}_{\parallel} + \cos\phi \cdot \mathbf{v}_{\perp} + \sin\phi \cdot \mathbf{w} \\
+&= (\mathbf{v} \cdot \mathbf{u})\mathbf{u} + \cos\phi \cdot (\mathbf{v} - (\mathbf{v} \cdot \mathbf{u})\mathbf{u}) + \sin\phi \cdot (\mathbf{u} \times \mathbf{v}) \\
+&= \cos\phi \cdot \mathbf{v} + (1 - \cos\phi)(\mathbf{u} \cdot \mathbf{v})\mathbf{u} + \sin\phi \cdot (\mathbf{u} \times \mathbf{v}) \\
+&= \left(\cos\phi \cdot I + (1 - \cos\phi)\mathbf{u}\mathbf{u}^T + \sin\phi \cdot \begin{bmatrix} 0 &-u_z &u_y \\ u_z &0 &-u_x \\ -u_y &u_x &0 \end{bmatrix}\right)\mathbf{v}
+\end{align}
+$$</div><p>还有别的表示方法，比如令 \(U = \begin{bmatrix} 0 &-u_z &u_y \\ u_z &0 &-u_x \\ -u_y &u_x &0 \end{bmatrix}\)，于是有 \(\mathbf {u} \times \mathbf {v} =\mathbf {U} \mathbf {v} ,\quad \mathbf {u} \times (\mathbf {u} \times \mathbf {v} )=\mathbf {U} (\mathbf {U} \mathbf {v} )=\mathbf {U} ^{2}\mathbf {v}\)。将表达式重新推导下：</p><div class=math-display>$$
+\begin{align}
+\mathbf{v}' &= \mathbf{v}_{\parallel}' + \mathbf{v}_{\perp}' \\
+&= \mathbf{v}_{\parallel} + \cos\phi \cdot \mathbf{v}_{\perp} + \sin\phi \cdot \mathbf{w} \\
+&= (\mathbf{v} \cdot \mathbf{u})\mathbf{u} + \cos\phi \cdot (\mathbf{v} - (\mathbf{v} \cdot \mathbf{u})\mathbf{u}) + \sin\phi \cdot (\mathbf{u} \times \mathbf{v}) \\
+&= \cos\phi \cdot \mathbf{v} + (1 - \cos\phi)(\mathbf{u} \cdot \mathbf{v})\mathbf{u} + \sin\phi \cdot (\mathbf{u} \times \mathbf{v}) \\
+&// \ \text{Simplified Using Vector Triple Product} \\
+&= \mathbf{v} + \sin\phi(\mathbf{u} \times \mathbf{v}) + (1-\cos\phi) \mathbf{u} \times (\mathbf{u} \times \mathbf{v}) \\
+&= \mathbf{v} +(\sin\phi)\mathbf{U}\mathbf{v} + (1-\cos\phi)\mathbf{U}^{2}\mathbf{v} \\
+&= \mathbf{Rv}
+\end{align}
+$$</div><p>其中 \(\mathbf{R}\) 就是常用的旋转矩阵：</p><div class=math-display>$$
+\mathbf{R} =\mathbf{I} + (\sin\phi)\mathbf{U} + (1-\cos\phi)\mathbf{U}^{2}
+$$</div><h3 id=shear-1>Shear</h3><p>三维切变变换实际上在上一节中平移变换推导中提到了，这里只给出沿轴的变换矩阵。</p><div class=math-display>$$
+shear_x(dy, dz) =
+\begin{bmatrix}
+1 & dy & dz \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{bmatrix}
+\\ \\
+shear_y(dx, dz) =
+\begin{bmatrix}
+1 & 0 & 0 \\
+dx & 1 & dz \\
+0 & 0 & 1
+\end{bmatrix}
+\\ \\
+shear_z(dx, dy) =
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+dx & dy & 1
+\end{bmatrix}
+$$</div><h3 id=translation-1>Translation</h3><div class=math-display>$$
+translation(t_x, t_y, t_z) =
+\begin{bmatrix}
+1 & 0 & 0 & t_x \\
+0 & 1 & 0 & t_y \\
+0 & 0 & 1 & t_z \\
+0 & 0 & 0 & 1 \\
+\end{bmatrix}
+$$</div><h3 id=extra>Extra</h3><p>现在考虑一个问题，对于一个物体，使其绕着空间中某一条直线旋转特定角度，如何使用 transformation matrix 来表示呢？</p><p>我们先前讨论的旋转，一开始都是以某个坐标轴为旋转轴进行的，后来经过拓展我们可以绕过原点的任意轴进行旋转。因此若对于任意的旋转轴，只要我们能够将旋转轴经过原点就好了。顺着这样思路下去，只要我们将旋转轴平移到穿过原点，再对物体进行旋转，在平移变换过程中，需要旋转的物体跟着进行相同的变换来保证相对位置不变，旋转完成后再逆平移变换回去就好了。</p><p>因此我们首先设初始旋转轴过空间中一点 \(P_0 = (x_0, y_0, z_0)\)，其单位方向向量 \(u = (u_x, u_y, u_z)\)，那么我们可以得到每一步的矩阵：</p><div class=math-display>$$
+T = \begin{bmatrix} 1 & 0 & 0 & -x_0 \\ 0 & 1 & 0 & -y_0 \\ 0 & 0 & 1 & -z_0 \\ 0 & 0 & 0 & 1 \end{bmatrix} \\ \\
+R = \mathbf{I} + (\sin\phi)\mathbf{U} + (1-\cos\phi)\mathbf{U}^{2} \\ \\
+T^{-1} = \begin{bmatrix} 1 & 0 & 0 & x_0 \\ 0 & 1 & 0 & y_0 \\ 0 & 0 & 1 & z_0 \\ 0 & 0 & 0 & 1 \end{bmatrix}
+$$</div><p>只需要将 \(R\) 修改成齐次坐标形式 \(R_{homo}\)，那么我们就可以得到最终的变化矩阵</p><div class=math-display>$$
+M = T^{-1} \cdot R_{homo} \cdot T
+$$</div><p>这样的变换，我们也可以认为是从世界空间变换到了局部旋转空间，进行旋转再变换回世界空间，这正是我们下面要说明的**视图变换（View Transform）**概念的雏形。</p><h3 id=normal-transformation>Normal Transformation</h3><p>法线变换是比较特殊的，并且与后面的 Shading 部分关系紧密，因此我们需要专门推导。</p><p>假设存在一个表面向量 \(\mathbf{t}\)，其法向量为 \(\mathbf{n}\)，有 \(\mathbf{n}^T\mathbf{t} = 0\)。在物体经过变换 \(M\) 之后，其表面向量也会进行相应变换 \(\mathbf{t}' = M\mathbf{t}\)，但是法向量应该怎么变换呢？我们不妨设其变换为 \(N\)，有：</p><div class=math-display>$$
+\mathbf{n}'^T\mathbf{t}' = (N\mathbf{n})^T(M\mathbf{t}) = \mathbf{n}^T(N^TM)\mathbf{t}
+$$</div><p>我们的期望是，变化后的法线 \(\mathbf{n}'\) 与变化后的平面向量 \(\mathbf{t}'\) 依然垂直，不难观察得到，如果 \(N = (M^{-1})^T\)，那么就可以符合我们的要求：</p><div class=math-display>$$
+\mathbf{n}'^T\mathbf{t}' = \mathbf{n}^T(M^{-1}M)\mathbf{t} = \mathbf{n}^T\mathbf{t} = 0
+$$</div><p>有一点可以注意的是，如果变换矩阵 \(M\) 只包含旋转（Rotation）和等比缩放（Uniform Scale），那么它本质上是一个正交矩阵（的常数倍）。对于正交矩阵，存在数学性质 \((M^{-1})^T = M\)。这意味着在这种情况下，法线<strong>可以直接使用原顶点变换矩阵 \(M\) 进行变换</strong>，从而省去求逆矩阵的昂贵计算开销。</p></section><footer class=article-footer><section class=article-tags><a href=/tags/computergraphics/>ComputerGraphics</a>
+<a href=/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/>计算机图形学</a>
+<a href=/tags/linearalgebra/>LinearAlgebra</a>
+<a href=/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/>线性代数</a>
+<a href=/tags/learningnote/>LearningNote</a>
+<a href=/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/>学习笔记</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css integrity=sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js integrity=sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8 crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js integrity=sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05 crossorigin=anonymous defer></script><script>window.addEventListener("DOMContentLoaded",()=>{const e=document.querySelector(".main-article");renderMathInElement(e,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}],ignoredClasses:["gist"],throwOnError:!1,macros:{"\\prescript":"{}^{#1}_{#2}#3"}})})</script></article><aside class=related-content--wrapper><h2 class=section-title>相关文章</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-git-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%89%E8%8A%82/><div class=article-details><h2 class=article-title>实验室 Git 基础课程 · 第三节</h2></div></a></article><article><a href=/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-git-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E8%8A%82/><div class=article-details><h2 class=article-title>实验室 Git 基础课程 · 第二节</h2></div></a></article><article><a href=/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-git-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%B8%80%E8%8A%82/><div class=article-details><h2 class=article-title>实验室 Git 基础课程 · 第一节</h2></div></a></article><article><a href=/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%B8%89%E8%8A%82/><div class=article-details><h2 class=article-title>实验室 C++ 基础课程 · 第二章第三节</h2></div></a></article><article><a href=/p/%E5%AE%9E%E9%AA%8C%E5%AE%A4-c-%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%AC%E4%BA%8C%E8%8A%82/><div class=article-details><h2 class=article-title>实验室 C++ 基础课程 · 第二章第二节</h2></div></a></article></div></div></aside><script src=https://giscus.app/client.js data-repo=EvanWonghere/EvanWonghere.github.io data-repo-id=R_kgDOPzgwzg data-category=Announcements data-category-id=DIC_kwDOPzgwzs4Cvsti data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=top data-theme=light data-lang=en data-loading crossorigin=anonymous async></script><script>function setGiscusTheme(e){let t=document.querySelector("iframe.giscus-frame");t&&t.contentWindow.postMessage({giscus:{setConfig:{theme:e}}},"https://giscus.app")}(function(){addEventListener("message",t=>{if(event.origin!=="https://giscus.app")return;e()}),window.addEventListener("onColorSchemeChange",e);function e(){setGiscusTheme(document.documentElement.dataset.scheme==="light"?"light":"dark_dimmed")}})()</script><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2026 EvanWong</section><section class=powerby>使用 <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> 构建<br>主题 <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.31.0>Stack</a></b> 由 <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a> 设计</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
