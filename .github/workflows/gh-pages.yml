@@ -21,7 +21,10 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: "0.157.0"
+          # 与本地开发环境保持一致（brew 安装的 hugo 0.165.0）。
+          # 两边版本不同意味着线上构建用的是从未在本地验证过的版本。
+          # 升级时请两边同时改：brew upgrade hugo，然后同步此处版本号。
+          hugo-version: "0.165.0"
           extended: true
 
       - name: Build
