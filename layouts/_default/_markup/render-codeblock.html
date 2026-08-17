@@ -1,0 +1,16 @@
+{{/*
+    代码块 render hook —— 唯一目的：把语言信息带到 HTML 里。
+
+    Chroma 生成的 <div class="highlight"> 不包含任何语言标识，
+    所以在外面包一层 .code-block 并挂上 data-lang。
+    footer/custom.html 读取它来渲染右上角的语言标签与复制按钮。
+
+    highlight 函数会自动合并 hugo.toml 里 [markup.highlight] 的配置
+    （lineNos / lineNumbersInTable 等），这里不需要重复声明。
+
+    没有标注语言的代码块不加 data-lang，也就不会显示标签。
+*/}}
+{{- $lang := trim .Type " " -}}
+<div class="code-block"{{ with $lang }} data-lang="{{ . }}"{{ end }}>
+    {{- highlight .Inner (default "text" $lang) .Options -}}
+</div>

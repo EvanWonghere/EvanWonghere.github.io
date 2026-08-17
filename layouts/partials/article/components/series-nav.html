@@ -1,0 +1,99 @@
+{{/*
+    系列导航 + 上/下一篇
+
+    Stack 主题完全没有这两样东西（全主题搜 .Next / .PrevInSection 零结果），
+    而本站 23 篇文章使用了 series，最大的「实验室课程」有 11 篇连载。
+    读者看完一节后没有任何路径走到下一节，只能退回归档页翻——这个 partial 补上它。
+
+    排序策略：
+      按日期升序。本站系列文章的日期顺序即为阅读顺序（第零章 → 第一章 …），
+      且没有任何文章使用 weight。
+
+    上/下一篇的取法：
+      不使用 Hugo 的 .Next / .Prev —— 它们基于站点默认的日期倒序，
+      语义是"更新的一篇"，和连载里的"下一节"正好相反，极易搞错。
+      这里直接在自己排好序的集合里按下标取，含义没有歧义。
+
+    不在任何系列里的文章，退回到同 section 内按日期升序的上下篇。
+*/}}
+
+{{- $current := . -}}
+{{- $pages := slice -}}
+{{- $seriesName := "" -}}
+
+{{- with .Params.series -}}
+    {{- $term := index . 0 -}}
+    {{- $found := where $.Site.RegularPages "Params.series" "intersect" (slice $term) -}}
+    {{- if ge (len $found) 2 -}}
+        {{- $pages = $found.ByDate -}}
+        {{- $seriesName = $term -}}
+    {{- end -}}
+{{- end -}}
+
+{{/* 不在系列中（或系列只有孤零零一篇）时，退回同 section */}}
+{{- if not $seriesName -}}
+    {{- $pages = (where $.Site.RegularPages "Section" $current.Section).ByDate -}}
+{{- end -}}
+
+{{- $idx := -1 -}}
+{{- range $i, $p := $pages -}}
+    {{- if eq $p.RelPermalink $current.RelPermalink -}}
+        {{- $idx = $i -}}
+    {{- end -}}
+{{- end -}}
+
+{{- if ge $idx 0 -}}
+    {{- $prev := "" -}}
+    {{- $next := "" -}}
+    {{- if gt $idx 0 -}}
+        {{- $prev = index $pages (sub $idx 1) -}}
+    {{- end -}}
+    {{- if lt (add $idx 1) (len $pages) -}}
+        {{- $next = index $pages (add $idx 1) -}}
+    {{- end -}}
+
+    {{- if or $seriesName $prev $next -}}
+        <nav class="series-nav" aria-label="{{ if $seriesName }}{{ T `seriesNavigation` | default `系列导航` }}{{ else }}{{ T `postNavigation` | default `文章导航` }}{{ end }}">
+
+            {{- if $seriesName -}}
+                <details class="series-list" open>
+                    <summary>
+                        <span class="series-label">{{ $seriesName }}</span>
+                        <span class="series-count">{{ add $idx 1 }} / {{ len $pages }}</span>
+                    </summary>
+                    <ol>
+                        {{- range $i, $p := $pages -}}
+                            <li{{ if eq $i $idx }} class="is-current" aria-current="true"{{ end }}>
+                                {{- if eq $i $idx -}}
+                                    <span>{{ $p.Title }}</span>
+                                {{- else -}}
+                                    <a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a>
+                                {{- end -}}
+                            </li>
+                        {{- end -}}
+                    </ol>
+                </details>
+            {{- end -}}
+
+            <div class="series-steps">
+                {{- with $prev -}}
+                    <a class="series-step series-step--prev" href="{{ .RelPermalink }}" rel="prev">
+                        <span class="series-step__dir">← {{ T "prevPage" | default "上一篇" }}</span>
+                        <span class="series-step__title">{{ .Title }}</span>
+                    </a>
+                {{- else -}}
+                    <span class="series-step is-empty" aria-hidden="true"></span>
+                {{- end -}}
+
+                {{- with $next -}}
+                    <a class="series-step series-step--next" href="{{ .RelPermalink }}" rel="next">
+                        <span class="series-step__dir">{{ T "nextPage" | default "下一篇" }} →</span>
+                        <span class="series-step__title">{{ .Title }}</span>
+                    </a>
+                {{- else -}}
+                    <span class="series-step is-empty" aria-hidden="true"></span>
+                {{- end -}}
+            </div>
+        </nav>
+    {{- end -}}
+{{- end -}}

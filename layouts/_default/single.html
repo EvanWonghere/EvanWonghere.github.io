@@ -1,0 +1,57 @@
+{{/*
+    覆盖 themes/hugo-theme-stack/layouts/_default/single.html
+
+    与主题原文件的唯一差异：在正文之后、相关文章之前插入 series-nav。
+    主题没有提供任何可用的 hook，所以只能整份覆盖 —— 其余内容与上游保持一致，
+    升级主题时请对照上游此文件同步改动。
+*/}}
+
+{{ define "body-class" }}
+    article-page
+    {{/*
+        Enable the right sidebar if
+            - Widget different from 'TOC' is enabled
+            - TOC is enabled and not empty
+    */}}
+    {{- $HasWidgetNotTOC := false -}}
+    {{- $TOCWidgetEnabled := false -}}
+    {{- range .Site.Params.widgets.page -}}
+        {{- if ne .type "toc" -}}
+            {{ $HasWidgetNotTOC = true -}}
+        {{- else -}}
+            {{ $TOCWidgetEnabled = true -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- $TOCManuallyDisabled := eq .Params.toc false -}}
+    {{- $TOCEnabled := and (not $TOCManuallyDisabled) $TOCWidgetEnabled -}}
+    {{- $hasTOC := ge (len .TableOfContents) 100 -}}
+    {{- .Scratch.Set "TOCEnabled" (and $TOCEnabled $hasTOC) -}}
+
+    {{- .Scratch.Set "hasWidget" (or $HasWidgetNotTOC (and $TOCEnabled $hasTOC)) -}}
+{{ end }}
+
+{{ define "main" }}
+    {{ partial "article/article.html" . }}
+
+    {{ if .Params.links }}
+        {{ partial "article/components/links" . }}
+    {{ end }}
+
+    {{/* ↓ 本站新增：系列导航与上/下一篇 */}}
+    {{ partial "article/components/series-nav" . }}
+
+    {{ partial "article/components/related-content" . }}
+
+    {{ if not (eq .Params.comments false) }}
+        {{ partial "comments/include" . }}
+    {{ end }}
+
+    {{ partialCached "footer/footer" . }}
+
+    {{ partialCached "article/components/photoswipe" . }}
+{{ end }}
+
+{{ define "right-sidebar" }}
+    {{ if .Scratch.Get "hasWidget" }}{{ partial "sidebar/right.html" (dict "Context" . "Scope" "page") }}{{ end}}
+{{ end }}

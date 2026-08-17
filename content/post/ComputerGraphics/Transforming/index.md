@@ -14,8 +14,6 @@ draft: false
 
 # Computer Graphics — Transforming
 
-[TOC]
-
 ## 2D Transforming
 
 ### Scale
