@@ -5,6 +5,7 @@ date: 2025-11-19T11:43:52+08:00
 image: "arcade_cover.png"
 menu:
     main:
+        identifier: "games"
         name: "游戏厅"
         weight: -50
         params: 

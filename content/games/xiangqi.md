@@ -3,6 +3,7 @@ title: "中国象棋 (Xiangqi)"
 date: 2025-11-19
 description: "楚河汉界，排兵布阵。支持双人同屏对弈，完美复刻木质手感。"
 game_url: "/games/xiangqi-app/index.html"
+gametype: "棋类"
 ---
 
 #### 游戏说明

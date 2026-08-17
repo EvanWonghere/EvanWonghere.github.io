@@ -3,6 +3,7 @@ title: "Flappy Emoji"
 date: 2025-11-20
 description: "虐心神作回归！换上你喜欢的 Emoji，飞越无限钢管。"
 game_url: "/games/flappy-app/index.html"
+gametype: "街机"
 ---
 
 #### 游戏说明

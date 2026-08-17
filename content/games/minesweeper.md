@@ -3,6 +3,7 @@ title: "扫雷 (Minesweeper)"
 date: 2025-11-19
 description: "经典逻辑游戏，完美复刻 Win95 风格。支持手机端操作。"
 game_url: "/games/minesweeper-app/index.html"
+gametype: "益智"
 ---
 
 #### 操作指南

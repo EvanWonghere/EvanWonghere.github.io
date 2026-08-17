@@ -3,6 +3,7 @@ title: "Breakout Prism"
 date: 2025-11-19
 description: "拥有霓虹、糖果、复古三种风格的现代打砖块游戏，包含 Roguelike 道具掉落。"
 game_url: "/games/breakout-app/index.html"
+gametype: "街机"
 ---
 
 #### 游戏特色

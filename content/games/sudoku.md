@@ -3,6 +3,7 @@ title: "Sudoku"
 date: 2025-11-19
 description: "经典的逻辑填数字游戏，支持笔记模式和错误提示。"
 game_url: "/games/sudoku-app/index.html"
+gametype: "益智"
 ---
 
 数独游戏规则：

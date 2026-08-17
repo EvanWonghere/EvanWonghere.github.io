@@ -1,70 +1,373 @@
+{{/*
+    游戏播放页
+
+    这是一个独立的全屏外壳，刻意不套用站点的 baseof —— 游戏需要占满视口，
+    带上侧栏和页脚只会挤压可玩区域。
+
+    相比初版的改动：
+      - 加入全屏按钮（此前只能靠浏览器自身的全屏，会把导航条一起带进去）
+      - 加入加载态：SPA 首屏加载期间原本是一片纯黑，看不出是在加载还是坏了
+      - Esc 返回大厅
+      - 配色改为跟随站点的暖色系变量，而非写死的 #000 / #1a1a1a
+
+    保持深色：游戏画面在深色外壳里对比更好，这一页不跟随站点的浅色主题。
+*/}}
 <!DOCTYPE html>
 <html lang="{{ .Site.Language.Lang }}">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ .Title }} - {{ .Site.Title }} 游戏厅</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>{{ .Title }} · {{ .Site.Title }} 游戏厅</title>
     <style>
-        /* 沉浸式重置样式 */
-        body, html {
+        :root {
+            --shell-bg: #131211;
+            --shell-bar: rgba(32, 30, 28, 0.72);
+            --shell-text: #f2ece2;
+            --shell-dim: rgba(242, 236, 226, 0.55);
+            --shell-accent: #e8a184;
+            --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { box-sizing: border-box; }
+
+        html, body {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
-            background-color: #000; /* 黑色背景，更有游戏感 */
-            overflow: hidden; /* 禁止页面滚动 */
+            background-color: var(--shell-bg);
+            overflow: hidden;
             display: flex;
             flex-direction: column;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            color: var(--shell-text);
         }
 
-        /* 顶部简单的导航条 (可选，方便用户返回) */
         .game-nav {
-            height: 40px;
-            background: #1a1a1a;
-            color: #fff;
+            flex-shrink: 0;
+            height: 46px;
             display: flex;
             align-items: center;
-            padding: 0 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            gap: 14px;
+            padding: 0 16px;
+            /* 安全区适配：横屏刘海屏上导航条不会被切掉 */
+            padding-left: max(16px, env(safe-area-inset-left));
+            padding-right: max(16px, env(safe-area-inset-right));
+
+            background-color: var(--shell-bar);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid rgba(242, 236, 226, 0.08);
             z-index: 10;
         }
-        .game-nav a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 14px;
-            font-family: sans-serif;
-            opacity: 0.7;
-            transition: opacity 0.3s;
-        }
-        .game-nav a:hover { opacity: 1; }
-        .game-title { margin-left: auto; font-size: 14px; font-weight: bold; }
 
-        /* 游戏容器 */
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            font-size: 13px;
+            line-height: 1;
+            color: var(--shell-dim);
+            background: none;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.3s var(--ease-out-soft),
+                background-color 0.3s var(--ease-out-soft),
+                border-color 0.3s var(--ease-out-soft);
+        }
+
+        .nav-btn:hover {
+            color: var(--shell-text);
+            background-color: rgba(242, 236, 226, 0.08);
+            border-color: rgba(242, 236, 226, 0.12);
+        }
+
+        .nav-btn svg { width: 15px; height: 15px; }
+
+        .game-title {
+            margin-inline-start: auto;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
         .game-container {
-            flex: 1; /* 占满剩余空间 */
+            flex: 1;
             width: 100%;
             position: relative;
+            min-height: 0;
         }
-        
-        /* 全屏 iframe */
+
         iframe {
             border: none;
             width: 100%;
             height: 100%;
             display: block;
         }
+
+        /* 加载态：SPA 首屏期间给出明确反馈，而不是一片纯黑 */
+        .game-loading {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            background-color: var(--shell-bg);
+            color: var(--shell-dim);
+            font-size: 13px;
+            transition: opacity 0.5s var(--ease-out-soft), visibility 0.5s;
+        }
+
+        .game-loading.is-hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .spinner {
+            width: 26px;
+            height: 26px;
+            border: 2px solid rgba(242, 236, 226, 0.18);
+            border-top-color: var(--shell-accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* 说明抽屉：15 个游戏在 md 正文里写了玩法说明，
+           但初版模板从不渲染 .Content，这些内容一直是看不见的。
+           做成抽屉而不是常驻面板，是为了不挤压游戏可玩区域。 */
+        .guide-backdrop {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s var(--ease-out-soft), visibility 0.4s;
+            z-index: 20;
+        }
+
+        .guide-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: min(420px, 88vw);
+            padding: 24px 26px 40px;
+            padding-right: max(26px, env(safe-area-inset-right));
+            overflow-y: auto;
+            overscroll-behavior: contain;
+
+            background-color: #1d1b1a;
+            border-left: 1px solid rgba(242, 236, 226, 0.1);
+            box-shadow: -20px 0 60px rgba(0, 0, 0, 0.5);
+
+            transform: translateX(100%);
+            transition: transform 0.45s var(--ease-out-soft);
+            z-index: 21;
+        }
+
+        body.guide-open .guide-backdrop { opacity: 1; visibility: visible; }
+        body.guide-open .guide-panel { transform: none; }
+
+        .guide-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .guide-head h2 {
+            margin: 0;
+            font-size: 17px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        #guide-close {
+            margin-inline-start: auto;
+            font-size: 20px;
+            line-height: 1;
+            padding: 4px 10px;
+        }
+
+        .guide-body {
+            font-size: 14px;
+            line-height: 1.75;
+            color: rgba(242, 236, 226, 0.82);
+        }
+
+        .guide-body h1, .guide-body h2, .guide-body h3,
+        .guide-body h4, .guide-body h5, .guide-body h6 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--shell-text);
+            margin: 20px 0 8px;
+        }
+
+        .guide-body h1:first-child, .guide-body h2:first-child,
+        .guide-body h3:first-child, .guide-body h4:first-child { margin-top: 0; }
+
+        .guide-body p { margin: 0 0 12px; }
+        .guide-body ul, .guide-body ol { margin: 0 0 12px; padding-inline-start: 20px; }
+        .guide-body li { margin-bottom: 6px; }
+        .guide-body strong { color: var(--shell-text); }
+        .guide-body a { color: var(--shell-accent); }
+
+        .guide-body code {
+            font-size: 12.5px;
+            padding: 1px 5px;
+            border-radius: 4px;
+            background-color: rgba(242, 236, 226, 0.1);
+        }
+
+        .guide-body pre {
+            padding: 12px 14px;
+            border-radius: 8px;
+            overflow-x: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .guide-body img { max-width: 100%; height: auto; border-radius: 6px; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .spinner { animation-duration: 2.4s; }
+            .nav-btn, .guide-panel, .guide-backdrop { transition: none; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="game-nav">
-        <a href="/games/">← 返回游戏大厅</a>
-        <span class="game-title">正在游玩：{{ .Title }}</span>
-    </div>
+    <nav class="game-nav">
+        <a class="nav-btn" href="/games/">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+            </svg>
+            返回大厅
+        </a>
+
+        <button class="nav-btn" id="fullscreen-btn" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/>
+            </svg>
+            <span id="fullscreen-label">全屏</span>
+        </button>
+
+        {{/* 只有写了说明正文的游戏才显示这个按钮 */}}
+        {{ if .Content }}
+            <button class="nav-btn" id="guide-btn" type="button" aria-expanded="false" aria-controls="guide-panel">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/>
+                    <line x1="12" y1="8" x2="12.01" y2="8"/>
+                </svg>
+                玩法说明
+            </button>
+        {{ end }}
+
+        <span class="game-title">{{ .Title }}</span>
+    </nav>
+
+    {{ if .Content }}
+        <div class="guide-backdrop" id="guide-backdrop"></div>
+        <aside class="guide-panel" id="guide-panel" aria-label="玩法说明">
+            <div class="guide-head">
+                <h2>{{ .Title }}</h2>
+                <button class="nav-btn" id="guide-close" type="button" aria-label="关闭">&times;</button>
+            </div>
+            <div class="guide-body">{{ .Content }}</div>
+        </aside>
+    {{ end }}
 
     <div class="game-container">
-        <iframe src="{{ .Params.game_url }}" title="{{ .Title }}" allowfullscreen></iframe>
+        <div class="game-loading" id="game-loading">
+            <div class="spinner"></div>
+            <span>正在载入 {{ .Title }}…</span>
+        </div>
+        <iframe id="game-frame" src="{{ .Params.game_url }}" title="{{ .Title }}" allowfullscreen></iframe>
     </div>
+
+    <script>
+        (function () {
+            var frame = document.getElementById("game-frame");
+            var loading = document.getElementById("game-loading");
+            var container = document.querySelector(".game-container");
+            var btn = document.getElementById("fullscreen-btn");
+            var label = document.getElementById("fullscreen-label");
+
+            /* iframe 载入完成后淡出加载层。
+               若 load 因故不触发，6 秒兜底移除，避免永远盖着一层。 */
+            function hideLoading() { loading.classList.add("is-hidden"); }
+            frame.addEventListener("load", hideLoading);
+            window.setTimeout(hideLoading, 6000);
+
+            /* 只把游戏容器送进全屏，导航条留在外面 */
+            btn.addEventListener("click", function () {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                } else if (container.requestFullscreen) {
+                    container.requestFullscreen();
+                }
+            });
+
+            document.addEventListener("fullscreenchange", function () {
+                label.textContent = document.fullscreenElement ? "退出全屏" : "全屏";
+            });
+
+            /* 说明抽屉 */
+            var guideBtn = document.getElementById("guide-btn");
+            var guidePanel = document.getElementById("guide-panel");
+            var guideBackdrop = document.getElementById("guide-backdrop");
+
+            function setGuide(open) {
+                document.body.classList.toggle("guide-open", open);
+                guideBtn.setAttribute("aria-expanded", open ? "true" : "false");
+                if (open) guidePanel.focus();
+            }
+
+            if (guideBtn) {
+                guideBtn.addEventListener("click", function () {
+                    setGuide(!document.body.classList.contains("guide-open"));
+                });
+                guideBackdrop.addEventListener("click", function () { setGuide(false); });
+                document.getElementById("guide-close")
+                    .addEventListener("click", function () { setGuide(false); });
+            }
+
+            /*
+               Esc 的优先级：先关抽屉 → 全屏时交给浏览器退出全屏 → 否则返回大厅。
+               直接返回大厅会让"想关抽屉"的人意外离开页面。
+            */
+            document.addEventListener("keydown", function (e) {
+                if (e.key !== "Escape") return;
+
+                if (document.body.classList.contains("guide-open")) {
+                    setGuide(false);
+                    return;
+                }
+                if (document.fullscreenElement) return;
+
+                window.location.href = "/games/";
+            });
+
+            /* Safari 等浏览器不支持 requestFullscreen 时直接隐藏按钮，
+               而不是留一个点了没反应的。 */
+            if (!container.requestFullscreen) {
+                btn.style.display = "none";
+            }
+        })();
+    </script>
 
 </body>
 </html>

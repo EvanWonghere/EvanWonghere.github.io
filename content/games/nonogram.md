@@ -3,6 +3,7 @@ title: "数织 (Pixel Logic)"
 date: 2025-11-23
 description: "在数字的指引下，像雕刻一样还原像素画。"
 game_url: "/games/nonogram-app/index.html"
+gametype: "益智"
 ---
 
 #### 游戏规则

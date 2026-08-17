@@ -3,6 +3,7 @@ title: "国际象棋 (Chess)"
 date: 2025-11-19
 description: "皇家典藏版国际象棋，支持双人对弈、王车易位与升变。"
 game_url: "/games/chess-app/index.html"
+gametype: "棋类"
 ---
 
 #### 游戏说明

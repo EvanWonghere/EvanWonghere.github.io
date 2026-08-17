@@ -3,6 +3,7 @@ title: "五子棋 (Gomoku)"
 date: 2025-11-19
 description: "挑战智能 AI，体验经典的人机对弈。"
 game_url: "/games/gomoku-app/index.html"
+gametype: "棋类"
 ---
 
 #### 游戏规则

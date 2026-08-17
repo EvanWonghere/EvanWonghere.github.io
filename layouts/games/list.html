@@ -1,0 +1,111 @@
+{{/*
+    游戏厅列表页
+
+    默认的 Stack list.html 把 16 个游戏渲染成一列"标题 + 日期"的纯文字卡片，
+    既看不到简介也没有"可以玩"的暗示。这里换成带封面的卡片网格 + 分类筛选。
+
+    封面来自 assets/covers/<slug>.jpg —— 用无头 Chrome 逐个访问游戏 SPA 抓的真实画面。
+    放在 assets/ 而非 content/ 是为了不改动内容结构（游戏都是单文件 md，不是页面 bundle，
+    用 .Page.Resources 取不到图）。
+
+    没有对应封面的游戏回退到按标题哈希生成的渐变色块 —— 同一个游戏永远得到同一组颜色，
+    看起来是有意设计而非缺图。
+*/}}
+{{ define "body-class" }}games-page{{ end }}
+
+{{ define "main" }}
+    {{- $types := slice -}}
+    {{- range .Pages -}}
+        {{- with .Params.gametype -}}
+            {{- if not (in $types .) }}{{ $types = $types | append . }}{{ end -}}
+        {{- end -}}
+    {{- end -}}
+
+    <header class="arcade-header">
+        <h1 class="arcade-title">{{ .Title }}</h1>
+        {{ with .Params.description }}
+            <p class="arcade-desc">{{ . }}</p>
+        {{ end }}
+        <p class="arcade-count"><span id="arcade-shown">{{ len .Pages }}</span> / {{ len .Pages }} {{ T "games.count" | default "款游戏" }}</p>
+    </header>
+
+    {{ if gt (len $types) 1 }}
+        {{/* 筛选逻辑是纯客户端的：16 个游戏一次全部渲染，
+             按钮只切换显隐，不需要为每个分类生成独立页面。 */}}
+        <div class="arcade-filter" role="group" aria-label="按类型筛选">
+            <button type="button" class="filter-chip is-active" data-filter="*">全部</button>
+            {{ range $types }}
+                <button type="button" class="filter-chip" data-filter="{{ . }}">{{ . }}</button>
+            {{ end }}
+        </div>
+    {{ end }}
+
+    <div class="game-grid" id="game-grid">
+        {{ range .Pages }}
+            {{- $hue := mod (hash.FNV32a .Title) 360 -}}
+            {{- $hue2 := mod (add $hue 40) 360 -}}
+            {{- $cover := resources.Get (printf "covers/%s.jpg" .File.BaseFileName) -}}
+
+            <a class="game-card" href="{{ .RelPermalink }}"
+               data-type="{{ .Params.gametype }}"
+               style="--game-h1: {{ $hue }}; --game-h2: {{ $hue2 }};">
+
+                <span class="game-card__art{{ if $cover }} has-cover{{ end }}">
+                    {{- with $cover -}}
+                        {{- $thumb := .Resize "560x webp q82" -}}
+                        <img src="{{ $thumb.RelPermalink }}" alt="{{ $.Page.Title }} 游戏画面"
+                             loading="lazy" width="{{ $thumb.Width }}" height="{{ $thumb.Height }}">
+                    {{- else -}}
+                        <span class="game-card__glyph" aria-hidden="true">{{ substr .Title 0 1 }}</span>
+                    {{- end -}}
+                    <span class="game-card__play" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                             fill="currentColor"><path d="M7 4.5v15a1 1 0 0 0 1.53.85l12-7.5a1 1 0 0 0 0-1.7l-12-7.5A1 1 0 0 0 7 4.5z"/></svg>
+                    </span>
+                    {{ with .Params.gametype }}
+                        <span class="game-card__type">{{ . }}</span>
+                    {{ end }}
+                </span>
+
+                <span class="game-card__body">
+                    <span class="game-card__title">{{ .Title }}</span>
+                    {{ with .Params.description }}
+                        <span class="game-card__desc">{{ . }}</span>
+                    {{ end }}
+                </span>
+            </a>
+        {{ end }}
+    </div>
+
+    <p class="arcade-empty" id="arcade-empty" hidden>该分类下暂时没有游戏。</p>
+
+    <script>
+        (function () {
+            var chips = document.querySelectorAll(".filter-chip");
+            if (!chips.length) return;
+
+            var cards = document.querySelectorAll("#game-grid .game-card");
+            var shown = document.getElementById("arcade-shown");
+            var empty = document.getElementById("arcade-empty");
+
+            chips.forEach(function (chip) {
+                chip.addEventListener("click", function () {
+                    var want = chip.dataset.filter;
+
+                    chips.forEach(function (c) { c.classList.toggle("is-active", c === chip); });
+
+                    var count = 0;
+                    cards.forEach(function (card) {
+                        var match = want === "*" || card.dataset.type === want;
+                        /* 用 hidden 而非 display:none，读屏软件也会跳过 */
+                        card.hidden = !match;
+                        if (match) count++;
+                    });
+
+                    shown.textContent = count;
+                    empty.hidden = count > 0;
+                });
+            });
+        })();
+    </script>
+{{ end }}

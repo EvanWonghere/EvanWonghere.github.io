@@ -3,6 +3,7 @@ title: "Tetris Chameleon"
 date: 2025-11-19
 description: "变色龙方块：支持霓虹、3D、怀旧三种风格切换的现代俄罗斯方块。"
 game_url: "/games/tetris-app/index.html"
+gametype: "益智"
 ---
 
 #### 风格说明

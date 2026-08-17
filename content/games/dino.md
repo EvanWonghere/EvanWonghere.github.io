@@ -3,6 +3,7 @@ title: "Dino Run"
 date: 2025-11-20
 description: "那只断网时陪伴你的小恐龙回来了。支持霓虹夜间模式。"
 game_url: "/games/dino-app/index.html"
+gametype: "街机"
 ---
 
 #### 游戏说明
