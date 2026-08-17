@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>游戏设计梦工厂 on 蜂窝</title><link>https://yufenghuang.tech/series/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82/</link><description>Recent content in 游戏设计梦工厂 on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Tue, 21 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://yufenghuang.tech/series/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82/index.xml" rel="self" type="application/rss+xml"/><item><title>游戏设计梦工厂，第一篇第四章</title><link>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/</link><pubDate>Tue, 21 Oct 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/</guid><description>&lt;img src="https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/cover.png" alt="Featured image of post 游戏设计梦工厂，第一篇第四章" /&gt;&lt;h1 id="-运用-dramatic-elements"&gt;📖 运用 Dramatic Elements
-&lt;/h1&gt;&lt;h2 id="-阅读目的"&gt;🎯 阅读目的
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>游戏设计梦工厂 on 蜂窝</title><link>https://yufenghuang.tech/series/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82/</link><description>Recent content in 游戏设计梦工厂 on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Tue, 21 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://yufenghuang.tech/series/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82/index.xml" rel="self" type="application/rss+xml"/><item><title>游戏设计梦工厂，第一篇第四章</title><link>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/</link><pubDate>Tue, 21 Oct 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/</guid><description>&lt;img src="https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E5%9B%9B%E7%AB%A0/cover.png" alt="Featured image of post 游戏设计梦工厂，第一篇第四章" /&gt;&lt;h1 id="-运用-dramatic-elements"&gt;&lt;a href="#-%e8%bf%90%e7%94%a8-dramatic-elements" class="header-anchor"&gt;&lt;/a&gt;📖 运用 Dramatic Elements
+&lt;/h1&gt;&lt;h2 id="-阅读目的"&gt;&lt;a href="#-%e9%98%85%e8%af%bb%e7%9b%ae%e7%9a%84" class="header-anchor"&gt;&lt;/a&gt;🎯 阅读目的
 &lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;在了解完游戏的骨架 —— Formal Elements 后，开始了解游戏的骨肉、能让玩家投入情感的元素—— Dramatic Elements。学习这些元素是如何结合并形成投入感的。&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2 id="-本章摘要"&gt;🧠 本章摘要
+&lt;h2 id="-本章摘要"&gt;&lt;a href="#-%e6%9c%ac%e7%ab%a0%e6%91%98%e8%a6%81" class="header-anchor"&gt;&lt;/a&gt;🧠 本章摘要
 &lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;讲述了一些关键的元素，并构成了一套基础工具，设计师可以用这台工具构建情节、引发共鸣。但除了这套工具，还应对传统戏剧构建工具有深刻的理解，在互动式叙事、传统叙事、电子游戏设计、传统游戏设计中鲜少有全新元素，先去理解先前的游戏和故事是明智的。&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2 id="-核心内容整理"&gt;📌 核心内容整理
-&lt;/h2&gt;&lt;h3 id="-关键戏剧元素"&gt;✦ 关键戏剧元素
-&lt;/h3&gt;&lt;h4 id="挑战-challenge"&gt;挑战 Challenge
+&lt;h2 id="-核心内容整理"&gt;&lt;a href="#-%e6%a0%b8%e5%bf%83%e5%86%85%e5%ae%b9%e6%95%b4%e7%90%86" class="header-anchor"&gt;&lt;/a&gt;📌 核心内容整理
+&lt;/h2&gt;&lt;h3 id="-关键戏剧元素"&gt;&lt;a href="#-%e5%85%b3%e9%94%ae%e6%88%8f%e5%89%a7%e5%85%83%e7%b4%a0" class="header-anchor"&gt;&lt;/a&gt;✦ 关键戏剧元素
+&lt;/h3&gt;&lt;h4 id="挑战-challenge"&gt;&lt;a href="#%e6%8c%91%e6%88%98-challenge" class="header-anchor"&gt;&lt;/a&gt;挑战 Challenge
 &lt;/h4&gt;&lt;p&gt;游戏应该追求挑战与技能的平衡，也就是追求「心流」状态。&lt;/p&gt;
 &lt;img src="flow.png" alt="心流" style="zoom: 25%;" /&gt;
 &lt;p&gt;帮助达到心流状态的元素有：&lt;/p&gt;
@@ -67,7 +67,7 @@
 &lt;p&gt;如何让玩家自发性地享受你的游戏？&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4 id="玩-play"&gt;玩 Play
+&lt;h4 id="玩-play"&gt;&lt;a href="#%e7%8e%a9-play" class="header-anchor"&gt;&lt;/a&gt;玩 Play
 &lt;/h4&gt;&lt;p&gt;玩，就是玩家在规则中的自由——紧凑体验和个人表达的机会。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;玩的本质&lt;/strong&gt;&lt;/li&gt;
@@ -129,10 +129,10 @@ data-flex-basis="487px"
 &lt;/ol&gt;
 &lt;p&gt;不同的玩家获得相同的乐趣，所需要的投入是不同的。&lt;/p&gt;
 &lt;p&gt;作为设计师，是否有方法将看游戏的“观众”融入到游戏中？不过当然，设计玩法时只考虑玩游戏的人是最常见、风险最小的做法。&lt;/p&gt;
-&lt;h4 id="故事预设-premise"&gt;故事预设 Premise
+&lt;h4 id="故事预设-premise"&gt;&lt;a href="#%e6%95%85%e4%ba%8b%e9%a2%84%e8%ae%be-premise" class="header-anchor"&gt;&lt;/a&gt;故事预设 Premise
 &lt;/h4&gt;&lt;p&gt;如果没有一个戏剧性的故事预设，很多游戏对玩家来说会太过抽象。为了从情感上把玩家与游戏联系到一起，设计师需要为游戏的交互床架你个戏剧性游戏预设。&lt;/p&gt;
 &lt;p&gt;故事预设的首要目标是让游戏的正规系统对玩家来说具有可玩性。一个好的故事预设还可以在情感方面吸引玩家。&lt;/p&gt;
-&lt;h4 id="角色-character"&gt;角色 Character
+&lt;h4 id="角色-character"&gt;&lt;a href="#%e8%a7%92%e8%89%b2-character" class="header-anchor"&gt;&lt;/a&gt;角色 Character
 &lt;/h4&gt;&lt;p&gt;角色是故事的媒介，故事通过角色的行为来讲述。观众对一个角色和他追求的目标感同身受，使故事中的事件像发生在自己身上，并追随这些时间的动向直到结局。&lt;/p&gt;
 &lt;p&gt;角色在故事中如何被使用很大程度取决于故事的类型。故事主角身处问题之中，从而创造了故事发展的冲突。在塑造角色时，都需要考虑以下问题：&lt;/p&gt;
 &lt;ul&gt;
@@ -143,17 +143,17 @@ data-flex-basis="487px"
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;媒介&lt;/strong&gt;（&lt;em&gt;角色在游戏中的实际功能是代表玩家&lt;/em&gt;）和&lt;strong&gt;移情&lt;/strong&gt;（&lt;em&gt;玩家与角色之间建立起情感联接&lt;/em&gt;）必须在游戏内的每个有角色的关卡中都被考虑。&lt;/p&gt;
 &lt;p&gt;设计师在创作角色时还需要考虑「自由意志」与玩家控制的平衡。玩家控制行为和角色控制行为的冲突是一个很有趣的区域。&lt;/p&gt;
-&lt;h4 id="故事-story"&gt;故事 Story
+&lt;h4 id="故事-story"&gt;&lt;a href="#%e6%95%85%e4%ba%8b-story" class="header-anchor"&gt;&lt;/a&gt;故事 Story
 &lt;/h4&gt;&lt;p&gt;传统叙事方式中结局的不确定性是由作者解答的，但是游戏当中的不确定性却是交给玩家解答的，正因为此，把传统叙事方式集合到游戏当中是很困难的。&lt;/p&gt;
 &lt;p&gt;很多游戏中故事被限制在了背景故事当中，故事的进展不受游戏玩法的影响；有些设计师会让玩家的行为来改变故事结构。&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;游戏设计师相信故事和玩法结合会比一个预设好的故事结构的叙事方式更加有潜力。&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;游戏叙事最流行的形式是，用故事推进冒险游戏，跟随单人玩家的旅程。&lt;/p&gt;
 &lt;p&gt;游戏设计师不只是考虑叙事，而是实验型的能够结合和拓展叙事的深度，同时不牺牲玩法的方法。&lt;/p&gt;
-&lt;h4 id="构建世界-world-building"&gt;构建世界 World Building
+&lt;h4 id="构建世界-world-building"&gt;&lt;a href="#%e6%9e%84%e5%bb%ba%e4%b8%96%e7%95%8c-world-building" class="header-anchor"&gt;&lt;/a&gt;构建世界 World Building
 &lt;/h4&gt;&lt;p&gt;所谓构建世界，就是把故事结构丝毫不违和地融入玩法和交互中。&lt;/p&gt;
 &lt;p&gt;现今最广为人知的虚构世界观应该算是 J.R.R. Tolkien 的 &lt;strong&gt;中土世界(Middle-earth)&lt;/strong&gt;，国内的话应该是“武侠世界”或者“修仙世界”。&lt;/p&gt;
 &lt;p&gt;作者创造出一个极具吸引力的环境，但这个环境存在于作者的想象中，并不能被完全探索和感知，但最终这个概念可能会发展得远比作品中甚至作者脑子中的世界更为庞大，因为热爱这套世界观的粉丝们会忍不住地自行创作、补充细节，拓展整个体系。&lt;/p&gt;
-&lt;h4 id="叙事弧-the-dramatic-arc"&gt;叙事弧 The Dramatic Arc
+&lt;h4 id="叙事弧-the-dramatic-arc"&gt;&lt;a href="#%e5%8f%99%e4%ba%8b%e5%bc%a7-the-dramatic-arc" class="header-anchor"&gt;&lt;/a&gt;叙事弧 The Dramatic Arc
 &lt;/h4&gt;&lt;p&gt;最重要的戏剧元素是冲突，任何好的故事核心都是冲突，这同样也是游戏系统的核心：能防止玩家太容易就达成目标，也能营造出跌宕起伏的感觉去吸引玩家深入到游戏的情感层面。&lt;/p&gt;
 &lt;p&gt;传统的戏剧冲突可以分为以下几类：&lt;/p&gt;
 &lt;ul&gt;
@@ -176,7 +176,7 @@ data-flex-basis="487px"
 &lt;img src="dramatic_arc.png" alt="戏剧弧" style="zoom: 67%;" /&gt;
 &lt;p&gt;游戏中的紧张感建立在一系列不同难度的玩法上，并不是电影中的线性结构，而是需要玩家亲自去发现、亲自去执行解决冲突的关键步骤。这种在正规和戏剧系统中的综合冲突为玩家在游戏中提供一个强有力的体验。&lt;/p&gt;
 &lt;hr&gt;
-&lt;h3 id="-案例提炼"&gt;🎮 案例提炼
+&lt;h3 id="-案例提炼"&gt;&lt;a href="#-%e6%a1%88%e4%be%8b%e6%8f%90%e7%82%bc" class="header-anchor"&gt;&lt;/a&gt;🎮 案例提炼
 &lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;互动式叙事的两大误区&lt;/strong&gt;&lt;/p&gt;
@@ -257,7 +257,7 @@ data-flex-basis="487px"
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id="-我的思考--提问"&gt;🧩 我的思考 &amp;amp; 提问
+&lt;h3 id="-我的思考--提问"&gt;&lt;a href="#-%e6%88%91%e7%9a%84%e6%80%9d%e8%80%83--%e6%8f%90%e9%97%ae" class="header-anchor"&gt;&lt;/a&gt;🧩 我的思考 &amp;amp; 提问
 &lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;✍️ 我的观点/感悟
@@ -294,7 +294,7 @@ data-flex-basis="487px"
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id="-练习回应或个人实践"&gt;🛠️ 练习回应或个人实践
+&lt;h3 id="-练习回应或个人实践"&gt;&lt;a href="#-%e7%bb%83%e4%b9%a0%e5%9b%9e%e5%ba%94%e6%88%96%e4%b8%aa%e4%ba%ba%e5%ae%9e%e8%b7%b5" class="header-anchor"&gt;&lt;/a&gt;🛠️ 练习回应或个人实践
 &lt;/h3&gt;&lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;em&gt;选一款你觉得故事和游戏融合的非常成功的游戏。这款游戏为什么成功？在游戏发展时剧情是怎样展开的？&lt;/em&gt;&lt;/p&gt;
@@ -302,7 +302,7 @@ data-flex-basis="487px"
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;hr&gt;
-&lt;h3 id="-精选语录摘录"&gt;💬 精选语录摘录
+&lt;h3 id="-精选语录摘录"&gt;&lt;a href="#-%e7%b2%be%e9%80%89%e8%af%ad%e5%bd%95%e6%91%98%e5%bd%95" class="header-anchor"&gt;&lt;/a&gt;💬 精选语录摘录
 &lt;/h3&gt;&lt;ol&gt;
 &lt;li&gt;「享受做游戏的过程，而不是在做完游戏后觉得完成了一项任务。」&lt;/li&gt;
 &lt;li&gt;「如果你有一个总体规划，想在 30 岁成为一名知名的游戏制作人，那么你想得更多是个人荣誉而不是做出一款伟大的游戏，这将会以最快的方式毁掉你的职业生涯。」&lt;/li&gt;
@@ -311,20 +311,20 @@ data-flex-basis="487px"
 &lt;li&gt;「传统叙事方式中结局的不确定性是由作者解答的，但是游戏当中的不确定性却是交给玩家解答的。」&lt;/li&gt;
 &lt;/ol&gt;
 &lt;hr&gt;
-&lt;h3 id="-小结--后续预期"&gt;🧾 小结 &amp;amp; 后续预期
-&lt;/h3&gt;&lt;p&gt;现在已经了解了骨与血肉，下一章该学习魂灵了。&lt;/p&gt;</description></item><item><title>游戏设计梦工厂，第一篇第三章</title><link>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/</link><pubDate>Tue, 23 Sep 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/</guid><description>&lt;img src="https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/cover.png" alt="Featured image of post 游戏设计梦工厂，第一篇第三章" /&gt;&lt;h2 id="-使用-formal-elements"&gt;📖 使用 Formal Elements
-&lt;/h2&gt;&lt;h3 id="-阅读目的"&gt;🎯 阅读目的
+&lt;h3 id="-小结--后续预期"&gt;&lt;a href="#-%e5%b0%8f%e7%bb%93--%e5%90%8e%e7%bb%ad%e9%a2%84%e6%9c%9f" class="header-anchor"&gt;&lt;/a&gt;🧾 小结 &amp;amp; 后续预期
+&lt;/h3&gt;&lt;p&gt;现在已经了解了骨与血肉，下一章该学习魂灵了。&lt;/p&gt;</description></item><item><title>游戏设计梦工厂，第一篇第三章</title><link>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/</link><pubDate>Tue, 23 Sep 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/</guid><description>&lt;img src="https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%89%E7%AB%A0/cover.png" alt="Featured image of post 游戏设计梦工厂，第一篇第三章" /&gt;&lt;h2 id="-使用-formal-elements"&gt;&lt;a href="#-%e4%bd%bf%e7%94%a8-formal-elements" class="header-anchor"&gt;&lt;/a&gt;📖 使用 Formal Elements
+&lt;/h2&gt;&lt;h3 id="-阅读目的"&gt;&lt;a href="#-%e9%98%85%e8%af%bb%e7%9b%ae%e7%9a%84" class="header-anchor"&gt;&lt;/a&gt;🎯 阅读目的
 &lt;/h3&gt;&lt;blockquote&gt;
 &lt;p&gt;更加深入了解 Formal Element，能够使用其来分析现有游戏和设计自己的游戏。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;hr&gt;
-&lt;h3 id="-本章摘要"&gt;🧠 本章摘要
+&lt;h3 id="-本章摘要"&gt;&lt;a href="#-%e6%9c%ac%e7%ab%a0%e6%91%98%e8%a6%81" class="header-anchor"&gt;&lt;/a&gt;🧠 本章摘要
 &lt;/h3&gt;&lt;blockquote&gt;
 &lt;p&gt;正规元素起作用时，就会构成我们所熟知的游戏，而有多种可能的方法将这些元素有机组合起来，来创造出更多、更广泛的游戏体验。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;hr&gt;
-&lt;h3 id="-核心内容整理"&gt;📌 核心内容整理
-&lt;/h3&gt;&lt;h4 id="-核心理念"&gt;✦ 核心理念
+&lt;h3 id="-核心内容整理"&gt;&lt;a href="#-%e6%a0%b8%e5%bf%83%e5%86%85%e5%ae%b9%e6%95%b4%e7%90%86" class="header-anchor"&gt;&lt;/a&gt;📌 核心内容整理
+&lt;/h3&gt;&lt;h4 id="-核心理念"&gt;&lt;a href="#-%e6%a0%b8%e5%bf%83%e7%90%86%e5%bf%b5" class="header-anchor"&gt;&lt;/a&gt;✦ 核心理念
 &lt;/h4&gt;&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;玩家 Player&lt;/strong&gt;
 &lt;ul&gt;
@@ -452,7 +452,7 @@ data-flex-basis="487px"
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4 id="-关键技能概念"&gt;✦ 关键技能/概念
+&lt;h4 id="-关键技能概念"&gt;&lt;a href="#-%e5%85%b3%e9%94%ae%e6%8a%80%e8%83%bd%e6%a6%82%e5%bf%b5" class="header-anchor"&gt;&lt;/a&gt;✦ 关键技能/概念
 &lt;/h4&gt;&lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -496,7 +496,7 @@ data-flex-basis="487px"
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;hr&gt;
-&lt;h3 id="-案例提炼"&gt;🎮 案例提炼
+&lt;h3 id="-案例提炼"&gt;&lt;a href="#-%e6%a1%88%e4%be%8b%e6%8f%90%e7%82%bc" class="header-anchor"&gt;&lt;/a&gt;🎮 案例提炼
 &lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Tim LeTourneau 的设计师视角&lt;/strong&gt;
 &lt;ul&gt;
@@ -593,7 +593,7 @@ data-flex-basis="487px"
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id="-我的思考--提问"&gt;🧩 我的思考 &amp;amp; 提问
+&lt;h3 id="-我的思考--提问"&gt;&lt;a href="#-%e6%88%91%e7%9a%84%e6%80%9d%e8%80%83--%e6%8f%90%e9%97%ae" class="header-anchor"&gt;&lt;/a&gt;🧩 我的思考 &amp;amp; 提问
 &lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;✍️ 我的观点/感悟
 &lt;ul&gt;
@@ -604,7 +604,7 @@ data-flex-basis="487px"
 &lt;li&gt;❓ 疑问或尚不理解的地方&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id="-练习回应或个人实践"&gt;🛠️ 练习回应或个人实践
+&lt;h3 id="-练习回应或个人实践"&gt;&lt;a href="#-%e7%bb%83%e4%b9%a0%e5%9b%9e%e5%ba%94%e6%88%96%e4%b8%aa%e4%ba%ba%e5%ae%9e%e8%b7%b5" class="header-anchor"&gt;&lt;/a&gt;🛠️ 练习回应或个人实践
 &lt;/h3&gt;&lt;blockquote&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;创造一版可供三人游玩的《井字棋》&lt;/strong&gt;&lt;/li&gt;
@@ -765,7 +765,7 @@ data-flex-basis="487px"
 寻找边界，等价于寻找构建 DnD 的最小游戏元素集合。是什么使得 DnD 是 DnD 而不是其他的？我认为主要在于核心机制、游戏规则还有故事题材。具体的 DnD 机制我不是特别了解，就不写了。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;hr&gt;
-&lt;h3 id="-精选语录摘录"&gt;💬 精选语录摘录
+&lt;h3 id="-精选语录摘录"&gt;&lt;a href="#-%e7%b2%be%e9%80%89%e8%af%ad%e5%bd%95%e6%91%98%e5%bd%95" class="header-anchor"&gt;&lt;/a&gt;💬 精选语录摘录
 &lt;/h3&gt;&lt;blockquote&gt;
 &lt;p&gt;“游戏中最有趣的目标通常是将各种类型混合得到的。”&lt;/p&gt;
 &lt;p&gt;“操作从本质上受到物理约束的限制，作为设计师需要时刻注意这些约束并寻找到具有创造性且优雅的解决方案。”&lt;/p&gt;
@@ -779,13 +779,13 @@ data-flex-basis="487px"
 &lt;p&gt;“别等着，动手去做游戏。”&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;hr&gt;
-&lt;h3 id="-小结--后续预期"&gt;🧾 小结 &amp;amp; 后续预期
+&lt;h3 id="-小结--后续预期"&gt;&lt;a href="#-%e5%b0%8f%e7%bb%93--%e5%90%8e%e7%bb%ad%e9%a2%84%e6%9c%9f" class="header-anchor"&gt;&lt;/a&gt;🧾 小结 &amp;amp; 后续预期
 &lt;/h3&gt;&lt;blockquote&gt;
 &lt;p&gt;本章过后，已经可以对一个游戏进行初步的框架剖析，或者在形式上推敲、构建一个游戏原型。后面章节将更详细了解戏剧元素和动态元素。在我看来基本的骨架已经了解了，后面两部分要开始填充血肉了。&lt;/p&gt;
 &lt;/blockquote&gt;</description></item><item><title>游戏设计梦工厂，第一篇第二章额外篇</title><link>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0%E9%A2%9D%E5%A4%96%E7%AF%87/</link><pubDate>Tue, 21 Jan 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0%E9%A2%9D%E5%A4%96%E7%AF%87/</guid><description>&lt;img src="https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0%E9%A2%9D%E5%A4%96%E7%AF%87/cover.png" alt="Featured image of post 游戏设计梦工厂，第一篇第二章额外篇" /&gt;&lt;pre&gt;&lt;code&gt;阅读时间：2025-01-21
 阅读目标：了解何为谜题、解密游戏和其他游戏的区别、如何设计好的谜题。
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="本篇摘要"&gt;本篇摘要
+&lt;h2 id="本篇摘要"&gt;&lt;a href="#%e6%9c%ac%e7%af%87%e6%91%98%e8%a6%81" class="header-anchor"&gt;&lt;/a&gt;本篇摘要
 &lt;/h2&gt;&lt;p&gt;​ 作者给谜题下了定义：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;谜题是有趣的&lt;/li&gt;
@@ -804,8 +804,8 @@ data-flex-basis="487px"
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;而让谜题有一个正确答案是为了区分谜题和其他娱乐形式，并给出他们之间的关系，据此得到判断谜题设计好坏的工具。&lt;/p&gt;
-&lt;h2 id="主要内容与要点"&gt;主要内容与要点
-&lt;/h2&gt;&lt;h3 id="什么是谜题"&gt;什么是谜题？
+&lt;h2 id="主要内容与要点"&gt;&lt;a href="#%e4%b8%bb%e8%a6%81%e5%86%85%e5%ae%b9%e4%b8%8e%e8%a6%81%e7%82%b9" class="header-anchor"&gt;&lt;/a&gt;主要内容与要点
+&lt;/h2&gt;&lt;h3 id="什么是谜题"&gt;&lt;a href="#%e4%bb%80%e4%b9%88%e6%98%af%e8%b0%9c%e9%a2%98" class="header-anchor"&gt;&lt;/a&gt;什么是谜题？
 &lt;/h3&gt;&lt;p&gt;​ 作者最喜欢的谜题的定义是：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
@@ -818,7 +818,7 @@ data-flex-basis="487px"
 &lt;p&gt;这个定义甚至是迷惑性的简单，但也带来很多有趣的效果。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id="好玩吗"&gt;好玩吗？
+&lt;h3 id="好玩吗"&gt;&lt;a href="#%e5%a5%bd%e7%8e%a9%e5%90%97" class="header-anchor"&gt;&lt;/a&gt;好玩吗？
 &lt;/h3&gt;&lt;p&gt;​ 给出了一些让谜题变得更好玩的东西。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
@@ -835,18 +835,18 @@ data-flex-basis="487px"
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;​ 人们对好玩的感觉是主观的，好不好玩取决于参与者的眼光，但作者认为反而更兴奋的是「在这世界上的每一个问题，无论多么乏味，总会有人想要去解决它」。&lt;/p&gt;
-&lt;h3 id="它有正确答案吗"&gt;它有正确答案吗？
+&lt;h3 id="它有正确答案吗"&gt;&lt;a href="#%e5%ae%83%e6%9c%89%e6%ad%a3%e7%a1%ae%e7%ad%94%e6%a1%88%e5%90%97" class="header-anchor"&gt;&lt;/a&gt;它有正确答案吗？
 &lt;/h3&gt;&lt;p&gt;​ 当答案公布时，绝大多数人都认可这是最佳答案，那么它就是有答案的。但有时候可能仍有漏洞，这就需要额外填补。&lt;/p&gt;
-&lt;h3 id="谜题之于游戏"&gt;谜题之于游戏
+&lt;h3 id="谜题之于游戏"&gt;&lt;a href="#%e8%b0%9c%e9%a2%98%e4%b9%8b%e4%ba%8e%e6%b8%b8%e6%88%8f" class="header-anchor"&gt;&lt;/a&gt;谜题之于游戏
 &lt;/h3&gt;&lt;p&gt;​ 前面说过「拥有一个正确答案」是为了区别谜题和游戏以及其他玩法。Chris Forward 给出了多种玩法类型的关系。&lt;/p&gt;
 &lt;img src="types_of_play.png" alt="Types of Play" style="zoom: 33%;" /&gt;
 &lt;p&gt;​ 这样的结构使我们获得一个判断谜题设计师好坏的好工具：要做一个好的谜题，先要做一个好的玩具。玩家应该能在操作谜题中得到乐趣，即使他们还不能得到一个解法。&lt;/p&gt;
-&lt;h3 id="设计谜题"&gt;设计谜题
+&lt;h3 id="设计谜题"&gt;&lt;a href="#%e8%ae%be%e8%ae%a1%e8%b0%9c%e9%a2%98" class="header-anchor"&gt;&lt;/a&gt;设计谜题
 &lt;/h3&gt;&lt;ol&gt;
 &lt;li&gt;谜题有两方面，一方面是谜题游戏中的关卡设计，以一个固定的规则为基础来制作一个特定的谜题；另一方面是规则设计，发明整体使用的规则、目标和谜题形式。&lt;/li&gt;
 &lt;li&gt;总的来说谜题设计和游戏设计拥有一样的目标：让玩家在一个享受并同时拥有挑战的状态中。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id="书中案例与引申"&gt;书中案例与引申
+&lt;h2 id="书中案例与引申"&gt;&lt;a href="#%e4%b9%a6%e4%b8%ad%e6%a1%88%e4%be%8b%e4%b8%8e%e5%bc%95%e7%94%b3" class="header-anchor"&gt;&lt;/a&gt;书中案例与引申
 &lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;书中给了一个谜题，我认为的确是很简单小巧但是不失精致，挺有趣的。&lt;/p&gt;
@@ -855,18 +855,18 @@ data-flex-basis="487px"
 &lt;p&gt;答案是「F」，是一个很巧妙的答案，很多人在尝试还原的时候估计都不会想到折叠过来的部分下面还有一个部分！这运用到了作者给出的让谜题变得好玩的技巧里的「不要太简单也不要太难」和「小把戏」，并且也完全符合作者提出来的谜题的定义！&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id="我的思考与疑问"&gt;我的思考与疑问
+&lt;h2 id="我的思考与疑问"&gt;&lt;a href="#%e6%88%91%e7%9a%84%e6%80%9d%e8%80%83%e4%b8%8e%e7%96%91%e9%97%ae" class="header-anchor"&gt;&lt;/a&gt;我的思考与疑问
 &lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;如果我的谜题是为了剧情服务，那我应该如何入手设计？&lt;/p&gt;
 &lt;p&gt;叙事解谜不需要核心机制，每道题与每道题之间相对独立，没有内在的联系。解谜的逻辑是一种天然的、生活化的逻辑。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id="书中问题"&gt;书中问题
+&lt;h2 id="书中问题"&gt;&lt;a href="#%e4%b9%a6%e4%b8%ad%e9%97%ae%e9%a2%98" class="header-anchor"&gt;&lt;/a&gt;书中问题
 &lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;发明一个电脑谜题，灵感源自于今日的新闻头条。至少两个关卡，一个简单一个难。作出纸面原型并让其他人测试并改进。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id="精选摘录"&gt;精选摘录
+&lt;h2 id="精选摘录"&gt;&lt;a href="#%e7%b2%be%e9%80%89%e6%91%98%e5%bd%95" class="header-anchor"&gt;&lt;/a&gt;精选摘录
 &lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;「玩开始于怀疑日常生活中的规则，能放纵我们去做不使用的事情。」&lt;/li&gt;
 &lt;li&gt;「太简单的谜题让人失望，太难的谜题让人受挫。」&lt;/li&gt;
@@ -877,13 +877,13 @@ data-flex-basis="487px"
 &lt;li&gt;「要做一个好的谜题，首先要做一个好的玩具。」&lt;/li&gt;
 &lt;li&gt;「玩家应该能够在操作谜题中得到乐趣，即使他们还不能得到一个解法。」&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id="本章小结与感想"&gt;本章小结与感想
+&lt;h2 id="本章小结与感想"&gt;&lt;a href="#%e6%9c%ac%e7%ab%a0%e5%b0%8f%e7%bb%93%e4%b8%8e%e6%84%9f%e6%83%b3" class="header-anchor"&gt;&lt;/a&gt;本章小结与感想
 &lt;/h2&gt;&lt;p&gt;​ 学到了关于谜题的定义以及评判和设计谜题的一些方法，正好我打算这段时间开发一个叙事解谜游戏，或许会有所帮助。&lt;/p&gt;</description></item><item><title>游戏设计梦工厂，第一篇第二章</title><link>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0/</link><pubDate>Sun, 19 Jan 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0/</guid><description>&lt;img src="https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%BA%8C%E7%AB%A0/cover.png" alt="Featured image of post 游戏设计梦工厂，第一篇第二章" /&gt;&lt;pre&gt;&lt;code&gt;阅读时间：2025-01-19
 阅读目标：了解游戏如何运转及为什么玩家会玩游戏
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="本章摘要"&gt;本章摘要
-&lt;/h2&gt;&lt;h2 id="主要内容与要点"&gt;主要内容与要点
-&lt;/h2&gt;&lt;h3 id="formal-elements"&gt;Formal Elements
+&lt;h2 id="本章摘要"&gt;&lt;a href="#%e6%9c%ac%e7%ab%a0%e6%91%98%e8%a6%81" class="header-anchor"&gt;&lt;/a&gt;本章摘要
+&lt;/h2&gt;&lt;h2 id="主要内容与要点"&gt;&lt;a href="#%e4%b8%bb%e8%a6%81%e5%86%85%e5%ae%b9%e4%b8%8e%e8%a6%81%e7%82%b9" class="header-anchor"&gt;&lt;/a&gt;主要内容与要点
+&lt;/h2&gt;&lt;h3 id="formal-elements"&gt;&lt;a href="#formal-elements" class="header-anchor"&gt;&lt;/a&gt;Formal Elements
 &lt;/h3&gt;&lt;p&gt;​ 一般译作「形式元素」或「正规元素」，是用于区分游戏和其他事物的元素，对设计师来说是非常重要且需要理解的概念，因为其提供了游戏的结构和形式。下一章会更详细讲解，本章主要介绍以下元素：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
@@ -919,7 +919,7 @@ data-flex-basis="487px"
 &lt;p&gt;游戏的结果是最终达到的状态，通常与玩家的目标相关。不确定的结果在以玩法为核心的流程中很重要，因为这是玩家动力的一个关键因素。游戏设计师的职责就是设计出一个满意的游戏结果，通常来说是一个可衡量但不相等的结果。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id="dramatic-elements"&gt;Dramatic Elements
+&lt;h3 id="dramatic-elements"&gt;&lt;a href="#dramatic-elements" class="header-anchor"&gt;&lt;/a&gt;Dramatic Elements
 &lt;/h3&gt;&lt;p&gt;​ 一般译作「戏剧元素」，是让玩家能对游戏产生情感连接的元素，通过在 formal elements 中创作戏剧化内容，使玩家在情感上投入。同样的在第四章会更加详细地讲解，本章主要介绍：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
@@ -943,12 +943,12 @@ data-flex-basis="487px"
 &lt;p&gt;游戏叙事的核心，结合 formal elements 创造出的环境让玩家投入，会随着游戏进程展开。故事如何结合游戏一直在争论，但是明确的是故事和玩法结合可以产生出强大的情感影响。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id="dynamic-elements"&gt;Dynamic Elements
+&lt;h3 id="dynamic-elements"&gt;&lt;a href="#dynamic-elements" class="header-anchor"&gt;&lt;/a&gt;Dynamic Elements
 &lt;/h3&gt;&lt;p&gt;​ 本章只用几段话简单介绍了「把游戏看作是动态系统」的想法，在第五章会更详细介绍。本章里主要说的是：
 游戏是一个系统——一组互相关联的元素组合在一起形成一个复杂的整体。思考游戏系统时要注意「&lt;strong&gt;整体优于各个部分的总和&lt;/strong&gt;」，意思是一个系统由于内部元素的关系，当它们运行起来时，成为了新维度的事物。所有游戏元素在被人运行和操作之前，都只是形成了一个「初始的潜在游戏」，在玩家玩游戏时会出现什么是我们无法预知的。这样的现象也被称为「&lt;strong&gt;Emergence 涌现&lt;/strong&gt;」，原文并未说明，不知本书后续是否会提及此概念。&lt;/p&gt;
-&lt;h3 id="什么是谜题"&gt;什么是谜题？
+&lt;h3 id="什么是谜题"&gt;&lt;a href="#%e4%bb%80%e4%b9%88%e6%98%af%e8%b0%9c%e9%a2%98" class="header-anchor"&gt;&lt;/a&gt;什么是谜题？
 &lt;/h3&gt;&lt;p&gt;​ 书中特别摘录了 Scott Kim 写的《什么是谜题？》，关于此文章的笔记和思考我将另开一文，在此篇中不讨论。&lt;/p&gt;
-&lt;h3 id="定义游戏"&gt;定义游戏
+&lt;h3 id="定义游戏"&gt;&lt;a href="#%e5%ae%9a%e4%b9%89%e6%b8%b8%e6%88%8f" class="header-anchor"&gt;&lt;/a&gt;定义游戏
 &lt;/h3&gt;&lt;p&gt;​ 本书给出了游戏的三个定义：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
@@ -965,16 +965,16 @@ data-flex-basis="487px"
 &lt;p&gt;​ 游戏的一个本质就是「不确定性」，游戏还能够结束这种不确定性，通过不平等的结果来解决不确定性。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id="超越定义"&gt;超越定义
+&lt;h3 id="超越定义"&gt;&lt;a href="#%e8%b6%85%e8%b6%8a%e5%ae%9a%e4%b9%89" class="header-anchor"&gt;&lt;/a&gt;超越定义
 &lt;/h3&gt;&lt;p&gt;​ 游戏的定义之外还有什么？现在有很多各种类型的游戏，超越了娱乐，设计教育、培训、政治、健康、人生追求、艺术、建筑等等领域，因此出现了「游戏化」这个概念，想要把「玩和重要的想法结合起来」。&lt;/p&gt;
-&lt;h2 id="书中案例与引申"&gt;书中案例与引申
+&lt;h2 id="书中案例与引申"&gt;&lt;a href="#%e4%b9%a6%e4%b8%ad%e6%a1%88%e4%be%8b%e4%b8%8e%e5%bc%95%e7%94%b3" class="header-anchor"&gt;&lt;/a&gt;书中案例与引申
 &lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;《钓鱼》和《雷神之锤》的比较&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;​ 这两个游戏截然不同，一个是使用实体扑克牌进行线下游玩的回合制多人卡牌游戏，一个是 3D 的 FPS 游戏，需要有软件和电脑。一个有公开的玩法，人人都能玩的游戏，一个是有版权的软件产品。但是这两者之间在个更深层次上是有相似点的，据此引出 formal elements，更加说明这是游戏的基础。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id="我的疑问与思考"&gt;我的疑问与思考
+&lt;h2 id="我的疑问与思考"&gt;&lt;a href="#%e6%88%91%e7%9a%84%e7%96%91%e9%97%ae%e4%b8%8e%e6%80%9d%e8%80%83" class="header-anchor"&gt;&lt;/a&gt;我的疑问与思考
 &lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Procedure 和 Rules 的区别是什么？有什么联系？&lt;/strong&gt;&lt;/p&gt;
@@ -1020,7 +1020,7 @@ data-flex-basis="487px"
 &lt;p&gt;​ 剧情游戏通常将玩家与主角绑定在一起，让玩家称为故事的一部分，以主角的视角体验剧情，而读书时读者通常处于「上帝视角」，以旁观者的身份观察和理解角色与故事。剧情游戏里的冲突或因玩家的选择而引发和解除，玩家的选项会推进故事发展，还可能具有多结局，而读书只是在被动跟着剧情走。剧情游戏还会通过音乐、画面效果等来强化体验和沉浸感，而读书基本靠“脑补“。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id="书中问题"&gt;书中问题
+&lt;h2 id="书中问题"&gt;&lt;a href="#%e4%b9%a6%e4%b8%ad%e9%97%ae%e9%a2%98" class="header-anchor"&gt;&lt;/a&gt;书中问题
 &lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;问题 1: 想一个游戏&lt;/strong&gt;&lt;/p&gt;
@@ -1071,7 +1071,7 @@ data-flex-basis="487px"
 &lt;p&gt;《我在七年后等着你》，这是我第一个玩哭的游戏，爱情与相互拯救让我无法控制自己。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id="精选摘录"&gt;精选摘录
+&lt;h2 id="精选摘录"&gt;&lt;a href="#%e7%b2%be%e9%80%89%e6%91%98%e5%bd%95" class="header-anchor"&gt;&lt;/a&gt;精选摘录
 &lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;「这两个描述中最明显的相同点就是，它们都是为玩家设计的。」&lt;/li&gt;
 &lt;li&gt;「如果你没有遵守这些规则，那么在现实中，你就已经不是在玩这个游戏了。」&lt;/li&gt;
@@ -1081,11 +1081,11 @@ data-flex-basis="487px"
 &lt;li&gt;「“拥有一个正确答案”的目的是为了区别谜题和游戏与其他玩法。」&lt;/li&gt;
 &lt;li&gt;「把你在这里读到的所有内容当作是一个你可以跳跃的起点，一个为你远征游戏设计世界准备的发射台，把玩家带到不可思议的地方。」&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id="本章小结与感想"&gt;本章小结与感想
+&lt;h2 id="本章小结与感想"&gt;&lt;a href="#%e6%9c%ac%e7%ab%a0%e5%b0%8f%e7%bb%93%e4%b8%8e%e6%84%9f%e6%83%b3" class="header-anchor"&gt;&lt;/a&gt;本章小结与感想
 &lt;/h2&gt;&lt;p&gt;​ 本章简单介绍了 FDD 理论，并为游戏提供了一个有用的定义，但并不是总体的游戏的绝对定义，因为随着新一代设计师对游戏边缘的不断探索，不断的新领域正在涌现。但是提供的定义对游戏分析和设计都很重要。&lt;/p&gt;</description></item><item><title>游戏设计梦工厂，第一篇第一章</title><link>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%80%E7%AB%A0/</link><pubDate>Sat, 18 Jan 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%80%E7%AB%A0/</guid><description>&lt;img src="https://yufenghuang.tech/p/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A2%A6%E5%B7%A5%E5%8E%82%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AC%AC%E4%B8%80%E7%AB%A0/cover.png" alt="Featured image of post 游戏设计梦工厂，第一篇第一章" /&gt;&lt;pre&gt;&lt;code&gt;阅读时间：2025 年 1 月 18 日
 阅读目标：探寻如何成为一名游戏设计师以及需要的技能等。
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="本章摘要"&gt;本章摘要
+&lt;h2 id="本章摘要"&gt;&lt;a href="#%e6%9c%ac%e7%ab%a0%e6%91%98%e8%a6%81" class="header-anchor"&gt;&lt;/a&gt;本章摘要
 &lt;/h2&gt;&lt;p&gt;​ 本章主要回答“如何成为一名游戏设计师？”、“需要什么样的才能和技巧？”、“在这个过程中需要做什么？”、“什么才是最好的游戏设计方法？”这几个问题。&lt;/p&gt;
 &lt;p&gt;​ 针对第一个问题，最重要的就是「&lt;strong&gt;与玩家站在同一阵营&lt;/strong&gt;」，好的核心玩法才是游戏的本质，游戏设计师的注意力应该集中在玩家体验上。因此游戏测试者也十分重要，他们直接告诉你你的游戏的体验，出色的游戏设计师应该为玩家创造一种有潜力的体验，布置好游戏世界内容后让玩家亲自体验，而不是想着掌控游戏的所有功能和细节，&lt;strong&gt;试玩是了解自己游戏表现力最好的方法，是整个游戏设计过程的心脏&lt;/strong&gt;。游戏在反复测试和仔细观察中进化，让游戏进化成为超越自己最初想法的游戏是游戏设计师的职责，不是一成不变，而是孕育出新的生命，「这就是游戏设计的艺术」。&lt;/p&gt;
 &lt;p&gt;​ 针对第二个问题，游戏设计师首先需要具备的基本特征就是&lt;strong&gt;对游戏和玩的热情&lt;/strong&gt;。然后，最重要的技能是和所有团队成员进行清楚、高效的&lt;strong&gt;交流&lt;/strong&gt;，同时做一个好的听众和妥协者，并且&lt;strong&gt;妥协是一件必要的事&lt;/strong&gt;，你的职责就是在妥协的情况下把游戏做得流畅和成功。在此之上，需要优秀的团队合作和工作流，你需要保证「所有不同类型的人确实是在为同一个游戏工作」。此外，你需要是一个能够看清复杂的系统、分析出事物间的联系和规则，并且能在常见的互动当中找到&lt;strong&gt;灵感&lt;/strong&gt;的人。你还需要「&lt;strong&gt;成为更好的玩家&lt;/strong&gt;」——用你自己和你的游戏体验来训练自己对好的游戏玩法的敏锐程度（貌似不太对，但这让我不禁想到岩田聪先生的“玩家之心”）。此外，一定需要有&lt;strong&gt;创造力&lt;/strong&gt;才能设计出一个很棒的游戏。&lt;/p&gt;
@@ -1105,20 +1105,20 @@ data-flex-basis="487px"
 &lt;/ol&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id="主要内容与要点"&gt;主要内容与要点
-&lt;/h2&gt;&lt;h3 id="游戏设计的核心"&gt;游戏设计的核心
+&lt;h2 id="主要内容与要点"&gt;&lt;a href="#%e4%b8%bb%e8%a6%81%e5%86%85%e5%ae%b9%e4%b8%8e%e8%a6%81%e7%82%b9" class="header-anchor"&gt;&lt;/a&gt;主要内容与要点
+&lt;/h2&gt;&lt;h3 id="游戏设计的核心"&gt;&lt;a href="#%e6%b8%b8%e6%88%8f%e8%ae%be%e8%ae%a1%e7%9a%84%e6%a0%b8%e5%bf%83" class="header-anchor"&gt;&lt;/a&gt;游戏设计的核心
 &lt;/h3&gt;&lt;p&gt;​ 本章的观点是「&lt;strong&gt;好的核心玩法才是游戏的本质&lt;/strong&gt;」，只有好的核心玩法才能吸引住玩家，游戏设计师的注意力应该集中在玩家体验上，不要被其他顾虑干扰。（然而现在国内许多厂商游戏本质上都是套皮游戏，糖豆人火了就出蛋仔派对、PUBG 火了就出和平精英、搜打撤火了就出三角洲、黎明杀机火了就出第五人格等等，都在害怕创新带来不确定性）
 应该牢记「&lt;strong&gt;游戏测试是整个游戏设计过程的心脏&lt;/strong&gt;」，在各个阶段都坚持让目标用户测试游戏，并且游戏原型的构建和迭代要很早就开始，积极测试、验证、迭代。&lt;/p&gt;
-&lt;h3 id="游戏设计师所需的才能和技能"&gt;游戏设计师所需的才能和技能
+&lt;h3 id="游戏设计师所需的才能和技能"&gt;&lt;a href="#%e6%b8%b8%e6%88%8f%e8%ae%be%e8%ae%a1%e5%b8%88%e6%89%80%e9%9c%80%e7%9a%84%e6%89%8d%e8%83%bd%e5%92%8c%e6%8a%80%e8%83%bd" class="header-anchor"&gt;&lt;/a&gt;游戏设计师所需的才能和技能
 &lt;/h3&gt;&lt;p&gt;​ 游戏设计师最基本的特征是「&lt;strong&gt;热爱游戏和玩&lt;/strong&gt;」，然后需要能进行「&lt;strong&gt;清楚、高效地交流，并做一个好的听众和妥协者&lt;/strong&gt;」，需要「&lt;strong&gt;保证整个团队各种类型的人都在为同一个游戏工作&lt;/strong&gt;」，需要会并且从开发的最开始阶段就「&lt;strong&gt;坚持执行良好的开发流程&lt;/strong&gt;」，需要能「&lt;strong&gt;用不同的视角看这个世界，在常见的互动中找到玩法灵感&lt;/strong&gt;」，需要「&lt;strong&gt;训练和保持对游戏和游戏玩法的敏锐直觉&lt;/strong&gt;」，需要有「&lt;strong&gt;创造力&lt;/strong&gt;」。&lt;/p&gt;
-&lt;h3 id="doa"&gt;D.O.A.
+&lt;h3 id="doa"&gt;&lt;a href="#doa" class="header-anchor"&gt;&lt;/a&gt;D.O.A.
 &lt;/h3&gt;&lt;p&gt;​ D.O.A.，Dead On Arrival，是指一个游戏玩起来完全没有任何乐趣，一上市就被认定失败。（比如 星鸣特攻、魔戒：咕噜 这些？）&lt;/p&gt;
-&lt;h3 id="以玩法为核心的设计流程"&gt;以玩法为核心的设计流程
-&lt;/h3&gt;&lt;h4 id="建立玩家体验目标"&gt;建立玩家体验目标
+&lt;h3 id="以玩法为核心的设计流程"&gt;&lt;a href="#%e4%bb%a5%e7%8e%a9%e6%b3%95%e4%b8%ba%e6%a0%b8%e5%bf%83%e7%9a%84%e8%ae%be%e8%ae%a1%e6%b5%81%e7%a8%8b" class="header-anchor"&gt;&lt;/a&gt;以玩法为核心的设计流程
+&lt;/h3&gt;&lt;h4 id="建立玩家体验目标"&gt;&lt;a href="#%e5%bb%ba%e7%ab%8b%e7%8e%a9%e5%ae%b6%e4%bd%93%e9%aa%8c%e7%9b%ae%e6%a0%87" class="header-anchor"&gt;&lt;/a&gt;建立玩家体验目标
 &lt;/h4&gt;&lt;p&gt;​ 此设计流程坚持考虑玩家体验，在每一个开发阶段都让目标用户测试游戏。“玩家体验目标”就是：玩家在有设计师创建的游戏中能够体验到的不同感受的目标。这并不是游戏里的实际内容，而是玩家可以在游戏中自行发掘的体验。&lt;/p&gt;
-&lt;h4 id="制作原型和测试游戏"&gt;制作原型和测试游戏
+&lt;h4 id="制作原型和测试游戏"&gt;&lt;a href="#%e5%88%b6%e4%bd%9c%e5%8e%9f%e5%9e%8b%e5%92%8c%e6%b5%8b%e8%af%95%e6%b8%b8%e6%88%8f" class="header-anchor"&gt;&lt;/a&gt;制作原型和测试游戏
 &lt;/h4&gt;&lt;p&gt;​ 要尽早地做出游戏原型并进行游戏测试，不要在对玩家体验目标、核心游戏机制深入理解时就开始游戏制作。开始制作游戏前，设计和原型的准备时间越长，就越可能避免高昂代价的错误。&lt;/p&gt;
-&lt;h4 id="迭代设计流程"&gt;迭代设计流程
+&lt;h4 id="迭代设计流程"&gt;&lt;a href="#%e8%bf%ad%e4%bb%a3%e8%ae%be%e8%ae%a1%e6%b5%81%e7%a8%8b" class="header-anchor"&gt;&lt;/a&gt;迭代设计流程
 &lt;/h4&gt;&lt;p&gt;​ 一遍又一遍地对游戏的方方面面进行设计、测试和评估，持续提升游戏的质量，直到玩家在游戏中的体验符合预期。
 在设计游戏时应该知道：&lt;/p&gt;
 &lt;ul&gt;
@@ -1130,7 +1130,7 @@ data-flex-basis="487px"
 &lt;li&gt;如果出来的效果是好的，但是没达到你的预期，阿么尝试再次修改和测试&lt;/li&gt;
 &lt;li&gt;如果新的想法最终能达到你的预期，那么迭代过程完成。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id="书中案例与引申"&gt;书中案例与引申
+&lt;h2 id="书中案例与引申"&gt;&lt;a href="#%e4%b9%a6%e4%b8%ad%e6%a1%88%e4%be%8b%e4%b8%8e%e5%bc%95%e7%94%b3" class="header-anchor"&gt;&lt;/a&gt;书中案例与引申
 &lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Will Wright 创造 SimAnt 和 SimEarth&lt;/strong&gt;&lt;/p&gt;
@@ -1157,7 +1157,7 @@ data-flex-basis="487px"
 &lt;p&gt;​ 主要是给一个具体的例子，体验下迭代设计法的具体应用。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id="我的思考与疑问"&gt;我的思考与疑问
+&lt;h2 id="我的思考与疑问"&gt;&lt;a href="#%e6%88%91%e7%9a%84%e6%80%9d%e8%80%83%e4%b8%8e%e7%96%91%e9%97%ae" class="header-anchor"&gt;&lt;/a&gt;我的思考与疑问
 &lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;如何区别“以玩法为核心的设计方法”和其他设计方法？什么时候正确使用？&lt;/p&gt;
@@ -1182,7 +1182,7 @@ Game development strikes a balance between the two; each needs good advocates fo
 &lt;p&gt;​ 而何为创新，我认为需要分不同方面来说，完全的「原创」几乎是不可能的，但是「创新」仍然是游戏行业生命里的来源。创新方面来说，最经典的就是「玩法创新」，是能够直接开创新的游戏类型的存在，比如「雷神之锤」之于 3D游戏 和 FPS 游戏；还有「设计创新」，比如「塞尔达传说：旷野之息」之于开放世界地图设计；还有「艺术创新」，比如「Atlus」就以独特的艺术风格闻名。除此之外应该还有其他，暂时先写这么多吧。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id="练习"&gt;练习
+&lt;h2 id="练习"&gt;&lt;a href="#%e7%bb%83%e4%b9%a0" class="header-anchor"&gt;&lt;/a&gt;练习
 &lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;练习 1: 成为一名测试者&lt;/strong&gt;
@@ -1238,7 +1238,7 @@ Game development strikes a balance between the two; each needs good advocates fo
 &lt;/ol&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id="精选摘录"&gt;精选摘录
+&lt;h2 id="精选摘录"&gt;&lt;a href="#%e7%b2%be%e9%80%89%e6%91%98%e5%bd%95" class="header-anchor"&gt;&lt;/a&gt;精选摘录
 &lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;「作为一名游戏设计师，首先且同时最重要的就是和玩家站在同一阵营。」&lt;/li&gt;
 &lt;li&gt;「游戏并不是单向交流的娱乐，想要做一名出色的游戏设计师，并不是要掌控游戏的所有功能的细节，而是要为玩家创造出一种有潜力的体验——把游戏世界的内容都布置好，当玩家进入这个世界后亲自体验。」&lt;/li&gt;
@@ -1260,5 +1260,5 @@ Game development strikes a balance between the two; each needs good advocates fo
 &lt;li&gt;「如果你看不到团队有所争执，你就不可能知道他们之间是否在充分地交流想法。」&lt;/li&gt;
 &lt;li&gt;「真正的创新很少来自灵光一现，往往更多是来自长期积累和实验。」&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id="本章小结与感想"&gt;本章小结与感想
+&lt;h2 id="本章小结与感想"&gt;&lt;a href="#%e6%9c%ac%e7%ab%a0%e5%b0%8f%e7%bb%93%e4%b8%8e%e6%84%9f%e6%83%b3" class="header-anchor"&gt;&lt;/a&gt;本章小结与感想
 &lt;/h2&gt;&lt;p&gt;​ 本章给了成为游戏设计师应该需要的技巧和工具，这是具备挑战游戏设计极限能力的基础。个人理解，总结起来技巧就是「热爱、沟通与创造」，工具就是「以玩法为核心」。而在整个开发过程中，最重要的就是「测试、原型与迭代」，先做出可玩原型，而不是拘泥于其他方面。&lt;/p&gt;</description></item></channel></rss>

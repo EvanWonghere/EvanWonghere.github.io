@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>环境配置 on 蜂窝</title><link>https://yufenghuang.tech/categories/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</link><description>Recent content in 环境配置 on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Sat, 15 Jul 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://yufenghuang.tech/categories/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/index.xml" rel="self" type="application/rss+xml"/><item><title>利用VSCode配置CSharp运行环境</title><link>https://yufenghuang.tech/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/</link><pubDate>Sat, 15 Jul 2023 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/</guid><description>&lt;h1 id="准备工作"&gt;准备工作
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>环境配置 on 蜂窝</title><link>https://yufenghuang.tech/categories/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</link><description>Recent content in 环境配置 on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Sat, 15 Jul 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://yufenghuang.tech/categories/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/index.xml" rel="self" type="application/rss+xml"/><item><title>利用VSCode配置CSharp运行环境</title><link>https://yufenghuang.tech/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/</link><pubDate>Sat, 15 Jul 2023 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/</guid><description>&lt;h1 id="准备工作"&gt;&lt;a href="#%e5%87%86%e5%a4%87%e5%b7%a5%e4%bd%9c" class="header-anchor"&gt;&lt;/a&gt;准备工作
 &lt;/h1&gt;&lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;下载 C# 拓展&lt;/p&gt;
@@ -26,18 +26,18 @@ data-flex-basis="426px"
 &gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h1 id="创建应用并运行"&gt;创建应用并运行
+&lt;h1 id="创建应用并运行"&gt;&lt;a href="#%e5%88%9b%e5%bb%ba%e5%ba%94%e7%94%a8%e5%b9%b6%e8%bf%90%e8%a1%8c" class="header-anchor"&gt;&lt;/a&gt;创建应用并运行
 &lt;/h1&gt;&lt;p&gt;​ &lt;em&gt;&lt;strong&gt;我们以HelloWorld为例：&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;​ 1. 创建一个HelloWorld文件夹或者在命令台输入&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;div class="code-block" data-lang="bash"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
 &lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;dotnet new console -o ProjectName -f net7.0
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;dotnet new console -o ProjectName -f net7.0&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;​ 如果你在命令台输入了，请跳转到第&lt;strong&gt;3.2&lt;/strong&gt;步&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;​ 如果你在命令台输入了，请跳转到第&lt;strong&gt;3.2&lt;/strong&gt;步&lt;/p&gt;
 &lt;ol start="2"&gt;
 &lt;li&gt;在VSCode中选择打开&lt;strong&gt;文件 &amp;gt; 打开文件夹&lt;/strong&gt;&lt;/li&gt;
 &lt;li&gt;3.1 &lt;strong&gt;使用VSCode命令面板&lt;/strong&gt;&lt;/li&gt;
@@ -50,20 +50,20 @@ data-flex-basis="426px"
 &lt;li&gt;输入项目名并选择项目路径&lt;/li&gt;
 &lt;li&gt;你能在项目文件夹中看到&lt;code&gt;Program.cs&lt;/code&gt;，它的内容如下：&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;div class="code-block" data-lang="c#"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
 &lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
 &lt;/span&gt;&lt;span class="lnt"&gt;2
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class="lntd"&gt;
 &lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-c#" data-lang="c#"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// See https://aka.ms/new-console-template for more information&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;Console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;WriteLine&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;Hello, World!&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;Console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;WriteLine&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;Hello, World!&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;ol start="6"&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;ol start="6"&gt;
 &lt;li&gt;将文件&lt;code&gt;Program&lt;/code&gt;重命名为&lt;code&gt;HelloWorld.cs&lt;/code&gt;，内容更改为&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;div class="code-block" data-lang="c#"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
 &lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
 &lt;/span&gt;&lt;span class="lnt"&gt; 2
@@ -86,54 +86,54 @@ data-flex-basis="426px"
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;WriteLine&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;Hello, World!&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;ol start="7"&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;ol start="7"&gt;
 &lt;li&gt;运行文件时，笔者直接点&lt;code&gt;Run code&lt;/code&gt;会报错，应选择&lt;code&gt;Debug/Run project associated with this file&lt;/code&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;div class="code-block" data-lang="plaintext"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
 &lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
 &lt;/span&gt;&lt;span class="lnt"&gt;2
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class="lntd"&gt;
 &lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;scriptcs : 无法将“scriptcs”项识别为 cmdlet、函数、脚本文件或可运行程序的名称。请检查名称的拼写，如果包括路径，请确保路径正确，然后再试一次。
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;所在位置 行:1 字符: 1
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;所在位置 行:1 字符: 1&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;/blockquote&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;​ 3.2 使用终端&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;ol&gt;
 &lt;li&gt;确认终端已经导航到项目文件夹的情况下，在&lt;strong&gt;Shell&lt;/strong&gt;输入&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;div class="code-block" data-lang="bash"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
 &lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;doenet new console
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;doenet new console&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;​ 你可能已经注意到它和第一部的指令有些相像，其实第一步的指令就是一步完成创建文件夹和应用。&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;​ 你可能已经注意到它和第一部的指令有些相像，其实第一步的指令就是一步完成创建文件夹和应用。&lt;/p&gt;
 &lt;ol start="2"&gt;
 &lt;li&gt;接下来找到&lt;code&gt;Program.cs&lt;/code&gt;，与&lt;strong&gt;3.1&lt;/strong&gt;做同样修改即可。&lt;/li&gt;
 &lt;li&gt;运行项目时，在终端输入&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;div class="code-block" data-lang="bash"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
 &lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;dotnet run
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;dotnet run&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;/blockquote&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
 &lt;p&gt;后记：&lt;/p&gt;
 &lt;p&gt;​ 有一说一，我感觉用VS都方便很多呢&amp;hellip;&amp;hellip;&lt;/p&gt;
-&lt;/blockquote&gt;</description></item><item><title>使用 Visual Studio 部署 Boost::Python</title><link>https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/</link><pubDate>Fri, 09 Jun 2023 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/</guid><description>&lt;h1 id="环境"&gt;环境
+&lt;/blockquote&gt;</description></item><item><title>使用 Visual Studio 部署 Boost::Python</title><link>https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/</link><pubDate>Fri, 09 Jun 2023 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/</guid><description>&lt;h1 id="环境"&gt;&lt;a href="#%e7%8e%af%e5%a2%83" class="header-anchor"&gt;&lt;/a&gt;环境
 &lt;/h1&gt;&lt;p&gt;笔者的环境是：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Windows 11 64 bit&lt;/li&gt;
@@ -141,8 +141,8 @@ data-flex-basis="426px"
 &lt;li&gt;Visual Studio 2022 Community Edition version 17.6.2 (msvc v14.3)&lt;/li&gt;
 &lt;li&gt;Boost 1.82&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h1 id="下载并编译"&gt;下载并编译
-&lt;/h1&gt;&lt;h2 id="下载"&gt;下载
+&lt;h1 id="下载并编译"&gt;&lt;a href="#%e4%b8%8b%e8%bd%bd%e5%b9%b6%e7%bc%96%e8%af%91" class="header-anchor"&gt;&lt;/a&gt;下载并编译
+&lt;/h1&gt;&lt;h2 id="下载"&gt;&lt;a href="#%e4%b8%8b%e8%bd%bd" class="header-anchor"&gt;&lt;/a&gt;下载
 &lt;/h2&gt;&lt;p&gt;​ 官网下载地址为 &lt;a class="link" href="https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/" target="_blank" rel="noopener"
 &gt;https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/&lt;/a&gt;，截至此博客发布时最新版本为1.82。笔者下载的版本是 boost_1_82_0.zip&lt;img src="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/DownloadZIP.png"
 width="929"
@@ -163,7 +163,7 @@ class="gallery-image"
 data-flex-grow="86"
 data-flex-basis="208px"
 &gt;&lt;/p&gt;
-&lt;h3 id="配置-user_configjam"&gt;配置 user_config.jam
+&lt;h3 id="配置-user_configjam"&gt;&lt;a href="#%e9%85%8d%e7%bd%ae-user_configjam" class="header-anchor"&gt;&lt;/a&gt;配置 user_config.jam
 &lt;/h3&gt;&lt;p&gt;​ 你可以在 &lt;code&gt;\\tool\\build\\example\\user-config.jam&lt;/code&gt;&lt;img src="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/user_config.png"
 width="1022"
 height="1189"
@@ -174,7 +174,7 @@ class="gallery-image"
 data-flex-grow="85"
 data-flex-basis="206px"
 &gt;看到模板，将其做如下修改：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;div class="code-block"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
 &lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
 &lt;/span&gt;&lt;span class="lnt"&gt;2
@@ -187,7 +187,7 @@ data-flex-basis="206px"
 &lt;/span&gt;&lt;span class="lnt"&gt;9
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;...
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;...
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;# Configure msvc (default version, searched for in standard locations and PATH).
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;# using msvc : 14.3;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;...
@@ -195,22 +195,22 @@ data-flex-basis="206px"
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;# using python : 3.9
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; : &amp;#34;D:\Anaconda\python.exe&amp;#34;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; : &amp;#34;D:\Anaconda\include&amp;#34;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; : &amp;#34;D:\Anaconda\libs&amp;#34;;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; : &amp;#34;D:\Anaconda\libs&amp;#34;;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;如果你不确定你的 &lt;strong&gt;msvc&lt;/strong&gt; 版本，可以参考 &lt;a class="link" href="https://en.wikipedia.org/wiki/Microsoft_Visual_C&amp;#43;&amp;#43;" target="_blank" rel="noopener"
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;如果你不确定你的 &lt;strong&gt;msvc&lt;/strong&gt; 版本，可以参考 &lt;a class="link" href="https://en.wikipedia.org/wiki/Microsoft_Visual_C&amp;#43;&amp;#43;" target="_blank" rel="noopener"
 &gt;https://en.wikipedia.org/wiki/Microsoft_Visual_C++&lt;/a&gt;，&lt;em&gt;&lt;strong&gt;using python&lt;/strong&gt;&lt;/em&gt; 使用自己的配置。修改好后将文件复制到 &lt;code&gt;C:\\users\\youUserName\\&lt;/code&gt; 即可。&lt;/p&gt;
-&lt;h2 id="编译"&gt;编译
+&lt;h2 id="编译"&gt;&lt;a href="#%e7%bc%96%e8%af%91" class="header-anchor"&gt;&lt;/a&gt;编译
 &lt;/h2&gt;&lt;p&gt;​ 我们通过命令行使用 &lt;code&gt;b2.exe&lt;/code&gt; 进行编译，笔者使用的命令是&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;div class="code-block" data-lang="bash"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
 &lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./b2.exe --with-python stage --stagedir&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;./bin/lib64-msvc-14.3&amp;#34;&lt;/span&gt; &lt;span class="nv"&gt;link&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;static address-model&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;64&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./b2.exe --with-python stage --stagedir&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;./bin/lib64-msvc-14.3&amp;#34;&lt;/span&gt; &lt;span class="nv"&gt;link&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;static address-model&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;64&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id="b2部分命令行参数说明"&gt;b2部分命令行参数说明
+&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id="b2部分命令行参数说明"&gt;&lt;a href="#b2%e9%83%a8%e5%88%86%e5%91%bd%e4%bb%a4%e8%a1%8c%e5%8f%82%e6%95%b0%e8%af%b4%e6%98%8e" class="header-anchor"&gt;&lt;/a&gt;b2部分命令行参数说明
 &lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;&lt;code&gt;--with&lt;/code&gt; 后面接的是需要编译的库，而 &lt;code&gt;--with-python&lt;/code&gt; 则说明只编译 &lt;code&gt;Boost::Python&lt;/code&gt;。&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;install&lt;/code&gt; | &lt;code&gt;stage&lt;/code&gt; &lt;code&gt;stage&lt;/code&gt; 即只生成库，而 &lt;code&gt;install&lt;/code&gt; 还会生成 &lt;code&gt;include&lt;/code&gt; 目录。通过 &lt;code&gt;--prefix=&amp;quot;libPath&amp;quot;&lt;/code&gt; 指定 &lt;code&gt;instalSl&lt;/code&gt; 生成好的库的路径为 &lt;code&gt;&amp;quot;libPath&amp;quot;&lt;/code&gt;。如果是 &lt;code&gt;stage&lt;/code&gt; 则由 &lt;code&gt;--stagedir=&lt;/code&gt; 来指定。&lt;/li&gt;
@@ -218,7 +218,7 @@ data-flex-basis="206px"
 &lt;li&gt;&lt;code&gt;address-model&lt;/code&gt; 指定是编译为32位还是64位。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;​ 编译完成后，可以在 &lt;code&gt;\\bin\\lib64-msvc-14.3\\lib\\&lt;/code&gt; 下看到四个文件，&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;div class="code-block"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
 &lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
 &lt;/span&gt;&lt;span class="lnt"&gt;2
@@ -226,14 +226,14 @@ data-flex-basis="206px"
 &lt;/span&gt;&lt;span class="lnt"&gt;4
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;libboost_numpy39-vc143-mt-gd-x64-1_82.lib
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;libboost_numpy39-vc143-mt-gd-x64-1_82.lib
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;libboost_numpy39-vc143-mt-x64-1_82.lib
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;libboost_python39-vc143-mt-gd-x64-1_82.lib
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;libboost_python39-vc143-mt-x64-1_82.lib
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;libboost_python39-vc143-mt-x64-1_82.lib&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;其中，python 和 numpy 各 2 个，带 &lt;code&gt;gd&lt;/code&gt; 的对应 &lt;code&gt;debug&lt;/code&gt; 版本，反之对应&lt;code&gt; release&lt;/code&gt; 版本。&lt;/p&gt;
-&lt;h1 id="配置visual-studio"&gt;配置Visual Studio
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;其中，python 和 numpy 各 2 个，带 &lt;code&gt;gd&lt;/code&gt; 的对应 &lt;code&gt;debug&lt;/code&gt; 版本，反之对应&lt;code&gt; release&lt;/code&gt; 版本。&lt;/p&gt;
+&lt;h1 id="配置visual-studio"&gt;&lt;a href="#%e9%85%8d%e7%bd%aevisual-studio" class="header-anchor"&gt;&lt;/a&gt;配置Visual Studio
 &lt;/h1&gt;&lt;p&gt;​ 首先建立一个空项目，这一部分就不赘述了，然后打开项目属性：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;ul&gt;
@@ -245,30 +245,30 @@ data-flex-basis="206px"
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;配置&lt;em&gt;&lt;strong&gt;包含目录&lt;/strong&gt;&lt;/em&gt;，包含boost目录和python目录，我的配置是&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;div class="code-block"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
 &lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
 &lt;/span&gt;&lt;span class="lnt"&gt;2
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;D:\\boost\\boost_1_82_0\\
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;D:\\Anaconda\\include\\
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;D:\\boost\\boost_1_82_0\\
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;D:\\Anaconda\\include\\&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;ul&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;ul&gt;
 &lt;li&gt;配置&lt;em&gt;&lt;strong&gt;库目录&lt;/strong&gt;&lt;/em&gt;，包含boost库目录和python库目录，我的配置是&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;div class="code-block"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
 &lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
 &lt;/span&gt;&lt;span class="lnt"&gt;2
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; D:\\boost\\boost_1_82_0\\bin\\lib64-msvc-14.3\\lib\\
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;D:\\Anaconda\\libs\\
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; D:\\boost\\boost_1_82_0\\bin\\lib64-msvc-14.3\\lib\\
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;D:\\Anaconda\\libs\\&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;/li&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/configuration.png"
@@ -307,10 +307,10 @@ class="gallery-image"
 data-flex-grow="144"
 data-flex-basis="346px"
 &gt;&lt;/p&gt;
-&lt;h1 id="测试"&gt;测试
-&lt;/h1&gt;&lt;h2 id="编写-c文件"&gt;编写 C++文件
+&lt;h1 id="测试"&gt;&lt;a href="#%e6%b5%8b%e8%af%95" class="header-anchor"&gt;&lt;/a&gt;测试
+&lt;/h1&gt;&lt;h2 id="编写-c文件"&gt;&lt;a href="#%e7%bc%96%e5%86%99-c%e6%96%87%e4%bb%b6" class="header-anchor"&gt;&lt;/a&gt;编写 C++文件
 &lt;/h2&gt;&lt;p&gt;​ 不多说了，直接上文件！&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;div class="code-block" data-lang="c&amp;#43;&amp;#43;"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
 &lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
 &lt;/span&gt;&lt;span class="lnt"&gt; 2
@@ -363,10 +363,10 @@ data-flex-basis="346px"
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;using&lt;/span&gt; &lt;span class="k"&gt;namespace&lt;/span&gt; &lt;span class="n"&gt;boost&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;def&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;hello_boost&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;hello_boost&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;def&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;hello_world&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;hello_world&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id="小提示"&gt;小提示
+&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id="小提示"&gt;&lt;a href="#%e5%b0%8f%e6%8f%90%e7%a4%ba" class="header-anchor"&gt;&lt;/a&gt;小提示
 &lt;/h3&gt;&lt;p&gt;​ 记得源代码要右键源代码然后添加啊不然就会像我一样以为没配置好环境一直再搞啊啊啊！！！&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/sourceFile.png"
 width="1029"
@@ -377,7 +377,7 @@ class="gallery-image"
 data-flex-grow="249"
 data-flex-basis="597px"
 &gt;&lt;/p&gt;
-&lt;h2 id="python测试"&gt;Python测试
+&lt;h2 id="python测试"&gt;&lt;a href="#python%e6%b5%8b%e8%af%95" class="header-anchor"&gt;&lt;/a&gt;Python测试
 &lt;/h2&gt;&lt;p&gt;​ 如果你执行的是 &lt;code&gt;release&lt;/code&gt;，进入目录 &lt;code&gt;file2project\\x64\\release\\&lt;/code&gt;，否则进入 &lt;code&gt;file2project\\x64\\debug\\&lt;/code&gt;，你能看到一个文件 &lt;code&gt;Hello_Boost.pyd&lt;/code&gt;，这就是刚才的 C++ 源代码生成的 Python 模块。&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/path2pyd.png"
 width="1029"
@@ -399,8 +399,8 @@ data-flex-grow="181"
 data-flex-basis="434px"
 &gt;&lt;/p&gt;
 &lt;p&gt;如果到这一步都没有问题！那就应该没有问题了！写你的代码去吧！&lt;/p&gt;
-&lt;h1 id="特别鸣谢"&gt;特别鸣谢
-&lt;/h1&gt;&lt;h2 id="参考博客排名不分先后如有侵权请联系我"&gt;参考博客（排名不分先后，如有侵权请联系我！）
+&lt;h1 id="特别鸣谢"&gt;&lt;a href="#%e7%89%b9%e5%88%ab%e9%b8%a3%e8%b0%a2" class="header-anchor"&gt;&lt;/a&gt;特别鸣谢
+&lt;/h1&gt;&lt;h2 id="参考博客排名不分先后如有侵权请联系我"&gt;&lt;a href="#%e5%8f%82%e8%80%83%e5%8d%9a%e5%ae%a2%e6%8e%92%e5%90%8d%e4%b8%8d%e5%88%86%e5%85%88%e5%90%8e%e5%a6%82%e6%9c%89%e4%be%b5%e6%9d%83%e8%af%b7%e8%81%94%e7%b3%bb%e6%88%91" class="header-anchor"&gt;&lt;/a&gt;参考博客（排名不分先后，如有侵权请联系我！）
 &lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;&lt;a class="link" href="https://zhuanlan.zhihu.com/p/60215378" target="_blank" rel="noopener"
 &gt;https://zhuanlan.zhihu.com/p/60215378&lt;/a&gt;&lt;/p&gt;

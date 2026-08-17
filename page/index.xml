@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Pages on 蜂窝</title><link>https://yufenghuang.tech/page/</link><description>Recent content in Pages on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Thu, 25 Sep 2025 16:10:46 +0800</lastBuildDate><atom:link href="https://yufenghuang.tech/page/index.xml" rel="self" type="application/rss+xml"/><item><title>Quotes</title><link>https://yufenghuang.tech/quotes/</link><pubDate>Thu, 25 Sep 2025 16:10:46 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/quotes/</guid><description/></item><item><title>关于我</title><link>https://yufenghuang.tech/about/</link><pubDate>Sat, 20 Sep 2025 23:50:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/about/</guid><description>&lt;h2 id="你好我是-evanwong-"&gt;你好，我是 EvanWong 👋
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Pages on 蜂窝</title><link>https://yufenghuang.tech/page/</link><description>Recent content in Pages on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Thu, 25 Sep 2025 16:10:46 +0800</lastBuildDate><atom:link href="https://yufenghuang.tech/page/index.xml" rel="self" type="application/rss+xml"/><item><title>采撷集</title><link>https://yufenghuang.tech/quotes/</link><pubDate>Thu, 25 Sep 2025 16:10:46 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/quotes/</guid><description/></item><item><title>关于我</title><link>https://yufenghuang.tech/about/</link><pubDate>Sat, 20 Sep 2025 23:50:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/about/</guid><description>&lt;h2 id="你好我是-evanwong-"&gt;&lt;a href="#%e4%bd%a0%e5%a5%bd%e6%88%91%e6%98%af-evanwong-" class="header-anchor"&gt;&lt;/a&gt;你好，我是 EvanWong 👋
 &lt;/h2&gt;&lt;p&gt;欢迎来到 &lt;strong&gt;「蜂窝」&lt;/strong&gt;。很高兴能在这里与你相遇。&lt;/p&gt;
 &lt;p&gt;我是一名 CS 专业在读大四牲。我创建这个博客（其实是秽土转生？），是让我有一个地方可以记录、沉淀和分享我的所学所思。&lt;/p&gt;
-&lt;h3 id="关于这个博客"&gt;关于这个博客
+&lt;h3 id="关于这个博客"&gt;&lt;a href="#%e5%85%b3%e4%ba%8e%e8%bf%99%e4%b8%aa%e5%8d%9a%e5%ae%a2" class="header-anchor"&gt;&lt;/a&gt;关于这个博客
 &lt;/h3&gt;&lt;p&gt;&lt;strong&gt;「蜂窝」&lt;/strong&gt; 是我的个人知识库和思考笔记本。在这里，你可能会看到以下内容：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;📚 读书笔记&lt;/strong&gt;：更多可能会是专业类书籍的笔记。&lt;/li&gt;
@@ -11,7 +11,7 @@
 &lt;li&gt;&lt;strong&gt;📸 生活瞬间&lt;/strong&gt;：偶尔，我也会分享一些摄影、音乐或生活中的随笔感悟（或许会）。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;我在此博客分享的内容纯属个人主观观点。如果文章中有任何疏漏或错误，欢迎你通过评论或邮件交流指正。&lt;/p&gt;
-&lt;h3 id="联系我"&gt;联系我
+&lt;h3 id="联系我"&gt;&lt;a href="#%e8%81%94%e7%b3%bb%e6%88%91" class="header-anchor"&gt;&lt;/a&gt;联系我
 &lt;/h3&gt;&lt;p&gt;你可以通过以下方式找到我：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;GitHub&lt;/strong&gt;: &lt;a class="link" href="https://github.com/EvanWonghere" target="_blank" rel="noopener"
@@ -21,7 +21,7 @@
 &gt;Is this my name?&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h4 id="关于本站-colophon"&gt;关于本站 (Colophon)
+&lt;h4 id="关于本站-colophon"&gt;&lt;a href="#%e5%85%b3%e4%ba%8e%e6%9c%ac%e7%ab%99-colophon" class="header-anchor"&gt;&lt;/a&gt;关于本站 (Colophon)
 &lt;/h4&gt;&lt;p&gt;此网站是基于以下这些优秀的技术构建的：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;静态网站生成器: &lt;a class="link" href="https://gohugo.io/" target="_blank" rel="noopener"

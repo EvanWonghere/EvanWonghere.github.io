@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Game Analysis Framework on 蜂窝</title><link>https://yufenghuang.tech/tags/game-analysis-framework/</link><description>Recent content in Game Analysis Framework on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Mon, 03 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://yufenghuang.tech/tags/game-analysis-framework/index.xml" rel="self" type="application/rss+xml"/><item><title>Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 3</title><link>https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/</link><pubDate>Mon, 03 Jun 2024 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/</guid><description>&lt;img src="https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/cover.png" alt="Featured image of post Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 3" /&gt;&lt;h2 id="chapter-3-the-layered-tetrad"&gt;Chapter 3 The Layered Tetrad
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Game Analysis Framework on 蜂窝</title><link>https://yufenghuang.tech/tags/game-analysis-framework/</link><description>Recent content in Game Analysis Framework on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Mon, 03 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://yufenghuang.tech/tags/game-analysis-framework/index.xml" rel="self" type="application/rss+xml"/><item><title>Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 3</title><link>https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/</link><pubDate>Mon, 03 Jun 2024 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/</guid><description>&lt;img src="https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-3/cover.png" alt="Featured image of post Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 3" /&gt;&lt;h2 id="chapter-3-the-layered-tetrad"&gt;&lt;a href="#chapter-3-the-layered-tetrad" class="header-anchor"&gt;&lt;/a&gt;Chapter 3 The Layered Tetrad
 &lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;&lt;em&gt;分层四元法帮助你分析你爱的游戏，并且帮助能能够以一个总体的视角去看待你的游戏，让你不仅是了解游戏的机制，更包括他们的游玩的含义、社会属性、意义和文化的实现。&lt;/em&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -6,7 +6,7 @@
 &lt;p&gt;​ 分层四元法由 Schell 的四元法中的四个元素组成，但这些元素通过三个层次来体验。&lt;/p&gt;
 &lt;p&gt;​ 前两个为&lt;strong&gt;内嵌层&lt;/strong&gt; (&lt;em&gt;inscribed&lt;/em&gt;) 和&lt;strong&gt;动态层&lt;/strong&gt; (&lt;em&gt;dynamic&lt;/em&gt;) ，基于 Fullerton 的形式元素 (formal elements) 和动态元素 (dynamic elements) 来划分。第三个是&lt;strong&gt;文化层&lt;/strong&gt; (&lt;em&gt;culture&lt;/em&gt;)，涵盖了游戏的生命 (game&amp;rsquo;s life) 和游玩之外的影响，还提供了链接游戏和文化的纽带，这对我们成为有意义的艺术创作者和负责人的游戏设计师极其重要。&lt;/p&gt;
 &lt;p&gt;​ 本章会简短描述每一层，后面章节会细讲。&lt;/p&gt;
-&lt;h3 id="the-inscribed-layer"&gt;The Inscribed Layer
+&lt;h3 id="the-inscribed-layer"&gt;&lt;a href="#the-inscribed-layer" class="header-anchor"&gt;&lt;/a&gt;The Inscribed Layer
 &lt;/h3&gt;&lt;p&gt;​ 这层与Schell的四元法极其相似，定义也十分相似，但是它们被限制只存在于游戏未被游玩时游戏层面。&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://picx.zhimg.com/80/v2-4ba0410d18e1d9d616bdebe69410740e_1440w.png?source=ccfced1a"
 loading="lazy"
@@ -34,7 +34,7 @@ alt="img"
 &lt;p&gt;​ Schell 在他的四元法中用了 &lt;em&gt;story&lt;/em&gt; 这个术语，但分层四元法采用 &lt;em&gt;narrative&lt;/em&gt; 这个更广泛的术语来表示，与 Fullerton 的用法类似，涵盖了前提、角色和情节。内在叙事（inscribed narrative）包括所有游戏中的预设剧本故事（pre-scripted story）和预设角色（pre-generated characters）。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id="the-dynamic-layer"&gt;The Dynamic Layer
+&lt;h3 id="the-dynamic-layer"&gt;&lt;a href="#the-dynamic-layer" class="header-anchor"&gt;&lt;/a&gt;The Dynamic Layer
 &lt;/h3&gt;&lt;p&gt;​ 正如 Fullerton 的书 &lt;em&gt;Game Design Workshop&lt;/em&gt; 和 MDA 框架所描述的，动态层在游玩过程中涌现。&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://picx.zhimg.com/80/v2-48fc0d573133edb1f782fcbb97e9650d_1440w.png?source=ccfced1a"
 loading="lazy"
@@ -67,7 +67,7 @@ alt="img"
 &lt;p&gt;​ 动态叙事指代的是从游戏系统中过程性地/程序性地（procedurally）涌现的故事。这可以意味着一个玩家分支剧情叙事的路径。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id="the-culture-layer"&gt;The Culture Layer
+&lt;h3 id="the-culture-layer"&gt;&lt;a href="#the-culture-layer" class="header-anchor"&gt;&lt;/a&gt;The Culture Layer
 &lt;/h3&gt;&lt;p&gt;​ 文化层描述了超越游玩之外的游戏，涵盖了游戏和文化之间的相互影响。&lt;/p&gt;
 &lt;p&gt;​ 游戏的玩家社区产生了文化层，在这里，玩家的控制比游戏设计师更强，而设计师的社会责任在这里清晰起来。&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://picx.zhimg.com/80/v2-b13b74750a8bd4e4a7a120da04ae18d6_1440w.png?source=ccfced1a"
@@ -98,18 +98,18 @@ alt="img"
 &lt;p&gt;​ 文化层叙事涵盖了同人跨媒体作品的叙事方面，也包括文化和社会中关于游戏的故事，比如对 GTA 的恶评和对风之旅人或 Ico 的美谈。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id="the-responsibility-of-the-designer"&gt;The Responsibility of the Designer
+&lt;h3 id="the-responsibility-of-the-designer"&gt;&lt;a href="#the-responsibility-of-the-designer" class="header-anchor"&gt;&lt;/a&gt;The Responsibility of the Designer
 &lt;/h3&gt;&lt;p&gt;​ 所有设计师都明白他们对游戏内嵌层的责任。很明显，游戏开发必须具有清晰的规则、有趣的美术等鼓励玩家进行游戏。&lt;/p&gt;
 &lt;p&gt;​ 到了动态层，设计师们就更不清楚（muddier）自己的责任了。游戏设计师会惊叹于他们的游戏的涌现并且想把该行为的责任推卸给玩家，但其实设计师仍要对玩家在动态层于设计师设计的系统的影响中的体验（the experiences of players at the dynamic layer through the implications of the systems they designed）负责。事实上，游戏设计最重要的一方面就是预测并打造动态层体验。这当然是个很艰难的任务，但也正是它有趣的部分原因。&lt;/p&gt;
 &lt;p&gt;​ 那么，设计师在文化层上的责任是什么呢？简短来说，你要对你的游戏产生的社会影响和对玩家造成的影响负责，我们有责任通过游戏促进亲社会和thoughtful的行为，并且尊重玩家以及他们花费在体验我们所创造的上的时间，而不是损坏游戏在社会上的形象，如诱骗小孩充巨资（书上就有，不是我影射某公司）。&lt;/p&gt;</description></item><item><title>Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 1 &amp; 2</title><link>https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/</link><pubDate>Fri, 26 Apr 2024 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/</guid><description>&lt;img src="https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/cover.png" alt="Featured image of post Reading Notes of Introduction to GAME DESIGN, PROTOTYPING, and DEVELOPMENT, Chapter 1 &amp; 2" /&gt;&lt;blockquote&gt;
 &lt;p&gt;长文预警！！！另外其实笔者并不咋会做笔记，基本可以看作翻译和吐槽&amp;hellip;&amp;hellip;&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2 id="chapter-1-thinking-like-a-designers"&gt;Chapter 1 Thinking Like a Designers
+&lt;h2 id="chapter-1-thinking-like-a-designers"&gt;&lt;a href="#chapter-1-thinking-like-a-designers" class="header-anchor"&gt;&lt;/a&gt;Chapter 1 Thinking Like a Designers
 &lt;/h2&gt;&lt;p&gt;​ 本章首先以Bartok游戏为例，简单讲解如何设计并迭代一个游戏，其实应该说讲的是如何迭代一个经过基本设计的游戏。&lt;/p&gt;
-&lt;h3 id="playtesting"&gt;Playtesting
+&lt;h3 id="playtesting"&gt;&lt;a href="#playtesting" class="header-anchor"&gt;&lt;/a&gt;Playtesting
 &lt;/h3&gt;&lt;p&gt;​ 首先要做的事就是试玩上几轮， &amp;ldquo;to get a feel for it&amp;rdquo;。如果你想玩Bartok的网页版本，可以访问 &lt;a class="link" href="https://book.prototools.net/BartokWebBuild/BartokWebBuild.html" target="_blank" rel="noopener"
 &gt;https://book.prototools.net/BartokWebBuild/BartokWebBuild.html&lt;/a&gt;。&lt;/p&gt;
-&lt;h3 id="analysis-asking-the-right-question"&gt;Analysis: Asking the Right Question
+&lt;h3 id="analysis-asking-the-right-question"&gt;&lt;a href="#analysis-asking-the-right-question" class="header-anchor"&gt;&lt;/a&gt;Analysis: Asking the Right Question
 &lt;/h3&gt;&lt;p&gt;​ 在每次试玩之后，问自己正确的问题很重要，不同游戏自然问题不同，但一般都基于以下几个 general guidelines：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -131,7 +131,7 @@ alt="img"
 &lt;p&gt;​ 我们还能问出许多其他问题，但是这几个是最常见的。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id="modifying-the-rules"&gt;Modifying the Rules
+&lt;h3 id="modifying-the-rules"&gt;&lt;a href="#modifying-the-rules" class="header-anchor"&gt;&lt;/a&gt;Modifying the Rules
 &lt;/h3&gt;&lt;p&gt;​ 正如你会在这整本书里看到的，从过程的角度来看游戏设计十分简单，几乎就总是：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;逐渐修改规则，每次测试后只修改很小一部分&lt;/li&gt;
@@ -152,7 +152,7 @@ alt="img"
 &lt;p&gt;&lt;strong&gt;Rule 3&lt;/strong&gt;: 如果某名玩家只剩最后一张手牌，那么需要立刻宣布 &amp;ldquo;&lt;strong&gt;Last Card&lt;/strong&gt;&amp;quot;，如果被其他玩家先宣布，那么需要罚抽两张牌。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id="analysis-comparing-the-rounds"&gt;Analysis: Comparing the Rounds
+&lt;h3 id="analysis-comparing-the-rounds"&gt;&lt;a href="#analysis-comparing-the-rounds" class="header-anchor"&gt;&lt;/a&gt;Analysis: Comparing the Rounds
 &lt;/h3&gt;&lt;p&gt;​ 在你游玩过不同规则选项的游戏之后，分析每一轮的结果，回看你的笔记去看不同的规则是如何改变游戏的感觉的。你或许能体验到即使是简单的规则改变也能够很大程度地改变游戏的感觉。书中列出了Bartok在不同规则下的场景反馈，在此简单列出来：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -168,9 +168,9 @@ alt="img"
 &lt;p&gt;&lt;strong&gt;Rule 3&lt;/strong&gt; 这条规则只在游戏可能快要结束时生效，不会影响游戏主进程，但仍会影响玩家在此时的行为。这条规则将引入一种有趣的紧张感，当某个玩家即将只剩一张牌时其他玩家将会想办法抢先说出&amp;quot;Last Card&amp;rdquo;（&amp;ldquo;try to jump in and say&amp;rdquo;）。这是多米诺和纸牌游戏的常见规则，当玩家正尝试清空手牌而忘记了这条规则，这就让其他玩家有机会赶上领先的玩家。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id="chapter-2-game-analysis-framework"&gt;Chapter 2 Game Analysis Framework
+&lt;h2 id="chapter-2-game-analysis-framework"&gt;&lt;a href="#chapter-2-game-analysis-framework" class="header-anchor"&gt;&lt;/a&gt;Chapter 2 Game Analysis Framework
 &lt;/h2&gt;&lt;p&gt;​ 首先学一个 “fancy word”，&lt;strong&gt;ludology&lt;/strong&gt;，这是给 study of games and game design 取的 “fancy name”。它的词源是 &amp;ldquo;From the Latin ludus (“game”) +‎ -ology. May also be construed as ludo +‎ -ology, although the prefix ludo- apparently derives from this word.&amp;rdquo;&lt;/p&gt;
-&lt;h3 id="common-frameworks-for-ludology"&gt;Common Frameworks for Ludology
+&lt;h3 id="common-frameworks-for-ludology"&gt;&lt;a href="#common-frameworks-for-ludology" class="header-anchor"&gt;&lt;/a&gt;Common Frameworks for Ludology
 &lt;/h3&gt;&lt;p&gt;​ 本章将要介绍的框架如下：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -188,9 +188,9 @@ alt="img"
 &lt;p&gt;​ 每个框架都有优缺点，他们共同促成了本书所述的 Layered Tetrad（分层四元法）。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4 id="mda-mechanics-dynamics-and-aesthetics"&gt;MDA: Mechanics, Dynamics, and Aesthetics
+&lt;h4 id="mda-mechanics-dynamics-and-aesthetics"&gt;&lt;a href="#mda-mechanics-dynamics-and-aesthetics" class="header-anchor"&gt;&lt;/a&gt;MDA: Mechanics, Dynamics, and Aesthetics
 &lt;/h4&gt;&lt;p&gt;​ MDA的核心元素是 mechanics, dynamics, and aesthetics 的定义、设计师和玩家看待游戏的不同视角的理解，并且提出设计师应当首先通过美学的视角来接近游戏，再回过头来处理能够产生这些美学的动态和机制。&lt;/p&gt;
-&lt;h5 id="definitions-of-mechanics-dynamics-and-aesthetics"&gt;Definitions of Mechanics, Dynamics, and Aesthetics
+&lt;h5 id="definitions-of-mechanics-dynamics-and-aesthetics"&gt;&lt;a href="#definitions-of-mechanics-dynamics-and-aesthetics" class="header-anchor"&gt;&lt;/a&gt;Definitions of Mechanics, Dynamics, and Aesthetics
 &lt;/h5&gt;&lt;p&gt;​ 需要注意的是上面提到的几个框架有一些共同的名词，但是它们的定义不尽相同，甚至会完全不同。&lt;/p&gt;
 &lt;p&gt;​ 以下为MDA的定义：&lt;/p&gt;
 &lt;ul&gt;
@@ -211,7 +211,7 @@ alt="img"
 &lt;p&gt;在第一版中，以上三点都只有从论文中摘抄下来的部分，也就是只有第一句，故中文版第一版也只翻译了第一句。（我说这翻译怎么都只翻译一半）&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;​ MDA对美学的定义是很独特的，没有其他的框架会如此定义。美学通常指的是哲学上的一个分支，和美、丑等概念有关。而更通俗地说，设计美学（design aesthetic）是设计的一种统一意图。（讲道理，我觉得这并不“colloquially”，因为其实我并没有看懂，还是 po 出原文吧&amp;quot;And, more colloquially, a design aesthetic is the cohesive intent of a design.&amp;quot;）&lt;/p&gt;
-&lt;h5 id="designer-and-player-views-of-a-game"&gt;Designer and Player Views of a Game
+&lt;h5 id="designer-and-player-views-of-a-game"&gt;&lt;a href="#designer-and-player-views-of-a-game" class="header-anchor"&gt;&lt;/a&gt;Designer and Player Views of a Game
 &lt;/h5&gt;&lt;p&gt;​ 基于 MDA，设计者应该首先从美学视角看待游戏，考虑游玩时要给玩家如何的情感体验。再回过头寻找能够产生那些情感的动态，再最终寻找能够创造这些动态的机制。而玩家倾向于以一个相反的方向看待游戏，首先体验到游戏的机制（经常是通过阅读游戏规则），然后在游玩中体验到动态，最后（希望）体验到设计师一开始预想的美学。&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://yufenghuang.tech/p/reading-notes-of-introduction-to-game-design-prototyping-and-development-chapter-1-2/MDA.png"
 width="466"
@@ -223,7 +223,7 @@ class="gallery-image"
 data-flex-grow="272"
 data-flex-basis="654px"
 &gt;&lt;/p&gt;
-&lt;h5 id="design-from-aesthetics-to-dynamics-to-mechanics"&gt;Design from Aesthetics to Dynamics to Mechanics
+&lt;h5 id="design-from-aesthetics-to-dynamics-to-mechanics"&gt;&lt;a href="#design-from-aesthetics-to-dynamics-to-mechanics" class="header-anchor"&gt;&lt;/a&gt;Design from Aesthetics to Dynamics to Mechanics
 &lt;/h5&gt;&lt;p&gt;​ 书中以Snakes and Ladders为例（想必这个游戏的规则不用再介绍），体现了设计师是如何通过修改机制影响动态和美学的。&lt;/p&gt;
 &lt;p&gt;​ 原始版本的游戏被设计成让孩子们感觉良好并且始终有赢的可能，玩家必须能感觉到游戏的结局不是固定的，在游戏过程中始终可以寄希望于好运气。期望的美学是让玩家体验希望、好运的逆转还有完全不做决定的刺激。实现此的机制就是蛇和梯子，而动态就是两者的交汇，产生在玩家与机制遭遇之时，带来了希望和刺激的美学感觉。&lt;/p&gt;
 &lt;p&gt;​ 但成年人更倾向更具有挑战性的游戏，他们不希望靠运气而是使用策略来赢得游戏。因此设计师希望让游戏感觉更策略化和目的化，我们可以通过仅修改规则（机制的元素之一）来达成这样的美学改变。比如说加入以下规则：&lt;/p&gt;
@@ -236,7 +236,7 @@ data-flex-basis="654px"
 &lt;li&gt;如果玩家的棋子行进后遇到自己的棋子，那么可选择自己的一个棋子上移一行&lt;/li&gt;
 &lt;li&gt;规则4、5让玩家之间相互协作或对抗，规则1、3让游戏减少运气的影响，都增加了游戏的策略性。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4 id="formal-dramatic-and-dynamic-elements"&gt;Formal, Dramatic, and Dynamic Elements
+&lt;h4 id="formal-dramatic-and-dynamic-elements"&gt;&lt;a href="#formal-dramatic-and-dynamic-elements" class="header-anchor"&gt;&lt;/a&gt;Formal, Dramatic, and Dynamic Elements
 &lt;/h4&gt;&lt;p&gt;​ 当 MDA 在试图帮助设计师和评论家更好地理解和讨论游戏时，由 Tracy Fullerton 和 Chris Swain 创建的 FDD 旨在帮助 USC 的 Game Design Workshop 课程的学生更效率地设计游戏。&lt;/p&gt;
 &lt;p&gt;​ 这个框架将游戏拆解成三类元素：&lt;/p&gt;
 &lt;ul&gt;
@@ -253,7 +253,7 @@ data-flex-basis="654px"
 &lt;p&gt;​ 游戏的动态过程（the game in motion）。当玩家将规则转变为实际的游玩时，游戏就进入了动态元素阶段。动态元素包括策略、行为和游戏实体间的联系等。需要注意的是，这和 MDA 中使用的 dynamics 术语有关联但范围更广，因为它不仅仅是机制的运行时表现（，还包括比如策略、行为和游戏实体间的联系等）。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h5 id="formal-elements"&gt;Formal Elements
+&lt;h5 id="formal-elements"&gt;&lt;a href="#formal-elements" class="header-anchor"&gt;&lt;/a&gt;Formal Elements
 &lt;/h5&gt;&lt;p&gt;​ Game Design Workshop提出了将游戏和其他种类媒体区分开来的七种形式元素：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -293,7 +293,7 @@ data-flex-basis="654px"
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;​ 根据 Fullerton 的理论，对形式元素的另一种看法是，当这些元素被移除时，游戏就不复存在了。如果从游戏中移除规则、结果等，它就不再是个游戏。（再次拷打中文版翻译，中文第一版翻译为”根据 Fullerton 的理论，另一种审视形式元素的看法是，尝试移除任意一种规则，看看它是否还称得上游戏“，原文为 &amp;ldquo;According to Fullerton, another way to look at formal elements is that game ceases to exist when they are removed. If one removes the rules, outcome and so on from a game, it ceases to be a game.&amp;quot;，你就说说这翻译的什么东西？）&lt;/p&gt;
-&lt;h5 id="dramatic-elements"&gt;Dramatic Elements
+&lt;h5 id="dramatic-elements"&gt;&lt;a href="#dramatic-elements" class="header-anchor"&gt;&lt;/a&gt;Dramatic Elements
 &lt;/h5&gt;&lt;p&gt;​ 戏剧元素帮助玩家更好地理解规则和资源，并且给予玩家在游戏中更强的情感投入。&lt;/p&gt;
 &lt;p&gt;​ Fullerton 提出了三种戏剧元素：&lt;/p&gt;
 &lt;ul&gt;
@@ -317,7 +317,7 @@ data-flex-basis="654px"
 &lt;p&gt;​ 戏剧元素的一个未被以上三种元素明确提及的主要目的是：&lt;strong&gt;帮助玩家更好地理解规则&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;​ 比如 1943 年 Milton Bradley 在美国出版 Snakes and Ladders 时将名字改成了 Chutes and Ladders，也许就是为了让美国儿童更容易理解规则，因为 Chutes 比 Snakes 更加直观。除此之外游戏的许多版本还有一张图片，图片上面的孩子在梯子底部做好事，在梯子底部得到奖励。相反，滑梯则是孩子在顶部犯错，在底部被惩罚。如此一来，叙事便与道德标准相结合起来。&lt;/p&gt;
 &lt;p&gt;​ 戏剧元素兼具&lt;strong&gt;嵌入叙事&lt;/strong&gt;（&lt;strong&gt;embedded narrative&lt;/strong&gt;），&lt;strong&gt;帮助玩家记忆规则&lt;/strong&gt;（比如将蛇换成梯子）和游戏叙事&lt;strong&gt;向玩家传递游戏之外持续存在的意义的能力&lt;/strong&gt;（比如用图片表示行善作恶的后果）（这里感觉我翻的怪怪的，我认为大概意思是在说游戏叙事可以超脱游戏，给玩家传递来自游戏之外/超越游戏本身的意义，英文原文为&amp;quot;the ability of the game narrative to convey meaning to the players that persists outside of the game&amp;rdquo;，中文版翻译为“传达游戏叙事超越游戏本身的能力”）&lt;/p&gt;
-&lt;h5 id="dynamic-elements"&gt;Dynamic Elements
+&lt;h5 id="dynamic-elements"&gt;&lt;a href="#dynamic-elements" class="header-anchor"&gt;&lt;/a&gt;Dynamic Elements
 &lt;/h5&gt;&lt;p&gt;​ 动态元素是指那些只在游戏被游玩后出现的东西（Dynamic are those that occur only when the game is being played）。&lt;/p&gt;
 &lt;p&gt;要理解游戏中的动态元素，有以下几个要点：&lt;/p&gt;
 &lt;ul&gt;
@@ -337,7 +337,7 @@ data-flex-basis="654px"
 &lt;p&gt;​ 重复试玩可以揭示游戏本来应该具有的各种动态行为，并且帮助设计师理解他们的游戏可能产生的体验范围。（大概就是都会玩出怎么样的体验）&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4 id="the-elemental-tetrad"&gt;The Elemental Tetrad
+&lt;h4 id="the-elemental-tetrad"&gt;&lt;a href="#the-elemental-tetrad" class="header-anchor"&gt;&lt;/a&gt;The Elemental Tetrad
 &lt;/h4&gt;&lt;p&gt;​ Jesse Schell 在书 The Art of Game Design: A book of Lenses 中描述了四元法，提出了他认为的游戏的四个基本元素：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -361,7 +361,7 @@ data-flex-basis="654px"
 &lt;/ul&gt;
 &lt;img src="Tetrad.png" alt="Tetrad" style="zoom:50%;" /&gt;
 &lt;p&gt;​ 上图展示了四元法的四个元素如何相互关联。Schell 指出美学对玩家总是可见的（不是 MDA 的美学喔！）。游戏的技术是最不可见的，相比起来，玩家通常对游戏机制有更好的理解。Schell 的四元法并不涉及游戏的动态玩法，更多在于盒子里的（桌游）或硬盘里的游戏的静态元素。Schell 的四元法将在下一张更深入的探讨和拓展，因为它激发了分层四元法的四个元素。&lt;/p&gt;
-&lt;h3 id="summary"&gt;Summary
+&lt;h3 id="summary"&gt;&lt;a href="#summary" class="header-anchor"&gt;&lt;/a&gt;Summary
 &lt;/h3&gt;&lt;p&gt;​ 每个这些用来理解游戏和交互艺术的框架都从不同的视角来解读：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;

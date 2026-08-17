@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Robotics on 蜂窝</title><link>https://yufenghuang.tech/tags/robotics/</link><description>Recent content in Robotics on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Mon, 17 Jul 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://yufenghuang.tech/tags/robotics/index.xml" rel="self" type="application/rss+xml"/><item><title>机器人学——学习笔记2(Fixed Angles&amp;Euler Angles)</title><link>https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/</link><pubDate>Mon, 17 Jul 2023 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/</guid><description>&lt;h2 id="1-复习关于-rotation-matrix"&gt;1. 复习：关于 Rotation Matrix
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Robotics on 蜂窝</title><link>https://yufenghuang.tech/tags/robotics/</link><description>Recent content in Robotics on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Mon, 17 Jul 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://yufenghuang.tech/tags/robotics/index.xml" rel="self" type="application/rss+xml"/><item><title>机器人学——学习笔记2(Fixed Angles&amp;Euler Angles)</title><link>https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/</link><pubDate>Mon, 17 Jul 2023 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/</guid><description>&lt;h2 id="1-复习关于-rotation-matrix"&gt;&lt;a href="#1-%e5%a4%8d%e4%b9%a0%e5%85%b3%e4%ba%8e-rotation-matrix" class="header-anchor"&gt;&lt;/a&gt;1. 复习：关于 Rotation Matrix
 &lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;&lt;u&gt;三个用法&lt;/u&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -22,9 +22,9 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id="2-fixed-angles"&gt;2. Fixed Angles
-&lt;/h2&gt;&lt;h3 id="21-x-y-z-fixed-angles"&gt;2.1 &lt;strong&gt;X-Y-Z Fixed Angles&lt;/strong&gt;
-&lt;/h3&gt;&lt;h3 id="由-angles-推算旋转矩阵-r三次旋转分别针对-xyz-轴来做xyz-轴是固定不动的如下图蓝色坐标系逆时针为正"&gt;&lt;strong&gt;由 angles 推算旋转矩阵 R（三次旋转分别针对 X,Y,Z 轴来做，X,Y,Z 轴是固定不动的，如下图蓝色坐标系&lt;/strong&gt;）(逆时针为正）
+&lt;h2 id="2-fixed-angles"&gt;&lt;a href="#2-fixed-angles" class="header-anchor"&gt;&lt;/a&gt;2. Fixed Angles
+&lt;/h2&gt;&lt;h3 id="21-x-y-z-fixed-angles"&gt;&lt;a href="#21-x-y-z-fixed-angles" class="header-anchor"&gt;&lt;/a&gt;2.1 &lt;strong&gt;X-Y-Z Fixed Angles&lt;/strong&gt;
+&lt;/h3&gt;&lt;h3 id="由-angles-推算旋转矩阵-r三次旋转分别针对-xyz-轴来做xyz-轴是固定不动的如下图蓝色坐标系逆时针为正"&gt;&lt;a href="#%e7%94%b1-angles-%e6%8e%a8%e7%ae%97%e6%97%8b%e8%bd%ac%e7%9f%a9%e9%98%b5-r%e4%b8%89%e6%ac%a1%e6%97%8b%e8%bd%ac%e5%88%86%e5%88%ab%e9%92%88%e5%af%b9-xyz-%e8%bd%b4%e6%9d%a5%e5%81%9axyz-%e8%bd%b4%e6%98%af%e5%9b%ba%e5%ae%9a%e4%b8%8d%e5%8a%a8%e7%9a%84%e5%a6%82%e4%b8%8b%e5%9b%be%e8%93%9d%e8%89%b2%e5%9d%90%e6%a0%87%e7%b3%bb%e9%80%86%e6%97%b6%e9%92%88%e4%b8%ba%e6%ad%a3" class="header-anchor"&gt;&lt;/a&gt;&lt;strong&gt;由 angles 推算旋转矩阵 R（三次旋转分别针对 X,Y,Z 轴来做，X,Y,Z 轴是固定不动的，如下图蓝色坐标系&lt;/strong&gt;）(逆时针为正）
 &lt;/h3&gt;&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/%E4%BB%8E%E5%B7%A6%E5%88%B0%E5%8F%B3%EF%BC%9A%E7%BB%95X_A%E6%97%8B%E8%BD%AC%EF%BC%8C%E7%BB%95Y_A%E6%97%8B%E8%BD%AC%EF%BC%8C%E7%BB%95Z_A%E6%97%8B%E8%BD%AC.png"
 width="674"
 height="191"
@@ -93,8 +93,8 @@ class="gallery-image"
 data-flex-grow="523"
 data-flex-basis="1257px"
 &gt;&lt;/p&gt;
-&lt;h3 id="22-x-y-z-fixed-angles由-r-推算-angles"&gt;2.2 X-Y-Z Fixed Angles——由 R 推算 angles
-&lt;/h3&gt;&lt;h1 id="endbmatrix"&gt;$$
+&lt;h3 id="22-x-y-z-fixed-angles由-r-推算-angles"&gt;&lt;a href="#22-x-y-z-fixed-angles%e7%94%b1-r-%e6%8e%a8%e7%ae%97-angles" class="header-anchor"&gt;&lt;/a&gt;2.2 X-Y-Z Fixed Angles——由 R 推算 angles
+&lt;/h3&gt;&lt;h1 id="endbmatrix"&gt;&lt;a href="#endbmatrix" class="header-anchor"&gt;&lt;/a&gt;$$
 \prescript{A}{B}{R}_{XYZ}(\gamma, \beta, \alpha) =
 \begin{bmatrix}
 c\alpha c\beta &amp;amp; c\alpha s\beta s\gamma - s\alpha c\gamma &amp;amp; c\alpha s\beta c\gamma + s\alpha s\gamma \
@@ -117,7 +117,7 @@ class="gallery-image"
 data-flex-grow="203"
 data-flex-basis="488px"
 &gt;&lt;/p&gt;
-&lt;h3 id="ex1先给旋转矩阵内容计算三个角度"&gt;EX1:先给旋转矩阵内容，计算三个角度
+&lt;h3 id="ex1先给旋转矩阵内容计算三个角度"&gt;&lt;a href="#ex1%e5%85%88%e7%bb%99%e6%97%8b%e8%bd%ac%e7%9f%a9%e9%98%b5%e5%86%85%e5%ae%b9%e8%ae%a1%e7%ae%97%e4%b8%89%e4%b8%aa%e8%a7%92%e5%ba%a6" class="header-anchor"&gt;&lt;/a&gt;EX1:先给旋转矩阵内容，计算三个角度
 &lt;/h3&gt;&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX21.png"
 width="677"
 height="328"
@@ -129,8 +129,8 @@ data-flex-grow="206"
 data-flex-basis="495px"
 &gt;&lt;/p&gt;
 &lt;p align="center"&gt;&lt;span style="color: gray; font-size: 15px;"&gt;先对X转60°，再对Y转30°，没有对Z转&lt;/span&gt;&lt;/p&gt;
-&lt;h2 id="3-euler-angles"&gt;3. Euler Angles
-&lt;/h2&gt;&lt;h3 id="31-z-y-x-euler-angles-由-angles-推算-r-绕被转动转轴去做旋转"&gt;3.1 Z-Y-X Euler Angles-由 angles 推算 R (绕被转动转轴去做旋转)
+&lt;h2 id="3-euler-angles"&gt;&lt;a href="#3-euler-angles" class="header-anchor"&gt;&lt;/a&gt;3. Euler Angles
+&lt;/h2&gt;&lt;h3 id="31-z-y-x-euler-angles-由-angles-推算-r-绕被转动转轴去做旋转"&gt;&lt;a href="#31-z-y-x-euler-angles-%e7%94%b1-angles-%e6%8e%a8%e7%ae%97-r-%e7%bb%95%e8%a2%ab%e8%bd%ac%e5%8a%a8%e8%bd%ac%e8%bd%b4%e5%8e%bb%e5%81%9a%e6%97%8b%e8%bd%ac" class="header-anchor"&gt;&lt;/a&gt;3.1 Z-Y-X Euler Angles-由 angles 推算 R (绕被转动转轴去做旋转)
 &lt;/h3&gt;&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/3.11.png"
 width="637"
 height="182"
@@ -174,7 +174,7 @@ c\beta &amp; 0 &amp; s\beta \\
 \\
 \textcolor{green}{和X-Y-Z \hspace{0.4em} Fixed \hspace{0.4em} angle得到一样的R}
 $$&lt;p align="center"&gt;&lt;span style="color: gray; font-size: 15px;"&gt;欧拉angle与Fixed Angle具有简单对应&lt;/span&gt;&lt;/p&gt;
-&lt;h3 id="ex1"&gt;EX1:
+&lt;h3 id="ex1"&gt;&lt;a href="#ex1" class="header-anchor"&gt;&lt;/a&gt;EX1:
 &lt;/h3&gt;&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX31.png"
 width="773"
 height="360"
@@ -185,7 +185,7 @@ class="gallery-image"
 data-flex-grow="214"
 data-flex-basis="515px"
 &gt;&lt;/p&gt;
-&lt;h3 id="ex2-eulery30x60-vs-fixedx60y30"&gt;EX2: Euler(Y30,X60) v.s. Fixed(X60,Y30)
+&lt;h3 id="ex2-eulery30x60-vs-fixedx60y30"&gt;&lt;a href="#ex2-eulery30x60-vs-fixedx60y30" class="header-anchor"&gt;&lt;/a&gt;EX2: Euler(Y30,X60) v.s. Fixed(X60,Y30)
 &lt;/h3&gt;&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX32.png"
 width="541"
 height="322"
@@ -196,7 +196,7 @@ class="gallery-image"
 data-flex-grow="168"
 data-flex-basis="403px"
 &gt;&lt;/p&gt;
-&lt;h3 id="32-z-y-z-euler-angles---由-angles-推算-rotation-matrix"&gt;3.2 Z-Y-Z Euler Angles - 由 angles 推算 Rotation Matrix
+&lt;h3 id="32-z-y-z-euler-angles---由-angles-推算-rotation-matrix"&gt;&lt;a href="#32-z-y-z-euler-angles---%e7%94%b1-angles-%e6%8e%a8%e7%ae%97-rotation-matrix" class="header-anchor"&gt;&lt;/a&gt;3.2 Z-Y-Z Euler Angles - 由 angles 推算 Rotation Matrix
 &lt;/h3&gt;&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/3.2.1.png"
 width="623"
 height="200"
@@ -231,7 +231,7 @@ class="gallery-image"
 data-flex-grow="298"
 data-flex-basis="716px"
 &gt;&lt;/p&gt;
-&lt;h3 id="ex-revisit-euler-angles-2-的范例"&gt;EX: Revisit Euler Angles-2 的范例
+&lt;h3 id="ex-revisit-euler-angles-2-的范例"&gt;&lt;a href="#ex-revisit-euler-angles-2-%e7%9a%84%e8%8c%83%e4%be%8b" class="header-anchor"&gt;&lt;/a&gt;EX: Revisit Euler Angles-2 的范例
 &lt;/h3&gt;&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/EX33.png"
 width="785"
 height="311"
@@ -248,7 +248,7 @@ data-flex-basis="605px"
 &lt;li&gt;12 种 Euler Angles 和 12 种 Fixed Angles;&lt;/li&gt;
 &lt;li&gt;存在 Duality &amp;mdash;共 12 种对 Principal Axes 连 3 次转动的拆解方法；&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id="4-angle-axis-表达法"&gt;4. Angle-Axis 表达法
+&lt;h2 id="4-angle-axis-表达法"&gt;&lt;a href="#4-angle-axis-%e8%a1%a8%e8%be%be%e6%b3%95" class="header-anchor"&gt;&lt;/a&gt;4. Angle-Axis 表达法
 &lt;/h2&gt;&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/Angle-axis.png"
 width="488"
 height="124"
@@ -260,7 +260,7 @@ data-flex-grow="393"
 data-flex-basis="944px"
 &gt;&lt;/p&gt;
 &lt;p align="center"&gt;&lt;span style="color: gray; font-size: 15px;"&gt;k是单位向量，vector有2个参量，再加上转角，也是3Dofs&lt;/span&gt;&lt;/p&gt;
-&lt;h2 id="5-quaternion-四元数表达法"&gt;5. Quaternion (四元数)表达法
+&lt;h2 id="5-quaternion-四元数表达法"&gt;&lt;a href="#5-quaternion-%e5%9b%9b%e5%85%83%e6%95%b0%e8%a1%a8%e8%be%be%e6%b3%95" class="header-anchor"&gt;&lt;/a&gt;5. Quaternion (四元数)表达法
 &lt;/h2&gt;$$
 q \hspace{0.5em} = \hspace{0.5em} \epsilon_{4} + \epsilon_{1}\overline{l} + \epsilon_{2}\overline{j} + \epsilon_{3}\overline{k} \hspace{0.5em} = \hspace{0.5em} \cos \frac{\theta}{2} + \sin \frac{\theta}{2}(k_{x}\overline{l} + k_{y}\overline{j} + k_{z}\overline{k})
 $$&lt;p&gt;其中：&lt;/p&gt;

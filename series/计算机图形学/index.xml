@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>计算机图形学 on 蜂窝</title><link>https://yufenghuang.tech/series/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/</link><description>Recent content in 计算机图形学 on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Mon, 04 May 2026 18:29:00 +0800</lastBuildDate><atom:link href="https://yufenghuang.tech/series/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/index.xml" rel="self" type="application/rss+xml"/><item><title>Computer Graphics — Viewing</title><link>https://yufenghuang.tech/p/computer-graphics-viewing/</link><pubDate>Mon, 04 May 2026 18:29:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/computer-graphics-viewing/</guid><description>&lt;img src="https://yufenghuang.tech/p/computer-graphics-viewing/cover.jpg" alt="Featured image of post Computer Graphics — Viewing" /&gt;&lt;h1 id="computer-graphics--viewing"&gt;Computer Graphics — Viewing
-&lt;/h1&gt;&lt;h2 id="viewing-transformations"&gt;Viewing Transformations
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>计算机图形学 on 蜂窝</title><link>https://yufenghuang.tech/series/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/</link><description>Recent content in 计算机图形学 on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Mon, 04 May 2026 18:29:00 +0800</lastBuildDate><atom:link href="https://yufenghuang.tech/series/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/index.xml" rel="self" type="application/rss+xml"/><item><title>Computer Graphics — Viewing</title><link>https://yufenghuang.tech/p/computer-graphics-viewing/</link><pubDate>Mon, 04 May 2026 18:29:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/computer-graphics-viewing/</guid><description>&lt;img src="https://yufenghuang.tech/p/computer-graphics-viewing/cover.jpg" alt="Featured image of post Computer Graphics — Viewing" /&gt;&lt;h1 id="computer-graphics--viewing"&gt;&lt;a href="#computer-graphics--viewing" class="header-anchor"&gt;&lt;/a&gt;Computer Graphics — Viewing
+&lt;/h1&gt;&lt;h2 id="viewing-transformations"&gt;&lt;a href="#viewing-transformations" class="header-anchor"&gt;&lt;/a&gt;Viewing Transformations
 &lt;/h2&gt;&lt;p&gt;我们知道，尽管我们认为游戏世界是三维的，但我们的屏幕目前只能是二维的，也就是我们需要将三维的世界显示在二维的屏幕上，这样的变换就叫做&lt;strong&gt;视图变换（Viewing Transformation）&lt;/strong&gt;。这与之前所讲解的**变换矩阵（Transformation Matrix）**紧密相关。&lt;/p&gt;
 &lt;p&gt;具体来说可以分为以下几个步骤：&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://yufenghuang.tech/p/computer-graphics-viewing/viewing.jpg"
@@ -14,7 +14,7 @@ data-flex-basis="407px"
 &gt;&lt;/p&gt;
 &lt;p&gt;其中最核心的过程就是 Model Transformation、Camera/View Transformation、Projection Transformation，一般直接统称 &lt;strong&gt;MVP 变换&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;Model Transformation 和 Camera/View Transformation 很容易理解，就是将物体局部坐标转换成世界坐标，然后将相机移动到原点，相机朝向根据需要可以选择 -z 或者 z 方向。在本系列中，都认为相机朝向为 \(-z\)，\(+y\) 为正上方。&lt;/p&gt;
-&lt;h3 id="viewport-transformation"&gt;Viewport Transformation
+&lt;h3 id="viewport-transformation"&gt;&lt;a href="#viewport-transformation" class="header-anchor"&gt;&lt;/a&gt;Viewport Transformation
 &lt;/h3&gt;&lt;p&gt;我们先从后往前来理解。Viewport Transformation 做的事就是将坐标从 Normalized Device Coordinates (NDC) space 投影到 screen space，深度（z）我们暂时不用管，在透视投影和光栅化阶段会更详细说明，我们当前的目标是将坐标从 \([-1, 1]^3\) 投影到 \([-0.5, n_x-0.5] \times [-0.5, n_y-0.5]\)，\(n_x, n_y\) 是屏幕的横竖像素数。由于 \(z\) 不用管，因此实际上只需要投影 \([-1, 1]^2\)。这样的区间投影实际上只需要两步变换，第一步是拉伸区间长度，第二步是平移区间，因此我们很容易可以得到 Viewport Transformation Matrix:&lt;/p&gt;
 &lt;div class="math-display"&gt;
 $$
@@ -43,7 +43,7 @@ M_{vp} =
 \end{bmatrix}
 $$
 &lt;/div&gt;
-&lt;h3 id="orthographic-projection-transformation"&gt;Orthographic Projection Transformation
+&lt;h3 id="orthographic-projection-transformation"&gt;&lt;a href="#orthographic-projection-transformation" class="header-anchor"&gt;&lt;/a&gt;Orthographic Projection Transformation
 &lt;/h3&gt;&lt;p&gt;我们知道相机一般有正交（Orthographic）和透视（Perspective）两种，我们暂时先讲解正交，因为透视会更加复杂，将在后面几节中说明。&lt;/p&gt;
 &lt;p&gt;这一步变换的目的就是，将视景体（View Volume）内看到的画面，投影到刚才的 NDC 空间中。正交的 View Volume 是一个长方体，具体来说，左前下角的点为 \((l, b, n)\)，右后上角的点为 \((r, t, f)\)。&lt;/p&gt;
 &lt;p&gt;各裁剪面为与坐标轴对齐的平面（下式中 \(x=l\) 表示左裁剪面、\(x=r\) 表示右裁剪面，其余类推）：&lt;/p&gt;
@@ -71,7 +71,7 @@ M_{ortho} =
 \end{bmatrix}
 $$
 &lt;/div&gt;
-&lt;h3 id="camera-transformation"&gt;Camera Transformation
+&lt;h3 id="camera-transformation"&gt;&lt;a href="#camera-transformation" class="header-anchor"&gt;&lt;/a&gt;Camera Transformation
 &lt;/h3&gt;&lt;p&gt;我们知道，Camera Transformation 的作用是将坐标从世界空间转换到相机空间，但是我们只有相机坐标点和相机观测方向，是无法构成一组基向量的，因此无法张成相机空间，那应该怎么办呢？&lt;/p&gt;
 &lt;p&gt;为了解决这个问题，图形学引入了一个世界向上向量，通常情况下，我们强制规定：&lt;strong&gt;在世界空间中，天空的方向是正上方&lt;/strong&gt;。因此，我们人为提供一个&lt;strong&gt;辅助的&lt;/strong&gt;世界向上向量 \(\vec{t}\)（通常就是世界坐标系的 Y 轴：\(\begin{bmatrix} 0 &amp; 1 &amp; 0 \end{bmatrix}^T\)）。这只是一个大概的参考标准，它&lt;strong&gt;不需要&lt;/strong&gt;（通常也&lt;strong&gt;不会&lt;/strong&gt;）与相机的观测方向严格垂直。它的唯一作用，就是告诉相机：“你的头顶尽量往这个方向靠拢，不要倒立，也不要侧翻”。&lt;/p&gt;
 &lt;p&gt;重新整理下，现在我们有：&lt;/p&gt;
@@ -130,7 +130,7 @@ $$
 \end{aligned}
 $$
 &lt;/div&gt;
-&lt;h2 id="projective-transformations"&gt;Projective Transformations
+&lt;h2 id="projective-transformations"&gt;&lt;a href="#projective-transformations" class="header-anchor"&gt;&lt;/a&gt;Projective Transformations
 &lt;/h2&gt;&lt;p&gt;接下来我们步入更为复杂的透视变换。我们的思路是将透视空间转换成正交空间，这样我们可以直接使用前面推导出来的后续矩阵了。我们都知道透视遵循着近大远小的原则，也就是同一物体离观察点越近时所成的像越大。在已知物体位置、视平面和视点的情况下，我们可以给出这样的关系图：&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://yufenghuang.tech/p/computer-graphics-viewing/perspective.png"
 width="630"
@@ -166,7 +166,7 @@ z' = \frac{a_3x + b_3y + c_3z + d_3}{ex + fy + gz + h} \\
 $$
 &lt;/div&gt;
 &lt;p&gt;这样的变换称之为：&lt;strong&gt;投影变换 / 单应性变换 (Projective Transformation / Homography)&lt;/strong&gt;。而我们将要应用的令 \(w = -z\) 就是其特例。&lt;/p&gt;
-&lt;h2 id="perspective-projection"&gt;Perspective Projection
+&lt;h2 id="perspective-projection"&gt;&lt;a href="#perspective-projection" class="header-anchor"&gt;&lt;/a&gt;Perspective Projection
 &lt;/h2&gt;&lt;p&gt;我们再回到透视的问题，我们已知了 \(x, y\) 坐标的变换，但是 \(z\) 坐标如何变换呢？从图上看，似乎因为所有点都在 \(z=n\) 平面上，因此 \(z\) 坐标变换后直接变成 \(d\) 即可，但是这样变换的话，原来的深度所携带的信息就全部消失了，比如说我们希望近的物体能够遮挡远处的物体，但是这样变换后实际上已经无法判断远近了。因此我们需要对 \(z\) 轴有一定的变换，但是具体怎样变换我们暂且不得而知：&lt;/p&gt;
 &lt;div class="math-display"&gt;
 $$
@@ -235,10 +235,9 @@ M_{persp} &amp;= M_{ortho} \cdot M_{persp \to ortho} \\
 \end{align}
 $$
 &lt;/div&gt;
-&lt;p&gt;至此，我们已经跑通了视图变换的全流程。&lt;/p&gt;</description></item><item><title>Computer Graphics — Transforming</title><link>https://yufenghuang.tech/p/computer-graphics-transforming/</link><pubDate>Sun, 26 Apr 2026 18:16:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/computer-graphics-transforming/</guid><description>&lt;img src="https://yufenghuang.tech/p/computer-graphics-transforming/cover.png" alt="Featured image of post Computer Graphics — Transforming" /&gt;&lt;h1 id="computer-graphics--transforming"&gt;Computer Graphics — Transforming
-&lt;/h1&gt;&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h2 id="2d-transforming"&gt;2D Transforming
-&lt;/h2&gt;&lt;h3 id="scale"&gt;Scale
+&lt;p&gt;至此，我们已经跑通了视图变换的全流程。&lt;/p&gt;</description></item><item><title>Computer Graphics — Transforming</title><link>https://yufenghuang.tech/p/computer-graphics-transforming/</link><pubDate>Sun, 26 Apr 2026 18:16:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/computer-graphics-transforming/</guid><description>&lt;img src="https://yufenghuang.tech/p/computer-graphics-transforming/cover.png" alt="Featured image of post Computer Graphics — Transforming" /&gt;&lt;h1 id="computer-graphics--transforming"&gt;&lt;a href="#computer-graphics--transforming" class="header-anchor"&gt;&lt;/a&gt;Computer Graphics — Transforming
+&lt;/h1&gt;&lt;h2 id="2d-transforming"&gt;&lt;a href="#2d-transforming" class="header-anchor"&gt;&lt;/a&gt;2D Transforming
+&lt;/h2&gt;&lt;h3 id="scale"&gt;&lt;a href="#scale" class="header-anchor"&gt;&lt;/a&gt;Scale
 &lt;/h3&gt;&lt;p&gt;对于一个 2D 空间的缩放，我们可以认为所有的横 X 坐标都变为了原来的 \(s_x\) 倍，所有的纵坐标 Y 都变为原来的 \(s_y\) 倍。也就是说我们定义一个缩放函数 \(scale(s_x, s_y, x, y)\)，那么有：&lt;/p&gt;
 &lt;div class="math-display"&gt;
 $$
@@ -258,7 +257,7 @@ s_yy
 \end{bmatrix}
 $$
 &lt;/div&gt;
-&lt;h3 id="rotate"&gt;Rotate
+&lt;h3 id="rotate"&gt;&lt;a href="#rotate" class="header-anchor"&gt;&lt;/a&gt;Rotate
 &lt;/h3&gt;&lt;p&gt;对于一个二维平面上的点 \(A(x_a, y_a)\)，我们将其旋转 \(\phi\) 角度到点 \(B(x_b, y_b)\)。不妨设线段 \(OA\) 与横坐标轴的夹角为 \(\alpha\)，长度为 \(r\)，于是有：&lt;/p&gt;
 &lt;div class="math-display"&gt;
 $$
@@ -290,7 +289,7 @@ x\sin\phi + x\cos\phi
 \end{bmatrix}
 $$
 &lt;/div&gt;
-&lt;h3 id="shear"&gt;Shear
+&lt;h3 id="shear"&gt;&lt;a href="#shear" class="header-anchor"&gt;&lt;/a&gt;Shear
 &lt;/h3&gt;&lt;p&gt;Shear 剪切是一种仿射变换，它将每个点沿固定方向移动，移动量与其到给定直线的有符号距离成正比，该直线平行于该方向。在平面 \(\mathbb{R}^{2}=\mathbb{R} \times \mathbb{R}\) 中，水平剪切（或沿 x 轴的剪切）是一个函数，它将具有坐标 \((x, y)\) 的任意点映射到点 \((x+my, y)\) ；其中 \(m\) 是一个固定参数，称为剪切因子。&lt;/p&gt;
 &lt;p&gt;故我们可以定义两个剪切函数 \(shear_x(x, y, m), shear_y(x, y, m)\)，那么有：&lt;/p&gt;
 &lt;div class="math-display"&gt;
@@ -353,10 +352,10 @@ rotate(\phi) &amp;=
 $$
 &lt;/div&gt;
 &lt;p&gt;这意味着任何二维平面上的旋转都可以等同为三次对应切变。&lt;/p&gt;
-&lt;h3 id="reflect"&gt;Reflect
+&lt;h3 id="reflect"&gt;&lt;a href="#reflect" class="header-anchor"&gt;&lt;/a&gt;Reflect
 &lt;/h3&gt;&lt;p&gt;反射变换，或者叫翻转变换，实际上就是 \(-1\) 倍的缩放变换。但是注意只能翻转一个轴，否则的话就等同于旋转了。&lt;/p&gt;
-&lt;h3 id="composition-and-decomposition"&gt;Composition and Decomposition
-&lt;/h3&gt;&lt;h4 id="composition"&gt;Composition
+&lt;h3 id="composition-and-decomposition"&gt;&lt;a href="#composition-and-decomposition" class="header-anchor"&gt;&lt;/a&gt;Composition and Decomposition
+&lt;/h3&gt;&lt;h4 id="composition"&gt;&lt;a href="#composition" class="header-anchor"&gt;&lt;/a&gt;Composition
 &lt;/h4&gt;&lt;p&gt;注意到以上变换都可以使用二维矩阵表示，于是连续的变换就可以通过矩阵乘法表现出来，例如：&lt;/p&gt;
 &lt;div class="math-display"&gt;
 $$
@@ -396,7 +395,7 @@ $$
 &lt;/div&gt;
 &lt;p&gt;需要注意的在于，根据矩阵乘法的定义，变换应该按顺序左乘，也就是按照变换顺序从右往左写变换矩阵。&lt;/p&gt;
 &lt;p&gt;还有一点就是，矩阵乘法具有结合律，因此我们可以先将所有变换矩阵相乘，得到混合的、总的变换矩阵。&lt;/p&gt;
-&lt;h4 id="decomposition"&gt;Decomposition
+&lt;h4 id="decomposition"&gt;&lt;a href="#decomposition" class="header-anchor"&gt;&lt;/a&gt;Decomposition
 &lt;/h4&gt;&lt;p&gt;既然变换矩阵是可以组合在一起呢，那么给出一个组合起来的矩阵，我们如何知道进行了哪些变换呢？&lt;/p&gt;
 &lt;p&gt;假设有线性变换核心矩阵 \(A\)：&lt;/p&gt;
 &lt;div class="math-display"&gt;
@@ -558,7 +557,7 @@ $$
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h3 id="translation"&gt;Translation
+&lt;h3 id="translation"&gt;&lt;a href="#translation" class="header-anchor"&gt;&lt;/a&gt;Translation
 &lt;/h3&gt;&lt;p&gt;Translation 平移是很简单的变换，但也是最特殊的变换，因为它并不是平移变换。我们定义一个平移函数 \(translation(x, y, dx, dy)\)，有：&lt;/p&gt;
 &lt;div class="math-display"&gt;
 $$
@@ -567,8 +566,8 @@ $$
 &lt;/div&gt;
 &lt;p&gt;由于并不是线性变换，因此无法使用同纬度的矩阵来表示，这就意味着无法把所有变换合并成一个单一的变换矩阵&lt;/p&gt;
 &lt;p&gt;吗？&lt;/p&gt;
-&lt;h3 id="transformation-matrix"&gt;Transformation Matrix
-&lt;/h3&gt;&lt;h4 id="translation-matrix"&gt;Translation Matrix?
+&lt;h3 id="transformation-matrix"&gt;&lt;a href="#transformation-matrix" class="header-anchor"&gt;&lt;/a&gt;Transformation Matrix
+&lt;/h3&gt;&lt;h4 id="translation-matrix"&gt;&lt;a href="#translation-matrix" class="header-anchor"&gt;&lt;/a&gt;Translation Matrix?
 &lt;/h4&gt;&lt;p&gt;为了解决将所有变换都合并起来的问题，数学家们使用了一个很 tricky 的方法：&lt;/p&gt;
 &lt;p&gt;引入齐次坐标，通过升维操作，将二维的平移转换成三维的错切 shear，具体来说是，我们将一个二维点坐标 \((x, y)\) 补充一个 \(w\) 分量，升维成使用三维向量 \([x \ y \ w]^T\) 表示。为了方便起见一般设 \(w=1\)，并且约定 \(w \neq 0\) 时 \([\frac{x}{w} \ \frac{y}{w} \ 1]^T\) 与 \([x \ y \ w]\) 表示的是同一个点；\(w = 0\) 时我们则认为表示的就是一个向量，而不是一个点，这么做的原因是确保二维向量经过平移变换后仍然是不变的，这一点将在后面证明。&lt;/p&gt;
 &lt;p&gt;想象一个左下角在原点、两条边紧贴横轴与纵轴的矩形。在二维 Shear 变换中，我们将每个点沿一个固定方向移动，不妨设为纵轴正方向。我们可以得知：紧贴着纵轴的边是不变的，与纵轴平行的边依旧平行且长度不变。这在直觉上相当于：这条边沿着纵轴正方向&lt;strong&gt;平移&lt;/strong&gt;了！&lt;/p&gt;
@@ -601,7 +600,7 @@ w
 $$
 &lt;/div&gt;
 &lt;p&gt;只要我们令 \(w = 1\)，那么 \(t_x, t_y\) 就直接是对应的偏移量了，这也是前面说的“一般设 \(w=1\)”的原因。此外这还能解释为什么“\(w = 0\) 时我们则认为表示的就是一个向量”，因为此时变换前后的坐标值并没有变化，这正符合&lt;strong&gt;向量的平移不变性&lt;/strong&gt;！&lt;/p&gt;
-&lt;h4 id="transformation-matrix-1"&gt;Transformation Matrix!
+&lt;h4 id="transformation-matrix-1"&gt;&lt;a href="#transformation-matrix-1" class="header-anchor"&gt;&lt;/a&gt;Transformation Matrix!
 &lt;/h4&gt;&lt;p&gt;我们虽然成功将 Translation 变换使用矩阵表示了出来，但是Translation 变换要使用三维矩阵，其他的线性变换却都是二维矩阵，这意味着无法通过矩阵乘法将它们进行结合。&lt;/p&gt;
 &lt;p&gt;然而若使用分块矩阵的思想，这个问题其实不难解决，我们将 Translation 变换矩阵进行分块可以得到：&lt;/p&gt;
 &lt;div class="math-display"&gt;
@@ -639,9 +638,9 @@ $$
 &lt;/div&gt;
 &lt;p&gt;不难注意到区域 \(I\) 代表的正是对 \((x, y)\) 进行线性变换！也就是说，我们完全可以将区域 \(I\) 替换成先前的聚合变换矩阵！这样修改后的矩阵的作用相当于&lt;strong&gt;先进行线性变换，再进行平移变换&lt;/strong&gt;，这样问题便解决了，解决的办法就是通过一个矩阵将线性变换和平移结合起来，并且这样得到的矩阵本身是可以再聚合的。&lt;/p&gt;
 &lt;p&gt;最终我们得到的同时包含了线性映射与平移的矩阵，我们称之为 Affine Transformation Matrix（仿射变换矩阵），而区域 \(I\) 称为线性变换区域，区域 \(II\) 称为平移变换区域，区域 \(III, IV\) 在实际存储中可以省略（恒为 \(\begin{bmatrix} 0 &amp; 0 &amp; 1 \end{bmatrix}\)），使用时再补齐。&lt;/p&gt;
-&lt;h2 id="3d-transforming"&gt;3D Transforming
+&lt;h2 id="3d-transforming"&gt;&lt;a href="#3d-transforming" class="header-anchor"&gt;&lt;/a&gt;3D Transforming
 &lt;/h2&gt;&lt;p&gt;在充分理解了 2D 变换的基础上，3D 变换并不难理解，其实基本相同。&lt;/p&gt;
-&lt;h3 id="scale-1"&gt;Scale
+&lt;h3 id="scale-1"&gt;&lt;a href="#scale-1" class="header-anchor"&gt;&lt;/a&gt;Scale
 &lt;/h3&gt;&lt;div class="math-display"&gt;
 $$
 scale(s_x, s_y, s_z) =
@@ -652,7 +651,7 @@ s_x &amp; 0 &amp; 0 \\
 \end{bmatrix}
 $$
 &lt;/div&gt;
-&lt;h3 id="rotation"&gt;Rotation
+&lt;h3 id="rotation"&gt;&lt;a href="#rotation" class="header-anchor"&gt;&lt;/a&gt;Rotation
 &lt;/h3&gt;&lt;div class="math-display"&gt;
 $$
 rotate_z(\phi) =
@@ -752,7 +751,7 @@ $$
 \mathbf{R} =\mathbf{I} + (\sin\phi)\mathbf{U} + (1-\cos\phi)\mathbf{U}^{2}
 $$
 &lt;/div&gt;
-&lt;h3 id="shear-1"&gt;Shear
+&lt;h3 id="shear-1"&gt;&lt;a href="#shear-1" class="header-anchor"&gt;&lt;/a&gt;Shear
 &lt;/h3&gt;&lt;p&gt;三维切变变换实际上在上一节中平移变换推导中提到了，这里只给出沿轴的变换矩阵。&lt;/p&gt;
 &lt;div class="math-display"&gt;
 $$
@@ -778,7 +777,7 @@ dx &amp; dy &amp; 1
 \end{bmatrix}
 $$
 &lt;/div&gt;
-&lt;h3 id="translation-1"&gt;Translation
+&lt;h3 id="translation-1"&gt;&lt;a href="#translation-1" class="header-anchor"&gt;&lt;/a&gt;Translation
 &lt;/h3&gt;&lt;div class="math-display"&gt;
 $$
 translation(t_x, t_y, t_z) =
@@ -790,7 +789,7 @@ translation(t_x, t_y, t_z) =
 \end{bmatrix}
 $$
 &lt;/div&gt;
-&lt;h3 id="extra"&gt;Extra
+&lt;h3 id="extra"&gt;&lt;a href="#extra" class="header-anchor"&gt;&lt;/a&gt;Extra
 &lt;/h3&gt;&lt;p&gt;现在考虑一个问题，对于一个物体，使其绕着空间中某一条直线旋转特定角度，如何使用 transformation matrix 来表示呢？&lt;/p&gt;
 &lt;p&gt;我们先前讨论的旋转，一开始都是以某个坐标轴为旋转轴进行的，后来经过拓展我们可以绕过原点的任意轴进行旋转。因此若对于任意的旋转轴，只要我们能够将旋转轴经过原点就好了。顺着这样思路下去，只要我们将旋转轴平移到穿过原点，再对物体进行旋转，在平移变换过程中，需要旋转的物体跟着进行相同的变换来保证相对位置不变，旋转完成后再逆平移变换回去就好了。&lt;/p&gt;
 &lt;p&gt;因此我们首先设初始旋转轴过空间中一点 \(P_0 = (x_0, y_0, z_0)\)，其单位方向向量 \(u = (u_x, u_y, u_z)\)，那么我们可以得到每一步的矩阵：&lt;/p&gt;
@@ -808,7 +807,7 @@ M = T^{-1} \cdot R_{homo} \cdot T
 $$
 &lt;/div&gt;
 &lt;p&gt;这样的变换，我们也可以认为是从世界空间变换到了局部旋转空间，进行旋转再变换回世界空间，这正是我们下面要说明的**视图变换（View Transform）**概念的雏形。&lt;/p&gt;
-&lt;h3 id="normal-transformation"&gt;Normal Transformation
+&lt;h3 id="normal-transformation"&gt;&lt;a href="#normal-transformation" class="header-anchor"&gt;&lt;/a&gt;Normal Transformation
 &lt;/h3&gt;&lt;p&gt;法线变换是比较特殊的，并且与后面的 Shading 部分关系紧密，因此我们需要专门推导。&lt;/p&gt;
 &lt;p&gt;假设存在一个表面向量 \(\mathbf{t}\)，其法向量为 \(\mathbf{n}\)，有 \(\mathbf{n}^T\mathbf{t} = 0\)。在物体经过变换 \(M\) 之后，其表面向量也会进行相应变换 \(\mathbf{t}' = M\mathbf{t}\)，但是法向量应该怎么变换呢？我们不妨设其变换为 \(N\)，有：&lt;/p&gt;
 &lt;div class="math-display"&gt;
