@@ -1,0 +1,48 @@
+# 覆盖 themes/hugo-theme-stack/data/external.yaml
+#
+# 主题默认从 jsDelivr 加载 KaTeX / PhotoSwipe / node-vibrant。
+# 本站有大量数学文章，强依赖 KaTeX —— CDN 一旦不可达，整篇公式会退化成
+# 原始 LaTeX 文本。改为自托管后没有这个失败点，也不再向第三方泄露访问者 IP。
+#
+# 文件位于 static/lib/，构建后由站点自身以 /lib/... 提供（共约 728 KB）。
+# 版本与主题原先声明的一致：katex 0.16.9 / photoswipe 4.1.3 / node-vibrant 3.1.6。
+#
+# 关于 integrity：同源资源不需要 SRI（它是为第三方 CDN 被篡改的场景设计的），
+# 主题的 helper/external.html 用 `with .integrity` 判空，省略即不输出该属性。
+#
+# 字体只保留 woff2：2016 年后的浏览器全部支持，katex.min.css 也把它排在
+# woff / ttf 之前。带上另外两种格式会让体积从 596KB 涨到约 1.8MB。
+#
+# 升级主题时请对照上游 data/external.yaml，确认版本号没有变化。
+# 未在此列出的命名空间（如 Cactus）会继续沿用主题的定义。
+
+Vibrant:
+    - src: /lib/vibrant/vibrant.min.js
+      type: script
+
+PhotoSwipe:
+    - src: /lib/photoswipe/photoswipe.min.js
+      type: script
+      defer: true
+
+    - src: /lib/photoswipe/photoswipe-ui-default.min.js
+      type: script
+      defer: true
+
+    - src: /lib/photoswipe/default-skin/default-skin.min.css
+      type: style
+
+    - src: /lib/photoswipe/photoswipe.min.css
+      type: style
+
+KaTeX:
+    - src: /lib/katex/katex.min.css
+      type: style
+
+    - src: /lib/katex/katex.min.js
+      type: script
+      defer: true
+
+    - src: /lib/katex/auto-render.min.js
+      type: script
+      defer: true
