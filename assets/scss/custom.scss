@@ -1,0 +1,1452 @@
+/*
+*   自定义样式 —— 暖米色 + Apple 式克制动效
+*
+*   全部写在本文件与 layouts/partials/{head,footer}/custom.html 里，
+*   themes/ 下没有任何改动。删掉这三个文件即可完整回滚。
+*
+*   变量原始定义见 themes/hugo-theme-stack/assets/scss/variables.scss
+*
+*   目录：
+*     1. 动效基元（缓动曲线与时长）
+*     2. 全局配色
+*     3. 卡片
+*     4. 字体
+*     5. 正文排版尺度
+*     6. 阴影
+*     7. 正文元素配色
+*     8. 全局过渡与主题切换
+*     9. 卡片与列表动效
+*    10. 侧栏与菜单
+*    11. 正文元素细节
+*    12. 组件动效（标签、分页、目录、搜索）
+*    13. 滚动揭示（配合 footer/custom.html）
+*    14. 无障碍：尊重 prefers-reduced-motion
+*/
+
+/* ==========================================================================
+*  1. 动效基元
+*
+*  Apple 的动效手感主要来自两点：出场曲线尾部极长（几乎线性地"滑停"），
+*  以及时长比一般 Web 动画更久（0.4~0.8s）。这里把它们抽成变量统一调度。
+*  ========================================================================== */
+:root {
+    // 尾部超长的减速曲线，用于绝大多数"进入/悬停"动效
+    --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+    // 两端对称，用于位移和折叠
+    --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+
+    --dur-fast: 0.2s;
+    --dur-base: 0.4s;
+    --dur-slow: 0.7s;
+}
+
+/* ==========================================================================
+*  2. 全局配色
+*
+*  参考 Claude 官网的暖调底子：米白底 + 略亮的卡片，靠明度差分层而非阴影。
+*  强调色取红陶色系，但比参考色更深一档 —— 因为 Stack 把 --accent-color
+*  同时用作标签/按钮的背景色，配白字时需要满足 WCAG AA（对比度 4.9:1）。
+*
+*  深色模式必须沿用主题的反转策略（浅色强调色 + 深色文字），否则标签会糊。
+*  ========================================================================== */
+:root {
+    --body-background: #f0eee6;
+
+    --accent-color: #b25634;
+    --accent-color-darker: #96452a;
+    --accent-color-text: #fff;
+
+    --body-text-color: #6b6559;
+
+    --card-border-radius: 14px;
+    --tag-border-radius: 8px;
+
+    --scrollbar-thumb: hsl(40, 12%, 78%);
+
+    &[data-scheme="dark"] {
+        --body-background: #1c1b19;
+
+        --accent-color: #f2ece2;
+        --accent-color-darker: #d5cec2;
+        --accent-color-text: #1c1b19;
+
+        --body-text-color: rgba(242, 236, 226, 0.66);
+
+        --scrollbar-thumb: hsl(40, 6%, 32%);
+    }
+}
+
+/* ==========================================================================
+*  3. 卡片
+*
+*  浅色下正文用墨黑而非纯黑：长文阅读时纯黑对比度过高会刺眼。
+*  ========================================================================== */
+:root {
+    --card-background: #faf9f5;
+    --card-background-selected: #eae7dc;
+
+    --card-text-color-main: #1f1e1c;
+    --card-text-color-secondary: #6b6559;
+    --card-text-color-tertiary: #8c8577;
+    --card-separator-color: rgba(31, 30, 28, 0.09);
+
+    &[data-scheme="dark"] {
+        --card-background: #2a2926;
+        --card-background-selected: rgba(242, 236, 226, 0.1);
+
+        --card-text-color-main: rgba(242, 236, 226, 0.9);
+        --card-text-color-secondary: rgba(242, 236, 226, 0.6);
+        --card-text-color-tertiary: rgba(242, 236, 226, 0.44);
+        --card-separator-color: rgba(242, 236, 226, 0.1);
+    }
+}
+
+/* ==========================================================================
+*  4. 字体
+*
+*  主题默认字体栈里的 "Lato" 从未被任何 @font-face 或外链加载过，是个无效
+*  声明，去掉。全部改用系统字体：不发外部请求，没有 FOUT，也没有隐私问题。
+*
+*  另外新增一个衬线展示字体栈，只用于标题 —— 这是 Claude 官网的关键特征，
+*  也是让博客脱离"默认主题感"最有效的一处。不喜欢的话删掉第 5 节里
+*  引用 --display-font-family 的那几行即可。
+*  ========================================================================== */
+:root {
+    --sys-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Inter", Roboto, Arial;
+    --zh-font-family: "PingFang SC", "Hiragino Sans GB", "Source Han Sans SC", "Noto Sans CJK SC",
+        "Microsoft YaHei", "Droid Sans Fallback";
+    --zh-serif-family: "Songti SC", "Source Han Serif SC", "Noto Serif CJK SC", "STSong", "SimSun";
+
+    --base-font-family: var(--sys-font-family), var(--zh-font-family), sans-serif;
+
+    --display-font-family: "New York", "Iowan Old Style", "Source Serif 4", "Charter", Georgia,
+        var(--zh-serif-family), serif;
+
+    --code-font-family: "JetBrains Mono", "SF Mono", Menlo, Monaco, Consolas, "Courier New",
+        var(--zh-font-family), monospace;
+}
+
+/* ==========================================================================
+*  5. 正文排版尺度
+*  ========================================================================== */
+:root {
+    --article-font-size: 1.65rem;
+    --article-line-height: 1.9;
+
+    --section-separation: 48px;
+}
+
+@media (min-width: 768px) {
+    :root {
+        --article-font-size: 1.75rem;
+    }
+}
+
+/* ==========================================================================
+*  6. 阴影
+*
+*  主题默认的四层阴影在浅色底上会让卡片明显"浮起"。这里压到近乎不可见，
+*  只留一道发丝边框定边界；真正的层次感交给悬停态（见第 9 节）。
+*  ========================================================================== */
+:root {
+    --shadow-l1: 0 1px 2px rgba(31, 30, 28, 0.035), 0 0 0 1px rgba(31, 30, 28, 0.045);
+    --shadow-l2: 0 2px 8px rgba(31, 30, 28, 0.05), 0 0 0 1px rgba(31, 30, 28, 0.045);
+    --shadow-l3: 0 6px 16px rgba(31, 30, 28, 0.06), 0 0 0 1px rgba(31, 30, 28, 0.045);
+    --shadow-l4: 0 12px 32px rgba(31, 30, 28, 0.08), 0 0 0 1px rgba(31, 30, 28, 0.045);
+
+    // 悬停时启用的抬升阴影
+    --shadow-hover: 0 12px 28px rgba(31, 30, 28, 0.1), 0 2px 6px rgba(31, 30, 28, 0.05),
+        0 0 0 1px rgba(31, 30, 28, 0.05);
+
+    &[data-scheme="dark"] {
+        --shadow-l1: 0 0 0 1px rgba(242, 236, 226, 0.07);
+        --shadow-l2: 0 2px 8px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(242, 236, 226, 0.07);
+        --shadow-l3: 0 6px 16px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(242, 236, 226, 0.07);
+        --shadow-l4: 0 12px 32px rgba(0, 0, 0, 0.42), 0 0 0 1px rgba(242, 236, 226, 0.07);
+
+        --shadow-hover: 0 12px 28px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(242, 236, 226, 0.14);
+    }
+}
+
+/* ==========================================================================
+*  7. 正文元素配色
+*  ========================================================================== */
+:root {
+    // 引用块改为无底色，只留左侧细线，视觉上更安静
+    --blockquote-border-size: 3px;
+    --blockquote-background-color: transparent;
+
+    --heading-border-size: 3px;
+
+    // 链接下划线高亮，跟随强调色
+    --link-background-color: 178, 86, 52;
+    --link-background-opacity: 0.32;
+    --link-background-opacity-hover: 0.8;
+
+    --pre-background-color: #f5f3ec;
+
+    --code-background-color: rgba(178, 86, 52, 0.1);
+    --code-text-color: #a04e2f;
+
+    --table-border-color: rgba(31, 30, 28, 0.12);
+    --tr-even-background-color: #f2f0e8;
+
+    --kbd-border-color: rgba(31, 30, 28, 0.18);
+
+    &[data-scheme="dark"] {
+        --blockquote-background-color: transparent;
+
+        --link-background-color: 242, 236, 226;
+
+        --code-background-color: rgba(242, 236, 226, 0.1);
+        --code-text-color: #e8a184;
+
+        --table-border-color: rgba(242, 236, 226, 0.14);
+        --tr-even-background-color: rgba(242, 236, 226, 0.04);
+
+        --kbd-border-color: rgba(242, 236, 226, 0.24);
+    }
+}
+
+/* ==========================================================================
+*  7b. 跨文档视图过渡
+*
+*  让页面跳转从"白闪"变成淡入淡出。纯渐进增强：
+*  不支持的浏览器（目前主要是 Firefox）完全忽略这条规则，行为和以前一样。
+*
+*  放在 prefers-reduced-motion: no-preference 里，
+*  因为 @view-transition 不会自动遵守该设置。
+*  ========================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+    @view-transition {
+        navigation: auto;
+    }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+    // 默认 250ms 略显仓促，拉长一点更接近前面统一的动效手感
+    animation-duration: 320ms;
+    animation-timing-function: var(--ease-in-out-soft);
+}
+
+/* ==========================================================================
+*  8. 全局过渡与主题切换
+*
+*  主题切换时若不加过渡，整页会硬闪一下。这里只对颜色属性加过渡，
+*  刻意不写 transition: all —— 否则会把布局属性也卷进来，导致首屏抖动。
+*  ========================================================================== */
+body {
+    transition: background-color var(--dur-base) var(--ease-out-soft);
+}
+
+.main-article,
+.article-list article,
+.section-card,
+.widget,
+#main-menu,
+.pagination,
+.article-list--tile article {
+    transition: background-color var(--dur-base) var(--ease-out-soft),
+        box-shadow var(--dur-base) var(--ease-out-soft), transform var(--dur-base) var(--ease-out-soft);
+}
+
+// 键盘焦点环：主题默认几乎不可见，补一个跟随强调色的
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+/* ==========================================================================
+*  9. 卡片与列表动效
+*
+*  悬停时卡片轻微抬升 + 阴影加深 + 封面图缓慢放大。
+*  位移只有 3px：幅度再大就从"精致"滑向"廉价"了。
+*  ========================================================================== */
+.article-list article,
+.section-card {
+    // 让封面图的 scale 被裁在圆角内
+    overflow: hidden;
+
+    &:hover {
+        // 位移加大并叠一点缩放：单纯上移显得"平"，
+        // 配合缩放才有卡片朝读者迎上来的体积感
+        transform: translateY(-6px) scale(1.012);
+        box-shadow: var(--shadow-hover);
+    }
+
+    &:active {
+        transform: translateY(-2px) scale(0.997);
+        transition-duration: var(--dur-fast);
+    }
+}
+
+.article-list article {
+    .article-image img {
+        transition: transform var(--dur-slow) var(--ease-out-soft);
+        will-change: transform;
+    }
+
+    &:hover .article-image img {
+        transform: scale(1.08);
+    }
+
+    // 标题在悬停时染上强调色
+    .article-title a {
+        transition: color var(--dur-base) var(--ease-out-soft);
+    }
+
+    &:hover .article-title a {
+        color: var(--accent-color);
+    }
+}
+
+// 文章正文页的封面图：进场时轻微放大收束，代替生硬的"图片突然出现"
+.main-article .article-image img {
+    transition: transform var(--dur-slow) var(--ease-out-soft);
+}
+
+/* ==========================================================================
+*  10. 侧栏与菜单
+*  ========================================================================== */
+// 头像：悬停轻微放大并回正
+.sidebar .site-avatar .site-logo {
+    transition: transform var(--dur-slow) var(--ease-out-soft);
+
+    &:hover {
+        transform: scale(1.06);
+    }
+}
+
+#main-menu {
+    li a {
+        transition: color var(--dur-base) var(--ease-out-soft),
+            transform var(--dur-base) var(--ease-out-soft);
+    }
+
+    li:hover a {
+        color: var(--accent-color);
+        transform: translateX(4px);
+
+        [dir="rtl"] & {
+            transform: translateX(-4px);
+        }
+    }
+
+    // 移动端菜单是一张浮层卡片，用毛玻璃让它和底下内容拉开层次。
+    // 桌面端主题会把它背景设为 transparent，所以只在移动端生效。
+    @media (max-width: 767px) {
+        backdrop-filter: saturate(180%) blur(20px);
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        background-color: color-mix(in srgb, var(--card-background) 82%, transparent);
+    }
+}
+
+.menu-social a svg {
+    transition: stroke var(--dur-base) var(--ease-out-soft),
+        transform var(--dur-base) var(--ease-out-soft);
+}
+
+.menu-social a:hover svg {
+    stroke: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+/* ==========================================================================
+*  11. 正文元素细节
+*  ========================================================================== */
+// 文章标题改用衬线展示字体，字距收紧 —— 大字号下负字距是 Apple 排版的标志
+.article-title,
+.section-term,
+.article-content h1,
+.article-content h2 {
+    font-family: var(--display-font-family);
+    letter-spacing: -0.02em;
+    font-weight: 600;
+}
+
+// 文章页的主标题放大并加重。列表页的卡片标题不跟着放大，
+// 否则一屏里全是大字号，层次反而没了。
+.main-article .article-title {
+    font-size: clamp(2.8rem, 4.2vw, 4.2rem);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+}
+
+.article-content h1 {
+    font-size: clamp(2.4rem, 3.2vw, 3.2rem);
+}
+
+.article-content {
+    // 中文正文加一点字距，避免密排
+    letter-spacing: 0.01em;
+
+    // 主题给 h1~h6 都加了强调色竖条，六级标题一起亮着会很吵。
+    // 只保留 h1/h2 作为章节锚点，h3 以下改透明（保留缩进以维持左边界对齐）。
+    h3,
+    h4,
+    h5,
+    h6 {
+        border-inline-start-color: transparent;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+        line-height: 1.35;
+        margin-top: 1.8em;
+        margin-bottom: 0.7em;
+    }
+
+    // 锚点 # 的淡入本来是 opacity 突变，换成带位移的柔和出现
+    h1, h2, h3, h4, h5, h6 {
+        a.header-anchor {
+            transition: opacity var(--dur-base) var(--ease-out-soft),
+                transform var(--dur-base) var(--ease-out-soft);
+            transform: translateX(-4px);
+        }
+
+        &:hover a.header-anchor,
+        &:focus a.header-anchor {
+            transform: translateX(0);
+        }
+    }
+
+    // 去掉底色后，引用块靠次级文字色和左线区分
+    blockquote {
+        color: var(--card-text-color-secondary);
+        padding-top: 4px;
+        padding-bottom: 4px;
+        transition: border-color var(--dur-base) var(--ease-out-soft);
+
+        &:hover {
+            border-inline-start-color: var(--accent-color);
+        }
+    }
+
+    // 浅色下代码块底色接近卡片色，需要边框才有边界
+    pre {
+        border-radius: 10px;
+        border: 1px solid var(--card-separator-color);
+    }
+
+    code {
+        font-size: 0.88em;
+        padding: 0.15em 0.4em;
+    }
+
+    img {
+        border-radius: 8px;
+    }
+
+    // 正文图片悬停时极轻微抬起，暗示可点击/可看细节
+    figure img {
+        transition: transform var(--dur-slow) var(--ease-out-soft),
+            box-shadow var(--dur-slow) var(--ease-out-soft);
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-l3);
+        }
+    }
+
+    hr {
+        width: 60px;
+        opacity: 0.35;
+    }
+
+    // 正文链接：下划线高亮从左侧展开，而非整条突然变色
+    a.link {
+        transition: background-size var(--dur-base) var(--ease-out-soft),
+            color var(--dur-base) var(--ease-out-soft);
+    }
+}
+
+// 代码块行号：主题默认与代码同色，容易被误读成代码内容
+.highlight {
+    .lntable td:first-child .lnt,
+    .lnt {
+        color: var(--card-text-color-tertiary);
+        opacity: 0.6;
+        user-select: none;
+    }
+}
+
+/* ==========================================================================
+*  12. 组件动效
+*  ========================================================================== */
+// 标签 / 分类
+.article-category a,
+.article-tags a,
+.tagCloud-tags a {
+    transition: transform var(--dur-base) var(--ease-out-soft),
+        box-shadow var(--dur-base) var(--ease-out-soft), opacity var(--dur-base) var(--ease-out-soft);
+    display: inline-block;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-l2);
+    }
+}
+
+// 分页
+.pagination .page-link {
+    transition: background-color var(--dur-base) var(--ease-out-soft),
+        color var(--dur-base) var(--ease-out-soft), transform var(--dur-base) var(--ease-out-soft);
+
+    &:hover {
+        transform: translateY(-2px);
+    }
+}
+
+// 目录
+//
+// 当前章节的高亮由主题自带的 scrollspy 负责（assets/ts/scrollspy.ts），
+// 它给 li 打 .active-class，主题也已经写好了左侧竖条和逐级缩进的补偿计算。
+// 这里只补一件主题没做的事：把高亮项染成强调色，并给未激活项降一点对比。
+#TableOfContents {
+    a {
+        transition: color var(--dur-base) var(--ease-out-soft),
+            opacity var(--dur-base) var(--ease-out-soft);
+        opacity: 0.75;
+
+        &:hover {
+            color: var(--accent-color);
+            opacity: 1;
+        }
+    }
+
+    li.active-class > a {
+        color: var(--accent-color);
+        opacity: 1;
+    }
+}
+
+// 锚点跳转后标题不要贴死在视口顶端。
+// 这里不设 scroll-behavior —— 主题的 smoothAnchors.ts 已经接管了锚点滚动，
+// 再加 CSS 平滑会和它的 scrollIntoView 叠加。
+html {
+    scroll-padding-top: 24px;
+}
+
+// 归档 / 分类等小组件里的条目
+.widget .archives-year,
+.widget .article-list--compact article {
+    transition: background-color var(--dur-fast) var(--ease-out-soft);
+}
+
+// 搜索框聚焦时的强调环
+.search-form input:focus,
+#searchForm input:focus {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color) 22%, transparent);
+    transition: box-shadow var(--dur-base) var(--ease-out-soft);
+}
+
+/* ==========================================================================
+*  12b. 新增交互组件
+*
+*  三个组件的 DOM 都由 layouts/partials/footer/custom.html 注入。
+*  ========================================================================== */
+
+/* ---------- 复制按钮（代码块与公式共用） ---------- */
+.copy-btn {
+    position: absolute;
+    z-index: 1;
+
+    padding: 4px 10px;
+    font-size: 1.2rem;
+    font-family: var(--base-font-family);
+    line-height: 1.6;
+
+    color: var(--card-text-color-secondary);
+    background-color: var(--card-background);
+    border: 1px solid var(--card-separator-color);
+    border-radius: 6px;
+    cursor: pointer;
+
+    // 平时隐藏，悬停或键盘聚焦时才出现，避免常驻干扰阅读
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity var(--dur-base) var(--ease-out-soft),
+        transform var(--dur-base) var(--ease-out-soft),
+        color var(--dur-fast) var(--ease-out-soft),
+        border-color var(--dur-fast) var(--ease-out-soft);
+
+    &:hover,
+    &.is-done {
+        color: var(--accent-color);
+        border-color: var(--accent-color);
+    }
+
+    &:focus-visible {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+// 触屏没有悬停态，直接常驻显示（否则永远点不出来）
+@media (hover: none) {
+    .copy-btn {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ---------- 代码块工具条（语言标签 + 复制） ---------- */
+// .code-block 包裹层来自 layouts/_default/_markup/render-codeblock.html
+.article-content .code-block {
+    position: relative;
+
+    // 包裹层是新增的一级，把原本 .highlight 承担的外边距接过来
+    margin: 1.5em 0;
+
+    .highlight {
+        margin: 0;
+    }
+}
+
+.code-bar {
+    position: absolute;
+    top: 8px;
+    inset-inline-end: 8px;
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.code-lang {
+    font-size: 1.15rem;
+    font-family: var(--code-font-family);
+    letter-spacing: 0.04em;
+    color: var(--card-text-color-tertiary);
+    user-select: none;
+    // 悬停时让位给复制按钮，避免两者挤在一起
+    transition: opacity var(--dur-base) var(--ease-out-soft);
+}
+
+.article-content .code-block.has-copy {
+    // 工具条里的按钮改为静态定位，由 flex 排布
+    .copy-btn {
+        position: static;
+    }
+
+    &:hover .copy-btn {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ---------- 数学公式块 ---------- */
+// 包裹层由 footer/custom.html 注入。用 span 而非 div：
+// .katex-display 的父元素是裸 <span>，在 span 里插 div 属于非法嵌套。
+.math-block {
+    display: block;
+    position: relative;
+
+    .copy-btn {
+        top: 50%;
+        transform: translateY(-50%) translateY(-4px);
+        inset-inline-end: 0;
+    }
+
+    &:hover .copy-btn,
+    .copy-btn:focus-visible {
+        opacity: 1;
+        transform: translateY(-50%);
+    }
+
+    // 公式比正文宽时（窄屏上的大矩阵）允许自身横向滚动，
+    // 而不是撑破卡片、把整个页面顶出横向滚动条。
+    // 按钮在包裹层上，不会跟着滚走。
+    .katex-display {
+        overflow-x: auto;
+        overflow-y: hidden;
+        // 给滚动留出一点空间，避免贴边裁切
+        padding-block: 2px;
+    }
+}
+
+@media (hover: none) {
+    .math-block .copy-btn {
+        transform: translateY(-50%);
+    }
+}
+
+/* ---------- 系列导航与上/下一篇 ---------- */
+// DOM 来自 layouts/partials/article/components/series-nav.html
+.series-nav {
+    margin-top: var(--section-separation);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.series-list {
+    background-color: var(--card-background);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--shadow-l1);
+    overflow: hidden;
+
+    summary {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px var(--card-padding);
+        cursor: pointer;
+        // 隐藏浏览器默认的三角，用下面的自绘箭头替代
+        list-style: none;
+        color: var(--card-text-color-main);
+        transition: background-color var(--dur-fast) var(--ease-out-soft);
+
+        &::-webkit-details-marker {
+            display: none;
+        }
+
+        &:hover {
+            background-color: var(--card-background-selected);
+        }
+
+        // 自绘展开箭头，跟随 open 状态旋转
+        &::after {
+            content: "";
+            width: 8px;
+            height: 8px;
+            margin-inline-start: auto;
+            border-right: 2px solid var(--card-text-color-tertiary);
+            border-bottom: 2px solid var(--card-text-color-tertiary);
+            transform: rotate(45deg) translate(-2px, -2px);
+            transition: transform var(--dur-base) var(--ease-out-soft);
+        }
+    }
+
+    &[open] summary::after {
+        transform: rotate(-135deg) translate(-2px, -2px);
+    }
+
+    .series-label {
+        font-weight: 600;
+        font-family: var(--display-font-family);
+        letter-spacing: -0.01em;
+    }
+
+    .series-count {
+        font-size: 1.3rem;
+        color: var(--accent-color);
+        border: 1px solid var(--accent-color);
+        border-radius: 999px;
+        padding: 1px 9px;
+        white-space: nowrap;
+    }
+
+    ol {
+        margin: 0;
+        padding: 0 var(--card-padding) 16px;
+        // 长系列（本站最长 11 篇）不至于把页面撑得太长
+        max-height: 340px;
+        overflow-y: auto;
+        counter-reset: series;
+        list-style: none;
+    }
+
+    li {
+        counter-increment: series;
+        position: relative;
+        padding: 7px 0 7px 30px;
+        font-size: 1.5rem;
+        line-height: 1.5;
+
+        &::before {
+            content: counter(series);
+            position: absolute;
+            inset-inline-start: 0;
+            width: 22px;
+            text-align: end;
+            color: var(--card-text-color-tertiary);
+            font-size: 1.3rem;
+            font-variant-numeric: tabular-nums;
+        }
+
+        a {
+            color: var(--card-text-color-secondary);
+            transition: color var(--dur-fast) var(--ease-out-soft);
+
+            &:hover {
+                color: var(--accent-color);
+            }
+        }
+
+        &.is-current {
+            color: var(--accent-color);
+            font-weight: 600;
+
+            &::before {
+                color: var(--accent-color);
+            }
+        }
+    }
+}
+
+.series-steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+
+    @media (max-width: 519px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.series-step {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    padding: 16px 18px;
+    background-color: var(--card-background);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--shadow-l1);
+
+    transition: transform var(--dur-base) var(--ease-out-soft),
+        box-shadow var(--dur-base) var(--ease-out-soft);
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-hover);
+    }
+
+    &__dir {
+        font-size: 1.3rem;
+        color: var(--card-text-color-tertiary);
+    }
+
+    &__title {
+        color: var(--card-text-color-main);
+        font-weight: 500;
+        line-height: 1.45;
+    }
+
+    &--next {
+        text-align: end;
+    }
+
+    // 系列首/末篇时的占位，保持另一侧不被拉宽
+    &.is-empty {
+        background: none;
+        box-shadow: none;
+        pointer-events: none;
+
+        @media (max-width: 519px) {
+            display: none;
+        }
+    }
+}
+
+/* ---------- 阅读进度条 ---------- */
+.reading-progress {
+    position: fixed;
+    top: 0;
+    inset-inline-start: 0;
+    z-index: 100;
+
+    width: 100%;
+    height: 3px;
+    background-color: var(--accent-color);
+
+    // 用 transform 缩放而非改 width：只触发合成，不触发重排
+    transform: scaleX(0);
+    transform-origin: left center;
+    will-change: transform;
+    pointer-events: none;
+
+    [dir="rtl"] & {
+        transform-origin: right center;
+    }
+}
+
+/* ---------- 采撷集 ----------
+*
+*  引文是这个站里最适合用衬线字的内容，但原样式用的是无衬线小字。
+*  这里只调排版，不动 layouts/page/quotes.html 与 quote-card.html 的结构。
+*/
+.quotes-list-elegant,
+.articles-list {
+    .quote-card {
+        transition: transform var(--dur-base) var(--ease-out-soft),
+            box-shadow var(--dur-base) var(--ease-out-soft);
+
+        &:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+    }
+
+    .quote-content {
+        font-family: var(--display-font-family);
+        font-size: 1.85rem;
+        line-height: 1.85;
+        letter-spacing: 0.01em;
+        color: var(--card-text-color-main);
+    }
+
+    // 诗歌用 <pre> 保留换行，但要继承正文字体而非等宽字体
+    pre.quote-content {
+        font-family: var(--display-font-family);
+        white-space: pre-wrap;
+        margin: 0;
+    }
+
+    .quote-mark {
+        font-family: var(--display-font-family);
+        font-size: 4.4rem;
+        line-height: 1;
+        color: var(--accent-color);
+        opacity: 0.28;
+    }
+
+    .quote-author {
+        font-size: 1.4rem;
+        color: var(--card-text-color-tertiary);
+
+        cite {
+            font-style: normal;
+        }
+    }
+
+    .quote-thoughts {
+        font-size: 1.45rem;
+        line-height: 1.8;
+        color: var(--card-text-color-secondary);
+    }
+
+    .quote-divider {
+        border: 0;
+        border-top: 1px solid var(--card-separator-color);
+        margin: 16px 0 12px;
+    }
+}
+
+.divider-text {
+    font-family: var(--display-font-family);
+    letter-spacing: 0.02em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .quotes-list-elegant .quote-card:hover,
+    .articles-list .quote-card:hover {
+        transform: none !important;
+    }
+}
+
+/* ---------- 首页自我介绍 ---------- */
+// DOM 来自 layouts/index.html
+.home-intro {
+    margin-bottom: var(--section-separation);
+    padding: 4px 2px;
+
+    &__greeting {
+        font-size: 1.5rem;
+        color: var(--card-text-color-tertiary);
+        margin: 0 0 6px;
+    }
+
+    &__title {
+        font-family: var(--display-font-family);
+        font-size: clamp(3rem, 5.5vw, 4.6rem);
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+        font-weight: 700;
+        color: var(--card-text-color-main);
+        margin: 0 0 14px;
+    }
+
+    &__desc {
+        font-size: 1.7rem;
+        line-height: 1.75;
+        color: var(--body-text-color);
+        max-width: 34em;
+        margin: 0 0 22px;
+
+        strong {
+            color: var(--card-text-color-main);
+            font-weight: 600;
+        }
+    }
+
+    &__stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+
+        a {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+
+            padding: 10px 16px;
+            background-color: var(--card-background);
+            border-radius: 12px;
+            box-shadow: var(--shadow-l1);
+            color: var(--card-text-color-secondary);
+
+            transition: transform var(--dur-base) var(--ease-out-soft),
+                box-shadow var(--dur-base) var(--ease-out-soft),
+                color var(--dur-base) var(--ease-out-soft);
+
+            &:hover {
+                transform: translateY(-3px);
+                box-shadow: var(--shadow-hover);
+                color: var(--accent-color);
+            }
+
+            strong {
+                font-family: var(--display-font-family);
+                font-size: 2rem;
+                font-weight: 700;
+                letter-spacing: -0.02em;
+                color: var(--card-text-color-main);
+                font-variant-numeric: tabular-nums;
+                transition: color var(--dur-base) var(--ease-out-soft);
+            }
+
+            &:hover strong {
+                color: var(--accent-color);
+            }
+
+            span {
+                font-size: 1.35rem;
+            }
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home-intro__stats a:hover,
+    .filter-chip:hover {
+        transform: none !important;
+    }
+}
+
+/* ---------- 游戏厅 ---------- */
+// DOM 来自 layouts/games/list.html
+.arcade-header {
+    margin-bottom: 32px;
+}
+
+.arcade-title {
+    font-family: var(--display-font-family);
+    font-size: clamp(3.2rem, 6vw, 5rem);
+    line-height: 1.1;
+    // 大字号下收紧字距，这是 Apple 排版最明显的特征
+    letter-spacing: -0.03em;
+    font-weight: 700;
+    color: var(--card-text-color-main);
+    margin: 0 0 10px;
+}
+
+.arcade-desc {
+    font-size: 1.7rem;
+    color: var(--body-text-color);
+    margin: 0 0 6px;
+    max-width: 46em;
+}
+
+.arcade-count {
+    font-size: 1.3rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--card-text-color-tertiary);
+    margin: 0;
+}
+
+.arcade-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 22px;
+}
+
+.filter-chip {
+    padding: 6px 14px;
+    font-size: 1.35rem;
+    font-family: inherit;
+    color: var(--card-text-color-secondary);
+    background-color: var(--card-background);
+    border: 1px solid var(--card-separator-color);
+    border-radius: 999px;
+    cursor: pointer;
+
+    transition: color var(--dur-fast) var(--ease-out-soft),
+        background-color var(--dur-fast) var(--ease-out-soft),
+        border-color var(--dur-fast) var(--ease-out-soft),
+        transform var(--dur-fast) var(--ease-out-soft);
+
+    &:hover {
+        color: var(--accent-color);
+        border-color: var(--accent-color);
+        transform: translateY(-2px);
+    }
+
+    &.is-active {
+        color: var(--accent-color-text);
+        background-color: var(--accent-color);
+        border-color: var(--accent-color);
+    }
+}
+
+.arcade-empty {
+    padding: 40px 0;
+    text-align: center;
+    color: var(--card-text-color-tertiary);
+}
+
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 20px;
+}
+
+.game-card {
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--card-border-radius);
+    background-color: var(--card-background);
+    box-shadow: var(--shadow-l1);
+    overflow: hidden;
+    color: inherit;
+
+    transition: transform var(--dur-base) var(--ease-out-soft),
+        box-shadow var(--dur-base) var(--ease-out-soft);
+
+    &:hover {
+        transform: translateY(-6px) scale(1.015);
+        box-shadow: var(--shadow-hover);
+    }
+
+    // 按下时轻微回弹，给触屏一个明确反馈
+    &:active {
+        transform: translateY(-2px) scale(0.995);
+        transition-duration: var(--dur-fast);
+    }
+
+    &__art {
+        position: relative;
+        display: grid;
+        place-items: center;
+        aspect-ratio: 16 / 10;
+        overflow: hidden;
+
+        // 色相由模板按标题哈希写入 --game-h1 / --game-h2。
+        //
+        // 这里必须绕一层自定义属性：Dart Sass 会把 hsl() 当成自己的内建函数解析，
+        // 遇到 var() 参数会报 "missing argument $saturation"。
+        // 而自定义属性的值 Sass 视为不透明字符串，原样透传给浏览器。
+        --art-from: hsl(var(--game-h1, 210) 62% 58%);
+        --art-to: hsl(var(--game-h2, 250) 58% 46%);
+
+        background-image: linear-gradient(135deg, var(--art-from), var(--art-to));
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--dur-slow) var(--ease-out-soft);
+        }
+
+        // 有真实封面时不需要渐变背景，换成中性底色，
+        // 避免图片边缘透出与画面无关的彩色
+        &.has-cover {
+            background-image: none;
+            background-color: #17161a;
+        }
+    }
+
+    // 类型角标
+    &__type {
+        position: absolute;
+        top: 8px;
+        inset-inline-start: 8px;
+        padding: 2px 9px;
+        font-size: 1.15rem;
+        line-height: 1.6;
+        color: #fff;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border-radius: 999px;
+        transition: opacity var(--dur-base) var(--ease-out-soft);
+    }
+
+    &:hover &__type {
+        opacity: 0;
+    }
+
+    &:hover &__art img {
+        transform: scale(1.08);
+    }
+
+    // 首字水印
+    &__glyph {
+        font-family: var(--display-font-family);
+        font-size: 6.4rem;
+        font-weight: 700;
+        line-height: 1;
+        color: #fff;
+        opacity: 0.34;
+        user-select: none;
+        transition: transform var(--dur-slow) var(--ease-out-soft),
+            opacity var(--dur-slow) var(--ease-out-soft);
+    }
+
+    &:hover &__glyph {
+        transform: scale(1.12);
+        opacity: 0.2;
+    }
+
+    // 播放按钮：平时缩在中心不可见，悬停时弹出
+    &__play {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        background-color: rgba(0, 0, 0, 0.28);
+        color: #fff;
+
+        opacity: 0;
+        transition: opacity var(--dur-base) var(--ease-out-soft);
+
+        svg {
+            width: 44px;
+            height: 44px;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+            transform: scale(0.7);
+            transition: transform var(--dur-base) var(--ease-out-soft);
+        }
+    }
+
+    &:hover &__play {
+        opacity: 1;
+
+        svg {
+            transform: scale(1);
+        }
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        padding: 14px 16px 16px;
+    }
+
+    &__title {
+        font-weight: 600;
+        font-size: 1.6rem;
+        line-height: 1.35;
+        color: var(--card-text-color-main);
+        transition: color var(--dur-base) var(--ease-out-soft);
+    }
+
+    &:hover &__title {
+        color: var(--accent-color);
+    }
+
+    &__desc {
+        font-size: 1.35rem;
+        line-height: 1.55;
+        color: var(--card-text-color-tertiary);
+        // 简介长短不一，统一裁到两行，卡片高度才整齐
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .game-card:hover,
+    .game-card:active {
+        transform: none !important;
+    }
+
+    .game-card:hover .game-card__art img,
+    .game-card:hover .game-card__glyph {
+        transform: none !important;
+    }
+}
+
+/* ---------- 轻量提示条 ---------- */
+.toast {
+    position: fixed;
+    inset-block-end: 28px;
+    inset-inline-start: 50%;
+    z-index: 200;
+
+    padding: 9px 18px;
+    font-size: 1.4rem;
+    color: var(--card-text-color-main);
+    background-color: var(--card-background);
+    border: 1px solid var(--card-separator-color);
+    border-radius: 999px;
+    box-shadow: var(--shadow-l3);
+    white-space: nowrap;
+    pointer-events: none;
+
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+    transition: opacity var(--dur-base) var(--ease-out-soft),
+        transform var(--dur-base) var(--ease-out-soft);
+
+    &.is-visible {
+        opacity: 1;
+        transform: translateX(-50%);
+    }
+}
+
+/* ---------- 返回顶部 ---------- */
+.to-top {
+    position: fixed;
+    inset-block-end: 24px;
+    inset-inline-end: 24px;
+    z-index: 99;
+
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+
+    color: var(--card-text-color-secondary);
+    background-color: var(--card-background);
+    border: 1px solid var(--card-separator-color);
+    border-radius: 50%;
+    box-shadow: var(--shadow-l2);
+    cursor: pointer;
+
+    // 未滚动时完全不可交互，避免挡住右下角内容
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: opacity var(--dur-base) var(--ease-out-soft),
+        transform var(--dur-base) var(--ease-out-soft),
+        visibility var(--dur-base) var(--ease-out-soft),
+        color var(--dur-fast) var(--ease-out-soft);
+
+    &.is-visible {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+    }
+
+    &:hover {
+        color: var(--accent-color);
+    }
+
+    svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* ==========================================================================
+*  13. 滚动揭示
+*
+*  初始隐藏状态只在 <html> 带上 .js-reveal 时才生效，而这个类是由
+*  footer/custom.html 里的脚本加上的。这样在 JS 被禁用或加载失败时，
+*  内容依然完整可见 —— 不会出现"整页空白"的降级事故。
+*  ========================================================================== */
+.js-reveal {
+    [data-reveal] {
+        opacity: 0;
+        // 位移加大并从略小的尺度放开，入场更有"推进"感而不只是滑一下
+        transform: translateY(28px) scale(0.985);
+        transition: opacity var(--dur-slow) var(--ease-out-soft),
+            transform var(--dur-slow) var(--ease-out-soft);
+        // 同批元素依次入场，索引由脚本写入
+        transition-delay: calc(var(--reveal-index, 0) * 80ms);
+        will-change: opacity, transform;
+    }
+
+    [data-reveal].is-revealed {
+        opacity: 1;
+        transform: none;
+        will-change: auto;
+    }
+}
+
+/* ---------- 滚动驱动的封面视差 ----------
+*
+*  纯 CSS 滚动驱动动画：封面图随页面滚动缓慢位移，产生浅景深。
+*  用 @supports 包起来，不支持的浏览器（目前主要是 Firefox）直接跳过，
+*  图片保持静止，没有任何降级问题。
+*/
+@supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+        /*
+           主题给 .main-article 设了 overflow: hidden，这会让它成为一个滚动容器，
+           于是 view() 时间线以它为参照 —— 而它永远不滚动，动画进度恒定不变。
+           overflow: clip 的裁剪效果完全相同，但不创建滚动容器，
+           时间线就能正确落到文档滚动上。
+        */
+        // 选择器必须与主题的 .article-page .main-article 同级特异性，
+        // 否则覆盖不掉（@supports / @media 不增加特异性）
+        .article-page .main-article {
+            overflow: clip;
+        }
+
+        .main-article .article-image img {
+            animation: cover-parallax linear both;
+            animation-timeline: view();
+            animation-range: entry 0% exit 100%;
+        }
+
+        @keyframes cover-parallax {
+            from {
+                transform: scale(1.12) translateY(-2.5%);
+            }
+            to {
+                transform: scale(1.12) translateY(2.5%);
+            }
+        }
+    }
+}
+
+/* ==========================================================================
+*  14. 无障碍
+*
+*  系统开启"减弱动态效果"时，关掉所有位移与缩放，只保留瞬时状态变化。
+*  滚动揭示要强制显形，否则内容会永远停在透明状态。
+*  ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .js-reveal [data-reveal] {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .article-list article:hover,
+    .section-card:hover,
+    .article-category a:hover,
+    .article-tags a:hover,
+    .tagCloud-tags a:hover,
+    .pagination .page-link:hover {
+        transform: none !important;
+    }
+
+    .article-list article:hover .article-image img {
+        transform: none !important;
+    }
+}

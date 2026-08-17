@@ -1,0 +1,356 @@
+{{/*
+    覆盖 themes/hugo-theme-stack/layouts/partials/footer/custom.html（主题里是空文件）。
+    在 </body> 前执行，此时 DOM 已完整可用。
+
+    四件事：
+      1. 滚动揭示 —— 元素进入视口时淡入上移，同批错峰
+      2. 代码块复制按钮
+      3. 阅读进度条
+      4. 返回顶部
+
+    刻意 *不* 做的事（主题已经实现，重复造会有两套逻辑打架）：
+      - 目录跟随高亮  → themes/.../assets/ts/scrollspy.ts，打的是 li.active-class
+      - 图片灯箱      → themes/.../assets/ts/gallery.ts，基于 PhotoSwipe
+      - 锚点平滑滚动  → themes/.../assets/ts/smoothAnchors.ts
+
+    不引入任何外部依赖。
+*/}}
+<script>
+    (function () {
+        var root = document.documentElement;
+        var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var isEN = (root.lang || "").toLowerCase().indexOf("en") === 0;
+
+        /* ==================== 1. 滚动揭示 ==================== */
+        /* 老浏览器没有 IntersectionObserver：移除标记类让内容直接显示 */
+        if (!("IntersectionObserver" in window)) {
+            root.classList.remove("js-reveal");
+        } else if (!reduceMotion) {
+            /* 告诉 head 里的兜底定时器：观察器已接管，不要再移除标记类 */
+            root.dataset.revealReady = "1";
+
+            /* 每组内部依次错峰，组与组之间重新计数，
+               避免页面靠后的元素累积出几秒钟的延迟 */
+            var targets = [];
+            [".article-list article", ".section-card", ".main-article", ".widget"].forEach(function (selector) {
+                var nodes = document.querySelectorAll(selector);
+                for (var i = 0; i < nodes.length; i++) {
+                    /* 索引封顶，第 6 个之后不再继续累加延迟 */
+                    nodes[i].style.setProperty("--reveal-index", Math.min(i, 5));
+                    nodes[i].setAttribute("data-reveal", "");
+                    targets.push(nodes[i]);
+                }
+            });
+
+            var revealObserver = new IntersectionObserver(
+                function (entries) {
+                    entries.forEach(function (entry) {
+                        if (!entry.isIntersecting) return;
+                        entry.target.classList.add("is-revealed");
+                        revealObserver.unobserve(entry.target); /* 一次性动效 */
+                    });
+                },
+                /* 元素露出约 40px 就开始，等完全进入视口才动会显得迟钝 */
+                { rootMargin: "0px 0px -40px 0px", threshold: 0 }
+            );
+
+            targets.forEach(function (el) { revealObserver.observe(el); });
+        }
+
+        /* ==================== 2. 复制按钮（代码块 + 数学公式） ==================== */
+        /*
+           剪贴板 API 只在安全上下文（https / localhost）可用。
+           不可用时直接不插按钮 —— 与其给个点了没反应的按钮，不如不给。
+        */
+        if (navigator.clipboard && window.isSecureContext) {
+            var DONE = isEN ? "Copied" : "已复制";
+            var FAIL = isEN ? "Failed" : "失败";
+
+            /* getText 用回调而非直接传字符串：公式的 DOM 在 KaTeX 渲染后才存在 */
+            function makeCopyButton(label, ariaLabel, extraClass, getText) {
+                var btn = document.createElement("button");
+                btn.type = "button";
+                btn.className = "copy-btn " + extraClass;
+                btn.textContent = label;
+                btn.setAttribute("aria-label", ariaLabel);
+
+                btn.addEventListener("click", function () {
+                    navigator.clipboard.writeText(getText()).then(
+                        function () {
+                            btn.textContent = DONE;
+                            btn.classList.add("is-done");
+                        },
+                        function () {
+                            btn.textContent = FAIL;
+                        }
+                    ).then(function () {
+                        window.setTimeout(function () {
+                            btn.textContent = label;
+                            btn.classList.remove("is-done");
+                        }, 1800);
+                    });
+                });
+
+                return btn;
+            }
+
+            /* ---------- 2a. 代码块：语言标签 + 复制按钮 ---------- */
+            /*
+               全站的 fence 标注并不统一（cpp 83 处、c++ 6 处、C++ 3 处，
+               另有 c / C、python、bash…），直接把原始值显示出来会很杂乱，
+               所以过一层显示名映射。表里没有的按首字母大写兜底。
+            */
+            var LANG_NAMES = {
+                cpp: "C++", "c++": "C++", cxx: "C++", cc: "C++",
+                c: "C", cs: "C#", csharp: "C#",
+                js: "JavaScript", javascript: "JavaScript",
+                ts: "TypeScript", typescript: "TypeScript",
+                py: "Python", python: "Python",
+                sh: "Shell", bash: "Bash", zsh: "Zsh", shell: "Shell",
+                json: "JSON", yaml: "YAML", yml: "YAML", toml: "TOML",
+                html: "HTML", css: "CSS", scss: "SCSS", sql: "SQL",
+                md: "Markdown", markdown: "Markdown",
+                go: "Go", rust: "Rust", java: "Java", glsl: "GLSL",
+                text: "", plaintext: "", plain: ""
+            };
+
+            function displayLang(raw) {
+                var key = (raw || "").toLowerCase();
+                if (Object.prototype.hasOwnProperty.call(LANG_NAMES, key)) return LANG_NAMES[key];
+                return raw.charAt(0).toUpperCase() + raw.slice(1);
+            }
+
+            document.querySelectorAll(".article-content .code-block").forEach(function (wrapper) {
+                var block = wrapper.querySelector(".highlight");
+                if (!block) return;
+
+                /*
+                   Hugo 配了 lineNumbersInTable，结构是：
+                     table.lntable > tr > td.lntd(行号) + td.lntd(代码)
+                   所以要取最后一个 td 里的 code，直接取整个 pre 会把行号一起复制走。
+                   没开行号表格的代码块则退回取 pre code。
+                */
+                var source = block.querySelector(".lntable td:last-child code") ||
+                             block.querySelector("pre code");
+                if (!source) return;
+
+                var bar = document.createElement("div");
+                bar.className = "code-bar";
+
+                var name = displayLang(wrapper.dataset.lang || "");
+                if (name) {
+                    var tag = document.createElement("span");
+                    tag.className = "code-lang";
+                    tag.textContent = name;
+                    bar.appendChild(tag);
+                }
+
+                bar.appendChild(makeCopyButton(
+                    isEN ? "Copy" : "复制",
+                    isEN ? "Copy code" : "复制代码",
+                    "code-copy",
+                    function () { return source.innerText; }
+                ));
+
+                wrapper.classList.add("has-copy");
+                wrapper.appendChild(bar);
+            });
+
+            /* ---------- 2b. 数学公式 ---------- */
+            /*
+               KaTeX 保留了原始 LaTeX：<annotation encoding="application/x-tex">。
+               复制这个而不是渲染后的文本 —— 渲染结果粘到别处是一堆无意义的符号，
+               LaTeX 源码才能直接用。
+
+               只给块级公式（.katex-display）加按钮；行内公式加按钮会毁掉阅读。
+
+               时机问题：KaTeX 是客户端渲染，挂在 DOMContentLoaded 上，
+               而本脚本在 </body> 前就执行了，此时公式还不存在。
+               所以用 MutationObserver 等它出现，而不是赌脚本执行顺序。
+            */
+            var articleContent = document.querySelector(".main-article .article-content");
+
+            if (articleContent) {
+                var attachMathCopy = function (scope) {
+                    scope.querySelectorAll(".katex-display").forEach(function (node) {
+                        if (node.dataset.copyReady) return;
+
+                        var annotation = node.querySelector('annotation[encoding="application/x-tex"]');
+                        if (!annotation) return;
+
+                        node.dataset.copyReady = "1";
+
+                        /*
+                           .katex-display 的父元素是个裸 <span>，所以包裹层也用 span
+                           （CSS 里置为 display:block）——在 span 里插 div 是非法嵌套。
+                           按钮放在包裹层而非 .katex-display 内部，这样公式横向滚动时
+                           按钮不会跟着滚走。
+                        */
+                        var wrap = document.createElement("span");
+                        wrap.className = "math-block";
+                        node.parentNode.insertBefore(wrap, node);
+                        wrap.appendChild(node);
+
+                        wrap.appendChild(makeCopyButton(
+                            "LaTeX",
+                            isEN ? "Copy LaTeX source" : "复制 LaTeX 源码",
+                            "math-copy",
+                            function () { return annotation.textContent.trim(); }
+                        ));
+                    });
+                };
+
+                attachMathCopy(articleContent);
+
+                /* KaTeX 渲染是一次性的，挂上按钮后就不需要继续观察了 */
+                var mathObserver = new MutationObserver(function () {
+                    attachMathCopy(articleContent);
+                });
+                mathObserver.observe(articleContent, { childList: true, subtree: true });
+                window.setTimeout(function () { mathObserver.disconnect(); }, 8000);
+            }
+        }
+
+        /* ==================== 3. 阅读进度条 ==================== */
+        var article = document.querySelector(".main-article .article-content");
+        if (article) {
+            var bar = document.createElement("div");
+            bar.className = "reading-progress";
+            bar.setAttribute("role", "progressbar");
+            bar.setAttribute("aria-hidden", "true");
+            document.body.appendChild(bar);
+
+            var ticking = false;
+
+            function updateProgress() {
+                var rect = article.getBoundingClientRect();
+                var total = rect.height - window.innerHeight;
+                /* 文章比一屏还短时没有"进度"可言，直接归零并隐藏 */
+                var ratio = total <= 0 ? 0 : Math.min(1, Math.max(0, -rect.top / total));
+                bar.style.transform = "scaleX(" + ratio + ")";
+                ticking = false;
+            }
+
+            /* requestAnimationFrame 节流：scroll 事件本身触发极频繁，
+               直接写样式会造成大量无谓的重排 */
+            window.addEventListener("scroll", function () {
+                if (ticking) return;
+                ticking = true;
+                window.requestAnimationFrame(updateProgress);
+            }, { passive: true });
+
+            window.addEventListener("resize", updateProgress, { passive: true });
+            updateProgress();
+        }
+
+        /* ==================== 3b. 轻量提示条 ==================== */
+        var toastTimer;
+
+        function toast(message) {
+            var el = document.querySelector(".toast");
+            if (!el) {
+                el = document.createElement("div");
+                el.className = "toast";
+                el.setAttribute("role", "status");
+                el.setAttribute("aria-live", "polite");
+                document.body.appendChild(el);
+            }
+            el.textContent = message;
+            /* 强制回流，让连续触发时动画能重新播放 */
+            void el.offsetWidth;
+            el.classList.add("is-visible");
+
+            window.clearTimeout(toastTimer);
+            toastTimer = window.setTimeout(function () {
+                el.classList.remove("is-visible");
+            }, 1600);
+        }
+
+        /* ==================== 3c. 标题锚点：点击复制章节链接 ==================== */
+        /*
+           主题已经给每个标题渲染了 a.header-anchor（那个 #）。
+           原行为只是跳转，这里额外把该章节的完整 URL 复制到剪贴板 ——
+           分享"文章的某一节"是技术博客里很常见的需求。
+
+           刻意不 preventDefault：跳转行为保留，复制是叠加的，不夺走原有功能。
+        */
+        if (navigator.clipboard && window.isSecureContext) {
+            document.querySelectorAll(".article-content a.header-anchor").forEach(function (anchor) {
+                anchor.addEventListener("click", function () {
+                    var url = window.location.origin + window.location.pathname + anchor.getAttribute("href");
+                    navigator.clipboard.writeText(url).then(function () {
+                        toast(isEN ? "Section link copied" : "已复制本节链接");
+                    }, function () {
+                        /* 复制失败就沉默 —— 跳转本身已经生效，没必要打扰 */
+                    });
+                });
+            });
+        }
+
+        /* ==================== 3d. 搜索快捷键 Cmd/Ctrl + K ==================== */
+        (function () {
+            /*
+               搜索框在首页侧栏是一个 widget，同时也有独立的 /search/ 页面。
+               当前页面上有输入框就直接聚焦，没有则跳转到搜索页。
+
+               搜索页地址从菜单里读取，而不是硬编码 —— 中英文站路径不同
+               （/search/ 与 /en/search/），读菜单能自动适配。
+            */
+            function findSearchURL() {
+                var link = document.querySelector('#main-menu a[href$="/search/"]');
+                return link ? link.getAttribute("href") : null;
+            }
+
+            document.addEventListener("keydown", function (e) {
+                if (e.key !== "k" && e.key !== "K") return;
+                if (!e.metaKey && !e.ctrlKey) return;
+                if (e.altKey || e.shiftKey) return;
+
+                var input = document.querySelector(".search-form input");
+                if (input) {
+                    e.preventDefault();
+                    input.focus();
+                    input.select();
+                    return;
+                }
+
+                var url = findSearchURL();
+                if (url) {
+                    e.preventDefault();
+                    window.location.href = url;
+                }
+            });
+        })();
+
+        /* ==================== 4. 返回顶部 ==================== */
+        var toTop = document.createElement("button");
+        toTop.type = "button";
+        toTop.className = "to-top";
+        toTop.setAttribute("aria-label", isEN ? "Back to top" : "返回顶部");
+        toTop.innerHTML =
+            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"' +
+            ' stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"' +
+            ' stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/>' +
+            '<line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>';
+
+        toTop.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+        });
+        document.body.appendChild(toTop);
+
+        var toTopTicking = false;
+
+        function updateToTop() {
+            toTop.classList.toggle("is-visible", window.scrollY > window.innerHeight);
+            toTopTicking = false;
+        }
+
+        window.addEventListener("scroll", function () {
+            if (toTopTicking) return;
+            toTopTicking = true;
+            window.requestAnimationFrame(updateToTop);
+        }, { passive: true });
+
+        updateToTop();
+    })();
+</script>

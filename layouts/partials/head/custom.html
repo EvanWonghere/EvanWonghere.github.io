@@ -1,0 +1,27 @@
+{{/*
+    覆盖 themes/hugo-theme-stack/layouts/partials/head/custom.html（主题里是空文件）。
+
+    这里只做一件事：在首次绘制之前给 <html> 打上 .js-reveal，
+    让 custom.scss 第 13 节的初始隐藏状态生效。
+
+    为什么必须放在 head 而不是 footer：
+    脚本若在 body 末尾执行，浏览器已经画过一帧了，
+    元素会先以完整不透明度出现、再被隐藏，肉眼可见地闪一下。
+
+    降级保护：
+    1. 系统开启"减弱动态效果"时直接不加类，内容始终可见；
+    2. 兜底定时器 —— 万一 footer 的观察器没跑起来（脚本报错、被拦截等），
+       2.5 秒后移除标记类，内容一定会显示出来，不会留下整页空白。
+*/}}
+<script>
+    (function () {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        var root = document.documentElement;
+        root.classList.add("js-reveal");
+
+        window.setTimeout(function () {
+            if (!root.dataset.revealReady) root.classList.remove("js-reveal");
+        }, 2500);
+    })();
+</script>
