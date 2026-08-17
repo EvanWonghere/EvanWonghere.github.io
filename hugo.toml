@@ -1,5 +1,5 @@
 baseurl = "https://yufenghuang.tech/"
-languageCode = "zh-cn"
+locale = "zh-cn"
 theme = "hugo-theme-stack"
 title = "蜂窝"
 copyright = "EvanWong"
@@ -12,39 +12,129 @@ hasCJKLanguage = true
   series = "series"
 
 [languages.en]
-languageName = "English"
+label = "English"
 title = "Hive"
 weight = 1
 
 [languages.en.params.sidebar]
 subtitle = "EvanWong's Personal Blog"
 
+# 英文站只列出确有英文版本的页面。about / quotes / quiz 仅有中文内容，
+# 若列在这里会把英文读者直接甩回中文站。
+  [[languages.en.menu.main]]
+  identifier = "home"
+  name = "Home"
+  url = "/en/"
+  weight = -100
+
+    [languages.en.menu.main.params]
+    icon = "home"
+
+  [[languages.en.menu.main]]
+  identifier = "archives"
+  name = "Archives"
+  url = "/en/archives/"
+  weight = -90
+
+    [languages.en.menu.main.params]
+    icon = "archives"
+
+  [[languages.en.menu.main]]
+  identifier = "search"
+  name = "Search"
+  url = "/en/search/"
+  weight = -60
+
+    [languages.en.menu.main.params]
+    icon = "search"
+
 [languages.zh-cn]
-languageName = "中文"
+label = "中文"
 title = "蜂窝"
 weight = 2
 
 [languages.zh-cn.params.sidebar]
 subtitle = "EvanWong的个人博客"
 
-[services.disqus]
-shortname = "hugo-theme-stack"
+  [[languages.zh-cn.menu.main]]
+  identifier = "home"
+  name = "主页"
+  url = "/"
+  weight = -100
+
+    [languages.zh-cn.menu.main.params]
+    icon = "home"
+
+  [[languages.zh-cn.menu.main]]
+  identifier = "archives"
+  name = "归档"
+  url = "/archives/"
+  weight = -90
+
+    [languages.zh-cn.menu.main.params]
+    icon = "archives"
+
+  [[languages.zh-cn.menu.main]]
+  identifier = "about"
+  name = "关于"
+  url = "/about/"
+  weight = -80
+
+    [languages.zh-cn.menu.main.params]
+    icon = "user"
+
+  [[languages.zh-cn.menu.main]]
+  identifier = "quotes"
+  name = "采撷集"
+  url = "/quotes/"
+  weight = -70
+
+    [languages.zh-cn.menu.main.params]
+    icon = "quote"
+
+  [[languages.zh-cn.menu.main]]
+  identifier = "quiz"
+  name = "面试刷题"
+  url = "/quiz/"
+  weight = -65
+
+    [languages.zh-cn.menu.main.params]
+    icon = "device-gamepad"
+
+  [[languages.zh-cn.menu.main]]
+  identifier = "search"
+  name = "搜索"
+  url = "/search/"
+  weight = -60
+
+    [languages.zh-cn.menu.main.params]
+    icon = "search"
 
 [services.googleAnalytics]
 
 [pagination]
-pagerSize = 3
+pagerSize = 10
 
 [permalinks]
 post = "/p/:slug/"
 page = "/:slug/"
 
 [params]
-description = "My personal blog."
+description = "EvanWong 的个人博客，记录图形学、游戏设计与开发的学习笔记。"
 mainSections = [ "post" ]
 featuredImageField = "image"
 rssFullContent = true
 favicon = "/favicon.ico"
+
+# 首页顶部的自我介绍区块，由 layouts/index.html 渲染。
+# 删掉这一节，首页就回到"直接是文章流"的原样。
+#
+# 注意：这个表头必须放在 [params] 的所有裸键之后。TOML 里表头之下的裸键
+# 都归属该表，写在前面会把 mainSections / favicon 等一并吞进 homeIntro。
+[params.homeIntro]
+greeting = "你好 👋"
+title = "我是 EvanWong"
+description = "这里记录我在**计算机图形学**、**游戏设计**与开发路上的学习笔记，也放着一些自己做的小游戏。"
 
   [params.author] # This defines author as an object
   name = "Evan Wong"
@@ -70,6 +160,9 @@ favicon = "/favicon.ico"
   toc = true
   readingTime = true
   math = true
+  # 主题的 render-heading.html 只在此项为真时才输出标题旁的 # 锚点。
+  # 开启后 footer/custom.html 会给它加上"点击复制本节链接"。
+  headingAnchor = true
 
     [params.article.license]
     enabled = true
@@ -118,6 +211,8 @@ favicon = "/favicon.ico"
     reactionsEnabled = 1
     emitMetadata = 0
     data-loading = "lazy"
+    # 此前未设置，giscus 回退到英文界面（"0 comments" 等），与中文站不符
+    lang = "zh-CN"
 
     [params.comments.gitalk]
 
@@ -150,9 +245,12 @@ type = "toc"
 [params.opengraph.twitter]
 card = "summary_large_image"
 
+# 文章页的 og:image 取自文章头图；这里是首页等无头图页面的兜底，
+# 否则分享首页链接时社交平台出不来预览图。
 [params.defaultImage.opengraph]
-enabled = false
-local = false
+enabled = true
+local = true
+src = "img/avatar.png"
 
   [params.colorScheme]
   toggle = true
@@ -164,60 +262,15 @@ enabled = true
 [params.imageProcessing.content]
 enabled = true
 
+# 主菜单按语言分别定义（见文件末尾的 [languages.*.menu.main]）。
+#
+# 原先所有菜单项都写在全局 [menu] 下，于是英文站也拿到了一套中文标签、
+# 且链接全部指向中文页面（/about/、/quotes/…）——这些页面没有英文版本。
+# 现在英文站只保留确实存在英文版的三项。
+#
+# 「游戏厅」不在这里：它由 content/games/_index.md 的页面级菜单声明，
+# 页面级菜单天然按语言隔离，因此只会出现在中文站。
 [menu]
-  [[menu.main]]
-  identifier = "home"
-  name = "主页"
-  url = "/"
-  weight = -100
-
-    [menu.main.params]
-    icon = "home"
-
-  [[menu.main]]
-  identifier = "archives"
-  name = "归档"
-  url = "/archives/"
-  weight = -90
-
-    [menu.main.params]
-    icon = "archives"
-
-  [[menu.main]]
-  identifier = "search"
-  name = "搜索"
-  url = "/search/"
-  weight = -60
-
-    [menu.main.params]
-    icon = "search"
-
-  [[menu.main]]
-  identifier = "about"
-  name = "关于"
-  url = "/about/"
-  weight = -80
-
-  [menu.main.params]
-  icon = "user"
-
-  [[menu.main]]
-  identifier = "quotes"
-  name = "采撷集" # 或者你喜欢的名字
-  url = "/quotes/"
-  weight = -70 # 调整 weight 来控制菜单顺序
-  [menu.main.params]
-    icon = "quote" # Stack 主题恰好有 "quote" 图标
-
-  [[menu.main]]
-  identifier = "quiz"
-  name = "面试刷题"
-  url = "/quiz/"
-  weight = -65
-
-  [menu.main.params]
-  icon = "device-gamepad"
-
   [[menu.social]]
   identifier = "github"
   name = "GitHub"
