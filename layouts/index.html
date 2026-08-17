@@ -1,0 +1,59 @@
+{{/*
+    覆盖 themes/hugo-theme-stack/layouts/index.html
+
+    与主题原文件的唯一差异：在文章流之前加一个自我介绍区块。
+    此前首页直接就是文章列表，新访客不知道这个站是谁写的、写什么。
+
+    文案走 hugo.toml 的 [params.homeIntro]，改字不必碰模板。
+    未配置 params.homeIntro 时整块不渲染，行为与主题原版一致。
+
+    只在第一页显示：翻到第二页还挂着自我介绍会很奇怪。
+*/}}
+{{ define "main" }}
+    {{ $pages := where .Site.RegularPages "Type" "in" .Site.Params.mainSections }}
+    {{ $notHidden := where .Site.RegularPages "Params.hidden" "!=" true }}
+    {{ $filtered := ($pages | intersect $notHidden) }}
+    {{ $pag := .Paginate ($filtered) }}
+
+    {{ with .Site.Params.homeIntro }}
+        {{ if eq $pag.PageNumber 1 }}
+            <section class="home-intro">
+                {{ with .greeting }}<p class="home-intro__greeting">{{ . }}</p>{{ end }}
+                {{ with .title }}<h1 class="home-intro__title">{{ . }}</h1>{{ end }}
+                {{ with .description }}<p class="home-intro__desc">{{ . | markdownify }}</p>{{ end }}
+
+                <div class="home-intro__stats">
+                    <a href="/archives/">
+                        <strong>{{ len $filtered }}</strong>
+                        <span>{{ T "home.posts" | default "篇文章" }}</span>
+                    </a>
+                    {{ with $.Site.GetPage "/games" }}
+                        <a href="{{ .RelPermalink }}">
+                            <strong>{{ len .Pages }}</strong>
+                            <span>{{ T "home.games" | default "款游戏" }}</span>
+                        </a>
+                    {{ end }}
+                    {{ with $.Site.Taxonomies.categories }}
+                        <a href="/categories/">
+                            <strong>{{ len . }}</strong>
+                            <span>{{ T "home.categories" | default "个分类" }}</span>
+                        </a>
+                    {{ end }}
+                </div>
+            </section>
+        {{ end }}
+    {{ end }}
+
+    <section class="article-list">
+        {{ range $index, $element := $pag.Pages }}
+            {{ partial "article-list/default" . }}
+        {{ end }}
+    </section>
+
+    {{- partial "pagination.html" . -}}
+    {{- partial "footer/footer" . -}}
+{{ end }}
+
+{{ define "right-sidebar" }}
+    {{ partial "sidebar/right.html" (dict "Context" . "Scope" "homepage") }}
+{{ end }}

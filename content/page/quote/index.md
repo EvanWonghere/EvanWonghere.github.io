@@ -1,5 +1,5 @@
 ---
-title: "Quotes"
+title: "采撷集"
 description: 
 date: 2025-09-25T16:10:46+08:00
 layout: "quotes"
