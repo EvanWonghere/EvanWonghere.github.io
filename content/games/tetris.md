@@ -1,9 +1,11 @@
 ---
-title: "Tetris Chameleon"
+title: "方块堆叠"
 date: 2025-11-19
-description: "变色龙方块：支持霓虹、3D、怀旧三种风格切换的现代俄罗斯方块。"
+description: "支持 7-bag、墙踢、暂存与连击的现代下落方块游戏。"
 game_url: "/games/tetris-app/index.html"
 gametype: "益智"
+platforms: ["桌面", "移动端"]
+controls: ["键盘", "触屏"]
 ---
 
 #### 风格说明

@@ -130,6 +130,20 @@
         .game-loading.is-hidden {
             opacity: 0;
             visibility: hidden;
+            pointer-events: none;
+        }
+
+        .game-loading.is-error .spinner { display: none; }
+        .game-loading.is-error { color: var(--shell-text); }
+        .loading-error { display: none; max-width: 30em; text-align: center; line-height: 1.6; }
+        .game-loading.is-error .loading-label { display: none; }
+        .game-loading.is-error .loading-error { display: block; }
+        .retry-btn {
+            margin-top: 12px;
+            color: #171412;
+            background: var(--shell-accent);
+            border-color: transparent;
+            font-weight: 600;
         }
 
         .spinner {
@@ -248,12 +262,12 @@
 <body>
 
     <nav class="game-nav">
-        <a class="nav-btn" href="/games/">
+        <a class="nav-btn" href="{{ .Params.return_url | default "/games/" }}">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
             </svg>
-            返回大厅
+            {{ .Params.return_label | default "返回大厅" }}
         </a>
 
         <button class="nav-btn" id="fullscreen-btn" type="button">
@@ -293,9 +307,13 @@
     <div class="game-container">
         <div class="game-loading" id="game-loading">
             <div class="spinner"></div>
-            <span>正在载入 {{ .Title }}…</span>
+            <span class="loading-label">正在载入 {{ .Title }}…</span>
+            <div class="loading-error">
+                <div id="loading-error-message">游戏未能完成初始化。</div>
+                <button class="nav-btn retry-btn" id="retry-btn" type="button">重新载入</button>
+            </div>
         </div>
-        <iframe id="game-frame" src="{{ .Params.game_url }}" title="{{ .Title }}" allowfullscreen></iframe>
+        <iframe id="game-frame" src="{{ .Params.game_url }}" title="{{ .Title }}" tabindex="0" allowfullscreen></iframe>
     </div>
 
     <script>
@@ -306,11 +324,60 @@
             var btn = document.getElementById("fullscreen-btn");
             var label = document.getElementById("fullscreen-label");
 
-            /* iframe 载入完成后淡出加载层。
-               若 load 因故不触发，6 秒兜底移除，避免永远盖着一层。 */
-            function hideLoading() { loading.classList.add("is-hidden"); }
-            frame.addEventListener("load", hideLoading);
-            window.setTimeout(hideLoading, 6000);
+            var expectedOrigin = window.location.origin;
+            var readyTimer;
+            var errorMessage = document.getElementById("loading-error-message");
+
+            function postToGame(type, reason) {
+                if (!frame.contentWindow) return;
+                frame.contentWindow.postMessage({ type: type, reason: reason }, expectedOrigin);
+            }
+
+            function showError(message) {
+                window.clearTimeout(readyTimer);
+                loading.classList.remove("is-hidden");
+                loading.classList.add("is-error");
+                errorMessage.textContent = message || "游戏未能完成初始化。";
+            }
+
+            function startReadyTimer() {
+                window.clearTimeout(readyTimer);
+                loading.classList.remove("is-hidden", "is-error");
+                readyTimer = window.setTimeout(function () {
+                    showError("载入时间过长，请检查网络或重新载入游戏。");
+                }, 12000);
+            }
+
+            startReadyTimer();
+            frame.addEventListener("load", function () {
+                /* load 只代表文档到达；等待游戏主动确认初始化完成。 */
+                startReadyTimer();
+                postToGame("arcade:hello", "handshake");
+            });
+
+            window.addEventListener("message", function (event) {
+                if (event.origin !== expectedOrigin || event.source !== frame.contentWindow) return;
+                var data = event.data || {};
+                if (data.type === "arcade:ready") {
+                    window.clearTimeout(readyTimer);
+                    loading.classList.add("is-hidden");
+                    /* 首次按键应直接进入游戏，不要求用户先额外点击 iframe。 */
+                    window.setTimeout(function () { frame.focus(); }, 0);
+                }
+                if (data.type === "arcade:error") {
+                    showError(data.message ? "游戏出错：" + data.message : "游戏初始化失败。");
+                }
+            });
+
+            document.getElementById("retry-btn").addEventListener("click", function () {
+                startReadyTimer();
+                var url = new URL(frame.src, window.location.href);
+                url.searchParams.set("reload", Date.now());
+                frame.src = url.toString();
+            });
+
+            /* 子页面可能在父页面监听器注册前完成载入，主动握手消除这个竞态。 */
+            postToGame("arcade:hello", "handshake");
 
             /* 只把游戏容器送进全屏，导航条留在外面 */
             btn.addEventListener("click", function () {
@@ -323,6 +390,7 @@
 
             document.addEventListener("fullscreenchange", function () {
                 label.textContent = document.fullscreenElement ? "退出全屏" : "全屏";
+                if (document.fullscreenElement) window.setTimeout(function () { frame.focus(); }, 0);
             });
 
             /* 说明抽屉 */
@@ -332,8 +400,10 @@
 
             function setGuide(open) {
                 document.body.classList.toggle("guide-open", open);
-                guideBtn.setAttribute("aria-expanded", open ? "true" : "false");
-                if (open) guidePanel.focus();
+                if (guideBtn) guideBtn.setAttribute("aria-expanded", open ? "true" : "false");
+                if (open && guidePanel) guidePanel.focus();
+                postToGame(open ? "arcade:pause" : "arcade:resume", "guide");
+                if (!open) window.setTimeout(function () { frame.focus(); }, 0);
             }
 
             if (guideBtn) {
@@ -358,14 +428,32 @@
                 }
                 if (document.fullscreenElement) return;
 
-                window.location.href = "/games/";
+                window.location.href = {{ .Params.return_url | default "/games/" | jsonify }};
             });
+
+            /* iframe 尚未取得焦点时也转交首个游戏按键；表单和导航按钮仍保留原生键盘行为。 */
+            function forwardGameKey(e, type) {
+                if (document.body.classList.contains("guide-open") || e.metaKey || e.ctrlKey || e.altKey) return;
+                if (/^(INPUT|SELECT|TEXTAREA|BUTTON|A)$/.test(e.target.tagName)) return;
+                if (document.activeElement === frame) return;
+                frame.contentWindow.postMessage({ type: type, key: e.key, code: e.code, repeat: e.repeat }, expectedOrigin);
+                if (["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) >= 0) e.preventDefault();
+            }
+            document.addEventListener("keydown", function (e) { forwardGameKey(e, "arcade:key"); });
+            document.addEventListener("keyup", function (e) { forwardGameKey(e, "arcade:key-up"); });
 
             /* Safari 等浏览器不支持 requestFullscreen 时直接隐藏按钮，
                而不是留一个点了没反应的。 */
             if (!container.requestFullscreen) {
                 btn.style.display = "none";
             }
+
+            document.addEventListener("visibilitychange", function () {
+                postToGame(document.hidden ? "arcade:pause" : "arcade:resume", "visibility");
+            });
+            window.addEventListener("pagehide", function () {
+                postToGame("arcade:pause", "navigation");
+            });
         })();
     </script>
 

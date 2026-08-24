@@ -1,9 +1,11 @@
 ---
-title: "Neon Snake"
+title: "霓虹贪吃蛇"
 date: 2025-11-19
 description: "复古赛博朋克风格的贪吃蛇，带上耳机享受视觉律动。"
 game_url: "/games/snake-app/index.html"
 gametype: "街机"
+platforms: ["桌面", "移动端"]
+controls: ["键盘", "触屏"]
 ---
 
 #### 游戏说明

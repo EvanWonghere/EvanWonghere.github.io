@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Chinese Chess Pro</title>
+    <title>中国象棋</title>
     <style>
         :root {
             --bg-color: #222;
@@ -86,8 +86,24 @@
         .controls {
             margin-top: 20px;
             display: flex;
-            gap: 20px;
+            justify-content: center;
+            align-items: stretch;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 8px;
+            max-width: calc(100vw - 20px);
+            border: 1px solid #8b6914;
+            border-radius: 11px;
+            background: linear-gradient(145deg, #5c3a1e, #382210);
+            box-shadow: 0 12px 30px #0008, inset 0 1px #d8b67744;
         }
+
+        .select-shell { position:relative; min-width:120px; padding:5px 31px 5px 11px; border:1px solid #a77d38; border-radius:7px; background:linear-gradient(#f5e7ca,#d8bc8a); box-shadow:inset 0 1px #fff9,0 2px 3px #160b0666; }
+        .select-shell::after { content:"▾"; position:absolute; right:11px; top:50%; transform:translateY(-45%); color:#7a431f; font-size:12px; pointer-events:none; }
+        .select-shell span { display:block; color:#986c3d; font:700 9px/1.1 sans-serif; letter-spacing:.18em; }
+        .select-shell select { width:100%; padding:0; border:0; outline:0; appearance:none; background:transparent; color:#3e2723; font-family:inherit; font-size:15px; font-weight:800; line-height:1.25; cursor:pointer; }
+        .select-shell:focus-within { border-color:#f0c050; box-shadow:0 0 0 2px #f0c05033,inset 0 1px #fff9; }
+        .select-shell:has(select:disabled) { opacity:.48; }
 
         button {
             padding: 10px 24px;
@@ -106,6 +122,14 @@
         button:active {
             transform: translateY(3px);
             border-bottom: 1px solid #8b6914;
+        }
+
+        @media (max-width: 540px), (max-height: 760px) {
+            .header { margin-bottom:6px; }
+            .controls { margin-top:9px; padding:6px; gap:5px; }
+            .select-shell { min-width:105px; padding:4px 27px 4px 9px; }
+            .select-shell select { font-size:13px; }
+            button { padding:8px 13px; font-size:.95rem; }
         }
 
         /* 结算弹窗 */
@@ -133,6 +157,8 @@
             font-weight: bold;
         }
     </style>
+    <script src="/games/arcade-runtime.js"></script>
+    <script src="/games/vendor/xiangqi.js/xiangqi.min.js"></script>
 </head>
 <body>
 
@@ -153,7 +179,17 @@
 </div>
 
 <div class="controls">
+    <label class="select-shell"><span>模式</span><select id="game-mode" aria-label="游戏模式">
+        <option value="ai" selected>对战电脑</option>
+        <option value="local">双人对弈</option>
+    </select></label>
+    <label class="select-shell"><span>棋力</span><select id="ai-difficulty" aria-label="电脑强度">
+        <option value="easy">休闲</option>
+        <option value="normal" selected>标准</option>
+        <option value="hard">挑战</option>
+    </select></label>
     <button onclick="undo()">悔棋</button>
+    <button onclick="redo()">重做</button>
     <button onclick="initGame()">重置</button>
 </div>
 
@@ -237,6 +273,48 @@
     let history = [];
     let isGameOver = false;
     let checkPos = null; // 将军位置
+    let halfmoveClock = 0;
+    let positionCounts = new Map();
+    let shellPaused = false;
+    let xiangqiEngine = null;
+    let aiWorker = null;
+    let aiRequestId = 0;
+
+    function isAiTurn() {
+        return document.getElementById('game-mode').value === 'ai' && xiangqiEngine && xiangqiEngine.turn() === 'b';
+    }
+
+    function createAiWorker() {
+        if (aiWorker) aiWorker.terminate();
+        aiWorker = new Worker('ai-worker.js');
+        aiWorker.addEventListener('message', handleAiResult);
+        aiWorker.addEventListener('error', (event) => {
+            console.error('Xiangqi AI worker:', event.message);
+            if (isAiTurn()) turnText.textContent = '电脑初始化失败 · 请切换双人对弈';
+        });
+    }
+
+    function cancelAi() {
+        aiRequestId++;
+        createAiWorker();
+    }
+
+    function coordsToSquare(r, c) {
+        return `${'abcdefghi'[c]}${9 - r}`;
+    }
+
+    function squareToCoords(square) {
+        return { r: 9 - Number(square[1]), c: 'abcdefghi'.indexOf(square[0]) };
+    }
+
+    function syncBoardFromEngine() {
+        board = xiangqiEngine.board().map(row => row.map(piece => piece ? {
+            type: piece.type,
+            color: piece.color === 'r' ? ROLES.RED : ROLES.BLACK
+        } : null));
+        isRedTurn = xiangqiEngine.turn() === 'r';
+        updateTurnUI();
+    }
     
     // 动画相关
     let animatingPiece = null; // { piece, fromR, fromC, toR, toC, progress, captured }
@@ -244,7 +322,7 @@
 
     // --- 初始化 ---
     function resize() {
-        const maxW = window.innerWidth - 24;
+        const maxW = window.innerWidth - 48;
         const maxH = window.innerHeight - 160;
         let w = Math.min(maxW, 520);
         let h = w * (10/9) + 40;
@@ -271,27 +349,20 @@
     window.addEventListener('resize', resize);
 
     function initGame() {
-        board = Array(10).fill(null).map(() => Array(9).fill(null));
+        xiangqiEngine = new Xiangqi();
         history = [];
+        halfmoveClock = 0;
+        positionCounts = new Map();
         isRedTurn = true;
         isGameOver = false;
         selected = null;
         possibleMoves = [];
         checkPos = null;
         animatingPiece = null;
+        cancelAi();
         
         overlay.classList.remove('show');
-        updateTurnUI();
-
-        for(let r=0; r<10; r++) {
-            for(let c=0; c<9; c++) {
-                const char = INITIAL_LAYOUT[r][c];
-                if (char !== '.') {
-                    const isRed = char === char.toUpperCase();
-                    board[r][c] = { type: char.toLowerCase(), color: isRed ? ROLES.RED : ROLES.BLACK };
-                }
-            }
-        }
+        syncBoardFromEngine();
         
         if (CELL_SIZE === 0) resize();
     }
@@ -302,7 +373,7 @@
         const dt = timestamp - lastFrameTime;
         lastFrameTime = timestamp;
 
-        updateAnimation(dt);
+        if (!shellPaused) updateAnimation(dt);
         draw();
         
         requestAnimationFrame(loop);
@@ -317,6 +388,7 @@
                 // 动画结束
                 finalizeMove(animatingPiece);
                 animatingPiece = null;
+                maybeStartAi();
             }
         }
     }
@@ -511,7 +583,7 @@
     }
 
     function handleInput(e) {
-        if (isGameOver || animatingPiece) return; // 动画中不可操作
+        if (isGameOver || animatingPiece || isAiTurn()) return; // 动画中不可操作
         const coord = getCoord(e);
         if (!coord) return;
         const {r, c} = coord;
@@ -556,66 +628,45 @@
 
     function finalizeMove(anim) {
         const { piece, fromR, fromC, toR, toC } = anim;
-        const captured = board[toR][toC];
-
-        // 记录历史
-        history.push({ from:{r:fromR,c:fromC}, to:{r:toR,c:toC}, piece:piece, captured:captured });
-        
-        // 落地
-        board[toR][toC] = piece;
-
-        if (captured) AudioSys.play('capture');
-        
-        // 胜负判定
-        if (captured && captured.type === 'k') {
-            isGameOver = true;
-            winTitle.innerText = (isRedTurn ? "红方" : "黑方") + " 胜";
-            overlay.classList.add('show');
+        const result = xiangqiEngine.move({
+            from: coordsToSquare(fromR, fromC),
+            to: coordsToSquare(toR, toC)
+        });
+        if (!result) {
+            syncBoardFromEngine();
+            return;
         }
+        history.push(result);
+        if (result.captured) AudioSys.play('capture');
+        syncBoardFromEngine();
 
-        // 检查将军
-        const enemyColor = isRedTurn ? ROLES.BLACK : ROLES.RED;
-        if (isInCheck(enemyColor)) {
+        const sideToMove = isRedTurn ? ROLES.RED : ROLES.BLACK;
+        if (xiangqiEngine.in_check()) {
             AudioSys.play('check');
-            checkPos = findKing(enemyColor);
+            checkPos = findKing(sideToMove);
         } else {
             checkPos = null;
         }
 
-        // 切换回合
-        isRedTurn = !isRedTurn;
-        updateTurnUI();
+        if (xiangqiEngine.in_checkmate() || xiangqiEngine.in_stalemate()) {
+            isGameOver = true;
+            winTitle.innerText = `${isRedTurn ? '黑方' : '红方'}胜 · ${xiangqiEngine.in_checkmate() ? '将死' : '困毙'}`;
+            overlay.classList.add('show');
+        } else if (xiangqiEngine.in_draw()) {
+            isGameOver = true;
+            winTitle.innerText = xiangqiEngine.in_threefold_repetition() ? '和棋 · 三次重复' :
+                xiangqiEngine.insufficient_material() ? '和棋 · 子力不足' : '和棋 · 六十回合无进展';
+            overlay.classList.add('show');
+        }
+        if (!isGameOver) maybeStartAi();
     }
 
     // --- 智能提示核心 (仿真) ---
     function calculateHints(r, c) {
-        possibleMoves = [];
-        const myColor = isRedTurn ? ROLES.RED : ROLES.BLACK;
-
-        for (let i=0; i<10; i++) {
-            for (let j=0; j<9; j++) {
-                // 1. 基础规则检查
-                if (isValidMove({r,c}, {r:i, c:j})) {
-                    // 2. 模拟移动，检查是否送将 (自杀)
-                    if (isSuicide({r,c}, {r:i, c:j}, myColor)) continue;
-
-                    // 3. 判定类型
-                    const target = board[i][j];
-                    let type = 'safe';
-                    
-                    // 模拟：我过去后，会不会被吃？
-                    const isDanger = isSpotDangerous({r:i, c:j}, myColor, {r,c}); // 传入from防止原位置干扰
-
-                    if (target) {
-                        type = isDanger ? 'exchange' : 'capture';
-                    } else {
-                        type = isDanger ? 'danger' : 'safe';
-                    }
-                    
-                    possibleMoves.push({r:i, c:j, type: type});
-                }
-            }
-        }
+        possibleMoves = xiangqiEngine.moves({ square: coordsToSquare(r, c), verbose: true }).map(move => {
+            const target = squareToCoords(move.to);
+            return { ...target, type: move.captured ? 'capture' : 'safe' };
+        });
     }
 
     // 检查某一步是否导致己方老将被吃
@@ -758,26 +809,91 @@
         return count;
     }
 
+    function hasLegalMove(color) {
+        for (let r = 0; r < 10; r++) {
+            for (let c = 0; c < 9; c++) {
+                const piece = board[r][c];
+                if (!piece || piece.color !== color) continue;
+                for (let tr = 0; tr < 10; tr++) {
+                    for (let tc = 0; tc < 9; tc++) {
+                        if (board[tr][tc] && board[tr][tc].type === 'k') continue;
+                        if (isValidMove({r, c}, {r: tr, c: tc}) && !isSuicide({r, c}, {r: tr, c: tc}, color)) return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    function recordPosition() {
+        const key = board.map(row => row.map(piece => piece ? `${piece.color[0]}${piece.type}` : '--').join('')).join('/') + (isRedTurn ? ':r' : ':b');
+        const count = (positionCounts.get(key) || 0) + 1;
+        positionCounts.set(key, count);
+        return count;
+    }
+
     function undo() {
-        if(history.length===0 || isGameOver || animatingPiece) return;
-        const last = history.pop();
-        board[last.from.r][last.from.c] = last.piece;
-        board[last.to.r][last.to.c] = last.captured;
-        isRedTurn = !isRedTurn;
+        if(!xiangqiEngine || animatingPiece) return;
+        cancelAi();
+        if(!xiangqiEngine.undo()) return;
+        history.pop();
+        if(document.getElementById('game-mode').value === 'ai' && xiangqiEngine.turn() === 'b' && xiangqiEngine.undo()) history.pop();
+        isGameOver = false;
+        overlay.classList.remove('show');
         selected = null; possibleMoves = []; checkPos = null;
-        updateTurnUI();
-        // 检查悔棋后是否将军状态恢复
-        const myColor = isRedTurn ? ROLES.RED : ROLES.BLACK;
-        if(isInCheck(myColor)) checkPos = findKing(myColor);
+        syncBoardFromEngine();
+        if(xiangqiEngine.in_check()) checkPos = findKing(isRedTurn ? ROLES.RED : ROLES.BLACK);
+    }
+
+    function redo() {
+        if(!xiangqiEngine || animatingPiece) return;
+        cancelAi();
+        const first = xiangqiEngine.redo();
+        if(!first) return;
+        history.push(first);
+        if(document.getElementById('game-mode').value === 'ai' && xiangqiEngine.turn() === 'b') {
+            const second = xiangqiEngine.redo();
+            if(second) history.push(second);
+        }
+        isGameOver = false;
+        overlay.classList.remove('show');
+        selected = null; possibleMoves = []; checkPos = null;
+        syncBoardFromEngine();
+        if(xiangqiEngine.in_check()) checkPos = findKing(isRedTurn ? ROLES.RED : ROLES.BLACK);
+        maybeStartAi();
     }
 
     function updateTurnUI() {
-        turnText.innerText = isRedTurn ? "红方执棋" : "黑方执棋";
+        turnText.innerText = isAiTurn() ? "电脑思考中…" : isRedTurn ? "红方执棋" : "黑方执棋";
         turnBadge.className = `turn-badge ${isRedTurn ? 'active-red' : 'active-black'}`;
         turnDot.className = `dot ${isRedTurn ? 'red' : 'black'}`;
     }
 
+    window.addEventListener('arcade:pause', () => { shellPaused = true; });
+    window.addEventListener('arcade:resume', () => { shellPaused = false; lastFrameTime = performance.now(); maybeStartAi(); });
+
+    function maybeStartAi() {
+        if (!isAiTurn() || isGameOver || animatingPiece || shellPaused) return;
+        updateTurnUI();
+        const id = ++aiRequestId;
+        aiWorker.postMessage({ id, fen: xiangqiEngine.fen(), difficulty: document.getElementById('ai-difficulty').value });
+    }
+
+    function handleAiResult(event) {
+        const { id, move } = event.data || {};
+        if (id !== aiRequestId || !move || !isAiTurn() || isGameOver || animatingPiece) return;
+        const legal = xiangqiEngine.moves({ square: move.from, verbose: true }).some((candidate) => candidate.to === move.to);
+        if (legal) startMoveAnimation(squareToCoords(move.from), squareToCoords(move.to));
+    }
+
+    document.getElementById('game-mode').addEventListener('change', () => {
+        document.getElementById('ai-difficulty').disabled = document.getElementById('game-mode').value !== 'ai';
+        cancelAi(); initGame();
+    });
+    document.getElementById('ai-difficulty').addEventListener('change', () => { cancelAi(); maybeStartAi(); });
+
     // Start
+    createAiWorker();
     initGame();
 
 </script>

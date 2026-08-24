@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Wordle</title>
+    <title>Hive Words</title>
     <style>
         :root {
             --correct: #6aaa64;
@@ -45,6 +45,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            box-sizing: border-box;
+            flex-wrap: wrap;
             padding: 10px;
             border-bottom: 1px solid var(--default-border);
             width: 100%;
@@ -162,6 +164,7 @@
 
         .loading { opacity: 0.5; pointer-events: none; }
     </style>
+    <script src="/games/arcade-runtime.js"></script>
 </head>
 <body>
 
@@ -173,8 +176,12 @@
         <option value="6">6 字母</option>
         <option value="7">7 字母</option>
     </select>
-    <h1>WORDLE</h1>
-    <button class="restart-btn" onclick="startNewGameRound()">重置</button>
+    <h1>HIVE WORDS</h1>
+    <select id="mode-selector" aria-label="游戏模式">
+        <option value="daily" selected>每日</option>
+        <option value="random">随机</option>
+    </select>
+    <button class="restart-btn" onclick="startNewGameRound(true)">重置</button>
 </header>
 
 <div id="message-container"></div>
@@ -202,6 +209,8 @@
         6: ["planet", "friend", "banana", "orange", "guitar"],
         7: ["freedom", "journey", "history", "mystery", "silence"]
     };
+    const ALLOWED_WORDS = { 3: new Set(), 4: new Set(), 5: new Set(), 6: new Set(), 7: new Set() };
+    const runtime = window.ArcadeRuntime;
 
     let wordLength = 5;
     let maxGuesses = 6; 
@@ -218,6 +227,7 @@
     // --- 初始化 ---
     const board = document.getElementById('game-board');
     const lengthSelector = document.getElementById('length-selector');
+    const modeSelector = document.getElementById('mode-selector');
 
     // 监听长度变化
     lengthSelector.addEventListener('change', (e) => {
@@ -225,6 +235,7 @@
         e.target.blur(); // 移出焦点
         startNewGameRound(); 
     });
+    modeSelector.addEventListener('change', () => startNewGameRound(false));
 
     // 加载词库
     async function loadWordsAndStart() {
@@ -244,14 +255,18 @@
             allWords.forEach(word => {
                 const len = word.length;
                 if (newWordList[len]) {
-                    newWordList[len].push(word);
+                    ALLOWED_WORDS[len].add(word);
+                    if (newWordList[len].length < 400) newWordList[len].push(word);
                     count++;
                 }
             });
 
             msgContainer.innerHTML = ''; 
             if (count > 0) {
-                TARGET_WORDS = newWordList;
+                Object.keys(TARGET_WORDS).forEach(length => {
+                    TARGET_WORDS[length].forEach(word => ALLOWED_WORDS[length].add(word));
+                    TARGET_WORDS[length] = Array.from(new Set([...TARGET_WORDS[length], ...newWordList[length]]));
+                });
                 showMessage("词库加载完成！", 1000);
             } else {
                 showMessage("词库为空，使用默认词库", 2000);
@@ -263,10 +278,10 @@
         }
 
         createKeyboard();
-        startNewGameRound();
+        startNewGameRound(false);
     }
 
-    function startNewGameRound() {
+    function startNewGameRound(forceNew = false) {
         // 🔥 关键修复 1：强制让当前获得焦点的元素（比如重置按钮）失去焦点
         // 这样按下 Enter 就不会再次触发它了
         if (document.activeElement instanceof HTMLElement) {
@@ -277,7 +292,7 @@
             alert(`抱歉，词库中没有长度为 ${wordLength} 的单词！`);
             return;
         }
-        initGame();
+        initGame(forceNew);
     }
 
     // 创建键盘
@@ -300,7 +315,87 @@
         });
     }
 
-    function initGame() {
+    function roundStateKey() {
+        const day = new Date().toISOString().slice(0, 10);
+        return `state.${modeSelector.value}.${wordLength}.${day}`;
+    }
+
+    function readSavedRound(forceNew) {
+        if (!runtime) return null;
+        const key = roundStateKey();
+        if (forceNew) {
+            runtime.remove(key);
+            return null;
+        }
+        try {
+            const saved = JSON.parse(runtime.get(key, 'null'));
+            if (!saved || typeof saved.target !== 'string' || saved.target.length !== wordLength) return null;
+            if (!Array.isArray(saved.guesses)) return null;
+            saved.guesses = saved.guesses.filter(word =>
+                typeof word === 'string' && word.length === wordLength && /^[a-z]+$/.test(word)
+            ).slice(0, maxGuesses);
+            return saved;
+        } catch {
+            runtime.remove(key);
+            return null;
+        }
+    }
+
+    function evaluateGuess(guessWord) {
+        const targetChars = currentTarget.split('');
+        const guessChars = guessWord.split('');
+        const states = Array(wordLength).fill('absent');
+
+        guessChars.forEach((char, i) => {
+            if (char === targetChars[i]) {
+                states[i] = 'correct';
+                targetChars[i] = null;
+                guessChars[i] = null;
+            }
+        });
+        guessChars.forEach((char, i) => {
+            if (char !== null && targetChars.includes(char)) {
+                states[i] = 'present';
+                targetChars[targetChars.indexOf(char)] = null;
+            }
+        });
+        return states;
+    }
+
+    function updateKeyboardState(character, state) {
+        const keyEl = document.querySelector(`.key[data-key="${character}"]`);
+        if (!keyEl) return;
+        const oldState = keyEl.getAttribute('data-state');
+        if (state === 'correct' ||
+            (state === 'present' && oldState !== 'correct') ||
+            (state === 'absent' && oldState !== 'correct' && oldState !== 'present')) {
+            keyEl.setAttribute('data-state', state);
+        }
+    }
+
+    function restoreRound(saved) {
+        saved.guesses.forEach((word, rowIndex) => {
+            guesses[rowIndex] = word.split('');
+            const states = evaluateGuess(word);
+            states.forEach((state, columnIndex) => {
+                const tile = document.getElementById(`tile-${rowIndex}-${columnIndex}`);
+                tile.textContent = word[columnIndex];
+                tile.setAttribute('data-state', state);
+                updateKeyboardState(word[columnIndex], state);
+            });
+        });
+        isGameOver = Boolean(saved.gameOver);
+        currentRow = isGameOver
+            ? Math.max(0, saved.guesses.length - 1)
+            : Math.min(saved.guesses.length, maxGuesses - 1);
+        currentTile = 0;
+        if (isGameOver) {
+            const won = saved.guesses.some(word => word === currentTarget);
+            showMessage(won ? '已恢复：本局已完成' : `已恢复：答案是 ${currentTarget.toUpperCase()}`, -1);
+        }
+    }
+
+    function initGame(forceNew = false) {
         currentGameId++;
 
         maxGuesses = wordLength + 1;
@@ -316,8 +411,17 @@
         document.querySelectorAll('.key').forEach(k => k.removeAttribute('data-state')); 
         
         const list = TARGET_WORDS[wordLength];
-        currentTarget = list[Math.floor(Math.random() * list.length)].toLowerCase();
-        console.log("Target:", currentTarget); 
+        const saved = readSavedRound(forceNew);
+        if (saved) {
+            currentTarget = saved.target.toLowerCase();
+        } else if (modeSelector.value === 'daily') {
+            const day = new Date().toISOString().slice(0, 10);
+            let hash = wordLength * 2166136261;
+            for (const char of day) hash = Math.imul(hash ^ char.charCodeAt(0), 16777619) >>> 0;
+            currentTarget = list[hash % list.length].toLowerCase();
+        } else {
+            currentTarget = list[Math.floor(Math.random() * list.length)].toLowerCase();
+        }
 
         board.style.gridTemplateColumns = `repeat(${wordLength}, 1fr)`;
         board.style.width = `${wordLength * 60}px`; 
@@ -329,6 +433,8 @@
             tile.id = `tile-${Math.floor(i / wordLength)}-${i % wordLength}`;
             board.appendChild(tile);
         }
+
+        if (saved) restoreRound(saved);
     }
 
     function handleInput(key) {
@@ -396,7 +502,7 @@
         isLoading = true;
         document.body.classList.add('loading');
         
-        const isValid = await validateWord(guessWord);
+        const isValid = validateWord(guessWord);
         
         if (thisRoundId !== currentGameId) return;
 
@@ -412,14 +518,8 @@
         flipTiles(guessWord, thisRoundId);
     }
 
-    async function validateWord(word) {
-        if (word === currentTarget) return true; 
-        try {
-            const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
-            return response.ok; 
-        } catch (error) {
-            return true; 
-        }
+    function validateWord(word) {
+        return word === currentTarget || ALLOWED_WORDS[wordLength].has(word);
     }
 
     function flipTiles(guessWord, roundId) {
@@ -428,24 +528,7 @@
             rowTiles.push(document.getElementById(`tile-${currentRow}-${i}`));
         }
 
-        const targetChars = currentTarget.split('');
-        const guessChars = guessWord.split('');
-        const states = Array(wordLength).fill('absent');
-
-        guessChars.forEach((char, i) => {
-            if (char === targetChars[i]) {
-                states[i] = 'correct';
-                targetChars[i] = null; 
-                guessChars[i] = null;
-            }
-        });
-
-        guessChars.forEach((char, i) => {
-            if (char !== null && targetChars.includes(char)) {
-                states[i] = 'present';
-                targetChars[targetChars.indexOf(char)] = null; 
-            }
-        });
+        const states = evaluateGuess(guessWord);
 
         rowTiles.forEach((tile, i) => {
             setTimeout(() => {
@@ -454,18 +537,7 @@
                 tile.classList.add('flip');
                 tile.setAttribute('data-state', states[i]);
                 
-                const keyChar = guesses[currentRow][i];
-                const keyEl = document.querySelector(`.key[data-key="${keyChar}"]`);
-                if (keyEl) {
-                    const oldState = keyEl.getAttribute('data-state');
-                    if (states[i] === 'correct') {
-                        keyEl.setAttribute('data-state', 'correct');
-                    } else if (states[i] === 'present' && oldState !== 'correct') {
-                        keyEl.setAttribute('data-state', 'present');
-                    } else if (states[i] === 'absent' && oldState !== 'correct' && oldState !== 'present') {
-                        keyEl.setAttribute('data-state', 'absent');
-                    }
-                }
+                updateKeyboardState(guesses[currentRow][i], states[i]);
             }, i * 250);
         });
 
@@ -483,6 +555,13 @@
                     currentRow++;
                     currentTile = 0;
                 }
+            }
+            if (runtime) {
+                runtime.set(roundStateKey(), JSON.stringify({
+                    target: currentTarget,
+                    guesses: guesses.map(row => row.join('')).filter(word => word.length === wordLength),
+                    gameOver: isGameOver
+                }));
             }
         }, wordLength * 250);
     }

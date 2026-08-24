@@ -1,9 +1,11 @@
 ---
-title: "Sudoku"
+title: "数独"
 date: 2025-11-19
 description: "经典的逻辑填数字游戏，支持笔记模式和错误提示。"
 game_url: "/games/sudoku-app/index.html"
 gametype: "益智"
+platforms: ["桌面", "移动端"]
+controls: ["鼠标", "触屏"]
 ---
 
 数独游戏规则：

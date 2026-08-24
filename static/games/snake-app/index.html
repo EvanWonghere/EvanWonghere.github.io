@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Neon Snake</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <title>霓虹贪吃蛇</title>
     <style>
         :root {
             --bg-color: #050505;
@@ -125,6 +124,7 @@
         }
 
     </style>
+    <script src="/games/arcade-runtime.js"></script>
 </head>
 <body>
 
@@ -159,7 +159,8 @@
     let TILE_COUNT_X, TILE_COUNT_Y;
     
     let score = 0;
-    let bestScore = localStorage.getItem('neon-snake-best') || 0;
+    const runtime = window.ArcadeRuntime;
+    let bestScore = Number(runtime ? runtime.get('best', 0) : localStorage.getItem('neon-snake-best')) || 0;
     bestEl.textContent = bestScore;
 
     let gameRunning = false;
@@ -167,6 +168,8 @@
     let lastTime = 0;
     let speed = 5; // 每秒移动多少格 (初始速度)
     let speedMultiplier = 1;
+    let moveAccumulator = 0;
+    let shellPaused = false;
 
     // 实体
     let snake = [];
@@ -179,11 +182,26 @@
 
     // --- 初始化与自适应 ---
     function resize() {
+        const oldX = TILE_COUNT_X || 1, oldY = TILE_COUNT_Y || 1;
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         
         TILE_COUNT_X = Math.floor(canvas.width / GRID_SIZE);
         TILE_COUNT_Y = Math.floor(canvas.height / GRID_SIZE);
+        if (gameRunning && (oldX !== TILE_COUNT_X || oldY !== TILE_COUNT_Y)) {
+            const seen = new Set();
+            snake = snake.map(part => ({
+                x: ((part.x % TILE_COUNT_X) + TILE_COUNT_X) % TILE_COUNT_X,
+                y: ((part.y % TILE_COUNT_Y) + TILE_COUNT_Y) % TILE_COUNT_Y
+            })).filter(part => {
+                const key = `${part.x},${part.y}`;
+                if (seen.has(key)) return false;
+                seen.add(key); return true;
+            });
+            food.x %= TILE_COUNT_X;
+            food.y %= TILE_COUNT_Y;
+            if (snake.some(part => part.x === food.x && part.y === food.y)) spawnFood();
+        }
     }
     window.addEventListener('resize', resize);
     resize();
@@ -201,6 +219,8 @@
         inputQueue = [];
         score = 0;
         speed = 8; // 初始速度
+        speedMultiplier = 1;
+        moveAccumulator = 0;
         scoreEl.textContent = 0;
         particles = [];
         
@@ -219,7 +239,8 @@
         
         if (score > bestScore) {
             bestScore = score;
-            localStorage.setItem('neon-snake-best', bestScore);
+            if (runtime) runtime.set('best', bestScore);
+            else localStorage.setItem('neon-snake-best', bestScore);
             bestEl.textContent = bestScore;
         }
         
@@ -231,19 +252,23 @@
     function gameLoop(currentTime) {
         if (!gameRunning) return;
 
-        const deltaTime = (currentTime - lastTime) / 1000;
+        const deltaTime = Math.max(0, Math.min(currentTime - lastTime, 50)) / 1000;
+        lastTime = currentTime;
         const moveInterval = 1 / (speed * speedMultiplier);
 
         // 1. 渲染背景
         drawBackground();
 
         // 2. 渲染粒子 (独立于帧率，保证流畅)
-        updateAndDrawParticles();
+        updateAndDrawParticles(deltaTime);
 
         // 3. 蛇的移动逻辑 (基于时间步长)
-        if (deltaTime >= moveInterval) {
-            updateSnake();
-            lastTime = currentTime;
+        if (!shellPaused) {
+            moveAccumulator += deltaTime;
+            while (moveAccumulator >= moveInterval && gameRunning) {
+                updateSnake();
+                moveAccumulator -= moveInterval;
+            }
         }
 
         // 4. 渲染实体 (插值渲染略，这里直接画)
@@ -305,6 +330,13 @@
     }
 
     function spawnFood() {
+        if (snake.length >= TILE_COUNT_X * TILE_COUNT_Y) {
+            score += 1000;
+            scoreEl.textContent = score;
+            gameOver();
+            startBtn.textContent = '全盘完成 · 再来一局';
+            return;
+        }
         // 简单的随机生成，防止生成在蛇身上
         let valid = false;
         while (!valid) {
@@ -329,10 +361,10 @@
             this.life = 1.0;
             this.decay = Math.random() * 0.03 + 0.02;
         }
-        update() {
-            this.x += this.vx;
-            this.y += this.vy;
-            this.life -= this.decay;
+        update(dt) {
+            this.x += this.vx * dt * 60;
+            this.y += this.vy * dt * 60;
+            this.life -= this.decay * dt * 60;
         }
         draw(ctx) {
             ctx.globalAlpha = this.life;
@@ -350,10 +382,10 @@
         }
     }
 
-    function updateAndDrawParticles() {
+    function updateAndDrawParticles(dt) {
         for (let i = particles.length - 1; i >= 0; i--) {
             const p = particles[i];
-            p.update();
+            p.update(dt);
             p.draw(ctx);
             if (p.life <= 0) {
                 particles.splice(i, 1);
@@ -483,6 +515,9 @@
             else body.style.transform = 'none';
         }, 50);
     }
+
+    window.addEventListener('arcade:pause', () => { shellPaused = true; speedMultiplier = 1; });
+    window.addEventListener('arcade:resume', () => { shellPaused = false; lastTime = performance.now(); });
 
 </script>
 </body>

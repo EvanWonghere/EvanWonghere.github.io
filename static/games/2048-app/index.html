@@ -217,6 +217,7 @@
             .tile.val-1024, .tile.val-2048 { font-size: 28px; }
         }
     </style>
+    <script src="/games/arcade-runtime.js"></script>
 </head>
 <body>
 
@@ -242,7 +243,7 @@
 <div class="game-container">
     <div class="game-message" id="game-message">
         <p id="game-msg-text"></p>
-        <button class="restart-btn" onclick="restartGame()">再来一局</button>
+        <button class="restart-btn" id="message-action" onclick="restartGame()">再来一局</button>
     </div>
 
     <div class="grid-container">
@@ -261,7 +262,8 @@
     const SIZE = 4;
     let board = [];
     let score = 0;
-    let bestScore = localStorage.getItem('2048-best') || 0;
+    const runtime = window.ArcadeRuntime;
+    let bestScore = Number(runtime ? runtime.get('best', 0) : localStorage.getItem('2048-best')) || 0;
     let won = false;
     let gameOver = false;
 
@@ -274,7 +276,23 @@
     bestScoreEl.textContent = bestScore;
 
     // 初始化
-    function init() {
+    function init(restore = true) {
+        if (restore && runtime) {
+            try {
+                const saved = JSON.parse(runtime.get('state', 'null'));
+                if (saved && Array.isArray(saved.board) && saved.board.length === SIZE) {
+                    board = saved.board;
+                    score = Number(saved.score) || 0;
+                    won = Boolean(saved.won);
+                    gameOver = Boolean(saved.gameOver);
+                    updateScore(score);
+                    msgContainer.classList.toggle('game-over', gameOver);
+                    if (gameOver) msgText.textContent = 'Game Over!';
+                    renderBoard();
+                    return;
+                }
+            } catch (_) { /* 损坏存档直接开始新局 */ }
+        }
         board = Array(SIZE).fill(null).map(() => Array(SIZE).fill(0));
         score = 0;
         won = false;
@@ -287,10 +305,21 @@
         addRandomTile();
         addRandomTile();
         renderBoard();
+        saveState();
     }
 
     function restartGame() {
-        init();
+        init(false);
+    }
+
+    function continueGame() {
+        msgContainer.classList.remove('game-over');
+        document.getElementById('message-action').textContent = '再来一局';
+        document.getElementById('message-action').onclick = restartGame;
+    }
+
+    function saveState() {
+        if (runtime) runtime.set('state', JSON.stringify({ board, score, won, gameOver }));
     }
 
     // 核心逻辑：移动
@@ -366,7 +395,10 @@
                     
                     if (board[nextCell.r][nextCell.c] === 2048 && !won) {
                         won = true;
-                        setTimeout(() => alert("🎉 你达到了 2048! 但你可以继续挑战更高分。"), 100);
+                        msgText.textContent = '你达到了 2048！';
+                        document.getElementById('message-action').textContent = '继续挑战';
+                        document.getElementById('message-action').onclick = continueGame;
+                        msgContainer.classList.add('game-over');
                     }
                 } else if (farthest.r !== r || farthest.c !== c) {
                     // 仅仅是移动
@@ -385,6 +417,7 @@
                 gameOver = true;
                 showGameOver(false);
             }
+            saveState();
         }
     }
 
@@ -425,7 +458,8 @@
         if (score > bestScore) {
             bestScore = score;
             bestScoreEl.textContent = bestScore;
-            localStorage.setItem('2048-best', bestScore);
+            if (runtime) runtime.set('best', bestScore);
+            else localStorage.setItem('2048-best', bestScore);
         }
     }
 

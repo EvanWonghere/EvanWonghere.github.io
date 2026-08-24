@@ -1,9 +1,11 @@
 ---
-title: "Conway's Game of Life"
+title: "生命游戏"
 date: 2025-11-19
 description: "零玩家游戏，在简单的规则下观察混沌与秩序的演化。"
 game_url: "/games/life-app/index.html"
 gametype: "模拟"
+platforms: ["桌面", "移动端"]
+controls: ["鼠标", "触屏"]
 ---
 
 #### 什么是生命游戏？

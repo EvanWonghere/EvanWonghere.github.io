@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Dino Run</title>
+    <title>恐龙快跑 · Dino Run</title>
     <style>
         :root {
             --bg-color: #f7f7f7;
@@ -85,11 +85,12 @@
             canvas { height: 250px; }
         }
     </style>
+    <script src="/games/arcade-runtime.js"></script>
 </head>
 <body class="theme-classic">
 
     <div class="header">
-        <button class="btn" onclick="toggleTheme()">🎨 Style Switch</button>
+        <button class="btn" onclick="toggleTheme()">切换昼夜</button>
         <div style="font-size: 1.5rem; font-weight: bold;" id="score">00000</div>
     </div>
 
@@ -100,7 +101,7 @@
         <p class="blink">Tap to Jump</p>
     </div>
 
-<script>
+<script type="text/plain" data-legacy-script>
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
     const scoreEl = document.getElementById('score');
@@ -375,5 +376,6 @@
     draw();
 
 </script>
+<script src="game.js"></script>
 </body>
 </html>

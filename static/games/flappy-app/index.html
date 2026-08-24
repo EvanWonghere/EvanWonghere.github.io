@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Flappy Emoji</title>
+    <title>Flappy Flight</title>
     <style>
         body {
             margin: 0;
@@ -74,6 +74,7 @@
             text-shadow: 2px 2px 0 #000; pointer-events: none; z-index: 5;
         }
     </style>
+    <script src="/games/arcade-runtime.js"></script>
 </head>
 <body>
 
@@ -81,13 +82,12 @@
 
 <div id="ui-layer">
     <div id="start-screen" class="panel">
-        <h1>Flappy Emoji</h1>
-        <p>Choose your hero</p>
+        <h1>Flappy Flight</h1>
+        <p>选择你的纸翼配色</p>
         <div class="char-selector">
-            <div class="char-btn selected" onclick="selectChar('🐦')">🐦</div>
-            <div class="char-btn" onclick="selectChar('🚀')">🚀</div>
-            <div class="char-btn" onclick="selectChar('👻')">👻</div>
-            <div class="char-btn" onclick="selectChar('🐱')">🐱</div>
+            <button class="char-btn selected" data-palette="coral" onclick="selectChar('coral')">珊瑚</button>
+            <button class="char-btn" data-palette="sun" onclick="selectChar('sun')">日光</button>
+            <button class="char-btn" data-palette="mint" onclick="selectChar('mint')">薄荷</button>
         </div>
         <button class="btn-start" onclick="startGame()">PLAY</button>
     </div>
@@ -102,7 +102,7 @@
 
 <canvas id="gameCanvas"></canvas>
 
-<script>
+<script type="text/plain" data-legacy-script>
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
     const scoreEl = document.getElementById('score-hud');
@@ -358,5 +358,6 @@
     draw();
     
 </script>
+<script src="game.js"></script>
 </body>
 </html>

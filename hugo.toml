@@ -93,15 +93,6 @@ subtitle = "EvanWong的个人博客"
     icon = "quote"
 
   [[languages.zh-cn.menu.main]]
-  identifier = "quiz"
-  name = "面试刷题"
-  url = "/quiz/"
-  weight = -65
-
-    [languages.zh-cn.menu.main.params]
-    icon = "device-gamepad"
-
-  [[languages.zh-cn.menu.main]]
   identifier = "search"
   name = "搜索"
   url = "/search/"

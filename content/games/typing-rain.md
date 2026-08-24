@@ -1,9 +1,11 @@
 ---
-title: "单词雨 (Typing Rain)"
+title: "打字雨"
 date: 2025-11-19
 description: "黑客帝国风格的打字练习游戏，词库与 Wordle 同步。"
 game_url: "/games/typing-rain-app/index.html"
 gametype: "文字"
+platforms: ["桌面"]
+controls: ["键盘"]
 ---
 
 #### 系统接入中...

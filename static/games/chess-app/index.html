@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>International Chess Pro</title>
+    <title>国际象棋 · Chess</title>
     <style>
         :root {
             --bg-color: #262421;
@@ -89,8 +89,24 @@
         .controls {
             margin-top: 20px;
             display: flex;
-            gap: 15px;
+            justify-content: center;
+            align-items: stretch;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 8px;
+            max-width: calc(100vw - 20px);
+            border: 1px solid #565047;
+            border-radius: 10px;
+            background: linear-gradient(145deg, #34312d, #201f1d);
+            box-shadow: 0 12px 28px #0007, inset 0 1px #ffffff12;
         }
+
+        .select-shell { position:relative; min-width:132px; padding:5px 31px 5px 11px; border:1px solid #5d574e; border-radius:6px; background:linear-gradient(#403c36,#2b2926); box-shadow:inset 0 1px #ffffff12; }
+        .select-shell::after { content:"◆"; position:absolute; right:11px; top:50%; transform:translateY(-44%) rotate(45deg); color:var(--accent-gold); font-size:7px; pointer-events:none; }
+        .select-shell span { display:block; color:#9d927f; font-size:8px; font-weight:800; letter-spacing:.18em; }
+        .select-shell select { width:100%; padding:0; border:0; outline:0; appearance:none; background:transparent; color:#f4ead7; font-family:inherit; font-size:13px; font-weight:700; line-height:1.3; cursor:pointer; }
+        .select-shell:focus-within { border-color:#c8a940; box-shadow:0 0 0 2px #d4af3725,inset 0 1px #ffffff12; }
+        .select-shell:has(select:disabled) { opacity:.42; }
 
         button {
             padding: 10px 20px;
@@ -113,6 +129,13 @@
             background: var(--accent-gold);
             color: #3e2723;
             border-bottom-color: #8b6914;
+        }
+
+        @media (max-width: 520px), (max-height: 700px) {
+            .header { margin-bottom:6px; }
+            .controls { margin-top:10px; padding:6px; gap:5px; }
+            .select-shell { min-width:118px; padding:4px 26px 4px 9px; }
+            button { padding:8px 13px; font-size:.88rem; }
         }
 
         /* 结算弹窗 */
@@ -141,6 +164,7 @@
             text-align: center;
         }
     </style>
+    <script src="/games/arcade-runtime.js"></script>
 </head>
 <body>
 
@@ -161,6 +185,15 @@
 </div>
 
 <div class="controls">
+    <label class="select-shell"><span>MODE</span><select id="game-mode" aria-label="Game mode">
+        <option value="ai" selected>Vs Computer</option>
+        <option value="local">Two Players</option>
+    </select></label>
+    <label class="select-shell"><span>STRENGTH</span><select id="ai-difficulty" aria-label="Computer strength">
+        <option value="easy">Casual</option>
+        <option value="normal" selected>Standard</option>
+        <option value="hard">Challenge</option>
+    </select></label>
     <button onclick="undo()">Undo</button>
     <button onclick="initGame()">Reset</button>
 </div>
@@ -235,13 +268,56 @@
     let selected = null; // {r, c}
     let possibleMoves = [];
     let history = [];
+    let halfmoveClock = 0;
+    let positionCounts = new Map();
+    let shellPaused = false;
     let isGameOver = false;
     let animatingPiece = null;
     let lastFrameTime = 0;
+    let chessEngine = null;
+    let aiWorker = null;
+    let aiRequestId = 0;
+
+    function isAiTurn() {
+        return document.getElementById('game-mode').value === 'ai' && chessEngine && chessEngine.turn() === 'b';
+    }
+
+    function createAiWorker() {
+        if (aiWorker) aiWorker.terminate();
+        aiWorker = new Worker('ai-worker.js', { type: 'module' });
+        aiWorker.addEventListener('message', handleAiResult);
+        aiWorker.addEventListener('error', (event) => {
+            console.error('Chess AI worker:', event.message);
+            if (isAiTurn()) turnText.textContent = 'Computer unavailable · switch to Two Players';
+        });
+    }
+
+    function cancelAi() {
+        aiRequestId++;
+        createAiWorker();
+    }
+
+    function coordsToSquare(r, c) {
+        return `${'abcdefgh'[c]}${8 - r}`;
+    }
+
+    function squareToCoords(square) {
+        return { r: 8 - Number(square[1]), c: 'abcdefgh'.indexOf(square[0]) };
+    }
+
+    function syncBoardFromEngine() {
+        board = chessEngine.board().map(row => row.map(piece => piece ? {
+            type: piece.type,
+            color: piece.color === 'w' ? COLORS.WHITE : COLORS.BLACK,
+            hasMoved: true
+        } : null));
+        turn = chessEngine.turn() === 'w' ? COLORS.WHITE : COLORS.BLACK;
+        updateUI();
+    }
 
     // --- 初始化 ---
     function resize() {
-        const maxW = window.innerWidth - 20;
+        const maxW = window.innerWidth - 48;
         const maxH = window.innerHeight - 160;
         let s = Math.min(maxW, maxH, 500);
         
@@ -253,32 +329,23 @@
         ctx.scale(dpr, dpr);
 
         CELL_SIZE = s / 8;
-        // 立即触发一次重绘
-        requestAnimationFrame(loop);
     }
     window.addEventListener('resize', resize);
 
     function initGame() {
-        board = Array(8).fill(null).map(() => Array(8).fill(null));
+        if (!window.ChessEngine) return;
+        chessEngine = new window.ChessEngine();
         history = [];
+        halfmoveClock = 0;
+        positionCounts = new Map();
         turn = COLORS.WHITE;
         isGameOver = false;
         selected = null;
         possibleMoves = [];
         overlay.classList.remove('show');
+        cancelAi();
         
-        // 解析初始布局
-        for(let r=0; r<8; r++) {
-            for(let c=0; c<8; c++) {
-                const char = INITIAL_FEN[r][c];
-                if (char) {
-                    const color = char === char.toUpperCase() ? COLORS.WHITE : COLORS.BLACK;
-                    board[r][c] = { type: char.toLowerCase(), color: color, hasMoved: false };
-                }
-            }
-        }
-        
-        updateUI();
+        syncBoardFromEngine();
         if (CELL_SIZE === 0) resize();
     }
 
@@ -288,11 +355,12 @@
         const dt = timestamp - lastFrameTime;
         lastFrameTime = timestamp;
 
-        if (animatingPiece) {
+        if (animatingPiece && !shellPaused) {
             animatingPiece.progress += dt / 200; // 200ms 动画
             if (animatingPiece.progress >= 1) {
                 finalizeMove(animatingPiece);
                 animatingPiece = null;
+                maybeStartAi();
             }
         }
         draw();
@@ -303,7 +371,7 @@
     // --- 绘制逻辑 ---
     // --- 绘制逻辑 (已修复崩溃并增加危险提示) ---
     function draw() {
-        if (CELL_SIZE === 0) return;
+        if (CELL_SIZE === 0 || board.length !== BOARD_SIZE || board.some(row => !Array.isArray(row) || row.length !== BOARD_SIZE)) return;
         
         // 1. 绘制棋盘
         for(let r=0; r<8; r++) {
@@ -453,7 +521,7 @@
     canvas.addEventListener('touchstart', e => { e.preventDefault(); handleInput(e.touches[0]); }, {passive:false});
 
     function handleInput(e) {
-        if (isGameOver || animatingPiece) return;
+        if (isGameOver || animatingPiece || isAiTurn()) return;
         const rect = canvas.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
@@ -481,7 +549,17 @@
         // 2. 选中
         if (p && p.color === turn) {
             selected = {r, c};
-            possibleMoves = getValidMoves(r, c);
+            possibleMoves = chessEngine.moves({ square: coordsToSquare(r, c), verbose: true }).map(move => {
+                const target = squareToCoords(move.to);
+                return {
+                    ...target,
+                    engineMove: move,
+                    special: move.flags.includes('k') ? 'castle-king' :
+                        move.flags.includes('q') ? 'castle-queen' :
+                        move.flags.includes('e') ? 'en-passant' :
+                        move.flags.includes('p') ? 'promotion' : null
+                };
+            });
             draw();
         } else {
             // 点击空白处取消选中
@@ -491,8 +569,9 @@
         }
     }
 
-    function startMove(from, to) {
+    function startMove(from, to, promotion = null) {
         const piece = board[from.r][from.c];
+        const snapshot = JSON.parse(JSON.stringify(board));
         board[from.r][from.c] = null; // 提起来
         
         animatingPiece = {
@@ -500,7 +579,11 @@
             fromR: from.r, fromC: from.c,
             toR: to.r, toC: to.c,
             progress: 0,
-            special: to.special // castle, promotion
+            special: to.special, // castle, promotion
+            snapshot,
+            halfmoveClock,
+            positionCounts: Array.from(positionCounts.entries())
+            ,promotion
         };
         selected = null;
         possibleMoves = [];
@@ -509,73 +592,61 @@
 
     function finalizeMove(anim) {
         const { piece, fromR, fromC, toR, toC, special } = anim;
-        const captured = board[toR][toC];
-        
-        // 记录
-        history.push({
-            boardState: JSON.parse(JSON.stringify(board)),
-            turn: turn,
-            movedPiece: piece,
-            from: {r:fromR, c:fromC},
-            to: {r:toR, c:toC}
-        });
-
-        // 放置
-        board[toR][toC] = piece;
-        piece.hasMoved = true;
-        if (captured) AudioSys.play('capture');
-
-        // 处理特殊规则
-        if (special === 'castle-king') {
-            // 搬运车：车从 h 列移到 f 列 (col 7 -> 5)
-            const rook = board[toR][7];
-            board[toR][5] = rook;
-            board[toR][7] = null;
-            rook.hasMoved = true;
-        } else if (special === 'castle-queen') {
-            // 搬运车：车从 a 列移到 d 列 (col 0 -> 3)
-            const rook = board[toR][0];
-            board[toR][3] = rook;
-            board[toR][0] = null;
-            rook.hasMoved = true;
-        } else if (special === 'promotion') {
-            piece.type = 'q'; // 自动升变为后
+        let promotion = 'q';
+        if (special === 'promotion' && !anim.promotion) {
+            const choice = (window.prompt('升变为 Q 后 / R 车 / B 象 / N 马', 'Q') || 'Q').toLowerCase();
+            promotion = ['q', 'r', 'b', 'n'].includes(choice) ? choice : 'q';
         }
+        if (anim.promotion) promotion = anim.promotion;
+        const result = chessEngine.move({
+            from: coordsToSquare(fromR, fromC),
+            to: coordsToSquare(toR, toC),
+            promotion
+        });
+        if (!result) {
+            syncBoardFromEngine();
+            return;
+        }
+        history.push(result);
+        if (result.captured) AudioSys.play('capture');
+        syncBoardFromEngine();
 
-        // 切换回合
-        turn = turn === COLORS.WHITE ? COLORS.BLACK : COLORS.WHITE;
-        updateUI();
-
-        // 检查胜负/将军
-        if (isKingInCheck(turn)) {
+        if (chessEngine.isCheck()) {
             AudioSys.play('check');
-            if (isCheckmate(turn)) {
+            if (chessEngine.isCheckmate()) {
                 isGameOver = true;
                 winTitle.textContent = (turn === COLORS.WHITE ? "Black" : "White") + " Wins!";
                 overlay.classList.add('show');
             }
-        } else if (isStalemate(turn)) {
+        } else if (chessEngine.isStalemate()) {
             isGameOver = true;
-            winTitle.textContent = "Draw";
+            winTitle.textContent = "Draw · Stalemate";
+            overlay.classList.add('show');
+        } else if (chessEngine.isThreefoldRepetition() || chessEngine.isDrawByFiftyMoves() || chessEngine.isInsufficientMaterial()) {
+            isGameOver = true;
+            winTitle.textContent = chessEngine.isThreefoldRepetition() ? 'Draw · Threefold Repetition' :
+                chessEngine.isDrawByFiftyMoves() ? 'Draw · Fifty-move Rule' : 'Draw · Insufficient Material';
             overlay.classList.add('show');
         }
+        if (!isGameOver) maybeStartAi();
     }
 
     function undo() {
-        if (history.length === 0 || animatingPiece || isGameOver) return;
-        const last = history.pop();
-        board = last.boardState; // 暴力恢复状态，最稳妥
-        turn = last.turn;
+        if (!chessEngine || animatingPiece) return;
+        cancelAi();
+        if (!chessEngine.undo()) return;
+        history.pop();
+        if (document.getElementById('game-mode').value === 'ai' && chessEngine.turn() === 'b' && chessEngine.undo()) history.pop();
         isGameOver = false;
         overlay.classList.remove('show');
         selected = null;
         possibleMoves = [];
-        updateUI();
+        syncBoardFromEngine();
         draw();
     }
 
     function updateUI() {
-        turnText.textContent = turn === COLORS.WHITE ? "White's Turn" : "Black's Turn";
+        turnText.textContent = isAiTurn() ? "Computer thinking…" : turn === COLORS.WHITE ? "White's Turn" : "Black's Turn";
         turnBadge.className = `turn-badge ${turn === COLORS.WHITE ? 'white-turn' : 'black-turn'}`;
     }
 
@@ -618,6 +689,14 @@
                     if (target && target.color !== p.color) {
                         let isPromo = (p.color === COLORS.WHITE && tr === 0) || (p.color === COLORS.BLACK && tr === 7);
                         moves.push({r:tr, c:tc, special: isPromo ? 'promotion' : null});
+                    } else if (!target && history.length) {
+                        const last = history[history.length - 1];
+                        const lastPiece = board[r][tc];
+                        if (lastPiece && lastPiece.type === 'p' && lastPiece.color !== p.color &&
+                            last.from.c === tc && last.to.c === tc && Math.abs(last.from.r - last.to.r) === 2 &&
+                            last.to.r === r) {
+                            moves.push({ r: tr, c: tc, special: 'en-passant' });
+                        }
                     }
                 }
             });
@@ -647,7 +726,8 @@
                 // 长易位 (Queen Side)
                 const qr = board[r][0]; // Queen-side Rook
                 if (qr && qr.type === 'r' && !qr.hasMoved && !board[r][1] && !board[r][2] && !board[r][3]) {
-                    if (!isSquareAttacked(r, 3, p.color === COLORS.WHITE ? COLORS.BLACK : COLORS.WHITE)) { // 只需要检查经过的点
+                    if (!isSquareAttacked(r, 3, p.color === COLORS.WHITE ? COLORS.BLACK : COLORS.WHITE) &&
+                        !isSquareAttacked(r, 2, p.color === COLORS.WHITE ? COLORS.BLACK : COLORS.WHITE)) {
                         moves.push({r:r, c:2, special: 'castle-queen'});
                     }
                 }
@@ -669,14 +749,17 @@
             moves = moves.filter(m => {
                 // 模拟移动
                 const originalTarget = board[m.r][m.c];
+                const enPassantTarget = m.special === 'en-passant' ? board[r][m.c] : null;
                 board[m.r][m.c] = p;
                 board[r][c] = null;
+                if (m.special === 'en-passant') board[r][m.c] = null;
                 
                 const safe = !isKingInCheck(p.color);
                 
                 // 还原
                 board[r][c] = p;
                 board[m.r][m.c] = originalTarget;
+                if (m.special === 'en-passant') board[r][m.c] = enPassantTarget;
                 
                 return safe;
             });
@@ -688,7 +771,7 @@
     function findKing(color) {
         for(let r=0; r<8; r++) {
             for(let c=0; c<8; c++) {
-                if (board[r][c] && board[r][c].type === 'k' && board[r][c].color === color) return {r, c};
+                if (board[r]?.[c] && board[r][c].type === 'k' && board[r][c].color === color) return {r, c};
             }
         }
         return null;
@@ -706,6 +789,9 @@
     // 检查格子是否被指定颜色的棋子攻击
     // [修复]：兵的直走不算攻击，王车易位不算攻击
     function isSquareAttacked(r, c, attackerColor) {
+        if (chessEngine) {
+            return chessEngine.isAttacked(coordsToSquare(r, c), attackerColor === COLORS.WHITE ? 'w' : 'b');
+        }
         for(let i=0; i<8; i++) {
             for(let j=0; j<8; j++) {
                 const p = board[i][j];
@@ -761,6 +847,58 @@
         return !isKingInCheck(color) && isCheckmate(color); // 借用 checkmate 的遍历逻辑
     }
 
+    function positionKey() {
+        return board.map(row => row.map(piece => piece ? `${piece.color}${piece.type}` : '--').join('')).join('/') + `:${turn}`;
+    }
+
+    function recordPosition() {
+        const key = positionKey();
+        const count = (positionCounts.get(key) || 0) + 1;
+        positionCounts.set(key, count);
+        return count;
+    }
+
+    function hasInsufficientMaterial() {
+        const pieces = [];
+        board.forEach((row, r) => row.forEach((piece, c) => {
+            if (piece && piece.type !== 'k') pieces.push({ piece, square: (r + c) % 2 });
+        }));
+        if (!pieces.length) return true;
+        if (pieces.length === 1 && ['b', 'n'].includes(pieces[0].piece.type)) return true;
+        return pieces.every(item => item.piece.type === 'b') && new Set(pieces.map(item => item.square)).size === 1;
+    }
+
+    window.addEventListener('arcade:pause', () => { shellPaused = true; });
+    window.addEventListener('arcade:resume', () => { shellPaused = false; lastFrameTime = performance.now(); maybeStartAi(); });
+
+    function maybeStartAi() {
+        if (!isAiTurn() || isGameOver || animatingPiece || shellPaused) return;
+        updateUI();
+        const id = ++aiRequestId;
+        aiWorker.postMessage({ id, fen: chessEngine.fen(), difficulty: document.getElementById('ai-difficulty').value });
+    }
+
+    function handleAiResult(event) {
+        const { id, move } = event.data || {};
+        if (id !== aiRequestId || !move || !isAiTurn() || isGameOver || animatingPiece) return;
+        const from = squareToCoords(move.from);
+        const target = chessEngine.moves({ square: move.from, verbose: true }).find((candidate) => candidate.to === move.to && (!candidate.promotion || candidate.promotion === move.promotion));
+        if (!target) return;
+        const to = squareToCoords(move.to);
+        startMove(from, { ...to, special: target.promotion ? 'promotion' : null }, move.promotion);
+    }
+
+    document.getElementById('game-mode').addEventListener('change', () => {
+        document.getElementById('ai-difficulty').disabled = document.getElementById('game-mode').value !== 'ai';
+        cancelAi(); initGame();
+    });
+    document.getElementById('ai-difficulty').addEventListener('change', () => { cancelAi(); maybeStartAi(); });
+
+</script>
+<script type="module">
+    import { Chess } from '/games/vendor/chess.js/chess.js';
+    window.ChessEngine = Chess;
+    createAiWorker();
     initGame();
 </script>
 </body>

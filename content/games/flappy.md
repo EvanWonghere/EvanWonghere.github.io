@@ -1,9 +1,11 @@
 ---
-title: "Flappy Emoji"
+title: "Flappy Flight"
 date: 2025-11-20
-description: "虐心神作回归！换上你喜欢的 Emoji，飞越无限钢管。"
+description: "驾驶纸翼小飞机穿过峡谷，挑战稳定节奏与最高航程。"
 game_url: "/games/flappy-app/index.html"
 gametype: "街机"
+platforms: ["桌面", "移动端"]
+controls: ["键盘", "鼠标", "触屏"]
 ---
 
 #### 游戏说明
