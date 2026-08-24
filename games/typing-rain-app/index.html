@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Typing Rain</title>
+    <title>打字雨 · Typing Rain</title>
     <style>
         :root {
             --bg-color: #0c0c0c;
@@ -139,6 +139,7 @@
         .mobile-warning { display: none; }
 
     </style>
+    <script src="/games/arcade-runtime.js"></script>
 </head>
 <body>
 
@@ -199,7 +200,9 @@
     let lastTime = 0;
     let spawnTimer = 0;
     let spawnInterval = 2000; // 生成间隔 (毫秒)
-    let fallSpeed = 0.5;      // 下落速度
+    let fallSpeed = 30;       // 像素/秒
+    let shellPaused = false;
+    let playElapsedMs = 0;
     
     // WPM 统计
     let typedChars = 0;
@@ -252,9 +255,11 @@
         score = 0;
         health = 100;
         spawnInterval = 2000;
-        fallSpeed = 0.5; // 像素/帧 (约 30px/s)
+        fallSpeed = 30;
+        spawnTimer = 0;
         typedChars = 0;
-        startTime = Date.now();
+        startTime = performance.now();
+        playElapsedMs = 0;
         
         gameRunning = true;
         lastTime = performance.now();
@@ -271,31 +276,36 @@
 
     function loop(timestamp) {
         if (!gameRunning) return;
-        
-        // 简单的增量时间控制 (假设 60fps)
-        // 在更复杂的项目中应使用 deltaTime
+        const deltaMs = Math.max(0, Math.min(timestamp - lastTime, 50));
+        const dt = deltaMs / 1000;
+        lastTime = timestamp;
         
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (shellPaused) {
+            drawEntities();
+            requestAnimationFrame(loop);
+            return;
+        }
+        playElapsedMs += deltaMs;
         
         // 1. 生成单词
-        spawnTimer += 16.6; // ~1 frame ms
+        spawnTimer += deltaMs;
         if (spawnTimer > spawnInterval) {
             spawnWord();
             spawnTimer = 0;
-            // 难度随分数动态增加
-            if (spawnInterval > 600) spawnInterval -= 10;
-            if (fallSpeed < 3) fallSpeed += 0.01;
+            spawnInterval = Math.max(650, 2000 - score * 1.4);
+            fallSpeed = Math.min(180, 30 + score * 0.035);
         }
 
         // 2. 更新实体
-        updateEntities();
+        updateEntities(dt);
         
         // 3. 渲染
         drawEntities();
-        drawMatrixBg(); // 背景特效
+        drawMatrixBg(dt); // 背景特效
         
         // 4. 更新 UI (WPM)
-        const elapsedMin = (Date.now() - startTime) / 60000;
+        const elapsedMin = playElapsedMs / 60000;
         const wpm = elapsedMin > 0 ? Math.floor((typedChars / 5) / elapsedMin) : 0;
         document.getElementById('wpm').textContent = wpm;
 
@@ -354,11 +364,11 @@
         activeWords.push(new WordEntity(text));
     }
 
-    function updateEntities() {
+    function updateEntities(dt) {
         // 更新单词
         for (let i = activeWords.length - 1; i >= 0; i--) {
             let w = activeWords[i];
-            w.y += fallSpeed;
+            w.y += fallSpeed * dt;
             
             // 触底扣血
             if (w.y > canvas.height) {
@@ -371,15 +381,15 @@
 
         // 更新粒子
         for (let i = particles.length - 1; i >= 0; i--) {
-            particles[i].life -= 0.02;
-            particles[i].x += particles[i].vx;
-            particles[i].y += particles[i].vy;
+            particles[i].life -= 1.2 * dt;
+            particles[i].x += particles[i].vx * dt;
+            particles[i].y += particles[i].vy * dt;
             if (particles[i].life <= 0) particles.splice(i, 1);
         }
 
         // 更新激光
         for (let i = lasers.length - 1; i >= 0; i--) {
-            lasers[i].life -= 0.05;
+            lasers[i].life -= 3 * dt;
             if (lasers[i].life <= 0) lasers.splice(i, 1);
         }
     }
@@ -505,8 +515,8 @@
         for (let i = 0; i < count; i++) {
             particles.push({
                 x: x, y: y,
-                vx: (Math.random() - 0.5) * 5,
-                vy: (Math.random() - 0.5) * 5,
+                vx: (Math.random() - 0.5) * 300,
+                vy: (Math.random() - 0.5) * 300,
                 life: 1.0,
                 color: color
             });
@@ -519,7 +529,7 @@
     const columns = window.innerWidth / fontSize;
     for(let x = 0; x < columns; x++) drops[x] = 1;
 
-    function drawMatrixBg() {
+    function drawMatrixBg(dt) {
         bgCtx.fillStyle = "rgba(12, 12, 12, 0.1)"; // 拖尾效果
         bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
 
@@ -533,9 +543,12 @@
 
             if(drops[i]*fontSize > bgCanvas.height && Math.random() > 0.975)
                 drops[i] = 0;
-            drops[i]++;
+            drops[i] += dt * 60;
         }
     }
+
+    window.addEventListener('arcade:pause', () => { shellPaused = true; });
+    window.addEventListener('arcade:resume', () => { shellPaused = false; lastTime = performance.now(); });
 
 </script>
 </body>

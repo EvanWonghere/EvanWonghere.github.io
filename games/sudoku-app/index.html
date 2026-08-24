@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sudoku Pro</title>
+    <title>数独</title>
     <style>
         :root {
             --bg: #ffffff;
@@ -237,15 +237,41 @@
             .num-btn { height: 40px; }
         }
     </style>
+    <script src="/games/arcade-runtime.js"></script>
+    <script src="/games/vendor/sudoku.js/sudoku.js"></script>
+    <script type="module">
+        import { generateSudoku as generateExtreme, countSolutions } from '/games/engines/sudoku.mjs';
+        const toNumberGrid = (boardString) => sudoku.board_string_to_grid(boardString)
+            .map(row => row.map(value => value === '.' ? 0 : Number(value)));
+        window.SudokuEngine = {
+            generateSudoku(givens) {
+                if (Number(givens) === 26) {
+                    const generated = generateExtreme(26);
+                    if (countSolutions(generated.puzzle, 2) !== 1) throw new Error('极限棋盘唯一性验证失败');
+                    const puzzleString = generated.puzzle.flat().map(value => value || '.').join('');
+                    const solved = sudoku.solve(puzzleString);
+                    if (!solved) throw new Error('sudoku.js 未能验证极限棋盘');
+                    return { puzzle: generated.puzzle, solution: toNumberGrid(solved) };
+                }
+                const puzzleString = sudoku.generate(Number(givens), true);
+                const solutionString = sudoku.solve(puzzleString);
+                if (!solutionString) throw new Error('sudoku.js 未能求解生成的棋盘');
+                const puzzle = toNumberGrid(puzzleString);
+                if (countSolutions(puzzle, 2) !== 1) throw new Error('sudoku.js 棋盘唯一性验证失败');
+                return { puzzle, solution: toNumberGrid(solutionString) };
+            }
+        };
+        window.dispatchEvent(new Event('sudoku-engine-ready'));
+    </script>
 </head>
 <body>
 
 <header>
     <select id="difficulty">
-        <option value="30">简单</option>
-        <option value="40" selected>中等</option>
-        <option value="50">困难</option>
-        <option value="60">地狱</option>
+        <option value="53">简单</option>
+        <option value="44" selected>普通</option>
+        <option value="35">困难</option>
+        <option value="26">极限</option>
     </select>
     
     <div class="status-bar">
@@ -357,29 +383,12 @@
     }
 
     // --- 核心逻辑 ---
-    function generateSudoku(holes) {
-        solution = Array(9).fill(null).map(() => Array(9).fill(0));
-        fillDiagonal();
-        solveSudoku(solution);
-        
-        board = JSON.parse(JSON.stringify(solution));
-        initialBoard = Array(9).fill(null).map(() => Array(9).fill(0));
-        
-        let attempts = holes;
-        while (attempts > 0) {
-            let r = Math.floor(Math.random() * 9);
-            let c = Math.floor(Math.random() * 9);
-            if (board[r][c] !== 0) {
-                board[r][c] = 0;
-                attempts--;
-            }
-        }
-        
-        for(let r=0; r<9; r++) {
-            for(let c=0; c<9; c++) {
-                if(board[r][c] !== 0) initialBoard[r][c] = board[r][c];
-            }
-        }
+    function generateSudoku(givens) {
+        if (!window.SudokuEngine) throw new Error('数独规则引擎尚未就绪');
+        const generated = window.SudokuEngine.generateSudoku(givens);
+        solution = generated.solution;
+        board = generated.puzzle;
+        initialBoard = generated.puzzle.map(row => row.slice());
     }
 
     // (这里复用之前高效的数独生成算法，篇幅原因省略重复代码，逻辑保持一致)
@@ -688,8 +697,22 @@
         if (r >= 0 && r < 9 && c >= 0 && c < 9) selectCell(r, c);
     }
 
-    initUI();
-    newGame();
+    function boot() {
+        initUI();
+        newGame();
+        if (window.ArcadeRuntime) window.ArcadeRuntime.ready();
+    }
+
+    if (window.SudokuEngine) boot();
+    else window.addEventListener('sudoku-engine-ready', boot, { once: true });
+
+    window.addEventListener('arcade:pause', () => clearInterval(timerInterval));
+    window.addEventListener('arcade:resume', () => {
+        if (!isGameOver) {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+    });
 
 </script>
 </body>

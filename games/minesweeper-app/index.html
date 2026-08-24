@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Minesweeper</title>
+    <title>扫雷</title>
     <style>
         :root {
             --bg-color: #c0c0c0;
@@ -113,8 +113,8 @@
         }
 
         .cell {
-            width: 24px;
-            height: 24px;
+            width: var(--cell-size, 24px);
+            height: var(--cell-size, 24px);
             background-color: var(--bg-color);
             display: flex;
             justify-content: center;
@@ -196,6 +196,7 @@
             color: red;
         }
     </style>
+    <script src="/games/arcade-runtime.js"></script>
 </head>
 <body>
 
@@ -215,6 +216,10 @@
             <option value="easy">简单 (9x9)</option>
             <option value="medium" selected>中等 (16x16)</option>
             <option value="hard">困难 (30x16)</option>
+        </select>
+        <select id="generation-mode" onchange="initGame()" aria-label="生成模式">
+            <option value="no-guess" selected>无猜模式</option>
+            <option value="classic">经典随机</option>
         </select>
         <button class="mode-switch" id="mode-btn" onclick="toggleMode()">
             ⛏️ 挖掘模式
@@ -288,8 +293,11 @@
 
     function renderGrid() {
         gridEl.innerHTML = '';
-        gridEl.style.gridTemplateColumns = `repeat(${config.cols}, 24px)`;
-        gridEl.style.gridTemplateRows = `repeat(${config.rows}, 24px)`;
+        const available = Math.max(280, window.innerWidth - 54);
+        const cellSize = Math.max(18, Math.min(28, Math.floor(available / config.cols)));
+        gridEl.style.setProperty('--cell-size', `${cellSize}px`);
+        gridEl.style.gridTemplateColumns = `repeat(${config.cols}, var(--cell-size))`;
+        gridEl.style.gridTemplateRows = `repeat(${config.rows}, var(--cell-size))`;
 
         for (let r = 0; r < config.rows; r++) {
             for (let c = 0; c < config.cols; c++) {
@@ -298,11 +306,37 @@
                 cell.id = `cell-${r}-${c}`;
                 
                 // 鼠标左键 / 触摸点击
-                cell.onclick = () => handleClick(r, c);
+                cell.onclick = () => {
+                    if (cell.dataset.longPress === 'done') { cell.dataset.longPress = ''; return; }
+                    handleClick(r, c);
+                };
                 // 鼠标右键插旗
                 cell.onmousedown = (e) => {
                     if (e.button === 2) handleFlag(r, c);
                 };
+                let longPressTimer;
+                cell.addEventListener('pointerdown', (event) => {
+                    if (event.pointerType === 'mouse') return;
+                    cell.dataset.longPress = '';
+                    longPressTimer = setTimeout(() => {
+                        cell.dataset.longPress = 'done';
+                        handleFlag(r, c);
+                        if (navigator.vibrate) navigator.vibrate(25);
+                    }, 480);
+                });
+                ['pointerup', 'pointercancel', 'pointerleave'].forEach(type =>
+                    cell.addEventListener(type, () => clearTimeout(longPressTimer)));
+
+                const data = board[r][c];
+                if (data.isOpen) {
+                    cell.classList.remove('closed');
+                    cell.classList.add('opened');
+                    if (data.isMine) { cell.classList.add('mine'); cell.textContent = '💣'; }
+                    else if (data.value) { cell.classList.add(`val-${data.value}`); cell.textContent = data.value; }
+                } else if (data.isFlag) {
+                    cell.classList.add('flagged');
+                    cell.textContent = '🚩';
+                }
                 
                 gridEl.appendChild(cell);
             }
@@ -311,28 +345,69 @@
 
     // 核心逻辑：放置地雷 (初见防杀：排除掉第一次点击的位置及其周围)
     function placeMines(excludeR, excludeC) {
-        let minesPlaced = 0;
-        while (minesPlaced < config.mines) {
-            const r = Math.floor(Math.random() * config.rows);
-            const c = Math.floor(Math.random() * config.cols);
-
-            // 排除第一次点击的区域 (3x3)
-            if (Math.abs(r - excludeR) <= 1 && Math.abs(c - excludeC) <= 1) continue;
-
-            if (!board[r][c].isMine) {
-                board[r][c].isMine = true;
-                minesPlaced++;
-            }
-        }
-
-        // 计算数字
-        for (let r = 0; r < config.rows; r++) {
-            for (let c = 0; c < config.cols; c++) {
+        const noGuess = document.getElementById('generation-mode').value === 'no-guess';
+        for (let attempt = 0; attempt < 600; attempt++) {
+            board.flat().forEach(cell => { cell.isMine = false; cell.value = 0; });
+            let minesPlaced = 0;
+            while (minesPlaced < config.mines) {
+                const r = Math.floor(Math.random() * config.rows);
+                const c = Math.floor(Math.random() * config.cols);
+                if (Math.abs(r - excludeR) <= 1 && Math.abs(c - excludeC) <= 1) continue;
                 if (!board[r][c].isMine) {
-                    board[r][c].value = countNeighbors(r, c);
+                    board[r][c].isMine = true;
+                    minesPlaced++;
+                }
+            }
+            for (let r = 0; r < config.rows; r++) {
+                for (let c = 0; c < config.cols; c++) {
+                    if (!board[r][c].isMine) board[r][c].value = countNeighbors(r, c);
+                }
+            }
+            if (!noGuess || isLogicallySolvable(excludeR, excludeC)) return;
+        }
+        throw new Error('无猜棋盘生成失败，请重试');
+    }
+
+    function neighborCells(r, c) {
+        const result = [];
+        for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) {
+            if (!dr && !dc) continue;
+            const nr = r + dr, nc = c + dc;
+            if (nr >= 0 && nr < config.rows && nc >= 0 && nc < config.cols) result.push(board[nr][nc]);
+        }
+        return result;
+    }
+
+    function isLogicallySolvable(startR, startC) {
+        const opened = new Set();
+        const flagged = new Set();
+        const key = cell => `${cell.r},${cell.c}`;
+        function reveal(cell) {
+            if (cell.isMine || opened.has(key(cell))) return false;
+            opened.add(key(cell));
+            if (cell.value === 0) neighborCells(cell.r, cell.c).forEach(reveal);
+            return true;
+        }
+        reveal(board[startR][startC]);
+        let changed = true;
+        while (changed) {
+            changed = false;
+            for (const id of Array.from(opened)) {
+                const [r, c] = id.split(',').map(Number);
+                const cell = board[r][c];
+                if (!cell.value) continue;
+                const around = neighborCells(r, c);
+                const marked = around.filter(item => flagged.has(key(item))).length;
+                const unknown = around.filter(item => !opened.has(key(item)) && !flagged.has(key(item)));
+                if (unknown.length && cell.value - marked === unknown.length) {
+                    unknown.forEach(item => flagged.add(key(item)));
+                    changed = true;
+                } else if (unknown.length && marked === cell.value) {
+                    unknown.forEach(item => { if (reveal(item)) changed = true; });
                 }
             }
         }
+        return opened.size === config.rows * config.cols - config.mines;
     }
 
     function countNeighbors(r, c) {
@@ -535,6 +610,15 @@
             modeBtn.textContent = '⛏️ 挖掘模式';
         }
     }
+
+    window.addEventListener('resize', renderGrid);
+    window.addEventListener('arcade:pause', () => clearInterval(timerInterval));
+    window.addEventListener('arcade:resume', () => {
+        if (gameStarted && !gameOver) {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => { timeElapsed++; updateTimer(); }, 1000);
+        }
+    });
 
     // 启动
     initGame();

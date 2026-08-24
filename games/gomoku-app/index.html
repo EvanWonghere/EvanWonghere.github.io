@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Gomoku AI</title>
+    <title>五子棋</title>
     <style>
         :root {
             --bg-color: #f0f0f0;
@@ -87,21 +87,50 @@
         .controls {
             margin-top: 15px;
             display: flex;
-            gap: 15px;
+            align-items: stretch;
+            gap: 8px;
+            padding: 7px;
+            max-width: calc(100vw - 18px);
+            border: 1px solid rgba(91, 55, 25, 0.38);
+            border-radius: 15px;
+            background: linear-gradient(145deg, rgba(239, 207, 161, 0.96), rgba(199, 153, 98, 0.96));
+            box-shadow: 0 9px 24px rgba(45, 24, 8, 0.23), inset 0 1px rgba(255,255,255,.6);
         }
 
-        button {
-            padding: 10px 20px;
-            font-size: 1rem;
-            border: none;
-            border-radius: 20px;
-            background: var(--btn-bg);
-            color: var(--text-color);
-            box-shadow: 0 2px 5px var(--btn-shadow);
-            cursor: pointer;
-            transition: transform 0.1s;
+        .select-shell {
+            position: relative;
+            min-width: 112px;
+            padding: 5px 32px 5px 12px;
+            border: 1px solid rgba(78, 46, 21, .5);
+            border-radius: 10px;
+            color: #3d2817;
+            background: linear-gradient(#fff3d6, #ead0a4);
+            box-shadow: inset 0 1px #fff, 0 2px 4px #633b1d22;
         }
-        button:active { transform: scale(0.95); }
+        .select-shell::after { content:"⌄"; position:absolute; right:11px; top:50%; transform:translateY(-44%); color:#764b27; font-weight:900; pointer-events:none; }
+        .select-shell span { display:block; color:#8a6240; font-size:9px; font-weight:800; letter-spacing:.18em; }
+        .select-shell select { width:100%; padding:0; border:0; outline:0; appearance:none; color:#2f2115; background:transparent; font-family:inherit; font-size:14px; font-weight:800; line-height:1.25; cursor:pointer; }
+        .controls button {
+            padding: 8px 17px;
+            font-size: .95rem;
+            font-weight: 800;
+            border: 1px solid rgba(74, 43, 20, .48);
+            border-radius: 10px;
+            background: linear-gradient(#6b4528, #432918);
+            color: #fff6e9;
+            box-shadow: inset 0 1px rgba(255,255,255,.18), 0 3px 0 #28170d;
+            cursor: pointer;
+            transition: transform .1s, filter .15s;
+        }
+        .controls button:hover { filter:brightness(1.12); }
+        .controls button:active { transform: translateY(2px); box-shadow: inset 0 1px rgba(255,255,255,.12), 0 1px 0 #28170d; }
+
+        @media (max-width: 520px), (max-height: 700px) {
+            .header { margin-bottom: 6px; }
+            .controls { margin-top: 9px; gap:5px; padding:5px; }
+            .select-shell { min-width:96px; padding:4px 27px 4px 9px; }
+            .controls button { padding:7px 10px; font-size:.86rem; }
+        }
         
         /* 胜利/思考中 浮层 */
         .overlay {
@@ -121,6 +150,7 @@
         .overlay.show { opacity: 1; }
 
     </style>
+    <script src="/games/arcade-runtime.js"></script>
 </head>
 <body>
 
@@ -138,6 +168,9 @@
 </div>
 
 <div class="controls">
+    <label class="select-shell"><span>棋力</span><select id="difficulty" aria-label="AI 难度">
+        <option value="easy">休闲</option><option value="normal" selected>标准</option><option value="hard">挑战</option>
+    </select></label>
     <button onclick="undo()">悔棋</button>
     <button onclick="restartGame()">重新开始</button>
 </div>
@@ -160,6 +193,19 @@
     let isPlayerTurn = true;
     let isGameOver = false;
     let lastMove = null; 
+    let aiWorker;
+    let aiRequestId = 0;
+
+    function createAiWorker() {
+        if (aiWorker) aiWorker.terminate();
+        aiWorker = new Worker('worker.js');
+        aiWorker.addEventListener('message', handleAiMove);
+    }
+
+    function cancelAi() {
+        aiRequestId++;
+        createAiWorker();
+    }
 
     // 初始化 Canvas 尺寸
     function resize() {
@@ -188,6 +234,7 @@
         isPlayerTurn = true;
         isGameOver = false;
         lastMove = null;
+        cancelAi();
         updateStatus("玩家回合 (黑棋)", true);
         overlay.classList.remove('show');
         
@@ -319,7 +366,7 @@
         if (role === 1) {
             isPlayerTurn = false;
             updateStatus("AI 思考中...", false);
-            setTimeout(aiMove, 100); 
+            aiMove();
         } else {
             isPlayerTurn = true;
             updateStatus("玩家回合 (黑棋)", true);
@@ -327,7 +374,9 @@
     }
 
     function undo() {
-        if (history.length === 0 || isGameOver) return;
+        if (history.length === 0) return;
+        cancelAi();
+        overlay.classList.remove('show');
         if (history.length >= 2) {
             const m1 = history.pop();
             board[m1.r][m1.c] = 0;
@@ -335,6 +384,14 @@
             board[m2.r][m2.c] = 0;
             
             lastMove = history.length > 0 ? {r: history[history.length-1].r, c: history[history.length-1].c} : null;
+            isPlayerTurn = true;
+            isGameOver = false;
+            updateStatus("玩家回合 (黑棋)", true);
+            drawBoard();
+        } else if (history.length === 1 && !isPlayerTurn) {
+            const move = history.pop();
+            board[move.r][move.c] = 0;
+            lastMove = null;
             isPlayerTurn = true;
             isGameOver = false;
             updateStatus("玩家回合 (黑棋)", true);
@@ -360,36 +417,15 @@
 
     // --- AI 核心逻辑 ---
     function aiMove() {
-        let maxScore = -Infinity;
-        let bestPoint = null;
-        
-        if (history.length === 0) {
-            bestPoint = {r: 7, c: 7};
-        } else {
-            for(let r=0; r<GRID_SIZE; r++) {
-                for(let c=0; c<GRID_SIZE; c++) {
-                    if(board[r][c] === 0) {
-                        if(!hasNeighbor(r, c)) continue;
-                        const scoreAttack = evaluatePoint(r, c, 2); 
-                        const scoreDefense = evaluatePoint(r, c, 1); 
-                        const totalScore = scoreAttack + scoreDefense;
+        const id = ++aiRequestId;
+        aiWorker.postMessage({ id, board, difficulty: document.getElementById('difficulty').value });
+    }
 
-                        if (totalScore > maxScore) {
-                            maxScore = totalScore;
-                            bestPoint = {r, c};
-                        } else if (totalScore === maxScore) {
-                            if(Math.random() > 0.5) bestPoint = {r, c};
-                        }
-                    }
-                }
-            }
-        }
-
-        if (bestPoint) {
-            placePiece(bestPoint.r, bestPoint.c, 2);
-        } else {
-            showMsg("平局！");
-        }
+    function handleAiMove(event) {
+        const { id, move } = event.data || {};
+        if (id !== aiRequestId || isGameOver || isPlayerTurn) return;
+        if (move && board[move.r][move.c] === 0) placePiece(move.r, move.c, 2);
+        else { isGameOver = true; showMsg('平局！'); }
     }
 
     function hasNeighbor(r, c) {
@@ -481,6 +517,7 @@
 
     // 🔥 关键修复：调整执行顺序
     // 1. 先初始化游戏数据 (让 board 变成数组，不再是空)
+    createAiWorker();
     initGame();
     
     // 2. 再绑定 Resize 事件
@@ -488,6 +525,14 @@
     
     // 3. 最后计算尺寸并绘制 (这时候 board 已经有数据了，drawBoard 不会报错)
     resize();
+
+    document.getElementById('difficulty').addEventListener('change', () => {
+        if (!isPlayerTurn && !isGameOver) { cancelAi(); aiMove(); }
+    });
+    window.addEventListener('arcade:pause', cancelAi);
+    window.addEventListener('arcade:resume', () => {
+        if (!isPlayerTurn && !isGameOver) aiMove();
+    });
 
 </script>
 </body>
