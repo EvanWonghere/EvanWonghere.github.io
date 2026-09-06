@@ -1,0 +1,134 @@
+/* ÉTUDE: an independent visual identity for the music room. */
+:root {
+    color-scheme: light;
+    --bg: #f3f0e8;
+    --surface: #faf8f2;
+    --surface2: #eae5da;
+    --line: #d7d0c2;
+    --text: #292f2b;
+    --muted: #686b61;
+    --accent: #87603a;
+    --green: #386a53;
+    --red: #a04338;
+    --radius: 3px;
+    --serif: 'Iowan Old Style', 'Baskerville', 'Songti SC', 'Noto Serif CJK SC', Georgia, serif;
+}
+body { background: radial-gradient(ellipse at 95% 0, #e5dfcd80, transparent 45%), var(--bg); }
+body::before { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 20; opacity: .1; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%235b5038' opacity='.2' filter='url(%23n)' d='M0 0h180v180H0z'/%3E%3C/svg%3E"); }
+h1, h2, h3, h4 { font-family: var(--serif); font-weight: 500; }
+h2 { font-size: clamp(2.25rem, 3.4vw, 3.6rem); letter-spacing: .015em; line-height: 1.3; }
+h3 { font-size: 1.25rem; }
+.eyebrow { font: 500 .65rem/1.5 -apple-system, sans-serif; letter-spacing: .22em; }
+button, .file-button { border-radius: 3px; background: transparent; font-weight: 450; padding: 9px 17px; }
+button:hover, .file-button:hover { background: #e7e1d4; border-color: #9c998a; }
+button.primary { background: #303f37; color: #f9f5e8; border-color: #303f37; }
+button.primary:hover { background: #45594b; border-color: #45594b; }
+button.active, button[aria-pressed=true] { background: #e8ddc8; color: #79552c; border-color: #a58658; }
+select, input[type=number] { border-radius: 2px; background: #fffdf7; padding: 9px 10px; }
+textarea:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.topbar { height: 83px; padding: 0 38px; background: #f8f5ee; border-bottom: 1px solid var(--line); }
+.brand { gap: 18px; }
+.brand-mark { background: none; width: auto; height: auto; color: var(--text); font: 1.7rem/1 var(--serif); letter-spacing: .08em; border-radius: 0; }
+.brand-caption { border-left: 1px solid #b7b19f; padding-left: 18px; font-size: .72rem; letter-spacing: .12em; }
+.top-actions { gap: 22px; }
+.top-actions #save-state { font-size: .7rem; }
+#sound-enable { font-size: .77rem; border-color: #b4af9e; }
+.shell { max-width: 1760px; grid-template-columns: 238px minmax(0, 1fr); }
+.sidebar { padding: 38px 23px; height: calc(100dvh - 150px); background: #eeeadf66; }
+.room-title { padding: 0 12px 31px; }
+.room-title h1 { font-size: 1.45rem; letter-spacing: .03em; margin-top: 12px; }
+.room-title p { font-family: var(--serif); font-size: .8rem; letter-spacing: .06em; }
+.room-title .accent { display: none; }
+nav { gap: 3px; }
+nav button { border-radius: 0; font-size: .83rem; padding: 12px; letter-spacing: .035em; }
+nav button span { font: italic .8rem var(--serif); color: #686b61; margin-right: 10px; }
+nav button.active { background: #e4dfd1; border-color: transparent; border-left-color: var(--accent); color: #293d31; }
+nav button.active span { color: var(--accent); }
+nav button:hover { background: #e9e4d8; border-color: transparent; }
+.daily { margin-top: auto; padding-top: 22px; }
+.daily .row { margin-top: 12px; }
+progress, progress::-webkit-progress-bar { background: #d9d5c8; }
+progress { height: 3px; border-radius: 0; }
+.back-link { font-size: .73rem; }
+main { padding: 40px clamp(24px, 4.4vw, 76px) 110px; }
+.page-heading { margin-bottom: 30px; padding-bottom: 25px; border-bottom: 1px solid var(--line); }
+.page-heading p { font-size: .86rem; line-height: 1.9; max-width: 600px; }
+.page-heading .pill { border-radius: 0; padding: 8px 0; border-width: 1px 0; background: none; letter-spacing: .08em; }
+/* A small concert-program cover, drawn specifically for this room. */
+.route-intro { display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; min-height: 270px; align-items: center; border: 0; padding-bottom: 0; margin-bottom: 26px; }
+.route-intro h2 { font-size: clamp(2.8rem, 4.3vw, 4.6rem); line-height: 1.32; margin: 20px 0 18px; }
+.route-intro p { max-width: 390px; }
+.cover-art { position: relative; width: 100%; max-width: 370px; justify-self: end; }
+.cover-art svg { display: block; width: 100%; height: auto; }
+.cover-art figcaption { display: flex; justify-content: space-between; gap: 15px; font: italic .72rem var(--serif); color: var(--muted); margin: 8px 12px 0; }
+.overview-stats { gap: 0; margin-bottom: 27px; border-block: 1px solid var(--line); }
+.stat { padding: 19px 22px; border: 0; border-right: 1px solid var(--line); border-radius: 0; background: none; }
+.stat:first-child { padding-left: 0; }.stat:last-child { border-right: 0; }
+.stat strong { font: 2.2rem/1.2 var(--serif); color: #374c3d; margin-bottom: 5px; }
+.stat strong small { font-size: .85rem; color: var(--muted); }
+.stat span { font-size: .72rem; }
+.continue-card { position: relative; border: 1px solid #3e5043; border-radius: 3px; background: #34473c; color: #fbf6e9; padding: 25px 30px; overflow: hidden; box-shadow: 0 9px 23px #3542310a; }
+.continue-card::after { content: 'Andante'; position: absolute; right: 22%; bottom: -30px; font: italic 6.5rem var(--serif); color: #f2e8cc09; pointer-events: none; }
+.continue-card .eyebrow { color: #ddc397; }.continue-card h3 { font-size: 1.55rem; }.continue-card p { color: #d0d8ca; font-size: .8rem; }
+.continue-card button { background: #e9ddc2; border-color: #e9ddc2; color: #334438; position: relative; z-index: 1; }.continue-card button:hover { background: #fff3d7; }
+.section-label { margin-top: 36px; margin-bottom: 22px; }.section-label h3 { font-size: 1.5rem; }.section-label span { font-size: .73rem; }
+.curriculum { gap: 22px 32px; }
+.stage { position: relative; padding: 25px 0 8px; border: 0; border-top: 2px solid #9b9d87; background: transparent; border-radius: 0; }
+.stage-head { gap: 20px; margin-bottom: 20px; }.stage-number { color: #a4855c; font-size: 2.8rem; font-weight: 400; }.stage-head h3 { font-size: 1.2rem; margin: 6px 0; }.stage-week { color: #686b61; font-size: .68rem; }
+.lesson-item { padding: 13px 0; font-size: .85rem; gap: 12px; }.lesson-item span:last-child { font-size: .71rem; white-space: nowrap; }
+.card { background: #fbf9f2; box-shadow: 0 4px 16px #44382203; padding: 28px; }
+.pill { background: #eeeadf; border-radius: 3px; font-size: .73rem; }
+.toolbar label { font-size: .75rem; }.toolbar { gap: 15px; }.toolbar select { font-size: .83rem; }
+.lesson-detail { padding: clamp(24px, 4vw, 56px); border-top: 3px solid #8c9779; }
+.lesson-detail>h3 { font-size: 2.2rem; line-height: 1.5; }.lesson-section { margin-top: 30px; }.lesson-section h4 { font-size: 1.3rem; }.lesson-section p { font-size: 1rem; line-height: 2.05; }
+.task { background: #eeeadb; border-left-color: #aa8756; }.worked-example { background: #edf0e6; border-left-color: #809276; border-radius: 0; }
+.lesson-tasks label { font-size: .93rem; line-height: 1.9; }
+.exercise { padding: 38px; }.exercise h3 { font-family: var(--serif); font-size: 1.8rem; line-height: 1.6; }
+.options button { background: #f5f1e7; border-color: #d7d0c0; border-radius: 2px; }.options button:hover { background: #e8e4d7; }
+.options button.correct { background: #e1eade; color: #31553b; border-color: #729172; }.options button.wrong { background: #f2e1da; color: #923d30; border-color: #b78474; }
+.listen-button { background: #374c40; color: #f6e9ca; border-color: #374c40; border-radius: 48px; padding: 18px 36px; margin: 10px 0 23px; }.listen-button:hover { background: #4a6150; color: #fff6de; }
+.score-wrap, .score { border-radius: 2px; }.score-wrap { border: 1px solid #e0d9c8; background: #f4f1e9; }
+.tuner { border-left: 1px solid var(--line); padding-left: 28px; }.tuner strong { font-family: var(--serif); color: #3d5d48; }.tuner-track span { background: #293e31; }
+.chord-tile { background: #f2f0e5; border-radius: 2px; padding: 20px; border-top: 2px solid #9a9b82; }.chord-tile.current { background: #e7dcc2; border-color: #a0824c; }.chord-tile h4 { font-family: var(--serif); font-size: 1.5rem; }
+.note-step { background: #f1edde; border-radius: 2px; }.note-step.current { background: #e6d3ac; color: #63451e; }
+.rhythm-cell { color: #737263; background: #f6f2e8; }.rhythm-cell.on { background: #ded3b8; color: #655021; border-color: #b7a274; }
+.tap-pad { background: #354b3e; border: 1px solid #354b3e; color: #f7efda; border-radius: 3px; }.tap-pad:hover { background: #4b6855; color: #fff7df; }.tap-pad:active, .tap-pad.hit { background: #bdcbae; color: #2f4536; }
+.activity-bar { background: #819274; border-radius: 1px 1px 0 0; }.results-table th { font-size: .75rem; letter-spacing: .08em; }.results-table td { padding-block: 17px; }
+.journal-input textarea { background: #f5f1e7; border-radius: 2px; padding: 18px; line-height: 1.9; }.journal-entry { border-bottom-style: dashed; }
+.resource-grid { gap: 22px; }.resource-grid .card { position: relative; padding: 31px 27px 26px 35px; border: 1px solid #d9d2c1; border-left: 5px solid #8a9279; background: #faf7ed; box-shadow: 3px 4px 0 #ddd6c580; }
+.resource-grid .card:nth-child(3n+2) { border-left-color: #b69a6c; background: #f2eddf; }.resource-grid .card:nth-child(3n) { border-left-color: #8d9d99; background: #edf0e9; }
+.resource-grid h3 { margin-top: 23px; font-size: 1.55rem; line-height: 1.35; }.resource-grid h3 a { color: #354b3c; text-decoration-thickness: 1px; text-decoration-color: #a1aa94; }.resource-grid p { font-size: .85rem; line-height: 1.85; }.resource-grid small { font-size: .72rem; }
+.practice-plan { border-block: 1px solid var(--line); padding-top: 15px; }.practice-plan strong { font-family: var(--serif); color: #7b6848; }
+.studio-footer { font-size: .7rem; letter-spacing: .08em; }.studio-footer span:last-child { font-family: var(--serif); font-style: italic; }
+/* Dark instrument surfaces retain contrast against the paper score. */
+.piano-case, .transport-bar { color-scheme: dark; --text: #eee9d9; --muted: #babdaf; --line: #596053; --accent: #dcc299; }
+.piano-case { background: linear-gradient(120deg, #353c33, #202b25 65%, #30352d); border: 1px solid #666956; border-radius: 5px; box-shadow: 0 14px 30px #22322324, inset 0 1px #afb79938; padding: 24px 17px 16px; }
+.piano-case button:not(.piano-key), .piano-case select { background: #2b352e; color: #eee9d9; border-color: #5e6959; }.piano-case button:not(.piano-key):hover { background: #455042; }.piano-case button:not(.piano-key)[aria-pressed=true] { color: #f2d298; border-color: #c4a06b; background: #4d4938; }
+.piano-case label { color: #c7cbbb; }.piano-controls .instrument-name { font-family: var(--serif); color: #e1c69d; }.instrument-name span { color: #c1c4b1; }.piano-scroll { border-top-color: #90604f; }.piano-case kbd { border-color: #747b6a; }
+.piano-score { padding: 18px 22px; }.piano-score .row h3 { font-size: 1.25rem; }.piano-score p { font-size: .83rem; }
+#piano-syllabus { background: transparent; border-width: 0 0 1px; padding: 4px 0 18px; box-shadow: none; }
+.piano-focus #workspace { max-width: 1400px; }.piano-focus .piano-score .row h3 { font-size: 1.1rem; }
+.transport-bar { background: #29362eee; border-top: 1px solid #73816a; padding-inline: 28px; box-shadow: 0 -6px 26px #313b2710; }
+.transport-bar button, .transport-bar select, .transport-bar input[type=number] { background: #354238; color: #f0e9d8; border-color: #687461; }.transport-bar button:hover { background: #4b5948; }.transport-bar button[aria-pressed=true] { background: #5d5c42; color: #ffe2ac; border-color: #c5a772; }
+.transport-bar label, .transport-bar #audio-status { color: #c4ccbb; }.transport-bar input[type=range] { accent-color: #dbc296; }.transport-bar .metro-beat { color: #75816e; }.transport-bar .metro-beat.on { color: #f1d7a6; }
+.notice { background: #e9efdf; color: #345139; border-color: #a2b395; border-radius: 2px; }.notice.warning { background: #f5e8d6; color: #7f4f2a; border-color: #bf996a; }
+@media(min-width:1500px) { .route-intro { min-height: 320px; }.cover-art { max-width: 420px; } }
+@media(max-width:1100px) {
+    .shell { grid-template-columns: 205px minmax(0, 1fr); }.sidebar { padding-inline: 15px; }.room-title { padding-inline: 7px; }.route-intro { gap: 10px; grid-template-columns: 1.25fr 1fr; }.route-intro h2 { font-size: 2.9rem; }.cover-art { margin: 0; }.curriculum { gap: 20px; }.stat { padding-inline: 15px; }
+}
+@media(max-width:760px) {
+    .topbar { height: 69px; padding: 0 20px; }.brand { gap: 12px; }.brand-mark { font-size: 1.45rem; }.brand-caption { font-size: .62rem; padding-left: 12px; }.top-actions { gap: 0; }#sound-enable { padding: 7px 10px; font-size: .72rem; }
+    .shell { display: block; }.sidebar { padding: 18px 16px 10px; height: auto; background: none; }.room-title { display: none; }nav { margin: 0; gap: 4px; }nav button { padding: 8px 11px; font-size: .78rem; }nav button.active { border-left-color: transparent; border-bottom-color: var(--accent); background: #e6e0d2; }
+    main { padding: 29px 20px 180px; }.page-heading { padding-bottom: 20px; margin-bottom: 25px; }h2 { font-size: 2.45rem; }.page-heading p { font-size: .83rem; }
+    .route-intro { grid-template-columns: 1fr .62fr; gap: 5px; min-height: 215px; margin-bottom: 20px; padding: 0; }.route-intro h2 { font-size: clamp(2rem, 7vw, 2.7rem); margin: 18px 0 13px; }.route-intro .eyebrow { font-size: .56rem; letter-spacing: .13em; }.route-intro p { font-size: .75rem; }.cover-art { align-self: center; }.cover-art figcaption { display: none; }
+    .overview-stats { grid-template-columns: 1fr 1fr; }.stat { padding: 15px 12px; }.stat:nth-child(2) { border-right: 0; }.stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }.stat:nth-child(3) { padding-left: 0; }.stat strong { font-size: 2rem; }.stat span { font-size: .7rem; }
+    .continue-card { padding: 23px; gap: 20px; }.continue-card h3 { font-size: 1.45rem; }.continue-card::after { font-size: 6rem; right: 0; }.section-label { margin-top: 28px; }.section-label span { font-size: .68rem; }
+    .stage { padding: 23px 0 8px; }.stage-number { font-size: 2.7rem; }.stage-head { gap: 18px; }.lesson-item { padding-block: 14px; }.card, .exercise { padding: 23px 20px; }.lesson-detail>h3 { font-size: 1.8rem; }.lesson-section h4 { font-size: 1.2rem; }.lesson-section p { font-size: .95rem; }.worked-example { padding-inline: 18px; }
+    .toolbar { gap: 12px; }.toolbar select { font-size: .82rem; }.toolbar button { font-size: .82rem; }.tuner { border-left: 0; border-top: 1px solid var(--line); padding: 24px 6px 8px; }.resource-grid { gap: 7px; }.resource-grid .card { padding: 26px 23px; }.resource-grid h3 { font-size: 1.5rem; }
+    .piano-case { padding: 19px 11px 13px; }.piano-controls { margin-inline: 5px; }.piano-score { padding: 18px 14px; }.piano-score .row h3 { font-size: 1.13rem; }.transport-bar { padding-inline: 13px; }.piano-focus #workspace { padding-inline: 15px; }
+}
+@media(prefers-reduced-motion:no-preference) {
+    button, a, select { transition: background-color .18s ease, border-color .18s ease, color .18s ease; }
+    [data-panel]:not([hidden]) { animation: page-appear .3s ease both; }
+    @keyframes page-appear { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+}

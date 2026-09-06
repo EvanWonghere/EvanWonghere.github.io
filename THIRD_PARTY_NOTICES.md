@@ -76,3 +76,22 @@ code and assets are not copied into this repository.
 
 All newly drawn arcade graphics in this repository are original Canvas/CSS
 artwork unless a game-specific notice states otherwise.
+
+## Music room piano samples
+
+The music room at `/study/music/` bundles 352 MP3 samples across Acoustic Grand Piano,
+Electric Piano 1, Harpsichord and Drawbar Organ
+from [MIDI.js Soundfonts / FluidR3](https://github.com/gleitz/midi-js-soundfonts).
+FluidR3: Copyright (c) 2000-2002, 2008 Frank Wen and contributors; MP3 conversion
+and distribution by Benjamin Gleitz / MIDI.js Soundfonts contributors.
+The distribution declares [CC BY 3.0 US](https://creativecommons.org/licenses/by/3.0/us/).
+The MP3 bytes are unchanged; data URIs were extracted to MIDI-numbered files.
+See `static/music/samples/NOTICE.md` for the source file, hash and license links.
+No upstream executable JavaScript is included.
+
+The beginner Ode to Joy exercise uses Beethoven's public-domain melody in an
+original single-line teaching arrangement, not a reproduction of a modern edition.
+The music room's lessons, questions, other short melodies, score renderer, synthesis
+fallback and training logic are original site code/content. Open Music Theory,
+Music Theory for the 21st-Century Classroom and Integrated Aural Skills are linked
+for further reading; their textbook prose and scores are not copied here.
