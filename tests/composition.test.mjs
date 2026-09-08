@@ -35,6 +35,15 @@ test('old progress migrates and new works round-trip without executing source co
  p.creative={abc:DEFAULT_ABC,live:'throw new Error("never evaluate")',title:'test',works:[{id:'work-1',kind:'score',title:'<script>x</script>',source:DEFAULT_ABC,at:42}]};assert.deepEqual(validateProgress(p).creative,p.creative);
  const invalid=validateCreative({...p.creative,works:[...p.creative.works,...p.creative.works,{id:'bad',kind:'evil',title:'a',source:'a'}]});assert.equal(invalid.works.length,1);
 });
+test('classical default replaces only untouched legacy drafts and preserves saved works',()=>{
+ const old=LIVE_PRESETS.find(p=>p.id==='pulse'),classic=LIVE_PRESETS.find(p=>p.id==='pathetique');
+ assert.equal(freshCreative().live,classic.code);
+ const saved={id:'saved-pulse',kind:'live',title:old.title,source:old.code,at:1};
+ const migrated=validateCreative({live:old.code,title:'我的编曲',works:[saved]});
+ assert.equal(migrated.live,classic.code);assert.equal(migrated.title,classic.title);assert.deepEqual(migrated.works,[saved]);
+ assert.equal(validateCreative({live:old.code+'\n// 我的变化',title:'我的编曲'}).live,old.code+'\n// 我的变化');
+ assert.equal(validateCreative({live:old.code,title:'我自己的鼓点'}).live,old.code);
+});
 test('Strudel payload uses official HTTPS origin and preserves Unicode without inline execution',()=>{
  for(const p of LIVE_PRESETS){const url=strudelURL(p.code);assert.equal(new URL(url).origin,'https://strudel.cc');assert.equal(Buffer.from(url.split('#')[1],'base64').toString(),p.code);}
  assert.throws(()=>strudelURL('a'.repeat(40001)));assert.throws(()=>checkABC('X:1\nC D E'));assert.throws(()=>checkABC(DEFAULT_ABC+'\nX:2\nK:G'));assert.throws(()=>checkABC(DEFAULT_ABC+'\n%%beginhtml'));

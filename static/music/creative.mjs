@@ -104,7 +104,7 @@ export function mountCreative({audio,getProgress,persist,stopAll,notify,setTab})
  $('#creative-works').onchange=e=>{const w=state().works.find(w=>w.id===e.target.value);if(!w)return;stopAll();activeWork[w.kind]=w.id;if(w.kind==='score'){$('#score-source').value=w.source;remember();void render();}else{$('#live-source').value=w.source;$('#live-title').value=w.title;}saveDraft();library();};
  function storeWork(update){saveDraft();const source=libraryKind==='score'?state().abc:state().live,title=libraryKind==='score'?(/^T:(.*)$/m.exec(source)?.[1]?.trim()||'未命名乐谱'):state().title||'未命名编曲';let work=update?state().works.find(w=>w.id===activeWork[libraryKind]):null;if(!work){if(state().works.length>=MAX_WORKS){notify('作品库已满，请先导出并删除不再需要的作品。');return;}work={id:crypto.randomUUID(),kind:libraryKind};state().works.push(work);}Object.assign(work,{title,source,at:Date.now()});activeWork[libraryKind]=work.id;persist();library();notify('作品已保存在此浏览器。');}
  $('#work-save').onclick=()=>storeWork(false);$('#work-update').onclick=()=>storeWork(true);$('#work-delete').onclick=()=>{const id=activeWork[libraryKind];if(!id||!confirm('删除选中的已存作品？当前编辑草稿会保留。'))return;state().works=state().works.filter(w=>w.id!==id);activeWork[libraryKind]='';persist();library();};
- $('#live-hint').textContent=LIVE_PRESETS[0].hint;
+ $('#live-hint').textContent=(LIVE_PRESETS.find(p=>p.code===state().live)||LIVE_PRESETS[0]).hint;
  const worksPanel=$('#creative-library');
  return {
   stop,stopScore,

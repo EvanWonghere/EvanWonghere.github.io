@@ -109,3 +109,13 @@ original site code. The new starter scores and import test fixture are original.
 Strudel is loaded on demand from its official site in a cross-origin iframe;
 its AGPL source and embedding documentation are linked in the application and
 vendor notice. This repository does not redistribute Strudel code or samples.
+
+### Default classical live-coding excerpt
+
+The Strudel default is Beethoven, Piano Sonata No. 8, Op. 13, second movement
+(Adagio cantabile), measures 1–8. Melody, inner voice and bass were transcribed
+from [Mutopia-2011/10/25-295](https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=295),
+typeset by Chris Sawer (2011 LilyPond update by Javier Ruiz-Alma), based on
+Berners 1908 / Peters 1910. Mutopia declares this edition public domain.
+The site's Strudel arrangement uses fixed 48 BPM timing, separate voice gains,
+piano samples provided by Strudel, and light reverb; it is not an audio recording.

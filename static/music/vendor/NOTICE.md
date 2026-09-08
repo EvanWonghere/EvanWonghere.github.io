@@ -35,6 +35,7 @@ from [strudel.cc](https://strudel.cc/), following its
 [official embedding documentation](https://strudel.cc/technical-manual/project-start/).
 Its source is [available under AGPL-3.0](https://codeberg.org/uzu/strudel).
 No Strudel JavaScript or sound library is redistributed in this repository.
-The four short starter patterns and local draft/library interface are original
-site content. The embedded editor has its own storage; copy edits back to the
+The four short exercise patterns and local draft/library interface are original
+site content. The default Beethoven excerpt is transcribed from the public-domain
+Mutopia-2011/10/25-295 score; see the repository THIRD_PARTY_NOTICES.md. The embedded editor has its own storage; copy edits back to the
 site draft to include them in a site progress backup.
