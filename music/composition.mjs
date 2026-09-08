@@ -8,6 +8,7 @@ K:C
 C D E G | A G E D | "F"F A G E | "G7"D2 "C"C2 |]
 `;
 export const LIVE_PRESETS = [
+ {id:'pathetique',title:'贝多芬 · 悲怆第二乐章 · 主题八小节',code:"// 贝多芬《悲怆》奏鸣曲 Op.13 · 第二乐章 Adagio cantabile\n// 主题第 1–8 小节 · 降 A 大调 · 2/4 · 钢琴演奏改编\n// 公共领域乐谱：Mutopia-2011/10/25-295（Chris Sawer 排谱）\n// https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=295\n// 每个 < > 中的方括号是一小节；@ 延长时值，逗号同时奏响。\n// 可先把下面的伴奏 gain 改成 0，只听主旋律；再逐层加入。\nsetcpm(48/2)\nstack(\n  // 主旋律：让长音唱出来\n  note(`<\n    [c4 bb3]\n    [eb4@3 db4]\n    [c4 eb4 ab4 bb4]\n    [eb4@3 e4]\n    [f4@8 bb3@6 c4 db4]\n    [eb4 a3]\n    [db4@4 c4 bb3 ab3 g3]\n    [[bb3,g3]@2 ab3 ~]\n  >`).s(\"piano\").gain(0.8).legato(0.98),\n  // 内声部：轻柔的十六分音符，末小节两组三连音\n  note(`<\n    [ab3 eb3 ab3 eb3 g3 eb3 g3 eb3]\n    [ab3 eb3 ab3 eb3 bb3 eb3 bb3 eb3]\n    [ab3 eb3 bb3 eb3 c4 ab3 d4 ab3]\n    [g3 bb3 g3 bb3 g3 bb3 g3 bb3]\n    [g3 bb3 g3 bb3 g3 eb3 g3 eb3]\n    [ab3 eb3 ab3 eb3 eb3 c3 eb3 c3]\n    [f3 db3 f3 db3 db3 db3 db3 db3]\n    [db3 eb3 db3 eb3 [c3 eb3 ab3]@2 [c4 eb4 ab4]@2]\n  >`).s(\"piano\").gain(0.3).legato(0.9),\n  // 低音：稳定而不抢旋律\n  note(`<\n    [ab2 db3] [c3 g2] [ab2 g2 f2 f3] [eb3 eb2]\n    [db2 db3] [c3 f2] [bb1 eb2] [ab1 ab2 ab1 ~]\n  >`).s(\"piano\").gain(0.45).legato(0.95)\n).room(0.25)\n",hint:'降 A 大调 · 2/4 · 48 BPM · 约 20 秒循环。主旋律、内声部与低音分层，可分别调整 gain。片段保留原谱音高与节奏，以固定速度播放。'},
  {id:'pulse',title:'01 · 一个会呼吸的节奏',code:'// 每个循环四拍；修改方括号内的节奏后按 play / update\nsetcpm(90/4)\ns("bd [~ sd] hh*4 [sd hh]").bank("RolandTR909")',hint:'~ 是休止，*4 是重复四次，[ ] 将一拍分成更小的格子。'},
  {id:'arpeggio',title:'02 · 音阶与琶音',code:'setcpm(80/4)\nn("0 2 4 7 4 2 1 3").scale("C4:major")\n  .s("triangle").gain(0.35).room(0.25)',hint:'n 中的数字是音阶级数，从 0 开始。试着把 major 改为 minor。'},
  {id:'jazz',title:'03 · 爵士 ii–V–I',code:'// 每个循环换一个和弦：Dm7 → G7 → Cmaj7\nsetcpm(72/4)\nnote("<[d3,f3,a3,c4] [g2,b2,d3,f3] [c3,e3,g3,b3] [c3,e3,g3,b3]>")\n  .s("triangle").gain(0.25).room(0.3)',hint:'逗号使音符同时发声，尖括号让和弦逐个循环切换。先听导向音，再改变声部位置。'},
@@ -49,10 +50,12 @@ K:G
 `}
 ];
 export const MAX_SOURCE=40000,MAX_WORKS=20;
-export const freshCreative=()=>({abc:DEFAULT_ABC,live:LIVE_PRESETS[0].code,title:'我的编曲',works:[]});
+export const freshCreative=()=>({abc:DEFAULT_ABC,live:LIVE_PRESETS[0].code,title:LIVE_PRESETS[0].title,works:[]});
 export function validateCreative(raw){
  const c=freshCreative();if(!raw||typeof raw!=='object'||Array.isArray(raw))return c;
  for(const key of ['abc','live','title'])if(typeof raw[key]==='string')c[key]=raw[key].slice(0,key==='title'?100:MAX_SOURCE);
+ // Upgrade only the untouched former default; custom drafts and saved works stay intact.
+ if(c.live===LIVE_PRESETS.find(p=>p.id==='pulse').code && ['我的编曲','01 · 一个会呼吸的节奏'].includes(c.title)){c.live=LIVE_PRESETS[0].code;c.title=LIVE_PRESETS[0].title;}
  const seen=new Set();
  c.works=(Array.isArray(raw.works)?raw.works:[]).filter(w=>w&&['score','live'].includes(w.kind)&&typeof w.id==='string'&&/^[a-zA-Z0-9-]{1,70}$/.test(w.id)&&!seen.has(w.id)&&seen.add(w.id)&&typeof w.source==='string'&&typeof w.title==='string').slice(0,MAX_WORKS).map(w=>({id:w.id,kind:w.kind,title:w.title.slice(0,100),source:w.source.slice(0,MAX_SOURCE),at:Number.isFinite(w.at)?Math.max(0,Math.min(8640000000000000,w.at)):0}));return c;
 }
