@@ -1,3 +1,4 @@
+import { mountCreative } from './creative.mjs';
 import { STORAGE_KEY, NOTE_NAMES, clamp, noteName, isBlack, localDay, freshProgress, validateProgress, loadProgress, saveProgress, recordAnswer, recordSkill, streakDays, pick, shuffle, earQuestion, detectPitch, midiPitch, scoreRhythm } from './core.mjs';
 import { STAGES, LESSONS, QUESTIONS, PIECES, MELODIES, RHYTHMS, RESOURCES } from './curriculum.mjs';
 import { PianoAudio, Transport, INSTRUMENTS } from './audio.mjs';
@@ -17,7 +18,7 @@ let currentEar, earAnswered = false, earHeard = false, earPending = false, earGe
 let pendingImport = null, activeLesson = LESSONS.find(l => l.id === progress.lastLesson) || LESSONS[0];
 const audio = new PianoAudio(text => { $('#audio-status').textContent = text; });
 const transport = new Transport(audio);
-let audioWarming = null;
+let audioWarming = null, creative = null;
 function notify(text) { $('#notice').textContent = text; $('#notice').hidden = false; clearTimeout(noticeTimer); noticeTimer = setTimeout(() => { $('#notice').hidden = true; }, 6500); }
 function storageWarning(text) { $('#storage-warning').textContent = text; $('#storage-warning').hidden = !text; $('#save-state').textContent = text ? '进度未能保存，请备份' : '已保存在此浏览器'; }
 if (loaded.error) storageWarning(loaded.error);
@@ -66,6 +67,7 @@ function setTab(name, focus = false) {
     if (name === 'rhythm') renderRhythm();
     if (name === 'progress') renderProgress();
     if (name === 'harmony') renderHarmony();
+    creative?.show(name);
     if (focus) $('#workspace').focus({ preventScroll: true });
     updateStats();
 }
@@ -592,6 +594,7 @@ $('#reset').onclick = () => {
 };
 let controlDefaults;
 function syncSettings() {
+    creative?.sync();
     controlDefaults ||= Object.fromEntries($$('select, input[type=number], #harmony-bass, #harmony-smooth').filter(e=>e.id).map(e=>[e.id,e.type==='checkbox'?String(e.checked):e.value]));
     for(const [id,value] of Object.entries(controlDefaults)){const control=document.getElementById(id);if(control.type==='checkbox')control.checked=value==='true';else control.value=value;}
     $('#bpm').value = progress.settings.bpm; $('#volume').value = progress.settings.volume; audio.setVolume(progress.settings.volume / 100);
@@ -648,6 +651,7 @@ function renderJournal(){ $('#journal-list').innerHTML=[...(progress.journal || 
 $('#journal-save').onclick=()=>{const text=$('#journal-text').value.trim();if(!text){notify('先写下本次观察或下一次目标。');return;}progress.journal ||= [];progress.journal.push({text:text.slice(0,1200),at:Date.now(),bpm:progress.settings.bpm});progress.journal=progress.journal.slice(-100);persist();$('#journal-text').value='';renderJournal();notify('练习日志已保存。');};
 
 function stopActivities() {
+    creative?.stop();
     transport.stop(); stopMetronome(); stopPiano(); stopRhythm(); stopMic(micStream || micPending ? '麦克风已关闭' : ''); allOff();
     earGeneration++; earPending = false; $('#ear-play').disabled = false;
 }
@@ -661,7 +665,7 @@ document.addEventListener('keydown', e => {
     if (computerKeys[e.code] !== undefined) { e.preventDefault(); const note = (progress.settings.octave + 1) * 12 + computerKeys[e.code]; pressedCodes.set(e.code,note); press(`computer-${e.code}`,note); }
 });
 document.addEventListener('keyup', e => { if (e.code === 'Space') setPedal('space',false); if (pressedCodes.has(e.code)) { release(`computer-${e.code}`); pressedCodes.delete(e.code); } });
-window.addEventListener('blur', () => { transport.stop(); stopMetronome(); stopPiano(); stopRhythm(); allOff(); if (micStream) stopMic('麦克风已关闭'); lastActive = 0; });
+window.addEventListener('blur', () => { creative?.stopScore(); transport.stop(); stopMetronome(); stopPiano(); stopRhythm(); allOff(); if (micStream) stopMic('麦克风已关闭'); lastActive = 0; });
 document.addEventListener('visibilitychange', () => { if (document.hidden) { tick(); stopActivities(); } else { lastTick = Date.now(); lastActive = Date.now(); } });
 window.addEventListener('pagehide', () => { tick(); stopActivities(); });
 window.addEventListener('storage', e => {
@@ -670,5 +674,8 @@ window.addEventListener('storage', e => {
     catch { storageBlocked = true; storageWarning('另一个页面写入了无法识别的进度；已暂停保存，请先备份。'); }
 });
 for (const id of ['piano-piece','piano-mode','sight-piece','sight-octave','rhythm-pattern','ear-mode','ear-level','ear-style','theory-mode','lesson-filter','instrument','piano-hand','piano-repeats','piano-duration','harmony-bass','harmony-smooth','harmony-kind','harmony-root','harmony-type','harmony-voicing','harmony-inversion','harmony-progression','piano-from','piano-to']) document.getElementById(id).addEventListener('change', e => { progress.preferences ||= {}; progress.preferences[id] = e.target.type==='checkbox'?String(e.target.checked):e.target.value; persist(); });
+creative = mountCreative({audio,getProgress:()=>progress,persist,stopAll:stopActivities,notify,setTab});
+$('#harmony-compose').onclick=()=>creative.fromEvents(eventsForHarmony(harmonySpec()).map(playableHands),workshopName(workshopId(harmonySpec())));
+$('#piano-compose').onclick=()=>{const piece=selectedPiece();if(piece)creative.fromEvents(piece.events,piece.title);else notify('先选择一首练习曲。');};
 buildKeyboard(); syncSettings(); renderCurriculum(); renderSight(); renderPiano(); renderRhythm(); updateStats();
-setTab(['route','theory','ear','sight','piano','rhythm','harmony','progress','resources'].includes(location.hash.slice(1)) ? location.hash.slice(1) : 'route');
+setTab(['route','theory','ear','sight','piano','rhythm','harmony','compose','live','progress','resources'].includes(location.hash.slice(1)) ? location.hash.slice(1) : 'route');
