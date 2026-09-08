@@ -95,3 +95,17 @@ The music room's lessons, questions, other short melodies, score renderer, synth
 fallback and training logic are original site code/content. Open Music Theory,
 Music Theory for the 21st-Century Classroom and Integrated Aural Skills are linked
 for further reading; their textbook prose and scores are not copied here.
+
+## Music composition desk
+
+The full composition desk uses abcjs 6.7.0 (MIT) for ABC notation and MIDI export,
+Willem Vree's xml2abc revision 122 (GNU LGPL) for MusicXML conversion, jQuery 3.7.1
+(MIT) for that converter, and fflate 0.8.2 (MIT) for compressed MusicXML archives.
+The converter is distributed as complete unmodified source, separately loaded
+and replaceable. Source links, hashes, license texts and replacement instructions
+are in `static/music/vendor/NOTICE.md`. The simpler practice-score renderer remains
+original site code. The new starter scores and import test fixture are original.
+
+Strudel is loaded on demand from its official site in a cross-origin iframe;
+its AGPL source and embedding documentation are linked in the application and
+vendor notice. This repository does not redistribute Strudel code or samples.

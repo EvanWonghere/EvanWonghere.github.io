@@ -1,3 +1,4 @@
+import { freshCreative, validateCreative } from './composition.mjs';
 // Pure music, assessment and progress functions shared by the browser and tests.
 export const STORAGE_KEY = 'hive-music-v1';
 export const DAY = 86400000;
@@ -12,7 +13,7 @@ export const midiPitch = hz => 69 + 12 * Math.log2(hz / 440);
 export const isBlack = n => [1, 3, 6, 8, 10].includes(n % 12);
 export const localDay = (date = new Date()) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 export function freshProgress() {
-    return { version: 1, lessons: {}, cards: {}, skills: {}, days: {}, history: [], settings: { bpm: 72, volume: 65, velocity: 85, octave: 4, goal: 20 }, lastLesson: 'pitch', preferences: {}, lessonTasks: {}, journal: [] };
+    return { version: 1, lessons: {}, cards: {}, skills: {}, days: {}, history: [], settings: { bpm: 72, volume: 65, velocity: 85, octave: 4, goal: 20 }, lastLesson: 'pitch', preferences: {}, lessonTasks: {}, journal: [], creative: freshCreative() };
 }
 const object = value => value && typeof value === 'object' && !Array.isArray(value);
 const finite = (value, fallback, min = 0, max = 1e9) => typeof value === 'number' && Number.isFinite(value) ? clamp(value, min, max) : fallback;
@@ -38,6 +39,7 @@ export function validateProgress(raw) {
     if (object(raw.preferences)) for (const [key, value] of Object.entries(raw.preferences)) {
         if (['piano-piece','piano-mode','sight-piece','sight-octave','rhythm-pattern','ear-mode','ear-level','ear-style','theory-mode','lesson-filter','instrument','piano-hand','piano-repeats','piano-duration','harmony-bass','harmony-smooth','harmony-kind','harmony-root','harmony-type','harmony-voicing','harmony-inversion','harmony-progression','piano-from','piano-to'].includes(key) && typeof value === 'string' && /^[a-zA-Z0-9_-]{1,100}$/.test(value)) p.preferences[key] = value;
     }
+    p.creative = validateCreative(raw.creative);
     return p;
 }
 export function loadProgress(storage) {
