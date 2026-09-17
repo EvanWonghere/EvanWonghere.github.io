@@ -1,0 +1,1 @@
+import{a as t,j as n}from"./markdown-BLzHrdAM.js";function c(){const[e,s]=t.useState(0);return t.useEffect(()=>{const a=Date.now(),r=setInterval(()=>s(Math.floor((Date.now()-a)/1e3)),1e3);return()=>clearInterval(r)},[]),n.jsxs("span",{className:"tabular-nums",children:["（已等待 ",e," 秒，深度思考最长约 90 秒）"]})}export{c as E};
