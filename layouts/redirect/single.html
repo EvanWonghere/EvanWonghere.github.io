@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="refresh" content="0; url={{ .Params.redirect_to }}">
+    <link rel="canonical" href="{{ .Params.redirect_to | absURL }}">
+    <title>{{ .Title }} · {{ .Site.Title }}</title>
+    <script>location.replace({{ .Params.redirect_to | jsonify }});</script>
+</head>
+<body>
+    <p><a href="{{ .Params.redirect_to }}">打开{{ .Title }}</a></p>
+</body>
+</html>

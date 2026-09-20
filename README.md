@@ -26,7 +26,7 @@ hugo server -D
 | 目录 / 文件     | 说明 |
 |----------------|------|
 | `content/`     | 文章与页面（Markdown） |
-| `static/`      | 静态资源；`static/quiz/` 为面试刷题单页应用 |
+| `static/`      | 静态资源；`static/quiz/` 为面试刷题单页应用，`static/labs/` 为概念实验室 |
 | `layouts/`     | 自定义布局（覆盖主题） |
 | `assets/icons/`| 自定义菜单图标（如 `device-gamepad.svg`） |
 | `hugo.toml`    | Hugo 与主题配置 |

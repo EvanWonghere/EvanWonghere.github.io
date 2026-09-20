@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-flask" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 3h6"/>
+  <path d="M10 9h4"/>
+  <path d="M10 3v7.394a.6 .6 0 0 1 -.106 .33l-5.22 7.917c-.434 .655 -.047 1.359 .76 1.359h14.132c.807 0 1.194 -.704 .76 -1.359l-5.22 -7.917a.6 .6 0 0 1 -.106 -.33v-7.394"/>
+</svg>

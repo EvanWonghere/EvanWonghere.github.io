@@ -101,6 +101,15 @@ subtitle = "EvanWong的个人博客"
     [languages.zh-cn.menu.main.params]
     icon = "search"
 
+  [[languages.zh-cn.menu.main]]
+  identifier = "labs"
+  name = "概念实验室"
+  url = "/labs/"
+  weight = -64
+
+    [languages.zh-cn.menu.main.params]
+    icon = "flask"
+
 [services.googleAnalytics]
 
 [pagination]

@@ -26,7 +26,7 @@ Open <http://localhost:1313/> in your browser.
 | Path | Description |
 |------|-------------|
 | `content/` | Posts and pages (Markdown) |
-| `static/` | Static assets; `static/quiz/` is the interview quiz SPA |
+| `static/` | Static assets; `static/quiz/` is the interview quiz SPA, `static/labs/` is ConceptLab |
 | `layouts/` | Custom layouts (override theme) |
 | `assets/icons/` | Custom menu icons (e.g. `device-gamepad.svg`) |
 | `hugo.toml` | Hugo and theme configuration |

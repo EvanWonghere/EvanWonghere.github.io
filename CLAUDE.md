@@ -36,7 +36,7 @@ Three content roots under `content/` drive distinct rendering paths:
 2. **`content/games/`** — the "独立游戏厅" arcade section. Each `<slug>.md` sets `game_url: "/games/<slug>-app/index.html"` in frontmatter. The custom layout `layouts/games/single.html` replaces the default single-post template with a full-screen black page containing a nav bar and an `<iframe>` pointing at `game_url`. The iframe targets are prebuilt standalone SPAs dropped into `static/games/<slug>-app/` (e.g. `2048-app/`, `chess-app/`, `wordle-app/`) — they are not built from this repo. Adding a new game means: (a) drop the built SPA into `static/games/<slug>-app/`, and (b) create `content/games/<slug>.md` with `menu.main.parent: "games"` and the matching `game_url`.
 3. **`content/page/quote/index.md`** — sets `layout: "quotes"`, which selects `layouts/page/quotes.html`. That template does **not** render the markdown body as a post; instead it iterates `.Site.Data.quotes.prose_quotes`, `poetry_and_passages`, and `articles` from `data/quotes.yaml`, rendering each via `layouts/_partials/quote-card.html`. To add a quote or article, edit `data/quotes.yaml` — not the markdown file.
 
-The interview-quiz SPA under `static/quiz/` (with `questions.json` and Vite-built `assets/`) is served as-is; the `/quiz/` menu item in `hugo.toml` links to it. It is a separate project copied in — do not try to rebuild it from this repo.
+The interview-quiz SPA under `static/quiz/` (with `questions.json` and Vite-built `assets/`) is served as-is; `/quiz/` is linked from the study page. ConceptLab is the same pattern under `static/labs/`, linked as `/labs/`. Do not rebuild either SPA from this repo.
 
 ## Layout override pattern
 
