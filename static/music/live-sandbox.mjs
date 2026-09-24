@@ -89,6 +89,15 @@ export function mountLiveSandbox({ audio, notify, stopAll, creative }) {
     $('#live-sandbox-stop').onclick = stop;
     $('#live-sandbox-online').onchange = () => { if (run) { stop(); void play(); } };
     $('#live-meter').onchange = render;
+    // Live draft → score draft (replaces it; the score editor keeps an undo step). Unreadable parts are named.
+    $('#live-to-score').onclick = () => {
+        const parsed = parseStrudel(code()), score = parsedScore(parsed, { meter: $('#live-meter').value, title: $('#live-title').value.trim() || '即兴手稿' });
+        if (!score.real.events.length) { notify('这段代码里没有可以记谱的音高（鼓不记谱）。'); return; }
+        const { abc } = compileABC(score.real, score.doc, { mode: 'score' });
+        creative.importScore(abc);
+        const notes = [...parsed.warnings, ...score.notes];
+        if (notes.length) notify(`已转成五线谱；${notes.length} 处需要留意：${notes[0]}${notes.length > 1 ? ' 等' : ''}`);
+    };
 
     // ---------- AI Strudel snippets (administrator; the card exists only when the AI is enabled) ----------
     const SNIPPET_KEY = 'hive-music-live-snippet';
