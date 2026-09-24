@@ -126,6 +126,15 @@ featuredImageField = "image"
 rssFullContent = true
 favicon = "/favicon.ico"
 
+# 音乐练习室的管理员 AI 助手（/study/music/，见 static/music/README.md）。
+# supabaseUrl 与 publishableKey 和题库前端使用的值相同，都是公开值；不要填 service-role 密钥。
+# 先完成题库仓库的迁移、ai-tutor 部署和 Auth 重定向白名单，再填写并把 enabled 改为 true。
+# 关闭时页面不会出现入口，也不会加载 supabase-js。
+[params.musicAI]
+enabled = false
+supabaseUrl = ""
+publishableKey = ""
+
 # 首页顶部的自我介绍区块，由 layouts/index.html 渲染。
 # 删掉这一节，首页就回到"直接是文章流"的原样。
 #

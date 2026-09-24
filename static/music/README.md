@@ -43,10 +43,32 @@ MIDI 仅请求普通输入（不申请 SysEx），支持力度、note-off、velo
 可迁移。导入预览后须明确确认替换，并尝试下载原进度。读取损坏或未来版本时不静默覆盖；
 保存被拒绝/空间不足时显示持久提示。新窗口通过 storage 事件接受其他页面的保存。
 
+## 管理员 AI 助手（可选）
+
+`hugo.toml` 的 `[params.musicAI]` 默认关闭。关闭时页面不渲染入口，不加载 `ai.mjs` 或 supabase-js，
+练习、判分和备份与离线版本完全一致。打开后顶栏出现“AI 助手”，只有管理员能使用：
+
+- 用途：讲解本课、作业反馈（先提示，不代做）、作曲点评（读当前 ABC 草稿与格式检查结果）。
+- 判分、掌握状态、作业勾选与复习安排仍只由 `core.mjs` 等确定性代码计算。`ai.mjs` 只拿到进度的
+  `structuredClone` 副本和当前课程、乐谱，没有任何保存进度的函数；`tests/music-ai.test.mjs` 检查这一点。
+- 后端是题库仓库 `supabase/functions/ai-tutor` 的 `music-*` 动作与 `music_messages` 表，见该仓库
+  `docs/AI_TUTOR.md`。浏览器只用公开的 `supabaseUrl` 与 `publishableKey`。
+- 登录：GitHub OAuth（PKCE）回到 `/study/music/?code=…`，换取会话后清理地址并回到登录前的栏目。
+  会话与题库、概念实验室同源共享，退出会同时退出三者。需要把 `https://yufenghuang.tech/study/music/`
+  加入 Supabase Auth 重定向白名单。
+- 请求恢复：发送前把请求写入 sessionStorage `hive-music-ai-pending`（不写 `hive-music-v1`）。
+  断网或刷新后用同一请求 ID 重发，服务端不会重复调用模型；关闭标签页后仍可在历史中看到结果。
+- 课程目录：服务端只信任题库仓库里的 `musicCatalog.json`，不含小测题与答案。修改课程后运行
+  `node tools/export-music-catalog.mjs <题库仓库路径>`，同时更新本目录的 `catalog-versions.mjs`
+  和题库的目录；两者不一致时该课的 AI 讲解暂停，其余课程不受影响。
+- `vendor/supabase-js-2.112.4.mjs` 的来源、打包命令与许可见 `vendor/NOTICE.md`。
+- 回退：把 `enabled` 改回 `false` 并推送；浏览器里的练习进度不受影响。
+
 ## 验证
 
 ```sh
 node --test tests/music.test.mjs
+node --test tests/music-ai.test.mjs
 node --test tests/*.test.mjs
 hugo --minify --destination /tmp/hive-music-build
 hugo server --port 1314 --destination /tmp/hive-music-preview
@@ -62,5 +84,6 @@ MIDI 消息/断开；麦克风拒绝、取消与完成清理；有效/无效备�
 ## 维护
 
 添加课程时使用稳定 ID，避免已有题目复习记录失配；新练习数据需提供音符与时值。
+修改课程内容后运行 `node tools/export-music-catalog.mjs <题库仓库路径>`，否则 `tests/music-ai.test.mjs` 会失败。
 不要修改 `public/` 或主题子模块。静态资源从同站 `/music/` 读取；本博客部署在域名根目录。
 该页面沿用博客的 GitHub Pages 工作流，提交并推送 `main` 后才会发布到线上。

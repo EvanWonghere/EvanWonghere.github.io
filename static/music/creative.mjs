@@ -110,6 +110,8 @@ export function mountCreative({audio,getProgress,persist,stopAll,notify,setTab})
   stop,stopScore,
   show(name){if(!['compose','live'].includes(name))return;libraryKind=name==='compose'?'score':'live';document.getElementById(name==='compose'?'score-library-slot':'live-library-slot').append(worksPanel);worksPanel.hidden=false;library();if(name==='compose')void render();},
   sync(){stop();importGeneration++;activeWork={score:'',live:''};$('#score-source').value=state().abc;history=[];historyIndex=-1;remember();$('#live-source').value=state().live;$('#live-title').value=state().title;library();if(!document.querySelector('[data-panel=compose]').hidden)void render();},
+  // Read-only view of the score draft for the AI assistant.
+  current(){const abc=$('#score-source').value;return {abc,workId:activeWork.score||'draft',title:/^T:(.*)$/m.exec(abc)?.[1]?.trim()||'未命名乐谱'};},
   fromEvents(events,title){stopAll();replaceSource(eventsToABC(events,title,getProgress().settings.bpm));setTab('compose',true);},
  };
 }

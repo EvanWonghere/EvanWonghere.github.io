@@ -6,6 +6,7 @@ import { staff } from './notation.mjs';
 import { LESSON_DETAILS } from './lesson-details.mjs';
 import { KEYS, CHORD_TYPES, PROGRESSIONS, makeChord, progressionEvents, playableHands } from './harmony.mjs';
 import { PIANO_LEVELS, preparePiece, PracticeJudge } from './practice.mjs';
+import { parseConfig, shouldLoadAI } from './ai-context.mjs';
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
 const esc = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
@@ -18,7 +19,7 @@ let currentEar, earAnswered = false, earHeard = false, earPending = false, earGe
 let pendingImport = null, activeLesson = LESSONS.find(l => l.id === progress.lastLesson) || LESSONS[0];
 const audio = new PianoAudio(text => { $('#audio-status').textContent = text; });
 const transport = new Transport(audio);
-let audioWarming = null, creative = null;
+let audioWarming = null, creative = null, aiAssistant = null;
 function notify(text) { $('#notice').textContent = text; $('#notice').hidden = false; clearTimeout(noticeTimer); noticeTimer = setTimeout(() => { $('#notice').hidden = true; }, 6500); }
 function storageWarning(text) { $('#storage-warning').textContent = text; $('#storage-warning').hidden = !text; $('#save-state').textContent = text ? '进度未能保存，请备份' : '已保存在此浏览器'; }
 if (loaded.error) storageWarning(loaded.error);
@@ -78,6 +79,7 @@ function renderCurriculum() {
 }
 function showLesson(id, scroll = true) {
     activeLesson = LESSONS.find(l => l.id === id) || LESSONS[0]; progress.lastLesson = activeLesson.id; persist();
+    aiAssistant?.then(api => api?.refresh());
     const l = activeLesson;
     $('#lesson-detail').hidden = false;
     const d = LESSON_DETAILS[l.id], quizDone = l.questions.filter(q => progress.cards[q.id]?.lastCorrect).length;
@@ -677,5 +679,20 @@ for (const id of ['piano-piece','piano-mode','sight-piece','sight-octave','rhyth
 creative = mountCreative({audio,getProgress:()=>progress,persist,stopAll:stopActivities,notify,setTab});
 $('#harmony-compose').onclick=()=>creative.fromEvents(eventsForHarmony(harmonySpec()).map(playableHands),workshopName(workshopId(harmonySpec())));
 $('#piano-compose').onclick=()=>{const piece=selectedPiece();if(piece)creative.fromEvents(piece.events,piece.title);else notify('先选择一首练习曲。');};
+// Administrator AI: loaded only when enabled and the visitor signs in, returns from GitHub, or
+// already has a session. It gets read-only getters; progress writers are never passed in.
+const aiConfig = parseConfig(document.querySelector('meta[name="hive-music-ai"]')?.dataset);
+function loadAssistant() {
+    aiAssistant ||= import('./ai.mjs').then(m => m.mountAI({
+        config: aiConfig, getSnapshot: () => structuredClone(progress), getLesson: () => ({ ...activeLesson, index: LESSONS.indexOf(activeLesson) + 1 }),
+        getComposition: () => creative.current(), getTab: () => tab, setTab, notify
+    })).catch(error => { aiAssistant = null; notify('AI 助手未能加载：' + error.message); return null; });
+    return aiAssistant;
+}
+if (aiConfig && $('#ai-toggle')) {
+    $('#ai-toggle').hidden = false;
+    $('#ai-toggle').onclick = async () => { const api = await loadAssistant(); api?.toggle(); };
+    if (shouldLoadAI({ config: aiConfig, href: location.href, storage })) void loadAssistant();
+}
 buildKeyboard(); syncSettings(); renderCurriculum(); renderSight(); renderPiano(); renderRhythm(); updateStats();
 setTab(['route','theory','ear','sight','piano','rhythm','harmony','compose','live','progress','resources'].includes(location.hash.slice(1)) ? location.hash.slice(1) : 'route');

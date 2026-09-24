@@ -1,3 +1,5 @@
+{{- /* The administrator AI assistant is rendered only when params.musicAI is enabled and configured. */ -}}
+{{- $ai := false }}{{ with site.Params.musicAI }}{{ if and .enabled .supabaseUrl .publishableKey }}{{ $ai = true }}{{ end }}{{ end -}}
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -9,13 +11,17 @@
     <link rel="stylesheet" href="{{ "music/style.css" | relURL }}">
     <link rel="stylesheet" href="{{ "music/atelier.css" | relURL }}">
     <link rel="stylesheet" href="{{ "music/creative.css" | relURL }}">
+    {{- if $ai }}
+    <meta name="hive-music-ai" data-url="{{ site.Params.musicAI.supabaseUrl }}" data-key="{{ site.Params.musicAI.publishableKey }}">
+    <link rel="stylesheet" href="{{ "music/ai.css" | relURL }}">
+    {{- end }}
     <script type="module" src="{{ "music/app.mjs" | relURL }}"></script>
 </head>
 <body>
 <a class="skip" href="#workspace">跳到练习内容</a>
 <header class="topbar">
     <a class="brand" href="{{ "study/" | relURL }}"><span class="brand-mark">ÉTUDE</span><span class="brand-caption">音乐练习室</span></a>
-    <div class="top-actions"><span id="save-state" role="status">进度保存在此浏览器</span><button id="sound-enable">开启声音</button></div>
+    <div class="top-actions"><span id="save-state" role="status">进度保存在此浏览器</span>{{ if $ai }}<button id="ai-toggle" aria-controls="ai-panel" aria-expanded="false" hidden>AI 助手</button>{{ end }}<button id="sound-enable">开启声音</button></div>
 </header>
 <div class="shell">
     <aside class="sidebar">
@@ -155,6 +161,25 @@
     </main>
 </div>
 <div class="transport-bar"><div class="button-row"><button id="metronome" aria-pressed="false">◷ 节拍器</button><span id="metro-beat" class="metro-beat" aria-hidden="true">●</span><label>速度 <input id="bpm" type="number" min="40" max="200" value="72" inputmode="numeric"> BPM</label></div><label>音色<select id="instrument"><option value="grand">三角钢琴</option><option value="electric">电钢琴</option><option value="harpsichord">羽管键琴</option><option value="organ">爵士风琴</option></select></label><label class="volume-control">音量 <input id="volume" type="range" min="0" max="100" value="65"></label><span id="audio-status" role="status">点击“开启声音”加载钢琴音色</span></div>
+{{ if $ai -}}
+<aside id="ai-panel" class="ai-panel" aria-labelledby="ai-title" hidden>
+    <div class="ai-head"><div><span class="eyebrow">ASSISTANT · 仅管理员</span><h3 id="ai-title">AI 助手</h3></div><button id="ai-close" aria-label="关闭 AI 助手">关闭</button></div>
+    <p class="ai-boundary">AI 只做讲解、作业反馈与作曲点评。成绩、掌握状态与复习安排仍由本页程序计算，AI 意见不计入。</p>
+    <div id="ai-signed-out" hidden><p>使用 GitHub 登录管理员账号。登录与面试题库、概念实验室共用。</p><button id="ai-signin" class="primary">使用 GitHub 登录</button></div>
+    <div id="ai-not-admin" hidden><p>当前账号不是管理员，无法使用 AI 助手。</p><button id="ai-signout-other">退出登录</button></div>
+    <div id="ai-ready" hidden>
+        <fieldset class="ai-kinds"><legend>用途</legend><label><input type="radio" name="ai-kind" value="lesson" checked>讲解本课</label><label><input type="radio" name="ai-kind" value="homework">作业反馈</label><label><input type="radio" name="ai-kind" value="composition">作曲点评</label></fieldset>
+        <p class="ai-subject"><span class="muted">对象</span> <strong id="ai-subject"></strong></p>
+        <div id="ai-history" class="ai-history" aria-live="polite"></div>
+        <p id="ai-empty" class="muted">这里还没有对话。</p>
+        <label class="source-label" for="ai-message">问题</label>
+        <textarea id="ai-message" rows="4" maxlength="4000"></textarea>
+        <div class="button-row"><button id="ai-send" class="primary">发送</button><button id="ai-retry" hidden>重试同一请求</button><button id="ai-clear">清空此处记录</button></div>
+        <p class="ai-account muted"><span id="ai-account"></span> · <button id="ai-signout" class="link-button">退出登录</button></p>
+    </div>
+    <p id="ai-status" class="ai-status" role="status"></p>
+</aside>
+{{ end -}}
 <noscript><div class="noscript">音乐练习室需要 JavaScript 才能播放声音和保存练习。请启用 JavaScript 后刷新。</div></noscript>
 </body>
 </html>
