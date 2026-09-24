@@ -133,6 +133,8 @@ test('assistant modules have no path to progress, grades or mastery', async () =
             assert.ok(!source.includes(forbidden), `${file} must not reference ${forbidden}`);
     }
     const app = await readFile(new URL('../static/music/app.mjs', import.meta.url), 'utf8');
+    assert.ok(!/^import[^\n]*\.\/ai(?:-context)?\.mjs/m.test(app), 'app.mjs must not statically import AI modules');
+    assert.ok(app.indexOf("import('./ai-context.mjs')") > app.indexOf("meta[name=\"hive-music-ai\"]"), 'AI helpers load only after the enabled check');
     const mount = app.slice(app.indexOf('m.mountAI('), app.indexOf('.catch(', app.indexOf('m.mountAI(')));
     assert.ok(mount.includes('structuredClone(progress)'));
     for (const forbidden of ['persist', 'saveSkill', 'recordAnswer', 'storage,', 'storage }']) assert.ok(!mount.includes(forbidden), `mountAI must not receive ${forbidden}`);

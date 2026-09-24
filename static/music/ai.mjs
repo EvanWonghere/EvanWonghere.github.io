@@ -13,7 +13,7 @@ export async function mountAI({ config, getSnapshot, getLesson, getComposition, 
     const callback = authCallback(location.href);
     const client = createClient(config.url, config.key, { auth: { flowType: 'pkce', persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
     const panel = $('#ai-panel'), toggle = $('#ai-toggle');
-    let kind = 'lesson', target = null, busy = false, admin = false, user = null, pollTimer = null, generation = 0;
+    let kind = 'lesson', target = null, busy = false, admin = false, user = null, pollTimer = null, generation = 0, clearConfirm = '', clearTimer = null;
 
     const status = (text, bad = false) => { $('#ai-status').textContent = text; $('#ai-status').classList.toggle('bad', bad); };
     const show = state => { for (const id of ['ai-signed-out', 'ai-not-admin', 'ai-ready']) $('#' + id).hidden = id !== state; };
@@ -53,8 +53,9 @@ export async function mountAI({ config, getSnapshot, getLesson, getComposition, 
         $('#ai-empty').hidden = turns.length > 0;
         list.scrollTop = list.scrollHeight;
     }
+    function resetClear() { clearTimeout(clearTimer); clearConfirm = ''; $('#ai-clear').textContent = '清空此处记录'; }
     async function loadHistory() {
-        target = currentTarget();
+        target = currentTarget(); resetClear();
         $('#ai-subject').textContent = describe();
         $('#ai-message').placeholder = PLACEHOLDERS[kind];
         if (target.error && kind !== 'composition') { renderHistory([]); status(target.error, true); return null; }
@@ -137,10 +138,12 @@ export async function mountAI({ config, getSnapshot, getLesson, getComposition, 
     $('#ai-send').onclick = () => void submit();
     $('#ai-message').addEventListener('keydown', e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); void submit(); } });
     $('#ai-retry').onclick = () => { const pending = loadPending(session); $('#ai-retry').hidden = true; if (pending) void send(pending); };
+    // The confirmation is bound to one conversation; switching kind, lesson or score resets it.
     $('#ai-clear').onclick = async () => {
         if (!target?.subjectId || busy) return;
-        if ($('#ai-clear').dataset.confirm !== 'yes') { $('#ai-clear').dataset.confirm = 'yes'; $('#ai-clear').textContent = '再点一次确认清空'; setTimeout(() => { $('#ai-clear').dataset.confirm = ''; $('#ai-clear').textContent = '清空此处记录'; }, 4000); return; }
-        $('#ai-clear').dataset.confirm = ''; $('#ai-clear').textContent = '清空此处记录';
+        const key = `${kind}:${target.subjectId}`;
+        if (clearConfirm !== key) { resetClear(); clearConfirm = key; $('#ai-clear').textContent = '再点一次确认清空'; clearTimer = setTimeout(resetClear, 4000); return; }
+        resetClear();
         const result = await call({ action: 'music-clear', kind, subjectId: target.subjectId }).catch(() => ({ status: 0, body: { error: '网络错误' } }));
         status(result.status === 200 ? `已清空 ${result.body.removed} 条记录。` : result.body.error || '清空失败', result.status !== 200);
         await loadHistory();
@@ -148,15 +151,18 @@ export async function mountAI({ config, getSnapshot, getLesson, getComposition, 
     client.auth.onAuthStateChange(event => { if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') setTimeout(() => void refreshUser(), 0); });
 
     // detectSessionInUrl exchanges ?code= during initialization; wait for it, then tidy the URL.
-    await client.auth.getSession();
+    const initial = await client.auth.getSession();
+    // A code that did not become a session (expired verifier, failed request) is a failed login, not a silent sign-out.
+    const loginError = callback.error || (callback.hasCode && !initial.data?.session ? '未能换取登录会话，可能已超时或网络中断，请重新登录。' : '');
     if (callback.isCallback) {
         history.replaceState(null, '', callback.cleanUrl);
         let back = null; try { back = returnTarget(session.getItem(AI_RETURN_KEY)); session.removeItem(AI_RETURN_KEY); } catch { /* keep current tab */ }
         if (back) setTab(back.tab);
-        if (callback.error) notify('GitHub 登录未完成：' + callback.error);
-        if (back?.open || callback.error) open();
+        if (loginError) notify('GitHub 登录未完成：' + loginError);
+        if (back?.open || loginError) open();
     }
     await refreshUser();
+    if (loginError) status('GitHub 登录未完成：' + loginError, true);
     syncKind();
     return { open, close, toggle() { if (panel.hidden) open(); else close(); }, refresh() { if (admin && !busy && !panel.hidden) void loadHistory(); } };
 }
