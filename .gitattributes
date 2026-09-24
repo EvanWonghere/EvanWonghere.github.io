@@ -1,2 +1,3 @@
 # Preserve the unmodified upstream source and its published SHA-256.
 static/music/vendor/xml2abc-122.js -whitespace
+static/music/vendor/supabase-js-2.112.4.mjs -whitespace
