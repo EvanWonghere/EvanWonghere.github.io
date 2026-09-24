@@ -84,6 +84,11 @@ test('new cloud items fill free local slots newest first; the rest stay cloud-on
     const plan = planSync({ local: [], ledger: freshLedger('u1'), remote, room: { works: 2, arrangement: 20 } });
     assert.deepEqual(plan.downloads.map(d => d.id), ['r4', 'r3']);
     assert.deepEqual(plan.cloudOnly.map(d => d.id), ['r2', 'r1']);
+    // Once listed as cloud-only, a work waits for an explicit retrieve instead of filling a freed slot.
+    const held = planSync({ local: [], ledger: { ...freshLedger('u1'), held: ['live:r4'] }, remote, room: { works: 1, arrangement: 20 } });
+    assert.deepEqual(held.downloads.map(d => d.id), ['r3']);
+    assert.ok(held.cloudOnly.some(d => d.id === 'r4'));
+    assert.deepEqual(readLedger(JSON.stringify({ ...freshLedger('u'), held: ['live:a', 3] })).held, ['live:a']);
 });
 
 test('ledger and account checks', () => {
