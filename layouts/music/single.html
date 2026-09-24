@@ -151,9 +151,9 @@
                 <p class="muted">谱面只读懂 note / n / s、mini-notation、stack、.scale、.slow/.fast、.add 等常用写法；读不懂的部分会在上面列出，不会猜。谱面是只读视图，改动请写在代码里。</p>
             </div>
             {{ if $ai -}}
-            <div id="live-ai" class="card arr-vibe"><div class="row"><h3>AI 写一段 Strudel</h3><span class="eyebrow">AI · 仅管理员</span></div>
+            <div id="live-ai" class="card arr-vibe"><div class="row"><h3>AI 写一段 Strudel</h3><span class="eyebrow">AI · 需授权</span></div>
                 <p class="muted">描述想要的声音、节奏或风格，AI 读上方手稿后写一段代码并说明思路。代码只在本站沙箱里试听；你选择追加或替换后才写入手稿，并且可以撤回。它不评分，也听不到声音。</p>
-                <div id="live-ai-login"><p>需要以管理员身份登录 AI 助手后使用。</p><button id="live-ai-signin">打开 AI 助手</button></div>
+                <div id="live-ai-login"><p>登录并获得授权后使用（在 AI 助手里登录）。</p><button id="live-ai-signin">打开 AI 助手</button></div>
                 <div id="live-ai-form" hidden>
                     <label class="source-label" for="live-ai-text">想要的声音</label><textarea id="live-ai-text" rows="3" maxlength="2000" placeholder="例如：给这段加一层慵懒的低音和轻鼓；或者写一段 C 小调的琶音，逐渐变亮。"></textarea>
                     <div class="toolbar"><button id="live-ai-go" class="primary">生成片段</button><button id="live-ai-retry" hidden>重试同一请求</button></div>
@@ -184,9 +184,9 @@
             </div>
             <div class="toolbar arr-transport"><button id="arr-play" class="primary">▶ 播放编曲</button><button id="arr-stop" disabled>停止</button><label>范围<select id="arr-loop"></select></label><span id="arr-time" class="pill" role="status">等待播放</span><span class="muted">每个声部用自己的音色播放（在声部设置里选）；鼓组为合成音。</span></div>
             {{ if $ai -}}
-            <div id="arr-vibe" class="card arr-vibe"><div class="row"><h3>vibe 编曲</h3><span class="eyebrow">AI · 仅管理员</span></div>
+            <div id="arr-vibe" class="card arr-vibe"><div class="row"><h3>vibe 编曲</h3><span class="eyebrow">AI · 需授权</span></div>
                 <p class="muted">用一句话描述想要的感觉。AI 只提出具体修改，每条附理由；你勾选、预览、接受后才写入编曲，并且可以撤销。它不评分，也听不到声音，只读到编曲数据。</p>
-                <div id="arr-vibe-login"><p>需要以管理员身份登录 AI 助手后使用。</p><button id="arr-vibe-signin">打开 AI 助手</button></div>
+                <div id="arr-vibe-login"><p>登录并获得授权后使用（在 AI 助手里登录）。</p><button id="arr-vibe-signin">打开 AI 助手</button></div>
                 <div id="arr-vibe-form" hidden>
                     <label class="source-label" for="arr-vibe-text">想要的感觉或改动</label><textarea id="arr-vibe-text" rows="3" maxlength="2000" placeholder="例如：主歌更慵懒一点，像深夜的 lo-fi；副歌更开阔，低音走起来。"></textarea>
                     <div class="toolbar"><label>范围<select id="arr-vibe-scope"></select></label><button id="arr-vibe-go" class="primary">生成提案</button><button id="arr-vibe-retry" hidden>重试同一请求</button></div>
@@ -245,11 +245,12 @@
 </div>
 {{ if $ai -}}
 <aside id="ai-panel" class="ai-panel" aria-labelledby="ai-title" hidden>
-    <div class="ai-head"><div><span class="eyebrow">ASSISTANT · 仅管理员</span><h3 id="ai-title">AI 助手</h3></div><button id="ai-close" aria-label="关闭 AI 助手">关闭</button></div>
+    <div class="ai-head"><div><span class="eyebrow">ASSISTANT · 需授权</span><h3 id="ai-title">AI 助手</h3></div><button id="ai-close" aria-label="关闭 AI 助手">关闭</button></div>
     <p class="ai-boundary">AI 只做讲解、作业反馈与作曲点评。成绩、掌握状态与复习安排仍由本页程序计算，AI 意见不计入。</p>
-    <div id="ai-signed-out" hidden><p>使用 GitHub 登录管理员账号。登录与面试题库、概念实验室共用。</p><button id="ai-signin" class="primary">使用 GitHub 登录</button></div>
-    <div id="ai-not-admin" hidden><p>当前账号不是管理员，无法使用 AI 助手。</p><button id="ai-signout-other">退出登录</button></div>
+    <div id="ai-signed-out" hidden><p>使用 GitHub 登录。站长开通后即可使用；登录与面试题库、概念实验室共用。</p><button id="ai-signin" class="primary">使用 GitHub 登录</button></div>
+    <div id="ai-not-admin" hidden><p>当前账号还没有音乐 AI 的使用权限。需要的话请联系站长开通。</p><button id="ai-signout-other">退出登录</button></div>
     <div id="ai-ready" hidden>
+        <p id="ai-quota" class="muted" role="status" hidden></p>
         <fieldset class="ai-kinds"><legend>用途</legend><label><input type="radio" name="ai-kind" value="lesson" checked>讲解本课</label><label><input type="radio" name="ai-kind" value="homework">作业反馈</label><label><input type="radio" name="ai-kind" value="composition">作曲点评</label></fieldset>
         <p class="ai-subject"><span class="muted">对象</span> <strong id="ai-subject"></strong></p>
         <div id="ai-history" class="ai-history" aria-live="polite"></div>

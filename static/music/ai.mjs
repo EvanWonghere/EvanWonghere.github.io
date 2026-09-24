@@ -1,7 +1,7 @@
 // Administrator AI assistant. Loaded on demand; anonymous practice never imports this file.
 // It receives read-only getters from app.mjs and has no way to save progress or grades.
 import { MUSIC_CATALOG_VERSIONS } from './catalog-versions.mjs';
-import { AI_RETURN_KEY, POLL_DELAYS, authCallback, buildArrangeRequest, buildRequest, classifyProposal, classifyResponse, clearArrangePending, clearPending, historyTurns, loadArrangePending, loadPending, pendingOutcome, proposalFromHistory, returnTarget, saveArrangePending, savePending, buildStrudelRequest, classifySnippet, clearStrudelPending, loadStrudelPending, saveStrudelPending, snippetFromHistory } from './ai-context.mjs';
+import { AI_RETURN_KEY, POLL_DELAYS, authCallback, canUseMusic, parseAccess, quotaText, buildArrangeRequest, buildRequest, classifyProposal, classifyResponse, clearArrangePending, clearPending, historyTurns, loadArrangePending, loadPending, pendingOutcome, proposalFromHistory, returnTarget, saveArrangePending, savePending, buildStrudelRequest, classifySnippet, clearStrudelPending, loadStrudelPending, saveStrudelPending, snippetFromHistory } from './ai-context.mjs';
 
 const $ = selector => document.querySelector(selector);
 const KIND_NAMES = { lesson: '讲解本课', homework: '作业反馈', composition: '作曲点评' };
@@ -13,8 +13,10 @@ export async function mountAI({ config, getSnapshot, getLesson, getComposition, 
     const callback = authCallback(location.href);
     const client = createClient(config.url, config.key, { auth: { flowType: 'pkce', persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
     const panel = $('#ai-panel'), toggle = $('#ai-toggle');
-    let kind = 'lesson', target = null, busy = false, admin = false, user = null, pollTimer = null, generation = 0, clearConfirm = '', clearTimer = null;
-    const adminListeners = new Set();
+    // `admin` here means "may use the music AI": an administrator, or a member with the music scope.
+    // `owner` is an administrator; only owners get the cloud library of saved works.
+    let kind = 'lesson', target = null, busy = false, admin = false, owner = false, user = null, pollTimer = null, generation = 0, clearConfirm = '', clearTimer = null;
+    const adminListeners = new Set(), accessListeners = new Set();
 
     const status = (text, bad = false) => { $('#ai-status').textContent = text; $('#ai-status').classList.toggle('bad', bad); };
     const show = state => { for (const id of ['ai-signed-out', 'ai-not-admin', 'ai-ready']) $('#' + id).hidden = id !== state; };
@@ -94,7 +96,7 @@ export async function mountAI({ config, getSnapshot, getLesson, getComposition, 
         }
         const outcome = classifyResponse(result.status, result.body);
         if (outcome === 'wait') { status(result.body.error || '请求仍在处理，稍后自动核对…'); poll(pending); return; }
-        clearPending(session); setBusy(false); $('#ai-retry').hidden = true;
+        clearPending(session); setBusy(false); $('#ai-retry').hidden = true; void refreshQuota();
         if (outcome === 'done') { $('#ai-message').value = ''; status(result.body.recovered ? '已恢复此前完成的回复。' : 'AI 意见，不计入成绩与掌握状态。'); }
         else status(result.body.error || '请求未完成。', true);
         if (pending.payload.kind === kind) await loadHistory();
@@ -108,13 +110,28 @@ export async function mountAI({ config, getSnapshot, getLesson, getComposition, 
         if (!savePending(session, pending)) status('浏览器不允许暂存请求；刷新页面时这次请求无法自动恢复。', true);
         await send(pending);
     }
+    /** ai_access(), or is_app_admin on a backend that predates members. */
+    async function readAccess() {
+        const access = parseAccess(await client.rpc('ai_access'));
+        if (access) return access;
+        const check = await client.rpc('is_app_admin');
+        return { admin: !check.error && check.data === true, scopes: [], dailyLimit: null, usedToday: null };
+    }
+    function showQuota(access) {
+        const quota = $('#ai-quota'), text = quotaText(access); if (!quota) return;
+        quota.hidden = !text; quota.textContent = text || '';
+    }
+    /** Members see the remaining daily requests go down after each answer. */
+    async function refreshQuota() { if (admin && !owner) showQuota(await readAccess()); }
     async function refreshUser() {
         const { data } = await client.auth.getSession();
         user = data.session?.user || null;
-        if (!user) { admin = false; for (const listener of adminListeners) listener(false); show('ai-signed-out'); toggle.textContent = 'AI 助手'; setBusy(false); return; }
-        const check = await client.rpc('is_app_admin');
-        admin = !check.error && check.data === true;
-        for (const listener of adminListeners) listener(admin);
+        if (!user) { admin = owner = false; for (const listener of accessListeners) listener(false); for (const listener of adminListeners) listener(false); show('ai-signed-out'); toggle.textContent = 'AI 助手'; setBusy(false); return; }
+        const access = await readAccess();
+        owner = access.admin; admin = canUseMusic(access);
+        for (const listener of accessListeners) listener(admin);
+        for (const listener of adminListeners) listener(owner);
+        showQuota(access);
         show(admin ? 'ai-ready' : 'ai-not-admin');
         $('#ai-account').textContent = user.user_metadata?.user_name || user.email || '已登录';
         setBusy(busy);
@@ -215,26 +232,30 @@ export async function mountAI({ config, getSnapshot, getLesson, getComposition, 
     }
     return {
         open, close, toggle() { if (panel.hidden) open(); else close(); }, refresh() { if (admin && !busy && !panel.hidden) void loadHistory(); },
-        isAdmin: () => admin,
+        /** An administrator (the cloud library of saved works is theirs only). */
+        isAdmin: () => owner,
+        /** May use the music AI: an administrator or a member with the music scope. */
+        canUse: () => admin,
+        onAccessChange(listener) { accessListeners.add(listener); listener(admin); },
         // Shared with the cloud sync of saved works: same client and login session.
         cloud: () => client, userId: () => user?.id ?? null,
-        onAdminChange(listener) { adminListeners.add(listener); listener(admin); },
+        onAdminChange(listener) { adminListeners.add(listener); listener(owner); },
         /** Sends a proposal request; the page applies nothing until the administrator accepts it. */
         requestArrangement(input) {
-            if (!admin) return Promise.resolve({ status: 'failed', error: '仅管理员可用。' });
+            if (!admin) return Promise.resolve({ status: 'failed', error: '当前账号没有音乐 AI 的使用权限。' });
             const payload = buildArrangeRequest({ ...input, requestId: crypto.randomUUID() });
             saveArrangePending(session, payload);
-            return runArrangement(payload);
+            return runArrangement(payload).finally(() => void refreshQuota());
         },
         pendingArrangement: () => loadArrangePending(session)?.payload || null,
         retryArrangement() { const pending = loadArrangePending(session); return pending ? runArrangement(pending.payload) : Promise.resolve(null); },
         discardArrangement() { clearArrangePending(session); },
         /** Asks for a Strudel snippet; the page only plays it in the sandbox or inserts it on request. */
         requestStrudel(input) {
-            if (!admin) return Promise.resolve({ status: 'failed', error: '仅管理员可用。' });
+            if (!admin) return Promise.resolve({ status: 'failed', error: '当前账号没有音乐 AI 的使用权限。' });
             const payload = buildStrudelRequest({ ...input, requestId: crypto.randomUUID() });
             saveStrudelPending(session, payload);
-            return runStrudel(payload);
+            return runStrudel(payload).finally(() => void refreshQuota());
         },
         pendingStrudel: () => loadStrudelPending(session)?.payload || null,
         retryStrudel() { const pending = loadStrudelPending(session); return pending ? runStrudel(pending.payload) : Promise.resolve(null); },

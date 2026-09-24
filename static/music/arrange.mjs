@@ -562,7 +562,7 @@ export function mountArrange({ audio, storage, notify, setTab, stopAll, creative
         vibeStatus(result.proposal.recovered ? '已取回之前生成的提案。' : '提案已生成：逐条查看，预览后再接受。');
     }
     async function requestProposal() {
-        if (!assistant?.isAdmin()) { openAssistant?.(); return; }
+        if (!assistant?.canUse()) { openAssistant?.(); return; }
         if (previewGuard()) return;
         if (proposal && !confirm('生成新提案会替换当前未处理的提案，继续？')) return;
         const [kind, id] = $('#arr-vibe-scope').value.split(':'), scope = kind === 'section' ? { section: id } : kind === 'track' ? { track: id } : {};
@@ -586,7 +586,7 @@ export function mountArrange({ audio, storage, notify, setTab, stopAll, creative
     }
     function attachAssistant(api) {
         assistant = api;
-        api.onAdminChange(admin => {
+        api.onAccessChange(admin => {
             if (!$('#arr-vibe')) return;
             $('#arr-vibe-login').hidden = admin; $('#arr-vibe-form').hidden = !admin;
             const pending = admin && !resumed && api.pendingArrangement();

@@ -130,7 +130,7 @@ export function mountLiveSandbox({ audio, notify, stopAll, creative }) {
         aiStatus(result.snippet.recovered ? '已取回之前生成的片段。' : '片段已生成：先在沙箱试听，再决定追加或替换。');
     }
     async function requestSnippet() {
-        if (!assistant?.isAdmin()) { openAssistant?.(); return; }
+        if (!assistant?.canUse()) { openAssistant?.(); return; }
         if (snippet && !confirm('生成新片段会替换当前未处理的片段，继续？')) return;
         const { code: draft, workId } = creative.liveDraft();
         $('#live-ai-go').disabled = true; $('#live-ai-retry').hidden = true;
@@ -163,7 +163,7 @@ export function mountLiveSandbox({ audio, notify, stopAll, creative }) {
         stop,
         attachAssistant(api) {
             assistant = api;
-            api.onAdminChange(admin => {
+            api.onAccessChange(admin => {
                 if (!$('#live-ai')) return;
                 $('#live-ai-login').hidden = admin; $('#live-ai-form').hidden = !admin;
                 if (admin && !resumed && api.pendingStrudel()) {
