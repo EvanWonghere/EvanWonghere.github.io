@@ -8,7 +8,7 @@ import { applySelected, describeOp, docHash, ARRANGE_KEY, TEMPLATES, analyzeChor
 import { abcKey, compileABC, splitDuration } from '../static/music/arrange-abc.mjs';
 import { compileStrudel, strudelNote } from '../static/music/arrange-strudel.mjs';
 import { checkArrangement } from '../static/music/arrange-check.mjs';
-import { playbackNotes } from '../static/music/arrange-player.mjs';
+import { ArrangePlayer, playbackNotes } from '../static/music/arrange-player.mjs';
 
 // abcjs is the renderer the page uses; its parser checks the generated notation.
 const abcModule = { exports: {} };
@@ -266,4 +266,22 @@ test('tracks play and export their own instrument; new tracks start with one tha
     assert.match(describeOp({ type: 'setTrack', track: 'guitar', instrument: 'cleanguitar' }, doc), /音色清音电吉他/);
     const celloBass = applyOps(doc, [{ type: 'setTrack', track: 'bass', instrument: 'cello' }]);
     assert.match(compileABC(realize(celloBass), celloBass).abc, /%%MIDI program 42/);
+});
+
+test('changing a track instrument during playback starts loading the new bank without restarting', async () => {
+    const doc = createFromTemplate('pop', 'arr-live');
+    const loads = [], audio = { context: { currentTime: 0 }, load: async (pitch, instrument) => { loads.push(`${instrument}:${pitch}`); } };
+    const player = new ArrangePlayer(audio);
+    Object.assign(player, { running: true, notes: [], length: 80, loop: false, spb: 0.5, origin: 0, index: 0, iteration: 0, scheduled: -1 });
+    const edited = applyOps(doc, [{ type: 'setTrack', track: 'bass', instrument: 'cello' }]);
+    const notes = playbackNotes(realize(edited), edited);
+    const generation = player.generation;
+    player.update(notes, { tempo: edited.meta.tempo, length: 80 });
+    await new Promise(r => setTimeout(r, 0));
+    const bassPitches = new Set(notes.filter(n => n.trackId === 'bass').map(n => n.pitch));
+    assert.ok(bassPitches.size > 0);
+    for (const pitch of bassPitches) assert.ok(loads.includes(`cello:${pitch}`), `cello:${pitch} requested`);
+    assert.ok(!loads.some(l => l.startsWith('undefined:')), 'drum hits are not loaded as samples');
+    assert.equal(player.generation, generation, 'the edit does not restart playback');
+    assert.equal(player.notes, notes);
 });
