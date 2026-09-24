@@ -39,10 +39,11 @@ Pushes to `main` trigger `.github/workflows/gh-pages.yml`: `node --test tests/*.
 
 ## 音乐练习室 (`/study/music/`)
 
-- Plain ES modules under `static/music/` with no build step and no online service for practice: `curriculum.mjs`, `lesson-details.mjs`, `harmony.mjs`, `practice.mjs`, `core.mjs` (pitch, question generation, rhythm scoring, progress validation, spaced review), `audio.mjs`, `notation.mjs`, `composition.mjs`, `score-player.mjs`, `creative.mjs`, `app.mjs`, plus styles.
+- Plain ES modules under `static/music/` with no build step and no online service for practice: `curriculum.mjs`, `lesson-details.mjs`, `harmony.mjs`, `practice.mjs`, `core.mjs` (pitch, question generation, rhythm scoring, progress validation, spaced review), `audio.mjs`, `notation.mjs`, `composition.mjs`, `score-player.mjs`, `creative.mjs`, `app.mjs`, the arrangement desk (`arrangement-schema.mjs`, `arrangement.mjs`, `arrange-styles.mjs`, `arrange-abc.mjs`, `arrange-strudel.mjs`, `arrange-check.mjs`, `arrange-player.mjs`, `arrange.mjs`), plus styles.
 - `static/music/README.md` is the detailed contract: scoring tolerances, storage and backup behaviour, and the browser review checklist. Read it before changing music logic.
 - Scoring and progress are deterministic code in `core.mjs` and friends, tested by `tests/music.test.mjs` and `tests/composition.test.mjs`. Keep them deterministic.
-- Progress is stored only in `localStorage` key `hive-music-v1`, isolated from quiz, 毛概 and game records. Stay compatible with existing v1 records and never silently overwrite corrupt or newer-version data.
+- Practice progress is stored only in `localStorage` key `hive-music-v1`, isolated from quiz, 毛概 and game records. Arrangements live in their own key `hive-music-arrange-v1` so that an older open page saving progress cannot drop them; progress backups carry them as an extra `arrangements` field. Stay compatible with existing v1 records and never silently overwrite corrupt or newer-version data in either key.
+- Arrangement edits are operations validated by `arrangement-schema.mjs` and applied atomically by `applyOps`; accompaniment styles, ABC and Strudel output, and rule checks are deterministic and covered by `tests/arrangement.test.mjs`. Strudel code is exported one way and never executed on this origin.
 - Use stable lesson and question IDs so existing review records keep matching.
 - Third-party code in `static/music/vendor/` and piano samples in `static/music/samples/` carry their own licences (`NOTICE.md`, `THIRD_PARTY_NOTICES.md`). Do not edit vendored files; record new third-party assets in the notices.
 - The microphone is analysed locally and never recorded or uploaded; MIDI requests plain input without SysEx. Keep both properties.
