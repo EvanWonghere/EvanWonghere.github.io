@@ -131,9 +131,9 @@ favicon = "/favicon.ico"
 # 先完成题库仓库的迁移、ai-tutor 部署和 Auth 重定向白名单，再填写并把 enabled 改为 true。
 # 关闭时页面不会出现入口，也不会加载 supabase-js。
 [params.musicAI]
-enabled = false
-supabaseUrl = ""
-publishableKey = ""
+enabled = true
+supabaseUrl = "https://vtbwqnigocrbpmbkbiiv.supabase.co"
+publishableKey = "sb_publishable_ELsgCJmcnnTm7V9kSmaZEw_vBMsaWCu"
 
 # 首页顶部的自我介绍区块，由 layouts/index.html 渲染。
 # 删掉这一节，首页就回到"直接是文章流"的原样。

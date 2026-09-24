@@ -141,15 +141,20 @@ test('assistant modules have no path to progress, grades or mastery', async () =
     for (const forbidden of ['persist', 'saveSkill', 'recordAnswer', 'storage,', 'storage }']) assert.ok(!mount.includes(forbidden), `mountAI must not receive ${forbidden}`);
 });
 
-test('layout renders the assistant only when enabled, and the default config keeps it off', async () => {
+test('layout renders the assistant only when enabled, and an enabled config carries only public values', async () => {
     const layout = await readFile(new URL('../layouts/music/single.html', import.meta.url), 'utf8');
     for (const id of ['ai-toggle', 'ai-panel', 'hive-music-ai', 'music/ai.css']) {
         const at = layout.indexOf(id); assert.ok(at > 0, id);
         assert.ok(layout.lastIndexOf('{{ if $ai', at) > layout.lastIndexOf('{{ end', at) || layout.lastIndexOf('{{- if $ai', at) > layout.lastIndexOf('{{- end', at), `${id} must be inside the $ai condition`);
     }
     const config = await readFile(new URL('../hugo.toml', import.meta.url), 'utf8');
-    assert.match(config, /\[params\.musicAI\]\nenabled = false/);
-    assert.ok(!/service_role|SERVICE_ROLE/.test(config));
+    const section = config.match(/\[params\.musicAI\]\nenabled = (true|false)\nsupabaseUrl = "([^"]*)"\npublishableKey = "([^"]*)"\n/);
+    assert.ok(section, '[params.musicAI] must keep its enabled / supabaseUrl / publishableKey layout');
+    if (section[1] === 'true') {
+        assert.match(section[2], /^https:\/\/[a-z0-9]+\.supabase\.co$/);
+        assert.match(section[3], /^sb_publishable_[A-Za-z0-9_-]+$/, 'only the public publishable key may be configured');
+    }
+    assert.ok(!/service_role|SERVICE_ROLE|sb_secret_/.test(config));
 });
 
 test('arrangement proposal requests: scope, size and message limits', () => {
