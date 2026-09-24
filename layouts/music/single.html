@@ -25,7 +25,7 @@
     <div class="top-actions"><span id="save-state" role="status">进度保存在此浏览器</span>{{ if $ai }}<button id="ai-toggle" aria-controls="ai-panel" aria-expanded="false" hidden>AI 助手</button>{{ end }}<button id="sound-enable">开启声音</button></div>
 </header>
 <!-- Fixed to the bottom on wide screens; on phones it is an ordinary strip under the top bar. -->
-<div class="transport-bar"><div class="button-row"><button id="metronome" aria-pressed="false">◷ 节拍器</button><span id="metro-beat" class="metro-beat" aria-hidden="true">●</span><label>速度 <input id="bpm" type="number" min="40" max="200" value="72" inputmode="numeric"> BPM</label></div><label>音色<select id="instrument"><optgroup label="钢琴"><option value="grand">三角钢琴</option><option value="bright">明亮钢琴</option><option value="honkytonk">酒吧钢琴</option></optgroup><optgroup label="电钢琴与键盘"><option value="electric">电钢琴</option><option value="fm">FM 电钢琴</option><option value="harpsichord">羽管键琴</option><option value="organ">爵士风琴</option></optgroup><optgroup label="其他"><option value="celesta">钢片琴</option><option value="vibraphone">颤音琴</option><option value="strings">弦乐合奏</option></optgroup></select></label><label class="volume-control">音量 <input id="volume" type="range" min="0" max="100" value="65"></label><span id="audio-status" role="status">点击“开启声音”加载钢琴音色</span></div>
+<div class="transport-bar"><div class="button-row"><button id="metronome" aria-pressed="false">◷ 节拍器</button><span id="metro-beat" class="metro-beat" aria-hidden="true">●</span><label>速度 <input id="bpm" type="number" min="40" max="200" value="72" inputmode="numeric"> BPM</label></div><label>音色<select id="instrument"><option value="grand">原声三角钢琴</option></select></label><label class="volume-control">音量 <input id="volume" type="range" min="0" max="100" value="65"></label><span id="audio-status" role="status">点击“开启声音”加载钢琴音色</span></div>
 <div class="shell">
     <aside class="sidebar">
         <div class="room-title"><span class="eyebrow">A PERSONAL CONSERVATORY</span><h1>音乐练习室<span class="accent">.</span></h1><p>读懂，听见，弹出来。</p></div>
@@ -182,7 +182,7 @@
                 <label class="check"><input id="arr-classical" type="checkbox">按古典声部规则检查</label>
                 <div class="button-row"><button id="arr-transpose-down" title="整首下移半音">移调 −1</button><button id="arr-transpose-up" title="整首上移半音">移调 +1</button></div>
             </div>
-            <div class="toolbar arr-transport"><button id="arr-play" class="primary">▶ 播放编曲</button><button id="arr-stop" disabled>停止</button><label>范围<select id="arr-loop"></select></label><span id="arr-time" class="pill" role="status">等待播放</span><span class="muted">播放统一使用底栏选择的音色；鼓组为合成音。</span></div>
+            <div class="toolbar arr-transport"><button id="arr-play" class="primary">▶ 播放编曲</button><button id="arr-stop" disabled>停止</button><label>范围<select id="arr-loop"></select></label><span id="arr-time" class="pill" role="status">等待播放</span><span class="muted">每个声部用自己的音色播放（在声部设置里选）；鼓组为合成音。</span></div>
             {{ if $ai -}}
             <div id="arr-vibe" class="card arr-vibe"><div class="row"><h3>vibe 编曲</h3><span class="eyebrow">AI · 仅管理员</span></div>
                 <p class="muted">用一句话描述想要的感觉。AI 只提出具体修改，每条附理由；你勾选、预览、接受后才写入编曲，并且可以撤销。它不评分，也听不到声音，只读到编曲数据。</p>

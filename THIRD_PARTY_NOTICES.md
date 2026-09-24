@@ -79,9 +79,13 @@ artwork unless a game-specific notice states otherwise.
 
 ## Music room piano samples
 
-The music room at `/study/music/` bundles 880 MP3 samples across Acoustic Grand Piano,
+The music room at `/study/music/` bundles 2,992 MP3 samples across Acoustic Grand Piano,
 Bright Acoustic Piano, Honky-tonk Piano, Electric Piano 1 and 2, Harpsichord, Drawbar Organ,
-Celesta, Vibraphone and String Ensemble 1
+Celesta, Vibraphone, String Ensemble 1, Acoustic Bass, Electric Bass (finger), Synth Bass 1,
+Acoustic Guitar (nylon), Acoustic Guitar (steel), Electric Guitar (clean), Overdriven Guitar,
+Pizzicato Strings, Violin, Cello, Orchestral Harp, Trumpet, Trombone, French Horn,
+Brass Section, Flute, Clarinet, Alto Sax, Oboe, Choir Aahs, Pad 2 (warm),
+Lead 2 (sawtooth), Marimba and Glockenspiel
 from [MIDI.js Soundfonts / FluidR3](https://github.com/gleitz/midi-js-soundfonts).
 FluidR3: Copyright (c) 2000-2002, 2008 Frank Wen and contributors; MP3 conversion
 and distribution by Benjamin Gleitz / MIDI.js Soundfonts contributors.

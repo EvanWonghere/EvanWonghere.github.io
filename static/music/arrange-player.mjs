@@ -1,10 +1,11 @@
 // Playback for the arrangement desk: one Web Audio clock drives notes, drums and the views.
-// Pitched tracks use the room's current piano samples; drums are short synthesized hits.
+// Pitched tracks play their own instrument's samples; drums are short synthesized hits.
 
-/** Notes to play for a region, with mute/solo, track volume and swing applied. Beats are region-relative. */
+/** Notes to play for a region, with mute/solo, track volume, instrument and swing applied. Beats are region-relative. */
 export function playbackNotes(real, doc, { from = 0, to = real.totalBeats } = {}) {
     const soloing = doc.tracks.some(t => t.solo);
     const audible = new Map(doc.tracks.filter(t => !t.mute && (!soloing || t.solo)).map(t => [t.id, t.volume]));
+    const instruments = new Map(doc.tracks.map(t => [t.id, t.instrument ?? 'grand']));
     const swing = doc.meta.swing ?? 0.5;
     return real.events
         .filter(e => audible.has(e.trackId) && e.start >= from - 1e-6 && e.start < to - 1e-6)
@@ -12,7 +13,7 @@ export function playbackNotes(real, doc, { from = 0, to = real.totalBeats } = {}
             // Swing moves off-beat eighths later; the notated (straight) position is kept for highlighting.
             const frac = e.start - Math.floor(e.start + 1e-9);
             const start = Math.abs(frac - 0.5) < 1e-6 ? Math.floor(e.start + 1e-9) + swing : e.start;
-            return { id: e.id, trackId: e.trackId, start: start - from, beats: Math.min(e.beats, to - e.start), pitch: e.pitch, drum: e.drum, vel: Math.max(1, Math.round(e.vel * audible.get(e.trackId))) };
+            return { id: e.id, trackId: e.trackId, start: start - from, beats: Math.min(e.beats, to - e.start), pitch: e.pitch, drum: e.drum, instrument: instruments.get(e.trackId), vel: Math.max(1, Math.round(e.vel * audible.get(e.trackId))) };
         })
         .sort((a, b) => a.start - b.start);
 }
@@ -27,8 +28,9 @@ export class ArrangePlayer {
     /** notes from playbackNotes; length in beats; loop repeats the region until stopped. */
     async play(notes, { tempo, length, loop = false, onTime = () => {}, onEnd = () => {} }) {
         this.stop(); const generation = this.generation; await this.audio.init();
-        const pitches = [...new Set(notes.filter(n => !n.drum).map(n => n.pitch))];
-        for (let i = 0; i < pitches.length; i += 8) { if (generation !== this.generation) return; await Promise.all(pitches.slice(i, i + 8).map(n => this.audio.load(n))); }
+        // Load only the pitches each instrument actually plays, eight requests at a time.
+        const wanted = [...new Map(notes.filter(n => !n.drum).map(n => [`${n.instrument}:${n.pitch}`, n])).values()];
+        for (let i = 0; i < wanted.length; i += 8) { if (generation !== this.generation) return; await Promise.all(wanted.slice(i, i + 8).map(n => this.audio.load(n.pitch, n.instrument))); }
         if (generation !== this.generation) return;
         Object.assign(this, { notes, length, loop, onTime, onEnd, spb: 60 / tempo, origin: this.audio.context.currentTime + 0.12, index: 0, iteration: 0, scheduled: -1, running: true });
         this.timer = setInterval(() => this.tick(generation), 25); this.tick(generation);
@@ -60,7 +62,7 @@ export class ArrangePlayer {
     sound(n, when) {
         const duration = Math.max(0.05, n.beats * this.spb * 0.95);
         if (n.drum) return this.drum(n.drum, when, n.vel / 127);
-        const id = this.audio.noteOn(n.pitch, n.vel, when);
+        const id = this.audio.noteOn(n.pitch, n.vel, when, undefined, n.instrument);
         if (id) { this.ids.add(id); this.audio.release(id, when + duration, true); }
     }
     drum(kind, when, level) {
