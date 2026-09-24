@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ "music/style.css" | relURL }}">
     <link rel="stylesheet" href="{{ "music/atelier.css" | relURL }}">
     <link rel="stylesheet" href="{{ "music/creative.css" | relURL }}">
+    <link rel="stylesheet" href="{{ "music/arrange.css" | relURL }}">
     {{- if $ai }}
     <meta name="hive-music-ai" data-url="{{ site.Params.musicAI.supabaseUrl }}" data-key="{{ site.Params.musicAI.publishableKey }}">
     <link rel="stylesheet" href="{{ "music/ai.css" | relURL }}">
@@ -36,8 +37,9 @@
             <button data-tab="harmony"><span>07</span>和弦工坊</button>
             <button data-tab="compose"><span>08</span>五线谱作曲</button>
             <button data-tab="live"><span>09</span>实时编曲</button>
-            <button data-tab="progress"><span>10</span>我的进度</button>
-            <button data-tab="resources"><span>11</span>参考书架</button>
+            <button data-tab="arrange"><span>10</span>编曲工作台</button>
+            <button data-tab="progress"><span>11</span>我的进度</button>
+            <button data-tab="resources"><span>12</span>参考书架</button>
         </nav>
         <div class="daily"><div class="row"><strong>今日练习</strong><span id="today-minutes">0 / 20 分钟</span></div><progress id="daily-progress" max="1200" value="0">0%</progress><p>每天一小段，让音乐留下来。</p></div>
         <a class="back-link" href="{{ "study/" | relURL }}">← 返回学习工具</a>
@@ -141,6 +143,36 @@
             <div class="live-boundary"><strong>两份手稿，清楚保存</strong><p>本站保存上方草稿与作品库；下方是 Strudel 独立编辑器。若在那里改了代码，请复制回上方再保存。切换栏目或隐藏本页会关闭内嵌演奏；独立打开的 Strudel 标签页需要在那里停止。</p><p>演奏环境及其音量由 Strudel 控制；本站底栏音色、BPM 和音量只作用于练习室。代码通过链接载入 Strudel，本站不读取第三方编辑器的账户或存储。</p></div>
             <div id="live-frame" class="live-frame" hidden></div>
             <div class="card"><h3>从第一拍到一首歌</h3><div class="practice-plan"><p><strong>01 · 节奏</strong>先保持一个循环，只改休止与细分。</p><p><strong>02 · 旋律</strong>用音阶级数建立主题，再改变音域。</p><p><strong>03 · 和声</strong>比较 ii–V–I 的完整和弦与导向音。</p><p><strong>04 · 结构</strong>分开写低音与旋律，用 stack 叠层。</p></div><p><a href="https://strudel.cc/workshop/getting-started/" target="_blank" rel="noopener noreferrer">Strudel 官方互动教程 ↗</a> · <a href="https://strudel.cc/technical-manual/project-start/" target="_blank" rel="noopener noreferrer">官方嵌入说明与 AGPL 授权</a></p></div>
+        </section>
+        <section data-panel="arrange" hidden>
+            <div class="page-heading"><div><span class="eyebrow">THE ARRANGER’S TABLE</span><h2>一份编曲，四种视图。</h2><p>和弦轨、段落时间线、五线谱与 Strudel 代码来自同一份编曲；改动一处，其余同步，播放时一起前进。</p></div></div>
+            <div class="toolbar arr-library"><label>我的编曲<select id="arr-select"></select></label><label>新建自<select id="arr-template"></select></label><button id="arr-new">新建</button><button id="arr-duplicate">复制一份</button><button id="arr-delete">删除</button><button id="arr-undo" disabled>撤销</button><button id="arr-redo" disabled>重做</button><span id="arr-save" class="muted" role="status"></span></div>
+            <div id="arr-warning" class="notice warning" role="alert" hidden></div>
+            <div class="card arr-meta">
+                <label class="arr-title">标题<input id="arr-title" type="text" maxlength="100"></label>
+                <label>速度<input id="arr-tempo" type="number" min="40" max="200" step="1"></label>
+                <label>调<select id="arr-key"></select></label>
+                <label>调式<select id="arr-mode"><option value="major">大调</option><option value="minor">小调</option></select></label>
+                <label>拍号<select id="arr-meter"><option>2/4</option><option>3/4</option><option>4/4</option><option>6/8</option></select></label>
+                <label>摇摆<input id="arr-swing" type="range" min="0.5" max="0.75" step="0.01"><span id="arr-swing-value" class="pill"></span></label>
+                <label class="check"><input id="arr-classical" type="checkbox">按古典声部规则检查</label>
+                <div class="button-row"><button id="arr-transpose-down" title="整首下移半音">移调 −1</button><button id="arr-transpose-up" title="整首上移半音">移调 +1</button></div>
+            </div>
+            <div class="toolbar arr-transport"><button id="arr-play" class="primary">▶ 播放编曲</button><button id="arr-stop" disabled>停止</button><label>范围<select id="arr-loop"></select></label><span id="arr-time" class="pill" role="status">等待播放</span><span class="muted">播放统一使用底栏选择的音色；鼓组为合成音。</span></div>
+            <div class="card arr-board"><div class="row"><h3>段落与声部</h3><div class="button-row"><button id="arr-add-section">添加段落</button><button id="arr-add-track">添加声部</button></div></div>
+                <p class="muted">点击和弦、片段、段落名或声部名进行编辑；在和弦轨空白处点击可添加和弦。</p>
+                <div class="arr-scroll"><div id="arr-timeline" class="arr-timeline" aria-label="编曲时间线"></div></div>
+            </div>
+            <div id="arr-inspector" class="card arr-inspector" aria-live="polite"></div>
+            <div class="card"><div class="row"><h3>五线谱</h3><label>视图<select id="arr-staff-mode"><option value="score">总谱</option><option value="lead">旋律与和弦</option></select></label></div>
+                <p id="arr-staff-status" class="muted" role="status">正在准备谱面…</p><div id="arr-sheet" class="arr-sheet" aria-label="编曲五线谱，可点击音符"></div>
+                <p class="muted">鼓组不记谱，只在时间线中显示。伴奏型生成的音符是只读的；需要逐音修改时，先在片段里“转为手写”。</p>
+            </div>
+            <div class="card"><div class="row"><h3>规则检查</h3><span class="eyebrow">DETERMINISTIC</span></div><ul id="arr-checks" class="arr-checks"></ul><p class="muted">由本页程序按固定规则检查：音域、单手跨度、伴奏高过旋律、空白和弦；勾选古典规则时另查旋律与低音的平行五八度。</p></div>
+            <div class="card"><div class="row"><h3>Strudel 代码</h3><div class="button-row"><button id="arr-copy-strudel">复制代码</button><button id="arr-open-strudel">在 Strudel 打开 ↗</button><button id="arr-to-live">存入即兴手稿</button></div></div>
+                <pre id="arr-strudel" class="arr-code"></pre><p class="muted">由编曲单向生成，每个循环一小节。代码只在 Strudel 的编辑器里运行，那里的改动不会回到这份编曲。</p>
+            </div>
+            <div class="card"><h3>导出与交换</h3><div class="button-row"><button id="arr-to-score">送到五线谱作曲</button><button id="arr-export-midi" disabled>导出 MIDI</button><button id="arr-export-json">导出编曲 JSON</button><label class="file-button">导入编曲 JSON<input id="arr-import" type="file" accept=".json,application/json"></label></div><p class="muted">编曲保存在此浏览器，并包含在“我的进度”的备份文件里。MIDI 不含鼓组。</p></div>
         </section>
         <div id="creative-library" class="creative-library" hidden><div class="toolbar"><label>我的作品<select id="creative-works"></select></label><button id="work-save">存为新作品</button><button id="work-update" disabled>更新所选作品</button><button id="work-delete" disabled>删除所选作品</button><span id="works-count" class="muted"></span></div></div>
         <section data-panel="progress" hidden>

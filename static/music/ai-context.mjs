@@ -11,7 +11,7 @@ export const AI_KINDS = ['lesson', 'homework', 'composition'];
 export const POLL_DELAYS = [3000, 6000, 12000, 24000, 48000, 60000];
 const SUBJECT = /^[A-Za-z0-9_-]{1,100}$/;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-const TABS = ['route', 'theory', 'ear', 'sight', 'piano', 'rhythm', 'harmony', 'compose', 'live', 'progress', 'resources'];
+const TABS = ['route', 'theory', 'ear', 'sight', 'piano', 'rhythm', 'harmony', 'compose', 'live', 'arrange', 'progress', 'resources'];
 
 /** Reads the Hugo-rendered meta data. Returns null unless both public values look valid. */
 export function parseConfig(data) {
