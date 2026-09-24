@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{{ "music/creative.css" | relURL }}">
     <link rel="stylesheet" href="{{ "music/arrange.css" | relURL }}">
     {{- if $ai }}
-    <meta name="hive-music-ai" data-url="{{ site.Params.musicAI.supabaseUrl }}" data-key="{{ site.Params.musicAI.publishableKey }}">
+    <meta name="hive-music-ai" data-url="{{ site.Params.musicAI.supabaseUrl }}" data-key="{{ site.Params.musicAI.publishableKey }}" data-sync="{{ if site.Params.musicAI.sync }}1{{ end }}">
     <link rel="stylesheet" href="{{ "music/ai.css" | relURL }}">
     {{- end }}
     <script type="module" src="{{ "music/app.mjs" | relURL }}"></script>
@@ -220,7 +220,20 @@
             <div class="card"><div class="row"><h3>练习成绩</h3><button id="review-go">复习错题 →</button></div><div id="skill-results"></div></div>
             <div class="card"><h3>最近练习</h3><div id="history"></div></div>
             <div class="card"><h3>练习日志</h3><p>记录实体琴练习、教材曲目、指法或声音问题。自动成绩与自我检查一起帮助安排下一次练习。</p><label class="journal-input">本次观察与下次目标<textarea id="journal-text" rows="4" maxlength="1200" placeholder="例：C 大调双手，60 BPM。左手 G–A 过指仍偏重；明天先练这四个音。"></textarea></label><button id="journal-save">保存练习日志</button><div id="journal-list"></div></div>
-            <div class="card"><h3>备份与迁移</h3><p>数据保存在当前浏览器，不会自动跨设备同步。清理浏览器数据前请导出；到其他设备后导入即可继续。导入会替换本页的音乐进度，并先尝试下载原进度备份。</p><div class="button-row"><button id="export">导出进度 JSON</button><label class="file-button">导入进度<input id="import" type="file" accept="application/json,.json"></label><button id="reset" class="danger">重置音乐进度</button></div><div id="import-confirm" class="notice" hidden><p id="import-summary"></p><button id="import-apply" class="primary">备份当前进度并确认导入</button><button id="import-cancel">取消</button></div></div>
+            {{ if and $ai site.Params.musicAI.sync -}}
+            <div id="sync-card" class="card sync-card"><div class="row"><h3>云端作品</h3><span class="eyebrow">仅管理员 · 多设备同步</span></div>
+                <p class="muted">登录后，已保存的五线谱作品、即兴手稿与编曲会在你的各台设备之间同步；草稿与练习进度仍只在本机。两台设备都改过同一首时两份都保留。</p>
+                <div id="sync-login"><p>需要以管理员身份登录 AI 助手后使用。</p><button id="sync-signin">登录并开启同步</button></div>
+                <div id="sync-ready" hidden>
+                    <p id="sync-status" class="muted" role="status"></p>
+                    <div class="button-row"><button id="sync-now" class="primary">立即同步</button><button id="sync-pause">暂停本设备同步</button></div>
+                    <div id="sync-confirm" class="notice warning" hidden><p id="sync-confirm-text"></p><div class="button-row"><button id="sync-confirm-yes">上传到当前账号</button><button id="sync-confirm-no">不上传，暂停同步</button></div></div>
+                    <p id="sync-cloud-note" class="muted" hidden>下面这些只在云端：本机作品库或编曲已满（各 20），先删除一首再取回。</p>
+                    <ul id="sync-cloud-only" class="sync-list" hidden></ul>
+                </div>
+            </div>
+            {{- end }}
+            <div class="card"><h3>备份与迁移</h3><p>数据保存在当前浏览器，练习进度不会自动跨设备同步（管理员可在上方同步已保存的作品）。清理浏览器数据前请导出；到其他设备后导入即可继续。导入会替换本页的音乐进度，并先尝试下载原进度备份。</p><div class="button-row"><button id="export">导出进度 JSON</button><label class="file-button">导入进度<input id="import" type="file" accept="application/json,.json"></label><button id="reset" class="danger">重置音乐进度</button></div><div id="import-confirm" class="notice" hidden><p id="import-summary"></p><button id="import-apply" class="primary">备份当前进度并确认导入</button><button id="import-cancel">取消</button></div></div>
         </section>
         <section data-panel="resources" hidden>
             <div class="page-heading"><div><span class="eyebrow">THE READING SHELF</span><h2>参考书架</h2><p>练习之外，给每个知识点找一个可靠的来处。</p></div></div>

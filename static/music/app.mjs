@@ -20,7 +20,7 @@ let currentEar, earAnswered = false, earHeard = false, earPending = false, earGe
 let pendingImport = null, pendingArrangements,  activeLesson = LESSONS.find(l => l.id === progress.lastLesson) || LESSONS[0];
 const audio = new PianoAudio(text => { $('#audio-status').textContent = text; });
 const transport = new Transport(audio);
-let audioWarming = null, creative = null, arrange = null, live = null, aiAssistant = null;
+let audioWarming = null, creative = null, arrange = null, live = null, aiAssistant = null, cloudSync = null;
 function notify(text) { $('#notice').textContent = text; $('#notice').hidden = false; clearTimeout(noticeTimer); noticeTimer = setTimeout(() => { $('#notice').hidden = true; }, 6500); }
 function storageWarning(text) { $('#storage-warning').textContent = text; $('#storage-warning').hidden = !text; $('#save-state').textContent = text ? '进度未能保存，请备份' : '已保存在此浏览器'; }
 if (loaded.error) storageWarning(loaded.error);
@@ -602,14 +602,20 @@ $('#import-apply').onclick = () => {
     if (error) { storageWarning(error); return; }
     stopActivities(); progress = pendingImport; pendingImport = null; storageBlocked = false;
     if (pendingArrangements !== undefined) { try { arrange.restore(pendingArrangements); } catch (error) { notify(`练习进度已恢复，但编曲未能恢复：${error.message}`); } }
-    pendingArrangements = undefined;
+    pendingArrangements = undefined; rebaseSync();
     $('#import-confirm').hidden = true; storageWarning(null); syncSettings(); renderCurriculum(); renderProgress(); notify('音乐进度已恢复。原进度已发起下载备份。');
 };
+// A restore or reset replaces the whole works list. Clearing the sync ledger makes the next cloud sync a
+// union (nothing is deleted anywhere), even when the sync module has not been loaded in this tab.
+function rebaseSync() {
+    try { const raw = JSON.parse(storage.getItem('hive-music-sync-v1') || 'null'); if (raw && typeof raw === 'object') { raw.items = {}; storage.setItem('hive-music-sync-v1', JSON.stringify(raw)); } } catch { /* no ledger to rebase */ }
+    cloudSync?.rebase();
+}
 $('#reset').onclick = () => {
     if (!confirm('重置此浏览器的音乐课程、题目、练习记录与设置？其他学习工具不受影响。建议先导出备份。')) return;
     const fresh = freshProgress(), error = saveProgress(storage, fresh);
     if (error) { storageWarning(error); return; }
-    stopActivities(); progress = fresh; storageBlocked = false; storageWarning(null); syncSettings(); renderCurriculum(); renderProgress(); $('#lesson-detail').hidden = true; notify('音乐进度已重置。');
+    stopActivities(); progress = fresh; storageBlocked = false; storageWarning(null); rebaseSync(); syncSettings(); renderCurriculum(); renderProgress(); $('#lesson-detail').hidden = true; notify('音乐进度已重置。');
 };
 let controlDefaults;
 function syncSettings() {
@@ -693,25 +699,32 @@ window.addEventListener('storage', e => {
     catch { storageBlocked = true; storageWarning('另一个页面写入了无法识别的进度；已暂停保存，请先备份。'); }
 });
 for (const id of ['piano-piece','piano-mode','sight-piece','sight-octave','rhythm-pattern','ear-mode','ear-level','ear-style','theory-mode','lesson-filter','instrument','piano-hand','piano-repeats','piano-duration','harmony-bass','harmony-smooth','harmony-kind','harmony-root','harmony-type','harmony-voicing','harmony-inversion','harmony-progression','piano-from','piano-to']) document.getElementById(id).addEventListener('change', e => { progress.preferences ||= {}; progress.preferences[id] = e.target.type==='checkbox'?String(e.target.checked):e.target.value; persist(); });
-creative = mountCreative({audio,getProgress:()=>progress,persist,stopAll:stopActivities,notify,setTab,onLiveChange:()=>live?.changed()});
+creative = mountCreative({audio,getProgress:()=>progress,persist,stopAll:stopActivities,notify,setTab,onLiveChange:()=>live?.changed(),onWorksChange:()=>cloudSync?.changed()});
 live = mountLiveSandbox({ audio, notify, stopAll: stopActivities, creative });
-arrange = mountArrange({ audio, storage, notify, setTab, stopAll: stopActivities, creative });
+arrange = mountArrange({ audio, storage, notify, setTab, stopAll: stopActivities, creative, onChange: () => cloudSync?.changed() });
 $('#harmony-compose').onclick=()=>creative.fromEvents(eventsForHarmony(harmonySpec()).map(playableHands),workshopName(workshopId(harmonySpec())));
 $('#piano-compose').onclick=()=>{const piece=selectedPiece();if(piece)creative.fromEvents(piece.events,piece.title);else notify('先选择一首练习曲。');};
 // Administrator AI: when disabled, no AI module is fetched. When enabled, it loads only once the
 // visitor signs in, returns from GitHub, or already has a session. It gets read-only getters;
 // progress writers are never passed in.
 const aiMeta = document.querySelector('meta[name="hive-music-ai"]');
+// Cloud copies of saved works load with the assistant and share its login session, but are a separate
+// module: the assistant itself never receives storage or anything that writes works or progress.
+async function mountCloudSync(api) {
+    if (cloudSync || aiMeta?.dataset.sync !== '1' || !$('#sync-card')) return;
+    cloudSync = (await import('./sync.mjs')).mountSync({ api, creative, arrange, storage, notify, progressBlocked: () => storageBlocked });
+}
 if (aiMeta && $('#ai-toggle')) import('./ai-context.mjs').then(({ parseConfig, shouldLoadAI }) => {
     const config = parseConfig(aiMeta.dataset);
     if (!config) return;
     const loadAssistant = () => aiAssistant ||= import('./ai.mjs').then(m => m.mountAI({
         config, getSnapshot: () => structuredClone(progress), getLesson: () => ({ ...activeLesson, index: LESSONS.indexOf(activeLesson) + 1 }),
         getComposition: () => creative.current(), getTab: () => tab, setTab, notify
-    })).then(api => { arrange.attachAssistant(api); live.attachAssistant(api); return api; }).catch(error => { aiAssistant = null; notify('AI 助手未能加载：' + error.message); return null; });
+    })).then(async api => { arrange.attachAssistant(api); live.attachAssistant(api); await mountCloudSync(api); return api; }).catch(error => { aiAssistant = null; notify('AI 助手未能加载：' + error.message); return null; });
     $('#ai-toggle').hidden = false;
     const openAssistant = async () => { const api = await loadAssistant(); api?.open(); };
     arrange.setAssistantOpener(openAssistant); live.setAssistantOpener(openAssistant);
+    $('#sync-signin')?.addEventListener('click', () => void openAssistant());
     $('#ai-toggle').onclick = async () => { const api = await loadAssistant(); api?.toggle(); };
     if (shouldLoadAI({ config, href: location.href, storage })) void loadAssistant();
 }).catch(error => notify('AI 助手未能加载：' + error.message));

@@ -27,7 +27,7 @@ export async function readScoreFile(file){
  const [abc,warning]=window.vertaal(doc,{u:0,b:4,n:100,c:0,v:1,d:0,m:0,x:0,t:0,v1:0,noped:1,stm:0,p:'',s:0});
  checkABC(abc);return {abc,warning:String(warning||'').replace(/<[^>]*>/g,'').trim()};
 }
-export function mountCreative({audio,getProgress,persist,stopAll,notify,setTab,onLiveChange}){
+export function mountCreative({audio,getProgress,persist,stopAll,notify,setTab,onLiveChange,onWorksChange}){
  const player=new ScorePlayer(audio);let visual=null,timeline=null,selected=null,activeWork={score:'',live:''},renderTimer,renderGeneration=0,importGeneration=0,frame=null,frameTimer;
  let libraryKind='score',lastHighlight='';
  let history=[],historyIndex=-1;
@@ -102,8 +102,8 @@ export function mountCreative({audio,getProgress,persist,stopAll,notify,setTab,o
  $('#live-export').onclick=()=>download($('#live-source').value,filename($('#live-title').value)+'.js');
  $('#live-import').onchange=async e=>{const file=e.target.files[0];e.target.value='';if(!file)return;if(file.size>MAX_SOURCE*3){notify('代码文件过大。');return;}const text=await file.text();if(text.length>MAX_SOURCE){notify('代码最多 40000 字符。');return;}stopAll();$('#live-source').value=text;$('#live-title').value=file.name.replace(/\.[^.]+$/,'');activeWork.live='';saveDraft();library();};
  $('#creative-works').onchange=e=>{const w=state().works.find(w=>w.id===e.target.value);if(!w)return;stopAll();activeWork[w.kind]=w.id;if(w.kind==='score'){$('#score-source').value=w.source;remember();void render();}else{$('#live-source').value=w.source;$('#live-title').value=w.title;}saveDraft();library();};
- function storeWork(update){saveDraft();const source=libraryKind==='score'?state().abc:state().live,title=libraryKind==='score'?(/^T:(.*)$/m.exec(source)?.[1]?.trim()||'未命名乐谱'):state().title||'未命名编曲';let work=update?state().works.find(w=>w.id===activeWork[libraryKind]):null;if(!work){if(state().works.length>=MAX_WORKS){notify('作品库已满，请先导出并删除不再需要的作品。');return;}work={id:crypto.randomUUID(),kind:libraryKind};state().works.push(work);}Object.assign(work,{title,source,at:Date.now()});activeWork[libraryKind]=work.id;persist();library();notify('作品已保存在此浏览器。');}
- $('#work-save').onclick=()=>storeWork(false);$('#work-update').onclick=()=>storeWork(true);$('#work-delete').onclick=()=>{const id=activeWork[libraryKind];if(!id||!confirm('删除选中的已存作品？当前编辑草稿会保留。'))return;state().works=state().works.filter(w=>w.id!==id);activeWork[libraryKind]='';persist();library();};
+ function storeWork(update){saveDraft();const source=libraryKind==='score'?state().abc:state().live,title=libraryKind==='score'?(/^T:(.*)$/m.exec(source)?.[1]?.trim()||'未命名乐谱'):state().title||'未命名编曲';let work=update?state().works.find(w=>w.id===activeWork[libraryKind]):null;if(!work){if(state().works.length>=MAX_WORKS){notify('作品库已满，请先导出并删除不再需要的作品。');return;}work={id:crypto.randomUUID(),kind:libraryKind};state().works.push(work);}Object.assign(work,{title,source,at:Date.now()});activeWork[libraryKind]=work.id;persist();library();notify('作品已保存在此浏览器。');onWorksChange?.();}
+ $('#work-save').onclick=()=>storeWork(false);$('#work-update').onclick=()=>storeWork(true);$('#work-delete').onclick=()=>{const id=activeWork[libraryKind];if(!id||!confirm('删除选中的已存作品？当前编辑草稿会保留。'))return;state().works=state().works.filter(w=>w.id!==id);activeWork[libraryKind]='';persist();library();onWorksChange?.();};
  $('#live-hint').textContent=(LIVE_PRESETS.find(p=>p.code===state().live)||LIVE_PRESETS[0]).hint;
  const worksPanel=$('#creative-library');
  return {
@@ -113,6 +113,10 @@ export function mountCreative({audio,getProgress,persist,stopAll,notify,setTab,o
   // Drafts handed over from the arrangement desk replace the current draft, like loading an example.
   importScore(abc){stopAll();importGeneration++;replaceSource(abc);setTab('compose',true);notify('编曲已送到五线谱作曲；原草稿已被替换，可用撤销找回。');},
   importLive(code,title){stopAll();$('#live-source').value=code;$('#live-title').value=String(title||'编曲').slice(0,100);activeWork.live='';saveDraft();library();setTab('live',true);notify('Strudel 代码已存入即兴手稿草稿。');},
+  // Cloud sync (administrator only): reads saved works and applies validated cloud copies.
+  // Drafts are never touched; only the works library changes.
+  cloudWorks(){return state().works.map(w=>({...w}));},
+  applyCloudWorks({puts=[],deletes=[]}){let works=state().works.filter(w=>!deletes.some(d=>d.kind===w.kind&&d.id===w.id));for(const k of ['score','live'])if(deletes.some(d=>d.id===activeWork[k]))activeWork[k]='';for(const p of puts){const i=works.findIndex(w=>w.id===p.id);if(i>=0)works[i]={...p};else works.push({...p});}state().works=works.slice(0,MAX_WORKS);persist();library();},
   // The live draft for the Strudel snippet assistant; it writes only through setLiveCode.
   liveDraft(){return {code:$('#live-source').value,workId:activeWork.live||'draft'};},
   setLiveCode(code){stopAll();$('#live-source').value=code;saveDraft();},

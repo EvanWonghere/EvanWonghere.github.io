@@ -25,3 +25,9 @@
 .ai-status { font-size: .85rem; min-height: 1.2em; }
 #ai-empty { color: var(--muted, #686b61); font-size: .85rem; }
 @media (max-width: 760px) { .ai-panel { top: 8px; right: 8px; bottom: 8px; width: calc(100vw - 16px); padding: 16px; } }
+/* Cloud sync card on the progress page (administrator only). */
+.sync-card #sync-status.bad { color: var(--red); }
+.sync-list { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 8px; }
+.sync-list li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 0; border-top: 1px solid var(--line); font-size: .9rem; }
+.sync-list li.bad { color: var(--red); }
+.sync-list button { flex: none; }

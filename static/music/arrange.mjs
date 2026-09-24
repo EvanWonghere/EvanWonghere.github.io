@@ -45,7 +45,7 @@ function keyboardSVG(notes) {
 
 // The unsaved example keeps one id across reloads so a pending AI proposal still finds it.
 const DEMO_ID = 'demo';
-export function mountArrange({ audio, storage, notify, setTab, stopAll, creative }) {
+export function mountArrange({ audio, storage, notify, setTab, stopAll, creative, onChange }) {
     const loaded = loadStore(storage);
     let store = loaded.store, blocked = loaded.blocked, doc, past = [], future = [], selection = null, real, compiled = { abc: '', map: {} };
     let visual = null, renderTimer = null, renderGeneration = 0, saved = true, highlight = '';
@@ -73,6 +73,7 @@ export function mountArrange({ audio, storage, notify, setTab, stopAll, creative
         const next = { version: 1, active: doc.id, arrangements }, error = saveStore(storage, next);
         if (error) { warning(error); $('#arr-save').textContent = '未能保存'; return; }
         store = next; saved = true; warning(''); $('#arr-save').textContent = '已保存在此浏览器';
+        onChange?.();
     }
     /** One user edit: validated, recorded for undo, saved, and every view refreshed. */
     function commit(ops) {
@@ -433,7 +434,7 @@ export function mountArrange({ audio, storage, notify, setTab, stopAll, creative
         if (!saved || !confirm(`删除编曲“${doc.title}”？此操作不能撤销，建议先导出 JSON。`)) return;
         const arrangements = store.arrangements.filter(a => a.id !== doc.id), next = { version: 1, active: arrangements[0]?.id || '', arrangements };
         const error = blocked ? '存档不可读，暂停保存' : saveStore(storage, next); if (error) return notify(error);
-        store = next; saved = arrangements.length > 0; openDoc(arrangements[0] || createFromTemplate('pop', DEMO_ID));
+        store = next; saved = arrangements.length > 0; openDoc(arrangements[0] || createFromTemplate('pop', DEMO_ID)); onChange?.();
     };
     $('#arr-select').onchange = () => { if (previewGuard()) { $('#arr-select').value = doc.id; return; } const next = store.arrangements.find(a => a.id === $('#arr-select').value); if (next) { openDoc(next); persist(); } };
     $('#arr-undo').onclick = () => travel(past, future);
@@ -611,6 +612,24 @@ export function mountArrange({ audio, storage, notify, setTab, stopAll, creative
             store = next; blocked = false; warning(''); preview = null; proposal = null; saveProposal();
             saved = store.arrangements.length > 0; openDoc(store.arrangements.find(a => a.id === store.active) || createFromTemplate('pop', DEMO_ID));
         },
-        summary: raw => validateStore(raw).arrangements.length
+        summary: raw => validateStore(raw).arrangements.length,
+        /** Cloud sync: the saved arrangements, or null while the archive is unreadable (sync pauses). */
+        cloudArrangements: () => blocked ? null : store.arrangements,
+        /** Applies validated cloud copies; returns false while an AI proposal is being previewed. */
+        applyCloudArrangements({ puts = [], deletes = [] }) {
+            if (blocked) throw new Error('编曲存档不可读，同步已暂停。');
+            if (preview) return false;
+            let arrangements = store.arrangements.filter(a => !deletes.some(d => d.id === a.id));
+            for (const p of puts) { const i = arrangements.findIndex(a => a.id === p.id); if (i >= 0) arrangements[i] = p; else arrangements.push(p); }
+            arrangements = arrangements.slice(0, LIMITS.docs);
+            const next = { version: 1, active: arrangements.some(a => a.id === store.active) ? store.active : arrangements[0]?.id || '', arrangements };
+            const error = saveStore(storage, next); if (error) throw new Error(error);
+            store = next;
+            const current = arrangements.find(a => a.id === doc.id);
+            if (current && puts.some(p => p.id === doc.id)) openDoc(current);
+            else if (!current && deletes.some(d => d.id === doc.id)) { saved = arrangements.length > 0; openDoc(arrangements[0] || createFromTemplate('pop', DEMO_ID)); }
+            else renderLibrary();
+            return true;
+        }
     };
 }
