@@ -31,6 +31,7 @@ test('sandbox policy: no network offline, GitHub samples only when switched on',
     assert.deepEqual(ONLINE_HOSTS, ['https://raw.githubusercontent.com']);
     assert.ok(!/allow-same-origin/.test(read('static/music/strudel-sandbox.mjs')), 'the frame never gets its origin back');
     assert.match(read('static/music/strudel-sandbox.mjs'), /setAttribute\('sandbox', 'allow-scripts'\)/);
+    assert.match(read('static/music/strudel-sandbox.mjs'), /\+\+loads > 1[^\n]*this\.destroy\(\)/, 'a sandbox that navigates itself is closed');
 });
 
 test('sandbox document inlines code without letting it close the script element', () => {

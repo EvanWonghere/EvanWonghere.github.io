@@ -62,6 +62,10 @@ export class StrudelSandbox {
             const frame = document.createElement('iframe');
             frame.setAttribute('sandbox', 'allow-scripts'); frame.allow = 'autoplay'; frame.title = 'Strudel 沙箱'; frame.hidden = true;
             this.frame = frame;
+            // CSP cannot stop the frame from navigating itself; a second load means it tried, so the
+            // sandbox is closed and the attempt reported.
+            let loads = 0;
+            frame.addEventListener('load', () => { if (++loads > 1 && this.frame === frame) { this.destroy(); this.emit({ type: 'error', id: null, message: 'Strudel 代码试图让沙箱离开本页，已关闭沙箱。' }); } });
             const ready = this.wait('ready', 20000);
             frame.srcdoc = sandboxDocument({ bundle, runtime, online });
             document.body.append(frame);
