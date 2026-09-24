@@ -197,6 +197,13 @@ test('sustained samples loop a steady stretch after the attack, with a seamless 
     // (within 1% of the tone's 0.1 amplitude; an unfaded seam in this tone jumps by up to 0.2)
     assert.ok(Math.abs(y[region.end-1]-x[region.start-1])<1e-3);
     assert.deepEqual([...y.slice(0,region.end-fade)],[...x.slice(0,region.end-fade)],'audio before the fade is unchanged');
+    // In-phase audio must not swell in the fade (a plain equal-power fade raises this tone by ~41%),
+    // and audio that is out of phase must not dip.
+    const rms=(a,s,e)=>{let q=0;for(let i=s;i<e;i++)q+=a[i]*a[i];return Math.sqrt(q/(e-s));},steady=rms(x,region.start,region.start+fade),w=Math.round(sr*.01);
+    for(let c=region.end-fade+w;c<region.end-w;c+=w)assert.ok(Math.abs(rms(y,c-w,c+w)/steady-1)<.05,`fade loudness at ${c}`);
+    const shifted=new Float32Array(x.length);for(let i=0;i<x.length;i++){const t=i/sr;shifted[i]=Math.min(1,t/.1)*.1*Math.sin(2*Math.PI*440*t+(t>2?2.5:0));}
+    const z=new Float32Array(shifted);crossfadeLoop([z],region.start,region.end,fade);
+    for(let c=region.end-fade+w;c<region.end-w;c+=w)assert.ok(Math.abs(rms(z,c-w,c+w)/steady-1)<.1,`out-of-phase fade loudness at ${c}`);
     for(const id of SUSTAINED)assert.ok(INSTRUMENTS[id],id);
     for(const id of ['grand','nylon','harp','marimba','upright','pizzicato'])assert.ok(!SUSTAINED.has(id),`${id} keeps its natural decay`);
 });

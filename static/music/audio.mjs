@@ -36,14 +36,38 @@ export function loopRegion(x, sampleRate) {
         const score = Math.abs(a - b) / b - .02 * (end - start);
         if (!best || score < best.score) best = { start, end, score };
     }
-    return best && { start: Math.round(best.start * sampleRate), end: Math.round(best.end * sampleRate) };
+    if (!best) return null;
+    const end = Math.round(best.end * sampleRate), fade = Math.round(LOOP_FADE * sampleRate), span = Math.round(sampleRate * .01);
+    // Within ±10 ms, start where the audio before it best matches the loop's last fade: the crossfade
+    // then mixes two nearly in-phase signals instead of cancelling or doubling.
+    let start = Math.round(best.start * sampleRate), bestCorr = -Infinity;
+    for (let s = start - span; s <= start + span; s += 2) {
+        if (s - fade < 0) continue;
+        const c = correlation(x, end - fade, s - fade, fade, 4);
+        if (c > bestCorr) { bestCorr = c; best.startIndex = s; }
+    }
+    return { start: best.startIndex ?? start, end };
 }
 
-/** Crossfades the end of the loop into the audio just before its start, so jumping from end to start is seamless. */
+/** Normalized correlation of x[a..a+n) and x[b..b+n), sampling every `step` samples. */
+function correlation(x, a, b, n, step = 1) {
+    let ab = 0, aa = 0, bb = 0;
+    for (let i = 0; i < n; i += step) { const p = x[a + i], q = x[b + i]; ab += p * q; aa += p * p; bb += q * q; }
+    return aa && bb ? ab / Math.sqrt(aa * bb) : 0;
+}
+
+/**
+ * Crossfades the end of the loop into the audio just before its start, so jumping from end to start is seamless.
+ * The fade is equal-power for unrelated audio and is normalized by the two segments' correlation r,
+ * whose mix has power 1 + r·sin(2θ): in-phase audio neither swells nor, out of phase, dips.
+ */
 export function crossfadeLoop(channels, start, end, fade) {
-    for (const x of channels) for (let i = 0; i < fade; i++) {
-        const t = (i + .5) / fade;
-        x[end - fade + i] = x[end - fade + i] * Math.cos(t * Math.PI / 2) + x[start - fade + i] * Math.sin(t * Math.PI / 2);
+    for (const x of channels) {
+        const r = Math.max(-.9, correlation(x, end - fade, start - fade, fade));
+        for (let i = 0; i < fade; i++) {
+            const theta = (i + .5) / fade * Math.PI / 2, norm = 1 / Math.sqrt(1 + r * Math.sin(2 * theta));
+            x[end - fade + i] = (x[end - fade + i] * Math.cos(theta) + x[start - fade + i] * Math.sin(theta)) * norm;
+        }
     }
 }
 
