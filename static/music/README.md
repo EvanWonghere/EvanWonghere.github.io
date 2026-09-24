@@ -63,7 +63,8 @@ MIDI 仅请求普通输入（不申请 SysEx），支持力度、note-off、velo
 
 Strudel 代码（访客写的、编曲生成的、AI 写的）只在一个隐藏的 `<iframe sandbox="allow-scripts">` 里运行。
 它的文档是 `srcdoc`，没有 `allow-same-origin`，是不透明来源：读不到本站 localStorage、sessionStorage、
-cookie 与登录会话，也拿不到页面 DOM；与页面之间只有 postMessage。
+cookie 与登录会话，也拿不到页面 DOM；与页面之间只有 postMessage。内容安全策略挡住 fetch、图片、样式与子框架，但挡不住沙箱页面
+自己跳转到别的网址；一旦发生第二次加载，页面立即关闭沙箱并提示（这次跳转的请求已发出）。因此 AI 片段另由服务端按白名单检查。
 
 - `vendor/strudel-web-1.3.0.js`：未修改的 `@strudel/web@1.3.0` 构建（AGPL-3.0-or-later），来源、校验和与
   各依赖许可见 `vendor/NOTICE.md` 和 `vendor/strudel-LICENSES.txt`。页面本身从不以 `<script>` 加载它。
