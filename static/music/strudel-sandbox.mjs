@@ -1,8 +1,8 @@
 // Page-side controller for the Strudel sandbox. One hidden <iframe sandbox="allow-scripts"> per page:
 // its document has an opaque origin, so Strudel code (the visitor's, generated or AI-written) cannot
 // read this site's storage, progress or login session. Only postMessage crosses the boundary.
-import { PIANO_SAMPLE_NOTES, STRUDEL_BUNDLE, STRUDEL_RUNTIME, encodeWav, midiName, readSandboxMessage, sandboxDocument } from './strudel-bridge.mjs';
-import { INSTRUMENTS } from './audio.mjs';
+import { PIANO_SAMPLE_NOTES, STRUDEL_BUNDLE, STRUDEL_RUNTIME, encodeWav, loopedSamples, midiName, readSandboxMessage, sandboxDocument } from './strudel-bridge.mjs';
+import { INSTRUMENTS, SUSTAINED } from './audio.mjs';
 
 let sources = null;
 const loadSources = () => sources ||= Promise.all([STRUDEL_BUNDLE, STRUDEL_RUNTIME].map(async url => {
@@ -29,6 +29,18 @@ async function renderDrums() {
         out[kind] = encodeWav((await ctx.startRendering()).getChannelData(0), rate);
     }
     return out;
+}
+
+// Decodes the MP3 samples and bakes the loop in; on any failure the plain samples are used instead.
+async function loopSamples(piano) {
+    try {
+        const ctx = new OfflineAudioContext(1, 1, 44100), decoded = {};
+        for (const [name, bytes] of Object.entries(piano)) {
+            const buffer = await ctx.decodeAudioData(bytes.slice(0));
+            decoded[name] = { sampleRate: buffer.sampleRate, channels: Array.from({ length: buffer.numberOfChannels }, (_, c) => buffer.getChannelData(c)) };
+        }
+        return loopedSamples(decoded, midiName(60));
+    } catch { return null; }
 }
 
 export class StrudelSandbox {
@@ -78,9 +90,11 @@ export class StrudelSandbox {
             const path = INSTRUMENTS[instrument]?.path ?? '', piano = {};
             await Promise.all(PIANO_SAMPLE_NOTES.map(async n => { const r = await fetch(`/music/samples/${path}${n}.mp3`); if (r.ok) piano[midiName(n)] = await r.arrayBuffer(); }));
             const drums = await renderDrums();
+            // Sustained instruments hold notes for their written length: the samples go in as looped WAV.
+            const looped = SUSTAINED.has(instrument) ? await loopSamples(piano) : null;
             current();
-            const sounds = this.wait('sounds-ready', 20000);
-            frame.contentWindow.postMessage({ type: 'sounds', piano, drums }, '*', [...Object.values(piano), ...Object.values(drums)]);
+            const sounds = this.wait('sounds-ready', 20000), sent = looped?.wavs ?? piano;
+            frame.contentWindow.postMessage({ type: 'sounds', piano: sent, pianoType: looped ? 'audio/wav' : 'audio/mpeg', loop: looped?.loop ?? null, drums }, '*', [...Object.values(sent), ...Object.values(drums)]);
             await sounds;
             if (online) {
                 this.emit({ type: 'status', message: '正在从 GitHub 加载 Strudel 在线采样…' });

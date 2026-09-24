@@ -1,5 +1,6 @@
 // Pure helpers for the Strudel sandbox: the sandbox document and its Content Security Policy,
-// validation of messages coming out of the sandbox, WAV encoding and cycle-to-beat mapping.
+// validation of messages coming out of the sandbox, WAV encoding, looped samples and cycle-to-beat mapping.
+import { LOOP_FADE, crossfadeLoop, loopRegion } from './audio.mjs';
 
 export const STRUDEL_BUNDLE = '/music/vendor/strudel-web-1.3.0.js';
 export const STRUDEL_RUNTIME = '/music/strudel-runtime.js';
@@ -50,6 +51,25 @@ export function encodeWav(samples, sampleRate) {
     view.setUint32(28, sampleRate * 2, true); view.setUint16(32, 2, true); view.setUint16(34, 16, true); ascii(36, 'data'); view.setUint32(40, samples.length * 2, true);
     for (let i = 0; i < samples.length; i++) view.setInt16(44 + i * 2, Math.round(Math.max(-1, Math.min(1, samples[i])) * 32767), true);
     return buffer;
+}
+
+/**
+ * Sustained instruments for the sandbox. Strudel's sampler takes one loopBegin/loopEnd (fractions of the
+ * sample) for a whole sound, so the stretch is chosen on the reference note, then every sample gets the
+ * same crossfaded seam and is sent as WAV. decoded: { name: { channels: Float32Array[], sampleRate } }.
+ */
+export function loopedSamples(decoded, reference) {
+    const mono = ({ channels }) => { const out = new Float32Array(channels[0].length); for (const c of channels) for (let i = 0; i < out.length; i++) out[i] += c[i] / channels.length; return out; };
+    const ref = decoded[reference]; if (!ref) return null;
+    const refData = mono(ref), region = loopRegion(refData, ref.sampleRate), fade = Math.round(LOOP_FADE * ref.sampleRate);
+    if (!region || region.start < fade) return null;
+    const wavs = {};
+    for (const [name, sample] of Object.entries(decoded)) {
+        const x = name === reference ? refData : mono(sample);
+        if (sample.sampleRate !== ref.sampleRate || x.length < region.end) return null;
+        crossfadeLoop([x], region.start, region.end, fade); wavs[name] = encodeWav(x, sample.sampleRate);
+    }
+    return { wavs, loop: { begin: region.start / refData.length, end: region.end / refData.length } };
 }
 
 /** Arrangement exports use one cycle per bar and loop the whole piece. */
