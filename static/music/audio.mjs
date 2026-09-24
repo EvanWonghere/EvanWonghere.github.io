@@ -17,6 +17,36 @@ export const INSTRUMENTS = {
     choir: { name:'合唱', path:'choir/', group:'人声与合成' }, pad: { name:'暖色铺底', path:'pad/', group:'人声与合成' }, lead: { name:'锯齿波主音', path:'lead/', group:'人声与合成' }
 };
 
+// Every sample is cut at about 3.2 s. Instruments that sustain rather than decay loop a steady
+// stretch of their sample while the note is held; pianos, guitars, mallets and basses keep their natural decay.
+export const SUSTAINED = new Set(['organ', 'strings', 'violin', 'cello', 'trumpet', 'trombone', 'horn', 'brass', 'flute', 'clarinet', 'sax', 'oboe', 'choir', 'pad', 'lead']);
+export const LOOP_FADE = .2;
+
+/** A stretch of 0.8–2 s, after the attack and before the cut, whose ends have the same loudness. Sample indices. */
+export function loopRegion(x, sampleRate) {
+    const hop = Math.round(sampleRate * .05), win = hop * 2, rms = [];
+    for (let i = 0; i + win <= x.length; i += hop) { let s = 0; for (let j = i; j < i + win; j++) s += x[j] * x[j]; rms.push(Math.sqrt(s / win)); }
+    if (!rms.length) return null;
+    const level = t => rms[Math.min(rms.length - 1, Math.max(0, Math.round(t * sampleRate / hop)))];
+    const last = Math.min(x.length / sampleRate - .15, 3), first = .5 + LOOP_FADE;
+    let best = null;
+    for (let end = last; end >= last - .4; end -= .05) for (let start = Math.max(first, end - 2); start <= end - .8; start += .05) {
+        const a = level(start), b = level(end); if (b < 1e-4) continue;
+        // Prefer matching loudness, then longer loops (fewer repeats are less audible).
+        const score = Math.abs(a - b) / b - .02 * (end - start);
+        if (!best || score < best.score) best = { start, end, score };
+    }
+    return best && { start: Math.round(best.start * sampleRate), end: Math.round(best.end * sampleRate) };
+}
+
+/** Crossfades the end of the loop into the audio just before its start, so jumping from end to start is seamless. */
+export function crossfadeLoop(channels, start, end, fade) {
+    for (const x of channels) for (let i = 0; i < fade; i++) {
+        const t = (i + .5) / fade;
+        x[end - fade + i] = x[end - fade + i] * Math.cos(t * Math.PI / 2) + x[start - fade + i] * Math.sin(t * Math.PI / 2);
+    }
+}
+
 /** <option> list grouped by family, for the instrument selects. */
 export function instrumentOptions(selected, ids = Object.keys(INSTRUMENTS)) {
     const groups = new Map();
@@ -79,7 +109,8 @@ export class PianoAudio {
             try {
                 const response = await fetch(`/music/samples/${INSTRUMENTS[instrument].path}${note}.mp3`, { signal: AbortSignal.timeout(12000) });
                 if (!response.ok) throw new Error('sample unavailable');
-                const data = await this.context.decodeAudioData(await response.arrayBuffer());
+                const decoded = await this.context.decodeAudioData(await response.arrayBuffer());
+                const data = SUSTAINED.has(instrument) ? this.loopable(decoded) : decoded;
                 buffers.set(note, data); failed.delete(note);
                 if (instrument === this.instrument) this.onStatus(`${INSTRUMENTS[instrument].name} · ${buffers.size} / 88 个采样已就绪${failed.size ? ' · 部分音使用合成音' : ''}`);
                 return data;
@@ -88,6 +119,16 @@ export class PianoAudio {
             } finally { loading.delete(note); }
         })();
         loading.set(note, promise); return promise;
+    }
+    /** A copy of a decoded sample with a seamless loop baked in, marked with loop times in seconds. */
+    loopable(buffer) {
+        if (typeof buffer?.getChannelData !== 'function') return buffer;
+        const region = loopRegion(buffer.getChannelData(0), buffer.sampleRate), fade = Math.round(LOOP_FADE * buffer.sampleRate);
+        if (!region || region.start < fade) return buffer;
+        const copy = this.context.createBuffer(buffer.numberOfChannels, buffer.length, buffer.sampleRate);
+        for (let c = 0; c < buffer.numberOfChannels; c++) { const x = new Float32Array(buffer.getChannelData(c)); crossfadeLoop([x], region.start, region.end, fade); copy.copyToChannel(x, c); }
+        copy.loop = { start: region.start / buffer.sampleRate, end: region.end / buffer.sampleRate };
+        return copy;
     }
     async warm() {
         const instrument = this.instrument; await this.init();
@@ -111,6 +152,8 @@ export class PianoAudio {
         const buffer = bank.buffers.get(note); const sources = [];
         if (buffer) {
             const source = this.context.createBufferSource(); source.buffer = buffer; source.connect(filter); source.start(when); sources.push(source);
+            // Sustained instruments hold until released; the long stop is only a guard against a lost release.
+            if (buffer.loop) { source.loop = true; source.loopStart = buffer.loop.start; source.loopEnd = buffer.loop.end; source.stop(when + 600); }
         } else {
             // Additive fallback while the sample loads: a fast attack, decaying harmonics and a longer
             // fundamental, scaled to the samples' level so the first presses are not louder.
