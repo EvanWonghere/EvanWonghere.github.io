@@ -136,11 +136,33 @@
             <details class="card composition-guide"><summary>第一次写谱：一分钟上手</summary><div class="syllabus-grid"><div><h4>从音名开始</h4><p>C D E F G A B 是 C4 到 B4；小写 c 是 C5，C, 是 C3。<code>^F</code> 是升 F，<code>_B</code> 是降 B，<code>=F</code> 是还原 F。</p><h4>时值与小节</h4><p>本页按钮按 <code>L:1/4</code> 书写：C 是一拍，C2 是两拍，C/2 是半拍，z 是休止，| 是小节线。导入其他 L: 时，按钮会按该单位换算时值。</p></div><div><h4>和弦与独立声部</h4><p><code>[CEG]2</code> 是两拍的 C 大三和弦；双手谱用 V: 定义声部、%%score 合并谱表。可从“和弦工坊”直接发送一个进行过来。</p><h4>与制谱软件往返</h4><p>导入 ABC、未压缩 MusicXML 或 MXL；导出 ABC 继续编辑、MIDI 进入音乐软件、SVG 保存谱面。支持反复、连音线与多声部，复杂排版请以原谱核对。</p></div></div><p><a href="https://abcnotation.com/wiki/abc:standard:v2.1" target="_blank" rel="noopener noreferrer">ABC 2.1 语法参考 ↗</a> · <a href="/music/vendor/NOTICE.md">排谱工具与开源署名</a></p></details>
         </section>
         <section data-panel="live" hidden>
-            <div class="page-heading"><div><span class="eyebrow">PATTERNS IN MOTION</span><h2>用代码，即兴。</h2><p>让一段节奏生长成完整的声音。以 Strudel 官方编辑器探索循环、叠层与实时变化。</p></div></div>
+            <div class="page-heading"><div><span class="eyebrow">PATTERNS IN MOTION</span><h2>用代码，即兴。</h2><p>让一段节奏生长成完整的声音。在本站沙箱里边听边看谱，或送进 Strudel 官方编辑器探索循环、叠层与实时变化。</p></div></div>
             <div id="live-library-slot"></div>
             <div class="toolbar"><label>起步片段<select id="live-presets"></select></label><button id="live-load-example">载入片段</button><label class="file-button">导入代码<input id="live-import" type="file" accept=".js,.txt"></label><button id="live-export">导出代码</button><button id="live-open">在 Strudel 打开 ↗</button></div>
             <div class="card live-draft"><div class="row"><h3>即兴手稿</h3><span class="eyebrow">WRITE · LISTEN · REPEAT</span></div><label class="source-label" for="live-title">作品名</label><input id="live-title" type="text" maxlength="100"><p id="live-hint" class="muted"></p><label class="source-label" for="live-source">本站代码草稿 · 自动保存</label><textarea id="live-source" class="source-editor" rows="10" maxlength="40000" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea><div class="button-row"><button id="live-launch" class="primary">送入 Strudel 演奏 ↓</button><button id="live-stop" disabled>停止并关闭演奏</button></div><p id="live-status" role="status" class="muted">点击后才会连接 strudel.cc；首次点击嵌入编辑器中央的 play 开始。</p></div>
-            <div class="live-boundary"><strong>两份手稿，清楚保存</strong><p>本站保存上方草稿与作品库；下方是 Strudel 独立编辑器。若在那里改了代码，请复制回上方再保存。切换栏目或隐藏本页会关闭内嵌演奏；独立打开的 Strudel 标签页需要在那里停止。</p><p>演奏环境及其音量由 Strudel 控制；本站底栏音色、BPM 和音量只作用于练习室。代码通过链接载入 Strudel，本站不读取第三方编辑器的账户或存储。</p></div>
+            <div class="card live-sandbox"><div class="row"><h3>本站沙箱 · 边听边看谱</h3><span class="eyebrow">SANDBOXED · OFFLINE FIRST</span></div>
+                <div class="toolbar"><button id="live-sandbox-play" class="primary">在本站沙箱演奏</button><button id="live-sandbox-stop" disabled>停止</button><label>每个循环记为一小节<select id="live-meter"><option value="4/4">4/4</option><option value="3/4">3/4</option><option value="2/4">2/4</option><option value="6/8">6/8</option></select></label><label class="check"><input id="live-sandbox-online" type="checkbox"> 加载 Strudel 在线采样（GitHub）</label></div>
+                <p id="live-sandbox-status" class="muted" role="status">上方草稿在隔离的空白页面里由 Strudel 演奏，读不到本站进度与登录。默认离线：本站钢琴采样、鼓组与 Strudel 自带合成器。</p>
+                <div class="row"><span id="live-sheet-status" class="muted"></span><span id="live-position" class="accent"></span></div>
+                <ul id="live-parse-notes" class="live-parse-notes" hidden></ul>
+                <div id="live-sheet" class="arr-sheet"></div>
+                <p class="muted">谱面只读懂 note / n / s、mini-notation、stack、.scale、.slow/.fast、.add 等常用写法；读不懂的部分会在上面列出，不会猜。谱面是只读视图，改动请写在代码里。</p>
+            </div>
+            {{ if $ai -}}
+            <div id="live-ai" class="card arr-vibe"><div class="row"><h3>AI 写一段 Strudel</h3><span class="eyebrow">AI · 仅管理员</span></div>
+                <p class="muted">描述想要的声音、节奏或风格，AI 读上方手稿后写一段代码并说明思路。代码只在本站沙箱里试听；你选择追加或替换后才写入手稿，并且可以撤回。它不评分，也听不到声音。</p>
+                <div id="live-ai-login"><p>需要以管理员身份登录 AI 助手后使用。</p><button id="live-ai-signin">打开 AI 助手</button></div>
+                <div id="live-ai-form" hidden>
+                    <label class="source-label" for="live-ai-text">想要的声音</label><textarea id="live-ai-text" rows="3" maxlength="2000" placeholder="例如：给这段加一层慵懒的低音和轻鼓；或者写一段 C 小调的琶音，逐渐变亮。"></textarea>
+                    <div class="toolbar"><button id="live-ai-go" class="primary">生成片段</button><button id="live-ai-retry" hidden>重试同一请求</button></div>
+                </div>
+                <p id="live-ai-status" class="muted" role="status"></p>
+                <div id="live-ai-result" hidden><p id="live-ai-summary" class="arr-summary"></p><pre id="live-ai-code" class="arr-code"></pre>
+                    <div class="button-row"><button id="live-ai-try" class="primary">在沙箱试听</button><button id="live-ai-append">作为新的一层追加</button><button id="live-ai-replace">替换手稿</button><button id="live-ai-discard">放弃片段</button></div></div>
+                <div class="button-row"><button id="live-ai-undo" hidden>撤回上次插入</button></div>
+            </div>
+            {{- end }}
+            <div class="live-boundary"><strong>两份手稿，清楚保存</strong><p>本站保存上方草稿与作品库。本站沙箱直接演奏上方草稿；下方是 Strudel 独立编辑器，若在那里改了代码，请复制回上方再保存。切换栏目或隐藏本页会停止沙箱并关闭内嵌演奏；独立打开的 Strudel 标签页需要在那里停止。</p><p>沙箱与 Strudel 编辑器的音量由 Strudel 控制；本站底栏的 BPM 和音量只作用于练习室，底栏音色决定沙箱里 piano 用哪套钢琴采样。代码通过链接载入 Strudel，本站不读取第三方编辑器的账户或存储。</p></div>
             <div id="live-frame" class="live-frame" hidden></div>
             <div class="card"><h3>从第一拍到一首歌</h3><div class="practice-plan"><p><strong>01 · 节奏</strong>先保持一个循环，只改休止与细分。</p><p><strong>02 · 旋律</strong>用音阶级数建立主题，再改变音域。</p><p><strong>03 · 和声</strong>比较 ii–V–I 的完整和弦与导向音。</p><p><strong>04 · 结构</strong>分开写低音与旋律，用 stack 叠层。</p></div><p><a href="https://strudel.cc/workshop/getting-started/" target="_blank" rel="noopener noreferrer">Strudel 官方互动教程 ↗</a> · <a href="https://strudel.cc/technical-manual/project-start/" target="_blank" rel="noopener noreferrer">官方嵌入说明与 AGPL 授权</a></p></div>
         </section>
@@ -182,7 +204,9 @@
             </div>
             <div class="card"><div class="row"><h3>规则检查</h3><span class="eyebrow">DETERMINISTIC</span></div><ul id="arr-checks" class="arr-checks"></ul><p class="muted">由本页程序按固定规则检查：音域、单手跨度、伴奏高过旋律、空白和弦；勾选古典规则时另查旋律与低音的平行五八度。</p></div>
             <div class="card"><div class="row"><h3>Strudel 代码</h3><div class="button-row"><button id="arr-copy-strudel">复制代码</button><button id="arr-open-strudel">在 Strudel 打开 ↗</button><button id="arr-to-live">存入即兴手稿</button></div></div>
-                <pre id="arr-strudel" class="arr-code"></pre><p class="muted">由编曲单向生成，每个循环一小节。代码只在 Strudel 的编辑器里运行，那里的改动不会回到这份编曲。</p>
+                <div class="button-row arr-sandbox"><button id="arr-sandbox-play" class="primary">在本站沙箱演奏</button><button id="arr-sandbox-stop" disabled>停止</button><label class="check"><input id="arr-sandbox-online" type="checkbox"> 加载 Strudel 在线采样（GitHub）</label></div>
+                <p id="arr-sandbox-status" class="muted" role="status">沙箱默认离线：用本站钢琴采样、鼓组与 Strudel 自带合成器演奏，五线谱与时间线跟着 Strudel 的事件前进。</p>
+                <pre id="arr-strudel" class="arr-code"></pre><p class="muted">由编曲单向生成，每个循环一小节。沙箱是隔离的空白页面，读不到本站的进度与登录；在 Strudel 编辑器里做的改动不会回到这份编曲。</p>
             </div>
             <div class="card"><h3>导出与交换</h3><div class="button-row"><button id="arr-to-score">送到五线谱作曲</button><button id="arr-export-midi" disabled>导出 MIDI</button><button id="arr-export-json">导出编曲 JSON</button><label class="file-button">导入编曲 JSON<input id="arr-import" type="file" accept=".json,application/json"></label></div><p class="muted">编曲保存在此浏览器，并包含在“我的进度”的备份文件里。MIDI 不含鼓组。</p></div>
         </section>

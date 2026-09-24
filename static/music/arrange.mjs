@@ -10,21 +10,14 @@ import { checkArrangement } from './arrange-check.mjs';
 import { ArrangePlayer, playbackNotes } from './arrange-player.mjs';
 import { strudelURL, MAX_SOURCE } from './composition.mjs';
 import { INSTRUMENTS } from './audio.mjs';
+import { loadABC, highlightStarts } from './abc-loader.mjs';
+import { cycleToBeat } from './strudel-bridge.mjs';
+import { sharedSandbox } from './strudel-sandbox.mjs';
 
 const $ = s => document.querySelector(s);
 const esc = v => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const LENGTHS = [0.25, 0.5, 0.75, 1, 1.5, 2, 3, 4, 6, 8, 12, 16];
 const LENGTH_NAMES = { 0.25: '十六分', 0.5: '八分', 0.75: '附点八分', 1: '四分', 1.5: '附点四分', 2: '二分', 3: '附点二分', 4: '全音符', 6: '6 拍', 8: '8 拍', 12: '12 拍', 16: '16 拍' };
-let abcLoading = null;
-function loadABC() {
-    if (window.ABCJS) return Promise.resolve();
-    return abcLoading ||= new Promise((resolve, reject) => {
-        const existing = document.querySelector('script[src="/music/vendor/abcjs-6.7.0.min.js"]');
-        const tag = existing || document.createElement('script');
-        tag.addEventListener('load', resolve, { once: true }); tag.addEventListener('error', () => { abcLoading = null; reject(new Error('排谱工具未能加载，请检查网络后重试。')); }, { once: true });
-        if (!existing) { tag.src = '/music/vendor/abcjs-6.7.0.min.js'; document.head.append(tag); }
-    });
-}
 function download(text, name, type) {
     const url = URL.createObjectURL(new Blob([text], { type })), a = document.createElement('a');
     a.href = url; a.download = name; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 30000);
@@ -329,9 +322,7 @@ export function mountArrange({ audio, storage, notify, setTab, stopAll, creative
     function highlightEvents(ids) {
         const starts = new Set(ids.map(id => compiled.map[id]?.[0]).filter(v => v !== undefined)), key = [...starts].join(',');
         if (key === highlight) return; highlight = key;
-        document.querySelectorAll('#arr-sheet .score-playing').forEach(el => el.classList.remove('score-playing'));
-        if (!starts.size) return;
-        for (const s of visual?.engraver?.selectables || []) { const abc = s.absEl?.abcelem; if (abc?.el_type === 'note' && [...starts].some(x => x >= abc.startChar && x < abc.endChar)) for (const el of s.absEl.elemset || []) el.classList.add('score-playing'); }
+        highlightStarts(visual, $('#arr-sheet'), starts);
     }
     function renderChecks() {
         const issues = checkArrangement(real, doc), list = $('#arr-checks');
@@ -344,7 +335,7 @@ export function mountArrange({ audio, storage, notify, setTab, stopAll, creative
         };
     }
     let strudelCode = '';
-    function renderStrudel() { strudelCode = compileStrudel(real, doc); $('#arr-strudel').textContent = strudelCode; }
+    function renderStrudel() { const next = compileStrudel(real, doc); if (next === strudelCode) return; strudelCode = next; $('#arr-strudel').textContent = strudelCode; sandboxResend(); }
 
     function refresh() {
         real = realize(doc);
@@ -367,9 +358,9 @@ export function mountArrange({ audio, storage, notify, setTab, stopAll, creative
             await player.play(playbackNotes(real, doc, r), { tempo: doc.meta.tempo, length: playing.length, loop: r.loop, onTime: beat => tickView(beat), onEnd: () => { stop(); $('#arr-time').textContent = '播放完成'; } });
         } catch (e) { stop(); notify(e.message); }
     }
-    function tickView(beat) {
-        if (!playing) return;
-        const absolute = playing.from + beat;
+    function tickView(beat) { if (playing) showPosition(playing.from + beat); }
+    // Shared by the site's player and the Strudel sandbox: time label, staff, playhead and chord lane.
+    function showPosition(absolute) {
         $('#arr-time').textContent = `${positionLabel(absolute, real.bpb)} · ${Math.floor(absolute / real.bpb) + 1}/${Math.round(real.totalBeats / real.bpb)} 小节`;
         highlightEvents(real.events.filter(e => !e.drum && e.start <= absolute + 1e-6 && e.start + e.beats > absolute + 1e-6).map(e => e.id));
         const head = $('#arr-playhead'), timeline = $('#arr-timeline'), first = timeline.querySelector('.arr-bar-number');
@@ -381,12 +372,56 @@ export function mountArrange({ audio, storage, notify, setTab, stopAll, creative
         timeline.querySelectorAll('.arr-chord.playing').forEach(el => { if (el.dataset.chord !== chord?.id) el.classList.remove('playing'); });
         if (chord) timeline.querySelector(`.arr-chord[data-chord="${CSS.escape(chord.id)}"]`)?.classList.add('playing');
     }
-    function stop() {
-        player.stop(); playing = null;
-        $('#arr-play').disabled = false; $('#arr-stop').disabled = true;
+    function clearPosition() {
         const head = $('#arr-playhead'); if (head) head.hidden = true;
         document.querySelectorAll('#arr-timeline .arr-chord.playing').forEach(el => el.classList.remove('playing'));
         highlightEvents([]);
+    }
+
+    // ---------- Strudel sandbox: the exported code itself plays here, and its events move the views ----------
+    const sandbox = sharedSandbox();
+    let sandboxRun = null, resendTimer = 0;
+    const sandboxStatus = text => { $('#arr-sandbox-status').textContent = text; };
+    function sandboxBusy(on) { $('#arr-sandbox-play').disabled = on; $('#arr-sandbox-stop').disabled = !on; }
+    sandbox.subscribe(message => {
+        if (message.type === 'status' && sandboxRun) sandboxStatus(message.message);
+        if (!sandboxRun || (message.id !== undefined && message.id !== null && message.id !== sandboxRun.id)) return;
+        if (message.type === 'hap') {
+            const run = sandboxRun, beat = cycleToBeat(message.cycle, run.bars, run.bpb);
+            const timer = setTimeout(() => { run.timers.delete(timer); if (sandboxRun === run) showPosition(beat); }, Math.max(0, message.delay * 1000));
+            run.timers.add(timer);
+        }
+        if (message.type === 'error') sandboxStatus(`Strudel 报错：${message.message}`);
+        if (message.type === 'log') sandboxStatus(message.message);
+    });
+    async function sandboxPlay() {
+        stopAll();
+        const run = { id: `arr-${Date.now().toString(36)}`, bars: Math.round(real.totalBeats / real.bpb), bpb: real.bpb, timers: new Set() };
+        sandboxRun = run; sandboxBusy(true); sandboxStatus('正在启动 Strudel 沙箱…');
+        try {
+            await sandbox.play(strudelCode, run.id, { online: $('#arr-sandbox-online').checked, instrument: audio.instrument });
+            if (sandboxRun === run) sandboxStatus('Strudel 正在沙箱里演奏这段代码；五线谱与时间线跟随它前进。');
+        } catch (e) { if (sandboxRun === run) { sandboxStop(); sandboxStatus(`未能演奏：${e.message}`); } }
+    }
+    // Edits while the sandbox plays are re-evaluated, like pressing update in Strudel's editor.
+    function sandboxResend() {
+        if (!sandboxRun) return;
+        clearTimeout(resendTimer);
+        resendTimer = setTimeout(() => {
+            if (!sandboxRun) return;
+            Object.assign(sandboxRun, { bars: Math.round(real.totalBeats / real.bpb), bpb: real.bpb });
+            sandbox.play(strudelCode, sandboxRun.id, { online: $('#arr-sandbox-online').checked, instrument: audio.instrument }).catch(e => sandboxStatus(e.message));
+        }, 400);
+    }
+    function sandboxStop() {
+        clearTimeout(resendTimer);
+        if (sandboxRun) { for (const t of sandboxRun.timers) clearTimeout(t); sandboxRun = null; sandbox.stop(); sandboxStatus('沙箱演奏已停止。'); clearPosition(); }
+        sandboxBusy(false);
+    }
+    function stop() {
+        player.stop(); playing = null;
+        $('#arr-play').disabled = false; $('#arr-stop').disabled = true;
+        clearPosition(); sandboxStop();
     }
 
     // ---------- events ----------
@@ -436,6 +471,9 @@ export function mountArrange({ audio, storage, notify, setTab, stopAll, creative
     $('#arr-play').onclick = () => void play();
     $('#arr-stop').onclick = stop;
     $('#arr-loop').onchange = () => { if (playing) { stop(); void play(); } };
+    $('#arr-sandbox-play').onclick = () => void sandboxPlay();
+    $('#arr-sandbox-stop').onclick = stop;
+    $('#arr-sandbox-online').onchange = () => { if (sandboxRun) { stop(); void sandboxPlay(); } };
     $('#arr-copy-strudel').onclick = async () => {
         try { await navigator.clipboard.writeText(strudelCode); notify('Strudel 代码已复制。'); }
         catch { const range = document.createRange(); range.selectNodeContents($('#arr-strudel')); getSelection().removeAllRanges(); getSelection().addRange(range); notify('浏览器不允许自动复制，已选中代码，请按 Ctrl/⌘+C。'); }
