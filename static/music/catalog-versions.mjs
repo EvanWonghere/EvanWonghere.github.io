@@ -29,7 +29,7 @@ export const MUSIC_CATALOG_VERSIONS = {
  "nonchord": "623fa2bf192385bc",
  "borrowed": "b1397529a70426af",
  "texture": "0516638f42a92769",
- "harmonize": "403d8f5c6f1970a1",
+ "harmonize": "4db1e20ec2a1965d",
  "form": "512330400015543b",
  "first-song": "769c447fed7f2d5f"
 };
