@@ -79,8 +79,9 @@ artwork unless a game-specific notice states otherwise.
 
 ## Music room piano samples
 
-The music room at `/study/music/` bundles 352 MP3 samples across Acoustic Grand Piano,
-Electric Piano 1, Harpsichord and Drawbar Organ
+The music room at `/study/music/` bundles 880 MP3 samples across Acoustic Grand Piano,
+Bright Acoustic Piano, Honky-tonk Piano, Electric Piano 1 and 2, Harpsichord, Drawbar Organ,
+Celesta, Vibraphone and String Ensemble 1
 from [MIDI.js Soundfonts / FluidR3](https://github.com/gleitz/midi-js-soundfonts).
 FluidR3: Copyright (c) 2000-2002, 2008 Frank Wen and contributors; MP3 conversion
 and distribution by Benjamin Gleitz / MIDI.js Soundfonts contributors.
