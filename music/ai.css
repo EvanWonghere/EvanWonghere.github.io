@@ -1,0 +1,27 @@
+/* Administrator AI drawer. Loaded only when params.musicAI is enabled. */
+.ai-panel { position: fixed; z-index: 40; top: 16px; right: 16px; bottom: 16px; width: min(440px, calc(100vw - 32px)); display: flex; flex-direction: column; gap: 12px; padding: 20px 22px; overflow-y: auto; background: var(--surface, #faf8f2); color: var(--text, #292f2b); border: 1px solid var(--line, #d7d0c2); border-radius: 4px; box-shadow: 0 18px 50px #2a2f2b33; }
+.ai-panel[hidden] { display: none; }
+.ai-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.ai-head h3 { margin: 4px 0 0; }
+.ai-panel p { margin: 0; }
+.ai-boundary { font-size: .82rem; line-height: 1.6; padding: 10px 12px; background: var(--surface2, #eae5da); border-radius: 3px; }
+.ai-panel #ai-ready, .ai-panel #ai-signed-out, .ai-panel #ai-not-admin { display: flex; flex-direction: column; gap: 12px; }
+.ai-panel #ai-ready[hidden], .ai-panel #ai-signed-out[hidden], .ai-panel #ai-not-admin[hidden] { display: none; }
+.ai-kinds { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 0; padding: 0; border: 0; }
+.ai-kinds legend { font-size: .75rem; letter-spacing: .12em; margin-bottom: 6px; color: var(--muted, #686b61); }
+.ai-kinds label { display: inline-flex; align-items: center; gap: 6px; }
+.ai-subject { font-size: .9rem; }
+.ai-subject span { color: var(--muted, #686b61); margin-right: 6px; }
+.ai-history { display: flex; flex-direction: column; gap: 14px; max-height: 46vh; overflow-y: auto; }
+.ai-history:empty { display: none; }
+.ai-turn { display: grid; gap: 6px; padding-bottom: 12px; border-bottom: 1px dashed var(--line, #d7d0c2); }
+.ai-question { font-weight: 600; white-space: pre-wrap; overflow-wrap: anywhere; }
+.ai-answer { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.75; font-size: .92rem; }
+.ai-answer.bad, .ai-status.bad { color: var(--red, #a04338); }
+.ai-model { font-size: .72rem; color: var(--muted, #686b61); }
+.ai-panel textarea { width: 100%; box-sizing: border-box; resize: vertical; min-height: 96px; font: inherit; padding: 10px; border: 1px solid var(--line, #d7d0c2); border-radius: 2px; background: #fffdf7; color: inherit; }
+.ai-account { font-size: .8rem; color: var(--muted, #686b61); }
+.ai-panel .link-button { padding: 0; border: 0; background: none; text-decoration: underline; color: inherit; font-size: inherit; }
+.ai-status { font-size: .85rem; min-height: 1.2em; }
+#ai-empty { color: var(--muted, #686b61); font-size: .85rem; }
+@media (max-width: 760px) { .ai-panel { top: 8px; right: 8px; bottom: 8px; width: calc(100vw - 16px); padding: 16px; } }

@@ -110,6 +110,11 @@ export function mountCreative({audio,getProgress,persist,stopAll,notify,setTab})
   stop,stopScore,
   show(name){if(!['compose','live'].includes(name))return;libraryKind=name==='compose'?'score':'live';document.getElementById(name==='compose'?'score-library-slot':'live-library-slot').append(worksPanel);worksPanel.hidden=false;library();if(name==='compose')void render();},
   sync(){stop();importGeneration++;activeWork={score:'',live:''};$('#score-source').value=state().abc;history=[];historyIndex=-1;remember();$('#live-source').value=state().live;$('#live-title').value=state().title;library();if(!document.querySelector('[data-panel=compose]').hidden)void render();},
+  // Drafts handed over from the arrangement desk replace the current draft, like loading an example.
+  importScore(abc){stopAll();importGeneration++;replaceSource(abc);setTab('compose',true);notify('编曲已送到五线谱作曲；原草稿已被替换，可用撤销找回。');},
+  importLive(code,title){stopAll();$('#live-source').value=code;$('#live-title').value=String(title||'编曲').slice(0,100);activeWork.live='';saveDraft();library();setTab('live',true);notify('Strudel 代码已存入即兴手稿草稿。');},
+  // Read-only view of the score draft for the AI assistant.
+  current(){const abc=$('#score-source').value;return {abc,workId:activeWork.score||'draft',title:/^T:(.*)$/m.exec(abc)?.[1]?.trim()||'未命名乐谱'};},
   fromEvents(events,title){stopAll();replaceSource(eventsToABC(events,title,getProgress().settings.bpm));setTab('compose',true);},
  };
 }

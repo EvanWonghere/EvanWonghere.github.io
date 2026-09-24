@@ -1,4 +1,5 @@
 import { mountCreative } from './creative.mjs';
+import { mountArrange } from './arrange.mjs';
 import { STORAGE_KEY, NOTE_NAMES, clamp, noteName, isBlack, localDay, freshProgress, validateProgress, loadProgress, saveProgress, recordAnswer, recordSkill, streakDays, pick, shuffle, earQuestion, detectPitch, midiPitch, scoreRhythm } from './core.mjs';
 import { STAGES, LESSONS, QUESTIONS, PIECES, MELODIES, RHYTHMS, RESOURCES } from './curriculum.mjs';
 import { PianoAudio, Transport, INSTRUMENTS } from './audio.mjs';
@@ -15,10 +16,10 @@ const loaded = loadProgress(storage);
 let progress = loaded.progress, storageBlocked = loaded.blocked || false;
 let tab = 'route', lastActive = Date.now(), lastTick = Date.now(), noticeTimer, currentTheory, theoryAnswered = false;
 let currentEar, earAnswered = false, earHeard = false, earPending = false, earGeneration = 0;
-let pendingImport = null, activeLesson = LESSONS.find(l => l.id === progress.lastLesson) || LESSONS[0];
+let pendingImport = null, pendingArrangements,  activeLesson = LESSONS.find(l => l.id === progress.lastLesson) || LESSONS[0];
 const audio = new PianoAudio(text => { $('#audio-status').textContent = text; });
 const transport = new Transport(audio);
-let audioWarming = null, creative = null;
+let audioWarming = null, creative = null, arrange = null, aiAssistant = null;
 function notify(text) { $('#notice').textContent = text; $('#notice').hidden = false; clearTimeout(noticeTimer); noticeTimer = setTimeout(() => { $('#notice').hidden = true; }, 6500); }
 function storageWarning(text) { $('#storage-warning').textContent = text; $('#storage-warning').hidden = !text; $('#save-state').textContent = text ? '进度未能保存，请备份' : '已保存在此浏览器'; }
 if (loaded.error) storageWarning(loaded.error);
@@ -67,7 +68,7 @@ function setTab(name, focus = false) {
     if (name === 'rhythm') renderRhythm();
     if (name === 'progress') renderProgress();
     if (name === 'harmony') renderHarmony();
-    creative?.show(name);
+    creative?.show(name); arrange?.show(name);
     if (focus) $('#workspace').focus({ preventScroll: true });
     updateStats();
 }
@@ -78,6 +79,7 @@ function renderCurriculum() {
 }
 function showLesson(id, scroll = true) {
     activeLesson = LESSONS.find(l => l.id === id) || LESSONS[0]; progress.lastLesson = activeLesson.id; persist();
+    aiAssistant?.then(api => api?.refresh());
     const l = activeLesson;
     $('#lesson-detail').hidden = false;
     const d = LESSON_DETAILS[l.id], quizDone = l.questions.filter(q => progress.cards[q.id]?.lastCorrect).length;
@@ -554,8 +556,10 @@ function renderProgress() {
 }
 $('#daily-goal').onchange = () => { progress.settings.goal = +$('#daily-goal').value; persist(); renderProgress(); };
 $('#review-go').onclick = () => { $('#theory-mode').value = 'review'; setTab('theory', true); };
+// Progress backups carry the arrangement archive too; older importers ignore the extra field.
+const withArrangements = data => { const archive = arrange?.backup(); return archive ? { ...data, arrangements: archive } : data; };
 function download(data, suffix = '') {
-    const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'}), url = URL.createObjectURL(blob), a = document.createElement('a');
+    const blob = new Blob([JSON.stringify(withArrangements(data),null,2)], {type:'application/json'}), url = URL.createObjectURL(blob), a = document.createElement('a');
     a.href = url; a.download = `hive-music-${localDay()}${suffix}.json`; a.click(); setTimeout(() => URL.revokeObjectURL(url), 10000);
 }
 $('#export').onclick = () => {
@@ -570,13 +574,16 @@ $('#import').onchange = async e => {
     const file = e.target.files?.[0]; if (!file) return;
     try {
         if (file.size > 3 * 1024 * 1024) throw new Error('备份文件过大，请选择 3 MB 以内的进度 JSON。');
-        pendingImport = validateProgress(JSON.parse(await file.text()));
-        $('#import-summary').textContent = `备份包含 ${Object.keys(pendingImport.lessons).length} 节已学课程、${Object.keys(pendingImport.cards).length} 道题记录。确认后替换当前音乐进度。`;
+        const raw = JSON.parse(await file.text());
+        pendingImport = validateProgress(raw);
+        pendingArrangements = raw.arrangements;
+        const arrangementCount = pendingArrangements === undefined ? null : arrange.summary(pendingArrangements);
+        $('#import-summary').textContent = `备份包含 ${Object.keys(pendingImport.lessons).length} 节已学课程、${Object.keys(pendingImport.cards).length} 道题记录${arrangementCount === null ? '，没有编曲存档（保留本机现有编曲）' : `和 ${arrangementCount} 份编曲`}。确认后替换当前音乐进度${arrangementCount === null ? '' : '与编曲'}。`;
         $('#import-confirm').hidden = false;
     } catch(error) { pendingImport = null; $('#import-confirm').hidden = true; notify(`未导入：${error.message}`); }
     e.target.value = '';
 };
-$('#import-cancel').onclick = () => { pendingImport = null; $('#import-confirm').hidden = true; };
+$('#import-cancel').onclick = () => { pendingImport = null; pendingArrangements = undefined; $('#import-confirm').hidden = true; };
 $('#import-apply').onclick = () => {
     if (!pendingImport) return;
     if (storageBlocked) { try { download({ unrecoveredRaw:storage.getItem(STORAGE_KEY), currentSession:progress }, '-before-import-recovery'); } catch { download(progress, '-before-import'); } }
@@ -584,6 +591,8 @@ $('#import-apply').onclick = () => {
     const error = saveProgress(storage, pendingImport);
     if (error) { storageWarning(error); return; }
     stopActivities(); progress = pendingImport; pendingImport = null; storageBlocked = false;
+    if (pendingArrangements !== undefined) { try { arrange.restore(pendingArrangements); } catch (error) { notify(`练习进度已恢复，但编曲未能恢复：${error.message}`); } }
+    pendingArrangements = undefined;
     $('#import-confirm').hidden = true; storageWarning(null); syncSettings(); renderCurriculum(); renderProgress(); notify('音乐进度已恢复。原进度已发起下载备份。');
 };
 $('#reset').onclick = () => {
@@ -651,7 +660,7 @@ function renderJournal(){ $('#journal-list').innerHTML=[...(progress.journal || 
 $('#journal-save').onclick=()=>{const text=$('#journal-text').value.trim();if(!text){notify('先写下本次观察或下一次目标。');return;}progress.journal ||= [];progress.journal.push({text:text.slice(0,1200),at:Date.now(),bpm:progress.settings.bpm});progress.journal=progress.journal.slice(-100);persist();$('#journal-text').value='';renderJournal();notify('练习日志已保存。');};
 
 function stopActivities() {
-    creative?.stop();
+    creative?.stop(); arrange?.stop();
     transport.stop(); stopMetronome(); stopPiano(); stopRhythm(); stopMic(micStream || micPending ? '麦克风已关闭' : ''); allOff();
     earGeneration++; earPending = false; $('#ear-play').disabled = false;
 }
@@ -675,7 +684,24 @@ window.addEventListener('storage', e => {
 });
 for (const id of ['piano-piece','piano-mode','sight-piece','sight-octave','rhythm-pattern','ear-mode','ear-level','ear-style','theory-mode','lesson-filter','instrument','piano-hand','piano-repeats','piano-duration','harmony-bass','harmony-smooth','harmony-kind','harmony-root','harmony-type','harmony-voicing','harmony-inversion','harmony-progression','piano-from','piano-to']) document.getElementById(id).addEventListener('change', e => { progress.preferences ||= {}; progress.preferences[id] = e.target.type==='checkbox'?String(e.target.checked):e.target.value; persist(); });
 creative = mountCreative({audio,getProgress:()=>progress,persist,stopAll:stopActivities,notify,setTab});
+arrange = mountArrange({ audio, storage, notify, setTab, stopAll: stopActivities, creative });
 $('#harmony-compose').onclick=()=>creative.fromEvents(eventsForHarmony(harmonySpec()).map(playableHands),workshopName(workshopId(harmonySpec())));
 $('#piano-compose').onclick=()=>{const piece=selectedPiece();if(piece)creative.fromEvents(piece.events,piece.title);else notify('先选择一首练习曲。');};
+// Administrator AI: when disabled, no AI module is fetched. When enabled, it loads only once the
+// visitor signs in, returns from GitHub, or already has a session. It gets read-only getters;
+// progress writers are never passed in.
+const aiMeta = document.querySelector('meta[name="hive-music-ai"]');
+if (aiMeta && $('#ai-toggle')) import('./ai-context.mjs').then(({ parseConfig, shouldLoadAI }) => {
+    const config = parseConfig(aiMeta.dataset);
+    if (!config) return;
+    const loadAssistant = () => aiAssistant ||= import('./ai.mjs').then(m => m.mountAI({
+        config, getSnapshot: () => structuredClone(progress), getLesson: () => ({ ...activeLesson, index: LESSONS.indexOf(activeLesson) + 1 }),
+        getComposition: () => creative.current(), getTab: () => tab, setTab, notify
+    })).then(api => { arrange.attachAssistant(api); return api; }).catch(error => { aiAssistant = null; notify('AI 助手未能加载：' + error.message); return null; });
+    $('#ai-toggle').hidden = false;
+    arrange.setAssistantOpener(async () => { const api = await loadAssistant(); api?.open(); });
+    $('#ai-toggle').onclick = async () => { const api = await loadAssistant(); api?.toggle(); };
+    if (shouldLoadAI({ config, href: location.href, storage })) void loadAssistant();
+}).catch(error => notify('AI 助手未能加载：' + error.message));
 buildKeyboard(); syncSettings(); renderCurriculum(); renderSight(); renderPiano(); renderRhythm(); updateStats();
-setTab(['route','theory','ear','sight','piano','rhythm','harmony','compose','live','progress','resources'].includes(location.hash.slice(1)) ? location.hash.slice(1) : 'route');
+setTab(['route','theory','ear','sight','piano','rhythm','harmony','compose','live','arrange','progress','resources'].includes(location.hash.slice(1)) ? location.hash.slice(1) : 'route');
