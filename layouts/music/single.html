@@ -159,6 +159,18 @@
                 <div class="button-row"><button id="arr-transpose-down" title="整首下移半音">移调 −1</button><button id="arr-transpose-up" title="整首上移半音">移调 +1</button></div>
             </div>
             <div class="toolbar arr-transport"><button id="arr-play" class="primary">▶ 播放编曲</button><button id="arr-stop" disabled>停止</button><label>范围<select id="arr-loop"></select></label><span id="arr-time" class="pill" role="status">等待播放</span><span class="muted">播放统一使用底栏选择的音色；鼓组为合成音。</span></div>
+            {{ if $ai -}}
+            <div id="arr-vibe" class="card arr-vibe"><div class="row"><h3>vibe 编曲</h3><span class="eyebrow">AI · 仅管理员</span></div>
+                <p class="muted">用一句话描述想要的感觉。AI 只提出具体修改，每条附理由；你勾选、预览、接受后才写入编曲，并且可以撤销。它不评分，也听不到声音，只读到编曲数据。</p>
+                <div id="arr-vibe-login"><p>需要以管理员身份登录 AI 助手后使用。</p><button id="arr-vibe-signin">打开 AI 助手</button></div>
+                <div id="arr-vibe-form" hidden>
+                    <label class="source-label" for="arr-vibe-text">想要的感觉或改动</label><textarea id="arr-vibe-text" rows="3" maxlength="2000" placeholder="例如：主歌更慵懒一点，像深夜的 lo-fi；副歌更开阔，低音走起来。"></textarea>
+                    <div class="toolbar"><label>范围<select id="arr-vibe-scope"></select></label><button id="arr-vibe-go" class="primary">生成提案</button><button id="arr-vibe-retry" hidden>重试同一请求</button></div>
+                </div>
+                <p id="arr-vibe-status" class="muted" role="status"></p>
+                <div id="arr-proposal" class="arr-proposal" hidden></div>
+            </div>
+            {{- end }}
             <div class="card arr-board"><div class="row"><h3>段落与声部</h3><div class="button-row"><button id="arr-add-section">添加段落</button><button id="arr-add-track">添加声部</button></div></div>
                 <p class="muted">点击和弦、片段、段落名或声部名进行编辑；在和弦轨空白处点击可添加和弦。</p>
                 <div class="arr-scroll"><div id="arr-timeline" class="arr-timeline" aria-label="编曲时间线"></div></div>

@@ -1,7 +1,7 @@
 // Administrator AI assistant. Loaded on demand; anonymous practice never imports this file.
 // It receives read-only getters from app.mjs and has no way to save progress or grades.
 import { MUSIC_CATALOG_VERSIONS } from './catalog-versions.mjs';
-import { AI_RETURN_KEY, POLL_DELAYS, authCallback, buildRequest, classifyResponse, clearPending, historyTurns, loadPending, pendingOutcome, returnTarget, savePending } from './ai-context.mjs';
+import { AI_RETURN_KEY, POLL_DELAYS, authCallback, buildArrangeRequest, buildRequest, classifyProposal, classifyResponse, clearArrangePending, clearPending, historyTurns, loadArrangePending, loadPending, pendingOutcome, proposalFromHistory, returnTarget, saveArrangePending, savePending } from './ai-context.mjs';
 
 const $ = selector => document.querySelector(selector);
 const KIND_NAMES = { lesson: '讲解本课', homework: '作业反馈', composition: '作曲点评' };
@@ -14,6 +14,7 @@ export async function mountAI({ config, getSnapshot, getLesson, getComposition, 
     const client = createClient(config.url, config.key, { auth: { flowType: 'pkce', persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
     const panel = $('#ai-panel'), toggle = $('#ai-toggle');
     let kind = 'lesson', target = null, busy = false, admin = false, user = null, pollTimer = null, generation = 0, clearConfirm = '', clearTimer = null;
+    const adminListeners = new Set();
 
     const status = (text, bad = false) => { $('#ai-status').textContent = text; $('#ai-status').classList.toggle('bad', bad); };
     const show = state => { for (const id of ['ai-signed-out', 'ai-not-admin', 'ai-ready']) $('#' + id).hidden = id !== state; };
@@ -110,9 +111,10 @@ export async function mountAI({ config, getSnapshot, getLesson, getComposition, 
     async function refreshUser() {
         const { data } = await client.auth.getSession();
         user = data.session?.user || null;
-        if (!user) { admin = false; show('ai-signed-out'); toggle.textContent = 'AI 助手'; setBusy(false); return; }
+        if (!user) { admin = false; for (const listener of adminListeners) listener(false); show('ai-signed-out'); toggle.textContent = 'AI 助手'; setBusy(false); return; }
         const check = await client.rpc('is_app_admin');
         admin = !check.error && check.data === true;
+        for (const listener of adminListeners) listener(admin);
         show(admin ? 'ai-ready' : 'ai-not-admin');
         $('#ai-account').textContent = user.user_metadata?.user_name || user.email || '已登录';
         setBusy(busy);
@@ -164,5 +166,43 @@ export async function mountAI({ config, getSnapshot, getLesson, getComposition, 
     await refreshUser();
     if (loginError) status('GitHub 登录未完成：' + loginError, true);
     syncKind();
-    return { open, close, toggle() { if (panel.hidden) open(); else close(); }, refresh() { if (admin && !busy && !panel.hidden) void loadHistory(); } };
+    // ---------- arrangement proposals (used by the arrangement desk) ----------
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+    async function arrangeOnce(payload) {
+        const result = await call(payload);
+        const outcome = classifyProposal(result.status, result.body);
+        if (outcome === 'done') { clearArrangePending(session); return { status: 'done', proposal: { summary: result.body.summary, ops: result.body.ops, baseHash: result.body.baseHash, recovered: result.body.recovered === true } }; }
+        if (outcome === 'failed') { clearArrangePending(session); return { status: 'failed', error: result.body.error || '请求未完成。' }; }
+        for (const delay of POLL_DELAYS) {
+            await sleep(delay);
+            const history = await call({ action: 'music-history', kind: 'arrangement', subjectId: payload.arrangementId }).catch(() => null);
+            if (history?.status !== 200) continue;
+            const proposal = proposalFromHistory(history.body.messages, payload.requestId);
+            if (proposal) { clearArrangePending(session); return { status: 'done', proposal }; }
+            if (pendingOutcome(history.body.messages, payload.requestId) === 'failed') { clearArrangePending(session); return { status: 'failed', error: '上一次提案请求没有完成，可以重新请求。' }; }
+        }
+        return { status: 'pending', error: '仍未确认结果；请求已保留，刷新页面后会自动核对。' };
+    }
+    async function runArrangement(payload) {
+        try { return await arrangeOnce(payload); }
+        catch (e) {
+            if (e.settled) { clearArrangePending(session); return { status: 'failed', error: e.message }; }
+            return { status: 'pending', error: '网络中断；请求已保留，可重试同一请求，不会重复计费。' };
+        }
+    }
+    return {
+        open, close, toggle() { if (panel.hidden) open(); else close(); }, refresh() { if (admin && !busy && !panel.hidden) void loadHistory(); },
+        isAdmin: () => admin,
+        onAdminChange(listener) { adminListeners.add(listener); listener(admin); },
+        /** Sends a proposal request; the page applies nothing until the administrator accepts it. */
+        requestArrangement(input) {
+            if (!admin) return Promise.resolve({ status: 'failed', error: '仅管理员可用。' });
+            const payload = buildArrangeRequest({ ...input, requestId: crypto.randomUUID() });
+            saveArrangePending(session, payload);
+            return runArrangement(payload);
+        },
+        pendingArrangement: () => loadArrangePending(session)?.payload || null,
+        retryArrangement() { const pending = loadArrangePending(session); return pending ? runArrangement(pending.payload) : Promise.resolve(null); },
+        discardArrangement() { clearArrangePending(session); }
+    };
 }

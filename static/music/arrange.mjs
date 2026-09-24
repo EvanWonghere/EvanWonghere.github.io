@@ -3,7 +3,7 @@
 import { CHORD_TYPES, PROGRESSIONS, rootPC, spellPitch } from './harmony.mjs';
 import { ROLES, ROOTS, VOICINGS, INSTRUMENT_IDS, MAJOR_KEYS, MINOR_KEYS, LIMITS, validateDocument } from './arrangement-schema.mjs';
 import { STYLES, stylesForRole, normalizeParams, voiceChord } from './arrange-styles.mjs';
-import { ARRANGE_KEY, TEMPLATES, applyOps, realize, createFromTemplate, newDocId, loadStore, saveStore, validateStore, positionLabel, spellInKey, spellingMidi } from './arrangement.mjs';
+import { ARRANGE_KEY, TEMPLATES, applyOps, applySelected, describeOp, docHash, realize, createFromTemplate, newDocId, loadStore, saveStore, validateStore, positionLabel, spellInKey, spellingMidi } from './arrangement.mjs';
 import { compileABC } from './arrange-abc.mjs';
 import { compileStrudel } from './arrange-strudel.mjs';
 import { checkArrangement } from './arrange-check.mjs';
@@ -50,12 +50,17 @@ function keyboardSVG(notes) {
     return `<svg class="arr-keys" viewBox="0 0 ${x} 42" role="img" aria-label="和弦配置">${whites.join('')}${blacks.join('')}</svg>`;
 }
 
+// The unsaved example keeps one id across reloads so a pending AI proposal still finds it.
+const DEMO_ID = 'demo';
 export function mountArrange({ audio, storage, notify, setTab, stopAll, creative }) {
     const loaded = loadStore(storage);
     let store = loaded.store, blocked = loaded.blocked, doc, past = [], future = [], selection = null, real, compiled = { abc: '', map: {} };
     let visual = null, renderTimer = null, renderGeneration = 0, saved = true, highlight = '';
     const player = new ArrangePlayer(audio);
     let playing = null;
+    // AI proposal state: `preview.original` is the saved document while a proposal is being previewed.
+    let preview = null, proposal = null, assistant = null, openAssistant = null, resumed = false;
+    const previewGuard = () => { if (!preview) return false; notify('正在预览 AI 提案：先接受或退出预览，再做其他修改。'); return true; };
     const warning = text => { $('#arr-warning').textContent = text || ''; $('#arr-warning').hidden = !text; };
     if (loaded.error) warning(loaded.error);
 
@@ -63,7 +68,7 @@ export function mountArrange({ audio, storage, notify, setTab, stopAll, creative
         doc = next; if (!keepHistory) { past = []; future = []; }
         selection = null; stop(); refresh();
     }
-    doc = store.arrangements.find(a => a.id === store.active) || store.arrangements[0] || createFromTemplate('pop');
+    doc = store.arrangements.find(a => a.id === store.active) || store.arrangements[0] || createFromTemplate('pop', DEMO_ID);
     saved = store.arrangements.some(a => a.id === doc.id);
 
     function persist() {
@@ -78,12 +83,13 @@ export function mountArrange({ audio, storage, notify, setTab, stopAll, creative
     }
     /** One user edit: validated, recorded for undo, saved, and every view refreshed. */
     function commit(ops) {
+        if (previewGuard()) return false;
         let next;
         try { next = applyOps(doc, ops); } catch (error) { notify(error.message); return false; }
         past.push(doc); if (past.length > 100) past.shift(); future = [];
         doc = next; persist(); refresh(); return true;
     }
-    function travel(from, to) { if (!from.length) return; to.push(doc); doc = from.pop(); persist(); refresh(); }
+    function travel(from, to) { if (previewGuard() || !from.length) return; to.push(doc); doc = from.pop(); persist(); refresh(); }
 
     // ---------- library and meta ----------
     function renderLibrary() {
@@ -342,7 +348,7 @@ export function mountArrange({ audio, storage, notify, setTab, stopAll, creative
 
     function refresh() {
         real = realize(doc);
-        renderLibrary(); renderMeta(); renderTimeline(); renderInspector(); renderChecks(); renderStrudel(); renderStaff();
+        renderLibrary(); renderMeta(); renderTimeline(); renderInspector(); renderChecks(); renderStrudel(); renderStaff(); renderVibe();
         if (playing) player.update(regionNotes(), { tempo: doc.meta.tempo, length: playing.length, loop: playing.loop });
     }
 
@@ -385,15 +391,16 @@ export function mountArrange({ audio, storage, notify, setTab, stopAll, creative
 
     // ---------- events ----------
     $('#arr-template').replaceChildren(...Object.entries(TEMPLATES).map(([id, t]) => new Option(t.name, id)), ...PROGRESSIONS.map(p => new Option(`和弦工坊：${p.name}`, `progression:${p.id}`)));
-    $('#arr-new').onclick = () => { if (store.arrangements.length >= LIMITS.docs) return notify(`最多保存 ${LIMITS.docs} 份编曲。`); openDoc(createFromTemplate($('#arr-template').value, newDocId())); persist(); renderLibrary(); };
-    $('#arr-duplicate').onclick = () => { if (store.arrangements.length >= LIMITS.docs) return notify(`最多保存 ${LIMITS.docs} 份编曲。`); openDoc(validateDocument({ ...JSON.parse(JSON.stringify(doc)), id: newDocId(), title: `${doc.title}（副本）`.slice(0, 100) })); persist(); renderLibrary(); };
+    $('#arr-new').onclick = () => { if (previewGuard()) return; if (store.arrangements.length >= LIMITS.docs) return notify(`最多保存 ${LIMITS.docs} 份编曲。`); openDoc(createFromTemplate($('#arr-template').value, newDocId())); persist(); renderLibrary(); };
+    $('#arr-duplicate').onclick = () => { if (previewGuard()) return; if (store.arrangements.length >= LIMITS.docs) return notify(`最多保存 ${LIMITS.docs} 份编曲。`); openDoc(validateDocument({ ...JSON.parse(JSON.stringify(doc)), id: newDocId(), title: `${doc.title}（副本）`.slice(0, 100) })); persist(); renderLibrary(); };
     $('#arr-delete').onclick = () => {
+        if (previewGuard()) return;
         if (!saved || !confirm(`删除编曲“${doc.title}”？此操作不能撤销，建议先导出 JSON。`)) return;
         const arrangements = store.arrangements.filter(a => a.id !== doc.id), next = { version: 1, active: arrangements[0]?.id || '', arrangements };
         const error = blocked ? '存档不可读，暂停保存' : saveStore(storage, next); if (error) return notify(error);
-        store = next; saved = arrangements.length > 0; openDoc(arrangements[0] || createFromTemplate('pop'));
+        store = next; saved = arrangements.length > 0; openDoc(arrangements[0] || createFromTemplate('pop', DEMO_ID));
     };
-    $('#arr-select').onchange = () => { const next = store.arrangements.find(a => a.id === $('#arr-select').value); if (next) { openDoc(next); persist(); } };
+    $('#arr-select').onchange = () => { if (previewGuard()) { $('#arr-select').value = doc.id; return; } const next = store.arrangements.find(a => a.id === $('#arr-select').value); if (next) { openDoc(next); persist(); } };
     $('#arr-undo').onclick = () => travel(past, future);
     $('#arr-redo').onclick = () => travel(future, past);
     $('#arr-title').onchange = () => { const title = $('#arr-title').value.trim(); if (title) commit([{ type: 'setMeta', title }]); else $('#arr-title').value = doc.title; };
@@ -439,7 +446,7 @@ export function mountArrange({ audio, storage, notify, setTab, stopAll, creative
     $('#arr-export-midi').onclick = () => { if (!visual) return; try { download(window.ABCJS.synth.getMidiFile(visual, { midiOutputType: 'binary', chordsOff: true }), `${filename(doc.title)}.mid`, 'audio/midi'); } catch (e) { notify('MIDI 导出失败：' + e.message); } };
     $('#arr-export-json').onclick = () => download(JSON.stringify(doc, null, 2), `${filename(doc.title)}.arrangement.json`, 'application/json');
     $('#arr-import').onchange = async e => {
-        const file = e.target.files?.[0]; e.target.value = ''; if (!file) return;
+        const file = e.target.files?.[0]; e.target.value = ''; if (!file || previewGuard()) return;
         try {
             if (file.size > LIMITS.docBytes * 2) throw new Error('文件过大。');
             if (store.arrangements.length >= LIMITS.docs) throw new Error(`最多保存 ${LIMITS.docs} 份编曲。`);
@@ -453,12 +460,108 @@ export function mountArrange({ audio, storage, notify, setTab, stopAll, creative
         const next = loadStore(storage);
         if (next.blocked) { blocked = true; warning('另一个页面写入了无法识别的编曲存档；已暂停保存，请先备份。'); return; }
         store = next.store; blocked = false; warning('');
+        if (preview) return;
         const same = store.arrangements.find(a => a.id === doc.id);
         if (same) { doc = same; saved = true; } refresh();
     });
 
+
+    // ---------- vibe arrangement (administrator AI; the card exists only when the AI is enabled) ----------
+    const PROPOSAL_KEY = 'hive-music-arrange-proposal';
+    const tabStore = (() => { try { return window.sessionStorage; } catch { return null; } })();
+    function saveProposal() { try { if (proposal) tabStore?.setItem(PROPOSAL_KEY, JSON.stringify(proposal)); else tabStore?.removeItem(PROPOSAL_KEY); } catch { /* the proposal stays in memory */ } }
+    try { const kept = JSON.parse(tabStore?.getItem(PROPOSAL_KEY) || 'null'); if (kept && typeof kept.arrangementId === 'string' && Array.isArray(kept.ops)) proposal = kept; } catch { /* no kept proposal */ }
+    const vibeStatus = (text, bad = false) => { const el = $('#arr-vibe-status'); if (el) { el.textContent = text; el.classList.toggle('bad', bad); } };
+    const selectedOps = () => proposal.ops.filter((_, i) => proposal.selected[i] !== false);
+    function renderVibe() {
+        document.querySelector('.arr-board')?.classList.toggle('arr-previewing', Boolean(preview));
+        if (!$('#arr-vibe')) return;
+        const scope = $('#arr-vibe-scope'), value = scope.value, base = preview ? preview.original : doc;
+        scope.replaceChildren(new Option('整首', ''), ...base.sections.map(s => new Option(`段落：${s.name}`, `section:${s.id}`)), ...base.tracks.map(t => new Option(`声部：${t.name}`, `track:${t.id}`)));
+        scope.value = [...scope.options].some(o => o.value === value) ? value : '';
+        const box = $('#arr-proposal');
+        if (!proposal) { box.hidden = true; box.replaceChildren(); return; }
+        box.hidden = false;
+        if (proposal.arrangementId !== base.id) {
+            const other = store.arrangements.find(a => a.id === proposal.arrangementId);
+            box.innerHTML = `<p class="muted">有一份未处理的提案属于${other ? `编曲“${esc(other.title)}”，切换过去即可查看` : '一份已不存在的编曲'}。</p><div class="button-row"><button id="arr-discard">放弃提案</button></div>`;
+            $('#arr-discard').onclick = discard; return;
+        }
+        const describe = op => { try { return describeOp(op, base); } catch { return op.type; } };
+        box.innerHTML = `<div class="row"><h4>AI 提案</h4><span class="eyebrow">${proposal.ops.length} 项修改</span></div>
+            <p class="arr-summary">${esc(proposal.summary)}</p><p id="arr-proposal-stale" class="arr-stale" hidden>编曲在提案生成后改动过。接受时会逐条尝试，与现有内容冲突的修改会被跳过。</p>
+            <ol class="arr-ops">${proposal.ops.map((op, i) => `<li><label class="check"><input type="checkbox" data-op="${i}"${proposal.selected[i] !== false ? ' checked' : ''}><span>${esc(describe(op))}</span></label>${op.reason ? `<small>${esc(op.reason)}</small>` : ''}</li>`).join('')}</ol>
+            <div class="button-row"><button id="arr-preview">${preview ? '退出预览' : '预览所选'}</button><button id="arr-accept" class="primary">接受所选</button><button id="arr-discard">放弃提案</button></div>`;
+        docHash(base).then(hash => { const el = $('#arr-proposal-stale'); if (el) el.hidden = hash === proposal?.baseHash; });
+        for (const box of document.querySelectorAll('#arr-proposal [data-op]')) box.onchange = () => { proposal.selected[Number(box.dataset.op)] = box.checked; saveProposal(); if (preview) enterPreview(); };
+        $('#arr-preview').onclick = () => preview ? exitPreview() : enterPreview();
+        $('#arr-accept').onclick = accept;
+        $('#arr-discard').onclick = discard;
+    }
+    function enterPreview() {
+        const base = preview ? preview.original : doc, result = applySelected(base, selectedOps());
+        if (!result.applied.length) { vibeStatus('所选修改都无法应用到当前编曲。', true); return; }
+        stop(); preview = { original: base }; doc = result.doc; selection = null; refresh();
+        vibeStatus(`正在预览 ${result.applied.length} 项修改${result.skipped.length ? `，${result.skipped.length} 项与当前编曲冲突已跳过` : ''}。预览可以播放，但不会保存。`);
+    }
+    function exitPreview() { if (!preview) return; stop(); doc = preview.original; preview = null; selection = null; refresh(); vibeStatus('已退出预览，编曲没有改动。'); }
+    function accept() {
+        const base = preview ? preview.original : doc, result = applySelected(base, selectedOps());
+        if (!result.applied.length) { vibeStatus('所选修改都无法应用到当前编曲。', true); return; }
+        stop(); preview = null; past.push(base); if (past.length > 100) past.shift(); future = [];
+        doc = result.doc; proposal = null; saveProposal(); selection = null; persist(); refresh();
+        vibeStatus(`已接受 ${result.applied.length} 项修改${result.skipped.length ? `；跳过 ${result.skipped.length} 项：${result.skipped.map(x => x.error).join('；')}` : ''}。可以用“撤销”一步恢复。`, result.skipped.length > 0);
+    }
+    function discard() { if (preview) { stop(); doc = preview.original; preview = null; } proposal = null; saveProposal(); selection = null; refresh(); vibeStatus('已放弃提案，编曲没有改动。'); }
+    function handleResult(result, arrangementId) {
+        if (!$('#arr-vibe')) return;
+        $('#arr-vibe-go').disabled = false; $('#arr-vibe-retry').hidden = result?.status !== 'pending';
+        if (!result) { vibeStatus(''); return; }
+        if (result.status !== 'done') { vibeStatus(result.error, true); return; }
+        proposal = { arrangementId, summary: result.proposal.summary, ops: result.proposal.ops, baseHash: result.proposal.baseHash, selected: result.proposal.ops.map(() => true) };
+        saveProposal(); renderVibe();
+        vibeStatus(result.proposal.recovered ? '已取回之前生成的提案。' : '提案已生成：逐条查看，预览后再接受。');
+    }
+    async function requestProposal() {
+        if (!assistant?.isAdmin()) { openAssistant?.(); return; }
+        if (previewGuard()) return;
+        if (proposal && !confirm('生成新提案会替换当前未处理的提案，继续？')) return;
+        const [kind, id] = $('#arr-vibe-scope').value.split(':'), scope = kind === 'section' ? { section: id } : kind === 'track' ? { track: id } : {};
+        if (!saved) persist();
+        const checks = checkArrangement(real, doc).map(i => i.message), arrangementId = doc.id;
+        $('#arr-vibe-go').disabled = true; $('#arr-vibe-retry').hidden = true;
+        vibeStatus('正在生成提案，通常需要十几秒到一分钟；刷新页面不会丢失这个请求。');
+        let result;
+        try { result = await assistant.requestArrangement({ doc, scope, message: $('#arr-vibe-text').value, checks }); }
+        catch (error) { result = { status: 'failed', error: error.message }; }
+        handleResult(result, arrangementId);
+    }
+    if ($('#arr-vibe')) {
+        $('#arr-vibe-go').onclick = () => void requestProposal();
+        $('#arr-vibe-signin').onclick = () => openAssistant?.();
+        $('#arr-vibe-retry').onclick = () => {
+            const pending = assistant?.pendingArrangement(); if (!pending) return;
+            $('#arr-vibe-retry').hidden = true; $('#arr-vibe-go').disabled = true; vibeStatus('正在重试同一请求…');
+            void assistant.retryArrangement().then(r => handleResult(r, pending.arrangementId));
+        };
+    }
+    function attachAssistant(api) {
+        assistant = api;
+        api.onAdminChange(admin => {
+            if (!$('#arr-vibe')) return;
+            $('#arr-vibe-login').hidden = admin; $('#arr-vibe-form').hidden = !admin;
+            const pending = admin && !resumed && api.pendingArrangement();
+            if (pending) {
+                resumed = true; $('#arr-vibe-go').disabled = true; vibeStatus('正在核对刷新前的提案请求…');
+                void api.retryArrangement().then(r => handleResult(r, pending.arrangementId));
+            }
+        });
+    }
+
     refresh();
     return {
+        attachAssistant,
+        setAssistantOpener(fn) { openAssistant = fn; },
         show(name) { if (name === 'arrange') { renderStaff(); } },
         stop,
         /** For the progress backup: the stored arrangements, or null when the archive is unreadable. */
@@ -467,8 +570,8 @@ export function mountArrange({ audio, storage, notify, setTab, stopAll, creative
         restore(raw) {
             const next = validateStore(raw), error = saveStore(storage, next);
             if (error) throw new Error(error);
-            store = next; blocked = false; warning('');
-            saved = store.arrangements.length > 0; openDoc(store.arrangements.find(a => a.id === store.active) || createFromTemplate('pop'));
+            store = next; blocked = false; warning(''); preview = null; proposal = null; saveProposal();
+            saved = store.arrangements.length > 0; openDoc(store.arrangements.find(a => a.id === store.active) || createFromTemplate('pop', DEMO_ID));
         },
         summary: raw => validateStore(raw).arrangements.length
     };

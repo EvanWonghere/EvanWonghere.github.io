@@ -188,6 +188,56 @@ export function applyOps(doc, ops, now = Date.now()) {
     return validateDocument(next);
 }
 
+// ---------- proposals ----------
+/** Stable JSON (sorted keys) used for hashing on both the page and the server. */
+export function canonicalJSON(value) {
+    if (Array.isArray(value)) return `[${value.map(canonicalJSON).join(',')}]`;
+    if (value && typeof value === 'object') return `{${Object.keys(value).sort().map(k => `${JSON.stringify(k)}:${canonicalJSON(value[k])}`).join(',')}}`;
+    return JSON.stringify(value);
+}
+/** SHA-256 of the document content; the save time is left out so only real edits change it. */
+export async function docHash(doc) {
+    const { updatedAt, ...content } = doc;
+    const digest = await globalThis.crypto.subtle.digest('SHA-256', new TextEncoder().encode(canonicalJSON(content)));
+    return [...new Uint8Array(digest)].map(b => b.toString(16).padStart(2, '0')).join('');
+}
+/**
+ * Applies the chosen proposal operations. The batch is tried first; if the document changed since
+ * the proposal was made and the batch no longer applies, each operation is tried on its own and the
+ * ones that conflict are reported instead of failing everything.
+ */
+export function applySelected(doc, ops, now = Date.now()) {
+    if (!ops.length) return { doc, applied: [], skipped: [] };
+    try { return { doc: applyOps(doc, ops, now), applied: ops.map((_, i) => i), skipped: [] }; } catch { /* fall back to one at a time */ }
+    let current = doc; const applied = [], skipped = [];
+    ops.forEach((op, i) => {
+        try { current = applyOps(current, [op], now); applied.push(i); } catch (error) { skipped.push({ index: i, error: error.message }); }
+    });
+    return { doc: current, applied, skipped };
+}
+/** One-line Chinese description of an operation, for reviewing proposals. */
+export function describeOp(op, doc) {
+    const section = id => doc.sections.find(s => s.id === id)?.name ?? id, track = id => doc.tracks.find(t => t.id === id)?.name ?? id;
+    const bpb = beatsPerBar(doc.meta.meter), at = (sid, beat) => `${section(sid)} ${positionLabel(beat, bpb)}`;
+    switch (op.type) {
+    case 'setMeta': return `基本信息：${[op.title && `标题“${op.title}”`, op.tempo && `速度 ${op.tempo}`, op.meter && `拍号 ${op.meter}`, op.key && `调 ${op.key}`, op.mode && (op.mode === 'minor' ? '小调' : '大调'), op.swing !== undefined && (op.swing > 0.5 ? `摇摆 ${Math.round(op.swing * 100)}%` : '直拍'), op.tags && `标签 ${op.tags.join('、')}`, op.classical !== undefined && (op.classical ? '启用古典规则' : '关闭古典规则')].filter(Boolean).join('，')}`;
+    case 'setChords': return `和弦：${at(op.section, op.from)} 到 ${positionLabel(op.to, bpb)} 改为 ${op.chords.map(c => chordSymbol({ bass: null, inversion: 0, ...c })).join(' ') || '（清空）'}`;
+    case 'addSection': return `新增段落“${op.name}”，${op.bars} 小节${op.copyFrom ? `，复制自“${section(op.copyFrom)}”` : ''}`;
+    case 'removeSection': return `删除段落“${section(op.section)}”`;
+    case 'moveSection': return `把“${section(op.section)}”移到第 ${op.index + 1} 段`;
+    case 'resizeSection': return `“${section(op.section)}”改为 ${op.bars} 小节`;
+    case 'renameSection': return `“${section(op.section)}”改名为“${op.name}”`;
+    case 'addTrack': return `新增${ROLES[op.role] ?? ''}声部${op.name ? `“${op.name}”` : ''}`;
+    case 'removeTrack': return `删除声部“${track(op.track)}”`;
+    case 'setTrack': return `声部“${track(op.track)}”：${[op.name && `改名“${op.name}”`, op.role && `类型${ROLES[op.role]}`, op.instrument && `导出音色 ${op.instrument}`, op.volume !== undefined && `音量 ${Math.round(op.volume * 100)}%`, op.mute !== undefined && (op.mute ? '静音' : '取消静音'), op.solo !== undefined && (op.solo ? '独奏' : '取消独奏')].filter(Boolean).join('，')}`;
+    case 'setClipStyle': return `“${track(op.track)}”在“${section(op.section)}”使用${STYLES[op.style]?.name ?? op.style}${op.params && Object.keys(op.params).length ? `（${Object.entries(op.params).map(([k, v]) => `${STYLES[op.style]?.params[k]?.label ?? k} ${typeof v === 'boolean' ? (v ? '开' : '关') : STYLES[op.style]?.params[k]?.values?.[v] ?? v}`).join('，')}）` : ''}`;
+    case 'setClipNotes': return `“${track(op.track)}”在“${section(op.section)}”写入 ${op.events.length} 个音符`;
+    case 'clearClip': return `清空“${track(op.track)}”在“${section(op.section)}”的片段`;
+    case 'transpose': return `${op.track ? `声部“${track(op.track)}”` : op.section ? `段落“${section(op.section)}”` : '整首'}移调 ${op.semitones > 0 ? '+' : ''}${op.semitones} 个半音`;
+    default: return op.type;
+    }
+}
+
 // ---------- realization ----------
 /** Expands chords and clips into timed events (beats from the start of the piece). */
 export function realize(doc) {

@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { checkABC } from '../static/music/composition.mjs';
 import { STYLES, generateStyle, normalizeParams, stylesForRole } from '../static/music/arrange-styles.mjs';
 import { LIMITS, OPS, validateDocument, validateOp } from '../static/music/arrangement-schema.mjs';
-import { ARRANGE_KEY, TEMPLATES, analyzeChord, applyOps, createFromTemplate, freshStore, keySignature, loadStore, realize, saveStore, spellInKey, validateStore, positionLabel } from '../static/music/arrangement.mjs';
+import { applySelected, describeOp, docHash, ARRANGE_KEY, TEMPLATES, analyzeChord, applyOps, createFromTemplate, freshStore, keySignature, loadStore, realize, saveStore, spellInKey, validateStore, positionLabel } from '../static/music/arrangement.mjs';
 import { abcKey, compileABC, splitDuration } from '../static/music/arrange-abc.mjs';
 import { compileStrudel, strudelNote } from '../static/music/arrange-strudel.mjs';
 import { checkArrangement } from '../static/music/arrange-check.mjs';
@@ -220,4 +220,22 @@ test('documents reject bad values instead of guessing', () => {
     assert.throws(bad({ tracks: [{ ...doc.tracks[0], clips: { intro: { kind: 'notes', events: [{ at: 0, beats: 1, pitch: 200 }] } } }] }), /音域/);
     assert.equal(Object.keys(OPS).length, 14);
     assert.throws(() => validateOp({ type: 'transpose', semitones: 0 }), /移调/);
+});
+
+test('proposal helpers: hash ignores save time, selected ops fall back one by one, every op type is described', async () => {
+    const doc = createFromTemplate('pop', 'doc-1');
+    assert.equal(await docHash(doc), await docHash({ ...doc, updatedAt: 123 }));
+    assert.notEqual(await docHash(doc), await docHash(applyOps(doc, [{ type: 'setMeta', tempo: 90 }])));
+    const ops = [{ type: 'setMeta', tempo: 90 }, { type: 'setClipStyle', track: 'gone', section: 'verse', style: 'block' }, { type: 'transpose', semitones: 2 }];
+    const result = applySelected(doc, ops);
+    assert.deepEqual(result.applied, [0, 2]); assert.equal(result.skipped[0].index, 1);
+    assert.equal(result.doc.meta.tempo, 90); assert.equal(result.doc.meta.key, 'D');
+    assert.deepEqual(applySelected(doc, []).applied, []);
+    const samples = { setMeta: { tempo: 90 }, setChords: { section: 'verse', from: 0, to: 4, chords: [{ at: 0, beats: 4, root: 'D', type: 'm7' }] }, addSection: { name: '尾声', bars: 2 }, removeSection: { section: 'intro' }, moveSection: { section: 'intro', index: 1 }, resizeSection: { section: 'intro', bars: 2 }, renameSection: { section: 'intro', name: '引子' }, addTrack: { role: 'pad' }, removeTrack: { track: 'drum' }, setTrack: { track: 'comp', volume: 0.5, mute: true }, setClipStyle: { track: 'comp', section: 'verse', style: 'lofi-rhodes', params: { density: 0.3 } }, setClipNotes: { track: 'mel', section: 'intro', events: [] }, clearClip: { track: 'comp', section: 'intro' }, transpose: { semitones: -2, section: 'verse' } };
+    assert.deepEqual(Object.keys(samples).sort(), Object.keys(OPS).sort());
+    for (const [type, fields] of Object.entries(samples)) {
+        const text = describeOp({ type, ...fields }, doc);
+        assert.ok(text && !text.includes('undefined'), `${type}: ${text}`);
+        assert.doesNotThrow(() => applyOps(doc, [{ type, ...fields }]), type);
+    }
 });

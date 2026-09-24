@@ -4,8 +4,9 @@ import { readFile } from 'node:fs/promises';
 import { freshProgress, recordAnswer, STORAGE_KEY } from '../static/music/core.mjs';
 import { LESSONS } from '../static/music/curriculum.mjs';
 import { MUSIC_CATALOG_VERSIONS } from '../static/music/catalog-versions.mjs';
-import { buildCatalog, catalogVersions, versionsModule } from '../tools/music-catalog.mjs';
-import { AI_PENDING_KEY, COMPOSITION_VERSION, POLL_DELAYS, authCallback, buildContext, buildRequest, classifyResponse, clearPending, hasStoredSession, historyTurns, lessonStats, loadPending, parseConfig, pendingOutcome, returnTarget, savePending, shouldLoadAI } from '../static/music/ai-context.mjs';
+import { ARRANGEMENT_MODULES, arrangementCopy, buildCatalog, catalogVersions, versionsModule } from '../tools/music-catalog.mjs';
+import { createFromTemplate } from '../static/music/arrangement.mjs';
+import { ARRANGE_PENDING_KEY, buildArrangeRequest, classifyProposal, clearArrangePending, loadArrangePending, proposalFromHistory, saveArrangePending, AI_PENDING_KEY, COMPOSITION_VERSION, POLL_DELAYS, authCallback, buildContext, buildRequest, classifyResponse, clearPending, hasStoredSession, historyTurns, lessonStats, loadPending, parseConfig, pendingOutcome, returnTarget, savePending, shouldLoadAI } from '../static/music/ai-context.mjs';
 
 const memory = (entries = {}) => {
     const data = new Map(Object.entries(entries));
@@ -149,4 +150,41 @@ test('layout renders the assistant only when enabled, and the default config kee
     const config = await readFile(new URL('../hugo.toml', import.meta.url), 'utf8');
     assert.match(config, /\[params\.musicAI\]\nenabled = false/);
     assert.ok(!/service_role|SERVICE_ROLE/.test(config));
+});
+
+test('arrangement proposal requests: scope, size and message limits', () => {
+    const doc = createFromTemplate('pop', 'arr-1');
+    const payload = buildArrangeRequest({ doc, scope: { section: 'verse', track: 'comp' }, message: ' 更慵懒 ', checks: ['a'.repeat(400)], requestId });
+    assert.deepEqual([payload.action, payload.arrangementId, payload.message, payload.scope, payload.checks[0].length], ['music-arrange', 'arr-1', '更慵懒', { section: 'verse', track: 'comp' }, 300]);
+    assert.throws(() => buildArrangeRequest({ doc, message: '', requestId }), /描述/);
+    assert.throws(() => buildArrangeRequest({ doc, message: 'x', requestId, scope: { section: 'nope' } }), /段落/);
+    assert.throws(() => buildArrangeRequest({ doc, message: 'x', requestId: 'bad' }), /请求 ID/);
+    assert.throws(() => buildArrangeRequest({ doc: { ...doc, title: 'x'.repeat(30000) }, message: 'x', requestId }), /24 KB/);
+});
+
+test('arrangement proposal recovery: pending storage, classification, history', () => {
+    const storage = memory(), doc = createFromTemplate('pop', 'arr-1');
+    const payload = buildArrangeRequest({ doc, message: 'x', requestId });
+    assert.ok(saveArrangePending(storage, payload));
+    assert.deepEqual(loadArrangePending(storage).payload, payload);
+    assert.equal(storage.getItem(STORAGE_KEY), null, 'progress storage untouched');
+    storage.setItem(ARRANGE_PENDING_KEY, '{"payload":{"action":"music-chat"}}'); assert.equal(loadArrangePending(storage), null);
+    clearArrangePending(storage); assert.equal(storage.getItem(ARRANGE_PENDING_KEY), null);
+    assert.equal(classifyProposal(200, { summary: 's', ops: [] }), 'done');
+    assert.equal(classifyProposal(409, { settled: false }), 'wait');
+    assert.equal(classifyProposal(422, { settled: true }), 'failed');
+    const rows = [{ request_id: requestId, role: 'assistant', status: 'complete', body: '说明', payload: { ops: [{ type: 'setMeta', tempo: 90 }] }, subject_version: 'h' }];
+    assert.deepEqual(proposalFromHistory(rows, requestId), { summary: '说明', ops: [{ type: 'setMeta', tempo: 90 }], baseHash: 'h', recovered: true });
+    assert.equal(proposalFromHistory([{ ...rows[0], status: 'running' }], requestId), null);
+});
+
+test('the quiz function gets marked copies of exactly the arrangement modules it needs', async () => {
+    assert.deepEqual(ARRANGEMENT_MODULES, ['harmony.mjs', 'arrange-styles.mjs', 'arrangement-schema.mjs', 'arrangement.mjs']);
+    for (const file of ARRANGEMENT_MODULES) {
+        const source = await readFile(new URL(`../static/music/${file}`, import.meta.url), 'utf8');
+        const imports = [...source.matchAll(/from '\.\/([^']+)'/g)].map(m => m[1]);
+        for (const dep of imports) assert.ok(ARRANGEMENT_MODULES.includes(dep), `${file} imports ${dep}, which is not copied`);
+        assert.match(arrangementCopy(file, source), /^\/\/ Generated copy of static\/music\//);
+        assert.ok(!/\b(?:document|window)\.[A-Za-z]|localStorage/.test(source), `${file} must stay free of browser APIs`);
+    }
 });
