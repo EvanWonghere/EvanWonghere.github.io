@@ -20,7 +20,7 @@ export function sandboxDocument({ bundle, runtime, online = false }) {
     return `<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="${sandboxPolicy({ online })}"></head><body><script>${inline(bundle)}</script><script>${inline(runtime)}</script></body></html>`;
 }
 
-const TYPES = new Set(['ready', 'sounds-ready', 'online-ready', 'playing', 'stopped', 'hap', 'log', 'error']);
+const TYPES = new Set(['ready', 'sounds-ready', 'online-ready', 'needs-gesture', 'playing', 'stopped', 'hap', 'log', 'error']);
 const num = (v, lo, hi) => typeof v === 'number' && Number.isFinite(v) ? Math.min(hi, Math.max(lo, v)) : null;
 const str = (v, max) => typeof v === 'string' ? v.slice(0, max) : null;
 /**
