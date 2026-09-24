@@ -207,3 +207,21 @@ export function snippetFromHistory(rows, requestId) {
     if (!row || row.status !== 'complete' || typeof row.payload?.code !== 'string') return null;
     return { summary: row.body, code: row.payload.code, recovered: true };
 }
+
+/**
+ * The answer of ai_access(): administrators, or members with scopes and a daily limit. Anything
+ * unexpected (an error, an older backend without ai_access) is null, so the caller can fall back.
+ */
+export function parseAccess(result) {
+    const data = result && !result.error ? result.data : null;
+    if (!data || typeof data !== 'object' || Array.isArray(data)) return null;
+    const count = v => Number.isInteger(v) && v >= 0 ? v : null;
+    return { admin: data.admin === true, scopes: Array.isArray(data.scopes) ? data.scopes.filter(s => typeof s === 'string') : [], dailyLimit: count(data.dailyLimit), usedToday: count(data.usedToday) };
+}
+/** Whether the music AI may be used: administrators, or members with the music scope. */
+export const canUseMusic = access => Boolean(access && (access.admin || access.scopes.includes('music')));
+/** The remaining daily requests shown to members; administrators have no limit (null). */
+export function quotaText(access) {
+    if (!access || access.admin || access.dailyLimit === null) return null;
+    return `今天还可以用 ${Math.max(0, access.dailyLimit - (access.usedToday ?? 0))} / ${access.dailyLimit} 次（北京时间零点恢复）`;
+}

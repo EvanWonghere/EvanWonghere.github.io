@@ -6,7 +6,7 @@ import { LESSONS } from '../static/music/curriculum.mjs';
 import { MUSIC_CATALOG_VERSIONS } from '../static/music/catalog-versions.mjs';
 import { ARRANGEMENT_MODULES, arrangementCopy, buildCatalog, catalogVersions, versionsModule } from '../tools/music-catalog.mjs';
 import { createFromTemplate } from '../static/music/arrangement.mjs';
-import { ARRANGE_PENDING_KEY, buildArrangeRequest, classifyProposal, clearArrangePending, loadArrangePending, proposalFromHistory, saveArrangePending, AI_PENDING_KEY, COMPOSITION_VERSION, POLL_DELAYS, authCallback, buildContext, buildRequest, classifyResponse, clearPending, hasStoredSession, historyTurns, lessonStats, loadPending, parseConfig, pendingOutcome, returnTarget, savePending, shouldLoadAI } from '../static/music/ai-context.mjs';
+import { canUseMusic, parseAccess, quotaText, ARRANGE_PENDING_KEY, buildArrangeRequest, classifyProposal, clearArrangePending, loadArrangePending, proposalFromHistory, saveArrangePending, AI_PENDING_KEY, COMPOSITION_VERSION, POLL_DELAYS, authCallback, buildContext, buildRequest, classifyResponse, clearPending, hasStoredSession, historyTurns, lessonStats, loadPending, parseConfig, pendingOutcome, returnTarget, savePending, shouldLoadAI } from '../static/music/ai-context.mjs';
 
 const memory = (entries = {}) => {
     const data = new Map(Object.entries(entries));
@@ -196,4 +196,22 @@ test('the quiz function gets marked copies of exactly the arrangement modules it
         assert.match(arrangementCopy(file, source), /^\/\/ Generated copy of static\/music\//);
         assert.ok(!/\b(?:document|window)\.[A-Za-z]|localStorage/.test(source), `${file} must stay free of browser APIs`);
     }
+});
+
+test('AI access: administrators and music members may use the assistant; only administrators get cloud sync', async () => {
+    const member = parseAccess({ data: { admin: false, scopes: ['music'], dailyLimit: 30, usedToday: 12, expiresAt: null }, error: null });
+    assert.deepEqual(member, { admin: false, scopes: ['music'], dailyLimit: 30, usedToday: 12 });
+    assert.equal(canUseMusic(member), true); assert.equal(quotaText(member), '今天还可以用 18 / 30 次（北京时间零点恢复）');
+    assert.match(quotaText({ ...member, usedToday: 40 }), /还可以用 0 \/ 30/);
+    const admin = parseAccess({ data: { admin: true, scopes: ['quiz', 'labs', 'music'] }, error: null });
+    assert.equal(canUseMusic(admin), true); assert.equal(quotaText(admin), null, 'administrators have no daily limit');
+    for (const denied of [{ data: { admin: false, scopes: [] } }, { data: { admin: false, scopes: ['labs'] } }, { data: { admin: 'true', scopes: 'music' } }]) assert.equal(canUseMusic(parseAccess(denied)), false);
+    for (const unusable of [{ data: null, error: { message: 'function ai_access() does not exist' } }, { data: true }, { data: ['music'] }, null]) assert.equal(parseAccess(unusable), null, 'falls back to is_app_admin');
+    assert.equal(canUseMusic(null), false);
+    const read = path => readFile(new URL(`../static/music/${path}`, import.meta.url), 'utf8');
+    const [ai, arrange, live, sync, app] = await Promise.all(['ai.mjs', 'arrange.mjs', 'live-sandbox.mjs', 'sync.mjs', 'app.mjs'].map(read));
+    assert.ok(ai.includes("client.rpc('ai_access')") && ai.includes('isAdmin: () => owner') && ai.includes('canUse: () => admin'));
+    for (const [name, source] of [['arrange', arrange], ['live', live]]) { assert.ok(source.includes('onAccessChange(') && source.includes('canUse()'), name); assert.ok(!source.includes('isAdmin()') && !source.includes('onAdminChange('), name); }
+    assert.ok(sync.includes('api.isAdmin()') && !sync.includes('canUse'), 'the cloud library stays administrator-only');
+    assert.ok(app.includes('api.onAdminChange(admin =>'), 'cloud sync loads for administrators only');
 });
