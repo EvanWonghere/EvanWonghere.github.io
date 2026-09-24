@@ -1,55 +1,15 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+@AGENTS.md
 
-## Project
+## Claude-specific notes
 
-Personal Hugo blog ("蜂窝 / Hive") deployed to GitHub Pages at `yufenghuang.tech`. Default language is `zh-cn`; English (`en`) is secondary. Theme is [hugo-theme-stack](https://github.com/CaiJimmy/hugo-theme-stack), pulled in as a git submodule under `themes/hugo-theme-stack` (an unused `themes/ananke` submodule is also declared in `.gitmodules`).
+### Artifacts
 
-## Common commands
+Publish these as private Artifacts instead of leaving them only in the terminal:
 
-```bash
-# First clone — submodules are required for the theme
-git submodule update --init --recursive
+- Task and acceptance reports, including which tests, builds and browser checks ran, which were skipped and why.
+- Design proposals and implementation plans the owner needs to approve, such as new study tools, games or the music AI integration.
+- Review summaries that the owner needs to decide on.
 
-# Local preview (drafts included)
-hugo server -D                    # http://localhost:1313/
-hugo server -D --buildFuture      # include scheduled posts
-
-# Production build — matches the GitHub Actions step
-hugo --minify                     # output to ./public
-```
-
-Deployment is automatic: pushes to `main` trigger `.github/workflows/gh-pages.yml`, which runs `hugo --minify` (Hugo extended 0.157.0) and publishes `./public` to the `gh-pages` branch with CNAME `yufenghuang.tech`. There are no tests, linters, or package managers — Hugo is the only build tool.
-
-## Configuration
-
-- `hugo.toml` is the live config. `hugo.yaml` is a leftover Stack example template and is not used — prefer editing `hugo.toml`.
-- Site-wide menu entries (including custom ones like `quiz`, `quotes`, `games`) are defined in `hugo.toml` under `[[menu.main]]`. Custom icons referenced by those entries (`device-gamepad`, `quote`, `brand-steam`) live in `assets/icons/` and override the Stack theme's built-in icon set by filename.
-- Math rendering uses the Stack theme's built-in KaTeX (`themes/hugo-theme-stack/layouts/partials/article/components/math.html`), enabled site-wide via `[params.article] math = true`. Per-page override with frontmatter `math: true/false`. `params.markup.goldmark` also has passthrough delimiters for `\[...\]`, `$$...$$`, `\(...\)` to stop Goldmark from eating backslashes/underscores inside formulas — single `$...$` is recognized by KaTeX but is **not** in passthrough, so avoid it. To switch to MathJax instead, add an override at `layouts/partials/article/components/math.html` — the `_partials/` path is not consulted by the theme.
-
-## Content architecture
-
-Three content roots under `content/` drive distinct rendering paths:
-
-1. **`content/post/`** — standard blog posts. Usual Stack theme rendering; no custom layouts.
-2. **`content/games/`** — the "独立游戏厅" arcade section. Each `<slug>.md` sets `game_url: "/games/<slug>-app/index.html"` in frontmatter. The custom layout `layouts/games/single.html` replaces the default single-post template with a full-screen black page containing a nav bar and an `<iframe>` pointing at `game_url`. The iframe targets are prebuilt standalone SPAs dropped into `static/games/<slug>-app/` (e.g. `2048-app/`, `chess-app/`, `wordle-app/`) — they are not built from this repo. Adding a new game means: (a) drop the built SPA into `static/games/<slug>-app/`, and (b) create `content/games/<slug>.md` with `menu.main.parent: "games"` and the matching `game_url`.
-3. **`content/page/quote/index.md`** — sets `layout: "quotes"`, which selects `layouts/page/quotes.html`. That template does **not** render the markdown body as a post; instead it iterates `.Site.Data.quotes.prose_quotes`, `poetry_and_passages`, and `articles` from `data/quotes.yaml`, rendering each via `layouts/_partials/quote-card.html`. To add a quote or article, edit `data/quotes.yaml` — not the markdown file.
-
-The interview-quiz SPA under `static/quiz/` (with `questions.json` and Vite-built `assets/`) is served as-is; `/quiz/` is linked from the study page. ConceptLab is the same pattern under `static/labs/`, linked as `/labs/`. Do not rebuild either SPA from this repo.
-
-## Layout override pattern
-
-When customizing theme rendering, mirror the Stack theme path under `layouts/` and Hugo will prefer the local file. Existing overrides:
-
-- `layouts/games/single.html` — iframe wrapper for the arcade section
-- `layouts/page/quotes.html` — data-driven quotes page
-- `layouts/_partials/quote-card.html` — reusable card used by `quotes.html` (Hugo 0.146+ `_partials/` convention)
-
-Before adding a new override, check the corresponding file in `themes/hugo-theme-stack/layouts/` to understand the block structure you need to `define`.
-
-## Things to avoid
-
-- Do not edit files under `themes/hugo-theme-stack/` — it is a submodule. Override via `layouts/` or `assets/` instead.
-- Do not edit `public/` — it is build output and is regenerated by CI. (`.hugo_build.lock` and `resources/` are also generated artifacts.)
-- Do not commit `.history/` — it is IDE local history, already gitignored.
+The repository stays the durable record: update `static/music/README.md` and other in-repo docs when behaviour changes. An Artifact summarizes them for reading; it does not replace those updates. Never put secrets, Supabase keys or project refs, or anyone's exported learning progress into an Artifact.
