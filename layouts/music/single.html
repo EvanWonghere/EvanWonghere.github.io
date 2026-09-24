@@ -24,6 +24,8 @@
     <a class="brand" href="{{ "study/" | relURL }}"><span class="brand-mark">ÉTUDE</span><span class="brand-caption">音乐练习室</span></a>
     <div class="top-actions"><span id="save-state" role="status">进度保存在此浏览器</span>{{ if $ai }}<button id="ai-toggle" aria-controls="ai-panel" aria-expanded="false" hidden>AI 助手</button>{{ end }}<button id="sound-enable">开启声音</button></div>
 </header>
+<!-- Fixed to the bottom on wide screens; on phones it is an ordinary strip under the top bar. -->
+<div class="transport-bar"><div class="button-row"><button id="metronome" aria-pressed="false">◷ 节拍器</button><span id="metro-beat" class="metro-beat" aria-hidden="true">●</span><label>速度 <input id="bpm" type="number" min="40" max="200" value="72" inputmode="numeric"> BPM</label></div><label>音色<select id="instrument"><option value="grand">三角钢琴</option><option value="electric">电钢琴</option><option value="harpsichord">羽管键琴</option><option value="organ">爵士风琴</option></select></label><label class="volume-control">音量 <input id="volume" type="range" min="0" max="100" value="65"></label><span id="audio-status" role="status">点击“开启声音”加载钢琴音色</span></div>
 <div class="shell">
     <aside class="sidebar">
         <div class="room-title"><span class="eyebrow">A PERSONAL CONSERVATORY</span><h1>音乐练习室<span class="accent">.</span></h1><p>读懂，听见，弹出来。</p></div>
@@ -228,7 +230,6 @@
         <footer class="studio-footer"><span>ÉTUDE · 音乐练习室</span><span>One note at a time.</span></footer>
     </main>
 </div>
-<div class="transport-bar"><div class="button-row"><button id="metronome" aria-pressed="false">◷ 节拍器</button><span id="metro-beat" class="metro-beat" aria-hidden="true">●</span><label>速度 <input id="bpm" type="number" min="40" max="200" value="72" inputmode="numeric"> BPM</label></div><label>音色<select id="instrument"><option value="grand">三角钢琴</option><option value="electric">电钢琴</option><option value="harpsichord">羽管键琴</option><option value="organ">爵士风琴</option></select></label><label class="volume-control">音量 <input id="volume" type="range" min="0" max="100" value="65"></label><span id="audio-status" role="status">点击“开启声音”加载钢琴音色</span></div>
 {{ if $ai -}}
 <aside id="ai-panel" class="ai-panel" aria-labelledby="ai-title" hidden>
     <div class="ai-head"><div><span class="eyebrow">ASSISTANT · 仅管理员</span><h3 id="ai-title">AI 助手</h3></div><button id="ai-close" aria-label="关闭 AI 助手">关闭</button></div>
