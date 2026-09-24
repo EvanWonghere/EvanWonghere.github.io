@@ -5,7 +5,17 @@ import { STYLES, normalizeParams } from './arrange-styles.mjs';
 
 export const LIMITS = { sections: 16, barsPerSection: 64, bars: 256, tracks: 8, chordsPerSection: 128, notesPerClip: 512, docBytes: 200000, docs: 20, ops: 40, title: 100, name: 40, tags: 8, tag: 20 };
 export const ROLES = { melody: '旋律', comp: '伴奏', bass: '低音', pad: '铺底', drums: '鼓组' };
-export const INSTRUMENT_IDS = ['grand', 'electric', 'harpsichord', 'organ'];
+// Sample banks under /music/samples, one per id; the page's INSTRUMENTS table uses the same ids and names.
+export const INSTRUMENT_NAMES = {
+    grand: '原声三角钢琴', bright: '明亮钢琴', honkytonk: '酒吧钢琴', electric: '电钢琴', fm: 'FM 电钢琴', harpsichord: '羽管键琴', organ: '爵士风琴',
+    celesta: '钢片琴', vibraphone: '颤音琴', marimba: '马林巴', glockenspiel: '钟琴', upright: '原声贝斯', bass: '电贝斯', synthbass: '合成贝斯',
+    nylon: '尼龙弦吉他', steel: '钢弦吉他', cleanguitar: '清音电吉他', overdrive: '失真电吉他', strings: '弦乐合奏', pizzicato: '弦乐拨奏',
+    violin: '小提琴', cello: '大提琴', harp: '竖琴', trumpet: '小号', trombone: '长号', horn: '圆号', brass: '铜管组',
+    flute: '长笛', clarinet: '单簧管', sax: '中音萨克斯', oboe: '双簧管', choir: '合唱', pad: '暖色铺底', lead: '锯齿波主音'
+};
+export const INSTRUMENT_IDS = Object.keys(INSTRUMENT_NAMES);
+/** Instrument a new track of each role starts with. */
+export const ROLE_INSTRUMENT = { melody: 'grand', comp: 'grand', bass: 'bass', pad: 'strings', drums: 'grand' };
 export const METERS = ['2/4', '3/4', '4/4', '6/8'];
 export const ROOTS = ['C', 'C♯', 'D♭', 'D', 'D♯', 'E♭', 'E', 'F', 'F♯', 'G♭', 'G', 'G♯', 'A♭', 'A', 'A♯', 'B♭', 'B'];
 export const MAJOR_KEYS = ['C', 'D♭', 'D', 'E♭', 'E', 'F', 'F♯', 'G', 'A♭', 'A', 'B♭', 'B'];

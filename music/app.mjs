@@ -3,7 +3,7 @@ import { mountArrange } from './arrange.mjs';
 import { mountLiveSandbox } from './live-sandbox.mjs';
 import { STORAGE_KEY, NOTE_NAMES, clamp, noteName, isBlack, localDay, freshProgress, validateProgress, loadProgress, saveProgress, recordAnswer, recordSkill, streakDays, pick, shuffle, earQuestion, detectPitch, midiPitch, scoreRhythm } from './core.mjs';
 import { STAGES, LESSONS, QUESTIONS, PIECES, MELODIES, RHYTHMS, RESOURCES } from './curriculum.mjs';
-import { PianoAudio, Transport, INSTRUMENTS } from './audio.mjs';
+import { PianoAudio, Transport, INSTRUMENTS, instrumentOptions } from './audio.mjs';
 import { staff } from './notation.mjs';
 import { LESSON_DETAILS } from './lesson-details.mjs';
 import { KEYS, CHORD_TYPES, PROGRESSIONS, makeChord, progressionEvents, playableHands } from './harmony.mjs';
@@ -19,6 +19,8 @@ let tab = 'route', lastActive = Date.now(), lastTick = Date.now(), noticeTimer, 
 let currentEar, earAnswered = false, earHeard = false, earPending = false, earGeneration = 0;
 let pendingImport = null, pendingArrangements,  activeLesson = LESSONS.find(l => l.id === progress.lastLesson) || LESSONS[0];
 const audio = new PianoAudio(text => { $('#audio-status').textContent = text; });
+// The instrument list follows INSTRUMENTS; it is filled before saved preferences are restored.
+$('#instrument').innerHTML = instrumentOptions('grand');
 const transport = new Transport(audio);
 let audioWarming = null, creative = null, arrange = null, live = null, aiAssistant = null, cloudSync = null;
 function notify(text) { $('#notice').textContent = text; $('#notice').hidden = false; clearTimeout(noticeTimer); noticeTimer = setTimeout(() => { $('#notice').hidden = true; }, 6500); }

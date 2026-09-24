@@ -1,10 +1,28 @@
 import { frequency, clamp } from './core.mjs';
 export const INSTRUMENTS = {
-    grand: { name:'原声三角钢琴', path:'' }, bright: { name:'明亮钢琴', path:'bright/' }, honkytonk: { name:'酒吧钢琴', path:'honkytonk/' },
-    electric: { name:'电钢琴', path:'electric/' }, fm: { name:'FM 电钢琴', path:'fm/' }, harpsichord: { name:'羽管键琴', path:'harpsichord/' },
-    organ: { name:'爵士风琴', path:'organ/' }, celesta: { name:'钢片琴', path:'celesta/' }, vibraphone: { name:'颤音琴', path:'vibraphone/' },
-    strings: { name:'弦乐合奏', path:'strings/' }
+    grand: { name:'原声三角钢琴', path:'', group:'钢琴' }, bright: { name:'明亮钢琴', path:'bright/', group:'钢琴' }, honkytonk: { name:'酒吧钢琴', path:'honkytonk/', group:'钢琴' },
+    electric: { name:'电钢琴', path:'electric/', group:'键盘' }, fm: { name:'FM 电钢琴', path:'fm/', group:'键盘' }, harpsichord: { name:'羽管键琴', path:'harpsichord/', group:'键盘' },
+    organ: { name:'爵士风琴', path:'organ/', group:'键盘' },
+    celesta: { name:'钢片琴', path:'celesta/', group:'色彩打击' }, vibraphone: { name:'颤音琴', path:'vibraphone/', group:'色彩打击' },
+    marimba: { name:'马林巴', path:'marimba/', group:'色彩打击' }, glockenspiel: { name:'钟琴', path:'glockenspiel/', group:'色彩打击' },
+    upright: { name:'原声贝斯', path:'upright/', group:'贝斯' }, bass: { name:'电贝斯', path:'bass/', group:'贝斯' }, synthbass: { name:'合成贝斯', path:'synthbass/', group:'贝斯' },
+    nylon: { name:'尼龙弦吉他', path:'nylon/', group:'吉他' }, steel: { name:'钢弦吉他', path:'steel/', group:'吉他' },
+    cleanguitar: { name:'清音电吉他', path:'cleanguitar/', group:'吉他' }, overdrive: { name:'失真电吉他', path:'overdrive/', group:'吉他' },
+    strings: { name:'弦乐合奏', path:'strings/', group:'弦乐' }, pizzicato: { name:'弦乐拨奏', path:'pizzicato/', group:'弦乐' },
+    violin: { name:'小提琴', path:'violin/', group:'弦乐' }, cello: { name:'大提琴', path:'cello/', group:'弦乐' }, harp: { name:'竖琴', path:'harp/', group:'弦乐' },
+    trumpet: { name:'小号', path:'trumpet/', group:'铜管' }, trombone: { name:'长号', path:'trombone/', group:'铜管' },
+    horn: { name:'圆号', path:'horn/', group:'铜管' }, brass: { name:'铜管组', path:'brass/', group:'铜管' },
+    flute: { name:'长笛', path:'flute/', group:'木管' }, clarinet: { name:'单簧管', path:'clarinet/', group:'木管' },
+    sax: { name:'中音萨克斯', path:'sax/', group:'木管' }, oboe: { name:'双簧管', path:'oboe/', group:'木管' },
+    choir: { name:'合唱', path:'choir/', group:'人声与合成' }, pad: { name:'暖色铺底', path:'pad/', group:'人声与合成' }, lead: { name:'锯齿波主音', path:'lead/', group:'人声与合成' }
 };
+
+/** <option> list grouped by family, for the instrument selects. */
+export function instrumentOptions(selected, ids = Object.keys(INSTRUMENTS)) {
+    const groups = new Map();
+    for (const id of ids) { const { group, name } = INSTRUMENTS[id]; if (!groups.has(group)) groups.set(group, []); groups.get(group).push(`<option value="${id}"${id === selected ? ' selected' : ''}>${name}</option>`); }
+    return [...groups].map(([group, options]) => `<optgroup label="${group}">${options.join('')}</optgroup>`).join('');
+}
 
 // The FluidR3 samples peak around 0.07–0.12 with an RMS of 0.015–0.045 over their first 0.3 s;
 // at 0.45 the synthesized stand-in was about ten times louder, so 0.05 puts it at the same level.
@@ -14,6 +32,14 @@ export class PianoAudio {
     constructor(onStatus = () => {}) {
         this.instrument = 'grand'; this.context = null; this.buffers = new Map(); this.loading = new Map(); this.voices = new Map();
         this.pedal = false; this.volume = .65; this.serial = 0; this.onStatus = onStatus; this.failed = new Set();
+        // Banks other than the selected one, loaded note by note for arrangement tracks.
+        this.others = new Map();
+    }
+    /** The sample maps of one instrument; the selected instrument keeps using buffers/loading/failed. */
+    bank(instrument = this.instrument) {
+        if (instrument === this.instrument) return { buffers: this.buffers, loading: this.loading, failed: this.failed };
+        if (!this.others.has(instrument)) this.others.set(instrument, { buffers: new Map(), loading: new Map(), failed: new Set() });
+        return this.others.get(instrument);
     }
     async init() {
         if (!this.context) {
@@ -40,14 +66,15 @@ export class PianoAudio {
     setInstrument(id) {
         if (!INSTRUMENTS[id] || id === this.instrument) return;
         this.stopAll(); this.instrument = id;
-        // Release the previous bank; do not retain four decoded banks on mobile devices.
-        this.buffers = new Map(); this.loading = new Map(); this.failed = new Set();
+        // Release the previous banks, including arrangement ones; do not retain decoded banks on mobile devices.
+        this.buffers = new Map(); this.loading = new Map(); this.failed = new Set(); this.others = new Map();
         this.onStatus(`${INSTRUMENTS[id].name} · 准备加载`);
     }
-    async load(note) {
-        if (this.buffers.has(note)) return this.buffers.get(note);
-        if (this.loading.has(note)) return this.loading.get(note);
-        const instrument = this.instrument, buffers = this.buffers, loading = this.loading, failed = this.failed;
+    async load(note, instrument = this.instrument) {
+        if (!INSTRUMENTS[instrument]) instrument = this.instrument;
+        const { buffers, loading, failed } = this.bank(instrument);
+        if (buffers.has(note)) return buffers.get(note);
+        if (loading.has(note)) return loading.get(note);
         const promise = (async () => {
             try {
                 const response = await fetch(`/music/samples/${INSTRUMENTS[instrument].path}${note}.mp3`, { signal: AbortSignal.timeout(12000) });
@@ -60,7 +87,7 @@ export class PianoAudio {
                 failed.add(note); if (instrument === this.instrument) this.onStatus('部分音色采样未加载，暂用合成音；可点击重新加载音色。'); return null;
             } finally { loading.delete(note); }
         })();
-        this.loading.set(note, promise); return promise;
+        loading.set(note, promise); return promise;
     }
     async warm() {
         const instrument = this.instrument; await this.init();
@@ -69,8 +96,10 @@ export class PianoAudio {
         // Keep requests bounded; all pitches are sampled, no global-script or CDN dependency.
         for (let i = 0; i < notes.length; i += 8) { if (instrument !== this.instrument) return; await Promise.all(notes.slice(i, i + 8).map(n => this.load(n))); }
     }
-    noteOn(note, velocity = 85, when = this.context?.currentTime || 0, id = `voice-${++this.serial}`) {
+    noteOn(note, velocity = 85, when = this.context?.currentTime || 0, id = `voice-${++this.serial}`, instrument = this.instrument) {
         if (!this.context || this.context.state !== 'running' || note < 21 || note > 108) return null;
+        if (!INSTRUMENTS[instrument]) instrument = this.instrument;
+        const bank = this.bank(instrument);
         when = Math.max(when, this.context.currentTime);
         if (this.voices.has(id)) this.release(id, when, true);
         // Bound polyphony, including pedal tails, to prevent unbounded resources.
@@ -79,7 +108,7 @@ export class PianoAudio {
         const level = (clamp(velocity, 1, 127) / 127) ** 1.6;
         gain.gain.setValueAtTime(0, when); gain.gain.linearRampToValueAtTime(level, when + .005);
         const filter = this.context.createBiquadFilter(); filter.type = 'lowpass'; filter.frequency.value = 1400 + level * 10000; filter.connect(gain);
-        const buffer = this.buffers.get(note); const sources = [];
+        const buffer = bank.buffers.get(note); const sources = [];
         if (buffer) {
             const source = this.context.createBufferSource(); source.buffer = buffer; source.connect(filter); source.start(when); sources.push(source);
         } else {
@@ -92,7 +121,7 @@ export class PianoAudio {
                 source.connect(harmonicGain); harmonicGain.connect(filter); source.start(when); source.stop(when + 8); sources.push(source);
                 source.addEventListener('ended', () => harmonicGain.disconnect(), { once: true });
             }
-            if (!this.failed.has(note)) void this.load(note);
+            if (!bank.failed.has(note)) void this.load(note, instrument);
         }
         const voice = { sources, gain, filter, note, held: true, released: false };
         this.voices.set(id, voice);

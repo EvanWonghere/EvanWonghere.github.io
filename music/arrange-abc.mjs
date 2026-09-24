@@ -4,7 +4,10 @@ import { abcDuration } from './composition.mjs';
 import { signatureAccidentals } from './arrangement.mjs';
 
 const EPS = 1e-6, PARTS = [4, 3, 2, 1.5, 1, 0.75, 0.5, 0.25];
-const MIDI_PROGRAM = { grand: 0, electric: 4, harpsichord: 6, organ: 16 };
+// General MIDI program numbers (zero-based) for each sample bank.
+export const MIDI_PROGRAM = { grand: 0, bright: 1, honkytonk: 3, electric: 4, fm: 5, harpsichord: 6, celesta: 8, glockenspiel: 9, vibraphone: 11, marimba: 12,
+    organ: 16, nylon: 24, steel: 25, cleanguitar: 27, overdrive: 29, upright: 32, bass: 33, synthbass: 38, violin: 40, cello: 42, pizzicato: 45, harp: 46,
+    strings: 48, choir: 52, trumpet: 56, trombone: 57, horn: 60, brass: 61, sax: 65, oboe: 68, clarinet: 71, flute: 73, lead: 81, pad: 89 };
 const ACC = { '𝄫': -2, '♭': -1, '♯': 1, '𝄪': 2 };
 const MARK = { '-2': '__', '-1': '_', '0': '=', '1': '^', '2': '^^' };
 const clean = s => String(s).replace(/["\r\n\\]/g, ' ').trim();
