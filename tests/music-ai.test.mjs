@@ -139,6 +139,10 @@ test('assistant modules have no path to progress, grades or mastery', async () =
     const mount = app.slice(app.indexOf('m.mountAI('), app.indexOf('.catch(', app.indexOf('m.mountAI(')));
     assert.ok(mount.includes('structuredClone(progress)'));
     for (const forbidden of ['persist', 'saveSkill', 'recordAnswer', 'storage,', 'storage }']) assert.ok(!mount.includes(forbidden), `mountAI must not receive ${forbidden}`);
+    // Cloud sync is its own module, loaded after the assistant; it writes only the works library and arrangements.
+    const sync = await readFile(new URL('../static/music/sync.mjs', import.meta.url), 'utf8');
+    for (const forbidden of ['saveProgress', 'recordAnswer', 'recordSkill', "'hive-music-v1'", 'lessons', 'cards']) assert.ok(!sync.includes(forbidden), `sync.mjs must not reference ${forbidden}`);
+    assert.ok(app.indexOf("import('./sync.mjs')") > app.indexOf("aiMeta?.dataset.sync !== '1'"), 'sync loads only when switched on');
 });
 
 test('layout renders the assistant only when enabled, and an enabled config carries only public values', async () => {

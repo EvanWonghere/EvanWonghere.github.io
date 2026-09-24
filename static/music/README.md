@@ -96,7 +96,7 @@ cookie 与登录会话，也拿不到页面 DOM；与页面之间只有 postMess
 题目答对后的间隔为 1、3、7、14、30 天；错题立即可复习并在 10 分钟后到期。
 
 页面在前台、且两分钟内有操作时每 15 秒累计时长。记录不自动跨设备同步，导出/导入 JSON
-可迁移；备份文件额外带上 `arrangements` 字段（整个编曲存档），旧版页面导入时会忽略它。导入含编曲的
+可迁移（管理员另可开启云端作品同步，见下节）；备份文件额外带上 `arrangements` 字段（整个编曲存档），旧版页面导入时会忽略它。导入含编曲的
 备份会同时替换编曲，导入不含编曲的旧备份则保留本机编曲。导入预览后须明确确认替换，并尝试下载原进度。读取损坏或未来版本时不静默覆盖；
 保存被拒绝/空间不足时显示持久提示。新窗口通过 storage 事件接受其他页面的保存。
 
@@ -135,6 +135,18 @@ cookie 与登录会话，也拿不到页面 DOM；与页面之间只有 postMess
   （Strudel 只演奏最后一个裸表达式，但所有 `$:` 块会同时演奏；手稿含变量或多条语句时不自动合并），
   “替换手稿”需确认；两者都可以撤回一次。请求写入 sessionStorage `hive-music-ai-strudel-pending`，
   未处理的片段存在 `hive-music-live-snippet`，刷新后用同一请求 ID 取回。
+- 云端作品（`sync.mjs`、`sync-core.mjs`，`[params.musicAI] sync = true` 时随 AI 助手加载）：管理员登录后，
+  作品库里已保存的乐谱与即兴手稿、编曲工作台的每份编曲，与题库 Supabase 的 `music_works` 表双向同步；
+  草稿、练习进度、AI 提案都不同步，访客与非管理员完全不受影响。本机仍是工作副本，离线照常保存。
+  - 每条记录带服务端递增的版本号；上传写“基于第 n 版”，云端已更新时不覆盖。两台设备都改过同一首时两份都保留：
+    云端版本保留原 ID，本机版本另存为“标题（本机副本）”并上传。编辑胜过删除；删除只留“墓碑”，其他设备随后删除本机副本。
+  - 每台设备在 `localStorage` 的 `hive-music-sync-v1` 记录每首作品对应的云端版本与本机内容哈希，并绑定账号；换账号时先询问，
+    拒绝则暂停本设备同步。导入备份或重置进度后清空这份记录，下次同步取并集，不会删除云端或其他设备的作品。
+  - 云端每类最多 50 首、总计 8 MB；本机上限不变（作品 20、编曲 20），放不下的列为“仅在云端”，腾出位置后可取回。
+  - 下载的内容先经本机校验（作品格式、`validateDocument`）才写入；格式不正确的跳过并提示。编曲正在预览 AI 提案时暂缓写入。
+  - 时机：登录后、回到页面（30 秒内最多一次）、网络恢复时拉取；保存作品或编辑编曲 3 秒后上传；“我的进度”页有“立即同步”
+    与“暂停本设备同步”。退出登录不删除本机副本。
+  - 停用：`sync = false` 并推送；本机作品不受影响，云端表保留。
 - 回退：把 `enabled` 改回 `false` 并推送；浏览器里的练习进度不受影响。
 
 ## 验证
@@ -144,6 +156,7 @@ node --test tests/music.test.mjs
 node --test tests/music-ai.test.mjs
 node --test tests/arrangement.test.mjs
 node --test tests/strudel.test.mjs
+node --test tests/sync.test.mjs
 node --test tests/*.test.mjs
 hugo --minify --destination /tmp/hive-music-build
 hugo server --port 1314 --destination /tmp/hive-music-preview

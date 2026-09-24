@@ -134,6 +134,8 @@ favicon = "/favicon.ico"
 enabled = true
 supabaseUrl = "https://vtbwqnigocrbpmbkbiiv.supabase.co"
 publishableKey = "sb_publishable_ELsgCJmcnnTm7V9kSmaZEw_vBMsaWCu"
+# 管理员的已保存作品与编曲在多台设备间同步（需要题库的 music_works 迁移）；改为 false 即停用，本机作品不受影响。
+sync = true
 
 # 首页顶部的自我介绍区块，由 layouts/index.html 渲染。
 # 删掉这一节，首页就回到"直接是文章流"的原样。
