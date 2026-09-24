@@ -24,9 +24,12 @@ let audioWarming = null, creative = null, arrange = null, live = null, aiAssista
 function notify(text) { $('#notice').textContent = text; $('#notice').hidden = false; clearTimeout(noticeTimer); noticeTimer = setTimeout(() => { $('#notice').hidden = true; }, 6500); }
 function storageWarning(text) { $('#storage-warning').textContent = text; $('#storage-warning').hidden = !text; $('#save-state').textContent = text ? '进度未能保存，请备份' : '已保存在此浏览器'; }
 if (loaded.error) storageWarning(loaded.error);
+/** Saves progress; returns an error message (or the blocked state) so callers that must know can check. */
 function persist() {
-    if (storageBlocked) return;
-    storageWarning(saveProgress(storage, progress));
+    if (storageBlocked) return '进度存档不可读，暂停保存';
+    const error = saveProgress(storage, progress);
+    storageWarning(error);
+    return error || null;
 }
 function saveSkill(id, score) {
     const previous = progress.skills[id]; recordSkill(progress, id, score);
@@ -710,9 +713,14 @@ $('#piano-compose').onclick=()=>{const piece=selectedPiece();if(piece)creative.f
 const aiMeta = document.querySelector('meta[name="hive-music-ai"]');
 // Cloud copies of saved works load with the assistant and share its login session, but are a separate
 // module: the assistant itself never receives storage or anything that writes works or progress.
-async function mountCloudSync(api) {
-    if (cloudSync || aiMeta?.dataset.sync !== '1' || !$('#sync-card')) return;
-    cloudSync = (await import('./sync.mjs')).mountSync({ api, creative, arrange, storage, notify, progressBlocked: () => storageBlocked });
+function mountCloudSync(api) {
+    if (aiMeta?.dataset.sync !== '1' || !$('#sync-card')) return;
+    let loading = null;
+    api.onAdminChange(admin => {
+        if (!admin || cloudSync || loading) return;
+        loading = import('./sync.mjs').then(m => { cloudSync = m.mountSync({ api, creative, arrange, storage, notify, progressBlocked: () => storageBlocked }); })
+            .catch(error => { loading = null; notify('云端作品同步未能加载：' + error.message); });
+    });
 }
 if (aiMeta && $('#ai-toggle')) import('./ai-context.mjs').then(({ parseConfig, shouldLoadAI }) => {
     const config = parseConfig(aiMeta.dataset);
@@ -720,7 +728,7 @@ if (aiMeta && $('#ai-toggle')) import('./ai-context.mjs').then(({ parseConfig, s
     const loadAssistant = () => aiAssistant ||= import('./ai.mjs').then(m => m.mountAI({
         config, getSnapshot: () => structuredClone(progress), getLesson: () => ({ ...activeLesson, index: LESSONS.indexOf(activeLesson) + 1 }),
         getComposition: () => creative.current(), getTab: () => tab, setTab, notify
-    })).then(async api => { arrange.attachAssistant(api); live.attachAssistant(api); await mountCloudSync(api); return api; }).catch(error => { aiAssistant = null; notify('AI 助手未能加载：' + error.message); return null; });
+    })).then(async api => { arrange.attachAssistant(api); live.attachAssistant(api); mountCloudSync(api); return api; }).catch(error => { aiAssistant = null; notify('AI 助手未能加载：' + error.message); return null; });
     $('#ai-toggle').hidden = false;
     const openAssistant = async () => { const api = await loadAssistant(); api?.open(); };
     arrange.setAssistantOpener(openAssistant); live.setAssistantOpener(openAssistant);

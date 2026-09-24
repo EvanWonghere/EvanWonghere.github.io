@@ -27,7 +27,7 @@ export async function contentHash({ title, body }) {
 export const workItem = w => ({ kind: w.kind, id: w.id, title: w.title || '未命名', body: { source: w.source } });
 export const arrangementItem = doc => ({ kind: 'arrangement', id: doc.id, title: doc.title || '未命名编曲', body: doc });
 
-export function freshLedger(userId) { return { version: 1, userId, items: {}, lastSync: 0, paused: false }; }
+export function freshLedger(userId) { return { version: 1, userId, items: {}, lastSync: 0, paused: false, held: [] }; }
 /** A ledger that cannot be read is treated as empty, which makes the next sync a first sync (a union). */
 export function readLedger(raw) {
     try {
@@ -35,14 +35,16 @@ export function readLedger(raw) {
         if (!v || v.version !== 1 || typeof v.userId !== 'string' || !v.items || typeof v.items !== 'object') return null;
         const items = {};
         for (const [key, e] of Object.entries(v.items)) if (e && Number.isInteger(e.rev) && e.rev >= 1 && /^[0-9a-f]{64}$/.test(e.hash)) items[key] = { rev: e.rev, hash: e.hash };
-        return { version: 1, userId: v.userId, items, lastSync: Number(v.lastSync) || 0, paused: v.paused === true };
+        const held = Array.isArray(v.held) ? v.held.filter(k => typeof k === 'string' && k.length <= 120).slice(0, 200) : [];
+        return { version: 1, userId: v.userId, items, lastSync: Number(v.lastSync) || 0, paused: v.paused === true, held };
     } catch { return null; }
 }
 
 /**
  * local: [{ kind, id, title, hash }], remote: cloud rows without bodies
  * ({ kind, id, title, content_hash, revision, deleted, updated_at }), room: free local slots per
- * capacity group. Returns the actions; `conflicts` mean "download the cloud copy into this id and keep
+ * capacity group. Works this device already listed as cloud-only (`ledger.held`) wait for an explicit
+ * retrieve instead of filling a freed slot automatically. Returns the actions; `conflicts` mean "download the cloud copy into this id and keep
  * the local version as a new copy" and need one free slot each.
  */
 export function planSync({ local, ledger, remote, room = { works: Infinity, arrangement: Infinity } }) {
@@ -86,9 +88,10 @@ export function planSync({ local, ledger, remote, room = { works: Infinity, arra
         if (!r.deleted) newDownloads.push(r);
     }
     // New cloud items fill the free local slots newest first; the rest stay listed as cloud-only.
+    const held = new Set(ledger.held || []);
     newDownloads.sort((a, b) => String(b.updated_at).localeCompare(String(a.updated_at)));
     for (const r of newDownloads) {
-        if (take(r.kind)) plan.downloads.push({ kind: r.kind, id: r.id });
+        if (!held.has(itemKey(r.kind, r.id)) && take(r.kind)) plan.downloads.push({ kind: r.kind, id: r.id });
         else plan.cloudOnly.push({ kind: r.kind, id: r.id, title: r.title, updated_at: r.updated_at });
     }
     return plan;
