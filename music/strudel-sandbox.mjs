@@ -36,7 +36,8 @@ export class StrudelSandbox {
     /** listener(message) receives validated messages: hap, playing, stopped, log, error, status. */
     subscribe(listener) { this.listeners.add(listener); return () => this.listeners.delete(listener); }
     emit(message) { for (const l of this.listeners) l(message); }
-    wait(type, ms) {
+    wait(types, ms) {
+        const type = [].concat(types);
         return new Promise((resolve, reject) => {
             const waiter = { type, resolve, reject, timer: setTimeout(() => { this.waiters = this.waiters.filter(w => w !== waiter); reject(new Error('Strudel 沙箱没有响应，请重试。')); }, ms) };
             this.waiters.push(waiter);
@@ -46,9 +47,9 @@ export class StrudelSandbox {
         if (!this.frame || event.source !== this.frame.contentWindow) return;
         const message = readSandboxMessage(event.data);
         if (!message) return;
-        for (const w of [...this.waiters]) if (w.type === message.type || message.type === 'error') {
+        for (const w of [...this.waiters]) if (w.type.includes(message.type) || message.type === 'error') {
             clearTimeout(w.timer); this.waiters = this.waiters.filter(x => x !== w);
-            if (message.type === 'error' && w.type !== 'error') w.reject(new Error(message.message)); else w.resolve(message);
+            if (message.type === 'error' && !w.type.includes('error')) w.reject(new Error(message.message)); else w.resolve(message);
         }
         this.emit(message);
     };
@@ -97,11 +98,21 @@ export class StrudelSandbox {
         await this.start(options);
         if (this.request !== id || !this.frame) return null;
         this.playing = id;
-        const playing = this.wait('playing', 15000);
+        const first = this.wait(['playing', 'needs-gesture'], 15000);
         this.frame.contentWindow.postMessage({ type: 'play', code, id }, '*');
-        return playing;
+        const message = await first;
+        if (message.type !== 'needs-gesture') return message;
+        // Safari: the frame itself shows a "tap to start" button; show the frame until it is tapped.
+        this.showUnlock(true);
+        this.emit({ type: 'status', message: '请轻点下方出现的“轻点这里开始演奏”：Safari 需要在演奏区域里点一下才能出声。' });
+        try { return await this.wait('playing', 120000); } finally { this.showUnlock(false); }
     }
-    stop() { this.request = null; if (this.frame && this.playing) this.frame.contentWindow.postMessage({ type: 'stop' }, '*'); this.playing = null; }
+    showUnlock(on) {
+        if (!this.frame) return;
+        this.frame.hidden = !on;
+        this.frame.style.cssText = on ? 'position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom, 0px));transform:translateX(-50%);width:min(340px, calc(100vw - 32px));height:96px;border:0;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.28);z-index:2000;background:#303f37' : '';
+    }
+    stop() { this.request = null; this.showUnlock(false); if (this.frame && this.playing) this.frame.contentWindow.postMessage({ type: 'stop' }, '*'); this.playing = null; }
     destroy() {
         this.generation++;
         removeEventListener('message', this.receive);

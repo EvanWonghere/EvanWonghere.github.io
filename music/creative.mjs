@@ -1,3 +1,4 @@
+import {scoreToStrudel,tracksFromAudio,totalBeatsFromAudio,scoreKey} from './score-strudel.mjs';
 import {DEFAULT_ABC,SCORE_PRESETS,LIVE_PRESETS,MAX_SOURCE,MAX_WORKS,freshCreative,abcPitch,abcDuration,insertToken,eventsToABC,audioTimeline,strudelURL,checkABC} from './composition.mjs';
 import {ScorePlayer} from './score-player.mjs';
 const $=s=>document.querySelector(s);
@@ -29,7 +30,7 @@ export async function readScoreFile(file){
 }
 export function mountCreative({audio,getProgress,persist,stopAll,notify,setTab,onLiveChange,onWorksChange}){
  const player=new ScorePlayer(audio);let visual=null,timeline=null,selected=null,activeWork={score:'',live:''},renderTimer,renderGeneration=0,importGeneration=0,frame=null,frameTimer;
- let libraryKind='score',lastHighlight='';
+ let libraryKind='score',lastHighlight='',scoreAudio=null;
  let history=[],historyIndex=-1;
  function remember(){const value=$('#score-source').value;if(history[historyIndex]!==value){history=history.slice(0,historyIndex+1);history.push(value);if(history.length>50)history.shift();historyIndex=history.length-1;}$('#score-undo').disabled=historyIndex<1;$('#score-redo').disabled=historyIndex>=history.length-1;}
  function travel(step){const next=historyIndex+step;if(next<0||next>=history.length)return;historyIndex=next;$('#score-source').value=history[next];selected=null;sourceChanged();}
@@ -48,14 +49,15 @@ export function mountCreative({audio,getProgress,persist,stopAll,notify,setTab,o
    const source=checkABC($('#score-source').value);await loadABC();if(generation!==renderGeneration)return;
    const tunes=window.ABCJS.renderAbc('composition-sheet',source,{responsive:'resize',add_classes:true,staffwidth:Math.max(320,$('#composition-sheet').clientWidth-50),wrap:{minSpacing:1.5,maxSpacing:2.7,preferredMeasuresPerLine:4},paddingright:25,paddingleft:25,selectionColor:'#9b6934',clickListener:selectElement});
    visual=tunes[0];if(!visual)throw Error('未能读取这份 ABC 乐谱。');
-   timeline=audioTimeline(visual.setUpAudio({chordsOff:true}));
+   const commands=visual.setUpAudio({chordsOff:true});timeline=audioTimeline(commands);
+   scoreAudio={tracks:tracksFromAudio(commands),totalBeats:totalBeatsFromAudio(commands),tempo:timeline.tempo,meter:visual.getMeterFraction?.()||{num:4,den:4}};
    if(!timeline.notes.length)throw Error('乐谱中没有可播放的钢琴音符。');
    const warnings=visual.warnings||[];status(`${timeline.notes.length} 个发声音符 · ${Math.ceil(timeline.duration)} 秒 · 原谱 ${Math.round(timeline.tempo)} BPM${timeline.skipped?` · ${timeline.skipped} 个打击乐/超出钢琴音域的音未播放`:''}${warnings.length?' · 请核对下方排谱提示':''}`);
    $('#score-warnings').textContent=warnings.map(w=>String(w).replace(/<[^>]*>/g,'')).join('\n');$('#score-warnings').hidden=!warnings.length;
-   $('#score-play').disabled=false;$('#score-export-midi').disabled=false;$('#score-export-svg').disabled=false;
-  }catch(e){timeline=null;visual=null;status(e.message,true);$('#score-export-midi').disabled=true;$('#score-export-svg').disabled=true;$('#composition-sheet').replaceChildren();}
+   $('#score-play').disabled=false;$('#score-to-live').disabled=!scoreAudio.tracks.length;$('#score-export-midi').disabled=false;$('#score-export-svg').disabled=false;
+  }catch(e){timeline=null;visual=null;scoreAudio=null;$('#score-to-live').disabled=true;status(e.message,true);$('#score-export-midi').disabled=true;$('#score-export-svg').disabled=true;$('#composition-sheet').replaceChildren();}
  }
- function sourceChanged(){importGeneration++;stopAll();timeline=null;visual=null;for(const id of ['score-play','score-selected-play','score-export-midi','score-export-svg'])$('#'+id).disabled=true;remember();saveDraft();clearTimeout(renderTimer);renderTimer=setTimeout(render,220);}
+ function sourceChanged(){importGeneration++;stopAll();timeline=null;visual=null;for(const id of ['score-play','score-selected-play','score-export-midi','score-export-svg','score-to-live'])$('#'+id).disabled=true;remember();saveDraft();clearTimeout(renderTimer);renderTimer=setTimeout(render,220);}
  function replaceSource(text){$('#score-source').value=text;remember();activeWork.score='';saveDraft();library();void render();}
  function insert(kind){
   const input=$('#score-source'),start=selected?.from??input.selectionStart,end=selected?.to??input.selectionEnd;
@@ -94,6 +96,8 @@ export function mountCreative({audio,getProgress,persist,stopAll,notify,setTab,o
  $('#score-export-abc').onclick=()=>download($('#score-source').value,filename(visual?.metaText?.title)+'.abc');
  $('#score-export-midi').onclick=()=>{if(!visual)return;try{const data=window.ABCJS.synth.getMidiFile(visual,{midiOutputType:'binary',chordsOff:true});download(data,filename(visual.metaText?.title)+'.mid','audio/midi');}catch(e){notify('MIDI 导出失败：'+e.message);}};
  $('#score-export-svg').onclick=()=>{const svgs=[...document.querySelectorAll('#composition-sheet svg')];if(!svgs.length)return;let y=0;const parts=svgs.map(svg=>{const copy=svg.cloneNode(true);copy.querySelectorAll('.score-playing').forEach(e=>e.classList.remove('score-playing'));const box=svg.viewBox.baseVal,height=box.height||svg.getBoundingClientRect().height;copy.setAttribute('x','0');copy.setAttribute('y',y);copy.setAttribute('height',height);copy.setAttribute('width',box.width||900);y+=height;return new XMLSerializer().serializeToString(copy);});download(`<svg xmlns="http://www.w3.org/2000/svg" width="900" height="${y}" viewBox="0 0 900 ${y}" style="color:#222;background:white">${parts.join('')}</svg>`,filename(visual.metaText?.title)+'.svg','image/svg+xml');};
+ // Score → live draft: every voice becomes Strudel layers, one cycle per bar. Replaces the live draft after confirmation.
+ $('#score-to-live').onclick=()=>{if(!scoreAudio?.tracks.length){notify('先渲染一份含音符的乐谱。');return;}const abc=$('#score-source').value,title=/^T:(.*)$/m.exec(abc)?.[1]?.trim()||'五线谱作品';const {code,offGrid,bars}=scoreToStrudel({...scoreAudio,title,...scoreKey(abc)});if(code.length>MAX_SOURCE){notify('转换后的代码超过 40000 字符，请先缩短乐谱。');return;}if(!confirm('用这份乐谱替换当前的实时编曲草稿？已保存的作品不受影响。'))return;stopAll();$('#live-source').value=code;$('#live-title').value=title.slice(0,100);activeWork.live='';saveDraft();library();setTab('live',true);notify(`已转成 ${bars} 小节的 Strudel 代码，每个循环一小节${offGrid?`；${offGrid} 个音不在十六分音符网格上（如三连音），已就近取整`:''}。`);};
  $('#live-source').oninput=saveDraft;$('#live-title').oninput=saveDraft;
  $('#live-load-example').onclick=()=>{stopAll();const p=LIVE_PRESETS.find(p=>p.id===$('#live-presets').value);$('#live-source').value=p.code;$('#live-title').value=p.title;$('#live-hint').textContent=p.hint;activeWork.live='';saveDraft();library();};
  $('#live-launch').onclick=()=>{stopAll();saveDraft();try{const url=strudelURL($('#live-source').value);frame=document.createElement('iframe');frame.title='Strudel 官方实时编曲编辑器';frame.allow='autoplay';frame.setAttribute('sandbox','allow-scripts allow-same-origin allow-downloads allow-popups');frame.referrerPolicy='no-referrer';frame.src=url;frame.onload=()=>{clearTimeout(frameTimer);$('#live-status').textContent='Strudel 已加载；先点击编辑器中央的 play 启动。若页面空白，请使用“在 Strudel 打开”。';};$('#live-frame').replaceChildren(frame);$('#live-frame').hidden=false;$('#live-stop').disabled=false;$('#live-status').textContent='正在连接 strudel.cc…';frameTimer=setTimeout(()=>$('#live-status').textContent='加载较慢，可在 Strudel 独立页面打开；本站草稿已保存。',18000);}catch(e){notify(e.message);}};
@@ -111,7 +115,7 @@ export function mountCreative({audio,getProgress,persist,stopAll,notify,setTab,o
   show(name){if(!['compose','live'].includes(name))return;libraryKind=name==='compose'?'score':'live';document.getElementById(name==='compose'?'score-library-slot':'live-library-slot').append(worksPanel);worksPanel.hidden=false;library();if(name==='compose')void render();},
   sync(){stop();importGeneration++;activeWork={score:'',live:''};$('#score-source').value=state().abc;history=[];historyIndex=-1;remember();$('#live-source').value=state().live;$('#live-title').value=state().title;library();if(!document.querySelector('[data-panel=compose]').hidden)void render();},
   // Drafts handed over from the arrangement desk replace the current draft, like loading an example.
-  importScore(abc){stopAll();importGeneration++;replaceSource(abc);setTab('compose',true);notify('编曲已送到五线谱作曲；原草稿已被替换，可用撤销找回。');},
+  importScore(abc){stopAll();importGeneration++;replaceSource(abc);setTab('compose',true);notify('已送到五线谱作曲；原草稿已被替换，可用撤销找回。');},
   importLive(code,title){stopAll();$('#live-source').value=code;$('#live-title').value=String(title||'编曲').slice(0,100);activeWork.live='';saveDraft();library();setTab('live',true);notify('Strudel 代码已存入即兴手稿草稿。');},
   // Cloud sync (administrator only): reads saved works and applies validated cloud copies.
   // Drafts are never touched; only the works library changes.

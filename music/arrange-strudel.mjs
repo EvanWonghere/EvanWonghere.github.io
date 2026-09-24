@@ -46,12 +46,22 @@ function barPattern(events, barStart, steps, name) {
     return `[${tokens.join(' ')}]`;
 }
 
+// A note held across a barline is split at the barline: each cycle is its own bar, so the tail is
+// struck again at the start of the next bar rather than lost.
+function splitAtBars(e, bpb) {
+    const out = []; let start = e.start, left = e.beats;
+    while (left > 1e-9) {
+        const barEnd = (Math.floor(start / bpb + 1e-9) + 1) * bpb, beats = Math.min(left, barEnd - start);
+        out.push({ ...e, start, beats }); start += beats; left -= beats;
+    }
+    return out;
+}
 export function compileStrudel(real, doc) {
     const { bpb, totalBeats } = real, bars = Math.round(totalBeats / bpb), steps = Math.round(bpb * 4);
     const soloing = doc.tracks.some(t => t.solo), lines = [];
     for (const track of doc.tracks) {
         if (track.mute || (soloing && !track.solo)) continue;
-        const events = real.events.filter(e => e.trackId === track.id);
+        const events = real.events.filter(e => e.trackId === track.id).flatMap(e => splitAtBars(e, bpb));
         if (!events.length) continue;
         const layers = track.role === 'drums' ? [events] : lanes(events);
         layers.forEach((lane, i) => {
