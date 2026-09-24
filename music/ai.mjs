@@ -216,6 +216,8 @@ export async function mountAI({ config, getSnapshot, getLesson, getComposition, 
     return {
         open, close, toggle() { if (panel.hidden) open(); else close(); }, refresh() { if (admin && !busy && !panel.hidden) void loadHistory(); },
         isAdmin: () => admin,
+        // Shared with the cloud sync of saved works: same client and login session.
+        cloud: () => client, userId: () => user?.id ?? null,
         onAdminChange(listener) { adminListeners.add(listener); listener(admin); },
         /** Sends a proposal request; the page applies nothing until the administrator accepts it. */
         requestArrangement(input) {
