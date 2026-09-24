@@ -15,7 +15,7 @@ export function scoreKey(abc) {
  * tracks: one array of { pitch, start, beats } per voice, in quarter-note beats.
  * Returns the code, how many notes had to be moved onto the sixteenth-note grid, and the bar count.
  */
-export function scoreToStrudel({ tracks, tempo = 90, meter = { num: 4, den: 4 }, title = '五线谱作品', key = 'C', mode = 'major' }) {
+export function scoreToStrudel({ tracks, tempo = 90, meter = { num: 4, den: 4 }, title = '五线谱作品', key = 'C', mode = 'major', totalBeats = 0 }) {
     const num = Number(meter?.num) || 4, den = Number(meter?.den) || 4, bpb = num * 4 / den;
     const events = [], docTracks = [];
     let offGrid = 0, end = 0;
@@ -28,12 +28,15 @@ export function scoreToStrudel({ tracks, tempo = 90, meter = { num: 4, den: 4 },
             end = Math.max(end, n.start + n.beats);
         }
     });
-    const bars = Math.max(1, Math.ceil(end / bpb - 1e-9));
+    // Trailing rests count: the loop is as long as the score, not just up to its last note.
+    const bars = Math.max(1, Math.ceil(Math.max(end, Number(totalBeats) || 0) / bpb - 1e-9));
     const doc = { title: String(title).slice(0, 100), meta: { key, mode, meter: `${num}/${den}`, tempo: Math.max(20, Math.min(300, Math.round(tempo))), swing: 0.5 }, tracks: docTracks };
     const code = compileStrudel({ bpb, totalBeats: bars * bpb, events: events.sort((a, b) => a.start - b.start || a.pitch - b.pitch) }, doc);
     return { code, offGrid, bars };
 }
 
+/** The score's full length in quarter-note beats, including trailing rests. */
+export const totalBeatsFromAudio = commands => Math.max(0, Number(commands?.totalDuration) * 4 || 0);
 /** The playable notes of each abcjs audio track, in quarter-note beats (percussion left out). */
 export function tracksFromAudio(commands) {
     return (commands?.tracks || []).map(track => track

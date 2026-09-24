@@ -1,4 +1,4 @@
-import {scoreToStrudel,tracksFromAudio,scoreKey} from './score-strudel.mjs';
+import {scoreToStrudel,tracksFromAudio,totalBeatsFromAudio,scoreKey} from './score-strudel.mjs';
 import {DEFAULT_ABC,SCORE_PRESETS,LIVE_PRESETS,MAX_SOURCE,MAX_WORKS,freshCreative,abcPitch,abcDuration,insertToken,eventsToABC,audioTimeline,strudelURL,checkABC} from './composition.mjs';
 import {ScorePlayer} from './score-player.mjs';
 const $=s=>document.querySelector(s);
@@ -50,7 +50,7 @@ export function mountCreative({audio,getProgress,persist,stopAll,notify,setTab,o
    const tunes=window.ABCJS.renderAbc('composition-sheet',source,{responsive:'resize',add_classes:true,staffwidth:Math.max(320,$('#composition-sheet').clientWidth-50),wrap:{minSpacing:1.5,maxSpacing:2.7,preferredMeasuresPerLine:4},paddingright:25,paddingleft:25,selectionColor:'#9b6934',clickListener:selectElement});
    visual=tunes[0];if(!visual)throw Error('未能读取这份 ABC 乐谱。');
    const commands=visual.setUpAudio({chordsOff:true});timeline=audioTimeline(commands);
-   scoreAudio={tracks:tracksFromAudio(commands),tempo:timeline.tempo,meter:visual.getMeterFraction?.()||{num:4,den:4}};
+   scoreAudio={tracks:tracksFromAudio(commands),totalBeats:totalBeatsFromAudio(commands),tempo:timeline.tempo,meter:visual.getMeterFraction?.()||{num:4,den:4}};
    if(!timeline.notes.length)throw Error('乐谱中没有可播放的钢琴音符。');
    const warnings=visual.warnings||[];status(`${timeline.notes.length} 个发声音符 · ${Math.ceil(timeline.duration)} 秒 · 原谱 ${Math.round(timeline.tempo)} BPM${timeline.skipped?` · ${timeline.skipped} 个打击乐/超出钢琴音域的音未播放`:''}${warnings.length?' · 请核对下方排谱提示':''}`);
    $('#score-warnings').textContent=warnings.map(w=>String(w).replace(/<[^>]*>/g,'')).join('\n');$('#score-warnings').hidden=!warnings.length;

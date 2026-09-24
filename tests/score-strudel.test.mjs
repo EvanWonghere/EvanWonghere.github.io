@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { scoreKey, scoreToStrudel, tracksFromAudio } from '../static/music/score-strudel.mjs';
+import { scoreKey, scoreToStrudel, totalBeatsFromAudio, tracksFromAudio } from '../static/music/score-strudel.mjs';
 import { parseStrudel, parsedScore } from '../static/music/strudel-parse.mjs';
 import { compileABC } from '../static/music/arrange-abc.mjs';
 
@@ -40,4 +40,13 @@ test('3/4 and 6/8 meters set the bar length; triplets are counted as moved', () 
     assert.match(scoreToStrudel({ tracks: [[{ pitch: 67, start: 0, beats: 1.5 }]], meter: { num: 6, den: 8 } }).code, /6\/8/);
     const trip = [0, 1 / 3, 2 / 3].map((start, i) => ({ pitch: 60 + i, start, beats: 1 / 3 }));
     assert.equal(scoreToStrudel({ tracks: [trip] }).offGrid, 3);
+});
+
+test('notes held across a barline keep sounding in the next bar; trailing rests keep the loop length', () => {
+    const held = scoreToStrudel({ tracks: [[{ pitch: 60, start: 3, beats: 2 }, { pitch: 64, start: 5, beats: 3 }]] });
+    const events = parseStrudel(held.code).voices[0].events.map(e => [e.pitch, e.time, e.dur]);
+    assert.deepEqual(events, [[60, 0.75, 0.25], [60, 1, 0.25], [64, 1.25, 0.75]], 'C4 sounds from beat 4 of bar 1 through beat 1 of bar 2');
+    assert.equal(totalBeatsFromAudio({ totalDuration: 2 }), 8);
+    const rests = scoreToStrudel({ tracks: [[{ pitch: 60, start: 0, beats: 1 }]], totalBeats: 8 });
+    assert.equal(rests.bars, 2); assert.equal(parseStrudel(rests.code).cycles, 2);
 });
