@@ -106,9 +106,15 @@ and replaceable. Source links, hashes, license texts and replacement instruction
 are in `static/music/vendor/NOTICE.md`. The simpler practice-score renderer remains
 original site code. The new starter scores and import test fixture are original.
 
-Strudel is loaded on demand from its official site in a cross-origin iframe;
-its AGPL source and embedding documentation are linked in the application and
-vendor notice. This repository does not redistribute Strudel code or samples.
+Strudel can be opened from its official site in a cross-origin iframe, or played
+in the music room's own sandbox. For the sandbox, this repository redistributes the
+unmodified `@strudel/web` 1.3.0 bundle (AGPL-3.0-or-later, source at
+codeberg.org/uzu/strudel) as `static/music/vendor/strudel-web-1.3.0.js`, with every
+bundled package's licence in `static/music/vendor/strudel-LICENSES.txt`. It runs only
+inside a sandboxed iframe with an opaque origin and is not part of the site's own
+scripts; see `static/music/vendor/NOTICE.md`. No Strudel sample files are
+redistributed: the sandbox uses synthesized sounds and this site's own piano samples,
+and loads Strudel's default samples from GitHub only when a visitor switches that on.
 
 ### Default classical live-coding excerpt
 

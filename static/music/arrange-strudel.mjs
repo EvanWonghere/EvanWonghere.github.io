@@ -1,7 +1,8 @@
 // One-way export of a realized arrangement to Strudel code: one cycle per bar, sixteenth-note
 // steps, `@n` elongation for held notes. The code runs only in Strudel's own editor, never here.
 const DRUM_SOUND = { kick: 'bd', snare: 'sd', hat: 'hh' };
-const SOUND = { grand: 'piano', harpsichord: 'piano', electric: 'gm_epiano1', organ: 'gm_drawbar_organ' };
+// Sounds that exist both on strudel.cc and offline in the site's sandbox (piano samples + built-in synths).
+const SOUND = { grand: 'piano', harpsichord: 'piano', electric: 'piano', organ: 'square' };
 const SHARP = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'];
 const comment = s => String(s).replace(/[\r\n*/]/g, ' ').trim();
 
@@ -59,7 +60,7 @@ export function compileStrudel(real, doc) {
             const body = cycle.every(c => c === '~') ? null : `"<${cycle.join(' ')}>"`;
             if (!body) return;
             const label = `  // ${comment(track.name)}${layers.length > 1 ? ` · 第 ${i + 1} 层` : ''}`;
-            const sound = track.role === 'drums' ? `s(${body}).bank("RolandTR909")` : `note(${body}).s("${track.role === 'bass' ? 'gm_acoustic_bass' : track.role === 'pad' ? 'triangle' : SOUND[track.instrument] || 'piano'}")`;
+            const sound = track.role === 'drums' ? `s(${body})` : `note(${body}).s("${track.role === 'pad' ? 'triangle' : SOUND[track.instrument] || 'piano'}")`;
             lines.push(`${label}\n  ${sound}.gain(${(+track.volume.toFixed(2)) || 0})`);
         });
     }

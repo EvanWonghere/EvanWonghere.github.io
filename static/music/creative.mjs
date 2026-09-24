@@ -27,7 +27,7 @@ export async function readScoreFile(file){
  const [abc,warning]=window.vertaal(doc,{u:0,b:4,n:100,c:0,v:1,d:0,m:0,x:0,t:0,v1:0,noped:1,stm:0,p:'',s:0});
  checkABC(abc);return {abc,warning:String(warning||'').replace(/<[^>]*>/g,'').trim()};
 }
-export function mountCreative({audio,getProgress,persist,stopAll,notify,setTab}){
+export function mountCreative({audio,getProgress,persist,stopAll,notify,setTab,onLiveChange}){
  const player=new ScorePlayer(audio);let visual=null,timeline=null,selected=null,activeWork={score:'',live:''},renderTimer,renderGeneration=0,importGeneration=0,frame=null,frameTimer;
  let libraryKind='score',lastHighlight='';
  let history=[],historyIndex=-1;
@@ -35,7 +35,7 @@ export function mountCreative({audio,getProgress,persist,stopAll,notify,setTab})
  function travel(step){const next=historyIndex+step;if(next<0||next>=history.length)return;historyIndex=next;$('#score-source').value=history[next];selected=null;sourceChanged();}
  const state=()=>getProgress().creative ||= freshCreative();
  const status=(text,bad=false)=>{$('#score-status').textContent=text;$('#score-status').classList.toggle('bad',bad);};
- const saveDraft=()=>{state().abc=$('#score-source').value;state().live=$('#live-source').value;state().title=$('#live-title').value;persist();};
+ const saveDraft=()=>{const live=$('#live-source').value,changed=state().live!==live;state().abc=$('#score-source').value;state().live=live;state().title=$('#live-title').value;persist();if(changed)onLiveChange?.();};
  const library=()=>{const list=$('#creative-works');list.replaceChildren(new Option('选择已保存作品…',''));for(const w of state().works.filter(w=>w.kind===libraryKind))list.add(new Option(w.title,w.id));list.value=activeWork[libraryKind];$('#work-update').disabled=!activeWork[libraryKind];$('#work-delete').disabled=!activeWork[libraryKind];$('#works-count').textContent=`${state().works.length} / ${MAX_WORKS} 首 · 包含在进度 JSON 备份中`;};
  function clearHighlight(){document.querySelectorAll('#composition-sheet .score-playing').forEach(e=>e.classList.remove('score-playing'));lastHighlight='';}
  function stopScore(){player.stop();clearHighlight();$('#score-play').disabled=!timeline;$('#score-stop').disabled=true;$('#score-time').textContent='已停止';}
@@ -113,6 +113,9 @@ export function mountCreative({audio,getProgress,persist,stopAll,notify,setTab})
   // Drafts handed over from the arrangement desk replace the current draft, like loading an example.
   importScore(abc){stopAll();importGeneration++;replaceSource(abc);setTab('compose',true);notify('编曲已送到五线谱作曲；原草稿已被替换，可用撤销找回。');},
   importLive(code,title){stopAll();$('#live-source').value=code;$('#live-title').value=String(title||'编曲').slice(0,100);activeWork.live='';saveDraft();library();setTab('live',true);notify('Strudel 代码已存入即兴手稿草稿。');},
+  // The live draft for the Strudel snippet assistant; it writes only through setLiveCode.
+  liveDraft(){return {code:$('#live-source').value,workId:activeWork.live||'draft'};},
+  setLiveCode(code){stopAll();$('#live-source').value=code;saveDraft();},
   // Read-only view of the score draft for the AI assistant.
   current(){const abc=$('#score-source').value;return {abc,workId:activeWork.score||'draft',title:/^T:(.*)$/m.exec(abc)?.[1]?.trim()||'未命名乐谱'};},
   fromEvents(events,title){stopAll();replaceSource(eventsToABC(events,title,getProgress().settings.bpm));setTab('compose',true);},

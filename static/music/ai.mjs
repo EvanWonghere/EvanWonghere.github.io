@@ -1,7 +1,7 @@
 // Administrator AI assistant. Loaded on demand; anonymous practice never imports this file.
 // It receives read-only getters from app.mjs and has no way to save progress or grades.
 import { MUSIC_CATALOG_VERSIONS } from './catalog-versions.mjs';
-import { AI_RETURN_KEY, POLL_DELAYS, authCallback, buildArrangeRequest, buildRequest, classifyProposal, classifyResponse, clearArrangePending, clearPending, historyTurns, loadArrangePending, loadPending, pendingOutcome, proposalFromHistory, returnTarget, saveArrangePending, savePending } from './ai-context.mjs';
+import { AI_RETURN_KEY, POLL_DELAYS, authCallback, buildArrangeRequest, buildRequest, classifyProposal, classifyResponse, clearArrangePending, clearPending, historyTurns, loadArrangePending, loadPending, pendingOutcome, proposalFromHistory, returnTarget, saveArrangePending, savePending, buildStrudelRequest, classifySnippet, clearStrudelPending, loadStrudelPending, saveStrudelPending, snippetFromHistory } from './ai-context.mjs';
 
 const $ = selector => document.querySelector(selector);
 const KIND_NAMES = { lesson: '讲解本课', homework: '作业反馈', composition: '作曲点评' };
@@ -183,6 +183,29 @@ export async function mountAI({ config, getSnapshot, getLesson, getComposition, 
         }
         return { status: 'pending', error: '仍未确认结果；请求已保留，刷新页面后会自动核对。' };
     }
+    // ---------- Strudel snippets (used by the live-coding page) ----------
+    async function strudelOnce(payload) {
+        const result = await call(payload);
+        const outcome = classifySnippet(result.status, result.body);
+        if (outcome === 'done') { clearStrudelPending(session); return { status: 'done', snippet: { summary: result.body.summary, code: result.body.code, recovered: result.body.recovered === true } }; }
+        if (outcome === 'failed') { clearStrudelPending(session); return { status: 'failed', error: result.body.error || '请求未完成。' }; }
+        for (const delay of POLL_DELAYS) {
+            await sleep(delay);
+            const history = await call({ action: 'music-history', kind: 'strudel', subjectId: payload.workId }).catch(() => null);
+            if (history?.status !== 200) continue;
+            const snippet = snippetFromHistory(history.body.messages, payload.requestId);
+            if (snippet) { clearStrudelPending(session); return { status: 'done', snippet }; }
+            if (pendingOutcome(history.body.messages, payload.requestId) === 'failed') { clearStrudelPending(session); return { status: 'failed', error: '上一次片段请求没有完成，可以重新请求。' }; }
+        }
+        return { status: 'pending', error: '仍未确认结果；请求已保留，刷新页面后会自动核对。' };
+    }
+    async function runStrudel(payload) {
+        try { return await strudelOnce(payload); }
+        catch (e) {
+            if (e.settled) { clearStrudelPending(session); return { status: 'failed', error: e.message }; }
+            return { status: 'pending', error: '网络中断；请求已保留，可重试同一请求，不会重复计费。' };
+        }
+    }
     async function runArrangement(payload) {
         try { return await arrangeOnce(payload); }
         catch (e) {
@@ -203,6 +226,16 @@ export async function mountAI({ config, getSnapshot, getLesson, getComposition, 
         },
         pendingArrangement: () => loadArrangePending(session)?.payload || null,
         retryArrangement() { const pending = loadArrangePending(session); return pending ? runArrangement(pending.payload) : Promise.resolve(null); },
-        discardArrangement() { clearArrangePending(session); }
+        discardArrangement() { clearArrangePending(session); },
+        /** Asks for a Strudel snippet; the page only plays it in the sandbox or inserts it on request. */
+        requestStrudel(input) {
+            if (!admin) return Promise.resolve({ status: 'failed', error: '仅管理员可用。' });
+            const payload = buildStrudelRequest({ ...input, requestId: crypto.randomUUID() });
+            saveStrudelPending(session, payload);
+            return runStrudel(payload);
+        },
+        pendingStrudel: () => loadStrudelPending(session)?.payload || null,
+        retryStrudel() { const pending = loadStrudelPending(session); return pending ? runStrudel(pending.payload) : Promise.resolve(null); },
+        discardStrudel() { clearStrudelPending(session); }
     };
 }

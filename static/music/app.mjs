@@ -1,5 +1,6 @@
 import { mountCreative } from './creative.mjs';
 import { mountArrange } from './arrange.mjs';
+import { mountLiveSandbox } from './live-sandbox.mjs';
 import { STORAGE_KEY, NOTE_NAMES, clamp, noteName, isBlack, localDay, freshProgress, validateProgress, loadProgress, saveProgress, recordAnswer, recordSkill, streakDays, pick, shuffle, earQuestion, detectPitch, midiPitch, scoreRhythm } from './core.mjs';
 import { STAGES, LESSONS, QUESTIONS, PIECES, MELODIES, RHYTHMS, RESOURCES } from './curriculum.mjs';
 import { PianoAudio, Transport, INSTRUMENTS } from './audio.mjs';
@@ -19,7 +20,7 @@ let currentEar, earAnswered = false, earHeard = false, earPending = false, earGe
 let pendingImport = null, pendingArrangements,  activeLesson = LESSONS.find(l => l.id === progress.lastLesson) || LESSONS[0];
 const audio = new PianoAudio(text => { $('#audio-status').textContent = text; });
 const transport = new Transport(audio);
-let audioWarming = null, creative = null, arrange = null, aiAssistant = null;
+let audioWarming = null, creative = null, arrange = null, live = null, aiAssistant = null;
 function notify(text) { $('#notice').textContent = text; $('#notice').hidden = false; clearTimeout(noticeTimer); noticeTimer = setTimeout(() => { $('#notice').hidden = true; }, 6500); }
 function storageWarning(text) { $('#storage-warning').textContent = text; $('#storage-warning').hidden = !text; $('#save-state').textContent = text ? '进度未能保存，请备份' : '已保存在此浏览器'; }
 if (loaded.error) storageWarning(loaded.error);
@@ -68,7 +69,7 @@ function setTab(name, focus = false) {
     if (name === 'rhythm') renderRhythm();
     if (name === 'progress') renderProgress();
     if (name === 'harmony') renderHarmony();
-    creative?.show(name); arrange?.show(name);
+    creative?.show(name); arrange?.show(name); live?.show(name);
     if (focus) $('#workspace').focus({ preventScroll: true });
     updateStats();
 }
@@ -660,7 +661,7 @@ function renderJournal(){ $('#journal-list').innerHTML=[...(progress.journal || 
 $('#journal-save').onclick=()=>{const text=$('#journal-text').value.trim();if(!text){notify('先写下本次观察或下一次目标。');return;}progress.journal ||= [];progress.journal.push({text:text.slice(0,1200),at:Date.now(),bpm:progress.settings.bpm});progress.journal=progress.journal.slice(-100);persist();$('#journal-text').value='';renderJournal();notify('练习日志已保存。');};
 
 function stopActivities() {
-    creative?.stop(); arrange?.stop();
+    creative?.stop(); arrange?.stop(); live?.stop();
     transport.stop(); stopMetronome(); stopPiano(); stopRhythm(); stopMic(micStream || micPending ? '麦克风已关闭' : ''); allOff();
     earGeneration++; earPending = false; $('#ear-play').disabled = false;
 }
@@ -683,7 +684,8 @@ window.addEventListener('storage', e => {
     catch { storageBlocked = true; storageWarning('另一个页面写入了无法识别的进度；已暂停保存，请先备份。'); }
 });
 for (const id of ['piano-piece','piano-mode','sight-piece','sight-octave','rhythm-pattern','ear-mode','ear-level','ear-style','theory-mode','lesson-filter','instrument','piano-hand','piano-repeats','piano-duration','harmony-bass','harmony-smooth','harmony-kind','harmony-root','harmony-type','harmony-voicing','harmony-inversion','harmony-progression','piano-from','piano-to']) document.getElementById(id).addEventListener('change', e => { progress.preferences ||= {}; progress.preferences[id] = e.target.type==='checkbox'?String(e.target.checked):e.target.value; persist(); });
-creative = mountCreative({audio,getProgress:()=>progress,persist,stopAll:stopActivities,notify,setTab});
+creative = mountCreative({audio,getProgress:()=>progress,persist,stopAll:stopActivities,notify,setTab,onLiveChange:()=>live?.changed()});
+live = mountLiveSandbox({ audio, notify, stopAll: stopActivities, creative });
 arrange = mountArrange({ audio, storage, notify, setTab, stopAll: stopActivities, creative });
 $('#harmony-compose').onclick=()=>creative.fromEvents(eventsForHarmony(harmonySpec()).map(playableHands),workshopName(workshopId(harmonySpec())));
 $('#piano-compose').onclick=()=>{const piece=selectedPiece();if(piece)creative.fromEvents(piece.events,piece.title);else notify('先选择一首练习曲。');};
@@ -697,9 +699,10 @@ if (aiMeta && $('#ai-toggle')) import('./ai-context.mjs').then(({ parseConfig, s
     const loadAssistant = () => aiAssistant ||= import('./ai.mjs').then(m => m.mountAI({
         config, getSnapshot: () => structuredClone(progress), getLesson: () => ({ ...activeLesson, index: LESSONS.indexOf(activeLesson) + 1 }),
         getComposition: () => creative.current(), getTab: () => tab, setTab, notify
-    })).then(api => { arrange.attachAssistant(api); return api; }).catch(error => { aiAssistant = null; notify('AI 助手未能加载：' + error.message); return null; });
+    })).then(api => { arrange.attachAssistant(api); live.attachAssistant(api); return api; }).catch(error => { aiAssistant = null; notify('AI 助手未能加载：' + error.message); return null; });
     $('#ai-toggle').hidden = false;
-    arrange.setAssistantOpener(async () => { const api = await loadAssistant(); api?.open(); });
+    const openAssistant = async () => { const api = await loadAssistant(); api?.open(); };
+    arrange.setAssistantOpener(openAssistant); live.setAssistantOpener(openAssistant);
     $('#ai-toggle').onclick = async () => { const api = await loadAssistant(); api?.toggle(); };
     if (shouldLoadAI({ config, href: location.href, storage })) void loadAssistant();
 }).catch(error => notify('AI 助手未能加载：' + error.message));
