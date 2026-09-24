@@ -2,7 +2,7 @@
 // Roman numeral analysis and browser storage. Pure functions; the UI lives in arrange.mjs.
 import { makeChord, rootPC, spellPitch, chordType, PROGRESSIONS } from './harmony.mjs';
 import { generateStyle, STYLES } from './arrange-styles.mjs';
-import { LIMITS, ROLES, ROOTS, GRID, MAJOR_KEYS, MINOR_KEYS, beatsPerBar, validateChord, validateDocument, validateOp } from './arrangement-schema.mjs';
+import { LIMITS, ROLES, ROLE_INSTRUMENT, INSTRUMENT_NAMES, ROOTS, GRID, MAJOR_KEYS, MINOR_KEYS, beatsPerBar, validateChord, validateDocument, validateOp } from './arrangement-schema.mjs';
 
 export const ARRANGE_KEY = 'hive-music-arrange-v1';
 const clone = value => JSON.parse(JSON.stringify(value));
@@ -133,7 +133,7 @@ function applyOne(doc, op, ids) {
     case 'addTrack': {
         if (!ROLES[op.role]) throw new Error('声部类型无效。');
         const tid = op.id && !ids.has(op.id) ? (ids.add(op.id), op.id) : nextId(ids, 't');
-        doc.tracks.push({ id: tid, name: op.name ?? ROLES[op.role], role: op.role, instrument: op.instrument ?? 'grand', volume: 0.8, mute: false, solo: false, clips: {} });
+        doc.tracks.push({ id: tid, name: op.name ?? ROLES[op.role], role: op.role, instrument: op.instrument ?? ROLE_INSTRUMENT[op.role], volume: 0.8, mute: false, solo: false, clips: {} });
         break;
     }
     case 'removeTrack': trackOf(doc, op.track); doc.tracks = doc.tracks.filter(t => t.id !== op.track); break;
@@ -229,7 +229,7 @@ export function describeOp(op, doc) {
     case 'renameSection': return `“${section(op.section)}”改名为“${op.name}”`;
     case 'addTrack': return `新增${ROLES[op.role] ?? ''}声部${op.name ? `“${op.name}”` : ''}`;
     case 'removeTrack': return `删除声部“${track(op.track)}”`;
-    case 'setTrack': return `声部“${track(op.track)}”：${[op.name && `改名“${op.name}”`, op.role && `类型${ROLES[op.role]}`, op.instrument && `导出音色 ${op.instrument}`, op.volume !== undefined && `音量 ${Math.round(op.volume * 100)}%`, op.mute !== undefined && (op.mute ? '静音' : '取消静音'), op.solo !== undefined && (op.solo ? '独奏' : '取消独奏')].filter(Boolean).join('，')}`;
+    case 'setTrack': return `声部“${track(op.track)}”：${[op.name && `改名“${op.name}”`, op.role && `类型${ROLES[op.role]}`, op.instrument && `音色${INSTRUMENT_NAMES[op.instrument] ?? op.instrument}`, op.volume !== undefined && `音量 ${Math.round(op.volume * 100)}%`, op.mute !== undefined && (op.mute ? '静音' : '取消静音'), op.solo !== undefined && (op.solo ? '独奏' : '取消独奏')].filter(Boolean).join('，')}`;
     case 'setClipStyle': return `“${track(op.track)}”在“${section(op.section)}”使用${STYLES[op.style]?.name ?? op.style}${op.params && Object.keys(op.params).length ? `（${Object.entries(op.params).map(([k, v]) => `${STYLES[op.style]?.params[k]?.label ?? k} ${typeof v === 'boolean' ? (v ? '开' : '关') : STYLES[op.style]?.params[k]?.values?.[v] ?? v}`).join('，')}）` : ''}`;
     case 'setClipNotes': return `“${track(op.track)}”在“${section(op.section)}”写入 ${op.events.length} 个音符`;
     case 'clearClip': return `清空“${track(op.track)}”在“${section(op.section)}”的片段`;
@@ -289,7 +289,7 @@ export const TEMPLATES = {
         doc.tracks = [
             track('mel', 'melody', '旋律', 'grand', { verse: notes([[0, 1, 'E4'], [1, 1, 'G4'], [2, 1.5, 'C5'], [3.5, 0.5, 'B4'], [4, 2, 'B4'], [6, 1, 'G4'], [7, 1, 'D4'], [8, 1.5, 'C5'], [9.5, 0.5, 'B4'], [10, 1, 'A4'], [11, 1, 'E4'], [12, 2, 'F4'], [14, 1, 'A4'], [15, 1, 'G4']]) }),
             track('comp', 'comp', '钢琴伴奏', 'grand', { intro: { kind: 'style', style: 'arpeggio', params: {}, seed: 1 }, verse: { kind: 'style', style: 'arpeggio', params: {}, seed: 1 }, chorus: { kind: 'style', style: 'pulse', params: {}, seed: 1 } }),
-            track('bass', 'bass', '低音', 'grand', { intro: { kind: 'style', style: 'root', params: {}, seed: 1 }, verse: { kind: 'style', style: 'root-fifth', params: {}, seed: 1 }, chorus: { kind: 'style', style: 'octave', params: {}, seed: 1 } }),
+            track('bass', 'bass', '低音', 'bass', { intro: { kind: 'style', style: 'root', params: {}, seed: 1 }, verse: { kind: 'style', style: 'root-fifth', params: {}, seed: 1 }, chorus: { kind: 'style', style: 'octave', params: {}, seed: 1 } }),
             track('drum', 'drums', '鼓组', 'grand', { verse: { kind: 'style', style: 'rock', params: {}, seed: 1 }, chorus: { kind: 'style', style: 'rock', params: { fill: true }, seed: 1 } })
         ];
         return doc;
@@ -297,13 +297,13 @@ export const TEMPLATES = {
     lofi: { name: 'Lo-fi · ii–V–I–vi', build: id => {
         const doc = baseDoc(id, '深夜的台灯', { tempo: 72, meter: '4/4', key: 'E♭', mode: 'major', swing: 0.6, tags: ['lo-fi', '温暖'] }, [{ id: 'a', name: 'A 段', bars: 8 }]);
         withChords(doc, 'a', Array.from({ length: 8 }, (_, i) => chordAt(i * 4, 4, ['F', 'B♭', 'E♭', 'C'][i % 4], ['m9', '13', 'maj9', 'm7'][i % 4])));
-        doc.tracks = [track('keys', 'comp', '电钢', 'electric', { a: { kind: 'style', style: 'lofi-rhodes', params: {}, seed: 3 } }), track('bass', 'bass', '低音', 'grand', { a: { kind: 'style', style: 'root', params: {}, seed: 1 } }), track('drum', 'drums', '鼓组', 'grand', { a: { kind: 'style', style: 'boom-bap', params: {}, seed: 2 } })];
+        doc.tracks = [track('keys', 'comp', '电钢', 'electric', { a: { kind: 'style', style: 'lofi-rhodes', params: {}, seed: 3 } }), track('bass', 'bass', '低音', 'upright', { a: { kind: 'style', style: 'root', params: {}, seed: 1 } }), track('drum', 'drums', '鼓组', 'grand', { a: { kind: 'style', style: 'boom-bap', params: {}, seed: 2 } })];
         return doc;
     } },
     bossa: { name: 'Bossa · ii–V–I', build: id => {
         const doc = baseDoc(id, '海边的周日', { tempo: 120, meter: '4/4', key: 'F', mode: 'major', tags: ['bossa'] }, [{ id: 'a', name: 'A 段', bars: 8 }]);
         withChords(doc, 'a', [['G', 'm7'], ['C', '7'], ['F', 'maj7'], ['F', 'maj7'], ['G', 'm7'], ['C', '7b9'], ['F', '6'], ['F', '6']].map(([r, t], i) => chordAt(i * 4, 4, r, t)));
-        doc.tracks = [track('guitar', 'comp', '伴奏', 'grand', { a: { kind: 'style', style: 'bossa', params: {}, seed: 1 } }), track('bass', 'bass', '低音', 'grand', { a: { kind: 'style', style: 'root-fifth', params: {}, seed: 1 } }), track('perc', 'drums', '打击乐', 'grand', { a: { kind: 'style', style: 'bossa-perc', params: {}, seed: 1 } })];
+        doc.tracks = [track('guitar', 'comp', '伴奏', 'nylon', { a: { kind: 'style', style: 'bossa', params: {}, seed: 1 } }), track('bass', 'bass', '低音', 'upright', { a: { kind: 'style', style: 'root-fifth', params: {}, seed: 1 } }), track('perc', 'drums', '打击乐', 'grand', { a: { kind: 'style', style: 'bossa-perc', params: {}, seed: 1 } })];
         return doc;
     } },
     waltz: { name: '圆舞曲 · 3/4', build: id => {
@@ -315,7 +315,7 @@ export const TEMPLATES = {
     blues: { name: '布鲁斯 · 十二小节', build: id => {
         const doc = baseDoc(id, '周五的布鲁斯', { tempo: 96, meter: '4/4', key: 'C', mode: 'major', swing: 0.62, tags: ['布鲁斯'] }, [{ id: 'a', name: '十二小节', bars: 12 }]);
         withChords(doc, 'a', ['C', 'C', 'C', 'C', 'F', 'F', 'C', 'C', 'G', 'F', 'C', 'G'].map((r, i) => chordAt(i * 4, 4, r, '7')));
-        doc.tracks = [track('mel', 'melody', '旋律', 'grand', { a: notes([[0, 1, 'G4'], [1, 0.5, 'B♭4'], [1.5, 0.5, 'C5'], [2, 2, 'G4'], [16, 1, 'A4'], [17, 0.5, 'C5'], [17.5, 0.5, 'E♭5'], [18, 2, 'C5']]) }), track('comp', 'comp', '钢琴', 'grand', { a: { kind: 'style', style: 'pulse', params: { register: 'low' }, seed: 1 } }), track('bass', 'bass', '行走低音', 'grand', { a: { kind: 'style', style: 'walking', params: {}, seed: 1 } }), track('drum', 'drums', '鼓组', 'grand', { a: { kind: 'style', style: 'rock', params: {}, seed: 1 } })];
+        doc.tracks = [track('mel', 'melody', '旋律', 'grand', { a: notes([[0, 1, 'G4'], [1, 0.5, 'B♭4'], [1.5, 0.5, 'C5'], [2, 2, 'G4'], [16, 1, 'A4'], [17, 0.5, 'C5'], [17.5, 0.5, 'E♭5'], [18, 2, 'C5']]) }), track('comp', 'comp', '钢琴', 'grand', { a: { kind: 'style', style: 'pulse', params: { register: 'low' }, seed: 1 } }), track('bass', 'bass', '行走低音', 'upright', { a: { kind: 'style', style: 'walking', params: {}, seed: 1 } }), track('drum', 'drums', '鼓组', 'grand', { a: { kind: 'style', style: 'rock', params: {}, seed: 1 } })];
         return doc;
     } },
     ballad: { name: '抒情 · 借用和弦', build: id => {
@@ -325,15 +325,15 @@ export const TEMPLATES = {
         doc.tracks = [
             track('mel', 'melody', '旋律', 'grand', { a: notes([[0, 2, 'D5'], [2, 1, 'B4'], [3, 1, 'A4'], [4, 3, 'B4'], [7, 1, 'G4'], [8, 2, 'E5'], [10, 1, 'D5'], [11, 1, 'C5'], [12, 2, 'E♭5'], [14, 2, 'D5']]) }),
             track('comp', 'comp', '钢琴', 'grand', { a: { kind: 'style', style: 'arpeggio', params: {}, seed: 2 }, b: { kind: 'style', style: 'block', params: {}, seed: 1 } }),
-            track('pad', 'pad', '长音铺底', 'organ', { b: { kind: 'style', style: 'sustain', params: {}, seed: 1 } }),
-            track('bass', 'bass', '低音', 'grand', { a: { kind: 'style', style: 'root', params: {}, seed: 1 }, b: { kind: 'style', style: 'root', params: {}, seed: 1 } })
+            track('pad', 'pad', '长音铺底', 'strings', { b: { kind: 'style', style: 'sustain', params: {}, seed: 1 } }),
+            track('bass', 'bass', '低音', 'bass', { a: { kind: 'style', style: 'root', params: {}, seed: 1 }, b: { kind: 'style', style: 'root', params: {}, seed: 1 } })
         ];
         return doc;
     } },
     dorian: { name: '小调律动 · 多利亚', build: id => {
         const doc = baseDoc(id, '多利亚的街角', { tempo: 100, meter: '4/4', key: 'D', mode: 'minor', tags: ['多利亚', '律动'] }, [{ id: 'a', name: 'A 段', bars: 8 }]);
         withChords(doc, 'a', Array.from({ length: 8 }, (_, i) => chordAt(i * 4, 4, i % 2 ? 'G' : 'D', i % 2 ? '7' : 'm7')));
-        doc.tracks = [track('mel', 'melody', '旋律', 'grand', { a: notes([[0, 1, 'A4'], [1, 0.5, 'C5'], [1.5, 0.5, 'D5'], [2, 1, 'F5'], [3, 1, 'E5'], [4, 1.5, 'D5'], [5.5, 0.5, 'B4'], [6, 2, 'A4']]) }), track('keys', 'comp', '电钢', 'electric', { a: { kind: 'style', style: 'lofi-rhodes', params: { register: 'low' }, seed: 2 } }), track('bass', 'bass', '低音', 'grand', { a: { kind: 'style', style: 'octave', params: {}, seed: 1 } }), track('drum', 'drums', '鼓组', 'grand', { a: { kind: 'style', style: 'boom-bap', params: {}, seed: 1 } })];
+        doc.tracks = [track('mel', 'melody', '旋律', 'grand', { a: notes([[0, 1, 'A4'], [1, 0.5, 'C5'], [1.5, 0.5, 'D5'], [2, 1, 'F5'], [3, 1, 'E5'], [4, 1.5, 'D5'], [5.5, 0.5, 'B4'], [6, 2, 'A4']]) }), track('keys', 'comp', '电钢', 'electric', { a: { kind: 'style', style: 'lofi-rhodes', params: { register: 'low' }, seed: 2 } }), track('bass', 'bass', '低音', 'bass', { a: { kind: 'style', style: 'octave', params: {}, seed: 1 } }), track('drum', 'drums', '鼓组', 'grand', { a: { kind: 'style', style: 'boom-bap', params: {}, seed: 1 } })];
         return doc;
     } },
     blank: { name: '空白', build: id => {
@@ -347,7 +347,7 @@ export function fromProgression(id, progressionId, key = 'C') {
     const p = PROGRESSIONS.find(x => x.id === progressionId) || PROGRESSIONS[0];
     const doc = baseDoc(id, p.name.split(' · ')[0], { tempo: 80, meter: '4/4', key, mode: p.id === 'jazz-minor' ? 'minor' : 'major' }, [{ id: 'a', name: 'A 段', bars: p.steps.length }]);
     withChords(doc, 'a', p.steps.map((s, i) => chordAt(i * 4, 4, spellPitch(key, s.degree, 60 + rootPC(key) + s.offset).replace(/-?\d+$/, ''), s.type)));
-    doc.tracks = [track('mel', 'melody', '旋律', 'grand', {}), track('comp', 'comp', '伴奏', 'grand', { a: { kind: 'style', style: 'block', params: {}, seed: 1 } }), track('bass', 'bass', '低音', 'grand', { a: { kind: 'style', style: 'root', params: {}, seed: 1 } })];
+    doc.tracks = [track('mel', 'melody', '旋律', 'grand', {}), track('comp', 'comp', '伴奏', 'grand', { a: { kind: 'style', style: 'block', params: {}, seed: 1 } }), track('bass', 'bass', '低音', 'bass', { a: { kind: 'style', style: 'root', params: {}, seed: 1 } })];
     return doc;
 }
 export const newDocId = (rng = Math.random) => `arr-${Date.now().toString(36)}-${Math.floor(rng() * 1e6).toString(36)}`;

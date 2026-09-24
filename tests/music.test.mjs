@@ -7,7 +7,7 @@ import { staff } from '../static/music/notation.mjs';
 import { LESSON_DETAILS } from '../static/music/lesson-details.mjs';
 import { KEYS, CHORD_TYPES, PROGRESSIONS, makeChord, progressionEvents, rootPC, playableHands } from '../static/music/harmony.mjs';
 import { preparePiece, PracticeJudge } from '../static/music/practice.mjs';
-import { PianoAudio, Transport, INSTRUMENTS } from '../static/music/audio.mjs';
+import { PianoAudio, Transport, INSTRUMENTS, instrumentOptions } from '../static/music/audio.mjs';
 
 test('88-key range, octave naming, equal temperament and black key layout', () => {
     assert.equal(noteName(21),'A0'); assert.equal(noteName(60),'C4'); assert.equal(noteName(108),'C8');
@@ -83,8 +83,8 @@ test('notation marks middle C with ledger line and avoids pitch-answer leaks in 
     assert.match(staff([{notes:[66],beats:1}]),/♯/);
     assert.match(staff([{notes:[48,60,64,67],beats:2}],{clef:'grand'}),/𝄢/);
 });
-test('every local sample in all ten instrument banks contains MP3 data and is credited', async () => {
-    assert.equal(Object.keys(INSTRUMENTS).length,10);
+test('every local sample in all 34 instrument banks contains MP3 data and is credited', async () => {
+    assert.equal(Object.keys(INSTRUMENTS).length,34);
     const notice=await readFile(new URL('../static/music/samples/NOTICE.md',import.meta.url),'utf8');
     for(const {path} of Object.values(INSTRUMENTS)) {
     if(path) assert.ok(notice.includes(`extracted to \`${path}\``),path);
@@ -166,4 +166,22 @@ test('switching instruments during download cannot populate the new bank with ol
     const original=globalThis.fetch;let resolve;
     try{globalThis.fetch=()=>new Promise(r=>resolve=r);const pending=audio.load(60);audio.setInstrument('electric');resolve({ok:true,arrayBuffer:async()=>new ArrayBuffer(8)});await pending;assert.equal(audio.buffers.size,0);assert.equal(audio.instrument,'electric');}
     finally{globalThis.fetch=original;}
+});
+test('other instruments load into their own bank and play from it without touching the selected one',async()=>{
+    const {audio,sources}=fakeAudio();audio.context.decodeAudioData=async()=>({bank:'cello'});
+    const original=globalThis.fetch;const urls=[];
+    try{
+        globalThis.fetch=async url=>{urls.push(url);return {ok:true,arrayBuffer:async()=>new ArrayBuffer(8)};};
+        await audio.load(48,'cello');
+        assert.deepEqual(urls,['/music/samples/cello/48.mp3']);assert.equal(audio.buffers.size,88);assert.deepEqual(audio.others.get('cello').buffers.get(48),{bank:'cello'});
+        audio.noteOn(48,90,0,'v1','cello');assert.deepEqual(sources.at(-1).buffer,{bank:'cello'});
+        audio.noteOn(48,90,0,'v2');assert.deepEqual(sources.at(-1).buffer,{},'the selected bank still plays without an instrument argument');
+        audio.setInstrument('electric');assert.equal(audio.others.size,0,'switching the selected instrument releases the other banks');
+    }finally{globalThis.fetch=original;}
+});
+test('the selects list every instrument once, grouped by family',()=>{
+    const html=instrumentOptions('cello');
+    assert.equal((html.match(/<option /g)||[]).length,Object.keys(INSTRUMENTS).length);
+    assert.match(html,/<option value="cello" selected>大提琴<\/option>/);
+    for(const group of new Set(Object.values(INSTRUMENTS).map(i=>i.group))) assert.ok(html.includes(`<optgroup label="${group}">`),group);
 });

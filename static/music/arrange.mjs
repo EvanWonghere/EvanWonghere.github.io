@@ -9,7 +9,7 @@ import { compileStrudel } from './arrange-strudel.mjs';
 import { checkArrangement } from './arrange-check.mjs';
 import { ArrangePlayer, playbackNotes } from './arrange-player.mjs';
 import { strudelURL, MAX_SOURCE } from './composition.mjs';
-import { INSTRUMENTS } from './audio.mjs';
+import { instrumentOptions } from './audio.mjs';
 import { loadABC, highlightStarts } from './abc-loader.mjs';
 import { cycleToBeat } from './strudel-bridge.mjs';
 import { sharedSandbox } from './strudel-sandbox.mjs';
@@ -280,10 +280,10 @@ export function mountArrange({ audio, storage, notify, setTab, stopAll, creative
         box.innerHTML = `<div class="row"><h3>声部 · ${esc(t.name)}</h3><span class="eyebrow">${ROLES[t.role]}</span></div>
             <div class="arr-form"><label>名称<input id="trk-name" type="text" maxlength="40" value="${esc(t.name)}"></label>
             <label>类型<select id="trk-role">${Object.entries(ROLES).map(([k, v]) => `<option value="${k}"${k === t.role ? ' selected' : ''}>${v}</option>`).join('')}</select></label>
-            <label>导出音色<select id="trk-instrument">${INSTRUMENT_IDS.map(i => `<option value="${i}"${i === t.instrument ? ' selected' : ''}>${INSTRUMENTS[i].name}</option>`).join('')}</select></label>
+            <label>音色<select id="trk-instrument">${instrumentOptions(t.instrument, INSTRUMENT_IDS)}</select></label>
             <label>音量<input id="trk-volume" type="range" min="0" max="1" step="0.05" value="${t.volume}"></label>
             <label class="check"><input id="trk-mute" type="checkbox"${t.mute ? ' checked' : ''}>静音</label><label class="check"><input id="trk-solo" type="checkbox"${t.solo ? ' checked' : ''}>独奏</label></div>
-            <p class="muted">改变类型时，新类型用不了的伴奏型片段会被清空。导出音色写入 MIDI 与 Strudel；本站播放统一使用底栏音色。</p>
+            <p class="muted">改变类型时，新类型用不了的伴奏型片段会被清空。音色用于本站播放，也写入 MIDI；Strudel 导出只有钢琴与合成器近似音色。鼓组始终用合成鼓。</p>
             <div class="button-row"><button id="trk-delete">删除声部</button></div>`;
         const set = patch => commit([{ type: 'setTrack', track: t.id, ...patch }]);
         $('#trk-name').onchange = () => set({ name: $('#trk-name').value.trim() || t.name });

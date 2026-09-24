@@ -2,7 +2,9 @@
 // steps, `@n` elongation for held notes. The code runs only in Strudel's own editor, never here.
 const DRUM_SOUND = { kick: 'bd', snare: 'sd', hat: 'hh' };
 // Sounds that exist both on strudel.cc and offline in the site's sandbox (piano samples + built-in synths).
-const SOUND = { grand: 'piano', harpsichord: 'piano', electric: 'piano', organ: 'square' };
+// Instruments without a match fall back to piano; sustained families map to the closest built-in synth.
+export const SOUND = { organ: 'square', clarinet: 'square', flute: 'sine', strings: 'triangle', violin: 'triangle', cello: 'triangle', choir: 'triangle', pad: 'triangle',
+    trumpet: 'sawtooth', trombone: 'sawtooth', horn: 'sawtooth', brass: 'sawtooth', sax: 'sawtooth', oboe: 'sawtooth', lead: 'sawtooth', synthbass: 'sawtooth' };
 const SHARP = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'];
 const comment = s => String(s).replace(/[\r\n*/]/g, ' ').trim();
 

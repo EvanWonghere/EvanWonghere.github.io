@@ -239,3 +239,31 @@ test('proposal helpers: hash ignores save time, selected ops fall back one by on
         assert.doesNotThrow(() => applyOps(doc, [{ type, ...fields }]), type);
     }
 });
+
+test('instrument ids, names and exports cover every sample bank', async () => {
+    const { INSTRUMENTS } = await import('../static/music/audio.mjs');
+    const { INSTRUMENT_IDS, INSTRUMENT_NAMES } = await import('../static/music/arrangement-schema.mjs');
+    const { MIDI_PROGRAM } = await import('../static/music/arrange-abc.mjs');
+    assert.deepEqual(INSTRUMENT_IDS, Object.keys(INSTRUMENTS), 'the schema copy used by the quiz function must list the page banks in the same order');
+    for (const id of INSTRUMENT_IDS) {
+        assert.equal(INSTRUMENT_NAMES[id], INSTRUMENTS[id].name, id);
+        assert.ok(Number.isInteger(MIDI_PROGRAM[id]) && MIDI_PROGRAM[id] >= 0 && MIDI_PROGRAM[id] < 128, `MIDI program for ${id}`);
+    }
+    assert.equal(new Set(Object.values(MIDI_PROGRAM)).size, INSTRUMENT_IDS.length, 'each bank exports a distinct General MIDI program');
+});
+
+test('tracks play and export their own instrument; new tracks start with one that suits the role', () => {
+    const doc = createFromTemplate('bossa', 'arr-inst');
+    assert.equal(doc.tracks.find(t => t.id === 'guitar').instrument, 'nylon');
+    const notes = playbackNotes(realize(doc), doc);
+    const byTrack = new Map(notes.map(n => [n.trackId, n.instrument]));
+    for (const t of doc.tracks) if (byTrack.has(t.id)) assert.equal(byTrack.get(t.id), t.instrument, t.id);
+    const withCello = applyOps(doc, [{ type: 'addTrack', role: 'bass', id: 'low' }, { type: 'setTrack', track: 'low', instrument: 'cello' }]);
+    assert.equal(withCello.tracks.find(t => t.id === 'low').instrument, 'cello');
+    assert.equal(applyOps(doc, [{ type: 'addTrack', role: 'pad', id: 'wash' }]).tracks.find(t => t.id === 'wash').instrument, 'strings');
+    assert.equal(applyOps(doc, [{ type: 'addTrack', role: 'bass', id: 'b2' }]).tracks.find(t => t.id === 'b2').instrument, 'bass');
+    assert.throws(() => validateDocument({ ...doc, tracks: [{ ...doc.tracks[0], instrument: 'kazoo' }] }), /音色无效/);
+    assert.match(describeOp({ type: 'setTrack', track: 'guitar', instrument: 'cleanguitar' }, doc), /音色清音电吉他/);
+    const celloBass = applyOps(doc, [{ type: 'setTrack', track: 'bass', instrument: 'cello' }]);
+    assert.match(compileABC(realize(celloBass), celloBass).abc, /%%MIDI program 42/);
+});
