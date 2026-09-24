@@ -6,6 +6,8 @@
     const post = message => parent.postMessage(message, '*');
     const text = value => String(value && value.message || value).slice(0, 500);
     let playId = null;
+    // Loop points for the site's "piano" sound when it is a sustained instrument (fractions of the sample).
+    let pianoLoop = null;
     document.addEventListener('strudel.log', event => {
         const message = String(event.detail && event.detail.message || '');
         if (/error|not found|failed|warn/i.test(message)) post({ type: 'log', message: message.slice(0, 300) });
@@ -24,6 +26,9 @@
                 s: typeof value.s === 'string' ? value.s : null,
                 delay: t - strudel.getAudioContext().currentTime
             });
+            // A sustained instrument holds each note for its written length instead of stopping when the
+            // 3-second sample ends; code that sets its own loop keeps it.
+            if (pianoLoop && value.s === 'piano' && value.loop == null) Object.assign(value, { loop: 1, loopBegin: pianoLoop.begin, loopEnd: pianoLoop.end });
             return strudel.webaudioOutput(hap, deadline, duration, cps, t);
         }
     });
@@ -51,9 +56,11 @@
         return promise;
     }
     const blobUrl = (buffer, type) => URL.createObjectURL(new Blob([buffer], { type }));
-    async function registerSounds({ piano = {}, drums = {} }) {
-        const pianoMap = {};
-        for (const [name, buffer] of Object.entries(piano)) pianoMap[name] = blobUrl(buffer, 'audio/mpeg');
+    async function registerSounds({ piano = {}, pianoType, loop, drums = {} }) {
+        const pianoMap = {}, type = pianoType === 'audio/wav' ? 'audio/wav' : 'audio/mpeg';
+        for (const [name, buffer] of Object.entries(piano)) pianoMap[name] = blobUrl(buffer, type);
+        const valid = loop && Number.isFinite(loop.begin) && Number.isFinite(loop.end) && loop.begin > 0 && loop.begin < loop.end && loop.end <= 1;
+        pianoLoop = valid ? { begin: loop.begin, end: loop.end } : null;
         const bank = {};
         for (const [name, buffer] of Object.entries(drums)) {
             const url = blobUrl(buffer, 'audio/wav');

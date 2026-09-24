@@ -2,7 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
-import { ONLINE_HOSTS, PIANO_SAMPLE_NOTES, STRUDEL_BUNDLE, STRUDEL_RUNTIME, cycleToBeat, encodeWav, midiName, readSandboxMessage, sandboxDocument, sandboxPolicy } from '../static/music/strudel-bridge.mjs';
+import vm from 'node:vm';
+import { ONLINE_HOSTS, PIANO_SAMPLE_NOTES, STRUDEL_BUNDLE, STRUDEL_RUNTIME, cycleToBeat, encodeWav, loopedSamples, midiName, readSandboxMessage, sandboxDocument, sandboxPolicy } from '../static/music/strudel-bridge.mjs';
 import { MAX_CYCLES, appendLayer, arithmetic, parseMini, parseNoteName, parseStrudel, parsedScore } from '../static/music/strudel-parse.mjs';
 import { TEMPLATES, createFromTemplate, realize } from '../static/music/arrangement.mjs';
 import { compileStrudel } from '../static/music/arrange-strudel.mjs';
@@ -165,4 +166,48 @@ test('page wiring: runtime only in the sandbox, AI snippet card only when the AI
         assert.ok(!/hive-music-v1|saveProgress|recordAnswer/.test(source), `${file} never touches practice progress`);
     }
     assert.ok(!/\beval\s*\(|new Function/.test(read('static/music/strudel-parse.mjs')), 'the parser never evaluates code');
+});
+
+// A steady 220 Hz stereo tone cut at 3.16 s, like a FluidR3 sample.
+const stereoTone = (sr = 8000, gain = .1) => { const n = Math.round(3.16 * sr), l = new Float32Array(n); for (let i = 0; i < n; i++) l[i] = Math.min(1, i / sr / .1) * gain * Math.sin(2 * Math.PI * 220 * i / sr); return { sampleRate: sr, channels: [l, l.slice()] }; };
+const wavSamples = buffer => { const v = new DataView(buffer), out = []; for (let o = 44; o < buffer.byteLength; o += 2) out.push(v.getInt16(o, true) / 32767); return out; };
+test('sandbox samples of sustained instruments share one crossfaded loop and go in as WAV', () => {
+    const decoded = { c4: stereoTone(), a4: stereoTone(8000, .05) };
+    const { wavs, loop } = loopedSamples(decoded, 'c4');
+    assert.ok(loop.begin > .15 && loop.end < .96 && loop.end - loop.begin > .25, JSON.stringify(loop));
+    for (const name of ['c4', 'a4']) {
+        const pcm = wavSamples(wavs[name]); assert.equal(String.fromCharCode(...new Uint8Array(wavs[name], 0, 4)), 'RIFF');
+        const start = Math.round(loop.begin * pcm.length), end = Math.round(loop.end * pcm.length);
+        // Jumping from the loop end back to its start continues the audio before the start (16-bit rounding aside).
+        assert.ok(Math.abs(pcm[end - 1] - pcm[start - 1]) < 2e-3, name);
+    }
+    assert.equal(loopedSamples({ a4: stereoTone() }, 'c4'), null, 'no reference sample, no loop');
+    assert.equal(loopedSamples({ c4: stereoTone(), a4: stereoTone(16000) }, 'c4'), null, 'mixed sample rates fall back to the plain samples');
+});
+
+test('the sandbox runtime loops site piano notes of a sustained instrument unless the code sets its own loop', async () => {
+    let output, listener; const outputs = [], posts = [];
+    const strudel = {
+        initStrudel: options => { output = options.defaultOutput; return Promise.resolve(); },
+        webaudioOutput: hap => { outputs.push({ ...hap.value }); },
+        samples: async () => {}, getAudioContext: () => ({ currentTime: 0, state: 'running' })
+    };
+    const parent = { postMessage: message => posts.push(message) };
+    const context = vm.createContext({ strudel, parent, document: { addEventListener() {} }, navigator: {}, addEventListener: (type, fn) => { if (type === 'message') listener = fn; }, URL: { createObjectURL: () => 'blob:x' }, Blob: class {}, setTimeout, Promise, Number, Object, String, Math });
+    vm.runInContext(read('static/music/strudel-runtime.js'), context);
+    const hap = value => ({ value, whole: { begin: { valueOf: () => 0 }, end: { valueOf: () => 1 } } });
+    const send = async data => { await listener({ source: parent, data }); };
+    await send({ type: 'sounds', piano: { c4: new ArrayBuffer(8) }, pianoType: 'audio/wav', loop: { begin: .3, end: .9 }, drums: {} });
+    output(hap({ s: 'piano', note: 60 }), 0, 4, 1, 0);
+    output(hap({ s: 'piano', note: 60, loop: 0 }), 0, 4, 1, 0);
+    output(hap({ s: 'bd' }), 0, 1, 1, 0);
+    assert.deepEqual([outputs[0].loop, outputs[0].loopBegin, outputs[0].loopEnd], [1, .3, .9]);
+    assert.equal(outputs[1].loop, 0); assert.equal(outputs[1].loopBegin, undefined);
+    assert.equal(outputs[2].loop, undefined);
+    await send({ type: 'sounds', piano: { c4: new ArrayBuffer(8) }, pianoType: 'audio/mpeg', loop: null, drums: {} });
+    output(hap({ s: 'piano', note: 60 }), 0, 4, 1, 0);
+    assert.equal(outputs[3].loop, undefined, 'decaying instruments keep one-shot samples');
+    await send({ type: 'sounds', piano: {}, loop: { begin: .9, end: .3 }, drums: {} });
+    output(hap({ s: 'piano', note: 60 }), 0, 4, 1, 0);
+    assert.equal(outputs[4].loop, undefined, 'invalid loop points are ignored');
 });
