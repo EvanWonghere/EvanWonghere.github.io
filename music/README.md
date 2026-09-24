@@ -46,8 +46,9 @@ MIDI 仅请求普通输入（不申请 SysEx），支持力度、note-off、velo
   默认值，未知参数或不适用于该声部的伴奏型会被拒绝。
 - `arrange-abc.mjs`：编译成 ABC（按调号与小节内临时记号书写，跨小节与不规则时值用连音线），并给出
   事件 ID 到谱面字符的映射，用于点击选中与播放高亮。鼓组不记谱。
-- `arrange-strudel.mjs`：单向生成 Strudel 代码，每个循环一小节、十六分音符步长、`@n` 表示时值。
-  代码只在 Strudel 的编辑器里运行，本站不执行它，那里的修改也不会回到编曲。
+- `arrange-strudel.mjs`：单向生成 Strudel 代码，每个循环一小节、十六分音符步长、`@n` 表示时值，只用
+  沙箱离线就有的声音（`piano`、`square`、`triangle`、`bd/sd/hh`）。代码可以在本站 Strudel 沙箱演奏（见下节），
+  也可以送到 Strudel 的编辑器；那里的修改不会回到编曲。
 - `arrange-check.mjs`：确定性规则检查（音域、单手跨度、伴奏高过旋律、没有和弦的段落；勾选古典规则
   时另查旋律与低音的平行五八度），与任何 AI 意见分开显示，不修改文档。
 - `arrange-player.mjs`：一个 Web Audio 时钟驱动音符、合成鼓与各视图；支持静音/独奏、音量、摇摆
@@ -57,6 +58,33 @@ MIDI 仅请求普通输入（不申请 SysEx），支持力度、note-off、velo
 编曲存于独立的 localStorage key `hive-music-arrange-v1`（最多 20 份，每份 200 KB 内），不写入
 `hive-music-v1`，因此打开着的旧版页面保存进度时不会丢掉编曲。读取失败或遇到未来版本时显示提示并
 暂停保存，不覆盖原记录。示例编曲在第一次编辑后才保存。
+
+## Strudel 沙箱（`#live` 与编曲工作台）
+
+Strudel 代码（访客写的、编曲生成的、AI 写的）只在一个隐藏的 `<iframe sandbox="allow-scripts">` 里运行。
+它的文档是 `srcdoc`，没有 `allow-same-origin`，是不透明来源：读不到本站 localStorage、sessionStorage、
+cookie 与登录会话，也拿不到页面 DOM；与页面之间只有 postMessage。内容安全策略挡住 fetch、图片、样式与子框架，但挡不住沙箱页面
+自己跳转到别的网址；一旦发生第二次加载，页面立即关闭沙箱并提示（这次跳转的请求已发出）。因此 AI 片段另由服务端按白名单检查。
+
+- `vendor/strudel-web-1.3.0.js`：未修改的 `@strudel/web@1.3.0` 构建（AGPL-3.0-or-later），来源、校验和与
+  各依赖许可见 `vendor/NOTICE.md` 和 `vendor/strudel-LICENSES.txt`。页面本身从不以 `<script>` 加载它。
+- `strudel-bridge.mjs`：纯函数。沙箱文档与内容安全策略（离线时 `default-src 'none'`、不允许任何网络；
+  打开“在线采样”时只多允许 `https://raw.githubusercontent.com`）、对沙箱发来消息的逐字段校验、WAV 编码、
+  循环到拍的换算。
+- `strudel-runtime.js`：只在沙箱里运行，接收 `sounds / online / play / stop`，回报 `ready / playing / hap / error`；
+  每个将要发声的事件回报其循环位置与距发声的时间，页面据此同步五线谱、播放头与和弦轨。
+- `strudel-sandbox.mjs`：页面端控制器，一页一个沙箱，编曲台与即兴页共用。本站钢琴采样由页面读取后以
+  ArrayBuffer 转交（底栏音色决定用哪一套），鼓由 OfflineAudioContext 现场合成为 `bd/sd/hh`（也映射到
+  `RolandTR909_*` 名称）；因此默认完全离线。勾选“加载 Strudel 在线采样”会重建沙箱并从 GitHub 加载
+  dirt-samples 与 tidal-drum-machines。
+- 播放中修改代码会在停顿后自动重新送入（编曲台 0.4 秒、即兴页 0.6 秒）。切换栏目、隐藏页面、Esc
+  或开始其他播放都会停止沙箱。
+- `strudel-parse.mjs`：文本解析（不执行代码），把即兴手稿里可记谱的子集画成五线谱：`setcpm/setcps`、
+  `stack`、`$:`、`note/n/s/sound` 与 mini-notation 的 `[ ] < > , @ * ! ~`、`.scale`、`.slow/.fast`、
+  `.add/.transpose`，以及只改音色或混音的方法。其余写法逐条列出、不猜；图案周期最多显示 32 个循环；
+  每个循环记为所选拍号的一小节，不在十六分网格上的音（如三连音）就近取整并提示。鼓不记谱。
+- `live-sandbox.mjs`：即兴页的沙箱演奏、谱面与高亮，以及 AI 片段卡片。`abc-loader.mjs` 由编曲台与即兴页
+  共用，按需加载 abcjs 并高亮正在发声的音符。
 
 ## 保存与备份
 
@@ -99,6 +127,13 @@ MIDI 仅请求普通输入（不申请 SysEx），支持力度、note-off、velo
 - 服务端需要的 `harmony.mjs`、`arrange-styles.mjs`、`arrangement-schema.mjs`、`arrangement.mjs` 由
   `node tools/export-music-catalog.mjs <题库仓库路径>` 复制到题库的 `supabase/functions/ai-tutor/arrangement/`；
   修改这些文件后需重新导出，并与题库一起部署函数，否则服务端会按旧规则校验提案。
+- AI 写 Strudel（即兴页的卡片，仅在开启且是管理员时可用）：用一句话描述声音，AI 读当前手稿（最多
+  12000 字符）后返回说明与一段代码（最多 6000 字符）。服务端拒绝含网络、存储、页面对象、计时器、
+  `samples()` 或网址的代码（让模型修正一次，仍不合格则不返回），这只是纵深防御，真正的隔离是沙箱。
+  片段先显示为文本，只有点“在沙箱试听”才运行；“作为新的一层追加”会把手稿与片段都改写成 `$:` 块
+  （Strudel 只演奏最后一个裸表达式，但所有 `$:` 块会同时演奏；手稿含变量或多条语句时不自动合并），
+  “替换手稿”需确认；两者都可以撤回一次。请求写入 sessionStorage `hive-music-ai-strudel-pending`，
+  未处理的片段存在 `hive-music-live-snippet`，刷新后用同一请求 ID 取回。
 - 回退：把 `enabled` 改回 `false` 并推送；浏览器里的练习进度不受影响。
 
 ## 验证
@@ -107,6 +142,7 @@ MIDI 仅请求普通输入（不申请 SysEx），支持力度、note-off、velo
 node --test tests/music.test.mjs
 node --test tests/music-ai.test.mjs
 node --test tests/arrangement.test.mjs
+node --test tests/strudel.test.mjs
 node --test tests/*.test.mjs
 hugo --minify --destination /tmp/hive-music-build
 hugo server --port 1314 --destination /tmp/hive-music-preview
@@ -116,8 +152,10 @@ hugo server --port 1314 --destination /tmp/hive-music-preview
 浏览器复核项目：课程/答题刷新恢复，重复答题只记一次；识谱不泄露答案；
 四套采样加载与切换取消；和弦工坊到钢琴跟弹、刷新恢复；作业/日志与片段循环；
 双手不同保持时值的完整评分；桌面专注模式与手机音区滑条；电脑键盘/指针松键与踏板；等音和跟拍完整结算；预备拍与节奏评分；
-MIDI 消息/断开；麦克风拒绝、取消与完成清理；有效/无效备份；窄屏滚动与无横向溢出。
-实体 MIDI 琴触感、真实人声在不同设备上的识别精度需手工复核。
+MIDI 消息/断开；麦克风拒绝、取消与完成清理；有效/无效备份；窄屏滚动与无横向溢出；
+Strudel 沙箱：离线演奏无外部请求、沙箱内读取存储报 SecurityError、谱面与播放头跟随、播放中修改自动更新、
+切换栏目停止、在线采样开关。
+实体 MIDI 琴触感、真实人声在不同设备上的识别精度，以及沙箱的实际音质、音量与在线采样下载，需手工复核。
 
 ## 维护
 

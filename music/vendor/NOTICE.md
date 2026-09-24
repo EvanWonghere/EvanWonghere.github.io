@@ -50,12 +50,41 @@ npx esbuild entry.mjs --bundle --format=esm --platform=browser --target=es2020 \
 
 ## Strudel
 
-Strudel is an external application loaded on demand in a cross-origin iframe
-from [strudel.cc](https://strudel.cc/), following its
-[official embedding documentation](https://strudel.cc/technical-manual/project-start/).
-Its source is [available under AGPL-3.0](https://codeberg.org/uzu/strudel).
-No Strudel JavaScript or sound library is redistributed in this repository.
-The four short exercise patterns and local draft/library interface are original
-site content. The default Beethoven excerpt is transcribed from the public-domain
-Mutopia-2011/10/25-295 score; see the repository THIRD_PARTY_NOTICES.md. The embedded editor has its own storage; copy edits back to the
-site draft to include them in a site progress backup.
+Two ways to use Strudel, both separate from the practice room's own code:
+
+1. **strudel.cc** in a cross-origin iframe or a new tab, following its
+   [official embedding documentation](https://strudel.cc/technical-manual/project-start/).
+2. **The in-site sandbox.** `strudel-web-1.3.0.js` is the unmodified file
+   `dist/index.js` of npm `@strudel/web@1.3.0` (Strudel, AGPL-3.0-or-later,
+   source at [codeberg.org/uzu/strudel](https://codeberg.org/uzu/strudel)). It
+   bundles further AGPL-3.0-or-later packages (`@strudel/*`, `superdough`,
+   `supradough`, `@kabelsalat/*`) and permissively licensed ones; every package
+   and licence text is listed in `strudel-LICENSES.txt`.
+
+   The file is never loaded as a script of this site. `../strudel-sandbox.mjs`
+   reads it as text and runs it, together with `../strudel-runtime.js`, inside an
+   `<iframe sandbox="allow-scripts">` document. That document has an opaque
+   origin, cannot read this site's storage or login session, and talks to the
+   page only through `postMessage` (code in, note events out). Its Content
+   Security Policy allows no network access unless the visitor switches on
+   online samples, which then may load only from `raw.githubusercontent.com`.
+
+   Corresponding source: the npm package `@strudel/web@1.3.0` and the tagged
+   source on Codeberg. To check or rebuild:
+
+   ```sh
+   npm pack @strudel/web@1.3.0 && tar xzf strudel-web-1.3.0.tgz
+   sha256sum package/dist/index.js   # equals the hash below
+   ```
+
+   The four example patterns and the page's own code are original site content.
+   The default Beethoven excerpt is transcribed from the public-domain
+   Mutopia-2011/10/25-295 score; see the repository THIRD_PARTY_NOTICES.md. The
+   strudel.cc editor has its own storage; copy edits back to the site draft to
+   include them in a site progress backup.
+
+   SHA-256:
+
+   ```
+   265cae9cf769a7dc2c1ac253784fce80fef5062db9a1aac5be7fa5f205af5e86  strudel-web-1.3.0.js
+   ```

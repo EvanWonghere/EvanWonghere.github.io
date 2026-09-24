@@ -174,3 +174,36 @@ export function proposalFromHistory(rows, requestId) {
     if (!row || row.status !== 'complete' || !Array.isArray(row.payload?.ops)) return null;
     return { summary: row.body, ops: row.payload.ops, baseHash: row.subject_version, recovered: true };
 }
+
+// ---------- Strudel snippets (live-coding page) ----------
+// The request carries the current draft; the reply is code that only runs in the sandbox.
+export const STRUDEL_PENDING_KEY = 'hive-music-ai-strudel-pending';
+export const STRUDEL_LIMITS = { draft: 12000, message: 2000, code: 6000 };
+export function buildStrudelRequest({ draft = '', workId = 'draft', message, requestId }) {
+    const text = String(message || '').trim();
+    if (!text) throw new Error('先描述想要的声音或节奏。');
+    if (text.length > STRUDEL_LIMITS.message) throw new Error(`描述最多 ${STRUDEL_LIMITS.message} 字。`);
+    if (!UUID.test(requestId || '')) throw new Error('无效请求 ID。');
+    if (!SUBJECT.test(workId)) throw new Error('无效的手稿。');
+    if (String(draft).length > STRUDEL_LIMITS.draft) throw new Error(`手稿超过 ${STRUDEL_LIMITS.draft} 字符；AI 只读取较短的手稿，请先删去无关部分。`);
+    return { action: 'music-strudel', requestId, workId, draft: String(draft), message: text };
+}
+export function saveStrudelPending(storage, payload) { try { storage.setItem(STRUDEL_PENDING_KEY, JSON.stringify({ payload, savedAt: Date.now() })); return true; } catch { return false; } }
+export function loadStrudelPending(storage) {
+    try {
+        const value = JSON.parse(storage.getItem(STRUDEL_PENDING_KEY) || 'null'), p = value?.payload;
+        return p && p.action === 'music-strudel' && UUID.test(p.requestId) && SUBJECT.test(p.workId) && typeof p.draft === 'string' && typeof p.message === 'string' ? value : null;
+    } catch { return null; }
+}
+export function clearStrudelPending(storage) { try { storage.removeItem(STRUDEL_PENDING_KEY); } catch { /* nothing to clear */ } }
+/** done: a snippet came back; wait: still running on the server; failed: settled without one. */
+export function classifySnippet(status, body) {
+    if (status === 200 && typeof body?.code === 'string' && body.code.length <= STRUDEL_LIMITS.code + 1 && typeof body?.summary === 'string') return 'done';
+    if (body?.settled === false) return 'wait';
+    return 'failed';
+}
+export function snippetFromHistory(rows, requestId) {
+    const row = (rows || []).find(r => r.request_id === requestId && r.role === 'assistant');
+    if (!row || row.status !== 'complete' || typeof row.payload?.code !== 'string') return null;
+    return { summary: row.body, code: row.payload.code, recovered: true };
+}
