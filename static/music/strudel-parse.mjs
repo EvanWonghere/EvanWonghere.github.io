@@ -119,7 +119,10 @@ function calls(expr) {
     const out = []; let i = 0;
     const skipWs = () => { while (/\s/.test(expr[i] || '')) i++; };
     while (i < expr.length) {
-        skipWs(); if (expr[i] === '.') { i++; skipWs(); }
+        skipWs();
+        // Every call after the first must be a method; `note("c4")\ns("bd")` is two statements
+        // (Strudel plays only the last), which is reported rather than read as one chain.
+        if (out.length) { if (expr[i] !== '.') return null; i++; skipWs(); }
         const m = /^[A-Za-z_$][\w$]*/.exec(expr.slice(i)); if (!m) return null;
         i += m[0].length; skipWs();
         if (expr[i] !== '(') return null;
