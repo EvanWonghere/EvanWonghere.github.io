@@ -28,16 +28,22 @@ export class ArrangePlayer {
     /** notes from playbackNotes; length in beats; loop repeats the region until stopped. */
     async play(notes, { tempo, length, loop = false, onTime = () => {}, onEnd = () => {} }) {
         this.stop(); const generation = this.generation; await this.audio.init();
-        // Load only the pitches each instrument actually plays, eight requests at a time.
-        const wanted = [...new Map(notes.filter(n => !n.drum).map(n => [`${n.instrument}:${n.pitch}`, n])).values()];
-        for (let i = 0; i < wanted.length; i += 8) { if (generation !== this.generation) return; await Promise.all(wanted.slice(i, i + 8).map(n => this.audio.load(n.pitch, n.instrument))); }
+        await this.preload(notes, generation);
         if (generation !== this.generation) return;
         Object.assign(this, { notes, length, loop, onTime, onEnd, spb: 60 / tempo, origin: this.audio.context.currentTime + 0.12, index: 0, iteration: 0, scheduled: -1, running: true });
         this.timer = setInterval(() => this.tick(generation), 25); this.tick(generation);
     }
+    /** Loads only the pitches each instrument actually plays, eight requests at a time; stops early once playback is replaced. */
+    async preload(notes, generation = this.generation) {
+        const wanted = [...new Map(notes.filter(n => !n.drum).map(n => [`${n.instrument}:${n.pitch}`, n])).values()];
+        for (let i = 0; i < wanted.length; i += 8) { if (generation !== this.generation) return; await Promise.all(wanted.slice(i, i + 8).map(n => this.audio.load(n.pitch, n.instrument))); }
+    }
     /** Swaps in edited notes without restarting; the playhead keeps its position. */
     update(notes, { tempo, length, loop = this.loop }) {
         if (!this.running) return;
+        // A track may now use another instrument: fetch its samples in the background so later
+        // notes play from them; notes due before a sample arrives use the synthesized stand-in.
+        void this.preload(notes);
         const now = this.audio.context.currentTime, beat = Math.max(0, (now - this.origin) / this.spb);
         this.spb = 60 / tempo; this.origin = now - beat * this.spb; this.notes = notes; this.length = length; this.loop = loop;
         this.iteration = Math.floor(Math.max(this.scheduled, beat) / length); this.index = notes.findIndex(n => this.iteration * length + n.start > this.scheduled + 1e-6);
