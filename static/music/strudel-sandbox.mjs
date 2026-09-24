@@ -32,7 +32,7 @@ async function renderDrums() {
 }
 
 export class StrudelSandbox {
-    constructor() { this.frame = null; this.online = false; this.listeners = new Set(); this.waiters = []; this.starting = null; this.playing = null; }
+    constructor() { this.frame = null; this.online = false; this.instrument = null; this.generation = 0; this.request = null; this.listeners = new Set(); this.waiters = []; this.starting = null; this.playing = null; }
     /** listener(message) receives validated messages: hap, playing, stopped, log, error, status. */
     subscribe(listener) { this.listeners.add(listener); return () => this.listeners.delete(listener); }
     emit(message) { for (const l of this.listeners) l(message); }
@@ -54,10 +54,13 @@ export class StrudelSandbox {
     };
     /** Creates (or re-creates, when the online setting changes) the sandbox and loads its sounds. */
     start({ online = false, instrument = 'grand' } = {}) {
-        if (this.frame && this.online === online && this.starting) return this.starting;
-        this.destroy(); this.online = online;
+        // The piano samples are loaded per instrument, so a different instrument needs a fresh sandbox.
+        if (this.starting && this.online === online && this.instrument === instrument) return this.starting;
+        this.destroy(); this.online = online; this.instrument = instrument;
+        const gen = this.generation, current = () => { if (gen !== this.generation) throw new Error('Strudel 沙箱已关闭。'); };
         this.starting = (async () => {
             const [bundle, runtime] = await loadSources();
+            current();
             addEventListener('message', this.receive);
             const frame = document.createElement('iframe');
             frame.setAttribute('sandbox', 'allow-scripts'); frame.allow = 'autoplay'; frame.title = 'Strudel 沙箱'; frame.hidden = true;
@@ -74,6 +77,7 @@ export class StrudelSandbox {
             const path = INSTRUMENTS[instrument]?.path ?? '', piano = {};
             await Promise.all(PIANO_SAMPLE_NOTES.map(async n => { const r = await fetch(`/music/samples/${path}${n}.mp3`); if (r.ok) piano[midiName(n)] = await r.arrayBuffer(); }));
             const drums = await renderDrums();
+            current();
             const sounds = this.wait('sounds-ready', 20000);
             frame.contentWindow.postMessage({ type: 'sounds', piano, drums }, '*', [...Object.values(piano), ...Object.values(drums)]);
             await sounds;
@@ -84,18 +88,22 @@ export class StrudelSandbox {
                 try { await done; } catch { this.emit({ type: 'log', message: '在线采样未能加载；继续使用本站声音。' }); }
             }
             return this;
-        })().catch(error => { this.destroy(); throw error; });
+        })().catch(error => { if (gen === this.generation) this.destroy(); throw error; });
         return this.starting;
     }
+    /** Resolves with null when stop() or another play() superseded this one during startup. */
     async play(code, id, options) {
+        this.request = id;
         await this.start(options);
-        const playing = this.wait('playing', 15000);
+        if (this.request !== id || !this.frame) return null;
         this.playing = id;
+        const playing = this.wait('playing', 15000);
         this.frame.contentWindow.postMessage({ type: 'play', code, id }, '*');
         return playing;
     }
-    stop() { if (this.frame && this.playing) this.frame.contentWindow.postMessage({ type: 'stop' }, '*'); this.playing = null; }
+    stop() { this.request = null; if (this.frame && this.playing) this.frame.contentWindow.postMessage({ type: 'stop' }, '*'); this.playing = null; }
     destroy() {
+        this.generation++;
         removeEventListener('message', this.receive);
         for (const w of this.waiters) { clearTimeout(w.timer); w.reject(new Error('Strudel 沙箱已关闭。')); }
         this.waiters = []; this.frame?.remove(); this.frame = null; this.starting = null; this.playing = null;

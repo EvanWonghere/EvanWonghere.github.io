@@ -87,6 +87,9 @@ test('unsupported parts are reported, never guessed', () => {
     const p = parseStrudel('note("c4(3,8) e4?").jux(rev)\n');
     assert.ok(p.warnings.length >= 2, p.warnings.join(' | '));
     assert.ok(parseStrudel('const x = 1; foo(x)').warnings.length);
+    const asi = parseStrudel('note("c4")\ns("bd")');
+    assert.equal(asi.voices.length, 0, 'two bare statements are not read as one chain'); assert.ok(asi.warnings.length);
+    assert.equal(parseStrudel('note("c4")\n  .s("piano")').voices[0].events[0].pitch, 60, 'a chain continued on the next line still parses');
     assert.ok(parseStrudel(`note("<${Array.from({ length: 40 }, () => 'c4').join(' ')}>")`).cycles <= MAX_CYCLES);
     assert.ok(parseStrudel('n("0 1 2")').warnings.some(w => /scale/.test(w)));
 });
