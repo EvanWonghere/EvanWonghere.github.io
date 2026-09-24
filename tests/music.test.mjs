@@ -7,7 +7,7 @@ import { staff } from '../static/music/notation.mjs';
 import { LESSON_DETAILS } from '../static/music/lesson-details.mjs';
 import { KEYS, CHORD_TYPES, PROGRESSIONS, makeChord, progressionEvents, rootPC, playableHands } from '../static/music/harmony.mjs';
 import { preparePiece, PracticeJudge } from '../static/music/practice.mjs';
-import { PianoAudio, Transport, INSTRUMENTS, instrumentOptions } from '../static/music/audio.mjs';
+import { PianoAudio, Transport, INSTRUMENTS, instrumentOptions, SUSTAINED, LOOP_FADE, loopRegion, crossfadeLoop } from '../static/music/audio.mjs';
 
 test('88-key range, octave naming, equal temperament and black key layout', () => {
     assert.equal(noteName(21),'A0'); assert.equal(noteName(60),'C4'); assert.equal(noteName(108),'C8');
@@ -184,4 +184,36 @@ test('the selects list every instrument once, grouped by family',()=>{
     assert.equal((html.match(/<option /g)||[]).length,Object.keys(INSTRUMENTS).length);
     assert.match(html,/<option value="cello" selected>大提琴<\/option>/);
     for(const group of new Set(Object.values(INSTRUMENTS).map(i=>i.group))) assert.ok(html.includes(`<optgroup label="${group}">`),group);
+});
+
+// A 440 Hz tone shaped like the FluidR3 samples: short attack, steady sustain, cut at 3.16 s.
+function toneSample(sr=8000){const n=Math.round(3.16*sr),x=new Float32Array(n);for(let i=0;i<n;i++){const t=i/sr;x[i]=Math.min(1,t/.1)*.1*Math.sin(2*Math.PI*440*t);}return x;}
+test('sustained samples loop a steady stretch after the attack, with a seamless crossfaded seam',()=>{
+    const sr=8000,x=toneSample(sr),region=loopRegion(x,sr),fade=Math.round(LOOP_FADE*sr);
+    assert.ok(region.start>=Math.round(.7*sr)&&region.end<=Math.round(3*sr),'inside the steady part, before the cut');
+    assert.ok(region.end-region.start>=Math.round(.8*sr));
+    const y=new Float32Array(x);crossfadeLoop([y],region.start,region.end,fade);
+    // Jumping from the loop end back to its start continues exactly as the audio before the start did.
+    // (within 1% of the tone's 0.1 amplitude; an unfaded seam in this tone jumps by up to 0.2)
+    assert.ok(Math.abs(y[region.end-1]-x[region.start-1])<1e-3);
+    assert.deepEqual([...y.slice(0,region.end-fade)],[...x.slice(0,region.end-fade)],'audio before the fade is unchanged');
+    for(const id of SUSTAINED)assert.ok(INSTRUMENTS[id],id);
+    for(const id of ['grand','nylon','harp','marimba','upright','pizzicato'])assert.ok(!SUSTAINED.has(id),`${id} keeps its natural decay`);
+});
+test('loaded sustained samples play looped until released; decaying ones play once',async()=>{
+    const {audio,sources}=fakeAudio();const sr=8000,tone=toneSample(sr);
+    const decoded=()=>({sampleRate:sr,length:tone.length,numberOfChannels:1,getChannelData:()=>tone});
+    audio.context.decodeAudioData=async()=>decoded();
+    audio.context.createBuffer=(channels,length,rate)=>{const data=[...Array(channels)].map(()=>new Float32Array(length));return{sampleRate:rate,length,numberOfChannels:channels,getChannelData:c=>data[c],copyToChannel:(x,c)=>data[c].set(x)};};
+    const original=globalThis.fetch;
+    try{
+        globalThis.fetch=async()=>({ok:true,arrayBuffer:async()=>new ArrayBuffer(8)});
+        const strings=await audio.load(60,'strings');
+        assert.ok(strings.loop&&strings.loop.start>.5&&strings.loop.end>strings.loop.start+.7&&strings.loop.end<3.1);
+        audio.noteOn(60,90,0,'s','strings');const looped=sources.at(-1);
+        assert.deepEqual([looped.loop,looped.loopStart,looped.loopEnd],[true,strings.loop.start,strings.loop.end]);
+        audio.release('s',8,true);assert.ok(looped.stops.some(t=>t>8&&t<8.1),'the release still stops the looping voice');
+        const harp=await audio.load(60,'harp');assert.equal(harp.loop,undefined);
+        audio.noteOn(60,90,0,'h','harp');assert.notEqual(sources.at(-1).loop,true);
+    }finally{globalThis.fetch=original;}
 });
