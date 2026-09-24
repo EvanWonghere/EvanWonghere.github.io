@@ -211,6 +211,10 @@ test('AI access: administrators and music members may use the assistant; only ad
     const read = path => readFile(new URL(`../static/music/${path}`, import.meta.url), 'utf8');
     const [ai, arrange, live, sync, app] = await Promise.all(['ai.mjs', 'arrange.mjs', 'live-sandbox.mjs', 'sync.mjs', 'app.mjs'].map(read));
     assert.ok(ai.includes("client.rpc('ai_access')") && ai.includes('isAdmin: () => owner') && ai.includes('canUse: () => admin'));
+    // The remaining count refreshes wherever a chat request ends: a direct answer, and both ends of polling.
+    const poll = ai.slice(ai.indexOf('function poll('), ai.indexOf('async function send('));
+    assert.equal((poll.match(/refreshQuota\(\)/g) || []).length, 2, 'poll: settled and gave up');
+    assert.ok(ai.slice(ai.indexOf('async function send('), ai.indexOf('async function submit(')).includes('refreshQuota()'));
     for (const [name, source] of [['arrange', arrange], ['live', live]]) { assert.ok(source.includes('onAccessChange(') && source.includes('canUse()'), name); assert.ok(!source.includes('isAdmin()') && !source.includes('onAdminChange('), name); }
     assert.ok(sync.includes('api.isAdmin()') && !sync.includes('canUse'), 'the cloud library stays administrator-only');
     assert.ok(app.includes('api.onAdminChange(admin =>'), 'cloud sync loads for administrators only');

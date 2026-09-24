@@ -74,13 +74,13 @@ export async function mountAI({ config, getSnapshot, getLesson, getComposition, 
     }
     function poll(pending, step = 0) {
         clearTimeout(pollTimer);
-        if (step >= POLL_DELAYS.length) { setBusy(false); status('仍未确认结果；请求已保留，稍后刷新页面会自动核对。', true); return; }
+        if (step >= POLL_DELAYS.length) { setBusy(false); status('仍未确认结果；请求已保留，稍后刷新页面会自动核对。', true); void refreshQuota(); return; }
         pollTimer = setTimeout(async () => {
             try {
                 const result = await call({ action: 'music-history', kind: pending.payload.kind, subjectId: pending.payload.subjectId });
                 const outcome = result.status === 200 ? pendingOutcome(result.body.messages, pending.payload.requestId) : 'wait';
                 if (outcome === 'wait' || outcome === 'missing') { poll(pending, step + 1); return; }
-                clearPending(session); setBusy(false);
+                clearPending(session); setBusy(false); void refreshQuota();
                 status(outcome === 'done' ? '已取回回复。' : '上一次请求没有完成，可以重新提问。', outcome !== 'done');
                 await loadHistory();
             } catch { poll(pending, step + 1); }
