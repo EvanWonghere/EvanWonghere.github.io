@@ -1,3 +1,4 @@
+import { EXTRA_DETAILS } from './lesson-extra.mjs';
 // Original expanded explanations, worked examples and practice assignments.
 const detail=(objectives,sections,example,practice,check,demo=[])=>({objectives,sections:sections.map(([title,text])=>({title,text})),example,practice,check,demo});
 export const LESSON_DETAILS={
@@ -161,3 +162,4 @@ Object.assign(LESSON_DETAILS,{
  ['即兴先做短动机','先用两三个音做一个节奏动机，在下一小节回答它。和弦变化时，尝试落在新和弦的三音或七音，并给句子留空。小调布鲁斯音阶可以作为素材，但不能代替对当前和弦与节奏的聆听。']
  ],{title:'例：C Blues 的低音图',steps:['四小节 C，接两小节 F，再两小节 C。','第九到十二小节依次 G、F、C、G。','回到第一小节 C，保持拍点不中断。'],answer:'先能听与数清结构，再增加和弦色彩和即兴音符。'},['只弹低音根音，连续数两轮十二小节。','用 shell 配置完成一轮，再换电钢音色。','实体琴上用三音小动机做问答，并录音回听。'],'能不丢小节地完成两轮，在和弦变化处落到合适音，留白自然。')
 });
+Object.assign(LESSON_DETAILS,EXTRA_DETAILS);

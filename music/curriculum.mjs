@@ -1,5 +1,6 @@
 import { EXTRA_PIECES } from './practice.mjs';
 import { ADVANCED_LESSONS } from './lesson-details.mjs';
+import { EXTRA_LESSONS, EXTRA_STAGES } from './lesson-extra.mjs';
 // Original Chinese lessons and exercises. External books are further reading, not copied text.
 export const STAGES = [
     ['听见与读懂', '第 1–2 周', '认识键盘、五线谱与稳定的拍点'],
@@ -7,7 +8,8 @@ export const STAGES = [
     ['听见和声', '第 5–6 周', '三和弦、低音与双手配合'],
     ['连成音乐', '第 7–8 周', '细分节奏、乐句与自主练习'],
     ['和声与声部', '第 9–12 周', '五度圈、七和弦与功能连接'],
-    ['爵士键盘', '第 13–16 周', '扩展和弦、ii–V–I 与伴奏配置']
+    ['爵士键盘', '第 13–16 周', '扩展和弦、ii–V–I 与伴奏配置'],
+    ...EXTRA_STAGES
 ];
 const lesson = (id, stage, title, points, task, tool, questions) => ({ id, stage, title, points, task, tool, questions: questions.map(([prompt, options, answer, explanation], i) => ({ id: `theory-${id}-${i}`, lesson: id, prompt, options, answer: options[answer], explanation })) });
 export const LESSONS = [
@@ -156,7 +158,7 @@ export const LESSONS = [
         ['本工具的进度默认保存在哪里？', ['当前浏览器', '自动同步到所有设备', '实体钢琴'], 0, '进度保存在当前浏览器，可导出后在其他设备导入。']
     ])
 ];
-LESSONS.push(...ADVANCED_LESSONS);
+LESSONS.push(...ADVANCED_LESSONS, ...EXTRA_LESSONS);
 export const QUESTIONS = LESSONS.flatMap(l => l.questions);
 const events = (notes, beats = 1) => notes.map(n => ({ notes: Array.isArray(n) ? n : [n], beats }));
 export const PIECES = [
@@ -174,20 +176,30 @@ export const MELODIES = [
     { id: 'thirds', title: '三度小径', key: 'C 大调', tonic: 60, solfege: 'do mi re fa mi sol mi re do', notes: [60, 64, 62, 65, 64, 67, 64, 62, 60], beats: [1, 1, 1, 1, 1, 1, 1, 1, 4] },
     { id: 'anchor', title: '主音与属音', key: 'C 大调', tonic: 60, solfege: 'do sol mi sol fa mi re do', notes: [60, 67, 64, 67, 65, 64, 62, 60], beats: [1, 1, 1, 1, 1, 1, 1, 1] },
     { id: 'minor-walk', title: '小调的回声', key: 'A 自然小调 · la 为主音', tonic: 57, solfege: 'la ti do re mi re do ti la', notes: [57, 59, 60, 62, 64, 62, 60, 59, 57], beats: [1, 1, 1, 1, 1, 1, 1, 1, 4] },
-    { id: 'rhythm-song', title: '轻轻摇摆', key: 'C 大调', tonic: 60, solfege: 'do re mi sol fa mi re do', notes: [60, 62, 64, 67, 65, 64, 62, 60], beats: [1.5, .5, 1, 1, 1, 1, 1, 1] }
+    { id: 'rhythm-song', title: '轻轻摇摆', key: 'C 大调', tonic: 60, solfege: 'do re mi sol fa mi re do', notes: [60, 62, 64, 67, 65, 64, 62, 60], beats: [1.5, .5, 1, 1, 1, 1, 1, 1] },
+    { id: 'leap-fifth', title: '五度跳进', key: 'C 大调', tonic: 60, solfege: 'do sol la sol mi re do', notes: [60, 67, 69, 67, 64, 62, 60], beats: [1, 1, 1, 1, 1, 1, 2] },
+    { id: 'g-triad', title: 'G 大调 · 分解主和弦', key: 'G 大调', tonic: 55, solfege: 'do mi sol mi fa re ti do', notes: [55, 59, 62, 59, 60, 57, 54, 55], beats: [1, 1, 1, 1, 1, 1, 1, 1] },
+    { id: 'f-descent', title: 'F 大调 · 从属音下行', key: 'F 大调', tonic: 65, solfege: 'sol fa mi re do re mi do', notes: [72, 70, 69, 67, 65, 67, 69, 65], beats: [1, 1, 1, 1, 2, 1, 1, 4] },
+    { id: 'harmonic-minor', title: '和声小调的导音', key: 'A 和声小调 · la 为主音，升高的第 7 级唱 si', tonic: 57, solfege: 'la ti do ti si la', notes: [57, 59, 60, 59, 56, 57], beats: [1, 1, 1, 1, 1, 3] },
+    { id: 'dotted-steps', title: '附点与八分', key: 'C 大调', tonic: 60, solfege: 'do re mi do sol mi re do', notes: [60, 62, 64, 60, 67, 64, 62, 60], beats: [1.5, .5, 1, 1, 1.5, .5, 1, 1] }
 ];
 export const RHYTHMS = [
     { id: 'quarters', title: '稳定四拍', positions: [0, 1, 2, 3, 4, 5, 6, 7], label: '1 2 3 4 | 1 2 3 4' },
     { id: 'eighths', title: '八分音符', positions: [0, 1, 1.5, 2, 3, 4, 5, 5.5, 6, 7], label: '1 2 & 3 4 | 1 2 & 3 4' },
     { id: 'rests', title: '把休止留出来', positions: [0, 2, 3, 4, 6], label: '1 · 3 4 | 1 · 3 ·' },
     { id: 'dotted', title: '附点节奏', positions: [0, 1.5, 2, 3.5, 4, 5.5, 6, 7.5], label: '1 (2) & 3 (4) & | 1 (2) & 3 (4) &' },
-    { id: 'offbeat', title: '弱拍进入', positions: [.5, 1.5, 2.5, 3.5, 4, 5, 6, 7], label: '· & · & · & · & | 1 2 3 4' }
+    { id: 'offbeat', title: '弱拍进入', positions: [.5, 1.5, 2.5, 3.5, 4, 5, 6, 7], label: '· & · & · & · & | 1 2 3 4' },
+    { id: 'syncopa', title: '切分：跨过第三拍', positions: [0, 1, 1.5, 2.5, 3, 4, 5, 5.5, 6.5, 7], label: '1 2 & · & 4 | 1 2 & · & 4' },
+    { id: 'charleston', title: '查尔斯顿节奏', positions: [0, 1.5, 4, 5.5], label: '1 · · & · · · · | 1 · · & · · · ·' },
+    { id: 'clave', title: '3-2 克拉维', positions: [0, 1.5, 3, 5, 6], label: '1 · · & · · 4 · | · · 2 · 3 · · ·' },
+    { id: 'gallop', title: '马蹄：八八四', positions: [0, .5, 1, 2, 2.5, 3, 4, 4.5, 5, 6, 6.5, 7], label: '1 & 2 3 & 4 | 1 & 2 3 & 4' },
+    { id: 'long-short', title: '长音与短音', positions: [0, 2, 3, 3.5, 4, 6], label: '1 — 3 4 & | 1 — 3 —' }
 ];
 export const RESOURCES = [
     { title: 'Open Music Theory', author: 'Kris Shaffer、Bryn Hughes、Brian Moseley 等', url: 'https://openmusictheory.github.io/', text: '开放乐理教材。配合阶段 1–3，阅读 Fundamentals、Intervals、Triads；之后继续调性与和声。', license: 'CC BY-SA 4.0；本站链接阅读，未复制教材。' },
     { title: 'Music Theory for the 21st-Century Classroom', author: 'Robert Hutchinson · University of Puget Sound', url: 'https://musictheory.pugetsound.edu/mt21c/MusicTheory.html', text: '按章有例题与练习。先读第 1–7 章：基础、大小调、节奏、音程、三和弦与终止。', license: '开放在线教材；请以原站授权说明为准。' },
     { title: 'Integrated Aural Skills', author: 'University of Idaho', url: 'https://uidaho.pressbooks.pub/auralskills/', text: '配合阶段 2–4 的视唱与节奏训练。先做简单拍子和调内级进，再练音程与附点。', license: '开放在线教材；本站仅提供学习链接。' },
-    { title: 'FluidR3 / MIDI.js Soundfonts', author: 'Frank Wen、Fluid soundfont contributors；Benjamin Gleitz 转换', url: 'https://github.com/gleitz/midi-js-soundfonts', text: '三角钢琴、电钢琴、羽管键琴、爵士风琴均使用本站逐音采样，共 352 个音。加载失败时临时使用合成音。', license: 'FluidR3 采样发行版：CC BY 3.0 US；具体来源与许可见随附说明。' }
+    { title: 'FluidR3 / MIDI.js Soundfonts', author: 'Frank Wen、Fluid soundfont contributors；Benjamin Gleitz 转换', url: 'https://github.com/gleitz/midi-js-soundfonts', text: '三角钢琴、明亮钢琴、酒吧钢琴、电钢琴、FM 电钢琴、羽管键琴、爵士风琴、钢片琴、颤音琴与弦乐合奏均使用本站逐音采样，共 880 个音。加载失败时临时使用与采样同等音量的合成音。', license: 'FluidR3 采样发行版：CC BY 3.0 US；具体来源与许可见随附说明。' }
 ];
 
 PIECES.push(...EXTRA_PIECES);

@@ -21,6 +21,19 @@ export const EXTRA_PIECES=[
 const ode=[64,64,65,67,67,65,64,62,60,60,62,64,64,62,62,64,64,65,67,67,65,64,62,60,60,62,64,62,60,60];
 const odeBeats=ode.map(()=>1);for(const i of [12,27])odeBeats[i]=1.5;for(const i of [13,28])odeBeats[i]=.5;for(const i of [14,29])odeBeats[i]=2;
 EXTRA_PIECES.push({id:'ode-theme',title:'欢乐颂主题 · 教学简编',level:2,hand:'right',events:ode.map((n,i)=>({notes:[n],right:[n],beats:odeBeats[i]})),fingers:'C 位五指：C1 D2 E3 F4 G5；先读节奏，不依赖逐音提示',detail:'贝多芬公共领域主题 · 本站单旋律教学简编 · 4/4 八小节',meter:4,goalBpm:80,target:'附点末句与长音准确；以两小节为单位形成呼吸。'});
+// More practice: two more scales, a two-octave arpeggio, accompaniment patterns and two public-domain
+// themes arranged here for teaching (single-line or simple two-hand versions, not facsimiles).
+const duo=(pairs,beats=1)=>pairs.map(([left,right,b])=>({notes:[...left,...right],left,right,beats:b??beats}));
+EXTRA_PIECES.push(
+ {id:'scale-a-melodic',title:'A 旋律小调 · 上行升六七、下行还原',level:3,hand:'right',events:row([57,59,60,62,64,66,68,69,67,65,64,62,60,59,57],'right'),fingers:'1 2 3 1 2 3 4 5 / 5 4 3 2 1 3 2 1',detail:'上行 F♯、G♯，下行 G、F · 每音一拍',goalBpm:60,target:'上下行的第 6、7 级不同，先唱再弹。'},
+ make('scale-bflat','B♭ 大调 · 从四指开始',3,'right',[70,72,74,75,77,79,81,82],'4 1 2 3 1 2 3 4','B♭ 与 E♭ · 右手第四指落在 B♭，拇指在 C 与 F',60),
+ make('arp-two-octave','C 大三和弦 · 两个八度琶音',3,'right',[60,64,67,72,76,79,84,79,76,72,67,64,60],'1 2 3 1 2 3 5 3 2 1 3 2 1','拇指在第二个 C 下穿 · 手臂带动横移，不跳手',60),
+ {id:'waltz-left',title:'圆舞曲伴奏 · 左手“嘭–恰–恰”',level:3,hand:'left',events:row([48,[52,55],[52,55],43,[53,59],[53,59],48,[52,55],[52,55],43,[53,59],[53,59]],'left'),fingers:'低音 5，和弦 2 1 / 3 1',detail:'3/4 · C–G7–C–G7 · 第一拍低音，二三拍轻',meter:3,goalBpm:72,target:'第一拍低音清楚，二三拍和弦轻而短。'},
+ {id:'pop-comp',title:'流行四和弦 · 双手伴奏',level:3,hand:'both',events:duo([[[48],[64,67,72],2],[[48],[64,67,72],2],[[43],[62,67,71],2],[[43],[62,67,71],2],[[45],[64,69,72],2],[[45],[64,69,72],2],[[41],[65,69,72],2],[[41],[65,69,72],2]]),fingers:'左手根音 5；右手就近配置，尽量保留共同音',detail:'C–G–Am–F · 每和弦两次、每次两拍 · 右手换和弦只移动少数手指',goalBpm:72,target:'换和弦不断音，右手保留共同音 C 与 G。'},
+ {id:'blues-bass',title:'布鲁斯走动低音 · 左手',level:4,hand:'left',events:row([48,52,55,57,58,57,55,52,53,57,60,62,63,62,60,57],'left',.5),fingers:'5 3 2 1 1 1 2 3 / 按手型调整',detail:'C7 与 F7 各一小节 · C E G A B♭ A G E · 八分音符',meter:4,goalBpm:80,target:'八分音符均匀，B♭ 与 E♭ 清楚。'},
+ {id:'twinkle-duo',title:'小星星 · 双手简编',level:2,hand:'both',events:duo([[[48],[60]],[[],[60]],[[48],[67]],[[],[67]],[[53],[69]],[[],[69]],[[48],[67],2],[[53],[65]],[[],[65]],[[48],[64]],[[],[64]],[[43],[62]],[[],[62]],[[48],[60],2]]),fingers:'右手 C 位：C1 G5 A5…；左手 5 与 2 交替',detail:'公共领域童谣旋律 · 左手在每两拍的开头弹低音',goalBpm:72,target:'左手低音与右手旋律同时落下，旋律更突出。'},
+ {id:'minuet-g',title:'G 大调小步舞曲 · 主题前八小节',level:3,hand:'right',events:[[74,1],[67,.5],[69,.5],[71,.5],[72,.5],[74,1],[67,1],[67,1],[76,1],[72,.5],[74,.5],[76,.5],[78,.5],[79,1],[67,1],[67,1],[72,1],[74,.5],[72,.5],[71,.5],[69,.5],[71,1],[72,.5],[71,.5],[69,.5],[67,.5],[66,1],[67,.5],[69,.5],[71,.5],[67,.5],[69,3]].map(([n,b])=>({notes:[n],right:[n],beats:b})),fingers:'开头 D 用 5 指；八分音符连贯，四分音符稍分开',detail:'3/4 · 传为佩措尔德作（旧归于巴赫，BWV Anh. 114）· 公共领域旋律，本站单旋律教学简编',meter:3,goalBpm:80,target:'每小节第一拍略重，八分音符均匀；第 8 小节保持满三拍。'}
+);
 export const PIANO_LEVELS=[{id:1,name:'预备 · 音位与五指',goal:'左右手分别准确、均匀地弹五指；认识基本谱号与时值。',book:'配合《拜厄》Op.101 开头的读谱、单手与双手基础练习。'},{id:2,name:'基础 · 音阶与短曲',goal:'C/G/D/F 大调单手音阶、C 调双手同向，读出完整乐句。',book:'配合《拜厄》的五指扩展、换位与双手练习；按原谱逐项检查指法与奏法。'},{id:3,name:'发展 · 织体与控制',goal:'反向音阶、琶音、左手伴奏与右手长音，建立声部层次。',book:'基本动作稳定后，配合《布格缪勒》Op.100 的初级练习曲，重视表情与乐句。'},{id:4,name:'和声 · 古典与爵士',goal:'终止、七和弦、ii–V–I 与导向音，逐步进入十二调和配置变化。',book:'配合书架中的乐理教材和 Jazz Chord Voicings；先骨架，再色彩与伴奏节奏。'}];
 export function preparePiece(piece,{hand='both',from=1,to=Infinity,repeats=1}={}) {
     if(!piece)return null;
