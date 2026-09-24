@@ -138,3 +138,39 @@ export function pendingOutcome(rows, requestId) {
     if (!assistant) return 'missing';
     return assistant.status === 'complete' ? 'done' : assistant.status === 'running' ? 'wait' : 'failed';
 }
+
+// ---------- arrangement proposals ----------
+// A proposal request carries the whole arrangement (the server re-validates it with the same schema).
+export const ARRANGE_PENDING_KEY = 'hive-music-ai-arrange-pending';
+export const ARRANGE_LIMITS = { doc: 24000, message: 2000, checks: 12 };
+export function buildArrangeRequest({ doc, scope = {}, message, checks = [], requestId }) {
+    const text = String(message || '').trim();
+    if (!text) throw new Error('先描述想要的感觉或改动。');
+    if (text.length > ARRANGE_LIMITS.message) throw new Error(`描述最多 ${ARRANGE_LIMITS.message} 字。`);
+    if (!UUID.test(requestId || '')) throw new Error('无效请求 ID。');
+    if (JSON.stringify(doc).length > ARRANGE_LIMITS.doc) throw new Error('编曲过大，AI 一次最多读取约 24 KB；请减少手写音符或拆分编曲。');
+    const cleanScope = {};
+    if (scope.section) { if (!doc.sections.some(s => s.id === scope.section)) throw new Error('所选段落不存在。'); cleanScope.section = scope.section; }
+    if (scope.track) { if (!doc.tracks.some(t => t.id === scope.track)) throw new Error('所选声部不存在。'); cleanScope.track = scope.track; }
+    return { action: 'music-arrange', requestId, arrangementId: doc.id, doc, scope: cleanScope, message: text, checks: checks.slice(0, ARRANGE_LIMITS.checks).map(c => String(c).slice(0, 300)) };
+}
+export function saveArrangePending(storage, payload) { try { storage.setItem(ARRANGE_PENDING_KEY, JSON.stringify({ payload, savedAt: Date.now() })); return true; } catch { return false; } }
+export function loadArrangePending(storage) {
+    try {
+        const value = JSON.parse(storage.getItem(ARRANGE_PENDING_KEY) || 'null'), p = value?.payload;
+        return p && p.action === 'music-arrange' && UUID.test(p.requestId) && p.doc && typeof p.message === 'string' ? value : null;
+    } catch { return null; }
+}
+export function clearArrangePending(storage) { try { storage.removeItem(ARRANGE_PENDING_KEY); } catch { /* nothing to clear */ } }
+/** done: a proposal came back; wait: still running on the server; failed: settled without one. */
+export function classifyProposal(status, body) {
+    if (status === 200 && Array.isArray(body?.ops) && typeof body?.summary === 'string') return 'done';
+    if (body?.settled === false) return 'wait';
+    return 'failed';
+}
+/** Rebuilds a proposal from history rows after a reload, or null if it is not finished. */
+export function proposalFromHistory(rows, requestId) {
+    const row = (rows || []).find(r => r.request_id === requestId && r.role === 'assistant');
+    if (!row || row.status !== 'complete' || !Array.isArray(row.payload?.ops)) return null;
+    return { summary: row.body, ops: row.payload.ops, baseHash: row.subject_version, recovered: true };
+}

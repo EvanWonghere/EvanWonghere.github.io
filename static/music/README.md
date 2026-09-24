@@ -90,6 +90,15 @@ MIDI 仅请求普通输入（不申请 SysEx），支持力度、note-off、velo
   `node tools/export-music-catalog.mjs <题库仓库路径>`，同时更新本目录的 `catalog-versions.mjs`
   和题库的目录；两者不一致时该课的 AI 讲解暂停，其余课程不受影响。
 - `vendor/supabase-js-2.112.4.mjs` 的来源、打包命令与许可见 `vendor/NOTICE.md`。
+- vibe 编曲（编曲工作台里的卡片，仅在开启且是管理员时可用）：用一句话描述感觉，AI 返回一组编辑操作
+  （与手工编辑相同的 14 种操作）并逐条附理由。服务端先用与本页相同的模块校验并试应用（不合格时让模型
+  修正一次，仍不合格则不返回提案）。页面上逐条勾选、预览（可播放、不保存、预览时不能手工编辑）、接受
+  （一步撤销）或放弃。提案生成后若编曲又被修改，会提示并在接受时逐条尝试，冲突的操作被跳过并说明原因。
+  请求写入 sessionStorage `hive-music-ai-arrange-pending`，未处理的提案存在 `hive-music-arrange-proposal`；
+  刷新后用同一请求 ID 取回，不会重复调用模型。示例编曲使用固定 ID `demo`，发起请求前会先保存。
+- 服务端需要的 `harmony.mjs`、`arrange-styles.mjs`、`arrangement-schema.mjs`、`arrangement.mjs` 由
+  `node tools/export-music-catalog.mjs <题库仓库路径>` 复制到题库的 `supabase/functions/ai-tutor/arrangement/`；
+  修改这些文件后需重新导出，并与题库一起部署函数，否则服务端会按旧规则校验提案。
 - 回退：把 `enabled` 改回 `false` 并推送；浏览器里的练习进度不受影响。
 
 ## 验证

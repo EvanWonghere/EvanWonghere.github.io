@@ -697,8 +697,9 @@ if (aiMeta && $('#ai-toggle')) import('./ai-context.mjs').then(({ parseConfig, s
     const loadAssistant = () => aiAssistant ||= import('./ai.mjs').then(m => m.mountAI({
         config, getSnapshot: () => structuredClone(progress), getLesson: () => ({ ...activeLesson, index: LESSONS.indexOf(activeLesson) + 1 }),
         getComposition: () => creative.current(), getTab: () => tab, setTab, notify
-    })).catch(error => { aiAssistant = null; notify('AI 助手未能加载：' + error.message); return null; });
+    })).then(api => { arrange.attachAssistant(api); return api; }).catch(error => { aiAssistant = null; notify('AI 助手未能加载：' + error.message); return null; });
     $('#ai-toggle').hidden = false;
+    arrange.setAssistantOpener(async () => { const api = await loadAssistant(); api?.open(); });
     $('#ai-toggle').onclick = async () => { const api = await loadAssistant(); api?.toggle(); };
     if (shouldLoadAI({ config, href: location.href, storage })) void loadAssistant();
 }).catch(error => notify('AI 助手未能加载：' + error.message));
