@@ -78,7 +78,9 @@ main { padding: 40px clamp(24px, 4.4vw, 76px) 110px; }
 .lesson-item { padding: 13px 0; font-size: .85rem; gap: 12px; }.lesson-item span:last-child { font-size: .71rem; white-space: nowrap; }
 .card { background: #fbf9f2; box-shadow: 0 4px 16px #44382203; padding: 28px; }
 .pill { background: #eeeadf; border-radius: 3px; font-size: .73rem; }
-.toolbar label { font-size: .75rem; }.toolbar { gap: 15px; }.toolbar select { font-size: .83rem; }
+.toolbar label { font-size: .75rem; }
+/* Import buttons are labels around a file input; they match the buttons beside them, not the field labels. */
+.toolbar label.file-button { font-size: .9rem; flex-direction: row; align-items: center; color: var(--text); }.toolbar { gap: 15px; }.toolbar select { font-size: .83rem; }
 .lesson-detail { padding: clamp(24px, 4vw, 56px); border-top: 3px solid #8c9779; }
 .lesson-detail>h3 { font-size: 2.2rem; line-height: 1.5; }.lesson-section { margin-top: 30px; }.lesson-section h4 { font-size: 1.3rem; }.lesson-section p { font-size: 1rem; line-height: 2.05; }
 .task { background: #eeeadb; border-left-color: #aa8756; }.worked-example { background: #edf0e6; border-left-color: #809276; border-radius: 0; }
@@ -117,14 +119,14 @@ main { padding: 40px clamp(24px, 4.4vw, 76px) 110px; }
     .shell { grid-template-columns: 205px minmax(0, 1fr); }.sidebar { padding-inline: 15px; }.room-title { padding-inline: 7px; }.route-intro { gap: 10px; grid-template-columns: 1.25fr 1fr; }.route-intro h2 { font-size: 2.9rem; }.cover-art { margin: 0; }.curriculum { gap: 20px; }.stat { padding-inline: 15px; }
 }
 @media(max-width:760px) {
-    .topbar { height: 69px; padding: 0 20px; }.brand { gap: 12px; }.brand-mark { font-size: 1.45rem; }.brand-caption { font-size: .62rem; padding-left: 12px; }.top-actions { gap: 0; }#sound-enable { padding: 7px 10px; font-size: .72rem; }
+    .topbar { height: 69px; padding: 0 20px; }.brand { gap: 12px; }.brand-mark { font-size: 1.45rem; }.brand-caption { font-size: .62rem; padding-left: 12px; }.top-actions { gap: 0; }#sound-enable, #ai-toggle { padding: 7px 10px; min-height: 34px; font-size: .72rem; white-space: nowrap; }.top-actions { gap: 6px; flex-wrap: nowrap; }.brand-caption { white-space: nowrap; }
     .shell { display: block; }.sidebar { padding: 18px 16px 10px; height: auto; background: none; }.room-title { display: none; }nav { margin: 0; gap: 4px; }nav button { padding: 8px 11px; font-size: .78rem; }nav button.active { border-left-color: transparent; border-bottom-color: var(--accent); background: #e6e0d2; }
     main { padding: 29px 20px 180px; }.page-heading { padding-bottom: 20px; margin-bottom: 25px; }h2 { font-size: 2.45rem; }.page-heading p { font-size: .83rem; }
     .route-intro { grid-template-columns: 1fr .62fr; gap: 5px; min-height: 215px; margin-bottom: 20px; padding: 0; }.route-intro h2 { font-size: clamp(2rem, 7vw, 2.7rem); margin: 18px 0 13px; }.route-intro .eyebrow { font-size: .56rem; letter-spacing: .13em; }.route-intro p { font-size: .75rem; }.cover-art { align-self: center; }.cover-art figcaption { display: none; }
     .overview-stats { grid-template-columns: 1fr 1fr; }.stat { padding: 15px 12px; }.stat:nth-child(2) { border-right: 0; }.stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }.stat:nth-child(3) { padding-left: 0; }.stat strong { font-size: 2rem; }.stat span { font-size: .7rem; }
     .continue-card { padding: 23px; gap: 20px; }.continue-card h3 { font-size: 1.45rem; }.continue-card::after { font-size: 6rem; right: 0; }.section-label { margin-top: 28px; }.section-label span { font-size: .68rem; }
     .stage { padding: 23px 0 8px; }.stage-number { font-size: 2.7rem; }.stage-head { gap: 18px; }.lesson-item { padding-block: 14px; }.card, .exercise { padding: 23px 20px; }.lesson-detail>h3 { font-size: 1.8rem; }.lesson-section h4 { font-size: 1.2rem; }.lesson-section p { font-size: .95rem; }.worked-example { padding-inline: 18px; }
-    .toolbar { gap: 12px; }.toolbar select { font-size: .82rem; }.toolbar button { font-size: .82rem; }.tuner { border-left: 0; border-top: 1px solid var(--line); padding: 24px 6px 8px; }.resource-grid { gap: 7px; }.resource-grid .card { padding: 26px 23px; }.resource-grid h3 { font-size: 1.5rem; }
+    .toolbar { gap: 12px; }.toolbar select { font-size: .82rem; }.toolbar button, .toolbar label.file-button { font-size: .82rem; }.tuner { border-left: 0; border-top: 1px solid var(--line); padding: 24px 6px 8px; }.resource-grid { gap: 7px; }.resource-grid .card { padding: 26px 23px; }.resource-grid h3 { font-size: 1.5rem; }
     .piano-case { padding: 19px 11px 13px; }.piano-controls { margin-inline: 5px; }.piano-score { padding: 18px 14px; }.piano-score .row h3 { font-size: 1.13rem; }.transport-bar { padding-inline: 13px; }.piano-focus #workspace { padding-inline: 15px; }
 }
 @media(prefers-reduced-motion:no-preference) {
@@ -132,3 +134,11 @@ main { padding: 40px clamp(24px, 4.4vw, 76px) 110px; }
     [data-panel]:not([hidden]) { animation: page-appear .3s ease both; }
     @keyframes page-appear { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 }
+/* Phones: iOS Safari's floating toolbar leaves a bottom-fixed bar hovering over scrolling content,
+   so the practice settings become an ordinary strip under the top bar there. */
+@media(max-width:760px) {
+    .transport-bar { position: static; min-height: 0; padding: 10px 16px 12px; border-top: 0; border-bottom: 1px solid #73816a; box-shadow: none; backdrop-filter: none; }
+    main { padding-bottom: 64px; }
+    .piano-focus #workspace { padding-bottom: 40px; }
+}
+@media(max-width:400px) { .brand-caption { display: none; } }

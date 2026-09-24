@@ -230,11 +230,19 @@ $('#bpm').value = progress.settings.bpm;
 $('#bpm').onchange = () => { stopActivities(); progress.settings.bpm = clamp(Math.round(Number($('#bpm').value) || 72), 40, 200); $('#bpm').value = progress.settings.bpm; persist(); };
 $('#volume').value = progress.settings.volume; audio.setVolume(progress.settings.volume / 100);
 $('#volume').oninput = () => { progress.settings.volume = +$('#volume').value; audio.setVolume(progress.settings.volume / 100); persist(); };
+// Loads the whole bank once; also started by the first key press so later keys use samples.
+const warmAudio = () => {
+    if (audioWarming?.instrument !== audio.instrument) {
+        const promise = audio.warm().finally(() => { if (audioWarming?.promise === promise) audioWarming = null; });
+        audioWarming = { instrument: audio.instrument, promise };
+    }
+    return audioWarming.promise;
+};
 $('#sound-enable').onclick = async () => {
     try {
         await audio.init(); $('#sound-enable').textContent = '重新加载音色';
-        if (!audioWarming) { audioWarming = audio.warm(); await audioWarming; audioWarming = null; }
-    } catch(e) { audioWarming = null; notify(e.message); }
+        await warmAudio();
+    } catch(e) { notify(e.message); }
 };
 
 // Piano: independent source IDs allow overlapping pointers, computer keys and MIDI ports.
@@ -276,6 +284,7 @@ async function press(token, note, velocity = progress.settings.velocity) {
     const entry = { note, id: null }; held.set(token, entry); updateKey(note);
     try {
         await audio.init();
+        if (audio.buffers.size + audio.failed.size < 88) void warmAudio().catch(() => {});
         if (held.get(token) !== entry || tab !== 'piano') return;
         entry.id = audio.noteOn(note, velocity);
         evaluatePiano(note, token);
@@ -655,7 +664,7 @@ function installWorkshop(spec){
 }
 $('#harmony-train').onclick=()=>{const id=installWorkshop(harmonySpec());$('#piano-piece').value=id;$('#piano-hand').value='both';$('#piano-from').value=1;$('#piano-to').value=PIECES.find(p=>p.id===id).events.length;$('#piano-repeats').value='1';$('#piano-mode').value='wait';progress.preferences['piano-piece']=id;for(const key of ['piano-hand','piano-from','piano-to','piano-repeats','piano-mode'])progress.preferences[key]=document.getElementById(key).value;persist();setTab('piano',true);};
 $('#harmony-lesson').onclick=()=>{setTab('route',true);showLesson('jazz251');};
-$('#instrument').onchange=async()=>{stopActivities();audio.setInstrument($('#instrument').value);$('#instrument-label').textContent=INSTRUMENTS[$('#instrument').value].name;try{await audio.warm();}catch(e){notify(e.message);}};
+$('#instrument').onchange=async()=>{stopActivities();audio.setInstrument($('#instrument').value);$('#instrument-label').textContent=INSTRUMENTS[$('#instrument').value].name;try{await warmAudio();}catch(e){notify(e.message);}};
 $('#piano-syllabus').innerHTML=`<details><summary>分级练习路线 · ${PIECES.length} 组基础练习 + 十二调和弦工坊</summary><div class="syllabus-grid">${PIANO_LEVELS.map(level=>`<div><h4>${level.name}</h4><p>${level.goal}</p><p class="muted">${level.book}</p></div>`).join('')}</div><p>推荐每段以 50–60 BPM 起步；连续三次准确、放松后增加 4 BPM。先分手，再合手；先短片段，再完整乐句。本站等级为学习顺序，不对应考级证书。</p></details>`;
 function renderJournal(){ $('#journal-list').innerHTML=[...(progress.journal || [])].reverse().slice(0,20).map(entry=>`<article class="journal-entry"><span class="muted">${esc(new Date(entry.at).toLocaleString('zh-CN'))} · ${entry.bpm} BPM</span><p>${esc(entry.text)}</p></article>`).join('') || '<p class="muted">还没有日志。写下具体困难，比只记“练了半小时”更有用。</p>'; }
 $('#journal-save').onclick=()=>{const text=$('#journal-text').value.trim();if(!text){notify('先写下本次观察或下一次目标。');return;}progress.journal ||= [];progress.journal.push({text:text.slice(0,1200),at:Date.now(),bpm:progress.settings.bpm});progress.journal=progress.journal.slice(-100);persist();$('#journal-text').value='';renderJournal();notify('练习日志已保存。');};
