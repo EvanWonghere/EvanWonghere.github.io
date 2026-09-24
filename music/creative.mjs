@@ -116,7 +116,7 @@ export function mountCreative({audio,getProgress,persist,stopAll,notify,setTab,o
   // Cloud sync (administrator only): reads saved works and applies validated cloud copies.
   // Drafts are never touched; only the works library changes.
   cloudWorks(){return state().works.map(w=>({...w}));},
-  applyCloudWorks({puts=[],deletes=[]}){let works=state().works.filter(w=>!deletes.some(d=>d.kind===w.kind&&d.id===w.id));for(const k of ['score','live'])if(deletes.some(d=>d.id===activeWork[k]))activeWork[k]='';for(const p of puts){const i=works.findIndex(w=>w.id===p.id);if(i>=0)works[i]={...p};else works.push({...p});}state().works=works.slice(0,MAX_WORKS);persist();library();},
+  applyCloudWorks({puts=[],deletes=[]}){const before=state().works;let works=before.filter(w=>!deletes.some(d=>d.kind===w.kind&&d.id===w.id));for(const k of ['score','live'])if(deletes.some(d=>d.id===activeWork[k]))activeWork[k]='';for(const p of puts){const i=works.findIndex(w=>w.id===p.id);if(i>=0)works[i]={...p};else works.push({...p});}state().works=works.slice(0,MAX_WORKS);const error=persist();if(error){state().works=before;library();throw new Error(`作品未能保存到本机（${error}），本次同步没有记录。`);}library();},
   // The live draft for the Strudel snippet assistant; it writes only through setLiveCode.
   liveDraft(){return {code:$('#live-source').value,workId:activeWork.live||'draft'};},
   setLiveCode(code){stopAll();$('#live-source').value=code;saveDraft();},

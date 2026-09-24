@@ -53,10 +53,19 @@ export function mountSync({ api, creative, arrange, storage, notify, progressBlo
         const localForPlan = local.items.filter(i => local.kinds.includes(i.kind));
         const room = { works: local.works ? MAX_WORKS - local.works.length : 0, arrangement: local.docs ? LIMITS.docs - local.docs.length : 0 };
         const plan = planSync({ local: localForPlan, ledger, remote, room });
+        const byKeyLocal = new Set(local.items.map(i => itemKey(i.kind, i.id)));
+        // A work the user asked for takes a free slot first, displacing a newer automatic pick if needed.
         let full = false;
         for (const f of forced.downloads || []) {
-            if (room[capacityGroup(f.kind)] > plan.downloads.filter(d => capacityGroup(d.kind) === capacityGroup(f.kind)).length) { plan.downloads.push(f); plan.cloudOnly = plan.cloudOnly.filter(c => !(c.kind === f.kind && c.id === f.id)); }
-            else full = true;
+            if (plan.downloads.some(d => d.kind === f.kind && d.id === f.id)) continue;
+            const group = capacityGroup(f.kind), isNew = r => !ledger.items[itemKey(r.kind, r.id)] && !byKeyLocal.has(itemKey(r.kind, r.id));
+            ledger.held = (ledger.held || []).filter(k => k !== itemKey(f.kind, f.id));
+            const automatic = plan.downloads.filter(d => capacityGroup(d.kind) === group && isNew(d));
+            const used = automatic.length + plan.conflicts.filter(c => capacityGroup(c.kind) === group).length;
+            if (room[group] > used) plan.downloads.push(f);
+            else if (automatic.length) { const out = automatic.at(-1); plan.downloads = plan.downloads.filter(d => d !== out); plan.cloudOnly.push({ kind: out.kind, id: out.id, title: remote.find(r => r.kind === out.kind && r.id === out.id)?.title || out.id }); plan.downloads.push(f); }
+            else { full = true; continue; }
+            plan.cloudOnly = plan.cloudOnly.filter(c => !(c.kind === f.kind && c.id === f.id));
         }
         const byKey = new Map(local.items.map(i => [itemKey(i.kind, i.id), i]));
         const localWork = id => local.works.find(w => w.id === id), localDoc = id => local.docs.find(d => d.id === id);
@@ -99,6 +108,8 @@ export function mountSync({ api, creative, arrange, storage, notify, progressBlo
         for (const d of plan.localDeletes) if (!(deferred && d.kind === 'arrangement')) delete ledger.items[itemKey(d.kind, d.id)];
         for (const l of plan.links) ledger.items[itemKey(l.kind, l.id)] = { rev: l.rev, hash: byKey.get(itemKey(l.kind, l.id))?.hash || l.hash };
         for (const k of plan.forget) delete ledger.items[k];
+        // Cloud-only works stay held until the user retrieves one; new cloud works still arrive on their own.
+        ledger.held = plan.cloudOnly.map(c => itemKey(c.kind, c.id));
         writeL(ledger);
 
         // Uploads: new items insert; changed items update only if the cloud is still at the base revision.
