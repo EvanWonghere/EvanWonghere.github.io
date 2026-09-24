@@ -23,5 +23,13 @@ export const MUSIC_CATALOG_VERSIONS = {
  "extensions": "c129dab38de8ff66",
  "jazz251": "a53f5559ca32c9dd",
  "comping": "50fbd613ba2f5e25",
- "blues": "2e867223624bafe5"
+ "blues": "2e867223624bafe5",
+ "modes": "f8061a76a1f99c91",
+ "modulation": "aa929de733a498c1",
+ "nonchord": "623fa2bf192385bc",
+ "borrowed": "b1397529a70426af",
+ "texture": "0516638f42a92769",
+ "harmonize": "403d8f5c6f1970a1",
+ "form": "512330400015543b",
+ "first-song": "769c447fed7f2d5f"
 };

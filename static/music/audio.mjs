@@ -1,5 +1,10 @@
 import { frequency, clamp } from './core.mjs';
-export const INSTRUMENTS = { grand: { name:'原声三角钢琴', path:'' }, electric:{ name:'电钢琴', path:'electric/' }, harpsichord:{ name:'羽管键琴', path:'harpsichord/' }, organ:{ name:'爵士风琴', path:'organ/' } };
+export const INSTRUMENTS = {
+    grand: { name:'原声三角钢琴', path:'' }, bright: { name:'明亮钢琴', path:'bright/' }, honkytonk: { name:'酒吧钢琴', path:'honkytonk/' },
+    electric: { name:'电钢琴', path:'electric/' }, fm: { name:'FM 电钢琴', path:'fm/' }, harpsichord: { name:'羽管键琴', path:'harpsichord/' },
+    organ: { name:'爵士风琴', path:'organ/' }, celesta: { name:'钢片琴', path:'celesta/' }, vibraphone: { name:'颤音琴', path:'vibraphone/' },
+    strings: { name:'弦乐合奏', path:'strings/' }
+};
 
 // The FluidR3 samples peak around 0.07–0.12 with an RMS of 0.015–0.045 over their first 0.3 s;
 // at 0.45 the synthesized stand-in was about ten times louder, so 0.05 puts it at the same level.

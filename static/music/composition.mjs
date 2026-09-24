@@ -12,7 +12,11 @@ export const LIVE_PRESETS = [
  {id:'pulse',title:'01 · 一个会呼吸的节奏',code:'// 每个循环四拍；修改方括号内的节奏后按 play / update\nsetcpm(90/4)\ns("bd [~ sd] hh*4 [sd hh]").bank("RolandTR909")',hint:'~ 是休止，*4 是重复四次，[ ] 将一拍分成更小的格子。'},
  {id:'arpeggio',title:'02 · 音阶与琶音',code:'setcpm(80/4)\nn("0 2 4 7 4 2 1 3").scale("C4:major")\n  .s("triangle").gain(0.35).room(0.25)',hint:'n 中的数字是音阶级数，从 0 开始。试着把 major 改为 minor。'},
  {id:'jazz',title:'03 · 爵士 ii–V–I',code:'// 每个循环换一个和弦：Dm7 → G7 → Cmaj7\nsetcpm(72/4)\nnote("<[d3,f3,a3,c4] [g2,b2,d3,f3] [c3,e3,g3,b3] [c3,e3,g3,b3]>")\n  .s("triangle").gain(0.25).room(0.3)',hint:'逗号使音符同时发声，尖括号让和弦逐个循环切换。先听导向音，再改变声部位置。'},
- {id:'layers',title:'04 · 低音与旋律叠层',code:'setcpm(96/4)\nstack(\n  note("<c2 a1 f2 g1>").s("sawtooth").lpf(400).gain(0.2),\n  n("0 2 4 6 4 2 1 3").scale("C4:major").s("triangle").gain(0.3)\n)',hint:'stack 将独立声部叠在一起；先单独试听每层，再调整音量与音域。'}
+ {id:'layers',title:'04 · 低音与旋律叠层',code:'setcpm(96/4)\nstack(\n  note("<c2 a1 f2 g1>").s("sawtooth").lpf(400).gain(0.2),\n  n("0 2 4 6 4 2 1 3").scale("C4:major").s("triangle").gain(0.3)\n)',hint:'stack 将独立声部叠在一起；先单独试听每层，再调整音量与音域。'},
+ {id:'dorian',title:'05 · 多利亚的第六级',code:'// D 多利亚：与 D 自然小调只差第 6 级 B（小调是 B♭）\nsetcpm(84/4)\nstack(\n  note("<d2 d2 g2 g2>").s("piano").gain(0.5),\n  n("0 2 3 5 4 2 1 0").scale("D4:dorian").s("triangle").gain(0.35)\n)',hint:'把 dorian 改成 minor，听第 6 级从 B 变成 B♭；谱面会同时更新。'},
+ {id:'pop4',title:'06 · 流行四和弦与旋律',code:'// I–V–vi–IV：低音、和弦、旋律三层\nsetcpm(88/4)\nstack(\n  note("<c2 g1 a1 f1>").s("piano").gain(0.6),\n  note("<[c4,e4,g4] [b3,d4,g4] [c4,e4,a4] [c4,f4,a4]>").s("triangle").gain(0.2),\n  n("<[4 2 0 2] [4 4 4 ~] [5 4 2 4] [3 2 1 ~]>").scale("C4:major").s("piano").gain(0.45)\n)',hint:'三层分工：低音、中音区和弦、高音区旋律。试着把和弦层静音，只听外声部。'},
+ {id:'blues12',title:'07 · 十二小节布鲁斯',code:'// 每个循环一小节：C7 ×4，F7 ×2，C7 ×2，G7，F7，C7，G7\nsetcpm(96/4)\nstack(\n  note("<[c3,e3,g3,bb3]!4 [f3,a3,c4,eb4]!2 [c3,e3,g3,bb3]!2 [g2,b2,d3,f3] [f3,a3,c4,eb4] [c3,e3,g3,bb3] [g2,b2,d3,f3]>").s("piano").gain(0.35),\n  note("<c2!4 f2!2 c2!2 g1 f2 c2 g1>").s("piano").gain(0.55),\n  s("bd ~ sd ~, hh*8").gain(0.35)\n)',hint:'!4 表示把前一项重复四次。数到第九个循环时和弦变成 G7。'},
+ {id:'waltz3',title:'08 · 三拍子圆舞',code:'// 每个循环一小节 3/4：低音 + 两下和弦\nsetcpm(40)\nstack(\n  note("<[c2 [e3,g3] [e3,g3]] [g1 [f3,b3] [f3,b3]]>").s("piano").gain(0.5),\n  n("<[4 4 5] [4 ~ 3] [2 2 3] [4 ~ ~]>").scale("C4:major").s("piano").gain(0.45)\n)',hint:'看谱面时把“每个循环记为一小节”改成 3/4。setcpm(40) 即每分钟 40 小节、120 拍。'}
 ];
 export const SCORE_PRESETS = [
  {id:'melody',title:'旋律 · 从四小节开始',abc:DEFAULT_ABC},
@@ -47,6 +51,36 @@ L:1/8
 Q:1/4=84
 K:G
 |: G2 B2 d2 | e3 d B2 | (3ABc d2 z2 |1 B2 A2 G2 :|2 A2 F2 G2 |]
+`},
+ {id:'minuet',title:'小步舞曲 · G 大调主题（公共领域）',abc:`X:1
+T:小步舞曲 G 大调（主题前八小节）
+C:传为佩措尔德作，BWV Anh. 114
+M:3/4
+L:1/8
+Q:1/4=96
+K:G
+d2 G A B c | d2 G2 G2 | e2 c d e f | g2 G2 G2 |
+c2 d c B A | B2 c B A G | F2 G A B G | A6 |]
+`},
+ {id:'twinkle',title:'双手 · 小星星简编',abc:`X:1
+T:小星星（公共领域童谣）
+%%score { RH LH }
+M:4/4
+L:1/4
+Q:1/4=80
+K:C
+V:RH clef=treble name="右手"
+"C"C C G G | "F"A A "C"G2 | "F"F F "C"E E | "G"D D "C"C2 |]
+V:LH clef=bass name="左手"
+C,2 C,2 | F,,2 C,2 | F,,2 C,2 | G,,2 C,2 |]
+`},
+ {id:'dorian',title:'调式 · D 多利亚小曲',abc:`X:1
+T:街角的多利亚
+M:4/4
+L:1/8
+Q:1/4=96
+K:Ddor
+"Dm"D2 F A B2 A F | "G"G2 B d e2 d B | "Dm"A2 F D E2 D E | "Dm"D8 |]
 `}
 ];
 export const MAX_SOURCE=40000,MAX_WORKS=20;

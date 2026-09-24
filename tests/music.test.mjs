@@ -15,7 +15,7 @@ test('88-key range, octave naming, equal temperament and black key layout', () =
     assert.equal(Array.from({length:88},(_,i)=>21+i).filter(isBlack).length,36);
 });
 test('curriculum has unique complete questions and playable bounded exercises', () => {
-    assert.equal(LESSONS.length,24); assert.equal(QUESTIONS.length,72); assert.equal(new Set(QUESTIONS.map(q=>q.id)).size,72);
+    assert.equal(LESSONS.length,32); assert.equal(QUESTIONS.length,96); assert.equal(new Set(QUESTIONS.map(q=>q.id)).size,96); assert.equal(new Set(LESSONS.map(l=>l.id)).size,32);
     for (const q of QUESTIONS) { assert.ok(q.options.includes(q.answer)); assert.equal(new Set(q.options).size,q.options.length); assert.ok(q.explanation); }
     for (const p of PIECES) for (const e of p.events) { assert.ok(e.beats>0); assert.equal(new Set(e.notes).size,e.notes.length); assert.ok(e.notes.every(n=>n>=21 && n<=108)); }
     for (const m of MELODIES) { assert.equal(m.notes.length,m.beats.length); assert.equal(m.solfege.split(' ').length,m.notes.length); }
@@ -83,8 +83,11 @@ test('notation marks middle C with ledger line and avoids pitch-answer leaks in 
     assert.match(staff([{notes:[66],beats:1}]),/♯/);
     assert.match(staff([{notes:[48,60,64,67],beats:2}],{clef:'grand'}),/𝄢/);
 });
-test('every local sample in all four instrument banks contains MP3 data', async () => {
+test('every local sample in all ten instrument banks contains MP3 data and is credited', async () => {
+    assert.equal(Object.keys(INSTRUMENTS).length,10);
+    const notice=await readFile(new URL('../static/music/samples/NOTICE.md',import.meta.url),'utf8');
     for(const {path} of Object.values(INSTRUMENTS)) {
+    if(path) assert.ok(notice.includes(`extracted to \`${path}\``),path);
     const dir=new URL(`../static/music/samples/${path}`,import.meta.url); const files=(await readdir(dir)).filter(f=>f.endsWith('.mp3'));
     assert.equal(files.length,88);
     for(let n=21;n<=108;n++) { const bytes=await readFile(new URL(`${n}.mp3`,dir)); assert.ok(bytes.length>1000); assert.equal(bytes[0],255); }
@@ -113,11 +116,11 @@ test('transport cancellation during sample preparation never starts delayed note
 });
 
 test('every lesson has substantial explanation, worked examples, assignments and mastery criteria',()=>{
-    assert.equal(PIECES.length,23);
+    assert.equal(PIECES.length,31); assert.equal(new Set(PIECES.map(p=>p.id)).size,31);
     for(const lesson of LESSONS){const d=LESSON_DETAILS[lesson.id];assert.ok(d,lesson.id);assert.ok(d.sections.length>=3);assert.ok(d.sections.every(s=>s.text.length>45));assert.ok(d.example.steps.length>=2);assert.ok(d.example.answer);assert.ok(d.practice.length>=3);assert.ok(d.check);}
 });
 test('all chord qualities and transpositions stay playable and preserve spelled pitch classes',()=>{
-    assert.equal(CHORD_TYPES.length,22);assert.equal(PROGRESSIONS.length,10);
+    assert.equal(CHORD_TYPES.length,22);assert.equal(PROGRESSIONS.length,14);
     for(const root of KEYS)for(const type of CHORD_TYPES)for(const voicing of ['close','open','shell','rootless'])for(let inversion=0;inversion<4;inversion++){
         const chord=makeChord(root,type.id,{voicing,inversion,bass:true});
         assert.equal(chord.notes.length,new Set(chord.notes).size);

@@ -100,7 +100,7 @@ function showLesson(id, scroll = true) {
         if (['triad', 'minor'].includes(l.id)) $('#ear-mode').value = 'chord';
         if (['seventh','extensions','jazz251'].includes(l.id)) $('#ear-mode').value = 'seventh';
         if (l.id === 'interval') $('#ear-mode').value = 'interval';
-        if (l.tool === 'harmony') { $('#harmony-kind').value = 'progression'; $('#harmony-progression').value = l.id === 'blues' ? 'blues' : l.id === 'classical-harmony' ? 'secondary' : l.id === 'extensions' ? 'extended251' : 'jazz251'; $('#harmony-voicing').value = 'shell'; }
+        if (l.tool === 'harmony') { $('#harmony-kind').value = 'progression'; $('#harmony-progression').value = { blues: 'blues', 'classical-harmony': 'secondary', extensions: 'extended251', modulation: 'pivot', borrowed: 'borrowed' }[l.id] || 'jazz251'; $('#harmony-voicing').value = 'shell'; }
         setTab(l.tool, true);
     };
     $('#lesson-complete').onclick = () => { progress.lessons[l.id] = true; persist(); renderCurriculum(); updateStats(); showLesson(l.id, false); notify('已记录本课学习进度。可以做小测检验掌握情况。'); };

@@ -41,3 +41,39 @@ SHA-256: `d3f214640a2373e362adc236a2e2adc7868fa7b2602cd51baab96321b4382a09`
 88 unchanged MP3 samples, MIDI 21–108, extracted to `organ/`. Same authors and license as above.
 Source: https://raw.githubusercontent.com/gleitz/midi-js-soundfonts/gh-pages/FluidR3_GM/drawbar_organ-mp3.js
 SHA-256: `00aab0b52e7ad3e8f40a5198c4e4dc844d3f5317d362d90534f433f1157cad64`
+
+## bright_acoustic_piano
+
+88 unchanged MP3 samples, MIDI 21–108, extracted to `bright/`. Same authors and license as above.
+Source: https://raw.githubusercontent.com/gleitz/midi-js-soundfonts/gh-pages/FluidR3_GM/bright_acoustic_piano-mp3.js
+SHA-256: `17fe637f5868899a4c1a777c62ad0c3816c1852cb90f6e477b5a6f945a5722d8`
+
+## honkytonk_piano
+
+88 unchanged MP3 samples, MIDI 21–108, extracted to `honkytonk/`. Same authors and license as above.
+Source: https://raw.githubusercontent.com/gleitz/midi-js-soundfonts/gh-pages/FluidR3_GM/honkytonk_piano-mp3.js
+SHA-256: `51957f9e7a6edfcea43ffc0f23ef763b144a56879ddfe1c7b1d7ea9ee3a51767`
+
+## electric_piano_2
+
+88 unchanged MP3 samples, MIDI 21–108, extracted to `fm/`. Same authors and license as above.
+Source: https://raw.githubusercontent.com/gleitz/midi-js-soundfonts/gh-pages/FluidR3_GM/electric_piano_2-mp3.js
+SHA-256: `c9d99289fdc382bd287f6c4759637821123dfae846a9a7b093ce0d80a9a4227a`
+
+## celesta
+
+88 unchanged MP3 samples, MIDI 21–108, extracted to `celesta/`. Same authors and license as above.
+Source: https://raw.githubusercontent.com/gleitz/midi-js-soundfonts/gh-pages/FluidR3_GM/celesta-mp3.js
+SHA-256: `95481faad30b05357cc8ec0c71b04e58034ccc8c773ab87d3c4436e45ebbb011`
+
+## vibraphone
+
+88 unchanged MP3 samples, MIDI 21–108, extracted to `vibraphone/`. Same authors and license as above.
+Source: https://raw.githubusercontent.com/gleitz/midi-js-soundfonts/gh-pages/FluidR3_GM/vibraphone-mp3.js
+SHA-256: `263bf866f7facd9652d39d4f7f499e8f883bc40adbdee75d8c5caf11403132f5`
+
+## string_ensemble_1
+
+88 unchanged MP3 samples, MIDI 21–108, extracted to `strings/`. Same authors and license as above.
+Source: https://raw.githubusercontent.com/gleitz/midi-js-soundfonts/gh-pages/FluidR3_GM/string_ensemble_1-mp3.js
+SHA-256: `8571395f4c42a989a63e0aed48ad9d79f0ac1a822ff2afd7cb356191be8fd4a2`
