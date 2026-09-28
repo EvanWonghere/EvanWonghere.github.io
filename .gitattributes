@@ -3,3 +3,4 @@ static/music/vendor/xml2abc-122.js -whitespace
 static/music/vendor/supabase-js-2.112.4.mjs -whitespace
 static/music/vendor/strudel-web-1.3.0.js -whitespace
 static/music/vendor/strudel-LICENSES.txt -whitespace
+static/study/finance/assets/index-*.js -whitespace
