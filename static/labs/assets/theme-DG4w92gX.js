@@ -1,0 +1,1 @@
+function n(e,t){try{return getComputedStyle(document.documentElement).getPropertyValue(e).trim()||t}catch{return t}}function o(e,t){return`color-mix(in srgb, ${e} ${Math.round(t*100)}%, transparent)`}export{o as a,n as t};
