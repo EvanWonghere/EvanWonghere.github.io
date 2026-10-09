@@ -9,6 +9,7 @@ import { createLearner, browserStorage, noStorage } from './learner.mjs';
 import { dayOf, recordClip, recordFinished, recordBest, recordRecited, addWord, removeWord, hasWord, dueWords, reviewWord, applyScores, recordPhonemes, weakSounds, streakDays, weekView, mergeProgress, validateProgress, wordKey, WORD_LIMIT } from './progress.mjs';
 import { findContext, summaryLine } from './archive.mjs';
 import { tipFor } from './phoneme-tips.mjs';
+import { enhanceSelect, enhanceAudio, refreshControls } from './controls.mjs';
 import { loadTrack, playRange } from './voiceplayer.mjs';
 import { unitsOf, unitAt } from './voice.mjs';
 
@@ -149,7 +150,9 @@ function renderListen(work) {
     const human = $('human'), audio = $('human-audio');
     human.hidden = !work.human;
     audio.pause(); audio.removeAttribute('src');
+    enhanceAudio(audio);
     if (work.human) {
+        audio.dataset.duration = String(work.human.seconds);
         audio.src = new URL(work.human.src, import.meta.url).href;
         $('human-credit').replaceChildren(el('a', { href: work.human.url, target: '_blank', rel: 'noopener' }, work.human.credit), '。公有领域的志愿者录音，用的版本可能和下面的文字略有出入。');
         audio.onplay = () => { stopSpeech(); stopSpeech = () => {}; clear(); };   // only the speech voice stops; stop() would pause this audio too
@@ -157,6 +160,7 @@ function renderListen(work) {
     let speed = 0.9, failNote = '';   // failNote: why the device voice is reading, kept next to the device voice's own notes
     const source = $('listen-source');
     source.value = ctx.pref('voice') ?? 'auto';
+    enhanceSelect(source); refreshControls();
     source.onchange = () => { ctx.setPref('voice', source.value); failNote = ''; stop(); clear(); };
     refreshSource = () => { $('listen-source-box').hidden = !tracks.get(trackKey(work)) || tracks.get(trackKey(work)) === 'loading'; };
     refreshSource();
@@ -204,6 +208,7 @@ function renderListen(work) {
     }));
     $('listen-speed').replaceChildren(...SPEEDS.map(([label, value]) => el('option', { value, ...(value === speed ? { selected: '' } : {}) }, label)));
     $('listen-speed').onchange = e => { speed = Number(e.target.value); };
+    enhanceSelect($('listen-speed')); refreshControls();
     $('listen-all').onclick = () => play(0, true);
     $('listen-stop').onclick = () => { stop(); clear(); };
     $('word-pop').textContent = '点任意一个词，听它的读音，并查看释义。';
