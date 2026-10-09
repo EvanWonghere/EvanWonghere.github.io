@@ -1,5 +1,5 @@
 import { SAMPLES, STORAGE_KEY, MAX_SECONDS, MAX_RECORDS, wordCount, validateReference, validateStore, mergeStores, encodeWav, wordClass, errorLabel } from './core.mjs';
-import { loadSDK, assessFile, withAbort } from './speech.mjs?v=20261009-v1';
+import { requestAssessment } from './service.mjs';
 const $ = id => document.getElementById(id);
 let client, admin = false, phase = 'idle', clip = null, recorder = null, stream = null, playbackURL = '', recordingStart = 0, tick, autoStop, canceledRecording = false, aborter;
 let store = { version: 1, records: [] }, storeWritable = true;
@@ -142,26 +142,15 @@ async function refreshAuth() {
     controls();
 }
 $('refresh-login').onclick = refreshAuth;
-async function speechAuthorization(signal) {
-    const { data } = await client.auth.getSession();
-    if (!data.session) throw new Error('登录已失效，请重新登录。');
-    const response = await fetch(`${config.url}/functions/v1/speech-token`, { method: 'POST', headers: { Authorization: `Bearer ${data.session.access_token}`, apikey: config.key }, signal });
-    const auth = await response.json();
-    if (!response.ok) throw new Error(auth.error || '评分服务暂不可用。');
-    if (typeof auth.token !== 'string' || !auth.token || auth.region !== 'southeastasia') throw new Error('评分服务配置不完整。');
-    return auth;
-}
 $('check-service').onclick = async () => {
     if (phase !== 'idle' || !admin) return;
     phase = 'checking'; aborter = new AbortController(); const signal = aborter.signal;
     const timeout = setTimeout(() => aborter?.abort(), 60000); controls(); status('正在用微软公开的 2 秒示例音频测试完整评分；不会发送你的录音。');
     try {
-        const auth = await speechAuthorization(signal);
-        const sdk = await withAbort(loadSDK(), signal);
         const response = await fetch(new URL('./diagnostic.wav', import.meta.url), { signal });
         if (!response.ok) throw new Error('测试音频加载失败，请刷新后重试。');
         const { file } = await convert(await response.blob());
-        const result = await assessFile(sdk, { token: auth.token, region: auth.region, file, reference: "What's the weather like?", locale: 'en-US', signal });
+        const result = await requestAssessment(client, config, { file, reference: "What's the weather like?", locale: 'en-US', signal });
         status(`完整评分测试通过（示例发音 ${result.scores.pronunciation ?? '—'} 分）。现在可以发送自己的录音评分。`);
     } catch (error) { status(error.name === 'AbortError' ? '连接检查超时，请检查网络后重试。' : error.message || '评分服务暂不可用。', true); }
     finally { clearTimeout(timeout); aborter = null; phase = 'idle'; controls(); }
@@ -175,9 +164,7 @@ $('assess').onclick = async () => {
     let timeout;
     try {
         timeout = setTimeout(() => aborter?.abort(), 60000);
-        const auth = await speechAuthorization(signal);
-        const sdk = await withAbort(loadSDK(), signal);
-        const result = await assessFile(sdk, { token: auth.token, region: auth.region, file: current.file, reference: current.reference, locale: current.locale, signal });
+        const result = await requestAssessment(client, config, { file: current.file, reference: current.reference, locale: current.locale, signal });
         const record = { id: crypto.randomUUID(), date: new Date().toISOString(), reference: current.reference, locale: current.locale, seconds: current.seconds, result };
         renderResult(record); saveRecord(record); status('评分完成。点击红色或橙色的词，查看需要练习的音素。');
     } catch (error) { status(error.name === 'AbortError' ? '评分已取消或超时；录音仍在本页。已发送的音频可能已计入 Azure 用量。' : error.message || '网络错误，请稍后重试。', true); }
