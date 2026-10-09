@@ -30,7 +30,7 @@
             <audio id="playback" controls hidden aria-label="回听本次录音"></audio>
             <div class="assessment-action"><button class="primary" id="assess" disabled>发送录音并评分 ↗</button><button id="cancel" hidden>取消评分</button></div>
             <p class="privacy">录音先留在此页面；点击“发送录音并评分”后，音频和朗读文本发送至 Azure Speech（东南亚）。本站不保存录音，刷新即丢失；文字和成绩保存在此浏览器。</p>
-            <div class="account"><span id="account-state" role="status">正在检查登录…</span><a href="{{ "quiz/" | relURL }}" target="_blank" rel="noopener">前往题库登录 ↗</a><button id="refresh-login">刷新登录状态</button></div>
+            <div class="account"><span id="account-state" role="status">正在检查登录…</span><a href="{{ "quiz/" | relURL }}" target="_blank" rel="noopener">前往题库登录 ↗</a><button id="refresh-login">刷新登录状态</button><button id="check-service" disabled>检查评分服务</button></div>
             <p class="hint">评分目前仅向网站管理员开放。与题库、音乐练习室共用登录；在题库完成 GitHub 登录后回到这里。</p>
         </section>
         <section class="paper feedback" aria-labelledby="feedback-title">
