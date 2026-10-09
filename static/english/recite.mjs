@@ -32,7 +32,7 @@ export function startRecite(work, api, { recited = 0 } = {}) {
         const live = api.liveOn();
         return [el('p', {}, `共 ${segs.length} 段。每段只给提示，凭记忆背出来，用练习区录音。选难度：`),
             el('div', { class: 'levels' }, ...LEVELS.map(([n, name, note]) => el('label', { class: 'level-pick' }, el('input', { type: 'radio', name: 'recite-level', value: n, ...(n === level ? { checked: '' } : {}), onchange: () => { level = n; } }), el('span', {}, el('b', {}, name), el('small', {}, note + (n <= passedLevel ? '（已通过）' : ''))))),),
-            el('p', { class: live ? 'hint' : 'bad', role: 'status' }, live ? '实时听写已开启：背完会自动数出背错和漏掉的词，按 8 分制给准确度。' : '自动评分需要打开练习区的“实时亮词”。不打开也可以背，背完对照原文自己判断。'),
+            el('p', { class: live ? 'hint' : 'notice', role: 'status' }, live ? '实时听写已开启：背完会自动数出背错和漏掉的词，按 8 分制给准确度。' : '自动评分需要打开练习区的“实时亮词”。不打开也可以背，背完对照原文自己判断。'),
             el('div', { class: 'controls' }, ...(live ? [] : [button('开启实时亮词', () => { api.setLive(true); render('ready'); })]), button('开始背诵', () => go(0), 'primary'))];
     }
     function reciting() {

@@ -5,6 +5,7 @@ import { createLive, recognitionSupported, describeRecognitionError } from './li
 import { align, liveStates, wordsCorrectPerMinute } from './align.mjs';
 import { tokenize } from './library.mjs';
 import { createSpanPlayer, renderWordDetail } from './feedback.mjs';
+import { enhanceSelect, enhanceAudio, refreshControls } from './controls.mjs';
 const $ = id => document.getElementById(id);
 let client, admin = false, phase = 'idle', clip = null, recorder = null, stream = null, playbackURL = '', recordingStart = 0, tick, autoStop, canceledRecording = false, aborter;
 let store = { version: 1, records: [] }, storeWritable = true;
@@ -26,6 +27,7 @@ function controls() {
     for (const id of ['reference', 'locale', 'accent']) $(id).disabled = busy;
     if (recognitionSupported()) $('live-toggle').disabled = busy;
     $('detail-toggle').disabled = busy;
+    refreshControls();
 }
 function updateCount() { $('word-count').textContent = `${wordCount($('reference').value)} / 60 词`; showWords(); }
 // The reference as words that can light up. states[k] is 'hit', 'miss', 'swap', 'now' or 'pending' for the k-th word.
@@ -49,7 +51,7 @@ const savePrefs = patch => { try { localStorage.setItem(PREFS, JSON.stringify({ 
 // One target accent for model voices, dictation and scoring. Both selects (top bar and practice panel) show it.
 function setAccent(value, remember = true) {
     if (!ACCENTS.includes(value)) return;
-    $('locale').value = value; $('accent').value = value;
+    $('locale').value = value; $('accent').value = value; refreshControls();
     if (remember) savePrefs({ locale: value });
 }
 $('locale').onchange = () => setAccent($('locale').value);
@@ -293,6 +295,7 @@ initReader({
         finally { aborter = null; phase = 'idle'; controls(); }
     },
 });
+enhanceSelect($('accent')); enhanceSelect($('locale')); enhanceAudio($('playback'));
 setupLive(); showWords();
 $('detail-toggle').checked = loadPrefs().detail === true;
 $('detail-toggle').onchange = () => savePrefs({ detail: $('detail-toggle').checked });

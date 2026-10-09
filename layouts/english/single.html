@@ -9,6 +9,9 @@
     {{/* One version for the entry script and the stylesheet, from every module and style: a change anywhere reloads both. */}}
     {{ $source := "" }}{{ range readDir "static/english" }}{{ if or (strings.HasSuffix .Name ".mjs") (strings.HasSuffix .Name ".css") }}{{ $source = printf "%s%s" $source (readFile (printf "static/english/%s" .Name)) }}{{ end }}{{ end }}
     {{ $version := substr (sha256 $source) 0 12 }}
+    {{/* Modules import each other without a version, so a browser could pair a new entry script with an old module. The import map gives every module the same version. */}}
+    {{ $imports := dict }}{{ range readDir "static/english" }}{{ if strings.HasSuffix .Name ".mjs" }}{{ $imports = merge $imports (dict (printf "%s%s" ("english/" | relURL) .Name) (printf "%s%s?v=%s" ("english/" | relURL) .Name $version)) }}{{ end }}{{ end }}
+    <script type="importmap">{{ dict "imports" $imports | jsonify | safeHTML }}</script>
     <link rel="stylesheet" href="{{ "english/style.css" | relURL }}?v={{ $version }}">
     <meta name="hive-english-library" data-version="{{ substr (sha256 (readFile "static/english/library/index.json")) 0 12 }}">
     {{ with site.Params.englishSpeech }}
