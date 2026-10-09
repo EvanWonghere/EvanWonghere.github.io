@@ -80,21 +80,36 @@ test('missing configuration and upstream errors are safe, actionable responses',
         assert.equal((await response.text()).includes('private'), false);
     }
 });
-function fakeSDK({ fail = false, hang = false } = {}) {
-    let closed = 0, audioClosed = 0, applied = null;
+function fakeSDK({ fail = false, hang = false, cancel } = {}) {
+    let closed = 0, audioClosed = 0, applied = null, endpointVersion;
     const sdk = {
-        SpeechConfig: { fromAuthorizationToken: () => ({}) }, OutputFormat: { Detailed: 1 }, ResultReason: { RecognizedSpeech: 3 }, PropertyId: { SpeechServiceResponse_JsonResult: 1 }, PronunciationAssessmentGradingSystem: { HundredMark: 1 }, PronunciationAssessmentGranularity: { Phoneme: 3 },
+        SpeechConfig: { fromAuthorizationToken: () => ({ setProperty: (key, value) => { assert.equal(key, 2); endpointVersion = value; } }) }, OutputFormat: { Detailed: 1 }, ResultReason: { RecognizedSpeech: 3 }, PropertyId: { SpeechServiceResponse_JsonResult: 1, SpeechServiceConnection_RecognitionEndpointVersion: 2 }, PronunciationAssessmentGradingSystem: { HundredMark: 1 }, PronunciationAssessmentGranularity: { Phoneme: 3 },
+        CancellationReason: { Error: 1, EndOfStream: 2 }, CancellationErrorCode: { 5: 'ConnectionFailure', 6: 'AuthenticationFailure', 7: 'TooManyRequests' },
         AudioConfig: { fromWavFileInput: () => ({ close: () => { audioClosed++; } }) },
         PronunciationAssessmentConfig: class { constructor(...args) { applied = args; } applyTo() {} },
-        SpeechRecognizer: class { close() { closed++; } recognizeOnceAsync(success, error) { if (!hang) queueMicrotask(() => fail ? error('secret diagnostic') : success({ reason: 3, properties: { getProperty: () => JSON.stringify(raw) } })); } },
+        SpeechRecognizer: class { close() { closed++; } recognizeOnceAsync(success, error) { if (!hang) queueMicrotask(() => { if (cancel) this.canceled(this, cancel); fail ? error('secret diagnostic') : success({ reason: 3, properties: { getProperty: () => JSON.stringify(raw) } }); }); } },
     };
-    return { sdk, closed: () => closed, audioClosed: () => audioClosed, applied: () => applied };
+    return { sdk, closed: () => closed, audioClosed: () => audioClosed, applied: () => applied, endpointVersion: () => endpointVersion };
 }
 test('Speech SDK adapter scores short WAV and closes audio/recognizer on success and error', async () => {
     for (const fail of [false, true]) {
         const f = fakeSDK({ fail }); const promise = assessFile(f.sdk, { token: 'token', region: 'southeastasia', file: {}, reference: 'Hello world.', locale: 'en-US' });
         if (fail) await assert.rejects(promise, /无法连接/); else assert.equal((await promise).scores.pronunciation, 85);
         assert.equal(f.closed(), 1); assert.equal(f.audioClosed(), 1); assert.deepEqual(f.applied(), ['Hello world.', 1, 3, true]);
+        assert.equal(f.endpointVersion(), '1');
+    }
+});
+test('normal end-of-file does not erase a score; Azure cancellations retain safe codes only', async () => {
+    const args = { token: 'token', region: 'southeastasia', file: {}, reference: 'Hello world.', locale: 'en-US' };
+    const normal = fakeSDK({ cancel: { reason: 2 } });
+    assert.equal((await assessFile(normal.sdk, args)).scores.pronunciation, 85);
+    for (const errorCode of [5, 6, 7]) {
+        const f = fakeSDK({ cancel: { reason: 1, errorCode, errorDetails: 'private-key wss://server?Authorization=Bearer-secret websocket error code: 1006' } });
+        await assert.rejects(assessFile(f.sdk, args), error => {
+            assert.match(error.message, new RegExp(f.sdk.CancellationErrorCode[errorCode]));
+            assert.match(error.message, /1006/); assert.doesNotMatch(error.message, /private|Bearer|wss/); return true;
+        });
+        assert.equal(f.closed(), 1); assert.equal(f.audioClosed(), 1);
     }
 });
 test('canceling a pending score closes the connection, and an already aborted call does not start', async () => {
