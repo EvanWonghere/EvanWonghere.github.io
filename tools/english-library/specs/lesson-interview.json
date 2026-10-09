@@ -1,0 +1,35 @@
+{
+  "id": "lesson-interview",
+  "kind": "lesson",
+  "title": "Introducing Yourself in an Interview",
+  "author": "Hive",
+  "year": 2026,
+  "level": "B1",
+  "source": {
+    "type": "original"
+  },
+  "intro": "这一课是面试开场的自我介绍：先致谢，再说明背景和优势，讲一个自己做过的项目，最后表达求职意愿并向面试官提问。说话人是初级软件开发者，朗读时把每一段当作一次完整的表达。",
+  "tips": [
+    "讲项目时放慢语速，把技术名词和数字读清楚。",
+    "开头和结尾的客套话要自然带笑意，不要像在念稿。"
+  ],
+  "glossary": {
+    "startup": "初创公司",
+    "backend": "后端",
+    "dashboard": "仪表盘，数据总览页面",
+    "queue": "队列",
+    "strength": "优势"
+  },
+  "segments": [
+    "Thank you for having me today. I'm really glad to be here, and I appreciate the chance to meet your team.",
+    "My name is Alex, and I'm a junior software developer with about two years of experience in web development.",
+    "I graduated last year with a degree in computer science, and since then I've been working on front-end projects at a small startup.",
+    "I'd say my biggest strength is that I learn quickly. When I don't know something, I look it up, try it out, and ask questions early.",
+    "I'm also pretty organized, so I usually write down my tasks and check them every morning.",
+    "One project I'm proud of is a small app that helps our team track bug reports. I built the backend, and I designed the simple dashboard.",
+    "The hardest part was handling a lot of data at once. I solved it by adding a queue, and the page now loads about three times faster.",
+    "I'm looking for a role where I can keep growing as a developer. Your team's work really interests me.",
+    "Could I ask a question about the team? How do new developers usually get started here?",
+    "Thank you for your time. I'd love to hear more about the next steps."
+  ]
+}

@@ -1,0 +1,50 @@
+{
+ "version": 1,
+ "id": "grahame-wind-in-the-willows",
+ "kind": "fiction",
+ "title": "The Wind in the Willows · The River Bank (excerpt)",
+ "author": "Kenneth Grahame",
+ "year": 1908,
+ "level": "B2",
+ "source": {
+  "name": "Project Gutenberg #289",
+  "url": "https://www.gutenberg.org/ebooks/289"
+ },
+ "rights": "美国：1908 年出版；中国：作者1932 年去世，保护期已满",
+ "words": 165,
+ "seconds": 83,
+ "intro": "肯尼斯·格雷厄姆（Kenneth Grahame，1859–1932）是出生于爱丁堡的英国作家。《柳林风声》1908 年出版，以河岸和树林里的动物（鼹鼠、水鼠、獾和蟾蜍）为主角，写友谊与乡野生活。本段是开篇：鼹鼠忙着春季大扫除，忽然扔下刷子，跑到地面上去。",
+ "tips": [
+  "叠词和拟声词（scrooged, scrabbled）节奏要轻快，不必逐词用力。",
+  "“Bother!” 和 “O blow!” 要带着烦躁又兴奋的语气。"
+ ],
+ "glossary": {
+  "imperiously": "专横地，不容抗拒地",
+  "bolted": "猛地冲出",
+  "whitewash": "石灰水涂料",
+  "dusters": "掸子",
+  "gravelled": "铺有砂砾的"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "The Mole had been working very hard all the morning, spring-cleaning his little home."
+  },
+  {
+   "id": "s2",
+   "text": "First with brooms, then with dusters; then on ladders and steps and chairs, with a brush and a pail of whitewash; till he had dust in his throat and eyes, and splashes of whitewash all over his black fur,"
+  },
+  {
+   "id": "s3",
+   "text": "and an aching back and weary arms. Spring was moving in the air above and in the earth below and around him, penetrating even his dark and lowly little house with its spirit of divine discontent and longing."
+  },
+  {
+   "id": "s4",
+   "text": "It was small wonder, then, that he suddenly flung down his brush on the floor, said \"Bother!\" and \"O blow!\" and also \"Hang spring-cleaning!\" and bolted out of the house without even waiting to put on his coat."
+  },
+  {
+   "id": "s5",
+   "text": "Something up above was calling him imperiously, and he made for the steep little tunnel which answered in his case to the gravelled carriage-drive owned by animals whose residences are nearer to the sun and air."
+  }
+ ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "keats-to-autumn",
+  "kind": "poem",
+  "title": "To Autumn",
+  "author": "John Keats",
+  "year": 1820,
+  "level": "B2",
+  "firstPublished": 1820,
+  "authorDied": 1821,
+  "source": {
+    "type": "wikisource",
+    "title": "Keats; poems published in 1820/To Autumn",
+    "from": "Season of mists and mellow fruitfulness,",
+    "to": "And gathering swallows twitter in the skies."
+  },
+  "intro": "《秋颂》（To Autumn）是英国浪漫派诗人济慈（John Keats）1819 年 9 月写成的颂诗，收在 1820 年出版的诗集里。全诗三节，每节十一行：先写秋天的成熟，再写收割时节的农人，最后写黄昏里的各种声音。读时让画面一幅幅慢慢铺开，不要赶。",
+  "tips": [
+    "每一节读完停一拍，再进入下一节。",
+    "长句靠逗号和分号分段呼吸，句尾的音不要掉。"
+  ],
+  "glossary": {
+    "mellow": "成熟柔和的",
+    "gourd": "葫芦、瓜类",
+    "hazel": "榛子树",
+    "winnowing": "扬谷",
+    "twitter": "叽啾"
+  },
+  "human": {
+    "item": "odetoautumn_0711_librivox",
+    "itemTitle": "Ode to Autumn",
+    "track": "Ode to Autumn - Read by CJRG",
+    "seconds": 143
+  }
+}

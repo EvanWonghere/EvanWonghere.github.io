@@ -1,0 +1,51 @@
+{
+ "version": 1,
+ "id": "aesop-hare-and-tortoise",
+ "kind": "prose",
+ "title": "The Hare and the Tortoise",
+ "author": "Aesop, tr. George Fyler Townsend",
+ "year": 1867,
+ "level": "B1",
+ "source": {
+  "name": "Wikisource",
+  "url": "https://en.wikisource.org/wiki/Three_Hundred_%C3%86sop's_Fables%2FThe_Hare_and_the_Tortoise"
+ },
+ "rights": "美国：1867 年出版；中国：作者及译者1893 年去世，保护期已满",
+ "words": 139,
+ "seconds": 70,
+ "intro": "《龟兔赛跑》出自《伊索寓言》。伊索是传说中的古希腊寓言家，生平并无可靠史料。本文采用英国学者乔治·菲勒·汤森德（George Fyler Townsend）1867 年的译本。故事以赛跑为线，讲述看似占优的一方如何轻敌而落败。",
+ "tips": [
+  "叙述平稳，引号内的对话可稍带语气，像讲故事一样读。",
+  "“comfortably dozing”一句放慢语速，读出懒洋洋的感觉。"
+ ],
+ "glossary": {
+  "ridiculed": "嘲笑",
+  "assertion": "断言，主张",
+  "deeming": "认为",
+  "appointed": "约定的",
+  "wayside": "路边",
+  "fatigue": "疲劳"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "A Hare one day ridiculed the short feet and slow pace of the Tortoise. The latter, laughing, said: \"Though you be swift as the wind, I will beat you in a race.\""
+  },
+  {
+   "id": "s2",
+   "text": "The Hare, deeming her assertion to be simply impossible, assented to the proposal; and they agreed that the Fox should choose the course, and fix the goal. On the day appointed for the race they started together."
+  },
+  {
+   "id": "s3",
+   "text": "The Tortoise never for a moment stopped, but went on with a slow but steady pace straight to the end of the course."
+  },
+  {
+   "id": "s4",
+   "text": "The Hare, trusting to his native swiftness, cared little about the race, and lying down by the wayside, fell fast asleep."
+  },
+  {
+   "id": "s5",
+   "text": "At last waking up, and moving as fast as he could, he saw the Tortoise had reached the goal, and was, comfortably dozing after her fatigue."
+  }
+ ]
+}

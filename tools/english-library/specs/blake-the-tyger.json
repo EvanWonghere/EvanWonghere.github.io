@@ -1,0 +1,36 @@
+{
+  "id": "blake-the-tyger",
+  "kind": "poem",
+  "title": "The Tyger",
+  "author": "William Blake",
+  "year": 1794,
+  "level": "B2",
+  "firstPublished": 1794,
+  "authorDied": 1827,
+  "source": {
+    "type": "wikisource",
+    "title": "Songs of Innocence and of Experience (1826)/Songs of Experience/The Tyger",
+    "from": "Tyger Tyger. burning bright,",
+    "to": "Dare frame thy fearful symmetry?"
+  },
+  "intro": "威廉·布莱克（William Blake，1757–1827）是英国诗人兼版画家。《老虎》（The Tyger）收入他1794年的诗集《经验之歌》，与《天真之歌》中的《羔羊》互为对照。全诗几乎都是提问，追问创造老虎的那只手和那双眼睛，是怎样锻造出它可怕的匀称。",
+  "tips": [
+    "每节四行，两行一韵，行末的逗号和问号处稍作停顿。",
+    "问句语调要上扬，最后一节的 Dare 要读得最有力。"
+  ],
+  "glossary": {
+    "tyger": "老虎（tiger 的古体拼法）",
+    "symmetry": "匀称，对称之美",
+    "sinews": "筋腱，肌腱",
+    "anvil": "铁砧",
+    "furnace": "熔炉",
+    "aspire": "向上攀升，渴望飞起",
+    "dread": "令人敬畏的，可怕的"
+  },
+  "human": {
+    "item": "spc164_1702_librivox",
+    "itemTitle": "Short Poetry Collection 164",
+    "track": "25 - The Tyger",
+    "seconds": 92
+  }
+}

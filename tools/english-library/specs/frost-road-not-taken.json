@@ -1,0 +1,34 @@
+{
+  "id": "frost-road-not-taken",
+  "kind": "poem",
+  "title": "The Road Not Taken",
+  "author": "Robert Frost",
+  "year": 1916,
+  "level": "B1",
+  "firstPublished": 1916,
+  "authorDied": 1963,
+  "source": {
+    "type": "wikisource",
+    "title": "Mountain Interval/The Road Not Taken",
+    "from": "Two roads diverged in a yellow wood,",
+    "to": "And that has made all the difference."
+  },
+  "intro": "罗伯特·弗罗斯特（1874–1963）是美国诗人，一生四次获得普利策诗歌奖。《未选择的路》1916年收入诗集《山间地带》（Mountain Interval）。诗人在树林的岔路口停下，选择了那条草更多、似乎较少有人走过的路。许多读者把它当作关于人生抉择的诗，但诗中两条路其实差不多，结尾的“不同”值得细细体会。",
+  "tips": [
+    "每行大约四个重音，节奏平稳，像在林中慢慢走。",
+    "“I—”后的破折号处要停一下，最后两行放慢读。"
+  ],
+  "glossary": {
+    "diverged": "分岔，分成两条",
+    "undergrowth": "灌木丛，矮树丛",
+    "trodden": "被踩过的（tread 的过去分词）",
+    "wanted": "缺少，此处指没有被磨损",
+    "hence": "从今以后，之后"
+  },
+  "human": {
+    "item": "shortpoetry123_1309_librivox",
+    "itemTitle": "Short Poetry Collection 123",
+    "track": "15 - The Road Not Taken",
+    "seconds": 81
+  }
+}

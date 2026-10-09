@@ -1,0 +1,49 @@
+{
+ "version": 1,
+ "id": "dickinson-hope",
+ "kind": "poem",
+ "title": "\"Hope\" is the thing with feathers",
+ "author": "Emily Dickinson",
+ "year": 1891,
+ "level": "B2",
+ "source": {
+  "name": "Wikisource",
+  "url": "https://en.wikisource.org/wiki/Poems%3A_Second_Series_(Dickinson)%2FHope"
+ },
+ "rights": "美国：1891 年出版；中国：作者1886 年去世，保护期已满",
+ "words": 69,
+ "seconds": 35,
+ "intro": "艾米丽·狄金森（1830–1886）是美国诗人，一生写下近两千首诗，生前只发表了极少数。《希望》1891年收入《诗集（第二辑）》（Poems: Second Series），是她最广为传诵的一首。诗把希望比作栖息在心里的小鸟，它不用言语，只是不停地歌唱，即使在寒冷和风暴中也不索取回报。",
+ "tips": [
+  "诗句多用逗号连接，少停顿，读得流畅，像鸟儿不停地唱。",
+  "perches、gale 等词读得轻而清楚，语气温和。"
+ ],
+ "glossary": {
+  "perches": "栖息，停落",
+  "gale": "大风，强风",
+  "sore": "猛烈的，严重的",
+  "abash": "使气馁，使受挫",
+  "extremity": "极度危难，绝境",
+  "chillest": "最寒冷的"
+ },
+ "human": {
+  "src": "human/dickinson-hope.mp3",
+  "seconds": 35,
+  "credit": "LibriVox 志愿者朗读 · Short Poetry Collection 119 · Hope is the thing with feathers",
+  "url": "https://archive.org/details/shortpoetry119_1305_librivox"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "HOPE is the thing with feathers\nThat perches in the soul,\nAnd sings the tune without the words,\nAnd never stops at all,"
+  },
+  {
+   "id": "s2",
+   "text": "And sweetest in the gale is heard;\nAnd sore must be the storm\nThat could abash the little bird\nThat kept so many warm."
+  },
+  {
+   "id": "s3",
+   "text": "I've heard it in the chillest land,\nAnd on the strangest sea;\nYet, never, in extremity,\nIt asked a crumb of me."
+  }
+ ]
+}

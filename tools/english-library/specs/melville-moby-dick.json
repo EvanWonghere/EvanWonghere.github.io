@@ -1,0 +1,27 @@
+{
+  "id": "melville-moby-dick",
+  "kind": "fiction",
+  "title": "Moby-Dick · Loomings (excerpt)",
+  "author": "Herman Melville",
+  "year": 1851,
+  "level": "C1",
+  "firstPublished": 1851,
+  "authorDied": 1891,
+  "source": {
+    "type": "gutenberg",
+    "id": 2701,
+    "from": "Call me Ishmael. Some years ago",
+    "to": "feelings towards the ocean with me."
+  },
+  "intro": "赫尔曼·梅尔维尔（Herman Melville，1819–1891）是美国作家。《白鲸》1851 年出版，讲述捕鲸船长亚哈追捕一头白鲸的故事，叙述者以 Call me Ishmael（叫我以实玛利）开篇。本段是第一章的开头，叙述者说明自己为何出海，语气随意而带自嘲，句子很长。",
+  "tips": [
+    "破折号处稍作停顿，不要一口气读完长句。",
+    "Call me Ishmael. 两个短句要干脆，作为开场的口吻。"
+  ],
+  "glossary": {
+    "spleen": "忧郁，坏脾气",
+    "hypos": "忧郁症（口语）",
+    "drizzly": "毛毛细雨的",
+    "methodically": "有条理地，有步骤地"
+  }
+}

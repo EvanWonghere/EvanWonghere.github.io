@@ -1,0 +1,29 @@
+{
+  "id": "emerson-self-reliance",
+  "kind": "prose",
+  "title": "Self-Reliance (excerpt)",
+  "author": "Ralph Waldo Emerson",
+  "year": 1841,
+  "level": "C1",
+  "firstPublished": 1841,
+  "authorDied": 1882,
+  "source": {
+    "type": "wikisource",
+    "title": "Essays: First Series/Self-Reliance",
+    "from": "Trust thyself: every heart vibrates to that iron string",
+    "to": "who prattle and play to it."
+  },
+  "intro": "拉尔夫·沃尔多·爱默生（1803–1882）是美国思想家、散文作家，超验主义运动的代表人物。《论自立》（Self-Reliance）收于他的《论文集（第一辑）》（1841）。文章主张人应相信自己内心的判断，不因他人的意见或传统而放弃自我。",
+  "tips": [
+    "句子短促有力，句号处略作停顿，让每句都站得住。",
+    "“Trust thyself”的 Trust 重读，这是全篇的主旨句。"
+  ],
+  "glossary": {
+    "vibrates": "共鸣，颤动",
+    "providence": "天意，神意",
+    "conform": "顺从，符合",
+    "disconcerted": "局促不安，困惑",
+    "prattle": "絮叨，闲聊",
+    "unconquered": "未被磨灭的，仍然锐利"
+  }
+}

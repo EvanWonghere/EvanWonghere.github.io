@@ -1,0 +1,36 @@
+{
+  "id": "tennyson-crossing-the-bar",
+  "kind": "poem",
+  "title": "Crossing the Bar",
+  "author": "Alfred, Lord Tennyson",
+  "year": 1889,
+  "level": "B2",
+  "firstPublished": 1889,
+  "authorDied": 1892,
+  "source": {
+    "type": "wikisource",
+    "title": "Demeter and other poems/Crossing the Bar",
+    "from": "Sunset and evening star,",
+    "to": "When I have crost the bar."
+  },
+  "intro": "丁尼生（1809–1892）是英国维多利亚时代的著名诗人，1850年起担任桂冠诗人。《越过沙洲》（Crossing the Bar）是他晚年的短诗，1889年发表于诗集《德墨忒耳及其他诗》（Demeter and Other Poems）。全诗以船只驶出港口、越过沙洲的意象，写对生命终点的平静期待：没有哀伤，只希望在夜幕降临后，见到引航的“领航者”。",
+  "tips": [
+    "全诗是一个长句的祈愿，行末逗号处短停，句号处再停。",
+    "bar、moaning、flood 等词要读出海水低沉、平缓的感觉。"
+  ],
+  "glossary": {
+    "bar": "河口沙洲（船只需越过的浅滩）",
+    "moaning": "呜咽般的低沉声响（指浪声）",
+    "bourne": "界限，边界",
+    "crost": "crossed 的旧写法，越过",
+    "embark": "登船出发",
+    "pilot": "引航员（常被读作上帝）",
+    "flood": "潮水"
+  },
+  "human": {
+    "item": "spc184_1810_librivox",
+    "itemTitle": "Short Poetry Collection 184",
+    "track": "08 - Crossing the Bar",
+    "seconds": 55
+  }
+}

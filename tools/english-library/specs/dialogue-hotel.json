@@ -1,0 +1,41 @@
+{
+  "id": "dialogue-hotel",
+  "kind": "lesson",
+  "title": "At the Hotel Desk",
+  "author": "Hive",
+  "year": 2026,
+  "level": "A2",
+  "source": {
+    "type": "original"
+  },
+  "roles": ["Receptionist", "Guest"],
+  "intro": "这是客人在酒店前台办理入住的对话。客人有预订，先确认身份和早餐时间，房间的灯坏了就换了一间房，最后请前台第二天一早叫出租车去机场。你可以任选前台或客人的角色朗读。",
+  "tips": [
+    "客人的请求多用 Could you、Is it possible，语调要柔和。",
+    "seven、quarter to seven 这类时间要读清楚。"
+  ],
+  "glossary": {
+    "reservation": "预订",
+    "passport": "护照",
+    "breakfast": "早餐",
+    "repair": "维修",
+    "entrance": "入口"
+  },
+  "segments": [
+    { "speaker": "Receptionist", "text": "Good evening, and welcome to our hotel. Do you have a reservation with us?" },
+    { "speaker": "Guest", "text": "Yes, I do. The reservation is under the name Lee, for two nights, starting tonight." },
+    { "speaker": "Receptionist", "text": "Thank you, Mr. Lee. Could I see your passport, please? Your room is on the fifth floor." },
+    { "speaker": "Guest", "text": "Here you go. Is breakfast included in the price? I'd like to know what time it starts." },
+    { "speaker": "Receptionist", "text": "Yes, breakfast is included. It's served in the restaurant on the ground floor, from seven to ten." },
+    { "speaker": "Guest", "text": "Great, thank you. Oh, there's one problem. The bathroom light in my room doesn't work." },
+    { "speaker": "Receptionist", "text": "I'm sorry about that. Let me send someone up to fix it right away." },
+    { "speaker": "Guest", "text": "Thank you. Is it possible to have a different room, if the repair takes too long?" },
+    { "speaker": "Receptionist", "text": "Of course. Here is a new key for room 618, on the sixth floor. It has a bigger desk." },
+    { "speaker": "Guest", "text": "That's perfect, thank you so much. Could you order a taxi to the airport for seven tomorrow morning?" },
+    { "speaker": "Receptionist", "text": "Sure. What time is your flight, so I can tell the driver when to arrive?" },
+    { "speaker": "Guest", "text": "The flight leaves at nine, so the taxi should come at a quarter to seven." },
+    { "speaker": "Receptionist", "text": "No problem. I'll book it now, and the taxi will wait for you outside the main entrance." },
+    { "speaker": "Guest", "text": "Thank you for your help. I hope I can enjoy my stay here." },
+    { "speaker": "Receptionist", "text": "You're welcome. Enjoy your stay, and have a good night's sleep." }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "lesson-daily",
+  "kind": "lesson",
+  "title": "Everyday Talk",
+  "author": "Hive",
+  "year": 2026,
+  "level": "A2",
+  "source": {
+    "type": "original"
+  },
+  "intro": "这一课练的是日常聊天：问候、聊天气、说周末计划和日常习惯。前四句是练习的起点，先慢慢读清每个词，再把后面的句子连起来读顺，最后可以试着用自己的生活替换句子里的内容。",
+  "tips": [
+    "句末语调下降，句中逗号处停顿半拍，不要一口气读完。",
+    "I'm、it's 这类缩写读得轻快自然，不必把每个音都读满。"
+  ],
+  "glossary": {
+    "pronunciation": "发音",
+    "prototype": "原型，初版样机",
+    "scratch": "从零开始",
+    "grandparents": "祖父母",
+    "jacket": "夹克外套"
+  },
+  "segments": [
+    "I usually read a little every evening. Today, I want to improve my English pronunciation.",
+    "I enjoy building small games and learning how things work. I am practicing English a little every day.",
+    "This weekend, I would like to take a walk, visit a bookstore, and spend some time with my friends.",
+    "I built this project from scratch. First, I made a simple prototype. Then, I tested the main features and improved the design.",
+    "Good morning! It's a bit cold today, so I'm wearing my warm jacket.",
+    "What are you doing this weekend? I'm going to visit my grandparents on Saturday.",
+    "I usually get up at seven, and I have a cup of tea before breakfast. After work, I like to go for a short run.",
+    "Sorry I'm late. The bus was full, so I decided to walk the rest of the way.",
+    "Did you sleep well last night? I stayed up too late watching a movie, so I'm a little tired."
+  ]
+}

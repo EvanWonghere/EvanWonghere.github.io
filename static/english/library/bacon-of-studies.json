@@ -1,0 +1,64 @@
+{
+ "version": 1,
+ "id": "bacon-of-studies",
+ "kind": "prose",
+ "title": "Of Studies",
+ "author": "Francis Bacon",
+ "year": 1625,
+ "level": "C1",
+ "source": {
+  "name": "Wikisource",
+  "url": "https://en.wikisource.org/wiki/Essays%2C_civil_and_moral_(Harvard_Classics)%2FOf_Studies"
+ },
+ "rights": "美国：1625 年出版；中国：作者1626 年去世，保护期已满",
+ "words": 240,
+ "seconds": 120,
+ "intro": "弗朗西斯·培根（1561–1626）是英国哲学家、政治家。《论学习》（Of Studies）是他《论说文集》（Essays）中的一篇，收录于 1625 年的扩充版。文章谈学习的三种用处（怡情、装饰与才干），以及读书应当浅尝、细读或精读的不同方法。",
+ "tips": [
+  "分号连接的排比句较多，分号处稍停，句末语调下降。",
+  "“Read not … nor … but …”的三组对照，每组之后停顿一下。"
+ ],
+ "glossary": {
+  "privateness": "独处，私下",
+  "retiring": "退隐，独居",
+  "sloth": "懒惰，怠惰",
+  "affectation": "矫饰，做作",
+  "contemn": "轻视，蔑视",
+  "proyning": "修剪（即 pruning）",
+  "confute": "驳斥，反驳"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "Studies serve for delight, for ornament, and for ability. Their chief use for delight is in privateness and retiring; for ornament, is in discourse; and for ability, is in the judgment and disposition of business."
+  },
+  {
+   "id": "s2",
+   "text": "For expert men can execute, and perhaps judge of particulars, one by one; but the general counsels, and the plots and marshalling of affairs, come best from those that are learned."
+  },
+  {
+   "id": "s3",
+   "text": "To spend too much time in studies is sloth; to use them too much for ornament, is affectation; to make judgment wholly by their rules, is the humor of a scholar."
+  },
+  {
+   "id": "s4",
+   "text": "They perfect nature, and are perfected by experience: for natural abilities are like natural plants, that need proyning, by study; and studies themselves do give forth directions too much at large, except they be bounded in by experience."
+  },
+  {
+   "id": "s5",
+   "text": "Crafty men contemn studies, simple men admire them, and wise men use them; for they teach not their own use; but that is a wisdom without them, and above them, won by observation."
+  },
+  {
+   "id": "s6",
+   "text": "Read not to contradict and confute; nor to believe and take for granted; nor to find talk and discourse; but to weigh and consider."
+  },
+  {
+   "id": "s7",
+   "text": "Some books are to be tasted, others to be swallowed, and some few to be chewed and digested; that is, some books are to be read only in parts; others to be read, but not curiously;"
+  },
+  {
+   "id": "s8",
+   "text": "and some few to be read wholly, and with diligence and attention."
+  }
+ ]
+}

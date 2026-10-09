@@ -1,0 +1,30 @@
+{
+  "id": "kennedy-inaugural",
+  "kind": "speech",
+  "title": "Inaugural Address (excerpt)",
+  "author": "John F. Kennedy",
+  "year": 1961,
+  "level": "B2",
+  "firstPublished": 1961,
+  "authorDied": 1963,
+  "usGovWork": true,
+  "source": {
+    "type": "wikisource",
+    "title": "John F. Kennedy's Inaugural Address",
+    "from": "Now the trumpet summons us again; not as a call",
+    "to": "ask what you can do for your country."
+  },
+  "intro": "1961年1月20日，肯尼迪在华盛顿发表就职演说，他是美国第一位在二十世纪出生的总统。演说强调冷战中的责任与合作，结尾 “ask not what your country can do for you” 一句广为人知。",
+  "tips": [
+    "“Now the trumpet summons us again” 读出号召的有力节奏。",
+    "结尾 “ask what you can do for your country” 要让两个 ask 形成对比。"
+  ],
+  "glossary": {
+    "summons": "召唤",
+    "embattled": "陷入战斗的、处境艰难的",
+    "tribulation": "苦难、磨难",
+    "twilight": "黄昏，比喻漫长的艰难时期",
+    "forge": "打造、锻造",
+    "alliance": "同盟"
+  }
+}

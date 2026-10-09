@@ -1,0 +1,36 @@
+{
+  "id": "lesson-sounds",
+  "kind": "lesson",
+  "title": "Hard Sounds for Chinese Speakers",
+  "author": "Hive",
+  "year": 2026,
+  "level": "B1",
+  "source": {
+    "type": "original"
+  },
+  "intro": "这一课把几组容易读错的音放进自然的句子里：th、r 与 l、v 与 w、词尾辅音，以及连读。每组两句，先慢速读准口型，再用正常语速读一遍，注意每组对比的那个音。",
+  "tips": [
+    "th：舌尖轻放在上下门牙之间，让气流从舌缝吹出，别读成 s 或 d。",
+    "r 舌尖不碰上颚、舌身后收，嘴唇微圆；v 上齿轻咬下唇，声带振动。",
+    "词尾 -ed、-s 要轻轻读出来，别吞掉；连读时把前一个词的尾音带进下一个词。"
+  ],
+  "glossary": {
+    "thoughtful": "体贴的",
+    "lately": "最近",
+    "village": "村庄",
+    "wonderful": "极好的",
+    "grateful": "感激的"
+  },
+  "segments": [
+    "I think this is the best way to practice, because I can hear the difference every time.",
+    "Thanks so much for the thoughtful gift. Honestly, I think this one is more useful than the other.",
+    "Really? I'd rather rest for a while, since the rain is supposed to arrive around noon.",
+    "Lately I've been getting up early, and the light in my living room looks lovely in the morning.",
+    "We drove to a quiet village over the weekend, and the view was very beautiful.",
+    "Well, we walked around the town, and it was wonderful to watch the sunset with the wind.",
+    "She asked me to help her finish the project before the end of the week.",
+    "He helped us a lot, and I'm grateful he's the kind of person who cares about the world.",
+    "Pick it up and put it on the table, then turn off the light.",
+    "It's an easy idea, and I think we should try it out right away."
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "thoreau-walden-deliberately",
+  "kind": "prose",
+  "title": "Where I Lived, and What I Lived For (excerpt)",
+  "author": "Henry David Thoreau",
+  "year": 1854,
+  "level": "C1",
+  "firstPublished": 1854,
+  "authorDied": 1862,
+  "source": {
+    "type": "wikisource",
+    "title": "Walden (1854) Thoreau/Where I Lived, and What I Lived for",
+    "from": "I went to the woods because I wished to live deliberately",
+    "to": "enjoy him forever.\""
+  },
+  "intro": "亨利·戴维·梭罗（1817–1862）是美国作家和思想家，超验主义运动的重要人物。《瓦尔登湖》（1854）记述他在马萨诸塞州康科德附近瓦尔登湖畔独居的生活。本篇是书中第二章《我为何而居，我为何而生》，开头几句说明他进入林中的目的。",
+  "tips": [
+    "长句多，按分号和逗号分意群读，意群之间稍作停顿。",
+    "“live deep”与“marrow”要重读，语气由慢转强。"
+  ],
+  "glossary": {
+    "front": "直面，迎对",
+    "marrow": "精髓",
+    "resignation": "顺从，听天由命",
+    "meanness": "卑微，平庸",
+    "sublime": "崇高的",
+    "excursion": "远行，探索"
+  }
+}

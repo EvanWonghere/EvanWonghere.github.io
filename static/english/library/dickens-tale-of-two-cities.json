@@ -1,0 +1,47 @@
+{
+ "version": 1,
+ "id": "dickens-tale-of-two-cities",
+ "kind": "fiction",
+ "title": "A Tale of Two Cities · Opening",
+ "author": "Charles Dickens",
+ "year": 1859,
+ "level": "C1",
+ "source": {
+  "name": "Project Gutenberg #98",
+  "url": "https://www.gutenberg.org/ebooks/98"
+ },
+ "rights": "美国：1859 年出版；中国：作者1870 年去世，保护期已满",
+ "words": 118,
+ "seconds": 59,
+ "intro": "查尔斯·狄更斯（1812–1870）是英国小说家，《双城记》1859 年出版，以法国大革命前后的伦敦与巴黎为背景，讲述爱情、牺牲与革命。开篇用成对的排比句，把希望与绝望、光明与黑暗并列，铺陈时代的矛盾。这段文字广为引用，适合练习长句的节奏。",
+ "tips": [
+  "成对的反义词之间稍作停顿，前后句要一气呵成。",
+  "末句 only 之前可放慢，语气带一点讽刺。"
+ ],
+ "glossary": {
+  "epoch": "时代，纪元",
+  "incredulity": "怀疑，不相信",
+  "noisiest": "最喧闹的",
+  "authorities": "权威人士",
+  "insisted": "坚持说",
+  "superlative": "最高级的"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity,"
+  },
+  {
+   "id": "s2",
+   "text": "it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair, we had everything before us, we had nothing before us,"
+  },
+  {
+   "id": "s3",
+   "text": "we were all going direct to Heaven, we were all going direct the other way--in short, the period was so far like the present period, that some of its noisiest authorities insisted on its being received,"
+  },
+  {
+   "id": "s4",
+   "text": "for good or for evil, in the superlative degree of comparison only."
+  }
+ ]
+}

@@ -1,0 +1,36 @@
+{
+  "id": "wordsworth-daffodils",
+  "kind": "poem",
+  "title": "I Wandered Lonely as a Cloud",
+  "author": "William Wordsworth",
+  "year": 1807,
+  "level": "B1",
+  "firstPublished": 1807,
+  "authorDied": 1850,
+  "source": {
+    "type": "wikisource",
+    "title": "Poems That Every Child Should Know/I Wandered Lonely as a Cloud",
+    "from": "I wandered lonely as a cloud",
+    "to": "And dances with the daffodils."
+  },
+  "intro": "华兹华斯（1770–1850）是英国浪漫主义诗人，与柯尔律治合作出版《抒情歌谣集》（1798），被视为英国浪漫主义运动的开端之一。本诗常被称为《水仙》（The Daffodils），写诗人漫步时突然看见湖边成片金黄的水仙在风中起舞；后来独处时，这景象又浮现在“内心之眼”前，带来喜悦。（这里的四节是 1815 年修订后的文本。）",
+  "tips": [
+    "每节前四行 ABAB 押韵，后两行 CC 押韵，朗读时注意韵脚。",
+    "最后一节转向回忆，语气由明快变温柔，读的时候可以放慢。"
+  ],
+  "glossary": {
+    "host": "一大群（此处指水仙）",
+    "vales": "山谷",
+    "margin": "岸边，边缘",
+    "sprightly": "活泼的，轻快的",
+    "jocund": "欢快的，快乐的",
+    "glee": "欢乐，喜悦",
+    "pensive": "沉思的，忧思的"
+  },
+  "human": {
+    "item": "wandered_lonely_as_a_cloud_librivox",
+    "itemTitle": "I Wandered Lonely As a Cloud",
+    "track": "I Wandered Lonely as a Cloud - Read by DJS",
+    "seconds": 82
+  }
+}

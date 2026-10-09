@@ -1,0 +1,51 @@
+{
+ "version": 1,
+ "id": "austen-pride-and-prejudice",
+ "kind": "fiction",
+ "title": "Pride and Prejudice · Chapter 1 (excerpt)",
+ "author": "Jane Austen",
+ "year": 1813,
+ "level": "C1",
+ "source": {
+  "name": "Project Gutenberg #1342",
+  "url": "https://www.gutenberg.org/ebooks/1342"
+ },
+ "rights": "美国：1813 年出版；中国：作者1817 年去世，保护期已满",
+ "words": 150,
+ "seconds": 75,
+ "intro": "简·奥斯汀（1775–1817）是英国小说家，《傲慢与偏见》1813 年出版，讲述乡绅班纳特家五个女儿的婚姻与人情。开篇这句名言用反讽口吻说：有钱的单身汉一定需要妻子。本段是班纳特太太与丈夫的第一段对话，她急着打听新搬来的富有单身汉。读时留意语气中的反讽。",
+ "tips": [
+  "开篇名言要放慢，句中逗号处停顿，体会反讽。",
+  "班纳特太太语速快、语气急切，与丈夫的平淡形成对比。"
+ ],
+ "glossary": {
+  "acknowledged": "公认的",
+  "possession": "拥有",
+  "fortune": "财产",
+  "neighbourhood": "街坊，邻近地区",
+  "rightful": "合法的，应得的",
+  "let": "（房屋）出租"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "It is a truth universally acknowledged, that a single man in possession of a good fortune must be in want of a wife."
+  },
+  {
+   "id": "s2",
+   "text": "However little known the feelings or views of such a man may be on his first entering a neighbourhood, this truth is so well fixed in the minds of the surrounding families,"
+  },
+  {
+   "id": "s3",
+   "text": "that he is considered as the rightful property of some one or other of their daughters. \"My dear Mr. Bennet,\" said his lady to him one day, \"have you heard that Netherfield Park is let at last?\""
+  },
+  {
+   "id": "s4",
+   "text": "Mr. Bennet replied that he had not. \"But it is,\" returned she; \"for Mrs. Long has just been here, and she told me all about it.\""
+  },
+  {
+   "id": "s5",
+   "text": "Mr. Bennet made no answer. \"Do not you want to know who has taken it?\" cried his wife, impatiently. \"You want to tell me, and I have no objection to hearing it.\""
+  }
+ ]
+}

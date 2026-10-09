@@ -1,0 +1,72 @@
+{
+ "version": 1,
+ "id": "keats-to-autumn",
+ "kind": "poem",
+ "title": "To Autumn",
+ "author": "John Keats",
+ "year": 1820,
+ "level": "B2",
+ "source": {
+  "name": "Wikisource",
+  "url": "https://en.wikisource.org/wiki/Keats%3B_poems_published_in_1820%2FTo_Autumn"
+ },
+ "rights": "美国：1820 年出版；中国：作者1821 年去世，保护期已满",
+ "words": 254,
+ "seconds": 127,
+ "intro": "《秋颂》（To Autumn）是英国浪漫派诗人济慈（John Keats）1819 年 9 月写成的颂诗，收在 1820 年出版的诗集里。全诗三节，每节十一行：先写秋天的成熟，再写收割时节的农人，最后写黄昏里的各种声音。读时让画面一幅幅慢慢铺开，不要赶。",
+ "tips": [
+  "每一节读完停一拍，再进入下一节。",
+  "长句靠逗号和分号分段呼吸，句尾的音不要掉。"
+ ],
+ "glossary": {
+  "mellow": "成熟柔和的",
+  "gourd": "葫芦、瓜类",
+  "hazel": "榛子树",
+  "winnowing": "扬谷",
+  "twitter": "叽啾"
+ },
+ "human": {
+  "src": "human/keats-to-autumn.mp3",
+  "seconds": 143,
+  "credit": "LibriVox 志愿者朗读 · Ode to Autumn · Ode to Autumn - Read by CJRG",
+  "url": "https://archive.org/details/odetoautumn_0711_librivox"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "Season of mists and mellow fruitfulness,\nClose bosom-friend of the maturing sun;\nConspiring with him how to load and bless\nWith fruit the vines that round the thatch-eves run;"
+  },
+  {
+   "id": "s2",
+   "text": "To bend with apples the moss'd cottage-trees,\nAnd fill all fruit with ripeness to the core;"
+  },
+  {
+   "id": "s3",
+   "text": "To swell the gourd, and plump the hazel shells\nWith a sweet kernel; to set budding more,\nAnd still more, later flowers for the bees,\nUntil they think warm days will never cease,\nFor Summer has o'er-brimm'd their clammy cells."
+  },
+  {
+   "id": "s4",
+   "text": "Who hath not seen thee oft amid thy store?\nSometimes whoever seeks abroad may find\nThee sitting careless on a granary floor,\nThy hair soft-lifted by the winnowing wind;"
+  },
+  {
+   "id": "s5",
+   "text": "Or on a half-reap'd furrow sound asleep,\nDrows'd with the fume of poppies, while thy hook\nSpares the next swath and all its twined flowers:\nAnd sometimes like a gleaner thou dost keep\nSteady thy laden head across a brook;"
+  },
+  {
+   "id": "s6",
+   "text": "Or by a cyder-press, with patient look,\nThou watchest the last oozings hours by hours."
+  },
+  {
+   "id": "s7",
+   "text": "Where are the songs of Spring? Ay, where are they?\nThink not of them, thou hast thy music too,—\nWhile barred clouds bloom the soft-dying day,\nAnd touch the stubble-plains with rosy hue;"
+  },
+  {
+   "id": "s8",
+   "text": "Then in a wailful choir the small gnats mourn\nAmong the river sallows, borne aloft\nOr sinking as the light wind lives or dies;\nAnd full-grown lambs loud bleat from hilly bourn;"
+  },
+  {
+   "id": "s9",
+   "text": "Hedge-crickets sing; and now with treble soft\nThe red-breast whistles from a garden-croft;\nAnd gathering swallows twitter in the skies."
+  }
+ ]
+}

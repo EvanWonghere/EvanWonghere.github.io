@@ -1,0 +1,30 @@
+{
+  "id": "aesop-hare-and-tortoise",
+  "kind": "prose",
+  "title": "The Hare and the Tortoise",
+  "author": "Aesop, tr. George Fyler Townsend",
+  "year": 1867,
+  "level": "B1",
+  "firstPublished": 1867,
+  "authorDied": 1893,
+  "translated": true,
+  "source": {
+    "type": "wikisource",
+    "title": "Three Hundred Æsop's Fables/The Hare and the Tortoise",
+    "from": "A Hare one day ridiculed the short feet",
+    "to": "dozing after her fatigue."
+  },
+  "intro": "《龟兔赛跑》出自《伊索寓言》。伊索是传说中的古希腊寓言家，生平并无可靠史料。本文采用英国学者乔治·菲勒·汤森德（George Fyler Townsend）1867 年的译本。故事以赛跑为线，讲述看似占优的一方如何轻敌而落败。",
+  "tips": [
+    "叙述平稳，引号内的对话可稍带语气，像讲故事一样读。",
+    "“comfortably dozing”一句放慢语速，读出懒洋洋的感觉。"
+  ],
+  "glossary": {
+    "ridiculed": "嘲笑",
+    "assertion": "断言，主张",
+    "deeming": "认为",
+    "appointed": "约定的",
+    "wayside": "路边",
+    "fatigue": "疲劳"
+  }
+}

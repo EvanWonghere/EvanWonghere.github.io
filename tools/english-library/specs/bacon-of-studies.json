@@ -1,0 +1,30 @@
+{
+  "id": "bacon-of-studies",
+  "kind": "prose",
+  "title": "Of Studies",
+  "author": "Francis Bacon",
+  "year": 1625,
+  "level": "C1",
+  "firstPublished": 1625,
+  "authorDied": 1626,
+  "source": {
+    "type": "wikisource",
+    "title": "Essays, civil and moral (Harvard Classics)/Of Studies",
+    "from": "Studies serve for delight, for ornament",
+    "to": "with diligence and attention."
+  },
+  "intro": "弗朗西斯·培根（1561–1626）是英国哲学家、政治家。《论学习》（Of Studies）是他《论说文集》（Essays）中的一篇，收录于 1625 年的扩充版。文章谈学习的三种用处（怡情、装饰与才干），以及读书应当浅尝、细读或精读的不同方法。",
+  "tips": [
+    "分号连接的排比句较多，分号处稍停，句末语调下降。",
+    "“Read not … nor … but …”的三组对照，每组之后停顿一下。"
+  ],
+  "glossary": {
+    "privateness": "独处，私下",
+    "retiring": "退隐，独居",
+    "sloth": "懒惰，怠惰",
+    "affectation": "矫饰，做作",
+    "contemn": "轻视，蔑视",
+    "proyning": "修剪（即 pruning）",
+    "confute": "驳斥，反驳"
+  }
+}

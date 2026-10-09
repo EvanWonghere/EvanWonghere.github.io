@@ -1,0 +1,52 @@
+{
+ "version": 1,
+ "id": "henley-invictus",
+ "kind": "poem",
+ "title": "Invictus",
+ "author": "W. E. Henley",
+ "year": 1888,
+ "level": "B2",
+ "source": {
+  "name": "Wikisource",
+  "url": "https://en.wikisource.org/wiki/Oxford_Book_of_English_Verse_1250-1900%2FInvictus"
+ },
+ "rights": "美国：1888 年出版；中国：作者1903 年去世，保护期已满",
+ "words": 103,
+ "seconds": 52,
+ "intro": "威廉·欧内斯特·亨利（William Ernest Henley，1849–1903）是英国诗人和编辑。《不可征服》（Invictus）收入他1888年的诗集 A Book of Verses，题目是拉丁文，意思是“不可征服的”。全诗四节，每节四行，写身处黑暗与苦难之中仍然坚守自我的意志，结尾两行“我是自己命运的主人，我是自己灵魂的船长”最为人熟知。",
+ "tips": [
+  "句中重音落在名词和动词上，节奏要稳，不要拖长。",
+  "结尾 master 和 captain 两句要读得坚定、有力。"
+ ],
+ "glossary": {
+  "fell": "残酷的，凶狠的",
+  "bludgeonings": "棍棒般的重击",
+  "strait": "狭窄的",
+  "scroll": "卷轴，此处指判决书",
+  "wrath": "愤怒，怒火"
+ },
+ "human": {
+  "src": "human/henley-invictus.mp3",
+  "seconds": 66,
+  "credit": "LibriVox 志愿者朗读 · Short Poetry Collection 174 · 14 - Invictus",
+  "url": "https://archive.org/details/spc174_1712_librivox"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "OUT of the night that covers me,\nBlack as the pit from pole to pole,\nI thank whatever gods may be\nFor my unconquerable soul."
+  },
+  {
+   "id": "s2",
+   "text": "In the fell clutch of circumstance\nI have not winced nor cried aloud.\nUnder the bludgeonings of chance\nMy head is bloody, but unbow'd."
+  },
+  {
+   "id": "s3",
+   "text": "Beyond this place of wrath and tears\nLooms but the Horror of the shade,\nAnd yet the menace of the years\nFinds and shall find me unafraid."
+  },
+  {
+   "id": "s4",
+   "text": "It matters not how strait the gate,\nHow charged with punishments the scroll,\nI am the master of my fate:\nI am the captain of my soul."
+  }
+ ]
+}

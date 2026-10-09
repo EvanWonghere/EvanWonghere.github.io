@@ -1,0 +1,33 @@
+{
+  "id": "rossetti-remember",
+  "kind": "poem",
+  "title": "Remember",
+  "author": "Christina Rossetti",
+  "year": 1862,
+  "level": "B2",
+  "firstPublished": 1862,
+  "authorDied": 1894,
+  "source": {
+    "type": "wikisource",
+    "title": "Goblin Market and Other Poems (1862)/Remember",
+    "from": "Remember me when I am gone away,",
+    "to": "Than that you should remember and be sad."
+  },
+  "intro": "克里斯蒂娜·罗塞蒂（Christina Rossetti，1830–1894）是英国诗人，画家但丁·加布里埃尔·罗塞蒂的妹妹。《记住》（Remember）收入她1862年出版的诗集《妖精集市及其他诗》（Goblin Market and Other Poems）。这是一首十四行诗，说话者请爱人在自己离世后记住她，又宽慰对方：若能忘记并微笑，好过记住而悲伤。",
+  "tips": [
+    "许多句子跨行，行末没有标点时要顺势连读，不要停顿。",
+    "第九行的 Yet 是转折点，之前偏请求，之后转为宽慰。"
+  ],
+  "glossary": {
+    "vestige": "残留的痕迹",
+    "corruption": "腐朽，指肉身的败坏",
+    "counsel": "劝告，开导",
+    "stay": "停留，驻足"
+  },
+  "human": {
+    "item": "sonnets_rossetti_2307_librivox",
+    "itemTitle": "Sonnets",
+    "track": "13 - Remember",
+    "seconds": 69
+  }
+}

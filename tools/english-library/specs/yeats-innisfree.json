@@ -1,0 +1,36 @@
+{
+  "id": "yeats-innisfree",
+  "kind": "poem",
+  "title": "The Lake Isle of Innisfree",
+  "author": "W. B. Yeats",
+  "year": 1890,
+  "level": "B1",
+  "firstPublished": 1890,
+  "authorDied": 1939,
+  "source": {
+    "type": "wikisource",
+    "title": "The Lake Isle of Innisfree",
+    "from": "I will arise and go now, and go to Innisfree,",
+    "to": "I hear it in the deep heart's core."
+  },
+  "intro": "叶芝（1865–1939）是爱尔兰诗人，1923年获诺贝尔文学奖。《茵尼斯弗利湖岛》是他早期的名作。Innisfree 是爱尔兰斯莱戈郡格伦湖（Lough Gill）中的一座小岛。诗中的“我”想离开喧嚣的城市，到湖上小岛建一间小屋，过简单安静的生活，耳边只有湖水轻拍岸边的声音。",
+  "tips": [
+    "行末逗号处短停，句号处停稍长，让湖边的安静慢慢出来。",
+    "lapping、low sounds 等轻柔的词要读得轻一些。"
+  ],
+  "glossary": {
+    "wattles": "编墙用的细枝条",
+    "glade": "林中空地",
+    "cricket": "蟋蟀",
+    "glimmer": "微光",
+    "veils": "面纱（比喻晨雾）",
+    "lapping": "轻拍（水波拍岸）",
+    "pavements": "人行道（英式）"
+  },
+  "human": {
+    "item": "spc137_1411_librivox",
+    "itemTitle": "Short Poetry Collection 137",
+    "track": "11 - The Lake Isle of Innisfree",
+    "seconds": 78
+  }
+}

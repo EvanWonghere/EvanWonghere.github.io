@@ -1,0 +1,37 @@
+{
+  "id": "lincoln-gettysburg-address",
+  "kind": "speech",
+  "title": "The Gettysburg Address",
+  "author": "Abraham Lincoln",
+  "year": 1863,
+  "level": "B2",
+  "firstPublished": 1863,
+  "authorDied": 1865,
+  "source": {
+    "type": "wikisource",
+    "title": "Gettysburg Address (Bliss copy)",
+    "from": "Four score and seven years ago",
+    "to": "shall not perish from the earth."
+  },
+  "intro": "葛底斯堡演说是林肯（Abraham Lincoln）1863 年 11 月 19 日在葛底斯堡国家公墓落成仪式上发表的演说，全文只有约 270 词，不到三分钟。它谈的是国家的建立、阵亡者的牺牲和活着的人肩上的责任。读时要慢，每个词都落稳。",
+  "tips": [
+    "开头 Four score and seven years ago 放慢，每个词落稳。",
+    "最后一句三个 the people 逐级加重，收在 earth 上。"
+  ],
+  "glossary": {
+    "score": "二十",
+    "conceived": "孕育",
+    "dedicate": "奉献",
+    "consecrate": "使神圣",
+    "hallow": "使神圣",
+    "detract": "减损",
+    "devotion": "忠诚",
+    "resolve": "决心"
+  },
+  "human": {
+    "item": "gettysburg_johng_librivox",
+    "itemTitle": "Gettysburg Address",
+    "track": "Gettysburg Address",
+    "seconds": 158
+  }
+}

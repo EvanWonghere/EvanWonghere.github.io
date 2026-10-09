@@ -1,0 +1,29 @@
+{
+  "id": "austen-pride-and-prejudice",
+  "kind": "fiction",
+  "title": "Pride and Prejudice · Chapter 1 (excerpt)",
+  "author": "Jane Austen",
+  "year": 1813,
+  "level": "C1",
+  "firstPublished": 1813,
+  "authorDied": 1817,
+  "source": {
+    "type": "gutenberg",
+    "id": 1342,
+    "from": "It is a truth universally acknowledged, that a single man in possession",
+    "to": "You want to tell me, and I have no objection to hearing it.\""
+  },
+  "intro": "简·奥斯汀（1775–1817）是英国小说家，《傲慢与偏见》1813 年出版，讲述乡绅班纳特家五个女儿的婚姻与人情。开篇这句名言用反讽口吻说：有钱的单身汉一定需要妻子。本段是班纳特太太与丈夫的第一段对话，她急着打听新搬来的富有单身汉。读时留意语气中的反讽。",
+  "tips": [
+    "开篇名言要放慢，句中逗号处停顿，体会反讽。",
+    "班纳特太太语速快、语气急切，与丈夫的平淡形成对比。"
+  ],
+  "glossary": {
+    "acknowledged": "公认的",
+    "possession": "拥有",
+    "fortune": "财产",
+    "neighbourhood": "街坊，邻近地区",
+    "rightful": "合法的，应得的",
+    "let": "（房屋）出租"
+  }
+}

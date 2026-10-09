@@ -1,0 +1,35 @@
+{
+  "id": "frost-stopping-by-woods",
+  "kind": "poem",
+  "title": "Stopping by Woods on a Snowy Evening",
+  "author": "Robert Frost",
+  "year": 1923,
+  "level": "B2",
+  "firstPublished": 1923,
+  "authorDied": 1963,
+  "source": {
+    "type": "wikisource",
+    "title": "New Hampshire, a Poem with Notes and Grace Notes/Stopping by Woods on a Snowy Evening",
+    "from": "Whose woods these are I think I know.",
+    "to": "And miles to go before I sleep."
+  },
+  "intro": "罗伯特·弗罗斯特（1874–1963）是美国诗人，一生四次获得普利策诗歌奖。《雪夜林畔驻马》写于1922年，1923年收入诗集《新罕布什尔》（New Hampshire）。诗人在一个寒冷的夜晚乘雪橇路过树林，停下来看雪，马儿摇动铃铛，似乎在问是不是出了差错。全诗每节押 aaba 韵，结尾两行重复，常被读作对责任与生活的沉思。",
+  "tips": [
+    "每节第三行不与其他行押韵，读到它时稍作停顿。",
+    "结尾两行一模一样，第二遍要读得更轻、更慢。"
+  ],
+  "glossary": {
+    "queer": "奇怪的",
+    "harness": "马具",
+    "downy": "柔软如绒的",
+    "flake": "雪花（雪片）",
+    "sweep": "（风的）轻掠声",
+    "keep": "履行，遵守"
+  },
+  "human": {
+    "item": "newhampshire_1902_librivox",
+    "itemTitle": "New Hampshire - A Poem with Notes and Grace Notes",
+    "track": "24 - Stopping by Woods on a Snowy Evening",
+    "seconds": 85
+  }
+}

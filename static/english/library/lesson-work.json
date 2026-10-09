@@ -1,0 +1,70 @@
+{
+ "version": 1,
+ "id": "lesson-work",
+ "kind": "lesson",
+ "title": "Talking With Teammates",
+ "author": "Hive",
+ "year": 2026,
+ "level": "B1",
+ "source": {
+  "name": "Hive 原创",
+  "url": ""
+ },
+ "rights": "原创内容，Hive 站点所有，可随站使用。",
+ "words": 181,
+ "seconds": 91,
+ "intro": "这一课是工作中和同事交流的常用句：每天的进度汇报、请人帮忙做代码审查、解释一个 bug、提出方案，以及说明自己需要更多时间。朗读时注意礼貌的语气，像在真实的站会和群聊里说话。",
+ "tips": [
+  "Would you mind、Could you 的语气要软，句尾不要上扬成命令。",
+  "解释问题时先说结论，再讲原因和细节，句子之间停半拍。"
+ ],
+ "glossary": {
+  "blocked": "被卡住，无法推进",
+  "overwritten": "被覆盖",
+  "refactor": "重构",
+  "sprint": "迭代周期",
+  "behind": "落后于进度"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "Quick update from me: I finished the login page yesterday, and I'm working on the password reset flow today."
+  },
+  {
+   "id": "s2",
+   "text": "I'm blocked on the API response, so I might need some help from the backend team this afternoon."
+  },
+  {
+   "id": "s3",
+   "text": "Could you review my pull request when you get a chance? It's mostly small changes to the form validation."
+  },
+  {
+   "id": "s4",
+   "text": "Would you mind taking a quick look at the test cases? I want to make sure I didn't miss an edge case."
+  },
+  {
+   "id": "s5",
+   "text": "I think I found the bug. When a user logs in twice, the session token gets overwritten."
+  },
+  {
+   "id": "s6",
+   "text": "It only happens on mobile browsers, and I'm not sure yet why."
+  },
+  {
+   "id": "s7",
+   "text": "Here's what I suggest. We can add a quick check first, and then refactor the storage logic next sprint."
+  },
+  {
+   "id": "s8",
+   "text": "What if we split the work into two parts? I'll handle the database changes, and you can take the UI."
+  },
+  {
+   "id": "s9",
+   "text": "Honestly, I need more time on this one. I'm about two days behind, so could we move the deadline?"
+  },
+  {
+   "id": "s10",
+   "text": "Let me know if that works for you, and I'll update the ticket once it's done."
+  }
+ ]
+}

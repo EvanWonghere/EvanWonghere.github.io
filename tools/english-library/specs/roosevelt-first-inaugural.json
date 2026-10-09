@@ -1,0 +1,30 @@
+{
+  "id": "roosevelt-first-inaugural",
+  "kind": "speech",
+  "title": "First Inaugural Address (excerpt)",
+  "author": "Franklin D. Roosevelt",
+  "year": 1933,
+  "level": "B2",
+  "firstPublished": 1933,
+  "authorDied": 1945,
+  "usGovWork": true,
+  "source": {
+    "type": "wikisource",
+    "title": "Franklin D. Roosevelt's First Inaugural Address",
+    "from": "So, first of all, let me assert my firm belief",
+    "to": "the savings of many years in thousands of families are gone."
+  },
+  "intro": "1933年3月4日，罗斯福在美国经济大萧条最严重的时期发表首次就职演说。他以 “the only thing we have to fear is fear itself” 一句稳定民心，随后提出复兴国家经济的行动方案。",
+  "tips": [
+    "“to fear is fear itself” 两个 fear 之间稍作停顿。",
+    "列举银行、农场、失业等问题时，每项用短停顿分开，语调保持平稳。"
+  ],
+  "glossary": {
+    "paralyzes": "使瘫痪、使无法施展",
+    "unreasoning": "非理性的",
+    "frankness": "坦率",
+    "vigor": "活力、魄力",
+    "retreat": "撤退、退缩",
+    "curtailment": "削减、缩减"
+  }
+}

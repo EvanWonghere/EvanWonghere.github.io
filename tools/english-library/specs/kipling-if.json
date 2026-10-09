@@ -1,0 +1,33 @@
+{
+  "id": "kipling-if",
+  "kind": "poem",
+  "title": "If—",
+  "author": "Rudyard Kipling",
+  "year": 1910,
+  "level": "C1",
+  "firstPublished": 1910,
+  "authorDied": 1936,
+  "source": {
+    "type": "wikisource",
+    "title": "Rewards and Fairies/If—",
+    "from": "If you can keep your head when all about you",
+    "to": "you'll be a Man, my son!"
+  },
+  "intro": "鲁德亚德·吉卜林（Rudyard Kipling，1865–1936）是英国作家，1907年获得诺贝尔文学奖。《如果》（If—）收入他1910年出版的《奖赏与仙境》（Rewards and Fairies）。诗中以父亲对儿子的口吻，列出一个人应有的品格：临危不乱，面对胜败一视同仁，不被谎言和仇恨左右。全诗由一连串以 If 开头的条件句组成，最后一节才给出结果。",
+  "tips": [
+    "每个 If 条件句之间稍作停顿，语调保持平稳。",
+    "最后两行 Yours is the Earth 要放慢，读出郑重许诺的感觉。"
+  ],
+  "glossary": {
+    "impostors": "冒充者，骗子",
+    "knaves": "无赖，恶人",
+    "sinew": "筋腱，此处指意志与力量",
+    "pitch-and-toss": "掷硬币的赌博"
+  },
+  "human": {
+    "item": "if_kipling_librivox",
+    "itemTitle": "If",
+    "track": "If - Read by CE",
+    "seconds": 149
+  }
+}

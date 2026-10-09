@@ -1,0 +1,29 @@
+{
+  "id": "dickens-tale-of-two-cities",
+  "kind": "fiction",
+  "title": "A Tale of Two Cities · Opening",
+  "author": "Charles Dickens",
+  "year": 1859,
+  "level": "C1",
+  "firstPublished": 1859,
+  "authorDied": 1870,
+  "source": {
+    "type": "gutenberg",
+    "id": 98,
+    "from": "It was the best of times, it was the worst of times",
+    "to": "in the superlative degree of comparison only."
+  },
+  "intro": "查尔斯·狄更斯（1812–1870）是英国小说家，《双城记》1859 年出版，以法国大革命前后的伦敦与巴黎为背景，讲述爱情、牺牲与革命。开篇用成对的排比句，把希望与绝望、光明与黑暗并列，铺陈时代的矛盾。这段文字广为引用，适合练习长句的节奏。",
+  "tips": [
+    "成对的反义词之间稍作停顿，前后句要一气呵成。",
+    "末句 only 之前可放慢，语气带一点讽刺。"
+  ],
+  "glossary": {
+    "epoch": "时代，纪元",
+    "incredulity": "怀疑，不相信",
+    "noisiest": "最喧闹的",
+    "authorities": "权威人士",
+    "insisted": "坚持说",
+    "superlative": "最高级的"
+  }
+}

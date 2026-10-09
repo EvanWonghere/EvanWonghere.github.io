@@ -1,0 +1,28 @@
+{
+  "id": "carroll-alice",
+  "kind": "fiction",
+  "title": "Alice's Adventures in Wonderland · Down the Rabbit-Hole (excerpt)",
+  "author": "Lewis Carroll",
+  "year": 1865,
+  "level": "B2",
+  "firstPublished": 1865,
+  "authorDied": 1898,
+  "source": {
+    "type": "gutenberg",
+    "id": 11,
+    "from": "Alice was beginning to get very tired of sitting by her sister on the",
+    "to": "large rabbit-hole under the hedge."
+  },
+  "intro": "《爱丽丝梦游仙境》是刘易斯·卡罗尔（Lewis Carroll）1865 年出版的儿童小说。这一段是第一章的开头：爱丽丝在河边无聊，看见一只白兔掏出怀表匆匆跑过，便追着它钻进了兔子洞。读时叙述平稳，括号里的插话放轻放快。",
+  "tips": [
+    "括号里的插话读得轻而快，和正文区分开。",
+    "被斜体强调的 very 可以稍微重读。"
+  ],
+  "glossary": {
+    "peeped": "偷看",
+    "daisy-chain": "雏菊花环",
+    "hedge": "树篱",
+    "waistcoat-pocket": "背心口袋",
+    "curiosity": "好奇心"
+  }
+}

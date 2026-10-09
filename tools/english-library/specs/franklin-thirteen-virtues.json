@@ -1,0 +1,28 @@
+{
+  "id": "franklin-thirteen-virtues",
+  "kind": "prose",
+  "title": "The Thirteen Virtues (excerpt)",
+  "author": "Benjamin Franklin",
+  "year": 1791,
+  "level": "B2",
+  "firstPublished": 1791,
+  "authorDied": 1790,
+  "source": {
+    "type": "wikisource",
+    "title": "The Autobiography of Benjamin Franklin/Section Thirty Seven",
+    "from": "My Intention being to acquire the Habitude",
+    "to": "I gave Silence the second Place."
+  },
+  "intro": "本杰明·富兰克林（1706–1790）是美国开国元勋之一，同时也是政治家、科学家和印刷商。《富兰克林自传》未能写完，1791 年首次以法文译本出版。这一段讲他为自己订立的十三条德行，决定一次只专注一条，逐周修炼，并用小册子逐日记录过失。",
+  "tips": [
+    "长句多，按分号和逗号分意群，“first”“one at a time”等词稍加重读。",
+    "旧式拼写 judg'd、arrang'd 读作 judged、arranged，& 读作 and。"
+  ],
+  "glossary": {
+    "facilitate": "使…更容易",
+    "unremitting": "不松懈的，不停的",
+    "ancient": "旧有的，积习的",
+    "trifling": "无聊的，琐碎的",
+    "previous": "先前的"
+  }
+}

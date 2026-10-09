@@ -1,0 +1,29 @@
+{
+  "id": "aurelius-meditations",
+  "kind": "prose",
+  "title": "Meditations · Book II (excerpt)",
+  "author": "Marcus Aurelius, tr. Meric Casaubon",
+  "year": 1634,
+  "level": "C1",
+  "firstPublished": 1634,
+  "authorDied": 1671,
+  "translated": true,
+  "source": {
+    "type": "gutenberg",
+    "id": 2680,
+    "from": "Remember how long thou hast already put off these things",
+    "to": "keep and observe these things."
+  },
+  "intro": "《沉思录》是罗马皇帝马可·奥勒留（Marcus Aurelius）写给自己的哲学笔记，属于斯多葛派。这里用的是 1634 年梅里克·卡索邦（Meric Casaubon）的英译本，英语还是早期现代英语，有 thou、hast 这样的古词。读时语气沉稳，像自己对自己说话。",
+  "tips": [
+    "thou、hast、shalt 都是古词，照常读，不要加重。",
+    "每个冒号后稍停，让两层意思分开。"
+  ],
+  "glossary": {
+    "distempers": "烦乱、不适",
+    "unfeigned": "真诚的",
+    "aberration": "偏离",
+    "requisite": "必需的",
+    "wilful": "任性的"
+  }
+}

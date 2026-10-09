@@ -1,0 +1,34 @@
+{
+  "id": "henley-invictus",
+  "kind": "poem",
+  "title": "Invictus",
+  "author": "W. E. Henley",
+  "year": 1888,
+  "level": "B2",
+  "firstPublished": 1888,
+  "authorDied": 1903,
+  "source": {
+    "type": "wikisource",
+    "title": "Oxford Book of English Verse 1250-1900/Invictus",
+    "from": "OUT of the night that covers me,",
+    "to": "I am the captain of my soul."
+  },
+  "intro": "威廉·欧内斯特·亨利（William Ernest Henley，1849–1903）是英国诗人和编辑。《不可征服》（Invictus）收入他1888年的诗集 A Book of Verses，题目是拉丁文，意思是“不可征服的”。全诗四节，每节四行，写身处黑暗与苦难之中仍然坚守自我的意志，结尾两行“我是自己命运的主人，我是自己灵魂的船长”最为人熟知。",
+  "tips": [
+    "句中重音落在名词和动词上，节奏要稳，不要拖长。",
+    "结尾 master 和 captain 两句要读得坚定、有力。"
+  ],
+  "glossary": {
+    "fell": "残酷的，凶狠的",
+    "bludgeonings": "棍棒般的重击",
+    "strait": "狭窄的",
+    "scroll": "卷轴，此处指判决书",
+    "wrath": "愤怒，怒火"
+  },
+  "human": {
+    "item": "spc174_1712_librivox",
+    "itemTitle": "Short Poetry Collection 174",
+    "track": "14 - Invictus",
+    "seconds": 66
+  }
+}

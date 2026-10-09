@@ -1,0 +1,35 @@
+{
+  "id": "lesson-travel",
+  "kind": "lesson",
+  "title": "Travelling and Ordering Food",
+  "author": "Hive",
+  "year": 2026,
+  "level": "A2",
+  "source": {
+    "type": "original"
+  },
+  "intro": "这一课是出门在外的常见场景：酒店入住、问路、餐厅点餐、结账，以及礼貌地反映问题。朗读时注意 Excuse me、Could 这类礼貌开头，语速放慢一点，就像真的站在服务台前说话。",
+  "tips": [
+    "问路时句尾语调平稳，数字和地名读清楚。",
+    "点餐时 Could we、I'd like 要读得轻，不要一字一顿。"
+  ],
+  "glossary": {
+    "reservation": "预订",
+    "checkout": "退房",
+    "traffic": "交通，此处指路口的红绿灯",
+    "spicy": "辣的",
+    "appreciate": "感激"
+  },
+  "segments": [
+    "Hi, I have a reservation under the name Chen. Here is my passport, and I'd like a room with a view.",
+    "Does the room come with breakfast? And what time is checkout?",
+    "Excuse me, could you tell me how to get to the museum? Is it far from here?",
+    "Go straight down this street, then turn right at the second traffic light. It's about a ten-minute walk.",
+    "Hi, table for two, please. Could we sit by the window if it's available?",
+    "I'd like the grilled chicken, and my friend would like the vegetable soup. Can we also get some water?",
+    "Is the soup spicy? I'm not really good with spicy food.",
+    "Could we get the check, please? I think we'd like to pay separately.",
+    "Excuse me, I hate to bother you, but the air conditioner in my room isn't working. Would it be possible to have someone take a look?",
+    "Thanks for your help. I really appreciate it, and I hope the room will be fixed soon."
+  ]
+}

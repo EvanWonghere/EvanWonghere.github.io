@@ -1,0 +1,28 @@
+{
+  "id": "lincoln-second-inaugural",
+  "kind": "speech",
+  "title": "Second Inaugural Address (excerpt)",
+  "author": "Abraham Lincoln",
+  "year": 1865,
+  "level": "C1",
+  "firstPublished": 1865,
+  "authorDied": 1865,
+  "source": {
+    "type": "wikisource",
+    "title": "Abraham Lincoln's Second Inaugural Address",
+    "from": "Fondly do we hope",
+    "to": "lasting peace among ourselves, and with all nations."
+  },
+  "intro": "1865年3月4日，林肯在华盛顿国会大厦东廊发表第二次就职演说，当时内战已接近尾声。他反思战争的起因，认为奴隶制是这场战争的根源之一，并多次引用《圣经》语句。末段 “With malice toward none” 语气平和而坚定，是全篇的收束。",
+  "tips": [
+    "“With malice toward none; with charity for all” 两组并列，分号处稍停。",
+    "“firmness in the right” 后放慢，末句 “a just and lasting peace” 略收束。"
+  ],
+  "glossary": {
+    "scourge": "灾祸、祸害",
+    "unrequited": "得不到回报的",
+    "malice": "恶意",
+    "charity": "仁慈、宽厚",
+    "firmness": "坚定"
+  }
+}

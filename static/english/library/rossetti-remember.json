@@ -1,0 +1,51 @@
+{
+ "version": 1,
+ "id": "rossetti-remember",
+ "kind": "poem",
+ "title": "Remember",
+ "author": "Christina Rossetti",
+ "year": 1862,
+ "level": "B2",
+ "source": {
+  "name": "Wikisource",
+  "url": "https://en.wikisource.org/wiki/Goblin_Market_and_Other_Poems_(1862)%2FRemember"
+ },
+ "rights": "美国：1862 年出版；中国：作者1894 年去世，保护期已满",
+ "words": 111,
+ "seconds": 56,
+ "intro": "克里斯蒂娜·罗塞蒂（Christina Rossetti，1830–1894）是英国诗人，画家但丁·加布里埃尔·罗塞蒂的妹妹。《记住》（Remember）收入她1862年出版的诗集《妖精集市及其他诗》（Goblin Market and Other Poems）。这是一首十四行诗，说话者请爱人在自己离世后记住她，又宽慰对方：若能忘记并微笑，好过记住而悲伤。",
+ "tips": [
+  "许多句子跨行，行末没有标点时要顺势连读，不要停顿。",
+  "第九行的 Yet 是转折点，之前偏请求，之后转为宽慰。"
+ ],
+ "glossary": {
+  "vestige": "残留的痕迹",
+  "corruption": "腐朽，指肉身的败坏",
+  "counsel": "劝告，开导",
+  "stay": "停留，驻足"
+ },
+ "human": {
+  "src": "human/rossetti-remember.mp3",
+  "seconds": 69,
+  "credit": "LibriVox 志愿者朗读 · Sonnets · 13 - Remember",
+  "url": "https://archive.org/details/sonnets_rossetti_2307_librivox"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "Remember me when I am gone away,\nGone far away into the silent land;\nWhen you can no more hold me by the hand,\nNor I half turn to go yet turning stay."
+  },
+  {
+   "id": "s2",
+   "text": "Remember me when no more day by day\nYou tell me of our future that you planned:\nOnly remember me; you understand\nIt will be late to counsel then or pray."
+  },
+  {
+   "id": "s3",
+   "text": "Yet if you should forget me for a while\nAnd afterwards remember, do not grieve:"
+  },
+  {
+   "id": "s4",
+   "text": "For if the darkness and corruption leave\nA vestige of the thoughts that once I had,\nBetter by far you should forget and smile\nThan that you should remember and be sad."
+  }
+ ]
+}

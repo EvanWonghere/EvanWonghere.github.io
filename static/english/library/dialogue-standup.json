@@ -1,0 +1,109 @@
+{
+ "version": 1,
+ "id": "dialogue-standup",
+ "kind": "lesson",
+ "title": "Daily Stand-up",
+ "author": "Hive",
+ "year": 2026,
+ "level": "B1",
+ "source": {
+  "name": "Hive 原创",
+  "url": ""
+ },
+ "rights": "原创内容，Hive 站点所有，可随站使用。",
+ "words": 225,
+ "seconds": 113,
+ "intro": "这是一次团队的每日站会。开发者汇报昨天完成的工作和今天的计划，说明遇到的阻碍，组长主动提出帮忙，最后双方约定如何拆分并提交代码审查。你可以任选组长或开发者的角色朗读。",
+ "tips": [
+  "汇报时先说结论，再补充细节，句子之间的停顿要短。",
+  "staging、token 等技术词要读清楚，重音落在第一个音节。"
+ ],
+ "glossary": {
+  "staging": "预发布环境，上线前测试用的服务器",
+  "token": "令牌，此处指登录链接里的凭证",
+  "permission": "权限",
+  "pair": "结对编程，两人一起写代码",
+  "review": "代码审查"
+ },
+ "roles": [
+  "Lead",
+  "Developer"
+ ],
+ "segments": [
+  {
+   "id": "s1",
+   "text": "Morning, everyone. Let's do a quick stand-up. What did you finish yesterday?",
+   "speaker": "Lead"
+  },
+  {
+   "id": "s2",
+   "text": "Yesterday I finished the login form validation, and I wrote tests for the email field.",
+   "speaker": "Developer"
+  },
+  {
+   "id": "s3",
+   "text": "Nice work. What are you planning to do today?",
+   "speaker": "Lead"
+  },
+  {
+   "id": "s4",
+   "text": "Today I'm working on the password reset page, but I'm a little stuck on the email link.",
+   "speaker": "Developer"
+  },
+  {
+   "id": "s5",
+   "text": "What's the problem with the link? Is it not opening, or is it going to the wrong page?",
+   "speaker": "Lead"
+  },
+  {
+   "id": "s6",
+   "text": "The link works locally, but in staging it expires too fast, so users get an error message.",
+   "speaker": "Developer"
+  },
+  {
+   "id": "s7",
+   "text": "That sounds like a configuration issue. Have you checked the token lifetime setting?",
+   "speaker": "Lead"
+  },
+  {
+   "id": "s8",
+   "text": "I did, and it's set to five minutes, but I don't have permission to change it.",
+   "speaker": "Developer"
+  },
+  {
+   "id": "s9",
+   "text": "I'll change that setting this afternoon. Do you want me to pair with you on the email template after that?",
+   "speaker": "Lead"
+  },
+  {
+   "id": "s10",
+   "text": "That would be great, thanks. Could we meet at two, and I'll share my screen?",
+   "speaker": "Developer"
+  },
+  {
+   "id": "s11",
+   "text": "Sounds good. When you finish, please open a pull request so Sam can review it.",
+   "speaker": "Lead"
+  },
+  {
+   "id": "s12",
+   "text": "Sure. Should I keep the change small, or should I include the new error page too?",
+   "speaker": "Developer"
+  },
+  {
+   "id": "s13",
+   "text": "Keep it small. Let's send the error page in a separate pull request, so the review is faster.",
+   "speaker": "Lead"
+  },
+  {
+   "id": "s14",
+   "text": "Agreed. I'll open the first one before lunch, and I'll tag Sam for the review.",
+   "speaker": "Developer"
+  },
+  {
+   "id": "s15",
+   "text": "Perfect. Thanks, everyone. Let's meet again tomorrow at nine.",
+   "speaker": "Lead"
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+  "id": "dialogue-interview",
+  "kind": "lesson",
+  "title": "A Job Interview",
+  "author": "Hive",
+  "year": 2026,
+  "level": "B1",
+  "source": {
+    "type": "original"
+  },
+  "roles": ["Interviewer", "Candidate"],
+  "intro": "这是一场初级软件开发工程师的求职面试。面试官请候选人先做自我介绍，接着聊项目经历、个人弱点、为什么想加入这个团队，最后请候选人提问。你可以选择面试官或候选人的角色来朗读。",
+  "tips": [
+    "谈弱点时语气要诚恳，再说明自己正在怎样改进。",
+    "提问部分句尾语调上扬，像真的对团队感兴趣。"
+  ],
+  "glossary": {
+    "backend": "后端",
+    "dashboard": "仪表盘，数据总览页面",
+    "queue": "队列",
+    "mentor": "导师，带新人的前辈",
+    "sprints": "短周期迭代"
+  },
+  "segments": [
+    { "speaker": "Interviewer", "text": "Thanks for coming in today. Could you start by telling us a little about yourself?" },
+    { "speaker": "Candidate", "text": "Of course. I'm a junior software developer, and I've been building web applications for about two years now." },
+    { "speaker": "Interviewer", "text": "What kind of projects have you worked on so far?" },
+    { "speaker": "Candidate", "text": "The project I'm proudest of is a bug tracker for a small logistics team. I built the backend and most of the dashboard." },
+    { "speaker": "Interviewer", "text": "Tell me about a time you ran into a hard technical problem. How did you handle it?" },
+    { "speaker": "Candidate", "text": "The dashboard slowed down when there was too much data. I added a simple queue, and the page loaded much faster after that." },
+    { "speaker": "Interviewer", "text": "Everyone has weaknesses, so what would you say is yours?" },
+    { "speaker": "Candidate", "text": "I sometimes spend too long polishing my code before I ask for a review. Now I share smaller changes earlier, and I get feedback faster." },
+    { "speaker": "Interviewer", "text": "I appreciate the honesty. Why are you interested in joining our team in particular?" },
+    { "speaker": "Candidate", "text": "Your team builds tools for schools, and I've always wanted to work on products that help teachers. I'd also like a team that does careful code reviews." },
+    { "speaker": "Interviewer", "text": "Great. Do you have any questions for us before we wrap up?" },
+    { "speaker": "Candidate", "text": "Yes, how does the team usually plan its work each week? And how do new developers get started here?" },
+    { "speaker": "Interviewer", "text": "We use short sprints and a planning meeting on Monday. New hires pair with a mentor for the first month." },
+    { "speaker": "Candidate", "text": "That sounds helpful. I'd love to learn how your team handles testing before code goes live." },
+    { "speaker": "Interviewer", "text": "We'll definitely talk about that. Thank you for your time today, and we'll be in touch soon." },
+    { "speaker": "Candidate", "text": "Thank you so much. I really enjoyed our conversation, and I look forward to hearing from you." }
+  ]
+}

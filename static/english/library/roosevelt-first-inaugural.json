@@ -1,0 +1,51 @@
+{
+ "version": 1,
+ "id": "roosevelt-first-inaugural",
+ "kind": "speech",
+ "title": "First Inaugural Address (excerpt)",
+ "author": "Franklin D. Roosevelt",
+ "year": 1933,
+ "level": "B2",
+ "source": {
+  "name": "Wikisource",
+  "url": "https://en.wikisource.org/wiki/Franklin_D._Roosevelt's_First_Inaugural_Address"
+ },
+ "rights": "美国：1933 年出版（美国政府作品）；中国：作者1945 年去世，保护期已满",
+ "words": 166,
+ "seconds": 83,
+ "intro": "1933年3月4日，罗斯福在美国经济大萧条最严重的时期发表首次就职演说。他以 “the only thing we have to fear is fear itself” 一句稳定民心，随后提出复兴国家经济的行动方案。",
+ "tips": [
+  "“to fear is fear itself” 两个 fear 之间稍作停顿。",
+  "列举银行、农场、失业等问题时，每项用短停顿分开，语调保持平稳。"
+ ],
+ "glossary": {
+  "paralyzes": "使瘫痪、使无法施展",
+  "unreasoning": "非理性的",
+  "frankness": "坦率",
+  "vigor": "活力、魄力",
+  "retreat": "撤退、退缩",
+  "curtailment": "削减、缩减"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "So, first of all, let me assert my firm belief that the only thing we have to fear is fear itself—nameless, unreasoning, unjustified terror which paralyzes needed efforts to convert retreat into advance."
+  },
+  {
+   "id": "s2",
+   "text": "In every dark hour of our national life a leadership of frankness and vigor has met with that understanding and support of the people themselves which is essential to victory."
+  },
+  {
+   "id": "s3",
+   "text": "I am convinced that you will again give that support to leadership in these critical days. In such a spirit on my part and on yours we face our common difficulties. They concern, thank God, only material things."
+  },
+  {
+   "id": "s4",
+   "text": "Values have shrunken to fantastic levels; taxes have risen; our ability to pay has fallen; government of all kinds is faced by serious curtailment of income; the means of exchange are frozen in the currents of trade;"
+  },
+  {
+   "id": "s5",
+   "text": "the withered leaves of industrial enterprise lie on every side; farmers find no markets for their produce; the savings of many years in thousands of families are gone."
+  }
+ ]
+}

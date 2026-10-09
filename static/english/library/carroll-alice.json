@@ -1,0 +1,66 @@
+{
+ "version": 1,
+ "id": "carroll-alice",
+ "kind": "fiction",
+ "title": "Alice's Adventures in Wonderland · Down the Rabbit-Hole (excerpt)",
+ "author": "Lewis Carroll",
+ "year": 1865,
+ "level": "B2",
+ "source": {
+  "name": "Project Gutenberg #11",
+  "url": "https://www.gutenberg.org/ebooks/11"
+ },
+ "rights": "美国：1865 年出版；中国：作者1898 年去世，保护期已满",
+ "words": 253,
+ "seconds": 127,
+ "intro": "《爱丽丝梦游仙境》是刘易斯·卡罗尔（Lewis Carroll）1865 年出版的儿童小说。这一段是第一章的开头：爱丽丝在河边无聊，看见一只白兔掏出怀表匆匆跑过，便追着它钻进了兔子洞。读时叙述平稳，括号里的插话放轻放快。",
+ "tips": [
+  "括号里的插话读得轻而快，和正文区分开。",
+  "被斜体强调的 very 可以稍微重读。"
+ ],
+ "glossary": {
+  "peeped": "偷看",
+  "daisy-chain": "雏菊花环",
+  "hedge": "树篱",
+  "waistcoat-pocket": "背心口袋",
+  "curiosity": "好奇心"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading,"
+  },
+  {
+   "id": "s2",
+   "text": "but it had no pictures or conversations in it, \"and what is the use of a book,\" thought Alice \"without pictures or conversations?\""
+  },
+  {
+   "id": "s3",
+   "text": "So she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and stupid),"
+  },
+  {
+   "id": "s4",
+   "text": "whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking the daisies, when suddenly a White Rabbit with pink eyes ran close by her."
+  },
+  {
+   "id": "s5",
+   "text": "There was nothing so very remarkable in that; nor did Alice think it so very much out of the way to hear the Rabbit say to itself, \"Oh dear! Oh dear!"
+  },
+  {
+   "id": "s6",
+   "text": "I shall be late!\" (when she thought it over afterwards, it occurred to her that she ought to have wondered at this, but at the time it all seemed quite natural);"
+  },
+  {
+   "id": "s7",
+   "text": "but when the Rabbit actually took a watch out of its waistcoat-pocket, and looked at it, and then hurried on, Alice started to her feet,"
+  },
+  {
+   "id": "s8",
+   "text": "for it flashed across her mind that she had never before seen a rabbit with either a waistcoat-pocket, or a watch to take out of it, and burning with curiosity, she ran across the field after it,"
+  },
+  {
+   "id": "s9",
+   "text": "and fortunately was just in time to see it pop down a large rabbit-hole under the hedge."
+  }
+ ]
+}

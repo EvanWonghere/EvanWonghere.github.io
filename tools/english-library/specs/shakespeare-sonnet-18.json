@@ -1,0 +1,37 @@
+{
+  "id": "shakespeare-sonnet-18",
+  "kind": "poem",
+  "title": "Sonnet 18",
+  "author": "William Shakespeare",
+  "year": 1609,
+  "level": "C1",
+  "firstPublished": 1609,
+  "authorDied": 1616,
+  "source": {
+    "type": "wikisource",
+    "title": "Shakespeare's Sonnets (1923) Yale/Text/Sonnet 18",
+    "from": "Shall I compare thee to a summer's day?",
+    "to": "So long lives this, and this gives life to thee."
+  },
+  "intro": "莎士比亚（1564–1616）是英国剧作家和诗人。他的《十四行诗》于1609年出版，第18首是其中最著名的一首。诗人把爱人与夏日相比，却发现夏天太短、太易变，而诗中的爱将因诗歌而永存。全诗是标准的莎士比亚体十四行，三节四行诗加一对偶句，押韵为 abab cdcd efef gg。",
+  "tips": [
+    "每行大约十个音节，节奏要稳，不要把古词读得断断续续。",
+    "以 Nor 开头的并列句要保持相同的节奏和语调。"
+  ],
+  "glossary": {
+    "temperate": "温和的，适度的",
+    "darling": "可爱的，宠爱的（修饰花蕾）",
+    "lease": "租约，此处指夏天的期限",
+    "hath": "拥有（have 的古形）",
+    "complexion": "容颜，光泽（指太阳）",
+    "untrimm'd": "未经修饰的，失去装饰的",
+    "ow'st": "拥有（own 的古形）",
+    "grow'st": "生长（grow 的古形）"
+  },
+  "human": {
+    "item": "sonnet_18_1604.poem_librivox",
+    "itemTitle": "Sonnet 18",
+    "track": "01 - Sonnet 18 - Read by ALP",
+    "seconds": 65
+  }
+}

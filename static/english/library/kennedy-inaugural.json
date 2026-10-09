@@ -1,0 +1,59 @@
+{
+ "version": 1,
+ "id": "kennedy-inaugural",
+ "kind": "speech",
+ "title": "Inaugural Address (excerpt)",
+ "author": "John F. Kennedy",
+ "year": 1961,
+ "level": "B2",
+ "source": {
+  "name": "Wikisource",
+  "url": "https://en.wikisource.org/wiki/John_F._Kennedy's_Inaugural_Address"
+ },
+ "rights": "美国：1961 年出版（美国政府作品）；中国：作者1963 年去世，保护期已满",
+ "words": 203,
+ "seconds": 102,
+ "intro": "1961年1月20日，肯尼迪在华盛顿发表就职演说，他是美国第一位在二十世纪出生的总统。演说强调冷战中的责任与合作，结尾 “ask not what your country can do for you” 一句广为人知。",
+ "tips": [
+  "“Now the trumpet summons us again” 读出号召的有力节奏。",
+  "结尾 “ask what you can do for your country” 要让两个 ask 形成对比。"
+ ],
+ "glossary": {
+  "summons": "召唤",
+  "embattled": "陷入战斗的、处境艰难的",
+  "tribulation": "苦难、磨难",
+  "twilight": "黄昏，比喻漫长的艰难时期",
+  "forge": "打造、锻造",
+  "alliance": "同盟"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "Now the trumpet summons us again; not as a call to bear arms, though arms we need; not as a call to battle, though embattled we are; but a call to bear the burden of a long twilight struggle,"
+  },
+  {
+   "id": "s2",
+   "text": "year in and year out, \"rejoicing in hope, patient in tribulation\"–a struggle against the common enemies of man: tyranny, poverty, disease and war itself."
+  },
+  {
+   "id": "s3",
+   "text": "Can we forge against these enemies a grand and global alliance, North and South, East and West, that can assure a more fruitful life for all mankind? Will you join in that historic effort?"
+  },
+  {
+   "id": "s4",
+   "text": "In the long history of the world, only a few generations have been granted the role of defending freedom in its hour of maximum danger. I do not shrink from this responsibility; I welcome it."
+  },
+  {
+   "id": "s5",
+   "text": "I do not believe that any of us would exchange places with any other people or any other generation."
+  },
+  {
+   "id": "s6",
+   "text": "The energy, the faith, the devotion which we bring to this endeavor will light our country and all who serve it–and the glow from that fire can truly light the world."
+  },
+  {
+   "id": "s7",
+   "text": "And so, my fellow Americans: ask not what your country can do for you–ask what you can do for your country."
+  }
+ ]
+}
