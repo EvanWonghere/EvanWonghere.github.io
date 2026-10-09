@@ -1,0 +1,462 @@
+{
+ "version": 1,
+ "format": "audio-24khz-48kbitrate-mono-mp3",
+ "works": {
+  "aesop-hare-and-tortoise": {
+   "en-US": {
+    "seconds": 53.3,
+    "bytes": 319536,
+    "rev": "mv0yaykm"
+   },
+   "en-GB": {
+    "seconds": 52.2,
+    "bytes": 313344,
+    "rev": "mv11fuxw"
+   }
+  },
+  "aurelius-meditations": {
+   "en-US": {
+    "seconds": 91.2,
+    "bytes": 547344,
+    "rev": "mv0ycm3t"
+   },
+   "en-GB": {
+    "seconds": 93.3,
+    "bytes": 559728,
+    "rev": "mv11hq3d"
+   }
+  },
+  "austen-pride-and-prejudice": {
+   "en-US": {
+    "seconds": 55.2,
+    "bytes": 331200,
+    "rev": "mv0ydu1h"
+   },
+   "en-GB": {
+    "seconds": 54.7,
+    "bytes": 328032,
+    "rev": "mv11j22g"
+   }
+  },
+  "bacon-of-studies": {
+   "en-US": {
+    "seconds": 95.2,
+    "bytes": 570960,
+    "rev": "mv0yffux"
+   },
+   "en-GB": {
+    "seconds": 93.5,
+    "bytes": 560880,
+    "rev": "mv11krcv"
+   }
+  },
+  "blake-the-tyger": {
+   "en-US": {
+    "seconds": 72.3,
+    "bytes": 434016,
+    "rev": "mv0yhst0"
+   },
+   "en-GB": {
+    "seconds": 69.6,
+    "bytes": 417456,
+    "rev": "mv11n1fs"
+   }
+  },
+  "carroll-alice": {
+   "en-US": {
+    "seconds": 84.2,
+    "bytes": 505440,
+    "rev": "mv0yjfqn"
+   },
+   "en-GB": {
+    "seconds": 82.3,
+    "bytes": 493920,
+    "rev": "mv11os1s"
+   }
+  },
+  "dialogue-hotel": {
+   "en-US": {
+    "seconds": 108.8,
+    "bytes": 652608,
+    "rev": "mv0ylilt"
+   },
+   "en-GB": {
+    "seconds": 103.6,
+    "bytes": 621360,
+    "rev": "mv11qyaa"
+   }
+  },
+  "dialogue-interview": {
+   "en-US": {
+    "seconds": 119.8,
+    "bytes": 718560,
+    "rev": "mv0ynl5l"
+   },
+   "en-GB": {
+    "seconds": 119.8,
+    "bytes": 718848,
+    "rev": "mv11te6v"
+   }
+  },
+  "dialogue-standup": {
+   "en-US": {
+    "seconds": 101.6,
+    "bytes": 609840,
+    "rev": "mv0yphl8"
+   },
+   "en-GB": {
+    "seconds": 99.3,
+    "bytes": 595728,
+    "rev": "mv11vij5"
+   }
+  },
+  "dickens-tale-of-two-cities": {
+   "en-US": {
+    "seconds": 38.7,
+    "bytes": 232128,
+    "rev": "mv0yq1g4"
+   },
+   "en-GB": {
+    "seconds": 39.5,
+    "bytes": 237024,
+    "rev": "mv11w6m0"
+   }
+  },
+  "dickinson-hope": {
+   "en-US": {
+    "seconds": 23.8,
+    "bytes": 142704,
+    "rev": "mv0yqnkj"
+   },
+   "en-GB": {
+    "seconds": 25.2,
+    "bytes": 151056,
+    "rev": "mv11wus1"
+   }
+  },
+  "emerson-self-reliance": {
+   "en-US": {
+    "seconds": 84.3,
+    "bytes": 506016,
+    "rev": "mv0yrykx"
+   },
+   "en-GB": {
+    "seconds": 83.4,
+    "bytes": 500112,
+    "rev": "mv11yqe5"
+   }
+  },
+  "franklin-thirteen-virtues": {
+   "en-US": {
+    "seconds": 71.5,
+    "bytes": 428976,
+    "rev": "mv0yt21d"
+   },
+   "en-GB": {
+    "seconds": 71.3,
+    "bytes": 427824,
+    "rev": "mv11zxu9"
+   }
+  },
+  "frost-road-not-taken": {
+   "en-US": {
+    "seconds": 48,
+    "bytes": 288000,
+    "rev": "mv0yucd3"
+   },
+   "en-GB": {
+    "seconds": 49.4,
+    "bytes": 296352,
+    "rev": "mv12160j"
+   }
+  },
+  "frost-stopping-by-woods": {
+   "en-US": {
+    "seconds": 39.1,
+    "bytes": 234432,
+    "rev": "mv0yvgjv"
+   },
+   "en-GB": {
+    "seconds": 38.9,
+    "bytes": 233424,
+    "rev": "mv12233u"
+   }
+  },
+  "grahame-wind-in-the-willows": {
+   "en-US": {
+    "seconds": 59.5,
+    "bytes": 357120,
+    "rev": "mv0ywdpi"
+   },
+   "en-GB": {
+    "seconds": 57.7,
+    "bytes": 346464,
+    "rev": "mv12333t"
+   }
+  },
+  "henley-invictus": {
+   "en-US": {
+    "seconds": 37,
+    "bytes": 221760,
+    "rev": "mv0yx4od"
+   },
+   "en-GB": {
+    "seconds": 37.6,
+    "bytes": 225504,
+    "rev": "mv123zze"
+   }
+  },
+  "keats-letter-to-fanny": {
+   "en-US": {
+    "seconds": 53.8,
+    "bytes": 322560,
+    "rev": "mv0yxywq"
+   },
+   "en-GB": {
+    "seconds": 54.4,
+    "bytes": 326592,
+    "rev": "mv124xpn"
+   }
+  },
+  "keats-to-autumn": {
+   "en-US": {
+    "seconds": 96,
+    "bytes": 575712,
+    "rev": "mv0z04xu"
+   },
+   "en-GB": {
+    "seconds": 102,
+    "bytes": 611712,
+    "rev": "mv127d5a"
+   }
+  },
+  "kennedy-inaugural": {
+   "en-US": {
+    "seconds": 76.1,
+    "bytes": 456480,
+    "rev": "mv0z1q8r"
+   },
+   "en-GB": {
+    "seconds": 76.1,
+    "bytes": 456624,
+    "rev": "mv128qz2"
+   }
+  },
+  "kipling-if": {
+   "en-US": {
+    "seconds": 87.7,
+    "bytes": 526320,
+    "rev": "mv0z3czl"
+   },
+   "en-GB": {
+    "seconds": 90.4,
+    "bytes": 542304,
+    "rev": "mv12aber"
+   }
+  },
+  "lesson-daily": {
+   "en-US": {
+    "seconds": 69.7,
+    "bytes": 418320,
+    "rev": "mv0z4sob"
+   },
+   "en-GB": {
+    "seconds": 67,
+    "bytes": 402192,
+    "rev": "mv12bhki"
+   }
+  },
+  "lesson-interview": {
+   "en-US": {
+    "seconds": 81.4,
+    "bytes": 488448,
+    "rev": "mv0z6c3a"
+   },
+   "en-GB": {
+    "seconds": 78.6,
+    "bytes": 471888,
+    "rev": "mv12cwr7"
+   }
+  },
+  "lesson-sounds": {
+   "en-US": {
+    "seconds": 60,
+    "bytes": 360000,
+    "rev": "mv0z7kod"
+   },
+   "en-GB": {
+    "seconds": 57.9,
+    "bytes": 347328,
+    "rev": "mv12each"
+   }
+  },
+  "lesson-travel": {
+   "en-US": {
+    "seconds": 71.2,
+    "bytes": 426960,
+    "rev": "mv0z8yfw"
+   },
+   "en-GB": {
+    "seconds": 67.2,
+    "bytes": 403200,
+    "rev": "mv12ftmo"
+   }
+  },
+  "lesson-work": {
+   "en-US": {
+    "seconds": 72.6,
+    "bytes": 435744,
+    "rev": "mv0zabpd"
+   },
+   "en-GB": {
+    "seconds": 69.8,
+    "bytes": 419040,
+    "rev": "mv12h8pf"
+   }
+  },
+  "lincoln-bixby-letter": {
+   "en-US": {
+    "seconds": 46.8,
+    "bytes": 281088,
+    "rev": "mv0zb30e"
+   },
+   "en-GB": {
+    "seconds": 47.7,
+    "bytes": 286416,
+    "rev": "mv12i4qz"
+   }
+  },
+  "lincoln-gettysburg-address": {
+   "en-US": {
+    "seconds": 100.3,
+    "bytes": 601632,
+    "rev": "mv0zcuey"
+   },
+   "en-GB": {
+    "seconds": 98.1,
+    "bytes": 588672,
+    "rev": "mv12k5tp"
+   }
+  },
+  "lincoln-second-inaugural": {
+   "en-US": {
+    "seconds": 54.1,
+    "bytes": 324576,
+    "rev": "mv0zdz7g"
+   },
+   "en-GB": {
+    "seconds": 54.3,
+    "bytes": 325584,
+    "rev": "mv12l6s4"
+   }
+  },
+  "melville-moby-dick": {
+   "en-US": {
+    "seconds": 77,
+    "bytes": 462096,
+    "rev": "mv0zfkfi"
+   },
+   "en-GB": {
+    "seconds": 74.7,
+    "bytes": 448128,
+    "rev": "mv12msg3"
+   }
+  },
+  "roosevelt-first-inaugural": {
+   "en-US": {
+    "seconds": 66,
+    "bytes": 396144,
+    "rev": "mv0zgh6n"
+   },
+   "en-GB": {
+    "seconds": 66.3,
+    "bytes": 397584,
+    "rev": "mv12nugy"
+   }
+  },
+  "roosevelt-man-in-the-arena": {
+   "en-US": {
+    "seconds": 47.6,
+    "bytes": 285408,
+    "rev": "mv0zh7bc"
+   },
+   "en-GB": {
+    "seconds": 48,
+    "bytes": 287856,
+    "rev": "mv12orwp"
+   }
+  },
+  "rossetti-remember": {
+   "en-US": {
+    "seconds": 35.1,
+    "bytes": 210672,
+    "rev": "mv0zhy6d"
+   },
+   "en-GB": {
+    "seconds": 37.5,
+    "bytes": 224928,
+    "rev": "mv12plze"
+   }
+  },
+  "shakespeare-sonnet-18": {
+   "en-US": {
+    "seconds": 41.1,
+    "bytes": 246816,
+    "rev": "mv0zis6s"
+   },
+   "en-GB": {
+    "seconds": 43.9,
+    "bytes": 263520,
+    "rev": "mv12qkcr"
+   }
+  },
+  "tennyson-crossing-the-bar": {
+   "en-US": {
+    "seconds": 34.5,
+    "bytes": 207216,
+    "rev": "mv0zjgqi"
+   },
+   "en-GB": {
+    "seconds": 35.5,
+    "bytes": 212832,
+    "rev": "mv12ri87"
+   }
+  },
+  "thoreau-walden-deliberately": {
+   "en-US": {
+    "seconds": 67.5,
+    "bytes": 404928,
+    "rev": "mv0zkp2n"
+   },
+   "en-GB": {
+    "seconds": 68.8,
+    "bytes": 412704,
+    "rev": "mv12sovv"
+   }
+  },
+  "wordsworth-daffodils": {
+   "en-US": {
+    "seconds": 53.6,
+    "bytes": 321840,
+    "rev": "mv0zlqvd"
+   },
+   "en-GB": {
+    "seconds": 56.5,
+    "bytes": 339264,
+    "rev": "mv12trkb"
+   }
+  },
+  "yeats-innisfree": {
+   "en-US": {
+    "seconds": 40.9,
+    "bytes": 245520,
+    "rev": "mv0zmgwv"
+   },
+   "en-GB": {
+    "seconds": 42.3,
+    "bytes": 254016,
+    "rev": "mv12upx0"
+   }
+  }
+ }
+}
