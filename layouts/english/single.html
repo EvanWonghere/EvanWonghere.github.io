@@ -10,7 +10,7 @@
     {{ with site.Params.englishSpeech }}
     <meta name="hive-english" data-url="{{ .supabaseUrl }}" data-key="{{ .publishableKey }}">
     {{ end }}
-    <script type="module" src="{{ "english/app.mjs" | relURL }}"></script>
+    <script type="module" src="{{ "english/app.mjs" | relURL }}?v={{ sha256 (readFile "static/english/app.mjs") }}"></script>
 </head>
 <body>
 <a class="skip" href="#practice">跳到练习</a>
