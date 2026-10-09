@@ -31,6 +31,9 @@ export function assessFile(sdk, { token, region, file, reference, locale, signal
         signal?.addEventListener('abort', abort, { once: true });
         try {
             const config = sdk.SpeechConfig.fromAuthorizationToken(token, region);
+            // Single-utterance assessment uses the established v1 endpoint. SDK 1.52
+            // defaults to universal/v2, whose handshake failed in the live browser.
+            config.setProperty(sdk.PropertyId.SpeechServiceConnection_RecognitionEndpointVersion, '1');
             config.speechRecognitionLanguage = locale;
             config.outputFormat = sdk.OutputFormat.Detailed;
             audio = sdk.AudioConfig.fromWavFileInput(file);
@@ -38,7 +41,14 @@ export function assessFile(sdk, { token, region, file, reference, locale, signal
             new sdk.PronunciationAssessmentConfig(reference, sdk.PronunciationAssessmentGradingSystem.HundredMark, sdk.PronunciationAssessmentGranularity.Phoneme, true).applyTo(recognizer);
             // Short recorded files retain Azure's omission/insertion calculation. Prosody is off.
             timer = setTimeout(() => finish(new Error('评分超时。录音仍在本页，可以检查网络后重试。')), 45000);
-            recognizer.canceled = () => finish(new Error('Azure 未能完成评分。请检查网络、资源额度或稍后重试。'));
+            recognizer.canceled = (_sender, event) => {
+                // EndOfStream is a normal file-input event, not a service error.
+                if (event.reason !== sdk.CancellationReason.Error) return;
+                const code = sdk.CancellationErrorCode[event.errorCode] || 'Unknown';
+                const hint = /websocket error code:\s*(\d+)/i.exec(event.errorDetails || '')?.[1];
+                // Expose only enum/status codes: raw diagnostics may contain bearer URLs.
+                finish(new Error(`Azure 评分失败（${code}${hint ? `；WebSocket ${hint}` : ''}）。${code === 'AuthenticationFailure' ? '请检查服务密钥和资源区域。' : code === 'TooManyRequests' ? '请求过多或免费额度不足，请稍后重试。' : '请检查到 Azure 的网络连接后重试；录音仍在本页。'}`));
+            };
             recognizer.recognizeOnceAsync(result => {
                 try {
                     if (result.reason !== sdk.ResultReason.RecognizedSpeech) throw new Error('没有识别到清晰的英语语音。请回听录音并重试。');

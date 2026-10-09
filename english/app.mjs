@@ -13,7 +13,7 @@ function controls() {
     $('stop').disabled = phase !== 'recording';
     $('discard').disabled = busy || !clip;
     $('assess').disabled = busy || !clip || !admin;
-    $('cancel').hidden = phase !== 'assessing';
+    $('cancel').hidden = phase !== 'assessing' && phase !== 'checking';
     $('check-service').disabled = busy || !admin;
     for (const id of ['reference', 'locale', 'sample']) $(id).disabled = busy;
 }
@@ -154,11 +154,15 @@ async function speechAuthorization(signal) {
 $('check-service').onclick = async () => {
     if (phase !== 'idle' || !admin) return;
     phase = 'checking'; aborter = new AbortController(); const signal = aborter.signal;
-    const timeout = setTimeout(() => aborter?.abort(), 15000); controls(); status('正在检查评分服务；不会发送录音。');
+    const timeout = setTimeout(() => aborter?.abort(), 60000); controls(); status('正在用微软公开的 2 秒示例音频测试完整评分；不会发送你的录音。');
     try {
-        await speechAuthorization(signal);
-        await withAbort(loadSDK(), signal);
-        status('评分服务已连接。可以录一小段英语，再发送评分。');
+        const auth = await speechAuthorization(signal);
+        const sdk = await withAbort(loadSDK(), signal);
+        const response = await fetch(new URL('./diagnostic.wav', import.meta.url), { signal });
+        if (!response.ok) throw new Error('测试音频加载失败，请刷新后重试。');
+        const file = new File([await response.arrayBuffer()], 'diagnostic.wav', { type: 'audio/wav' });
+        const result = await assessFile(sdk, { token: auth.token, region: auth.region, file, reference: "What's the weather like?", locale: 'en-US', signal });
+        status(`完整评分测试通过（示例发音 ${result.scores.pronunciation ?? '—'} 分）。现在可以发送自己的录音评分。`);
     } catch (error) { status(error.name === 'AbortError' ? '连接检查超时，请检查网络后重试。' : error.message || '评分服务暂不可用。', true); }
     finally { clearTimeout(timeout); aborter = null; phase = 'idle'; controls(); }
 };
