@@ -55,6 +55,14 @@ Pushes to `main` trigger `.github/workflows/gh-pages.yml`: `node --test tests/*.
 - Cloud copies of saved works (`sync.mjs`, `sync-core.mjs`) load with the AI assistant only when `[params.musicAI] sync = true` and an administrator is signed in. They read and write the quiz project's `music_works` table directly under RLS (no service key, no function), write only the works library in `hive-music-v1` and the arrangements archive, and keep the per-device ledger in `hive-music-sync-v1`. Uploads are compare-and-set on the server revision; a conflict keeps both copies; downloads pass the local validators first. Import and reset clear the ledger so the next sync is a union and never deletes anything. `sync-core.mjs` stays free of browser APIs and is covered by `tests/sync.test.mjs`.
 - AI Strudel snippets (`music-strudel`, the live-tab card) are shown as text, auditioned only in the sandbox, and written into the draft only when the administrator appends (both codes become `$:` blocks) or replaces; either can be undone once. Its session keys are `hive-music-ai-strudel-pending` and `hive-music-live-snippet`.
 
+## 英语朗读室 (`/study/english/`)
+
+- Plain modules in `static/english/`, standalone Hugo layout `layouts/english/single.html`. Read `static/english/README.md` before changing audio or auth.
+- Audio stays in page memory until the user clicks to send it to Azure Speech; no raw audio in storage. History uses only `hive-english-v1`, validates before writing and preserves corrupt/newer versions.
+- The independent `supabase/functions/speech-token/` function lives in this repository and reuses the quiz project's Auth and `is_app_admin()` RPC. Keys are server secrets only; token issuance always verifies the user and administrator permission. Do not expose it to music members or visitors.
+- Production Edge Function deployment and secret changes require explicit user approval. No DB migration or Supabase Auth changes are needed. Do not edit the existing `ai-tutor` or built quiz/labs apps for this feature.
+- Do not edit the vendored Speech SDK. Tests in `tests/english.test.mjs`; real microphone/voice scoring and Safari need manual acceptance.
+
 ## Built apps copied from other repositories
 
 - `static/quiz/` is the Interview Question Bank build (`EvanWonghere/InterviewQuestionBank`). Its CI pushes the "Update from https://github.com/EvanWonghere/InterviewQuestionBank/commit/…" commits here.

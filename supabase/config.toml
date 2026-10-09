@@ -1,0 +1,6 @@
+project_id = "hive-english"
+
+[functions.speech-token]
+# Publishable keys are not JWTs. The handler verifies the user's access token
+# with Supabase Auth and checks is_app_admin() before contacting Azure.
+verify_jwt = false

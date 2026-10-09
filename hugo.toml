@@ -336,3 +336,7 @@ lineNoStart = 1
 lineNos = true
 lineNumbersInTable = true
 tabWidth = 4
+
+[params.englishSpeech]
+supabaseUrl = "https://vtbwqnigocrbpmbkbiiv.supabase.co"
+publishableKey = "sb_publishable_ELsgCJmcnnTm7V9kSmaZEw_vBMsaWCu"
