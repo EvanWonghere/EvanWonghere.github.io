@@ -14,6 +14,7 @@ function controls() {
     $('discard').disabled = busy || !clip;
     $('assess').disabled = busy || !clip || !admin;
     $('cancel').hidden = phase !== 'assessing';
+    $('check-service').disabled = busy || !admin;
     for (const id of ['reference', 'locale', 'sample']) $(id).disabled = busy;
 }
 function updateCount() { $('word-count').textContent = `${wordCount($('reference').value)} / 60 词`; }
@@ -141,6 +142,26 @@ async function refreshAuth() {
     controls();
 }
 $('refresh-login').onclick = refreshAuth;
+async function speechAuthorization(signal) {
+    const { data } = await client.auth.getSession();
+    if (!data.session) throw new Error('登录已失效，请重新登录。');
+    const response = await fetch(`${config.url}/functions/v1/speech-token`, { method: 'POST', headers: { Authorization: `Bearer ${data.session.access_token}`, apikey: config.key }, signal });
+    const auth = await response.json();
+    if (!response.ok) throw new Error(auth.error || '评分服务暂不可用。');
+    if (typeof auth.token !== 'string' || !auth.token || auth.region !== 'southeastasia') throw new Error('评分服务配置不完整。');
+    return auth;
+}
+$('check-service').onclick = async () => {
+    if (phase !== 'idle' || !admin) return;
+    phase = 'checking'; aborter = new AbortController(); const signal = aborter.signal;
+    const timeout = setTimeout(() => aborter?.abort(), 15000); controls(); status('正在检查评分服务；不会发送录音。');
+    try {
+        await speechAuthorization(signal);
+        await withAbort(loadSDK(), signal);
+        status('评分服务已连接。可以录一小段英语，再发送评分。');
+    } catch (error) { status(error.name === 'AbortError' ? '连接检查超时，请检查网络后重试。' : error.message || '评分服务暂不可用。', true); }
+    finally { clearTimeout(timeout); aborter = null; phase = 'idle'; controls(); }
+};
 $('assess').onclick = async () => {
     if (phase !== 'idle' || !clip || !admin) return;
     const current = clip;
@@ -149,13 +170,8 @@ $('assess').onclick = async () => {
     phase = 'assessing'; aborter = new AbortController(); const signal = aborter.signal; controls(); status('正在发送录音并评分…');
     let timeout;
     try {
-        const { data } = await client.auth.getSession();
-        if (!data.session) throw new Error('登录已失效，请重新登录。');
         timeout = setTimeout(() => aborter?.abort(), 60000);
-        const response = await fetch(`${config.url}/functions/v1/speech-token`, { method: 'POST', headers: { Authorization: `Bearer ${data.session.access_token}`, apikey: config.key }, signal });
-        const auth = await response.json();
-        if (!response.ok) throw new Error(auth.error || '评分服务暂不可用。');
-        if (typeof auth.token !== 'string' || !auth.token || auth.region !== 'southeastasia') throw new Error('评分服务配置不完整。');
+        const auth = await speechAuthorization(signal);
         const sdk = await withAbort(loadSDK(), signal);
         const result = await assessFile(sdk, { token: auth.token, region: auth.region, file: current.file, reference: current.reference, locale: current.locale, signal });
         const record = { id: crypto.randomUUID(), date: new Date().toISOString(), reference: current.reference, locale: current.locale, seconds: current.seconds, result };
