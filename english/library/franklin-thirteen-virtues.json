@@ -1,0 +1,58 @@
+{
+ "version": 1,
+ "id": "franklin-thirteen-virtues",
+ "kind": "prose",
+ "title": "The Thirteen Virtues (excerpt)",
+ "author": "Benjamin Franklin",
+ "year": 1791,
+ "level": "B2",
+ "source": {
+  "name": "Wikisource",
+  "url": "https://en.wikisource.org/wiki/The_Autobiography_of_Benjamin_Franklin%2FSection_Thirty_Seven"
+ },
+ "rights": "美国：1791 年出版；中国：作者1790 年去世，保护期已满",
+ "words": 203,
+ "seconds": 102,
+ "intro": "本杰明·富兰克林（1706–1790）是美国开国元勋之一，同时也是政治家、科学家和印刷商。《富兰克林自传》未能写完，1791 年首次以法文译本出版。这一段讲他为自己订立的十三条德行，决定一次只专注一条，逐周修炼，并用小册子逐日记录过失。",
+ "tips": [
+  "长句多，按分号和逗号分意群，“first”“one at a time”等词稍加重读。",
+  "旧式拼写 judg'd、arrang'd 读作 judged、arranged，& 读作 and。"
+ ],
+ "glossary": {
+  "facilitate": "使…更容易",
+  "unremitting": "不松懈的，不停的",
+  "ancient": "旧有的，积习的",
+  "trifling": "无聊的，琐碎的",
+  "previous": "先前的"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "My Intention being to acquire the Habitude of all these Virtues, I judg'd it would be well not to distract my Attention by attempting the whole at once, but to fix it on one of them at a time,"
+  },
+  {
+   "id": "s2",
+   "text": "and when I should be Master of that, then to proceed to another, and so on till I should have gone thro' the thirteen."
+  },
+  {
+   "id": "s3",
+   "text": "And as the previous Acquisition of some might facilitate the Acquisition of certain others, I arrang'd them with that View as they stand above."
+  },
+  {
+   "id": "s4",
+   "text": "Temperance first, as it tends to procure that Coolness & Clearness of Head, which is so necessary where constant Vigilance was to be kept up, and Guard maintained, against the unremitting Attraction of ancient Habits,"
+  },
+  {
+   "id": "s5",
+   "text": "and the Force of perpetual Temptations. This being acquir'd & establish'd, Silence would be more easy, and my Desire being to gain Knowledge at the same time that I improv'd in Virtue,"
+  },
+  {
+   "id": "s6",
+   "text": "and considering that in Conversation it was obtain'd rather by the use of the Ears than of the Tongue, & therefore wishing to break a Habit I was getting into of Prattling, Punning & Joking,"
+  },
+  {
+   "id": "s7",
+   "text": "which only made me acceptable to trifling Company, I gave Silence the second Place."
+  }
+ ]
+}

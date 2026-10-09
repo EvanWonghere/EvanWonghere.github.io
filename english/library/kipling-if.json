@@ -1,0 +1,67 @@
+{
+ "version": 1,
+ "id": "kipling-if",
+ "kind": "poem",
+ "title": "If—",
+ "author": "Rudyard Kipling",
+ "year": 1910,
+ "level": "C1",
+ "source": {
+  "name": "Wikisource",
+  "url": "https://en.wikisource.org/wiki/Rewards_and_Fairies%2FIf%E2%80%94"
+ },
+ "rights": "美国：1910 年出版；中国：作者1936 年去世，保护期已满",
+ "words": 283,
+ "seconds": 142,
+ "intro": "鲁德亚德·吉卜林（Rudyard Kipling，1865–1936）是英国作家，1907年获得诺贝尔文学奖。《如果》（If—）收入他1910年出版的《奖赏与仙境》（Rewards and Fairies）。诗中以父亲对儿子的口吻，列出一个人应有的品格：临危不乱，面对胜败一视同仁，不被谎言和仇恨左右。全诗由一连串以 If 开头的条件句组成，最后一节才给出结果。",
+ "tips": [
+  "每个 If 条件句之间稍作停顿，语调保持平稳。",
+  "最后两行 Yours is the Earth 要放慢，读出郑重许诺的感觉。"
+ ],
+ "glossary": {
+  "impostors": "冒充者，骗子",
+  "knaves": "无赖，恶人",
+  "sinew": "筋腱，此处指意志与力量",
+  "pitch-and-toss": "掷硬币的赌博"
+ },
+ "human": {
+  "src": "human/kipling-if.mp3",
+  "seconds": 149,
+  "credit": "LibriVox 志愿者朗读 · If · If - Read by CE",
+  "url": "https://archive.org/details/if_kipling_librivox"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "If you can keep your head when all about you\nAre losing theirs and blaming it on you;\nIf you can trust yourself when all men doubt you,\nBut make allowance for their doubting too:"
+  },
+  {
+   "id": "s2",
+   "text": "If you can wait and not be tired by waiting,\nOr being lied about, don't deal in lies,\nOr being hated don't give way to hating,\nAnd yet don't look too good, nor talk too wise;"
+  },
+  {
+   "id": "s3",
+   "text": "If you can dream—and not make dreams your master;\nIf you can think—and not make thoughts your aim,\nIf you can meet with Triumph and Disaster\nAnd treat those two impostors just the same:"
+  },
+  {
+   "id": "s4",
+   "text": "If you can bear to hear the truth you've spoken\nTwisted by knaves to make a trap for fools,\nOr watch the things you gave your life to, broken,\nAnd stoop and build 'em up with worn-out tools;"
+  },
+  {
+   "id": "s5",
+   "text": "If you can make one heap of all your winnings\nAnd risk it on one turn of pitch-and-toss,\nAnd lose, and start again at your beginnings\nAnd never breathe a word about your loss:"
+  },
+  {
+   "id": "s6",
+   "text": "If you can force your heart and nerve and sinew\nTo serve your turn long after they are gone,\nAnd so hold on when there is nothing in you\nExcept the Will which says to them: 'Hold on!'"
+  },
+  {
+   "id": "s7",
+   "text": "If you can talk with crowds and keep your virtue,\nOr walk with Kings—nor lose the common touch,\nIf neither foes nor loving friends can hurt you,\nIf all men count with you, but none too much:"
+  },
+  {
+   "id": "s8",
+   "text": "If you can fill the unforgiving minute\nWith sixty seconds' worth of distance run,\nYours is the Earth and everything that's in it,\nAnd—which is more—you'll be a Man, my son!"
+  }
+ ]
+}

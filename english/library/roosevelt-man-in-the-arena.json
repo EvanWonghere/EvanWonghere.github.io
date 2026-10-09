@@ -1,0 +1,51 @@
+{
+ "version": 1,
+ "id": "roosevelt-man-in-the-arena",
+ "kind": "speech",
+ "title": "Citizenship in a Republic (excerpt)",
+ "author": "Theodore Roosevelt",
+ "year": 1910,
+ "level": "C1",
+ "source": {
+  "name": "Wikisource",
+  "url": "https://en.wikisource.org/wiki/Citizenship_in_a_Republic"
+ },
+ "rights": "美国：1910 年出版；中国：作者1919 年去世，保护期已满",
+ "words": 140,
+ "seconds": 70,
+ "intro": "1910年4月，老罗斯福在巴黎索邦大学发表题为《共和国的公民》的演讲，此时他已卸任总统。其中 “The Man in the Arena” 一段后来广为流传，强调敢于行动、不怕失败的人。原文句子很长，结构是并列排比。",
+ "tips": [
+  "句中分号多，每个分号处停顿，但不要降调。",
+  "“daring greatly” 要读得有力，最后一句语速放慢。"
+ ],
+ "glossary": {
+  "marred": "弄脏、损伤",
+  "valiantly": "勇敢地",
+  "shortcoming": "缺点、不足",
+  "enthusiasms": "热忱、热情",
+  "daring": "勇敢冒险的",
+  "timid": "胆怯的"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "It is not the critic who counts; not the man who points out how the strong man stumbles, or where the doer of deeds could have done them better."
+  },
+  {
+   "id": "s2",
+   "text": "The credit belongs to the man who is actually in the arena, whose face is marred by dust and sweat and blood; who strives valiantly; who errs, who comes short again and again,"
+  },
+  {
+   "id": "s3",
+   "text": "because there is no effort without error and shortcoming; but who does actually strive to do the deeds; who knows great enthusiasms, the great devotions; who spends himself in a worthy cause;"
+  },
+  {
+   "id": "s4",
+   "text": "who at the best knows in the end the triumph of high achievement, and who at the worst, if he fails, at least fails while daring greatly,"
+  },
+  {
+   "id": "s5",
+   "text": "so that his place shall never be with those cold and timid souls who neither know victory nor defeat."
+  }
+ ]
+}

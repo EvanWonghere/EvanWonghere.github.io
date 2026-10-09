@@ -1,0 +1,59 @@
+{
+ "version": 1,
+ "id": "thoreau-walden-deliberately",
+ "kind": "prose",
+ "title": "Where I Lived, and What I Lived For (excerpt)",
+ "author": "Henry David Thoreau",
+ "year": 1854,
+ "level": "C1",
+ "source": {
+  "name": "Wikisource",
+  "url": "https://en.wikisource.org/wiki/Walden_(1854)_Thoreau%2FWhere_I_Lived%2C_and_What_I_Lived_for"
+ },
+ "rights": "美国：1854 年出版；中国：作者1862 年去世，保护期已满",
+ "words": 213,
+ "seconds": 107,
+ "intro": "亨利·戴维·梭罗（1817–1862）是美国作家和思想家，超验主义运动的重要人物。《瓦尔登湖》（1854）记述他在马萨诸塞州康科德附近瓦尔登湖畔独居的生活。本篇是书中第二章《我为何而居，我为何而生》，开头几句说明他进入林中的目的。",
+ "tips": [
+  "长句多，按分号和逗号分意群读，意群之间稍作停顿。",
+  "“live deep”与“marrow”要重读，语气由慢转强。"
+ ],
+ "glossary": {
+  "front": "直面，迎对",
+  "marrow": "精髓",
+  "resignation": "顺从，听天由命",
+  "meanness": "卑微，平庸",
+  "sublime": "崇高的",
+  "excursion": "远行，探索"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "I went to the woods because I wished to live deliberately, to front only the essential facts of life, and see if I could not learn what it had to teach, and not, when I came to die,"
+  },
+  {
+   "id": "s2",
+   "text": "discover that I had not lived. I did not wish to live what was not life, living is so dear; nor did I wish to practise resignation, unless it was quite necessary."
+  },
+  {
+   "id": "s3",
+   "text": "I wanted to live deep and suck out all the marrow of life, to live so sturdily and Spartan-like as to put to rout all that was not life, to cut a broad swath and shave close,"
+  },
+  {
+   "id": "s4",
+   "text": "to drive life into a corner, and reduce it to its lowest terms, and, if it proved to be mean, why then to get the whole and genuine meanness of it, and publish its meanness to the world;"
+  },
+  {
+   "id": "s5",
+   "text": "or if it were sublime, to know it by experience, and be able to give a true account of it in my next excursion."
+  },
+  {
+   "id": "s6",
+   "text": "For most men, it appears to me, are in a strange uncertainty about it, whether it is of the devil or of God,"
+  },
+  {
+   "id": "s7",
+   "text": "and have somewhat hastily concluded that it is the chief end of man here to \"glorify God and enjoy him forever.\""
+  }
+ ]
+}

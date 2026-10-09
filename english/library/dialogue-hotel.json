@@ -1,0 +1,109 @@
+{
+ "version": 1,
+ "id": "dialogue-hotel",
+ "kind": "lesson",
+ "title": "At the Hotel Desk",
+ "author": "Hive",
+ "year": 2026,
+ "level": "A2",
+ "source": {
+  "name": "Hive 原创",
+  "url": ""
+ },
+ "rights": "原创内容，Hive 站点所有，可随站使用。",
+ "words": 233,
+ "seconds": 117,
+ "intro": "这是客人在酒店前台办理入住的对话。客人有预订，先确认身份和早餐时间，房间的灯坏了就换了一间房，最后请前台第二天一早叫出租车去机场。你可以任选前台或客人的角色朗读。",
+ "tips": [
+  "客人的请求多用 Could you、Is it possible，语调要柔和。",
+  "seven、quarter to seven 这类时间要读清楚。"
+ ],
+ "glossary": {
+  "reservation": "预订",
+  "passport": "护照",
+  "breakfast": "早餐",
+  "repair": "维修",
+  "entrance": "入口"
+ },
+ "roles": [
+  "Receptionist",
+  "Guest"
+ ],
+ "segments": [
+  {
+   "id": "s1",
+   "text": "Good evening, and welcome to our hotel. Do you have a reservation with us?",
+   "speaker": "Receptionist"
+  },
+  {
+   "id": "s2",
+   "text": "Yes, I do. The reservation is under the name Lee, for two nights, starting tonight.",
+   "speaker": "Guest"
+  },
+  {
+   "id": "s3",
+   "text": "Thank you, Mr. Lee. Could I see your passport, please? Your room is on the fifth floor.",
+   "speaker": "Receptionist"
+  },
+  {
+   "id": "s4",
+   "text": "Here you go. Is breakfast included in the price? I'd like to know what time it starts.",
+   "speaker": "Guest"
+  },
+  {
+   "id": "s5",
+   "text": "Yes, breakfast is included. It's served in the restaurant on the ground floor, from seven to ten.",
+   "speaker": "Receptionist"
+  },
+  {
+   "id": "s6",
+   "text": "Great, thank you. Oh, there's one problem. The bathroom light in my room doesn't work.",
+   "speaker": "Guest"
+  },
+  {
+   "id": "s7",
+   "text": "I'm sorry about that. Let me send someone up to fix it right away.",
+   "speaker": "Receptionist"
+  },
+  {
+   "id": "s8",
+   "text": "Thank you. Is it possible to have a different room, if the repair takes too long?",
+   "speaker": "Guest"
+  },
+  {
+   "id": "s9",
+   "text": "Of course. Here is a new key for room 618, on the sixth floor. It has a bigger desk.",
+   "speaker": "Receptionist"
+  },
+  {
+   "id": "s10",
+   "text": "That's perfect, thank you so much. Could you order a taxi to the airport for seven tomorrow morning?",
+   "speaker": "Guest"
+  },
+  {
+   "id": "s11",
+   "text": "Sure. What time is your flight, so I can tell the driver when to arrive?",
+   "speaker": "Receptionist"
+  },
+  {
+   "id": "s12",
+   "text": "The flight leaves at nine, so the taxi should come at a quarter to seven.",
+   "speaker": "Guest"
+  },
+  {
+   "id": "s13",
+   "text": "No problem. I'll book it now, and the taxi will wait for you outside the main entrance.",
+   "speaker": "Receptionist"
+  },
+  {
+   "id": "s14",
+   "text": "Thank you for your help. I hope I can enjoy my stay here.",
+   "speaker": "Guest"
+  },
+  {
+   "id": "s15",
+   "text": "You're welcome. Enjoy your stay, and have a good night's sleep.",
+   "speaker": "Receptionist"
+  }
+ ]
+}

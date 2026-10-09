@@ -1,0 +1,55 @@
+{
+ "version": 1,
+ "id": "keats-letter-to-fanny",
+ "kind": "letter",
+ "title": "Letter to Fanny Brawne, 8 July 1819",
+ "author": "John Keats",
+ "year": 1819,
+ "level": "C1",
+ "source": {
+  "name": "Wikisource",
+  "url": "https://en.wikisource.org/wiki/Letter_to_Fanny_Brawne%2C_July_8%2C_1819"
+ },
+ "rights": "美国：1878 年出版；中国：作者1821 年去世，保护期已满",
+ "words": 168,
+ "seconds": 84,
+ "intro": "1819年7月8日，约翰·济慈写给恋人范妮·布劳恩的信。信中既有热烈的爱意，也有对美与爱情的思索，句子长，用词偏古雅，拼写也保留了旧式写法。济慈写信时二十多岁，文字热烈，朗读时可随情绪起伏调整语速和停顿。",
+ "tips": [
+  "“my love of Beauty” 一句较长，在 love 后停顿，突出对美的热爱。",
+  "“'twill” 是 it will 的旧式缩写，读成短促的 twil 即可。"
+ ],
+ "glossary": {
+  "luxurious": "强烈而诱人的（支配力）",
+  "tenderer": "更温柔的",
+  "fancy": "想象力、幻想",
+  "miserable": "痛苦的、难受的",
+  "bedewed": "被浸润的",
+  "moistened": "被湿润的，比喻被滋养"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "My Sweet Girl: Your Letter gave me more delight than any thing in the world but yourself could do; indeed I am almost astonished that any absent one should have that luxurious power over my senses which I feel."
+  },
+  {
+   "id": "s2",
+   "text": "Even when I am not thinking of you I receive your influence and a tenderer nature stealing upon me."
+  },
+  {
+   "id": "s3",
+   "text": "All my thoughts, my unhappiest days and nights have I find not at all cured me of my love of Beauty, but made it so intense that I am miserable that you are not with me:"
+  },
+  {
+   "id": "s4",
+   "text": "or rather breathe in that dull sort of patience that cannot be called Life."
+  },
+  {
+   "id": "s5",
+   "text": "I never knew before, what such a love as you have made me feel, was; I did not believe in it; my Fancy was afraid of it, lest it should burn me up."
+  },
+  {
+   "id": "s6",
+   "text": "But if you will fully love me, though there may be some fire, 'twill not be more than we can bear when moistened and bedewed with pleasures."
+  }
+ ]
+}

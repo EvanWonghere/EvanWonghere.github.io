@@ -1,0 +1,54 @@
+{
+ "version": 1,
+ "id": "wordsworth-daffodils",
+ "kind": "poem",
+ "title": "I Wandered Lonely as a Cloud",
+ "author": "William Wordsworth",
+ "year": 1807,
+ "level": "B1",
+ "source": {
+  "name": "Wikisource",
+  "url": "https://en.wikisource.org/wiki/Poems_That_Every_Child_Should_Know%2FI_Wandered_Lonely_as_a_Cloud"
+ },
+ "rights": "美国：1807 年出版；中国：作者1850 年去世，保护期已满",
+ "words": 151,
+ "seconds": 76,
+ "intro": "华兹华斯（1770–1850）是英国浪漫主义诗人，与柯尔律治合作出版《抒情歌谣集》（1798），被视为英国浪漫主义运动的开端之一。本诗常被称为《水仙》（The Daffodils），写诗人漫步时突然看见湖边成片金黄的水仙在风中起舞；后来独处时，这景象又浮现在“内心之眼”前，带来喜悦。（这里的四节是 1815 年修订后的文本。）",
+ "tips": [
+  "每节前四行 ABAB 押韵，后两行 CC 押韵，朗读时注意韵脚。",
+  "最后一节转向回忆，语气由明快变温柔，读的时候可以放慢。"
+ ],
+ "glossary": {
+  "host": "一大群（此处指水仙）",
+  "vales": "山谷",
+  "margin": "岸边，边缘",
+  "sprightly": "活泼的，轻快的",
+  "jocund": "欢快的，快乐的",
+  "glee": "欢乐，喜悦",
+  "pensive": "沉思的，忧思的"
+ },
+ "human": {
+  "src": "human/wordsworth-daffodils.mp3",
+  "seconds": 82,
+  "credit": "LibriVox 志愿者朗读 · I Wandered Lonely As a Cloud · I Wandered Lonely as a Cloud - Read by DJS",
+  "url": "https://archive.org/details/wandered_lonely_as_a_cloud_librivox"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "I wandered lonely as a cloud\nThat floats on high o'er vales and hills,\nWhen all at once I saw a crowd,\nA host of golden daffodils:\nBeside the lake, beneath the trees,\nFluttering and dancing in the breeze."
+  },
+  {
+   "id": "s2",
+   "text": "Continuous as the stars that shine\nAnd twinkle on the milky way,\nThey stretched in never-ending line\nAlong the margin of a bay:\nTen thousand saw I at a glance,\nTossing their heads in sprightly dance."
+  },
+  {
+   "id": "s3",
+   "text": "The waves beside them danced, but they\nOutdid the sparkling waves in glee:—\nA poet could not but be gay\nIn such a jocund company;\nI gazed—and gazed—but little thought\nWhat wealth the show to me had brought."
+  },
+  {
+   "id": "s4",
+   "text": "For oft, when on my couch I lie\nIn vacant or in pensive mood,\nThey flash upon that inward eye\nWhich is the bliss of solitude;\nAnd then my heart with pleasure fills,\nAnd dances with the daffodils."
+  }
+ ]
+}

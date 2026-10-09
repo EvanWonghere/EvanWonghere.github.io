@@ -1,0 +1,59 @@
+{
+ "version": 1,
+ "id": "emerson-self-reliance",
+ "kind": "prose",
+ "title": "Self-Reliance (excerpt)",
+ "author": "Ralph Waldo Emerson",
+ "year": 1841,
+ "level": "C1",
+ "source": {
+  "name": "Wikisource",
+  "url": "https://en.wikisource.org/wiki/Essays%3A_First_Series%2FSelf-Reliance"
+ },
+ "rights": "美国：1841 年出版；中国：作者1882 年去世，保护期已满",
+ "words": 205,
+ "seconds": 103,
+ "intro": "拉尔夫·沃尔多·爱默生（1803–1882）是美国思想家、散文作家，超验主义运动的代表人物。《论自立》（Self-Reliance）收于他的《论文集（第一辑）》（1841）。文章主张人应相信自己内心的判断，不因他人的意见或传统而放弃自我。",
+ "tips": [
+  "句子短促有力，句号处略作停顿，让每句都站得住。",
+  "“Trust thyself”的 Trust 重读，这是全篇的主旨句。"
+ ],
+ "glossary": {
+  "vibrates": "共鸣，颤动",
+  "providence": "天意，神意",
+  "conform": "顺从，符合",
+  "disconcerted": "局促不安，困惑",
+  "prattle": "絮叨，闲聊",
+  "unconquered": "未被磨灭的，仍然锐利"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "Trust thyself: every heart vibrates to that iron string. Accept the place the divine providence has found for you, the society of your contemporaries, the connection of events."
+  },
+  {
+   "id": "s2",
+   "text": "Great men have always done so, and confided themselves childlike to the genius of their age, betraying their perception that the absolutely trustworthy was seated at their heart, working through their hands, predominating in all their being."
+  },
+  {
+   "id": "s3",
+   "text": "And we are now men, and must accept in the highest mind the same transcendent destiny; and not minors and invalids in a protected corner, not cowards fleeing before a revolution, but guides, redeemers, and benefactors, obeying the Almighty effort,"
+  },
+  {
+   "id": "s4",
+   "text": "and advancing on Chaos and the Dark. What pretty oracles nature yields us on this text, in the face and behaviour of children, babes, and even brutes!"
+  },
+  {
+   "id": "s5",
+   "text": "That divided and rebel mind, that distrust of a sentiment because our arithmetic has computed the strength and means opposed to our purpose, these have not."
+  },
+  {
+   "id": "s6",
+   "text": "Their mind being whole, their eye is as yet unconquered, and when we look in their faces, we are disconcerted."
+  },
+  {
+   "id": "s7",
+   "text": "Infancy conforms to nobody: all conform to it, so that one babe commonly makes four or five out of the adults who prattle and play to it."
+  }
+ ]
+}

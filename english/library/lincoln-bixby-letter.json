@@ -1,0 +1,51 @@
+{
+ "version": 1,
+ "id": "lincoln-bixby-letter",
+ "kind": "letter",
+ "title": "Letter to Mrs. Bixby",
+ "author": "Abraham Lincoln",
+ "year": 1864,
+ "level": "B2",
+ "source": {
+  "name": "Wikisource",
+  "url": "https://en.wikisource.org/wiki/Life_and_Works_of_Abraham_Lincoln%2FVolume_8%2FBixby%2C_Mrs."
+ },
+ "rights": "美国：1864 年出版；中国：作者1865 年去世，保护期已满",
+ "words": 137,
+ "seconds": 69,
+ "intro": "这封信以林肯名义写给波士顿的毕克斯贝夫人，安慰她据称失去五个儿子的丧子之痛（人数本身也有争议）。信件真伪存在争议，有一种常见说法认为是林肯的秘书约翰·海伊所写。信中措辞庄重、有礼，多用长句与抽象名词，朗读时要读出悲悯而克制的语气。",
+ "tips": [
+  "信的语气庄重克制，长句之间的停顿要稍长。",
+  "“I pray that our heavenly Father” 是祈祷语气，宜放慢、略降低音量。"
+ ],
+ "glossary": {
+  "beguile": "诱使忘却、哄开",
+  "bereavement": "丧亲之痛",
+  "assuage": "缓解、抚平",
+  "anguish": "极度痛苦",
+  "consolation": "安慰",
+  "fruitless": "徒劳的"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "I have been shown in the files of the War Department a statement of the Adjutant-General of Massachusetts that you are the mother of five sons who have died gloriously on the field of battle."
+  },
+  {
+   "id": "s2",
+   "text": "I feel how weak and fruitless must be any words of mine which should attempt to beguile you from the grief of a loss so overwhelming."
+  },
+  {
+   "id": "s3",
+   "text": "But I cannot refrain from tendering to you the consolation that may be found in the thanks of the Republic they died to save."
+  },
+  {
+   "id": "s4",
+   "text": "I pray that our heavenly Father may assuage the anguish of your bereavement, and leave you only the cherished memory of the loved and lost,"
+  },
+  {
+   "id": "s5",
+   "text": "and the solemn pride that must be yours to have laid so costly a sacrifice upon the altar of freedom. Yours very sincerely and respectfully, Abraham Lincoln."
+  }
+ ]
+}

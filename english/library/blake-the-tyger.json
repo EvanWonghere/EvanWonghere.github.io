@@ -1,0 +1,62 @@
+{
+ "version": 1,
+ "id": "blake-the-tyger",
+ "kind": "poem",
+ "title": "The Tyger",
+ "author": "William Blake",
+ "year": 1794,
+ "level": "B2",
+ "source": {
+  "name": "Wikisource",
+  "url": "https://en.wikisource.org/wiki/Songs_of_Innocence_and_of_Experience_(1826)%2FSongs_of_Experience%2FThe_Tyger"
+ },
+ "rights": "美国：1794 年出版；中国：作者1827 年去世，保护期已满",
+ "words": 143,
+ "seconds": 72,
+ "intro": "威廉·布莱克（William Blake，1757–1827）是英国诗人兼版画家。《老虎》（The Tyger）收入他1794年的诗集《经验之歌》，与《天真之歌》中的《羔羊》互为对照。全诗几乎都是提问，追问创造老虎的那只手和那双眼睛，是怎样锻造出它可怕的匀称。",
+ "tips": [
+  "每节四行，两行一韵，行末的逗号和问号处稍作停顿。",
+  "问句语调要上扬，最后一节的 Dare 要读得最有力。"
+ ],
+ "glossary": {
+  "tyger": "老虎（tiger 的古体拼法）",
+  "symmetry": "匀称，对称之美",
+  "sinews": "筋腱，肌腱",
+  "anvil": "铁砧",
+  "furnace": "熔炉",
+  "aspire": "向上攀升，渴望飞起",
+  "dread": "令人敬畏的，可怕的"
+ },
+ "human": {
+  "src": "human/blake-the-tyger.mp3",
+  "seconds": 92,
+  "credit": "LibriVox 志愿者朗读 · Short Poetry Collection 164 · 25 - The Tyger",
+  "url": "https://archive.org/details/spc164_1702_librivox"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "Tyger Tyger. burning bright,\nIn the forests of the night;\nWhat immortal hand or eye.\nCould frame thy fearful symmetry?"
+  },
+  {
+   "id": "s2",
+   "text": "In what distant deeps or skies.\nBurnt the fire of thine eyes?\nOn what wings dare he aspire?\nWhat the hand, dare sieze the fire?"
+  },
+  {
+   "id": "s3",
+   "text": "And what shoulder, & what art,\nCould twist the sinews of thy heart?\nAnd when thy heart began to beat.\nWhat dread hand? & what dread feet?"
+  },
+  {
+   "id": "s4",
+   "text": "What the hammer? what the chain,\nIn what furnace was thy brain?\nWhat the anvil? what dread grasp.\nDare its deadly terrors clasp!"
+  },
+  {
+   "id": "s5",
+   "text": "When the stars threw down their spears\nAnd water'd heaven with their tears:\nDid he smile his work to see?\nDid he who made the Lamb make thee?"
+  },
+  {
+   "id": "s6",
+   "text": "Tyger Tyger burning bright.\nIn the forests of the night:\nWhat immortal hand or eye.\nDare frame thy fearful symmetry?"
+  }
+ ]
+}

@@ -1,0 +1,54 @@
+{
+ "version": 1,
+ "id": "lincoln-second-inaugural",
+ "kind": "speech",
+ "title": "Second Inaugural Address (excerpt)",
+ "author": "Abraham Lincoln",
+ "year": 1865,
+ "level": "C1",
+ "source": {
+  "name": "Wikisource",
+  "url": "https://en.wikisource.org/wiki/Abraham_Lincoln's_Second_Inaugural_Address"
+ },
+ "rights": "美国：1865 年出版；中国：作者1865 年去世，保护期已满",
+ "words": 157,
+ "seconds": 79,
+ "intro": "1865年3月4日，林肯在华盛顿国会大厦东廊发表第二次就职演说，当时内战已接近尾声。他反思战争的起因，认为奴隶制是这场战争的根源之一，并多次引用《圣经》语句。末段 “With malice toward none” 语气平和而坚定，是全篇的收束。",
+ "tips": [
+  "“With malice toward none; with charity for all” 两组并列，分号处稍停。",
+  "“firmness in the right” 后放慢，末句 “a just and lasting peace” 略收束。"
+ ],
+ "glossary": {
+  "scourge": "灾祸、祸害",
+  "unrequited": "得不到回报的",
+  "malice": "恶意",
+  "charity": "仁慈、宽厚",
+  "firmness": "坚定"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "Fondly do we hope—fervently do we pray—that this mighty scourge of war may speedily pass away."
+  },
+  {
+   "id": "s2",
+   "text": "Yet, if God wills that it continue until all the wealth piled by the bondman's two hundred and fifty years of unrequited toil shall be sunk,"
+  },
+  {
+   "id": "s3",
+   "text": "and until every drop of blood drawn with the lash shall be paid by another drawn with the sword, as was said three thousand years ago, so still it must be said,"
+  },
+  {
+   "id": "s4",
+   "text": "\"The judgments of the Lord are true and righteous altogether.\""
+  },
+  {
+   "id": "s5",
+   "text": "With malice toward none; with charity for all; with firmness in the right, as God gives us to see the right, let us strive on to finish the work we are in; to bind up the nation's wounds;"
+  },
+  {
+   "id": "s6",
+   "text": "to care for him who shall have borne the battle, and for his widow, and his orphan—to do all which may achieve and cherish a just and lasting peace among ourselves, and with all nations."
+  }
+ ]
+}

@@ -1,0 +1,53 @@
+{
+ "version": 1,
+ "id": "frost-stopping-by-woods",
+ "kind": "poem",
+ "title": "Stopping by Woods on a Snowy Evening",
+ "author": "Robert Frost",
+ "year": 1923,
+ "level": "B2",
+ "source": {
+  "name": "Wikisource",
+  "url": "https://en.wikisource.org/wiki/New_Hampshire%2C_a_Poem_with_Notes_and_Grace_Notes%2FStopping_by_Woods_on_a_Snowy_Evening"
+ },
+ "rights": "美国：1923 年出版；中国：作者1963 年去世，保护期已满",
+ "words": 108,
+ "seconds": 54,
+ "intro": "罗伯特·弗罗斯特（1874–1963）是美国诗人，一生四次获得普利策诗歌奖。《雪夜林畔驻马》写于1922年，1923年收入诗集《新罕布什尔》（New Hampshire）。诗人在一个寒冷的夜晚乘雪橇路过树林，停下来看雪，马儿摇动铃铛，似乎在问是不是出了差错。全诗每节押 aaba 韵，结尾两行重复，常被读作对责任与生活的沉思。",
+ "tips": [
+  "每节第三行不与其他行押韵，读到它时稍作停顿。",
+  "结尾两行一模一样，第二遍要读得更轻、更慢。"
+ ],
+ "glossary": {
+  "queer": "奇怪的",
+  "harness": "马具",
+  "downy": "柔软如绒的",
+  "flake": "雪花（雪片）",
+  "sweep": "（风的）轻掠声",
+  "keep": "履行，遵守"
+ },
+ "human": {
+  "src": "human/frost-stopping-by-woods.mp3",
+  "seconds": 85,
+  "credit": "LibriVox 志愿者朗读 · New Hampshire - A Poem with Notes and Grace Notes · 24 - Stopping by Woods on a Snowy Evening",
+  "url": "https://archive.org/details/newhampshire_1902_librivox"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "Whose woods these are I think I know.\nHis house is in the village though;\nHe will not see me stopping here\nTo watch his woods fill up with snow."
+  },
+  {
+   "id": "s2",
+   "text": "My little horse must think it queer\nTo stop without a farmhouse near\nBetween the woods and frozen lake\nThe darkest evening of the year."
+  },
+  {
+   "id": "s3",
+   "text": "He gives his harness bells a shake\nTo ask if there is some mistake.\nThe only other sound's the sweep\nOf easy wind and downy flake."
+  },
+  {
+   "id": "s4",
+   "text": "The woods are lovely, dark and deep.\nBut I have promises to keep,\nAnd miles to go before I sleep,\nAnd miles to go before I sleep."
+  }
+ ]
+}

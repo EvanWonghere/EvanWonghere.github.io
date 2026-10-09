@@ -1,0 +1,54 @@
+{
+ "version": 1,
+ "id": "yeats-innisfree",
+ "kind": "poem",
+ "title": "The Lake Isle of Innisfree",
+ "author": "W. B. Yeats",
+ "year": 1890,
+ "level": "B1",
+ "source": {
+  "name": "Wikisource",
+  "url": "https://en.wikisource.org/wiki/The_Lake_Isle_of_Innisfree"
+ },
+ "rights": "美国：1890 年出版；中国：作者1939 年去世，保护期已满",
+ "words": 121,
+ "seconds": 61,
+ "intro": "叶芝（1865–1939）是爱尔兰诗人，1923年获诺贝尔文学奖。《茵尼斯弗利湖岛》是他早期的名作。Innisfree 是爱尔兰斯莱戈郡格伦湖（Lough Gill）中的一座小岛。诗中的“我”想离开喧嚣的城市，到湖上小岛建一间小屋，过简单安静的生活，耳边只有湖水轻拍岸边的声音。",
+ "tips": [
+  "行末逗号处短停，句号处停稍长，让湖边的安静慢慢出来。",
+  "lapping、low sounds 等轻柔的词要读得轻一些。"
+ ],
+ "glossary": {
+  "wattles": "编墙用的细枝条",
+  "glade": "林中空地",
+  "cricket": "蟋蟀",
+  "glimmer": "微光",
+  "veils": "面纱（比喻晨雾）",
+  "lapping": "轻拍（水波拍岸）",
+  "pavements": "人行道（英式）"
+ },
+ "human": {
+  "src": "human/yeats-innisfree.mp3",
+  "seconds": 78,
+  "credit": "LibriVox 志愿者朗读 · Short Poetry Collection 137 · 11 - The Lake Isle of Innisfree",
+  "url": "https://archive.org/details/spc137_1411_librivox"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "I will arise and go now, and go to Innisfree,\nAnd a small cabin build there, of clay and wattles made:\nNine bean-rows will I have there, a hive for the honey-bee,\nAnd live alone in the bee-loud glade."
+  },
+  {
+   "id": "s2",
+   "text": "And I shall have some peace there, for peace comes dropping slow,\nDropping from the veils of the morning to where the cricket sings;"
+  },
+  {
+   "id": "s3",
+   "text": "There midnight's all a glimmer, and noon a purple glow,\nAnd evening full of the linnet's wings.\nI will arise and go now, for always night and day\nI hear lake water lapping with low sounds by the shore;"
+  },
+  {
+   "id": "s4",
+   "text": "While I stand on the roadway, or on the pavements grey,\nI hear it in the deep heart's core."
+  }
+ ]
+}

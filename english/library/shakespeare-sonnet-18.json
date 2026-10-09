@@ -1,0 +1,55 @@
+{
+ "version": 1,
+ "id": "shakespeare-sonnet-18",
+ "kind": "poem",
+ "title": "Sonnet 18",
+ "author": "William Shakespeare",
+ "year": 1609,
+ "level": "C1",
+ "source": {
+  "name": "Wikisource",
+  "url": "https://en.wikisource.org/wiki/Shakespeare's_Sonnets_(1923)_Yale%2FText%2FSonnet_18"
+ },
+ "rights": "美国：1609 年出版；中国：作者1616 年去世，保护期已满",
+ "words": 114,
+ "seconds": 57,
+ "intro": "莎士比亚（1564–1616）是英国剧作家和诗人。他的《十四行诗》于1609年出版，第18首是其中最著名的一首。诗人把爱人与夏日相比，却发现夏天太短、太易变，而诗中的爱将因诗歌而永存。全诗是标准的莎士比亚体十四行，三节四行诗加一对偶句，押韵为 abab cdcd efef gg。",
+ "tips": [
+  "每行大约十个音节，节奏要稳，不要把古词读得断断续续。",
+  "以 Nor 开头的并列句要保持相同的节奏和语调。"
+ ],
+ "glossary": {
+  "temperate": "温和的，适度的",
+  "darling": "可爱的，宠爱的（修饰花蕾）",
+  "lease": "租约，此处指夏天的期限",
+  "hath": "拥有（have 的古形）",
+  "complexion": "容颜，光泽（指太阳）",
+  "untrimm'd": "未经修饰的，失去装饰的",
+  "ow'st": "拥有（own 的古形）",
+  "grow'st": "生长（grow 的古形）"
+ },
+ "human": {
+  "src": "human/shakespeare-sonnet-18.mp3",
+  "seconds": 65,
+  "credit": "LibriVox 志愿者朗读 · Sonnet 18 · 01 - Sonnet 18 - Read by ALP",
+  "url": "https://archive.org/details/sonnet_18_1604.poem_librivox"
+ },
+ "segments": [
+  {
+   "id": "s1",
+   "text": "Shall I compare thee to a summer's day?\nThou art more lovely and more temperate:\nRough winds do shake the darling buds of May,\nAnd summer's lease hath all too short a date:"
+  },
+  {
+   "id": "s2",
+   "text": "Sometime too hot the eye of heaven shines,\nAnd often is his gold complexion dimm'd;\nAnd every fair from fair sometime declines,\nBy chance, or nature's changing course untrimm'd;"
+  },
+  {
+   "id": "s3",
+   "text": "But thy eternal summer shall not fade,\nNor lose possession of that fair thou ow'st,\nNor shall death brag thou wander'st in his shade,\nWhen in eternal lines to time thou grow'st;"
+  },
+  {
+   "id": "s4",
+   "text": "So long as man can breathe, or eyes can see,\nSo long lives this, and this gives life to thee."
+  }
+ ]
+}
