@@ -124,3 +124,47 @@ test('cancel while the SDK is still loading does not leave the page busy', async
     aborter.abort(); await assert.rejects(p, { name: 'AbortError' });
     assert.equal(await withAbort(Promise.resolve('ready'), new AbortController().signal), 'ready');
 });
+
+test('prosody, word times and breaks are kept when present and optional when absent', () => {
+    const rich = structuredClone(raw);
+    rich.NBest[0].PronunciationAssessment.ProsodyScore = 72.4;
+    rich.NBest[0].Words[0].Offset = 7500000; rich.NBest[0].Words[0].Duration = 13800000;
+    rich.NBest[0].Words[0].Feedback = { Prosody: { Break: { ErrorTypes: ['None'], UnexpectedBreak: { Confidence: 0.9 } }, Intonation: { ErrorTypes: ['Monotone'] } } };
+    rich.NBest[0].Words[1].Feedback = { Prosody: { Break: { ErrorTypes: ['None'], MissingBreak: { Confidence: 1 }, UnexpectedBreak: { Confidence: 0.1 } } } };
+    const result = parseAssessment(rich);
+    assert.equal(result.scores.prosody, 72.4);
+    assert.deepEqual([result.words[0].offsetMs, result.words[0].durationMs], [750, 1380]);
+    assert.equal(result.words[0].breakBefore, 'unexpected');
+    assert.equal(result.words[1].breakBefore, null, 'a high missing-break confidence alone is not flagged: the sample response gives 1.0 for ordinary words');
+    assert.equal(result.monotone, true);
+    assert.equal(result.words[1].offsetMs, null);
+    const plain = parseAssessment(raw);
+    assert.equal(plain.scores.prosody, null); assert.equal(plain.monotone, false);
+    const keep = date => ({ id: 'a', date, reference: 'Hello world.', locale: 'en-US', seconds: 2, result });
+    assert.equal(validateStore({ version: 1, records: [keep('2026-10-09T12:00:00Z')] }).records.length, 1);
+    for (const mutate of [r => { r.result.scores.prosody = 120; }, r => { r.result.words[0].offsetMs = -1; }, r => { r.result.words[0].breakBefore = 'sometimes'; }, r => { r.result.monotone = 'yes'; }]) {
+        const bad = structuredClone(keep('2026-10-09T12:00:00Z')); mutate(bad);
+        assert.throws(() => validateStore({ version: 1, records: [bad] }));
+    }
+});
+
+test('sounds the service thought it heard are kept when asked for, and absent otherwise', () => {
+    const detailed = structuredClone(raw);
+    detailed.NBest[0].Words[1].Phonemes = [
+        { Phoneme: 'w', PronunciationAssessment: { AccuracyScore: 30, NBestPhonemes: [{ Phoneme: 'v', Score: 80 }, { Phoneme: 'w', Score: 20 }] } },
+        { Phoneme: 'ɹ', PronunciationAssessment: { AccuracyScore: 90, NBestPhonemes: [{ Phoneme: 'r', Score: 95 }] } },   // the same sound written two ways: not "instead"
+        { Phoneme: 'l', PronunciationAssessment: { AccuracyScore: 40, NBestPhonemes: [] } },
+    ];
+    const result = parseAssessment(detailed);
+    assert.deepEqual(result.words[1].phonemes.map(p => p.spoken), ['v', null, null]);
+    assert.equal(result.spokenReported, true); assert.equal(result.detail, undefined);
+    assert.equal(parseAssessment(raw).spokenReported, false); assert.equal(parseAssessment(raw).words[0].phonemes[0].spoken, null);
+    const record = { id: 'a', date: '2026-10-09T12:00:00Z', reference: 'Hello world.', locale: 'en-US', seconds: 2, result };
+    assert.equal(validateStore({ version: 1, records: [record] }).records.length, 1);
+    const marked = structuredClone(detailed); marked.HiveDetail = 'sdk';
+    assert.equal(parseAssessment(marked).detail, 'sdk'); assert.equal(parseAssessment({ ...detailed, HiveDetail: 'whatever' }).detail, undefined);
+    for (const mutate of [r => { r.result.words[1].phonemes[0].spoken = 'x'.repeat(20); }, r => { r.result.detail = 'maybe'; }, r => { r.result.spokenReported = 'yes'; }]) {
+        const bad = structuredClone(record); mutate(bad);
+        assert.throws(() => validateStore({ version: 1, records: [bad] }));
+    }
+});

@@ -19,7 +19,7 @@ test('HTTPS scoring authenticates before uploads, pins Azure destination and san
         calls++; assert.equal(url, 'https://southeastasia.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language=en-US&format=detailed');
         assert.equal(options.headers['Ocp-Apim-Subscription-Key'], 'private-key');
         const params = JSON.parse(Buffer.from(options.headers['Pronunciation-Assessment'], 'base64').toString());
-        assert.equal(params.ReferenceText, 'Hello world.'); assert.equal(params.EnableMiscue, true); assert.equal(params.EnableProsodyAssessment, false); assert.equal(params.Granularity, 'Phoneme');
+        assert.equal(params.ReferenceText, 'Hello world.'); assert.equal(params.EnableMiscue, true); assert.equal(params.EnableProsodyAssessment, 'True'); assert.equal(params.Granularity, 'Phoneme');
         assert.equal(options.body.length, 32044); return Response.json(raw);
     } });
     assert.equal((await handler(request({}, 'invalid'))).status, 401);
@@ -47,4 +47,58 @@ test('browser HTTPS client uploads only WAV/reference and returns actual normali
     });
     assert.equal(result.scores.pronunciation, 88);
     await assert.rejects(requestAssessment(client, { url: 'https://project.supabase.co', key: 'public-key' }, args, async () => Response.json({ error: 'Azure HTTP 429' }, { status: 502 })), /429/);
+});
+
+test('prosody is asked for only with the American accent, the one locale the service supports it for', async () => {
+    const asked = [];
+    const handler = createHandler({ env: name => name === 'AZURE_SPEECH_KEY' ? 'private-key' : '', authenticate: permission, fetcher: async (url, options) => {
+        asked.push([new URL(url).searchParams.get('language'), JSON.parse(Buffer.from(options.headers['Pronunciation-Assessment'], 'base64').toString()).EnableProsodyAssessment]);
+        return Response.json(raw);
+    } });
+    await handler(request()); await handler(request({ ...input(), locale: 'en-GB' }));
+    assert.deepEqual(asked, [['en-US', 'True'], ['en-GB', false]]);
+});
+
+// The Speech SDK answer for "Hello world.": IPA sounds, candidates for each, prosody inside each word's assessment.
+const sdkAnswer = { RecognitionStatus: 'Success', NBest: [{ Display: 'Hello world.', PronunciationAssessment: { AccuracyScore: 90, FluencyScore: 95, CompletenessScore: 100, ProsodyScore: 88, PronScore: 91 }, Words: [
+    { Word: 'hello', Offset: 1000000, Duration: 5000000, PronunciationAssessment: { AccuracyScore: 90, ErrorType: 'None', Feedback: { Prosody: { Break: { ErrorTypes: ['None'], UnexpectedBreak: { Confidence: 0.9 } }, Intonation: { ErrorTypes: ['Monotone'] } } } },
+      Phonemes: [{ Phoneme: 'h', PronunciationAssessment: { AccuracyScore: 95, NBestPhonemes: [{ Phoneme: 'h', Score: 100 }] } }, { Phoneme: 'ɹ', PronunciationAssessment: { AccuracyScore: 40, NBestPhonemes: [{ Phoneme: 'w', Score: 80 }, { Phoneme: 'ɹ', Score: 30 }] } }] }] }] };
+
+test('the detailed path answers with the SDK result, and plain scoring is not contacted', async () => {
+    const asked = [];
+    const handler = createHandler({ env: name => name === 'AZURE_SPEECH_KEY' ? 'private-key' : '', authenticate: permission,
+        fetcher: () => { throw new Error('the plain path must not run'); },
+        assessDetail: async args => { asked.push(args); return structuredClone(sdkAnswer); } });
+    const response = await handler(request({ ...input(), detail: true }));
+    assert.equal(response.status, 200);
+    const raw = await response.json();
+    assert.equal(raw.HiveDetail, 'sdk');
+    assert.equal(asked.length, 1); assert.equal(asked[0].reference, 'Hello world.'); assert.equal(asked[0].locale, 'en-US'); assert.equal(asked[0].bytes.length, 32044); assert.equal(asked[0].region, 'southeastasia');
+    const parsed = parseAssessment(raw);
+    assert.equal(parsed.detail, 'sdk'); assert.equal(parsed.spokenReported, true); assert.equal(parsed.scores.prosody, 88);
+    assert.deepEqual(parsed.words[0].phonemes.map(p => p.spoken), [null, 'w']);          // 'ɹ' was heard as 'w'
+    assert.equal(parsed.words[0].breakBefore, 'unexpected'); assert.equal(parsed.monotone, true); assert.equal(parsed.words[0].offsetMs, 100);
+});
+
+test('when the detailed path fails or is not wanted, the plain path answers', async () => {
+    const calls = [];
+    const plain = async (url, options) => { calls.push(new URL(url).searchParams.get('language')); return Response.json(raw); };
+    const failing = createHandler({ env: name => name === 'AZURE_SPEECH_KEY' ? 'private-key' : '', authenticate: permission, fetcher: plain, assessDetail: async () => { throw new Error('websocket closed: private-key'); } });
+    const fellBack = await failing(request({ ...input(), detail: true }));
+    const body = await fellBack.json();
+    assert.equal(fellBack.status, 200); assert.equal(body.HiveDetail, 'unavailable'); assert.equal(parseAssessment(body).detail, 'unavailable'); assert.doesNotMatch(JSON.stringify(body), /private-key|websocket/);
+    assert.equal(calls.length, 1);
+    const handler = createHandler({ env: name => name === 'AZURE_SPEECH_KEY' ? 'private-key' : '', authenticate: permission, fetcher: plain, assessDetail: async () => { throw new Error('must not run'); } });
+    for (const body of [input(), { ...input(), detail: 'yes' }, { ...input(), detail: true, locale: 'en-GB' }]) assert.equal((await handler(request(body))).status, 200);
+    assert.equal(calls.length, 4); assert.equal((await (await handler(request())).json()).HiveDetail, undefined);
+    const noSdk = createHandler({ env: name => name === 'AZURE_SPEECH_KEY' ? 'private-key' : '', authenticate: permission, fetcher: plain });
+    assert.equal((await noSdk(request({ ...input(), detail: true }))).status, 200);
+});
+
+test('the detailed path refuses what the plain path refuses, and reports no speech clearly', async () => {
+    const handler = createHandler({ env: name => name === 'AZURE_SPEECH_KEY' ? 'private-key' : '', authenticate: permission, fetcher: () => { throw new Error('must not run'); }, assessDetail: async () => ({ RecognitionStatus: 'NoMatch' }) });
+    assert.equal((await handler(request({ ...input(), detail: true }, 'invalid'))).status, 401);
+    assert.equal((await handler(request({ ...input(), detail: true }, 'user'))).status, 403);
+    assert.equal((await handler(request({ ...input(), detail: true, audio: 'AAAA' }))).status, 400);
+    assert.equal((await handler(request({ ...input(), detail: true }))).status, 422);
 });

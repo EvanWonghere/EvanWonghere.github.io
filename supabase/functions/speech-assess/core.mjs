@@ -24,13 +24,15 @@ export function decodeInput(data) {
     const view = new DataView(bytes.buffer);
     const text = at => String.fromCharCode(...bytes.slice(at, at + 4));
     if (text(0) !== 'RIFF' || text(8) !== 'WAVE' || text(12) !== 'fmt ' || text(36) !== 'data' || view.getUint32(4, true) !== bytes.length - 8 || view.getUint32(16, true) !== 16 || view.getUint16(20, true) !== 1 || view.getUint16(22, true) !== 1 || view.getUint32(24, true) !== 16000 || view.getUint32(28, true) !== 32000 || view.getUint16(32, true) !== 2 || view.getUint16(34, true) !== 16 || view.getUint32(40, true) !== bytes.length - 44) throw new Error('wav');
-    return { bytes, reference: data.reference.trim(), locale: data.locale };
+    return { bytes, reference: data.reference.trim(), locale: data.locale, detail: data.detail === true };
 }
 export function normalizeAssessment(raw) {
     // REST returns flat scores; the SDK returns PronunciationAssessment objects.
     return { ...raw, NBest: raw.NBest?.map(best => ({ ...best, PronunciationAssessment: best.PronunciationAssessment ?? best, Words: best.Words?.map(word => ({ ...word, PronunciationAssessment: word.PronunciationAssessment ?? word, Phonemes: word.Phonemes?.map(phoneme => ({ ...phoneme, PronunciationAssessment: phoneme.PronunciationAssessment ?? phoneme })) })) })) };
 }
-export function createHandler({ env, authenticate, fetcher = fetch }) {
+// assessDetail (optional): the Speech SDK over WebSocket, which alone returns IPA sounds and the sounds a speaker may have said instead.
+// It runs here, on the server, because the browser cannot rely on a WebSocket to Azure. Any failure falls back to the REST path below.
+export function createHandler({ env, authenticate, fetcher = fetch, assessDetail }) {
     return async req => {
         const origin = req.headers.get('Origin');
         const headers = { 'Content-Type': 'application/json', 'Cache-Control': 'no-store', Vary: 'Origin', 'Access-Control-Allow-Headers': 'authorization, apikey, content-type, x-client-info', 'Access-Control-Allow-Methods': 'POST, OPTIONS' };
@@ -50,13 +52,22 @@ export function createHandler({ env, authenticate, fetcher = fetch }) {
             let input;
             try { input = decodeInput(await readBody(req)); }
             catch (error) { return json({ error: '请发送不超过 25 秒的单声道 16kHz PCM16 录音及英语短句。' }, error instanceof RangeError ? 413 : 400); }
-            const params = { ReferenceText: input.reference, GradingSystem: 'HundredMark', Granularity: 'Phoneme', Dimension: 'Comprehensive', EnableMiscue: true, EnableProsodyAssessment: false };
+            let detailNote;   // 'sdk' when the detailed path answered, 'unavailable' when it was asked for and failed
+            if (input.detail && input.locale === 'en-US' && assessDetail) {
+                try {
+                    const raw = await assessDetail({ bytes: input.bytes, reference: input.reference, locale: input.locale, key, region, signal: AbortSignal.any([req.signal, AbortSignal.timeout(40000)]) });
+                    if (raw?.RecognitionStatus === 'NoMatch') return json({ error: '没有识别到清晰的英语语音，请回听并重录。' }, 422);
+                    if (Array.isArray(raw?.NBest) && raw.NBest.length) return json({ ...normalizeAssessment(raw), HiveDetail: 'sdk' });
+                    detailNote = 'unavailable';
+                } catch { detailNote = 'unavailable'; }
+            }
+            const params = { ReferenceText: input.reference, GradingSystem: 'HundredMark', Granularity: 'Phoneme', Dimension: 'Comprehensive', EnableMiscue: true, EnableProsodyAssessment: input.locale === 'en-US' ? 'True' : false };   // prosody is only available for en-US
             const encoded = btoa(String.fromCharCode(...new TextEncoder().encode(JSON.stringify(params))));
             const response = await fetcher(`https://${region}.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language=${input.locale}&format=detailed`, { method: 'POST', headers: { 'Ocp-Apim-Subscription-Key': key, 'Content-Type': 'audio/wav; codecs=audio/pcm; samplerate=16000', Accept: 'application/json', 'Pronunciation-Assessment': encoded }, body: input.bytes, signal: AbortSignal.any([req.signal, AbortSignal.timeout(45000)]) });
             if (!response.ok) return json({ error: `Azure 评分请求失败（HTTP ${response.status}）。${response.status === 429 ? '请求过多或额度不足，请稍后重试。' : '请检查资源状态、区域和额度。'}` }, 502);
             const raw = await response.json();
             if (raw.RecognitionStatus !== 'Success') return json({ error: '没有识别到清晰的英语语音，请回听并重录。' }, 422);
-            return json(normalizeAssessment(raw));
+            return json({ ...normalizeAssessment(raw), ...(detailNote ? { HiveDetail: detailNote } : {}) });
         } catch { return json({ error: '评分服务连接超时或暂不可用；录音仍在本页，请稍后重试。' }, 503); }
     };
 }
