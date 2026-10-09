@@ -1,5 +1,5 @@
 import { SAMPLES, STORAGE_KEY, MAX_SECONDS, MAX_RECORDS, wordCount, validateReference, validateStore, mergeStores, encodeWav, wordClass, errorLabel } from './core.mjs';
-import { loadSDK, assessFile, withAbort } from './speech.mjs';
+import { loadSDK, assessFile, withAbort } from './speech.mjs?v=20261009-v1';
 const $ = id => document.getElementById(id);
 let client, admin = false, phase = 'idle', clip = null, recorder = null, stream = null, playbackURL = '', recordingStart = 0, tick, autoStop, canceledRecording = false, aborter;
 let store = { version: 1, records: [] }, storeWritable = true;
@@ -160,7 +160,7 @@ $('check-service').onclick = async () => {
         const sdk = await withAbort(loadSDK(), signal);
         const response = await fetch(new URL('./diagnostic.wav', import.meta.url), { signal });
         if (!response.ok) throw new Error('测试音频加载失败，请刷新后重试。');
-        const file = new File([await response.arrayBuffer()], 'diagnostic.wav', { type: 'audio/wav' });
+        const { file } = await convert(await response.blob());
         const result = await assessFile(sdk, { token: auth.token, region: auth.region, file, reference: "What's the weather like?", locale: 'en-US', signal });
         status(`完整评分测试通过（示例发音 ${result.scores.pronunciation ?? '—'} 分）。现在可以发送自己的录音评分。`);
     } catch (error) { status(error.name === 'AbortError' ? '连接检查超时，请检查网络后重试。' : error.message || '评分服务暂不可用。', true); }
