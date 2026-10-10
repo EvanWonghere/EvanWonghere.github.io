@@ -2,7 +2,7 @@
 // Renders the model voice of the reading library with Azure text to speech, into static/english/voice/.
 //   AZURE_SPEECH_KEY=<key> node tools/render-english-voices.mjs --dry-run            count what would be sent and how big it gets
 //   AZURE_SPEECH_KEY=<key> node tools/render-english-voices.mjs --accents en-US      render one accent
-//   options: --accents en-US,en-GB  --only id,id  --format <azure mp3 format>  --delay <ms between requests>  --force  --rest  --sdk <folder>
+//   options: --accents en-US,en-GB  --only id,id  --tracks main,slow  --format <main track mp3 format>  --slow-format <slow track mp3 format>  --delay <ms between requests>  --force  --rest  --no-index  --sdk <folder>
 // The key is read from the environment, or from a private file in your home folder (never inside the repository):
 //   node tools/render-english-voices.mjs --init-key     creates ~/.config/hive-english/azure.env for you to fill in
 //   node tools/render-english-voices.mjs --check        sends one short word to prove the key works
@@ -19,17 +19,32 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { workTextHash, tokenize } from '../static/english/library.mjs';
-import { VOICES, FORMATS, PAUSE_MS, unitsOf, voiceFor } from '../static/english/voice.mjs';
+import { VOICES, SLOW_VOICES, FORMATS, PAUSE_MS, unitsOf, voiceFor, isHD } from '../static/english/voice.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DEFAULT_FORMAT = 'audio-24khz-48kbitrate-mono-mp3';
+const SLOW_FORMAT = 'audio-16khz-32kbitrate-mono-mp3';
+const SLOW_RATE = '-30%';
+const TAKES = 4;   // how many times a unit is synthesized when its word times come back unusable
 // Quote marks need no escaping in element text, and Azure reports the position of a word after &quot; wrongly (-1), so they stay as they are.
 const escapeXml = text => text.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]);
 const flat = text => text.replace(/\s*\n\s*/g, ' ').trim();
 
-export function buildSsml({ text, voice, accent }) {
+export function buildSsml({ text, voice, accent, rate = '-8%' }) {
+    const head = `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="${accent}"><voice name="${voice}">`;
+    // HD voices take neither <prosody> nor (in the Omni model) <break>: they read as they like and the tool adds the silence itself.
+    if (isHD(voice)) return `${head}${escapeXml(flat(text))}</voice></speak>`;
     // A little slower than the default, and a short silence after the unit so listeners can follow along.
-    return `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="${accent}"><voice name="${voice}"><prosody rate="-8%">${escapeXml(flat(text))}</prosody><break time="${PAUSE_MS}ms"/></voice></speak>`;
+    return `${head}<prosody rate="${rate}">${escapeXml(flat(text))}</prosody><break time="${PAUSE_MS}ms"/></voice></speak>`;
+}
+
+// PAUSE_MS of digital silence as whole mp3 frames: MPEG-2 layer III, mono, 144 bytes a frame, all-zero side info and data.
+// 24 kHz / 48 kbit/s frames last 24 ms and 16 kHz / 32 kbit/s frames 36 ms, so the pause is 360 ms either way.
+const SILENT_FRAME = { 'audio-24khz-48kbitrate-mono-mp3': [0xff, 0xf3, 0x64, 0xc0, 24], 'audio-16khz-32kbitrate-mono-mp3': [0xff, 0xf3, 0x48, 0xc0, 36] };
+export function silence(format) {
+    const [a, b, c, d, frameMs] = SILENT_FRAME[format], frame = Buffer.alloc(144);
+    frame.set([a, b, c, d]);
+    return Buffer.concat(Array.from({ length: Math.round(PAUSE_MS / frameMs) }, () => frame));
 }
 
 async function synthesize({ ssml, key, region, format, fetcher, attempts = 6, backoff = 2000 }) {
@@ -52,26 +67,33 @@ async function synthesize({ ssml, key, region, format, fetcher, attempts = 6, ba
 // `boundaries`: [{kind: 'word' | 'other', startMs, durationMs, textOffset, length}], where textOffset points into the SSML.
 // Azure sometimes reports two words as one event ("in 1864", "” bit"); that event's time is shared by the words in it,
 // by letters. A word with no event at all is an error: the timeline must never carry a guess for a missing word.
-// One known fault is repaired: the British voices report the last word of a unit with no length and a start that can lie
-// before the word ahead of it. Such a last word is placed from the end of the word before it to `endMs`, where the speech
-// stops (the unit's audio less the silence after it). Anywhere else a zero-length word is an error.
-export function wordTimes({ text, ssml, boundaries, endMs }) {
+// One known fault is repaired: Azure sometimes reports the last words of a unit (up to three of them: in the British voices
+// and in headings such as "II.") with no length, at a start that can lie before the word ahead of them. Such a run of last
+// words is spread over the stretch from the end of the word before it (or the start of the unit) to `endMs`, where the speech
+// stops, by letters; these times are inferred, not Azure's. Anywhere else a zero-length word is an error.
+export function wordTimes({ text, ssml, boundaries, endMs, drop = [] }) {   // drop: where words that are in `text` but not in the real text start
     const flatText = flat(text), escaped = escapeXml(flatText), base = ssml.indexOf(escaped);
     if (base < 0) throw new Error('the SSML does not contain the unit text');
     const original = [];   // original[i]: which character of the plain text the i-th character of the escaped text came from
     for (let i = 0; i < flatText.length; i++) for (let k = escapeXml(flatText[i]).length; k > 0; k--) original.push(i);
     const heard = boundaries.filter(b => b.kind === 'word').map(b => ({ ...b }));
-    heard.forEach((b, i) => {
-        if (!(b.durationMs <= 0 || (i > 0 && b.startMs < heard[i - 1].startMs))) return;
-        if (i !== heard.length - 1 || i === 0 || !(endMs > heard[i - 1].startMs + heard[i - 1].durationMs)) throw new Error(`Azure gave a bad time for the word at ${b.textOffset}`);
-        b.startMs = heard[i - 1].startMs + heard[i - 1].durationMs; b.durationMs = endMs - b.startMs;
-    });
+    const broken = (b, i) => b.durationMs <= 0 || (i > 0 && b.startMs < heard[i - 1].startMs);
+    let run = heard.length;
+    while (run > 0 && broken(heard[run - 1], run - 1)) run--;
+    if (heard.some((b, i) => i < run && broken(b, i))) throw new Error(`Azure gave a bad time for a word in the middle of a unit`);
+    if (run < heard.length) {
+        const tail = heard.slice(run), from = run > 0 ? heard[run - 1].startMs + heard[run - 1].durationMs : tail[0].startMs;
+        if (tail.length > 3 || !(endMs > from)) throw new Error(`Azure gave a bad time for the word at ${tail[0].textOffset}`);
+        const letters = tail.reduce((n, b) => n + b.length, 0);
+        let at = from;
+        for (const b of tail) { b.startMs = at; b.durationMs = (endMs - from) * b.length / letters; at += b.durationMs; }
+    }
     const spans = heard.map(b => {
         const from = b.textOffset - base, to = from + b.length;
         if (!(from >= 0 && to <= original.length && b.length > 0)) return null;
         return { a: original[from], b: original[to - 1] + 1, start: b.startMs, end: b.startMs + b.durationMs };
     }).filter(Boolean);
-    return tokenize(flatText).filter(t => t.word).map(token => {
+    return tokenize(flatText).filter(t => t.word && !drop.includes(t.start)).map(token => {
         const from = token.start, to = token.start + token.text.length, parts = [];
         for (const span of spans) {
             const a = Math.max(from, span.a), b = Math.min(to, span.b);
@@ -117,7 +139,7 @@ export function sdkSynthesizer({ key, region, format, folder = SDK_FOLDER, attem
 }
 
 // One work in one accent: the joined mp3 and its timeline. `pause(ms)` is awaited between requests.
-export async function renderWork({ work, accent, key, region, format = DEFAULT_FORMAT, fetcher = fetch, synth, pause = async () => {}, onProgress = () => {}, backoff }) {
+export async function renderWork({ work, accent, key, region, track = 'main', format = track === 'slow' ? SLOW_FORMAT : DEFAULT_FORMAT, fetcher = fetch, synth, pause = async () => {}, onProgress = () => {}, backoff }) {
     const bytesPerSecond = FORMATS[format];
     const parts = [], segments = [];
     let total = 0, chars = 0, requests = 0;
@@ -125,22 +147,38 @@ export async function renderWork({ work, accent, key, region, format = DEFAULT_F
     // synth({ssml}) gives {audio, boundaries}; without it plain HTTPS gives audio only, so no word times.
     const speak = synth ?? (async ({ ssml }) => ({ audio: await synthesize({ ssml, key, region, format, fetcher, backoff }), boundaries: null }));
     let timed = true;
+    const voices = track === 'slow' ? SLOW_VOICES : VOICES;
     for (const segment of work.segments) {
-        const voice = voiceFor(work, segment, accent), start = total, units = [];
+        const voice = voiceFor(work, segment, accent, voices), start = total, units = [];
         for (const unit of unitsOf(segment, work.kind)) {
             await pause();
-            const ssml = buildSsml({ text: unit, voice, accent });
-            const { audio, boundaries } = await speak({ ssml });
-            const from = at(total), to = at(total + audio.length), entry = { start: from, end: to };
-            if (boundaries) entry.words = wordTimes({ text: unit, ssml, boundaries, endMs: at(audio.length) - PAUSE_MS }).map(([a, b]) => [from + Math.round(a), Math.min(to, from + Math.round(b))]);
-            else timed = false;
+            // HD voices report word positions wrongly after an XML entity such as &amp;, so a spaced "&" is written "and" (which is how they read it anyway)
+            // and that word is left out of the times again.
+            const plain = flat(unit), said = isHD(voice) ? plain.replace(/ & /g, ' and ') : plain, drop = [];
+            if (said !== plain) [...plain.matchAll(/ & /g)].forEach((m, k) => drop.push(m.index + 1 + 2 * k));
+            const ssml = buildSsml({ text: said, voice, accent, rate: track === 'slow' ? SLOW_RATE : undefined });
+            // The HD voices now and then report some words with no length. A new synthesis of the same text is a new take (and usually a clean one),
+            // so the unit is asked for again a few times before the tool gives up; the times are always those of the audio that is kept.
+            let spoken, audio, entry, from, lastError;
+            for (let take = 1; take <= TAKES; take++) {
+                spoken = await speak({ ssml });
+                audio = isHD(voice) ? Buffer.concat([spoken.audio, silence(format)]) : spoken.audio;
+                const speechEnd = isHD(voice) ? at(spoken.audio.length) : at(audio.length) - PAUSE_MS;   // where the voice stops talking, in ms into the unit
+                from = at(total); entry = { start: from, end: at(total + audio.length) };
+                if (!spoken.boundaries) { timed = false; lastError = null; break; }
+                try {
+                    entry.words = wordTimes({ text: said, ssml, boundaries: spoken.boundaries, endMs: speechEnd, drop }).map(([a, b]) => [from + Math.round(a), Math.min(entry.end, from + Math.round(b))]);
+                    lastError = null; break;
+                } catch (error) { lastError = error; }
+            }
+            if (lastError) throw new Error(`${lastError.message} after ${TAKES} takes (${work.id}, "${flat(unit).slice(0, 70)}")`);
             units.push(entry);
             parts.push(audio); total += audio.length; chars += flat(unit).length; requests += 1;
             onProgress(requests);
         }
         segments.push({ id: segment.id, start: at(start), end: at(total), units });
     }
-    const timeline = { version: timed ? 2 : 1, id: work.id, accent, voices: VOICES[accent], format, textHash: workTextHash(work), seconds: Math.round(total / bytesPerSecond * 10) / 10, segments };
+    const timeline = { version: timed ? 2 : 1, id: work.id, accent, track, voices: voices[accent], format, textHash: workTextHash(work), seconds: Math.round(total / bytesPerSecond * 10) / 10, segments };
     return { mp3: Buffer.concat(parts), timeline, chars, requests };
 }
 
@@ -174,20 +212,25 @@ async function initKeyFile() {
     console.log(`Created ${KEY_FILE}. Open it, paste Key 1 after AZURE_SPEECH_KEY=, and save.`);
 }
 // rev changes whenever a file is rendered again, so a browser never pairs an old mp3 with a new timeline.
-function addEntry(summary, id, accent, entry) {
+function addEntry(summary, id, accent, entry, track = 'main') {
     if (!Object.hasOwn(summary.works, id)) summary.works[id] = {};
-    summary.works[id][accent] = { ...entry, rev: Date.now().toString(36) };
+    const rev = Date.now().toString(36), have = summary.works[id][accent];
+    if (track === 'slow') {
+        if (!have) throw new Error(`${accent} ${id}: render the main track before the slow one`);
+        have.slow = { ...entry, rev };
+    } else summary.works[id][accent] = { ...entry, rev, ...(have?.slow ? { slow: have.slow } : {}) };
 }
 async function main(argv) {
     const flag = name => { const i = argv.indexOf(name); return i < 0 ? null : argv[i + 1]; };
     if (argv.includes('--init-key')) { await initKeyFile(); return; }
-    const dry = argv.includes('--dry-run'), force = argv.includes('--force'), rest = argv.includes('--rest');
+    const dry = argv.includes('--dry-run'), force = argv.includes('--force'), rest = argv.includes('--rest'), noIndex = argv.includes('--no-index');   // --no-index: several runs side by side, then one plain run to write the index
     const accents = (flag('--accents') ?? 'en-US,en-GB').split(',');
     const only = flag('--only')?.split(',');
-    const format = flag('--format') ?? DEFAULT_FORMAT;
+    const format = flag('--format') ?? DEFAULT_FORMAT, slowFormat = flag('--slow-format') ?? SLOW_FORMAT;
+    const tracks = (flag('--tracks') ?? 'main,slow').split(',');
     const delay = Number(flag('--delay') ?? 3200);
     const sdkFolder = flag('--sdk') ?? undefined;
-    if (!accents.every(a => VOICES[a]) || !FORMATS[format] || !Number.isFinite(delay)) throw new Error(`usage: see the top of this file (accents: ${Object.keys(VOICES)}; formats: ${Object.keys(FORMATS)})`);
+    if (!accents.every(a => VOICES[a]) || !tracks.every(t => ['main', 'slow'].includes(t)) || !FORMATS[format] || !FORMATS[slowFormat] || !Number.isFinite(delay)) throw new Error(`usage: see the top of this file (accents: ${Object.keys(VOICES)}; formats: ${Object.keys(FORMATS)})`);
     const { key, region } = await credentials();
     if (argv.includes('--check')) {
         if (!key) throw new Error(`No key yet. Open ${KEY_FILE} and fill in AZURE_SPEECH_KEY (or set it in your shell).`);
@@ -201,35 +244,43 @@ async function main(argv) {
     const works = [];
     for (const entry of index.works) if (!only || only.includes(entry.id)) works.push(JSON.parse(await readFile(path.join(library, `${entry.id}.json`), 'utf8')));
     const summary = (await exists(path.join(out, 'index.json'))) ? JSON.parse(await readFile(path.join(out, 'index.json'), 'utf8')) : { version: 1, format, works: {} };
-    if (summary.format !== format && Object.keys(summary.works).length && !force) throw new Error(`The existing voice files use ${summary.format}. Use the same --format, or --force to render everything again.`);
-    summary.format = format;
+    if (tracks.includes('main') && summary.format !== format && Object.keys(summary.works).length && !force) throw new Error(`The existing voice files use ${summary.format}. Use the same --format, or --force to render everything again.`);
+    if (tracks.includes('slow') && summary.slowFormat && summary.slowFormat !== slowFormat && !force) throw new Error(`The existing slow files use ${summary.slowFormat}. Use the same --slow-format, or --force to render everything again.`);
+    if (tracks.includes('main')) summary.format = format;
+    if (tracks.includes('slow')) summary.slowFormat = slowFormat;
     let units = 0, chars = 0;
     for (const work of works) for (const segment of work.segments) for (const unit of unitsOf(segment, work.kind)) { units += 1; chars += flat(unit).length; }
     const seconds = works.reduce((n, w) => n + w.words, 0) / 140 * 60 + units * PAUSE_MS / 1000;
-    const megabytes = accents.length * seconds * FORMATS[format] / 1e6;
-    console.log(`${works.length} works, ${units} units, ${chars} characters a pass; ${accents.length} accent(s): ${units * accents.length} requests, about ${Math.round(megabytes)} MB of audio in all.`);
+    const megabytes = accents.length * (tracks.includes('main') ? seconds * FORMATS[format] : 0) / 1e6 + accents.length * (tracks.includes('slow') ? seconds / 0.7 * FORMATS[slowFormat] : 0) / 1e6;
+    console.log(`${works.length} works, ${units} units, ${chars} characters a pass; ${accents.length} accent(s), ${tracks.length} track(s): ${units * accents.length * tracks.length} requests, about ${Math.round(megabytes)} MB of audio in all.`);
     if (dry) return;
     await mkdir(out, { recursive: true });
     const synth = rest ? undefined : sdkSynthesizer({ key, region, format, folder: sdkFolder });
-    for (const accent of accents) {
-        await mkdir(path.join(out, accent), { recursive: true });
-        for (const work of works) {
-            const base = path.join(out, accent, work.id);
-            if (!force && await exists(`${base}.json`) && await exists(`${base}.mp3`)) {
-                const old = JSON.parse(await readFile(`${base}.json`, 'utf8'));
-                if (old.textHash === workTextHash(work) && old.format === format && (rest || old.version === 2)) {
-                    // Files are there; make sure the index knows them (a stop between the files and the index would leave it without).
-                    const known = Object.hasOwn(summary.works, work.id) && Object.hasOwn(summary.works[work.id], accent);
-                    if (!known) { addEntry(summary, work.id, accent, { seconds: old.seconds, bytes: (await stat(`${base}.mp3`)).size }); await writeFile(path.join(out, 'index.json'), JSON.stringify(summary, null, 1) + '\n'); }
-                    console.log(`skip ${accent} ${work.id} (already rendered${known ? '' : '; added to the index'})`); continue;
+    for (const track of tracks) {
+        const trackFormat = track === 'slow' ? slowFormat : format, voices = track === 'slow' ? SLOW_VOICES : VOICES;
+        for (const accent of accents) {
+            await mkdir(path.join(out, accent), { recursive: true });
+            for (const work of works) {
+                const base = path.join(out, accent, work.id) + (track === 'slow' ? '.slow' : ''), label = `${track} ${accent} ${work.id}`;
+                if (!force && await exists(`${base}.json`) && await exists(`${base}.mp3`)) {
+                    const old = JSON.parse(await readFile(`${base}.json`, 'utf8'));
+                    // Only files made from this text, by these voices, in this format count as done (a voice change renders the work again).
+                    if (old.textHash === workTextHash(work) && old.format === trackFormat && JSON.stringify(old.voices) === JSON.stringify(voices[accent]) && (rest || old.version === 2)) {
+                        // Files are there; make sure the index knows them (a stop between the files and the index would leave it without).
+                        const have = summary.works[work.id]?.[accent], known = track === 'slow' ? Boolean(have?.slow) : Boolean(have);
+                        if (!known && !noIndex) { addEntry(summary, work.id, accent, { seconds: old.seconds, bytes: (await stat(`${base}.mp3`)).size }, track); await writeFile(path.join(out, 'index.json'), JSON.stringify(summary, null, 1) + '\n'); }
+                        console.log(`skip ${label} (already rendered${known ? '' : '; added to the index'})`); continue;
+                    }
                 }
+                const started = Date.now();
+                const { mp3, timeline, chars: used } = await renderWork({ work, accent, key, region, track, format: trackFormat, synth, pause: () => new Promise(r => setTimeout(r, delay)) });
+                await writeFile(`${base}.mp3`, mp3); await writeFile(`${base}.json`, JSON.stringify(timeline) + '\n');
+                if (!noIndex) {
+                    addEntry(summary, work.id, accent, { seconds: timeline.seconds, bytes: mp3.length }, track);
+                    await writeFile(path.join(out, 'index.json'), JSON.stringify(summary, null, 1) + '\n');   // saved after each work, so a stop loses nothing
+                }
+                console.log(`done ${label}: ${timeline.seconds}s, ${Math.round(mp3.length / 1024)} KB, ${used} characters, ${Math.round((Date.now() - started) / 1000)} s`);
             }
-            const started = Date.now();
-            const { mp3, timeline, chars: used } = await renderWork({ work, accent, key, region, format, synth, pause: () => new Promise(r => setTimeout(r, delay)) });
-            await writeFile(`${base}.mp3`, mp3); await writeFile(`${base}.json`, JSON.stringify(timeline) + '\n');
-            addEntry(summary, work.id, accent, { seconds: timeline.seconds, bytes: mp3.length });
-            await writeFile(path.join(out, 'index.json'), JSON.stringify(summary, null, 1) + '\n');   // saved after each work, so a stop loses nothing
-            console.log(`done ${accent} ${work.id}: ${timeline.seconds}s, ${Math.round(mp3.length / 1024)} KB, ${used} characters, ${Math.round((Date.now() - started) / 1000)} s`);
         }
     }
 }

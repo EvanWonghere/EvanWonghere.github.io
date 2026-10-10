@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { VOICES, FORMATS, durationMs, voiceFor, checkTimeline, unitAt, unitsOf, wordAt } from '../static/english/voice.mjs';
+import { VOICES, SLOW_VOICES, FORMATS, isHD, prettyVoice, durationMs, voiceFor, checkTimeline, unitAt, unitsOf, wordAt } from '../static/english/voice.mjs';
 import { workTextHash } from '../static/english/library.mjs';
 
 const work = { id: 'demo', kind: 'speech', roles: undefined, segments: [{ id: 's1', text: 'One two three. Four five six.' }, { id: 's2', text: 'Seven eight nine.' }] };
@@ -41,7 +41,7 @@ test('the unit playing at a moment', () => {
     assert.equal(unitAt(t, 6000), null); assert.equal(unitAt(t, -1), null);
 });
 
-import { buildSsml, renderWork, wordTimes } from '../tools/render-english-voices.mjs';
+import { buildSsml, renderWork, wordTimes, silence } from '../tools/render-english-voices.mjs';
 
 const FORMAT = 'audio-24khz-48kbitrate-mono-mp3';
 const demo = { id: 'demo', kind: 'speech', roles: undefined, segments: [{ id: 's1', text: 'One two three. Four & five <six>.' }, { id: 's2', text: 'Seven eight nine.' }] };
@@ -49,7 +49,7 @@ const fakeAzure = (log, behave = () => 200) => async (url, options) => {
     log.push({ url, options });
     const status = behave(log.length);
     if (status !== 200) return new Response('no', { status });
-    const text = /<prosody[^>]*>([^<]*)<\/prosody>/.exec(options.body)[1];
+    const text = /<voice[^>]*>(?:<prosody[^>]*>)?([^<]*)/.exec(options.body)[1];
     return new Response(Buffer.alloc(text.length * 100));   // a stand-in for audio: 100 bytes a letter
 };
 
@@ -85,7 +85,7 @@ test('rendering retries a busy service, but gives up at once on a refused key', 
 
 // A stand-in for the Speech SDK: one word event a whitespace-separated piece, 200 ms apart, 1200 bytes (200 ms) of audio a piece.
 const fakeSdk = () => async ({ ssml }) => {
-    const escaped = /<prosody[^>]*>([^<]*)<\/prosody>/.exec(ssml)[1], base = ssml.indexOf(escaped), boundaries = [];
+    const escaped = /<voice[^>]*>(?:<prosody[^>]*>)?([^<]*)/.exec(ssml)[1], base = ssml.indexOf(escaped), boundaries = [];
     for (const m of escaped.matchAll(/\S+/g)) boundaries.push({ kind: 'word', startMs: boundaries.length * 200, durationMs: 150, textOffset: base + m.index, length: m[0].length });
     return { audio: Buffer.alloc(boundaries.length * 1200), boundaries };
 };
@@ -133,7 +133,43 @@ test('a last word reported with no length is placed after the word before it; a 
     const times = wordTimes({ text, ssml, boundaries: events(event('spring', 9825, 0)), endMs: 10738 });
     assert.deepEqual(times.at(-1), [10122, 10738]); assert.deepEqual(times[4], [10027, 10122]);
     assert.throws(() => wordTimes({ text, ssml, boundaries: events(event('spring', 9825, 0)) }), /bad time/, 'no end of speech to place it by');
+    // Two last words reported together with no length share the stretch after the word before them, by letters.
+    const two = wordTimes({ text, ssml, boundaries: [event('as', 9253, 82), event('a', 9348, 68), event('channel', 9429, 408), event('from', 9851, 163), { ...event('the', 9825, 0) }, { ...event('spring', 9825, 0) }], endMs: 10738 });
+    assert.deepEqual(two[3], [9851, 10014]); assert.ok(two[4][0] === 10014 && two[4][1] > 10014 && two[5][1] === 10738 && two[4][1] <= two[5][0] + 1, 'the last words follow one another to the end of the speech');
+    // A heading of one word with no length takes the whole of the speech.
+    const heading = buildSsml({ text: 'II.', voice: 'v', accent: 'en-US' }), at0 = heading.indexOf('II.');
+    assert.deepEqual(wordTimes({ text: 'II.', ssml: heading, boundaries: [{ kind: 'word', startMs: 0, durationMs: 0, textOffset: at0, length: 2 }, { kind: 'other', startMs: 0, durationMs: 0, textOffset: at0 + 2, length: 1 }], endMs: 440 }), [[0, 440]]);
     assert.throws(() => wordTimes({ text, ssml, boundaries: events(event('spring', 10200, 300)).map(b => b.textOffset === base + where.from ? { ...b, durationMs: 0 } : b), endMs: 10738 }), /bad time/, 'a zero-length word in the middle');
+});
+
+test('an HD unit with a spaced ampersand is spoken as "and", and that word is left out of the times', async () => {
+    const hdWork = { id: 'poem', kind: 'poem', roles: undefined, segments: [{ id: 's1', text: 'Tom & Jerry ran & ran.' }] };
+    const seen = [];
+    const synth = async ({ ssml }) => { seen.push(ssml); return fakeSdk()({ ssml }); };
+    const { timeline } = await renderWork({ work: hdWork, accent: 'en-US', key: 'k', region: 'r', synth });
+    assert.doesNotMatch(seen[0], /&amp;|&/); assert.match(seen[0], /Tom and Jerry ran and ran\./);
+    assert.equal(timeline.segments[0].units[0].words.length, 4);   // Tom Jerry ran ran: the "and"s are not in the text
+    assert.ok(checkTimeline(timeline, hdWork));
+    // The slow track uses a standard voice, which handles the entity, so the text stays as written.
+    const slow = []; await renderWork({ work: hdWork, accent: 'en-US', key: 'k', region: 'r', track: 'slow', synth: async ({ ssml }) => { slow.push(ssml); return fakeSdk()({ ssml }); } });
+    assert.match(slow[0], /Tom &amp; Jerry ran &amp; ran\./);
+});
+
+test('a unit whose word times come back unusable is synthesized again, and the tool gives up after a few takes', async () => {
+    const one = { id: 'one', kind: 'speech', roles: undefined, segments: [{ id: 's1', text: 'Seven eight nine ten.' }] };
+    let calls = 0;
+    // The first take has the middle word with no length; the second is clean.
+    const flaky = async ({ ssml }) => {
+        calls += 1; const result = await fakeSdk()({ ssml });
+        if (calls === 1) result.boundaries[1] = { ...result.boundaries[1], durationMs: 0 };
+        return result;
+    };
+    const { timeline, requests } = await renderWork({ work: one, accent: 'en-US', key: 'k', region: 'r', synth: flaky });
+    assert.equal(calls, 2); assert.equal(requests, 1); assert.ok(checkTimeline(timeline, one));
+    let tries = 0;
+    const hopeless = async ({ ssml }) => { tries += 1; const result = await fakeSdk()({ ssml }); result.boundaries[1] = { ...result.boundaries[1], durationMs: 0 }; return result; };
+    await assert.rejects(renderWork({ work: one, accent: 'en-US', key: 'k', region: 'r', synth: hopeless }), /after 4 takes \(one, "Seven eight nine ten\."\)/);
+    assert.equal(tries, 4);
 });
 
 test('the word being said at a moment', () => {
@@ -154,6 +190,42 @@ test('a version 2 timeline must give every word, in order and inside its unit', 
     }
 });
 
+test('HD voices get plain SSML, standard voices keep the rate and the break, and the tool adds its own silence', async () => {
+    const hd = buildSsml({ text: 'Hello there.', voice: 'en-US-Ava:DragonHDLatestNeural', accent: 'en-US' });
+    assert.doesNotMatch(hd, /prosody|break/); assert.match(hd, /<voice name="en-US-Ava:DragonHDLatestNeural">Hello there\.<\/voice>/);
+    const slow = buildSsml({ text: 'Hello there.', voice: 'en-US-JennyNeural', accent: 'en-US', rate: '-30%' });
+    assert.match(slow, /<prosody rate="-30%">/); assert.match(slow, /<break time="350ms"\/>/);
+    assert.ok(isHD(VOICES['en-US'][0]) && isHD(VOICES['en-GB'][1]) && !isHD(SLOW_VOICES['en-US'][0]));
+    assert.deepEqual(['en-US-Ava:DragonHDLatestNeural', 'en-GB-Sonia:DragonHDOmniLatestNeural', 'en-US-JennyNeural'].map(prettyVoice), ['Ava HD', 'Sonia HD', 'Jenny']);
+    // Silence is whole mp3 frames, 360 ms long at either bit rate, so the byte count stays a length.
+    for (const format of Object.keys(FORMATS)) { const bytes = silence(format); assert.equal(durationMs(bytes.length, format), 360, format); assert.equal(bytes[0], 0xff); assert.equal(bytes.length % 144, 0); }
+    // An HD unit's audio is the speech plus that silence; a slow track uses the slow voices and the slow format.
+    const { timeline, mp3 } = await renderWork({ work: demo, accent: 'en-GB', key: 'k', region: 'r', track: 'slow', synth: fakeSdk() });
+    assert.equal(timeline.track, 'slow'); assert.equal(timeline.format, 'audio-16khz-32kbitrate-mono-mp3'); assert.deepEqual(timeline.voices, SLOW_VOICES['en-GB']);
+    assert.equal(timeline.segments.at(-1).end, durationMs(mp3.length, timeline.format));
+    const main = await renderWork({ work: { ...demo, segments: [demo.segments[1]] }, accent: 'en-US', key: 'k', region: 'r', synth: fakeSdk() });
+    assert.deepEqual(main.timeline.voices, VOICES['en-US']); assert.equal(main.timeline.track, 'main'); assert.equal(main.timeline.format, 'audio-24khz-48kbitrate-mono-mp3');
+});
+
+test('a track loads with its slow reading, and a broken slow reading only loses the slow one', async () => {
+    const lines = JSON.stringify({ version: 2, id: 'demo', accent: 'en-US', track: 'main', textHash: workTextHash(work), segments: [
+        { id: 's1', start: 0, end: 4000, units: [{ start: 0, end: 2000, words: [[0, 300], [400, 700], [800, 1200]] }, { start: 2000, end: 4000, words: [[2000, 2300], [2400, 2800], [3000, 3500]] }] },
+        { id: 's2', start: 4000, end: 6000, units: [{ start: 4000, end: 6000, words: [[4000, 4500], [4600, 5000], [5100, 5900]] }] }] });
+    const files = { 'voice/index.json': JSON.stringify({ version: 1, works: { demo: { 'en-US': { bytes: 1, rev: 'a', slow: { bytes: 2, rev: 'b' } } } } }), 'voice/en-US/demo.json': lines, 'voice/en-US/demo.slow.json': lines };
+    const real = globalThis.fetch;
+    const serve = broken => async url => { const name = new URL(url).pathname.replace(/^.*?(voice\/.*)$/, '$1'); return broken === name || !files[name] ? new Response('no', { status: 404 }) : new Response(files[name]); };
+    try {
+        globalThis.fetch = serve(null);
+        const track = await loadTrack(work, 'en-US', 'http://x.test/english/app.mjs');
+        assert.match(track.src, /voice\/en-US\/demo\.mp3\?v=a$/); assert.match(track.slow.src, /voice\/en-US\/demo\.slow\.mp3\?v=b$/);
+        globalThis.fetch = serve('voice/en-US/demo.slow.json');
+        const noSlow = await loadTrack(work, 'en-US', 'http://x.test/english/app.mjs');
+        assert.ok(noSlow.src && noSlow.slow === null, 'the normal reading survives');
+        globalThis.fetch = serve('voice/en-US/demo.json');
+        assert.equal(await loadTrack(work, 'en-US', 'http://x.test/english/app.mjs'), null, 'without the normal reading there is no track');
+    } finally { globalThis.fetch = real; }
+});
+
 test('dialogue roles get different voices', async () => {
     const log = [];
     const dialogue = { id: 'talk', kind: 'lesson', roles: ['Host', 'Guest'], segments: [{ id: 's1', speaker: 'Host', text: 'Welcome to the show.' }, { id: 's2', speaker: 'Guest', text: 'Thank you for having me.' }] };
@@ -161,7 +233,7 @@ test('dialogue roles get different voices', async () => {
     assert.deepEqual(log.map(l => /voice name="([^"]+)"/.exec(l.options.body)[1]), VOICES['en-GB']);
 });
 
-import { playRange } from '../static/english/voiceplayer.mjs';
+import { playRange, loadTrack } from '../static/english/voiceplayer.mjs';
 
 // A stand-in for an <audio> element that plays in real time at a chosen speed.
 function fakeAudio({ length = 10, ready = 1 } = {}) {
@@ -245,13 +317,19 @@ test('every pre-rendered voice in the repository fits the text it was made from'
     for (const [id, accents] of Object.entries(index.works)) {
         const work = JSON.parse(await readText(new URL(`../static/english/library/${id}.json`, import.meta.url), 'utf8'));
         for (const [accent, entry] of Object.entries(accents)) {
-            const timeline = JSON.parse(await readText(new URL(`${accent}/${id}.json`, dir), 'utf8'));
-            const mp3 = await readText(new URL(`${accent}/${id}.mp3`, dir));
-            assert.ok(checkTimeline(timeline, work), `${accent}/${id}: the text changed since it was rendered; render it again`);
-            assert.equal(timeline.accent, accent); assert.equal(entry.bytes, mp3.length); assert.ok(entry.rev);
-            assert.equal(timeline.segments.at(-1).end, durationMs(mp3.length, index.format), `${accent}/${id}: the timeline does not end where the audio ends`);
-            assert.ok(mp3.subarray(0, 3).toString('latin1') === 'ID3' || mp3[0] === 0xff, `${accent}/${id}: not an mp3`);
-            checked += 1;
+            // The normal reading, and the slow one when the index lists it: each file is checked against its own timeline.
+            for (const [name, info, track] of [[id, entry, 'main'], ...(entry.slow ? [[`${id}.slow`, entry.slow, 'slow']] : [])]) {
+                const timeline = JSON.parse(await readText(new URL(`${accent}/${name}.json`, dir), 'utf8'));
+                const mp3 = await readText(new URL(`${accent}/${name}.mp3`, dir));
+                assert.ok(checkTimeline(timeline, work), `${accent}/${name}: the text changed since it was rendered; render it again`);
+                assert.equal(timeline.version, 2, `${accent}/${name}: no word times`);
+                assert.equal(timeline.track, track); assert.equal(timeline.accent, accent); assert.equal(info.bytes, mp3.length); assert.ok(info.rev);
+                assert.ok(FORMATS[timeline.format], `${accent}/${name}: unknown format`);
+                assert.equal(timeline.segments.at(-1).end, durationMs(mp3.length, timeline.format), `${accent}/${name}: the timeline does not end where the audio ends`);
+                assert.ok(mp3.subarray(0, 3).toString('latin1') === 'ID3' || mp3[0] === 0xff, `${accent}/${name}: not an mp3`);
+                assert.deepEqual(timeline.voices, (track === 'slow' ? SLOW_VOICES : VOICES)[accent], `${accent}/${name}: made by other voices than the current ones`);
+                checked += 1;
+            }
         }
     }
     const files = (await listDir(new URL('en-US/', dir))).filter(n => n.endsWith('.mp3')).length;

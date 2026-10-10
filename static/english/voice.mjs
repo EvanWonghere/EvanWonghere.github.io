@@ -4,10 +4,19 @@
 // word, as reported by Azure while it synthesized (version 1 has units only); a word is never placed by guessing.
 import { splitUnits, workTextHash, tokenize } from './library.mjs';
 
+// The main track: Azure HD voices (the American ones are DragonHD, the British ones are DragonHD Omni). The second voice reads the second role of a dialogue.
 export const VOICES = {
+    'en-US': ['en-US-Ava:DragonHDLatestNeural', 'en-US-Andrew:DragonHDLatestNeural'],
+    'en-GB': ['en-GB-Sonia:DragonHDOmniLatestNeural', 'en-GB-Ryan:DragonHDOmniLatestNeural'],
+};
+// The slow track: the standard neural voices, which can be slowed down (HD voices cannot).
+export const SLOW_VOICES = {
     'en-US': ['en-US-JennyNeural', 'en-US-GuyNeural'],
     'en-GB': ['en-GB-SoniaNeural', 'en-GB-RyanNeural'],
 };
+export const isHD = voice => voice.includes(':Dragon');
+// 'en-US-Ava:DragonHDLatestNeural' → 'Ava HD', 'en-US-JennyNeural' → 'Jenny'
+export const prettyVoice = voice => `${voice.replace(/^[a-z]{2}-[A-Z]{2}-/, '').replace(/:.*$/, '').replace(/Neural$/, '')}${isHD(voice) ? ' HD' : ''}`;
 // Azure mp3 formats are constant bit rate, so a byte count is a length.
 export const FORMATS = {
     'audio-24khz-48kbitrate-mono-mp3': 6000,
@@ -18,7 +27,7 @@ export const unitsOf = (segment, kind) => splitUnits(segment.text, kind);
 export const durationMs = (bytes, format) => Math.round(bytes / FORMATS[format] * 1000);
 
 // Which voice reads this segment: dialogues give the second role the second voice.
-export const voiceFor = (work, segment, accent) => VOICES[accent][work.roles && segment.speaker === work.roles[1] ? 1 : 0];
+export const voiceFor = (work, segment, accent, voices = VOICES) => voices[accent][work.roles && segment.speaker === work.roles[1] ? 1 : 0];
 
 // Returns the timeline if it fits this work as it is now, otherwise null (then the device voice is used).
 export function checkTimeline(timeline, work) {
