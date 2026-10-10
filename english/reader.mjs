@@ -11,7 +11,7 @@ import { findContext, summaryLine } from './archive.mjs';
 import { tipFor } from './phoneme-tips.mjs';
 import { enhanceSelect, enhanceAudio, refreshControls } from './controls.mjs';
 import { loadTrack, playRange } from './voiceplayer.mjs';
-import { unitsOf, unitAt } from './voice.mjs';
+import { unitsOf, unitAt, wordAt } from './voice.mjs';
 
 const $ = id => document.getElementById(id);
 const el = (tag, attrs = {}, ...kids) => {
@@ -142,7 +142,14 @@ function renderListen(work) {
         let at = 0;
         return unitsOf(segment, work.kind).map(unit => { const n = tokenize(unit).filter(t => t.word).length; const range = [at, at + n - 1]; at += n; return range; });
     });
-    const markUnit = (seg, k) => { const range = words[seg] && unitWords[seg][k]; if (range && unitWords[seg].at(-1)[1] === words[seg].length - 1) markRange(seg, range[0], range[1]); };
+    // Word by word when the track has word times, else the whole sentence or clause.
+    const markUnit = (seg, k, w) => {
+        const range = words[seg] && unitWords[seg][k];
+        if (!range || unitWords[seg].at(-1)[1] !== words[seg].length - 1) return;
+        if (w === null) markRange(seg, range[0], range[1]);
+        else if (w < 0) markRange(seg, range[0], range[0] - 1);   // the unit has started but not its first word
+        else markRange(seg, range[0] + w, range[0] + w);
+    };
     // Words in your word list carry a dot, in this text too.
     const refreshCarry = () => { const p = learner.read(); for (const list of words) for (const span of list) span.classList.toggle('carry', Object.hasOwn(p.words, span.dataset.key)); };
     const note = $('listen-note');
@@ -173,7 +180,7 @@ function renderListen(work) {
             note.textContent = `声音：预生成（${track.timeline.voices.join('、')}）。`;
             stopSpeech = playRange(voiceAudio(), track, segments[from].start, all ? segments.at(-1).end : segments[from].end, {
                 rate: speed / 0.9,
-                onTime: ms => { const at = unitAt(track.timeline, ms); if (at) markUnit(at[0], at[1]); },
+                onTime: ms => { const at = unitAt(track.timeline, ms); if (at) markUnit(at[0], at[1], wordAt(track.timeline.segments[at[0]].units[at[1]], ms)); },
                 onEnd: info => { clear(); if (info.error) { failTrack(work); failNote = '预生成的声音没能播放，已改用设备声音。'; play(from, all); note.textContent = failNote; } },
             });
             return;

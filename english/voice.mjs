@@ -1,7 +1,8 @@
 // Pre-rendered model voice: one mp3 per work and accent, plus a timeline saying where each segment and each unit
 // (a sentence, or a clause or line of a poem) starts and ends. Pure functions; the tool writes the files and the reader plays them.
-// The timeline is exact for units because the tool synthesizes them one by one; nothing inside a unit is guessed.
-import { splitUnits, workTextHash } from './library.mjs';
+// The timeline is exact for units because the tool synthesizes them one by one. Version 2 also carries the start and end of every
+// word, as reported by Azure while it synthesized (version 1 has units only); a word is never placed by guessing.
+import { splitUnits, workTextHash, tokenize } from './library.mjs';
 
 export const VOICES = {
     'en-US': ['en-US-JennyNeural', 'en-US-GuyNeural'],
@@ -22,17 +23,35 @@ export const voiceFor = (work, segment, accent) => VOICES[accent][work.roles && 
 // Returns the timeline if it fits this work as it is now, otherwise null (then the device voice is used).
 export function checkTimeline(timeline, work) {
     const t = timeline;
-    if (!t || t.version !== 1 || t.id !== work.id || t.textHash !== workTextHash(work) || !Array.isArray(t.segments) || t.segments.length !== work.segments.length) return null;
+    if (!t || (t.version !== 1 && t.version !== 2) || t.id !== work.id || t.textHash !== workTextHash(work) || !Array.isArray(t.segments) || t.segments.length !== work.segments.length) return null;
     let last = 0;
     for (const [i, s] of t.segments.entries()) {
         const units = unitsOf(work.segments[i], work.kind);
         if (s.id !== work.segments[i].id || !Array.isArray(s.units) || s.units.length !== units.length || !(s.start >= last) || !(s.end > s.start)) return null;
         let at = s.start;
-        for (const u of s.units) { if (!(u.start >= at) || !(u.end > u.start)) return null; at = u.end; }
+        for (const [k, u] of s.units.entries()) {
+            if (!(u.start >= at) || !(u.end > u.start)) return null;
+            if (t.version === 2 && !wordsFit(u, tokenize(units[k]).filter(token => token.word).length)) return null;
+            at = u.end;
+        }
         if (at > s.end + 1) return null;
         last = s.end;
     }
     return t;
+}
+// Every word of the unit has a start and an end inside it, in order.
+function wordsFit(unit, count) {
+    if (!Array.isArray(unit.words) || unit.words.length !== count) return false;
+    let at = unit.start;
+    for (const w of unit.words) { if (!Array.isArray(w) || !(w[0] >= at) || !(w[1] >= w[0]) || !(w[1] <= unit.end)) return false; at = w[0]; }
+    return true;
+}
+// The word being said at a moment, as its number in the unit; -1 before the first word, and null when the timeline has no word times.
+export function wordAt(unit, ms) {
+    if (!unit.words) return null;
+    let found = -1;
+    for (const [i, w] of unit.words.entries()) { if (ms >= w[0]) found = i; else break; }
+    return found;
 }
 // The unit playing at a moment, as [segment, unit], or null between or after.
 export function unitAt(timeline, ms) {

@@ -38,7 +38,8 @@
 3. **预生成的神经网络声音**（`voice/`）：用 `tools/render-english-voices.mjs` 生成。**2026-10-09 已生成美式（Jenny、Guy）38 篇，共 15 MB；英式（Sonia、Ryan）还没有生成**，英式口音下仍用设备声音，要的话运行 `--accents en-GB`（约 15 MB、一小时左右）。有预生成音频时，听、跟读、朗读整篇、背诵、配音里的范读都会自动用它，听模式里多一个“声音”选项可以改回设备自带。
    - 运行：先 `node tools/render-english-voices.mjs --init-key` 创建 `~/.config/hive-english/azure.env`（在用户目录里，不在仓库内；工具会拒绝仓库内或别人可读的密钥文件），把密钥填进去；再 `--check` 验证，`--dry-run` 看规模，最后 `--accents en-US`。密钥也可以用环境变量 `AZURE_SPEECH_KEY`。密钥不会被打印或写到别处。可中断后续跑，只重新生成文本变过的作品；`tests/english-voice.test.mjs` 会在文字改了而音频没重新生成时报错。
    - 规模：38 篇 343 句、3.5 万字符，美式 15 MB（`--format audio-16khz-32kbitrate-mono-mp3` 约 10 MB）。免费档限速约每分钟 20 次请求，默认每次请求间隔 3.2 秒，实测美式用了约 50 分钟。字符数远在每月免费额度内。
-   - 每句（诗的一个分句）单独合成再拼接，所以“哪一句从几秒到几秒”是精确的，听模式高亮的是正在读的那一句；句内逐词高亮是设备声音才有的。生成的时间轴带文本指纹，作品文字改了，旧音频就不会再被使用。
+   - 每句（诗的一个分句）单独合成再拼接，所以“哪一句从几秒到几秒”是精确的。时间轴版本 2 还给每个词记了起止时间：工具用 Speech SDK 合成，Azure 在合成时报告每个词的起点，所以听模式的高亮是逐词走的，不是估算。Azure 偶尔把两个词合成一个事件（如“in 1864”），工具按字母数在两个词之间分摊；某个词完全没有时间时工具直接报错，不会写入猜测。`wordAt`（`voice.mjs`）按当前播放时间找词，停顿时保持上一个词亮着。版本 1（只有句时间）仍然有效，高亮整句。生成的时间轴带文本指纹，作品文字改了，旧音频就不会再被使用。
+   - SDK 只是这个工具的依赖，不在仓库里：`mkdir -p ~/.cache/hive-english/sdk && cd ~/.cache/hive-english/sdk && echo '{"private":true}' > package.json && npm install microsoft-cognitiveservices-speech-sdk@1.52.0`（`--sdk <文件夹>` 或环境变量 `HIVE_SPEECH_SDK` 可指向别处；`--rest` 退回普通 HTTPS，只有句时间）。SSML 里的引号不转义成 `&quot;`：Azure 对它报告的词位置是错的（-1）。
    - 这是新增 20–40 MB 的二进制文件，会进入仓库历史；动手前先决定生成几种口音和哪种码率。
 
 ## 目标口音（美式 / 英式）
