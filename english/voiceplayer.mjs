@@ -8,13 +8,21 @@ async function fetchJSON(url) {
     return response.json();
 }
 // base: the URL the voice folder sits next to (import.meta.url of the caller). Resolves to null when nothing was rendered.
+// The track has `slow` too when a slow reading was rendered for this work and fits its text: { src, timeline } or null.
 export async function loadTrack(work, accent, base) {
     indexRequest ??= fetchJSON(new URL('voice/index.json', base)).catch(() => null);
     const entry = (await indexRequest)?.works?.[work.id]?.[accent];
     if (!entry) return null;
+    const open = async (name, version) => {
+        const timeline = checkTimeline(await fetchJSON(new URL(`voice/${accent}/${name}.json?v=${version}`, base)), work);
+        return timeline ? { src: new URL(`voice/${accent}/${name}.mp3?v=${version}`, base).href, timeline } : null;
+    };
     try {
-        const timeline = checkTimeline(await fetchJSON(new URL(`voice/${accent}/${work.id}.json?v=${entry.rev ?? entry.bytes}`, base)), work);
-        return timeline ? { src: new URL(`voice/${accent}/${work.id}.mp3?v=${entry.rev ?? entry.bytes}`, base).href, timeline } : null;
+        const main = await open(work.id, entry.rev ?? entry.bytes);
+        if (!main) return null;
+        // A slow track that is missing or broken only loses the slow reading, never the normal one.
+        const slow = entry.slow ? await open(`${work.id}.slow`, entry.slow.rev ?? entry.slow.bytes).catch(() => null) : null;
+        return { ...main, slow };
     } catch { return null; }
 }
 

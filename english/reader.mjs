@@ -11,7 +11,7 @@ import { findContext, summaryLine } from './archive.mjs';
 import { tipFor } from './phoneme-tips.mjs';
 import { enhanceSelect, enhanceAudio, refreshControls } from './controls.mjs';
 import { loadTrack, playRange } from './voiceplayer.mjs';
-import { unitsOf, unitAt, wordAt } from './voice.mjs';
+import { unitsOf, unitAt, wordAt, prettyVoice } from './voice.mjs';
 
 const $ = id => document.getElementById(id);
 const el = (tag, attrs = {}, ...kids) => {
@@ -41,24 +41,40 @@ async function getWork(id) {
 const stop = () => { stopSpeech(); stopSpeech = () => {}; $('human-audio')?.pause(); };
 
 // ---- The model voice: pre-rendered when the folder has it, the device's own voice otherwise ----
-let voiceElement = null, refreshSource = () => {};
-const voiceAudio = () => {
-    if (!voiceElement) { voiceElement = new Audio(); voiceElement.addEventListener('loadedmetadata', () => refreshSource()); }
-    return voiceElement;
+const voiceElements = {};   // one audio element for the normal track and one for the slow one, so both can be ready before a click
+let refreshSource = () => {};
+const voiceAudio = (kind = 'main') => {
+    if (!voiceElements[kind]) { voiceElements[kind] = new Audio(); voiceElements[kind].addEventListener('loadedmetadata', () => refreshSource()); }
+    return voiceElements[kind];
 };
-const tracks = new Map();   // `${work}|${accent}` → 'loading', a track, or null when nothing was rendered or it failed
+const SLOW_UP_TO = 0.75;   // the 慢速 speed (0.7) plays the slowly read track, when there is one, instead of stretching the normal one
+const variantOf = (track, rate) => track.slow && rate <= SLOW_UP_TO ? { kind: 'slow', track: track.slow, playbackRate: 1 } : { kind: 'main', track, playbackRate: rate / 0.9 };
+const tracks = new Map();   // `${work}|${accent}` → 'loading', a track (with .slow), or null when nothing was rendered or it failed
 const trackKey = work => `${work.id}|${ctx.locale()}`;
 // A track is usable only when its file is the one loaded in the audio element and the length is known: then play() can run
 // inside the click, which phones require. Until then the device voice speaks.
-const readyTrack = work => {
-    const track = tracks.get(trackKey(work)), audio = voiceElement;
-    return track && track !== 'loading' && ctx.pref('voice') !== 'device' && audio && audio.src === track.src && audio.readyState >= 1 ? track : null;
+// Returns { kind, track, playbackRate } for the reading that suits `rate`, or null.
+const readyTrack = (work, rate = 0.9) => {
+    const whole = tracks.get(trackKey(work));
+    if (!whole || whole === 'loading' || ctx.pref('voice') === 'device') return null;
+    const variant = variantOf(whole, rate), audio = voiceElements[variant.kind];
+    return audio && audio.src === variant.track.src && audio.readyState >= 1 ? variant : null;
 };
-const failTrack = work => { tracks.set(trackKey(work), null); refreshSource(); };
+const failTrack = (work, kind = 'main') => {
+    const key = trackKey(work), whole = tracks.get(key);
+    if (kind === 'slow' && whole && whole !== 'loading') whole.slow = null;   // the normal reading is still good
+    else tracks.set(key, null);
+    refreshSource();
+};
 function preloadTrack(work) {
     const key = trackKey(work), accent = ctx.locale();
-    const prime = track => {
-        if (track && track !== 'loading' && currentWork?.id === work.id && ctx.locale() === accent && voiceAudio().src !== track.src) { const audio = voiceAudio(); audio.preload = 'auto'; audio.src = track.src; audio.load(); }
+    const prime = whole => {
+        if (whole && whole !== 'loading' && currentWork?.id === work.id && ctx.locale() === accent) {
+            for (const [kind, track] of [['main', whole], ['slow', whole.slow]]) {
+                if (!track || voiceAudio(kind).src === track.src) continue;
+                const audio = voiceAudio(kind); audio.preload = 'auto'; audio.src = track.src; audio.load();
+            }
+        }
         refreshSource();
     };
     if (tracks.has(key)) { prime(tracks.get(key)); return; }
@@ -74,12 +90,12 @@ const rangeOf = (timeline, spec) => {
 // spec: { text, segment?, unit? }. Returns stop(); onEnd gets { stopped, error, voiceLang, boundaries }.
 function say(work, spec, rate, { pitch = 1, onEnd } = {}) {
     const device = () => speak(spec.text, { rate, pitch, locale: ctx.locale(), onEnd });
-    const track = readyTrack(work), range = track && rangeOf(track.timeline, spec);
+    const ready = readyTrack(work, rate), range = ready && rangeOf(ready.track.timeline, spec);
     if (!range) { preloadTrack(work); return device(); }
-    let stopper = playRange(voiceAudio(), track, range.start, range.end, {
-        rate: rate / 0.9,
+    let stopper = playRange(voiceAudio(ready.kind), ready.track, range.start, range.end, {
+        rate: ready.playbackRate,
         // A failing file must not leave the learner in silence: remember it is bad and let the device voice read instead.
-        onEnd: info => { if (info.error) { failTrack(work); stopper = device(); return; } onEnd?.({ boundaries: 1, voiceLang: ctx.locale(), ...info }); },
+        onEnd: info => { if (info.error) { failTrack(work, ready.kind); stopper = device(); return; } onEnd?.({ boundaries: 1, voiceLang: ctx.locale(), ...info }); },
     });
     return () => stopper();
 }
@@ -174,14 +190,14 @@ function renderListen(work) {
     const play = (from, all) => {
         stop(); clear();
         const text = work.segments[from].text;
-        const track = readyTrack(work);
-        if (track) {
-            const segments = track.timeline.segments;
-            note.textContent = `声音：预生成（${track.timeline.voices.join('、')}）。`;
-            stopSpeech = playRange(voiceAudio(), track, segments[from].start, all ? segments.at(-1).end : segments[from].end, {
-                rate: speed / 0.9,
+        const ready = readyTrack(work, speed);
+        if (ready) {
+            const { track } = ready, segments = track.timeline.segments;
+            note.textContent = `声音：预生成${ready.kind === 'slow' ? '慢读' : ''}（${track.timeline.voices.map(prettyVoice).join('、')}）。`;
+            stopSpeech = playRange(voiceAudio(ready.kind), track, segments[from].start, all ? segments.at(-1).end : segments[from].end, {
+                rate: ready.playbackRate,
                 onTime: ms => { const at = unitAt(track.timeline, ms); if (at) markUnit(at[0], at[1], wordAt(track.timeline.segments[at[0]].units[at[1]], ms)); },
-                onEnd: info => { clear(); if (info.error) { failTrack(work); failNote = '预生成的声音没能播放，已改用设备声音。'; play(from, all); note.textContent = failNote; } },
+                onEnd: info => { clear(); if (info.error) { failTrack(work, ready.kind); failNote = '预生成的声音没能播放，已改用设备声音。'; play(from, all); note.textContent = failNote; } },
             });
             return;
         }
