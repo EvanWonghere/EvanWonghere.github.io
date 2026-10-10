@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { VOICES, FORMATS, durationMs, voiceFor, checkTimeline, unitAt, unitsOf } from '../static/english/voice.mjs';
+import { VOICES, FORMATS, durationMs, voiceFor, checkTimeline, unitAt, unitsOf, wordAt } from '../static/english/voice.mjs';
 import { workTextHash } from '../static/english/library.mjs';
 
 const work = { id: 'demo', kind: 'speech', roles: undefined, segments: [{ id: 's1', text: 'One two three. Four five six.' }, { id: 's2', text: 'Seven eight nine.' }] };
@@ -26,7 +26,7 @@ test('a timeline is used only when it still fits the text it was rendered from',
     assert.equal(unitsOf(work.segments[0], work.kind).length, 2);
     const changed = { ...work, segments: [{ id: 's1', text: 'One two three. Four five six!' }, work.segments[1]] };
     assert.equal(checkTimeline(timeline(), changed), null, 'the words changed');
-    for (const bad of [{ version: 2 }, { id: 'other' }, { segments: [] }, { segments: timeline().segments.slice(0, 1) },
+    for (const bad of [{ version: 3 }, { version: 2 }, { id: 'other' }, { segments: [] }, { segments: timeline().segments.slice(0, 1) },
         { segments: [{ id: 's1', start: 0, end: 4000, units: [{ start: 0, end: 4000 }] }, timeline().segments[1]] },                      // one unit instead of two
         { segments: [timeline().segments[0], { id: 's2', start: 3000, end: 6000, units: [{ start: 3000, end: 6000 }] }] },                // overlaps the segment before
         { segments: [{ id: 's1', start: 0, end: 4000, units: [{ start: 0, end: 2500 }, { start: 2000, end: 4000 }] }, timeline().segments[1]] }]) {
@@ -41,7 +41,7 @@ test('the unit playing at a moment', () => {
     assert.equal(unitAt(t, 6000), null); assert.equal(unitAt(t, -1), null);
 });
 
-import { buildSsml, renderWork } from '../tools/render-english-voices.mjs';
+import { buildSsml, renderWork, wordTimes } from '../tools/render-english-voices.mjs';
 
 const FORMAT = 'audio-24khz-48kbitrate-mono-mp3';
 const demo = { id: 'demo', kind: 'speech', roles: undefined, segments: [{ id: 's1', text: 'One two three. Four & five <six>.' }, { id: 's2', text: 'Seven eight nine.' }] };
@@ -55,7 +55,7 @@ const fakeAzure = (log, behave = () => 200) => async (url, options) => {
 
 test('SSML escapes the text, flattens poem lines and names the voice and accent', () => {
     const ssml = buildSsml({ text: 'Tom & "Jerry" <run>\nfast', voice: 'en-GB-SoniaNeural', accent: 'en-GB' });
-    assert.match(ssml, /xml:lang="en-GB"/); assert.match(ssml, /<voice name="en-GB-SoniaNeural">/); assert.match(ssml, /Tom &amp; &quot;Jerry&quot; &lt;run&gt; fast/);
+    assert.match(ssml, /xml:lang="en-GB"/); assert.match(ssml, /<voice name="en-GB-SoniaNeural">/); assert.match(ssml, /Tom &amp; "Jerry" &lt;run&gt; fast/);
     assert.doesNotMatch(ssml, /<run>|\n/);
     assert.match(ssml, /<break time="350ms"\/>/);
 });
@@ -81,6 +81,77 @@ test('rendering retries a busy service, but gives up at once on a refused key', 
     const badLog = [];
     await assert.rejects(renderWork({ work: demo, accent: 'en-US', key: 'wrong', region: 'r', format: FORMAT, backoff: 1, fetcher: fakeAzure(badLog, () => 401) }), /HTTP 401/);
     assert.equal(badLog.length, 1);
+});
+
+// A stand-in for the Speech SDK: one word event a whitespace-separated piece, 200 ms apart, 1200 bytes (200 ms) of audio a piece.
+const fakeSdk = () => async ({ ssml }) => {
+    const escaped = /<prosody[^>]*>([^<]*)<\/prosody>/.exec(ssml)[1], base = ssml.indexOf(escaped), boundaries = [];
+    for (const m of escaped.matchAll(/\S+/g)) boundaries.push({ kind: 'word', startMs: boundaries.length * 200, durationMs: 150, textOffset: base + m.index, length: m[0].length });
+    return { audio: Buffer.alloc(boundaries.length * 1200), boundaries };
+};
+
+test('with the SDK every unit lists the time of each word, and the timeline still fits', async () => {
+    const { timeline } = await renderWork({ work: demo, accent: 'en-US', key: 'k', region: 'r', format: FORMAT, synth: fakeSdk() });
+    assert.equal(timeline.version, 2); assert.ok(checkTimeline(timeline, demo));
+    const [one, two] = timeline.segments[0].units;
+    assert.deepEqual(one.words.map(w => w[0] - one.start), [0, 200, 400]);                       // One, two, three.
+    assert.equal(two.words.length, 3);                                                              // Four, five, six: "&" is not a word
+    assert.ok(two.words.every((w, i) => i === 0 || w[0] >= two.words[i - 1][0]));
+    assert.ok(timeline.segments.every(s => s.units.every(u => u.words.every(w => w[0] >= u.start && w[1] <= u.end))), 'words stay inside their unit');
+    // Without it (plain HTTPS) the timeline is the old one, with units only.
+    const plain = await renderWork({ work: demo, accent: 'en-US', key: 'k', region: 'r', format: FORMAT, fetcher: fakeAzure([]) });
+    assert.equal(plain.timeline.version, 1); assert.equal(plain.timeline.segments[0].units[0].words, undefined);
+});
+
+test('word times follow the text through entities, quotes and merged events', () => {
+    const text = 'In 1864, "Mrs. Bixby" read Tom & Jerry.';
+    const ssml = buildSsml({ text, voice: 'v', accent: 'en-US' });
+    const base = ssml.indexOf('In 1864');
+    const at = piece => base + ssml.slice(base).indexOf(piece);   // where a piece of the escaped text sits in the SSML
+    const event = (piece, startMs, durationMs, kind = 'word') => ({ kind, startMs, durationMs, textOffset: at(piece), length: piece.length });
+    const times = wordTimes({ text, ssml, boundaries: [
+        event('In 1864', 0, 1000),                       // one event for two words: shared by letters
+        event(',', 1000, 50, 'other'),
+        event('"Mrs.', 1100, 300), event('Bixby"', 1400, 400), event('read', 1800, 200), event('Tom', 2000, 200), event('&amp;', 2200, 100), event('Jerry', 2300, 300),
+    ] });
+    assert.equal(times.length, 7);                       // In 1864 Mrs Bixby read Tom Jerry
+    assert.ok(times[0][0] === 0 && times[0][1] > 0 && times[0][1] < 1000, 'In gets the start of the event');
+    assert.ok(times[1][0] > 0 && times[1][1] === 1000, '1864 gets the end of the event');
+    assert.ok(times[2][0] > 1100 && times[2][1] < 1400, 'Mrs gets the part of its event that is not the quote mark or the full stop');
+    assert.ok(times[3][0] === 1400 && times[3][1] < 1800, 'Bixby loses the closing quote mark'); assert.deepEqual(times[6], [2300, 2600]);
+    // A word Azure gave no time for is an error, never a guess.
+    assert.throws(() => wordTimes({ text: 'One two', ssml: buildSsml({ text: 'One two', voice: 'v', accent: 'en-US' }), boundaries: [{ kind: 'word', startMs: 0, durationMs: 100, textOffset: buildSsml({ text: 'One two', voice: 'v', accent: 'en-US' }).indexOf('One'), length: 3 }] }), /no time for the word "two"/);
+});
+
+test('a last word reported with no length is placed after the word before it; a bad word elsewhere is an error', () => {
+    const text = 'as a channel from the spring,', ssml = buildSsml({ text, voice: 'v', accent: 'en-GB' });
+    const base = ssml.indexOf(text);
+    const where = { as: 0, a: 3, channel: 5, from: 13, the: 18, spring: 22, ',': 28 };
+    const event = (piece, startMs, durationMs, kind = 'word') => ({ kind, startMs, durationMs, textOffset: base + where[piece], length: piece.length });
+    const events = last => [event('as', 9253, 82), event('a', 9348, 68), event('channel', 9429, 408), event('from', 9851, 163), event('the', 10027, 95), last, event(',', 9825, 0, 'other')];
+    // the fault: "spring" starts before "the" and has no length
+    const times = wordTimes({ text, ssml, boundaries: events(event('spring', 9825, 0)), endMs: 10738 });
+    assert.deepEqual(times.at(-1), [10122, 10738]); assert.deepEqual(times[4], [10027, 10122]);
+    assert.throws(() => wordTimes({ text, ssml, boundaries: events(event('spring', 9825, 0)) }), /bad time/, 'no end of speech to place it by');
+    assert.throws(() => wordTimes({ text, ssml, boundaries: events(event('spring', 10200, 300)).map(b => b.textOffset === base + where.from ? { ...b, durationMs: 0 } : b), endMs: 10738 }), /bad time/, 'a zero-length word in the middle');
+});
+
+test('the word being said at a moment', () => {
+    const unit = { start: 0, end: 1000, words: [[100, 300], [400, 600], [700, 900]] };
+    assert.equal(wordAt(unit, 0), -1); assert.equal(wordAt(unit, 100), 0); assert.equal(wordAt(unit, 350), 0, 'a pause keeps the last word lit');
+    assert.equal(wordAt(unit, 400), 1); assert.equal(wordAt(unit, 999), 2);
+    assert.equal(wordAt({ start: 0, end: 1000 }, 500), null, 'a version 1 unit has no words');
+});
+
+test('a version 2 timeline must give every word, in order and inside its unit', () => {
+    const good = timeline({ version: 2, segments: [
+        { id: 's1', start: 0, end: 4000, units: [{ start: 0, end: 2000, words: [[0, 300], [400, 700], [800, 1200]] }, { start: 2000, end: 4000, words: [[2000, 2300], [2400, 2800], [3000, 3500]] }] },
+        { id: 's2', start: 4000, end: 6000, units: [{ start: 4000, end: 6000, words: [[4000, 4500], [4600, 5000], [5100, 5900]] }] }] });
+    assert.ok(checkTimeline(good, work));
+    const withUnit = (k, words) => timeline({ version: 2, segments: [{ ...good.segments[0], units: [good.segments[0].units[0], { ...good.segments[0].units[1], ...(k === 1 ? { words } : {}) }] }, good.segments[1]] });
+    for (const bad of [[[2000, 2300], [2400, 2800]], [[2000, 2300], [2400, 2800], [3000, 4500]], [[2000, 2300], [2200, 2800], [1900, 3500]], [[2000, 2300], [2400, 2800], [3000, 3500], [3600, 3700]], undefined]) {
+        assert.equal(checkTimeline(withUnit(1, bad), work), null, JSON.stringify(bad));
+    }
 });
 
 test('dialogue roles get different voices', async () => {

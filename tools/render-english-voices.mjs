@@ -2,23 +2,29 @@
 // Renders the model voice of the reading library with Azure text to speech, into static/english/voice/.
 //   AZURE_SPEECH_KEY=<key> node tools/render-english-voices.mjs --dry-run            count what would be sent and how big it gets
 //   AZURE_SPEECH_KEY=<key> node tools/render-english-voices.mjs --accents en-US      render one accent
-//   options: --accents en-US,en-GB  --only id,id  --format <azure mp3 format>  --delay <ms between requests>  --force
+//   options: --accents en-US,en-GB  --only id,id  --format <azure mp3 format>  --delay <ms between requests>  --force  --rest  --sdk <folder>
 // The key is read from the environment, or from a private file in your home folder (never inside the repository):
 //   node tools/render-english-voices.mjs --init-key     creates ~/.config/hive-english/azure.env for you to fill in
 //   node tools/render-english-voices.mjs --check        sends one short word to prove the key works
 // It is never printed, logged or written anywhere else.
 // Every sentence (or poem clause) is synthesized on its own and joined, so the timeline is exact. The free tier allows
 // about 20 requests a minute, hence the default delay; it renders in the background of your own time and can be stopped and resumed.
+// Word times: the Speech SDK reports where each word starts while it synthesizes, so the timeline (version 2) lists every word
+// of every unit. The SDK is a tool-only dependency kept outside the repository:
+//   npm install --prefix ~/.cache/hive-english/sdk microsoft-cognitiveservices-speech-sdk@1.52.0   (a package.json must exist there)
+// --sdk <folder> or HIVE_SPEECH_SDK points elsewhere. --rest uses plain HTTPS instead and writes unit times only (version 1).
 import { readFile, writeFile, mkdir, access, stat, chmod } from 'node:fs/promises';
+import { createRequire } from 'node:module';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { workTextHash } from '../static/english/library.mjs';
+import { workTextHash, tokenize } from '../static/english/library.mjs';
 import { VOICES, FORMATS, PAUSE_MS, unitsOf, voiceFor } from '../static/english/voice.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DEFAULT_FORMAT = 'audio-24khz-48kbitrate-mono-mp3';
-const escapeXml = text => text.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' })[c]);
+// Quote marks need no escaping in element text, and Azure reports the position of a word after &quot; wrongly (-1), so they stay as they are.
+const escapeXml = text => text.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]);
 const flat = text => text.replace(/\s*\n\s*/g, ' ').trim();
 
 export function buildSsml({ text, voice, accent }) {
@@ -42,24 +48,99 @@ async function synthesize({ ssml, key, region, format, fetcher, attempts = 6, ba
     }
 }
 
+// Where each word of `text` starts and ends, in ms from the start of the audio, from the SDK's boundary events.
+// `boundaries`: [{kind: 'word' | 'other', startMs, durationMs, textOffset, length}], where textOffset points into the SSML.
+// Azure sometimes reports two words as one event ("in 1864", "” bit"); that event's time is shared by the words in it,
+// by letters. A word with no event at all is an error: the timeline must never carry a guess for a missing word.
+// One known fault is repaired: the British voices report the last word of a unit with no length and a start that can lie
+// before the word ahead of it. Such a last word is placed from the end of the word before it to `endMs`, where the speech
+// stops (the unit's audio less the silence after it). Anywhere else a zero-length word is an error.
+export function wordTimes({ text, ssml, boundaries, endMs }) {
+    const flatText = flat(text), escaped = escapeXml(flatText), base = ssml.indexOf(escaped);
+    if (base < 0) throw new Error('the SSML does not contain the unit text');
+    const original = [];   // original[i]: which character of the plain text the i-th character of the escaped text came from
+    for (let i = 0; i < flatText.length; i++) for (let k = escapeXml(flatText[i]).length; k > 0; k--) original.push(i);
+    const heard = boundaries.filter(b => b.kind === 'word').map(b => ({ ...b }));
+    heard.forEach((b, i) => {
+        if (!(b.durationMs <= 0 || (i > 0 && b.startMs < heard[i - 1].startMs))) return;
+        if (i !== heard.length - 1 || i === 0 || !(endMs > heard[i - 1].startMs + heard[i - 1].durationMs)) throw new Error(`Azure gave a bad time for the word at ${b.textOffset}`);
+        b.startMs = heard[i - 1].startMs + heard[i - 1].durationMs; b.durationMs = endMs - b.startMs;
+    });
+    const spans = heard.map(b => {
+        const from = b.textOffset - base, to = from + b.length;
+        if (!(from >= 0 && to <= original.length && b.length > 0)) return null;
+        return { a: original[from], b: original[to - 1] + 1, start: b.startMs, end: b.startMs + b.durationMs };
+    }).filter(Boolean);
+    return tokenize(flatText).filter(t => t.word).map(token => {
+        const from = token.start, to = token.start + token.text.length, parts = [];
+        for (const span of spans) {
+            const a = Math.max(from, span.a), b = Math.min(to, span.b);
+            if (a >= b) continue;
+            const length = span.b - span.a;
+            parts.push([span.start + (span.end - span.start) * (a - span.a) / length, span.start + (span.end - span.start) * (b - span.a) / length]);
+        }
+        if (!parts.length) throw new Error(`Azure gave no time for the word "${token.text}"`);
+        return [Math.min(...parts.map(p => p[0])), Math.max(...parts.map(p => p[1]))];
+    });
+}
+
+const SDK_FOLDER = process.env.HIVE_SPEECH_SDK || path.join(os.homedir(), '.cache', 'hive-english', 'sdk');
+const SDK_FORMATS = { 'audio-24khz-48kbitrate-mono-mp3': 'Audio24Khz48KBitRateMonoMp3', 'audio-16khz-32kbitrate-mono-mp3': 'Audio16Khz32KBitRateMonoMp3' };
+// Synthesizes with the Speech SDK: audio and word boundaries together. Errors carry only the SDK's error name, never its details (they can hold the key).
+export function sdkSynthesizer({ key, region, format, folder = SDK_FOLDER, attempts = 6, backoff = 2000 }) {
+    let sdk;
+    try { sdk = createRequire(path.join(folder, '/'))('microsoft-cognitiveservices-speech-sdk'); }
+    catch { throw new Error(`The Speech SDK is not installed in ${folder}. Run: npm install --prefix "${folder}" microsoft-cognitiveservices-speech-sdk@1.52.0 (create a package.json there first), or use --rest for unit times only.`); }
+    const final = new Set(['AuthenticationFailure', 'BadRequestParameters', 'Forbidden']);   // a bad key or request will not get better
+    const once = ssml => new Promise((resolve, reject) => {
+        const config = sdk.SpeechConfig.fromSubscription(key, region);
+        config.speechSynthesisOutputFormat = sdk.SpeechSynthesisOutputFormat[SDK_FORMATS[format]];
+        const synthesizer = new sdk.SpeechSynthesizer(config, null);
+        const boundaries = [];
+        synthesizer.wordBoundary = (_sender, e) => boundaries.push({ kind: e.boundaryType === 'WordBoundary' || e.boundaryType === 0 ? 'word' : 'other', startMs: e.audioOffset / 10000, durationMs: e.duration / 10000, textOffset: e.textOffset, length: e.wordLength });
+        const fail = name => { synthesizer.close(); reject(Object.assign(new Error(`Azure speech failed: ${name}`), { final: final.has(name) })); };
+        synthesizer.speakSsmlAsync(ssml, result => {
+            if (result.reason !== sdk.ResultReason.SynthesizingAudioCompleted) { fail(sdk.CancellationErrorCode[sdk.CancellationDetails.fromResult(result).ErrorCode] ?? 'Unknown'); return; }
+            const audio = Buffer.from(result.audioData);
+            synthesizer.close(); resolve({ audio, boundaries });
+        }, () => fail('Error'));
+    });
+    return async ({ ssml }) => {
+        for (let attempt = 1; ; attempt++) {
+            try { return await once(ssml); }
+            catch (error) {
+                if (error.final || attempt === attempts) throw error;
+                await new Promise(r => setTimeout(r, Math.min(30000, backoff * 2 ** (attempt - 1))));
+            }
+        }
+    };
+}
+
 // One work in one accent: the joined mp3 and its timeline. `pause(ms)` is awaited between requests.
-export async function renderWork({ work, accent, key, region, format = DEFAULT_FORMAT, fetcher = fetch, pause = async () => {}, onProgress = () => {}, backoff }) {
+export async function renderWork({ work, accent, key, region, format = DEFAULT_FORMAT, fetcher = fetch, synth, pause = async () => {}, onProgress = () => {}, backoff }) {
     const bytesPerSecond = FORMATS[format];
     const parts = [], segments = [];
     let total = 0, chars = 0, requests = 0;
     const at = bytes => Math.round(bytes / bytesPerSecond * 1000);
+    // synth({ssml}) gives {audio, boundaries}; without it plain HTTPS gives audio only, so no word times.
+    const speak = synth ?? (async ({ ssml }) => ({ audio: await synthesize({ ssml, key, region, format, fetcher, backoff }), boundaries: null }));
+    let timed = true;
     for (const segment of work.segments) {
         const voice = voiceFor(work, segment, accent), start = total, units = [];
         for (const unit of unitsOf(segment, work.kind)) {
             await pause();
-            const audio = await synthesize({ ssml: buildSsml({ text: unit, voice, accent }), key, region, format, fetcher, backoff });
-            units.push({ start: at(total), end: at(total + audio.length) });
+            const ssml = buildSsml({ text: unit, voice, accent });
+            const { audio, boundaries } = await speak({ ssml });
+            const from = at(total), to = at(total + audio.length), entry = { start: from, end: to };
+            if (boundaries) entry.words = wordTimes({ text: unit, ssml, boundaries, endMs: at(audio.length) - PAUSE_MS }).map(([a, b]) => [from + Math.round(a), Math.min(to, from + Math.round(b))]);
+            else timed = false;
+            units.push(entry);
             parts.push(audio); total += audio.length; chars += flat(unit).length; requests += 1;
             onProgress(requests);
         }
         segments.push({ id: segment.id, start: at(start), end: at(total), units });
     }
-    const timeline = { version: 1, id: work.id, accent, voices: VOICES[accent], format, textHash: workTextHash(work), seconds: Math.round(total / bytesPerSecond * 10) / 10, segments };
+    const timeline = { version: timed ? 2 : 1, id: work.id, accent, voices: VOICES[accent], format, textHash: workTextHash(work), seconds: Math.round(total / bytesPerSecond * 10) / 10, segments };
     return { mp3: Buffer.concat(parts), timeline, chars, requests };
 }
 
@@ -100,11 +181,12 @@ function addEntry(summary, id, accent, entry) {
 async function main(argv) {
     const flag = name => { const i = argv.indexOf(name); return i < 0 ? null : argv[i + 1]; };
     if (argv.includes('--init-key')) { await initKeyFile(); return; }
-    const dry = argv.includes('--dry-run'), force = argv.includes('--force');
+    const dry = argv.includes('--dry-run'), force = argv.includes('--force'), rest = argv.includes('--rest');
     const accents = (flag('--accents') ?? 'en-US,en-GB').split(',');
     const only = flag('--only')?.split(',');
     const format = flag('--format') ?? DEFAULT_FORMAT;
     const delay = Number(flag('--delay') ?? 3200);
+    const sdkFolder = flag('--sdk') ?? undefined;
     if (!accents.every(a => VOICES[a]) || !FORMATS[format] || !Number.isFinite(delay)) throw new Error(`usage: see the top of this file (accents: ${Object.keys(VOICES)}; formats: ${Object.keys(FORMATS)})`);
     const { key, region } = await credentials();
     if (argv.includes('--check')) {
@@ -128,13 +210,14 @@ async function main(argv) {
     console.log(`${works.length} works, ${units} units, ${chars} characters a pass; ${accents.length} accent(s): ${units * accents.length} requests, about ${Math.round(megabytes)} MB of audio in all.`);
     if (dry) return;
     await mkdir(out, { recursive: true });
+    const synth = rest ? undefined : sdkSynthesizer({ key, region, format, folder: sdkFolder });
     for (const accent of accents) {
         await mkdir(path.join(out, accent), { recursive: true });
         for (const work of works) {
             const base = path.join(out, accent, work.id);
             if (!force && await exists(`${base}.json`) && await exists(`${base}.mp3`)) {
                 const old = JSON.parse(await readFile(`${base}.json`, 'utf8'));
-                if (old.textHash === workTextHash(work) && old.format === format) {
+                if (old.textHash === workTextHash(work) && old.format === format && (rest || old.version === 2)) {
                     // Files are there; make sure the index knows them (a stop between the files and the index would leave it without).
                     const known = Object.hasOwn(summary.works, work.id) && Object.hasOwn(summary.works[work.id], accent);
                     if (!known) { addEntry(summary, work.id, accent, { seconds: old.seconds, bytes: (await stat(`${base}.mp3`)).size }); await writeFile(path.join(out, 'index.json'), JSON.stringify(summary, null, 1) + '\n'); }
@@ -142,7 +225,7 @@ async function main(argv) {
                 }
             }
             const started = Date.now();
-            const { mp3, timeline, chars: used } = await renderWork({ work, accent, key, region, format, pause: () => new Promise(r => setTimeout(r, delay)) });
+            const { mp3, timeline, chars: used } = await renderWork({ work, accent, key, region, format, synth, pause: () => new Promise(r => setTimeout(r, delay)) });
             await writeFile(`${base}.mp3`, mp3); await writeFile(`${base}.json`, JSON.stringify(timeline) + '\n');
             addEntry(summary, work.id, accent, { seconds: timeline.seconds, bytes: mp3.length });
             await writeFile(path.join(out, 'index.json'), JSON.stringify(summary, null, 1) + '\n');   // saved after each work, so a stop loses nothing
