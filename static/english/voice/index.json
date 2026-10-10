@@ -4,459 +4,840 @@
  "works": {
   "aesop-hare-and-tortoise": {
    "en-US": {
-    "seconds": 52.9,
-    "bytes": 317232,
-    "rev": "mv1cdewk"
+    "seconds": 47.4,
+    "bytes": 284688,
+    "rev": "mv2xonp1",
+    "slow": {
+     "seconds": 103,
+     "bytes": 411840,
+     "rev": "mv2xonpj"
+    }
    },
    "en-GB": {
-    "seconds": 51.9,
-    "bytes": 311184,
-    "rev": "mv1dfaxy"
+    "seconds": 48.6,
+    "bytes": 291744,
+    "rev": "mv2xonpc",
+    "slow": {
+     "seconds": 100.9,
+     "bytes": 403776,
+     "rev": "mv2xonpq"
+    }
    }
   },
   "aurelius-meditations": {
    "en-US": {
-    "seconds": 91,
-    "bytes": 545760,
-    "rev": "mv1cexc8"
+    "seconds": 95.4,
+    "bytes": 572256,
+    "rev": "mv2xonp2",
+    "slow": {
+     "seconds": 177.2,
+     "bytes": 708912,
+     "rev": "mv2xonpj"
+    }
    },
    "en-GB": {
-    "seconds": 92.8,
-    "bytes": 556848,
-    "rev": "mv1elozb"
+    "seconds": 96,
+    "bytes": 576144,
+    "rev": "mv2xonpc",
+    "slow": {
+     "seconds": 180.2,
+     "bytes": 720864,
+     "rev": "mv2xonpr"
+    }
    }
   },
   "austen-pride-and-prejudice": {
    "en-US": {
-    "seconds": 54.8,
-    "bytes": 328752,
-    "rev": "mv1cfwn5"
+    "seconds": 49.9,
+    "bytes": 299664,
+    "rev": "mv2xonp2",
+    "slow": {
+     "seconds": 106.4,
+     "bytes": 425520,
+     "rev": "mv2xonpj"
+    }
    },
    "en-GB": {
-    "seconds": 54.2,
-    "bytes": 325296,
-    "rev": "mv1emsq9"
+    "seconds": 54.4,
+    "bytes": 326304,
+    "rev": "mv2xonpd",
+    "slow": {
+     "seconds": 105.1,
+     "bytes": 420480,
+     "rev": "mv2xonpr"
+    }
    }
   },
   "bacon-of-studies": {
    "en-US": {
-    "seconds": 94.7,
-    "bytes": 568224,
-    "rev": "mv1cgwoy"
+    "seconds": 91.8,
+    "bytes": 550656,
+    "rev": "mv2xonp3",
+    "slow": {
+     "seconds": 185.2,
+     "bytes": 740736,
+     "rev": "mv2xonpj"
+    }
    },
    "en-GB": {
-    "seconds": 93,
-    "bytes": 558000,
-    "rev": "mv1enx0q"
+    "seconds": 94.7,
+    "bytes": 568224,
+    "rev": "mv2xonpd",
+    "slow": {
+     "seconds": 181.7,
+     "bytes": 726912,
+     "rev": "mv2xonpr"
+    }
    }
   },
   "blake-the-tyger": {
    "en-US": {
-    "seconds": 71.3,
-    "bytes": 427824,
-    "rev": "mv1cizwb"
+    "seconds": 63,
+    "bytes": 378144,
+    "rev": "mv2xonp5",
+    "slow": {
+     "seconds": 136.8,
+     "bytes": 547344,
+     "rev": "mv2xonpj"
+    }
    },
    "en-GB": {
-    "seconds": 68.4,
-    "bytes": 410688,
-    "rev": "mv1dkygb"
+    "seconds": 65.7,
+    "bytes": 393984,
+    "rev": "mv2xonpd",
+    "slow": {
+     "seconds": 131.2,
+     "bytes": 524736,
+     "rev": "mv2xonpr"
+    }
    }
   },
   "carroll-alice": {
    "en-US": {
-    "seconds": 83.9,
-    "bytes": 503424,
-    "rev": "mv1ck3lw"
+    "seconds": 79.3,
+    "bytes": 475632,
+    "rev": "mv2xonp6",
+    "slow": {
+     "seconds": 163.5,
+     "bytes": 654192,
+     "rev": "mv2xonpk"
+    }
    },
    "en-GB": {
-    "seconds": 81.8,
-    "bytes": 490896,
-    "rev": "mv1ep5ck"
+    "seconds": 83.9,
+    "bytes": 503424,
+    "rev": "mv2xonpd",
+    "slow": {
+     "seconds": 158.7,
+     "bytes": 634896,
+     "rev": "mv2xonpr"
+    }
    }
   },
   "dialogue-hotel": {
    "en-US": {
-    "seconds": 108,
-    "bytes": 647712,
-    "rev": "mv1clqfv"
+    "seconds": 73.9,
+    "bytes": 443664,
+    "rev": "mv2xonp6",
+    "slow": {
+     "seconds": 210.2,
+     "bytes": 840960,
+     "rev": "mv2xonpk"
+    }
    },
    "en-GB": {
-    "seconds": 102.8,
-    "bytes": 616752,
-    "rev": "mv1dns44"
+    "seconds": 81.5,
+    "bytes": 488736,
+    "rev": "mv2xonpd",
+    "slow": {
+     "seconds": 199.8,
+     "bytes": 799344,
+     "rev": "mv2xonps"
+    }
    }
   },
   "dialogue-interview": {
    "en-US": {
-    "seconds": 118.9,
-    "bytes": 713520,
-    "rev": "mv1cnh1p"
+    "seconds": 86.4,
+    "bytes": 518256,
+    "rev": "mv2xonp6",
+    "slow": {
+     "seconds": 231.5,
+     "bytes": 925920,
+     "rev": "mv2xonpk"
+    }
    },
    "en-GB": {
-    "seconds": 118.8,
-    "bytes": 713088,
-    "rev": "mv1dplh8"
+    "seconds": 95.4,
+    "bytes": 572112,
+    "rev": "mv2xonpe",
+    "slow": {
+     "seconds": 231.5,
+     "bytes": 925920,
+     "rev": "mv2xonps"
+    }
    }
   },
   "dialogue-standup": {
    "en-US": {
-    "seconds": 100.8,
-    "bytes": 604656,
-    "rev": "mv1cp4f3"
+    "seconds": 71.6,
+    "bytes": 429552,
+    "rev": "mv2xonp7",
+    "slow": {
+     "seconds": 196.1,
+     "bytes": 784368,
+     "rev": "mv2xonpl"
+    }
    },
    "en-GB": {
-    "seconds": 98.5,
-    "bytes": 590976,
-    "rev": "mv1drc02"
+    "seconds": 78.3,
+    "bytes": 469872,
+    "rev": "mv2xonpe",
+    "slow": {
+     "seconds": 191.4,
+     "bytes": 765648,
+     "rev": "mv2xonps"
+    }
    }
   },
   "dickens-tale-of-two-cities": {
    "en-US": {
-    "seconds": 38.6,
-    "bytes": 231840,
-    "rev": "mv1cpk7k"
+    "seconds": 41.2,
+    "bytes": 247392,
+    "rev": "mv2xonp7",
+    "slow": {
+     "seconds": 75.5,
+     "bytes": 301824,
+     "rev": "mv2xonpl"
+    }
    },
    "en-GB": {
-    "seconds": 39.3,
-    "bytes": 235584,
-    "rev": "mv1epnha"
+    "seconds": 41,
+    "bytes": 245952,
+    "rev": "mv2xonpe",
+    "slow": {
+     "seconds": 76.6,
+     "bytes": 306576,
+     "rev": "mv2xonps"
+    }
    }
   },
   "dickinson-hope": {
    "en-US": {
-    "seconds": 23.7,
-    "bytes": 141984,
-    "rev": "mv1cq3a9"
+    "seconds": 26.2,
+    "bytes": 157104,
+    "rev": "mv2xonp7",
+    "slow": {
+     "seconds": 45.7,
+     "bytes": 182880,
+     "rev": "mv2xonpl"
+    }
    },
    "en-GB": {
-    "seconds": 24.9,
-    "bytes": 149328,
-    "rev": "mv1eqazd"
+    "seconds": 25.9,
+    "bytes": 155232,
+    "rev": "mv2xonpe",
+    "slow": {
+     "seconds": 48.1,
+     "bytes": 192384,
+     "rev": "mv2xonps"
+    }
    }
   },
   "emerson-self-reliance": {
    "en-US": {
-    "seconds": 83.9,
-    "bytes": 503136,
-    "rev": "mv1cr2ov"
+    "seconds": 81.7,
+    "bytes": 490032,
+    "rev": "mv2xonp7",
+    "slow": {
+     "seconds": 163.7,
+     "bytes": 654912,
+     "rev": "mv2xonpl"
+    }
    },
    "en-GB": {
-    "seconds": 82.9,
-    "bytes": 497232,
-    "rev": "mv1ermja"
+    "seconds": 82.1,
+    "bytes": 492768,
+    "rev": "mv2xonpe",
+    "slow": {
+     "seconds": 161.7,
+     "bytes": 646704,
+     "rev": "mv2xonps"
+    }
    }
   },
   "franklin-thirteen-virtues": {
    "en-US": {
-    "seconds": 71.3,
-    "bytes": 427680,
-    "rev": "mv1cry1g"
+    "seconds": 69,
+    "bytes": 414144,
+    "rev": "mv2xonp7",
+    "slow": {
+     "seconds": 139.1,
+     "bytes": 556272,
+     "rev": "mv2xonpm"
+    }
    },
    "en-GB": {
-    "seconds": 70.8,
-    "bytes": 425088,
-    "rev": "mv1esqy1"
+    "seconds": 74.4,
+    "bytes": 446256,
+    "rev": "mv2xonpe",
+    "slow": {
+     "seconds": 138.1,
+     "bytes": 552528,
+     "rev": "mv2xonpt"
+    }
    }
   },
   "frost-road-not-taken": {
    "en-US": {
-    "seconds": 47.8,
-    "bytes": 286704,
-    "rev": "mv1cst8u"
+    "seconds": 51.8,
+    "bytes": 311040,
+    "rev": "mv2xonp7",
+    "slow": {
+     "seconds": 92.6,
+     "bytes": 370512,
+     "rev": "mv2xonpm"
+    }
    },
    "en-GB": {
-    "seconds": 48.9,
-    "bytes": 293616,
-    "rev": "mv1ety1c"
+    "seconds": 49.5,
+    "bytes": 297216,
+    "rev": "mv2xonpe",
+    "slow": {
+     "seconds": 95,
+     "bytes": 380016,
+     "rev": "mv2xonpt"
+    }
    }
   },
   "frost-stopping-by-woods": {
    "en-US": {
-    "seconds": 38.7,
-    "bytes": 232416,
-    "rev": "mv1ctovs"
+    "seconds": 40.2,
+    "bytes": 241200,
+    "rev": "mv2xonp8",
+    "slow": {
+     "seconds": 74.8,
+     "bytes": 299376,
+     "rev": "mv2xonpm"
+    }
    },
    "en-GB": {
-    "seconds": 38.5,
-    "bytes": 230976,
-    "rev": "mv1dw6tf"
+    "seconds": 36.6,
+    "bytes": 219456,
+    "rev": "mv2xonpf",
+    "slow": {
+     "seconds": 74.3,
+     "bytes": 297360,
+     "rev": "mv2xonpt"
+    }
    }
   },
   "grahame-wind-in-the-willows": {
    "en-US": {
-    "seconds": 59.3,
-    "bytes": 355536,
-    "rev": "mv1cud32"
+    "seconds": 60.3,
+    "bytes": 361584,
+    "rev": "mv2xonp8",
+    "slow": {
+     "seconds": 115.7,
+     "bytes": 462960,
+     "rev": "mv2xonpm"
+    }
    },
    "en-GB": {
-    "seconds": 57.4,
-    "bytes": 344448,
-    "rev": "mv1euu6m"
+    "seconds": 58.8,
+    "bytes": 352800,
+    "rev": "mv2xonpf",
+    "slow": {
+     "seconds": 112,
+     "bytes": 448128,
+     "rev": "mv2xonpt"
+    }
    }
   },
   "henley-invictus": {
    "en-US": {
-    "seconds": 36.7,
-    "bytes": 220176,
-    "rev": "mv1cv0n8"
+    "seconds": 40.5,
+    "bytes": 243216,
+    "rev": "mv2xonp8",
+    "slow": {
+     "seconds": 71.3,
+     "bytes": 285120,
+     "rev": "mv2xonpn"
+    }
    },
    "en-GB": {
     "seconds": 37.3,
     "bytes": 223776,
-    "rev": "mv1dxko8"
+    "rev": "mv2xonpf",
+    "slow": {
+     "seconds": 72.4,
+     "bytes": 289440,
+     "rev": "mv2xonpu"
+    }
    }
   },
   "keats-letter-to-fanny": {
    "en-US": {
-    "seconds": 53.5,
-    "bytes": 321120,
-    "rev": "mv1cvonh"
+    "seconds": 53.2,
+    "bytes": 319392,
+    "rev": "mv2xonp8",
+    "slow": {
+     "seconds": 104.4,
+     "bytes": 417456,
+     "rev": "mv2xonpn"
+    }
    },
    "en-GB": {
-    "seconds": 54.1,
-    "bytes": 324576,
-    "rev": "mv1evpoz"
+    "seconds": 53.5,
+    "bytes": 320976,
+    "rev": "mv2xonpf",
+    "slow": {
+     "seconds": 105.5,
+     "bytes": 422064,
+     "rev": "mv2xonpu"
+    }
    }
   },
   "keats-to-autumn": {
    "en-US": {
-    "seconds": 95.7,
-    "bytes": 574128,
-    "rev": "mv1cxfem"
+    "seconds": 109,
+    "bytes": 654048,
+    "rev": "mv2xonp8",
+    "slow": {
+     "seconds": 185.6,
+     "bytes": 742464,
+     "rev": "mv2xonpn"
+    }
    },
    "en-GB": {
-    "seconds": 101.2,
-    "bytes": 606960,
-    "rev": "mv1yvbqy"
+    "seconds": 103.4,
+    "bytes": 620640,
+    "rev": "mv2xonpf",
+    "slow": {
+     "seconds": 196.4,
+     "bytes": 785664,
+     "rev": "mv2xonpu"
+    }
    }
   },
   "kennedy-inaugural": {
    "en-US": {
-    "seconds": 75.6,
-    "bytes": 453744,
-    "rev": "mv1cyf6n"
+    "seconds": 78,
+    "bytes": 467712,
+    "rev": "mv2xonp9",
+    "slow": {
+     "seconds": 147.3,
+     "bytes": 589392,
+     "rev": "mv2xonpn"
+    }
    },
    "en-GB": {
-    "seconds": 75.6,
-    "bytes": 453888,
-    "rev": "mv1ywwo1"
+    "seconds": 73.8,
+    "bytes": 442800,
+    "rev": "mv2xonpf",
+    "slow": {
+     "seconds": 147.4,
+     "bytes": 589680,
+     "rev": "mv2xonpu"
+    }
    }
   },
   "kipling-if": {
    "en-US": {
-    "seconds": 87.6,
-    "bytes": 525744,
-    "rev": "mv1cziph"
+    "seconds": 101.5,
+    "bytes": 609120,
+    "rev": "mv2xonp9",
+    "slow": {
+     "seconds": 170.9,
+     "bytes": 683712,
+     "rev": "mv2xonpn"
+    }
    },
    "en-GB": {
-    "seconds": 89.9,
-    "bytes": 539280,
-    "rev": "mv1yyvnp"
+    "seconds": 94.4,
+    "bytes": 566352,
+    "rev": "mv2xonpg",
+    "slow": {
+     "seconds": 175.2,
+     "bytes": 700992,
+     "rev": "mv2xonpv"
+    }
    }
   },
   "lesson-daily": {
    "en-US": {
-    "seconds": 69.3,
-    "bytes": 415584,
-    "rev": "mv1d0j2y"
+    "seconds": 54.2,
+    "bytes": 325440,
+    "rev": "mv2xonp9",
+    "slow": {
+     "seconds": 134.9,
+     "bytes": 539712,
+     "rev": "mv2xonpo"
+    }
    },
    "en-GB": {
-    "seconds": 66.5,
-    "bytes": 399168,
-    "rev": "mv1e3bmu"
+    "seconds": 61.8,
+    "bytes": 371088,
+    "rev": "mv2xonpg",
+    "slow": {
+     "seconds": 129.5,
+     "bytes": 518112,
+     "rev": "mv2xonpv"
+    }
    }
   },
   "lesson-interview": {
    "en-US": {
-    "seconds": 80.9,
-    "bytes": 485136,
-    "rev": "mv1d1mpa"
+    "seconds": 65.7,
+    "bytes": 393984,
+    "rev": "mv2xonp9",
+    "slow": {
+     "seconds": 157.6,
+     "bytes": 630576,
+     "rev": "mv2xonpo"
+    }
    },
    "en-GB": {
-    "seconds": 78.1,
-    "bytes": 468576,
-    "rev": "mv1e4hb0"
+    "seconds": 73.3,
+    "bytes": 439920,
+    "rev": "mv2xonpg",
+    "slow": {
+     "seconds": 152.2,
+     "bytes": 608688,
+     "rev": "mv2xonpv"
+    }
    }
   },
   "lesson-sounds": {
    "en-US": {
-    "seconds": 59.4,
-    "bytes": 356544,
-    "rev": "mv1d2q8h"
+    "seconds": 48.5,
+    "bytes": 290880,
+    "rev": "mv2xonp9",
+    "slow": {
+     "seconds": 115.3,
+     "bytes": 461376,
+     "rev": "mv2xonpo"
+    }
    },
    "en-GB": {
-    "seconds": 57.4,
-    "bytes": 344160,
-    "rev": "mv1e5lyy"
+    "seconds": 53.1,
+    "bytes": 318384,
+    "rev": "mv2xonpg",
+    "slow": {
+     "seconds": 111.3,
+     "bytes": 445104,
+     "rev": "mv2xonpv"
+    }
    }
   },
   "lesson-travel": {
    "en-US": {
-    "seconds": 70.6,
-    "bytes": 423648,
-    "rev": "mv1d3ui4"
+    "seconds": 51.3,
+    "bytes": 308016,
+    "rev": "mv2xonp9",
+    "slow": {
+     "seconds": 137.3,
+     "bytes": 549360,
+     "rev": "mv2xonpo"
+    }
    },
    "en-GB": {
-    "seconds": 66.7,
-    "bytes": 400032,
-    "rev": "mv1e6qsj"
+    "seconds": 57.5,
+    "bytes": 345024,
+    "rev": "mv2xonpg",
+    "slow": {
+     "seconds": 129.6,
+     "bytes": 518544,
+     "rev": "mv2xonpw"
+    }
    }
   },
   "lesson-work": {
    "en-US": {
-    "seconds": 72,
-    "bytes": 432144,
-    "rev": "mv1d4yg9"
+    "seconds": 56.7,
+    "bytes": 340272,
+    "rev": "mv2xonpa",
+    "slow": {
+     "seconds": 140.2,
+     "bytes": 560880,
+     "rev": "mv2xonpo"
+    }
    },
    "en-GB": {
-    "seconds": 69.4,
-    "bytes": 416160,
-    "rev": "mv1e7xd8"
+    "seconds": 64.5,
+    "bytes": 387216,
+    "rev": "mv2xonpg",
+    "slow": {
+     "seconds": 134.8,
+     "bytes": 539136,
+     "rev": "mv2xonpw"
+    }
    }
   },
   "lincoln-bixby-letter": {
    "en-US": {
-    "seconds": 46.6,
-    "bytes": 279360,
-    "rev": "mv1d5m0y"
+    "seconds": 48.1,
+    "bytes": 288576,
+    "rev": "mv2xonpa",
+    "slow": {
+     "seconds": 90.7,
+     "bytes": 362736,
+     "rev": "mv2xonpp"
+    }
    },
    "en-GB": {
-    "seconds": 47.4,
-    "bytes": 284256,
-    "rev": "mv1yzpao"
+    "seconds": 47.3,
+    "bytes": 283536,
+    "rev": "mv2xonph",
+    "slow": {
+     "seconds": 92.3,
+     "bytes": 369360,
+     "rev": "mv2xonpw"
+    }
    }
   },
   "lincoln-gettysburg-address": {
    "en-US": {
-    "seconds": 99.7,
-    "bytes": 598464,
-    "rev": "mv1d6yhl"
+    "seconds": 96,
+    "bytes": 576144,
+    "rev": "mv2xonpa",
+    "slow": {
+     "seconds": 194.4,
+     "bytes": 777600,
+     "rev": "mv2xonpp"
+    }
    },
    "en-GB": {
-    "seconds": 97.4,
-    "bytes": 584640,
-    "rev": "mv1z1isk"
+    "seconds": 97.8,
+    "bytes": 586800,
+    "rev": "mv2xonph",
+    "slow": {
+     "seconds": 189.9,
+     "bytes": 759600,
+     "rev": "mv2xonpw"
+    }
    }
   },
   "lincoln-second-inaugural": {
    "en-US": {
-    "seconds": 54,
-    "bytes": 323712,
-    "rev": "mv1d7m5v"
+    "seconds": 55.9,
+    "bytes": 335376,
+    "rev": "mv2xonpa",
+    "slow": {
+     "seconds": 105.3,
+     "bytes": 421056,
+     "rev": "mv2xonpp"
+    }
    },
    "en-GB": {
-    "seconds": 54,
-    "bytes": 323712,
-    "rev": "mv1z2jxb"
+    "seconds": 52.3,
+    "bytes": 313920,
+    "rev": "mv2xonph",
+    "slow": {
+     "seconds": 105.2,
+     "bytes": 420912,
+     "rev": "mv2xonpw"
+    }
    }
   },
   "melville-moby-dick": {
    "en-US": {
-    "seconds": 76.6,
-    "bytes": 459360,
-    "rev": "mv1d8p2d"
+    "seconds": 71.4,
+    "bytes": 428688,
+    "rev": "mv2xonpa",
+    "slow": {
+     "seconds": 149.1,
+     "bytes": 596592,
+     "rev": "mv2xonpp"
+    }
    },
    "en-GB": {
-    "seconds": 74.1,
-    "bytes": 444816,
-    "rev": "mv1z433a"
+    "seconds": 72.4,
+    "bytes": 434160,
+    "rev": "mv2xonph",
+    "slow": {
+     "seconds": 144.4,
+     "bytes": 577440,
+     "rev": "mv2xonpx"
+    }
    }
   },
   "roosevelt-first-inaugural": {
    "en-US": {
-    "seconds": 65.7,
-    "bytes": 394416,
-    "rev": "mv1d9hbx"
+    "seconds": 67.1,
+    "bytes": 402336,
+    "rev": "mv2xonpb",
+    "slow": {
+     "seconds": 128.3,
+     "bytes": 513360,
+     "rev": "mv2xonpp"
+    }
    },
    "en-GB": {
-    "seconds": 65.9,
-    "bytes": 395280,
-    "rev": "mv1z5exd"
+    "seconds": 69,
+    "bytes": 413856,
+    "rev": "mv2xonph",
+    "slow": {
+     "seconds": 128.6,
+     "bytes": 514224,
+     "rev": "mv2xonpx"
+    }
    }
   },
   "roosevelt-man-in-the-arena": {
    "en-US": {
-    "seconds": 47.4,
-    "bytes": 284688,
-    "rev": "mv1da1rt"
+    "seconds": 49.6,
+    "bytes": 297648,
+    "rev": "mv2xonpb",
+    "slow": {
+     "seconds": 92.6,
+     "bytes": 370512,
+     "rev": "mv2xonpp"
+    }
    },
    "en-GB": {
-    "seconds": 47.7,
-    "bytes": 286272,
-    "rev": "mv1z6alo"
+    "seconds": 49.2,
+    "bytes": 295488,
+    "rev": "mv2xonph",
+    "slow": {
+     "seconds": 93.1,
+     "bytes": 372384,
+     "rev": "mv2xonpx"
+    }
    }
   },
   "rossetti-remember": {
    "en-US": {
-    "seconds": 34.9,
-    "bytes": 209376,
-    "rev": "mv1daoxa"
+    "seconds": 39.6,
+    "bytes": 237888,
+    "rev": "mv2xonpb",
+    "slow": {
+     "seconds": 67.7,
+     "bytes": 270720,
+     "rev": "mv2xonpp"
+    }
    },
    "en-GB": {
-    "seconds": 37.2,
-    "bytes": 223200,
-    "rev": "mv1edzph"
+    "seconds": 36.5,
+    "bytes": 219024,
+    "rev": "mv2xonpi",
+    "slow": {
+     "seconds": 72.1,
+     "bytes": 288576,
+     "rev": "mv2xonpx"
+    }
    }
   },
   "shakespeare-sonnet-18": {
    "en-US": {
-    "seconds": 41,
-    "bytes": 245952,
-    "rev": "mv1dbg66"
+    "seconds": 46.3,
+    "bytes": 277920,
+    "rev": "mv2xonpb",
+    "slow": {
+     "seconds": 79.6,
+     "bytes": 318240,
+     "rev": "mv2xonpq"
+    }
    },
    "en-GB": {
-    "seconds": 43.5,
-    "bytes": 261216,
-    "rev": "mv1z7szj"
+    "seconds": 42.5,
+    "bytes": 255024,
+    "rev": "mv2xonpi",
+    "slow": {
+     "seconds": 84.5,
+     "bytes": 337968,
+     "rev": "mv2xonpx"
+    }
    }
   },
   "tennyson-crossing-the-bar": {
    "en-US": {
-    "seconds": 34.3,
-    "bytes": 205920,
-    "rev": "mv1dc3yf"
+    "seconds": 36.6,
+    "bytes": 219888,
+    "rev": "mv2xonpb",
+    "slow": {
+     "seconds": 66.5,
+     "bytes": 266112,
+     "rev": "mv2xonpq"
+    }
    },
    "en-GB": {
-    "seconds": 35.1,
-    "bytes": 210816,
-    "rev": "mv1efgg0"
+    "seconds": 35.3,
+    "bytes": 211968,
+    "rev": "mv2xonpi",
+    "slow": {
+     "seconds": 68.1,
+     "bytes": 272448,
+     "rev": "mv2xonpy"
+    }
    }
   },
   "thoreau-walden-deliberately": {
    "en-US": {
-    "seconds": 67.3,
-    "bytes": 403632,
-    "rev": "mv1dczlt"
+    "seconds": 67.1,
+    "bytes": 402624,
+    "rev": "mv2xonpc",
+    "slow": {
+     "seconds": 131.1,
+     "bytes": 524448,
+     "rev": "mv2xonpq"
+    }
    },
    "en-GB": {
-    "seconds": 68.4,
-    "bytes": 410256,
-    "rev": "mv1z9ck8"
+    "seconds": 68.8,
+    "bytes": 412704,
+    "rev": "mv2xonpi",
+    "slow": {
+     "seconds": 133.3,
+     "bytes": 533088,
+     "rev": "mv2xonpy"
+    }
    }
   },
   "wordsworth-daffodils": {
    "en-US": {
-    "seconds": 53.4,
-    "bytes": 320688,
-    "rev": "mv1dduut"
+    "seconds": 62,
+    "bytes": 371952,
+    "rev": "mv2xonpc",
+    "slow": {
+     "seconds": 103.9,
+     "bytes": 415584,
+     "rev": "mv2xonpq"
+    }
    },
    "en-GB": {
-    "seconds": 56.1,
-    "bytes": 336384,
-    "rev": "mv1zau02"
+    "seconds": 59.5,
+    "bytes": 357120,
+    "rev": "mv2xonpi",
+    "slow": {
+     "seconds": 109.1,
+     "bytes": 436320,
+     "rev": "mv2xonpy"
+    }
    }
   },
   "yeats-innisfree": {
    "en-US": {
-    "seconds": 40.7,
-    "bytes": 244368,
-    "rev": "mv1dei8h"
+    "seconds": 42.7,
+    "bytes": 256320,
+    "rev": "mv2xonpc",
+    "slow": {
+     "seconds": 79.3,
+     "bytes": 317088,
+     "rev": "mv2xonpq"
+    }
    },
    "en-GB": {
-    "seconds": 42,
-    "bytes": 252288,
-    "rev": "mv1zbw15"
+    "seconds": 42.6,
+    "bytes": 255600,
+    "rev": "mv2xonpi",
+    "slow": {
+     "seconds": 81.7,
+     "bytes": 326736,
+     "rev": "mv2xonpy"
+    }
    }
   }
- }
+ },
+ "slowFormat": "audio-16khz-32kbitrate-mono-mp3"
 }
