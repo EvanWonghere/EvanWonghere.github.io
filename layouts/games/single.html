@@ -258,6 +258,23 @@
             .nav-btn, .guide-panel, .guide-backdrop { transition: none; }
         }
     </style>
+{{ if .Params.isolate }}
+    {{/* 需要 SharedArrayBuffer 的游戏（多线程 WebAssembly 引擎）：用 /games/ 范围内的 Service Worker 补上跨源隔离所需的响应头。
+         第一次访问要刷新一次；浏览器不支持（如 Safari）或注册失败时，游戏自动使用内置的小 AI。 */}}
+    <script>
+        (async () => {
+            if (window.crossOriginIsolated || !('serviceWorker' in navigator)) return;
+            try {
+                const registration = await navigator.serviceWorker.register('/games/coi-sw.js', { scope: '/games/' });
+                if (navigator.serviceWorker.controller) return;   // already controlled but still not isolated: this browser does not support it
+                const worker = registration.installing || registration.waiting || registration.active;
+                const reload = () => { try { if (sessionStorage.getItem('hive-coi-reload')) return; sessionStorage.setItem('hive-coi-reload', '1'); } catch (_) { return; } location.reload(); };
+                if (worker.state === 'activated') reload();
+                else worker.addEventListener('statechange', () => { if (worker.state === 'activated') reload(); });
+            } catch (_) { /* the game falls back to its built-in AI */ }
+        })();
+    </script>
+{{ end }}
 </head>
 <body>
 

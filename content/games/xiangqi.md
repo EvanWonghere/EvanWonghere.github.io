@@ -6,6 +6,7 @@ game_url: "/games/xiangqi-app/index.html"
 gametype: "棋类"
 platforms: ["桌面", "移动端"]
 controls: ["鼠标", "触屏"]
+isolate: true
 ---
 
 #### 游戏说明
