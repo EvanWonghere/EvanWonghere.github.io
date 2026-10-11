@@ -13,6 +13,7 @@ import { enhanceSelect, enhanceAudio, refreshControls } from './controls.mjs';
 import { loadTrack, playRange } from './voiceplayer.mjs';
 import { unitsOf, unitAt, wordAt, prettyVoice } from './voice.mjs';
 import { loadGloss, loadDictionary, unitZh, segmentZh, wordHelp, sensesLine } from './gloss.mjs';
+import { loadHumanTimeline, humanWordAt } from './humanalign.mjs';
 
 const $ = id => document.getElementById(id);
 const el = (tag, attrs = {}, ...kids) => {
@@ -191,7 +192,20 @@ function renderListen(work) {
         audio.dataset.duration = String(work.human.seconds);
         audio.src = new URL(work.human.src, import.meta.url).href;
         $('human-credit').replaceChildren(el('a', { href: work.human.url, target: '_blank', rel: 'noopener' }, work.human.credit), '。公有领域的志愿者录音，用的版本可能和下面的文字略有出入。');
-        audio.onplay = () => { stopSpeech(); stopSpeech = () => {}; clear(); };   // only the speech voice stops; stop() would pause this audio too
+        // The words light up with the recording when its word times exist (they come from speech recognition, so a word it missed stays dark).
+        let timeline = null, ticking = 0;
+        const light = () => { const at = timeline && humanWordAt(timeline, audio.currentTime * 1000); if (at) mark(at[0], at[1]); else clear(); };
+        const tick = () => { light(); ticking = setTimeout(tick, 60); };
+        const halt = () => { clearTimeout(ticking); ticking = 0; };
+        audio.onplay = () => { stopSpeech(); stopSpeech = () => {}; clear(); if (timeline && !ticking) tick(); };   // only the speech voice stops; stop() would pause this audio too
+        audio.onpause = () => { halt(); if (audio.ended || !timeline) clear(); };
+        audio.onended = () => { halt(); clear(); };
+        audio.onseeked = () => { if (timeline) light(); };
+        loadHumanTimeline(work, import.meta.url).then(found => {
+            if (!found || currentWork?.id !== work.id) return;
+            timeline = found;
+            $('human-credit').append(' 文字高亮来自语音识别的对齐，识别不出的词不会亮。');
+        });
     }
     let speed = 0.9, failNote = '';   // failNote: why the device voice is reading, kept next to the device voice's own notes
     const source = $('listen-source');
