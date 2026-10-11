@@ -7,6 +7,13 @@
         <p class="quote-content">{{ .content | markdownify }}</p>
     {{ end }}
 
+    {{/* 有预生成的朗读音频时显示播放键：文件名是正文（空白折叠）SHA-1 的前十位，和 tools/render-quote-audio.mjs 一致 */}}
+    {{ $spoken := .content | replaceRE "[ \t\r\n\f]+" " " | replaceRE "^ | $" "" }}
+    {{ $clip := printf "quotes/audio/%s.mp3" (substr (sha1 $spoken) 0 10) }}
+    {{ if fileExists (printf "static/%s" $clip) }}
+    <button type="button" class="quote-listen" data-src="{{ $clip | relURL }}" aria-label="朗读这段摘抄">▶ 朗读</button>
+    {{ end }}
+
     <footer class="quote-author">
         — {{ if .author }}{{ .author }}{{ end }}
         {{ if .source }}
