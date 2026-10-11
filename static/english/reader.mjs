@@ -14,6 +14,7 @@ import { loadTrack, playRange } from './voiceplayer.mjs';
 import { unitsOf, unitAt, wordAt, prettyVoice } from './voice.mjs';
 import { loadGloss, loadDictionary, unitZh, segmentZh, wordHelp, sensesLine } from './gloss.mjs';
 import { loadHumanTimeline, humanWordAt } from './humanalign.mjs';
+import { loadWordIndex, wordClip } from './wordaudio.mjs';
 
 const $ = id => document.getElementById(id);
 const el = (tag, attrs = {}, ...kids) => {
@@ -112,6 +113,18 @@ function say(work, spec, rate, { pitch = 1, onEnd } = {}) {
         onEnd: info => { if (info.error) { failTrack(work, ready.kind); stopper = device(); return; } onEnd?.({ boundaries: 1, voiceLang: ctx.locale(), ...info }); },
     });
     return () => stopper();
+}
+// One word: the pre-rendered clip of the accent when there is one (it starts inside the click, as phones need), else the device voice.
+let wordIndex = null;
+function sayWord(text) {
+    const src = wordClip(wordIndex, ctx.locale(), wordKey(text), import.meta.url);
+    const device = () => speak(text, { rate: 0.8, locale: ctx.locale() });
+    if (!src) return device();
+    const audio = new Audio(src);
+    let stopped = false, fallback = null;
+    audio.onerror = () => { if (!stopped && !fallback) fallback = device(); };
+    audio.play().catch(error => { if (!stopped && !fallback && error?.name !== 'AbortError') fallback = device(); });
+    return () => { stopped = true; audio.pause(); fallback?.(); };
 }
 const ACCENT_NAME = { 'en-US': '美式', 'en-GB': '英式' };
 // Said when the device has no voice for the chosen accent and another English voice spoke instead.
@@ -305,7 +318,7 @@ function word(work, text, span, refreshCarry, where) {
     showPop();
     for (const other of document.querySelectorAll('#listen-text .w.picked')) other.classList.remove('picked');
     span.classList.add('picked');
-    stop(); stopSpeech = speak(text, { rate: 0.8, locale: ctx.locale() });
+    stop(); stopSpeech = sayWord(text);
 }
 
 function renderFollow(work) {
@@ -418,7 +431,7 @@ function renderArchive() {
     renderReview();
     const words = Object.entries(p.words).sort(([a, x], [b, y]) => x.due < y.due ? -1 : x.due > y.due ? 1 : a < b ? -1 : 1);
     $('archive-words').replaceChildren(el('h3', {}, `生词本（${words.length}）`), ...(words.length
-        ? [el('ul', { class: 'word-list' }, ...words.map(([key, w]) => el('li', {}, el('button', { type: 'button', class: 'linkish', lang: 'en', onclick: () => { stop(); stopSpeech = speak(key, { rate: 0.8, locale: ctx.locale() }); } }, key), el('small', {}, w.due <= today ? '今天复习' : `下次 ${w.due}`), el('button', { type: 'button', 'aria-label': `移出 ${key}`, onclick: () => { learner.update(q => removeWord(q, key)); renderArchive(); } }, '移出'))))]
+        ? [el('ul', { class: 'word-list' }, ...words.map(([key, w]) => el('li', {}, el('button', { type: 'button', class: 'linkish', lang: 'en', onclick: () => { stop(); stopSpeech = sayWord(key); } }, key), el('small', {}, w.due <= today ? '今天复习' : `下次 ${w.due}`), el('button', { type: 'button', 'aria-label': `移出 ${key}`, onclick: () => { learner.update(q => removeWord(q, key)); renderArchive(); } }, '移出'))))]
         : [el('p', { class: 'hint' }, '读文章时点一个词，选“＋ 生词本”；朗读报告里的难词也可以一键加入。')]));
 }
 function renderReview() {
@@ -448,7 +461,7 @@ async function reviewCard(queue, i, tally) {
     const detail = el('div', { class: 'review-detail', hidden: '' }, el('p', {}, gloss || '这个词没有收录释义。'), ...(sentence ? [el('p', { class: 'follow-text small', lang: 'en' }, sentence)] : []), ...(work ? [el('small', {}, `出自《${work.title}》`)] : []));
     const rate = good => { learner.update(p => reviewWord(p, item.key, good, today)); reviewCard(queue, i + 1, { good: tally.good + (good ? 1 : 0), bad: tally.bad + (good ? 0 : 1) }); };
     box.replaceChildren(el('h3', {}, `今日复习 · ${i + 1} / ${queue.length}`), el('p', { class: 'review-word', lang: 'en' }, item.key),
-        el('div', { class: 'controls' }, el('button', { type: 'button', onclick: () => { stop(); stopSpeech = speak(item.key, { rate: 0.8, locale: ctx.locale() }); } }, '▶ 范读'), el('button', { type: 'button', onclick: () => { detail.hidden = false; } }, '看释义和例句')),
+        el('div', { class: 'controls' }, el('button', { type: 'button', onclick: () => { stop(); stopSpeech = sayWord(item.key); } }, '▶ 范读'), el('button', { type: 'button', onclick: () => { detail.hidden = false; } }, '看释义和例句')),
         detail, el('div', { class: 'controls' }, el('button', { type: 'button', class: 'primary', onclick: () => rate(true) }, '想起来了'), el('button', { type: 'button', onclick: () => rate(false) }, '还不熟')));
 }
 function setupBackup() {
@@ -484,6 +497,7 @@ function setupProbe() {
 
 export async function initReader(context) {
     ctx = context;
+    loadWordIndex(import.meta.url).then(index => { wordIndex = index; });
     ctx.hooks.beforeRecord = () => { stop(); probing?.abort(); active?.beforeRecord(); };
     ctx.hooks.onClip = clip => { learner.update(p => recordClip(p, { day: dayOf(), seconds: clip.seconds, workId: currentWork?.id ?? null })); active?.onClip(clip); };
     // Every scored recording feeds the word queue and the list of weak sounds (sound names are American English only).

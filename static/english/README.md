@@ -55,6 +55,13 @@
 - **译文是机器翻译，诗和古文的质量差**（Translator 逐句翻译，不看上下文）。`tools/english-library/gloss-overrides.json` 放修正：`units`（键是 `作品/段/单元`）整句替换译文，`words` 替换某个词的释义和词典。生成后我通读了全部 343 句，修正了其中 233 句明显错误或生硬的译文（例如把 bar 译成酒吧、把 a quarter to seven 译成七点四十五分）；仍可能有遗漏，发现错误就在这个文件里加一条再生成。
 - `gloss.mjs` 是纯函数加加载器，`checkGloss` 要求文本指纹、单元数和每个单元的词数都对得上，否则不显示中文；测试在 `tests/english-gloss.test.mjs`，其中一项会在作品文字改了而译文没重新生成时报错。
 
+## 单词发音
+
+- 点词（听模式的词弹窗）、档案页的生词本、复习卡片上的“范读”，都先播放 `words/<口音>/<词>.mp3`（`wordaudio.mjs`）；没有这个文件、列表没加载好、文件播放出错，就退回设备声音。点击里直接开始播放（手机要求）。
+- `tools/render-english-words.mjs` 为文库里每个不同的词（1,892 个，和词典的键同一套规则）生成一个短 mp3：美式用 Ava（`en-US-Ava:DragonHDLatestNeural`），英式用 Sonia（`en-GB-Sonia:DragonHDOmniLatestNeural`），24 kHz / 48 kbps，每个约 4–8 KB，两种口音共约 29 MB。`words/index.json` 列出每种口音有哪些词，页面按它决定播不播。可中断续跑（已有文件不重做），`--force` 重来，`--concurrency` 和 `--delay` 调速度；结束时列出时长异常的词（这次没有）。
+- 文库加了新作品、词表变了：重新运行这个工具；`tests/english-words.test.mjs` 会在有词没有发音文件时报错。
+- 没验证：听感，尤其是单个词的重音和 “a”“I” 这类很短的词；手机上点词立即出声。
+
 ## 目标口音（美式 / 英式）
 
 - 页面右上的“目标口音”（和练习区的“口音”是同一个设置，互相同步，并记在 `hive-english-prefs-v1`）决定四件事：范读和读词用哪种英语语音、实时亮词让浏览器按哪种口音听写、评分按哪种口音打分、历史里记的口音。切换后，已录好的录音要重录才能按新口音评分。
