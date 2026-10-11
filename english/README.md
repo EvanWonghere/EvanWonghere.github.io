@@ -45,6 +45,14 @@
    - SDK 只是这个工具的依赖，不在仓库里：`mkdir -p ~/.cache/hive-english/sdk && cd ~/.cache/hive-english/sdk && echo '{"private":true}' > package.json && npm install microsoft-cognitiveservices-speech-sdk@1.52.0`（`--sdk <文件夹>` 或环境变量 `HIVE_SPEECH_SDK` 可指向别处；`--rest` 退回普通 HTTPS，只有句时间）。SSML 里的引号不转义成 `&quot;`：Azure 对它报告的词位置是错的（-1）。
    - 这是新增几十 MB 的二进制文件，会进入仓库历史；动手前先决定生成几种口音和哪种码率。
 
+## 中文对照与逐词释义
+
+- 听模式和逐句跟读里的“中文对照”开关（记在 `hive-english-prefs-v1` 的 `zh`，默认关）：每段下面显示译文；点任意一个词，弹窗里先显示作品里手写的释义（有就只显示它），否则显示“本句译文里：…”和“词典：…”。逐行拆开时不显示译文。
+- 数据都是一次性生成的静态文件，页面运行时不调用任何翻译服务：`gloss/<作品>.json`（每个单元一条译文，加每个英文词在本句译文里用到的释义）、`gloss/dictionary.json`（每个不同的词的中文释义，最多三种词性、每种三个义项）、`gloss/index.json`（版本号）。用 `node tools/render-english-gloss.mjs` 生成（Azure Translator，密钥 `AZURE_TRANSLATOR_KEY`、`AZURE_TRANSLATOR_REGION`、`AZURE_TRANSLATOR_ENDPOINT` 放在和语音工具同一个私有文件里，不进仓库）。只重新生成文本变过的作品；`--force` 全部重来，`--dry-run` 看规模，`--check` 验证密钥。
+- “本句译文里”的做法：Translator 给出译文和中英文对齐；一个词的释义只有在“词典里的某个义项出现在译文里、并且就在这个词对齐的位置附近”时才显示，所以覆盖率只有三成左右，但显示的都有依据。人工修正过的句子没有对齐，只在义项至少两个字且出现在译文里时显示。
+- **译文是机器翻译，诗和古文的质量差**（Translator 逐句翻译，不看上下文）。`tools/english-library/gloss-overrides.json` 放修正：`units`（键是 `作品/段/单元`）整句替换译文，`words` 替换某个词的释义和词典。生成后我通读了全部 343 句，修正了其中 233 句明显错误或生硬的译文（例如把 bar 译成酒吧、把 a quarter to seven 译成七点四十五分）；仍可能有遗漏，发现错误就在这个文件里加一条再生成。
+- `gloss.mjs` 是纯函数加加载器，`checkGloss` 要求文本指纹、单元数和每个单元的词数都对得上，否则不显示中文；测试在 `tests/english-gloss.test.mjs`，其中一项会在作品文字改了而译文没重新生成时报错。
+
 ## 目标口音（美式 / 英式）
 
 - 页面右上的“目标口音”（和练习区的“口音”是同一个设置，互相同步，并记在 `hive-english-prefs-v1`）决定四件事：范读和读词用哪种英语语音、实时亮词让浏览器按哪种口音听写、评分按哪种口音打分、历史里记的口音。切换后，已录好的录音要重录才能按新口音评分。

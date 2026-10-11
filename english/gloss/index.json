@@ -1,0 +1,123 @@
+{
+ "version": 1,
+ "works": {
+  "aesop-hare-and-tortoise": {
+   "rev": "mv3enrc2"
+  },
+  "aurelius-meditations": {
+   "rev": "mv3enuxa"
+  },
+  "austen-pride-and-prejudice": {
+   "rev": "mv3enwfi"
+  },
+  "bacon-of-studies": {
+   "rev": "mv3enz4j"
+  },
+  "blake-the-tyger": {
+   "rev": "mv3eo0pl"
+  },
+  "carroll-alice": {
+   "rev": "mv3eo38m"
+  },
+  "dialogue-hotel": {
+   "rev": "mv3eo7zu"
+  },
+  "dialogue-interview": {
+   "rev": "mv3eod0e"
+  },
+  "dialogue-standup": {
+   "rev": "mv3eohpb"
+  },
+  "dickens-tale-of-two-cities": {
+   "rev": "mv3eoizi"
+  },
+  "dickinson-hope": {
+   "rev": "mv3eojtz"
+  },
+  "emerson-self-reliance": {
+   "rev": "mv3eom5r"
+  },
+  "franklin-thirteen-virtues": {
+   "rev": "mv3eop5t"
+  },
+  "frost-road-not-taken": {
+   "rev": "mv3eoqha"
+  },
+  "frost-stopping-by-woods": {
+   "rev": "mv3eork9"
+  },
+  "grahame-wind-in-the-willows": {
+   "rev": "mv3eothi"
+  },
+  "henley-invictus": {
+   "rev": "mv3eov6o"
+  },
+  "keats-letter-to-fanny": {
+   "rev": "mv3eowyw"
+  },
+  "keats-to-autumn": {
+   "rev": "mv3eozrz"
+  },
+  "kennedy-inaugural": {
+   "rev": "mv3ep2e4"
+  },
+  "kipling-if": {
+   "rev": "mv3ep4yx"
+  },
+  "lesson-daily": {
+   "rev": "mv3ep7hc"
+  },
+  "lesson-interview": {
+   "rev": "mv3epb5a"
+  },
+  "lesson-sounds": {
+   "rev": "mv3epds9"
+  },
+  "lesson-travel": {
+   "rev": "mv3eph74"
+  },
+  "lesson-work": {
+   "rev": "mv3epkl2"
+  },
+  "lincoln-bixby-letter": {
+   "rev": "mv3epmeh"
+  },
+  "lincoln-gettysburg-address": {
+   "rev": "mv3epppk"
+  },
+  "lincoln-second-inaugural": {
+   "rev": "mv3eprxf"
+  },
+  "melville-moby-dick": {
+   "rev": "mv3epues"
+  },
+  "roosevelt-first-inaugural": {
+   "rev": "mv3epw4y"
+  },
+  "roosevelt-man-in-the-arena": {
+   "rev": "mv3epxnj"
+  },
+  "rossetti-remember": {
+   "rev": "mv3epys8"
+  },
+  "shakespeare-sonnet-18": {
+   "rev": "mv3eq0g3"
+  },
+  "tennyson-crossing-the-bar": {
+   "rev": "mv3eq27a"
+  },
+  "thoreau-walden-deliberately": {
+   "rev": "mv3eq4ok"
+  },
+  "wordsworth-daffodils": {
+   "rev": "mv3eq61s"
+  },
+  "yeats-innisfree": {
+   "rev": "mv3eq77a"
+  }
+ },
+ "dictionary": {
+  "rev": "mv3enpxc",
+  "words": 1797
+ }
+}

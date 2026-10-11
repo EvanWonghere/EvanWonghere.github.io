@@ -12,6 +12,7 @@ import { tipFor } from './phoneme-tips.mjs';
 import { enhanceSelect, enhanceAudio, refreshControls } from './controls.mjs';
 import { loadTrack, playRange } from './voiceplayer.mjs';
 import { unitsOf, unitAt, wordAt, prettyVoice } from './voice.mjs';
+import { loadGloss, loadDictionary, unitZh, segmentZh, wordHelp, sensesLine } from './gloss.mjs';
 
 const $ = id => document.getElementById(id);
 const el = (tag, attrs = {}, ...kids) => {
@@ -49,6 +50,18 @@ const voiceAudio = (kind = 'main') => {
 };
 const SLOW_UP_TO = 0.75;   // the 慢速 speed (0.7) plays the slowly read track, when there is one, instead of stretching the normal one
 const variantOf = (track, rate) => track.slow && rate <= SLOW_UP_TO ? { kind: 'slow', track: track.slow, playbackRate: 1 } : { kind: 'main', track, playbackRate: rate / 0.9 };
+// The Chinese reading aids of the open work: { id, gloss, dictionary } once loaded. The page works without them.
+const aids = { id: null, gloss: null, dictionary: null };
+let refreshZh = () => {}, refreshFollowZh = () => {};
+function loadAids(work) {
+    if (aids.id === work.id) return;
+    aids.id = work.id; aids.gloss = null;
+    Promise.all([loadGloss(work, import.meta.url), loadDictionary(import.meta.url)]).then(([gloss, dictionary]) => {
+        if (aids.id !== work.id) return;   // another text was opened meanwhile
+        aids.gloss = gloss; aids.dictionary = dictionary; refreshZh(); refreshFollowZh();
+    });
+}
+const zhOn = () => ctx.pref('zh') === true;
 const tracks = new Map();   // `${work}|${accent}` → 'loading', a track (with .slow), or null when nothing was rendered or it failed
 const trackKey = work => `${work.id}|${ctx.locale()}`;
 // A track is usable only when its file is the one loaded in the audio element and the length is known: then play() can run
@@ -215,20 +228,33 @@ function renderListen(work) {
         });
     };
     const body = $('listen-text');
+    const zhLines = [];   // zhLines[s]: where the translation of segment s goes
     body.replaceChildren(...work.segments.map((segment, s) => {
         const spans = [];
         const paragraph = el('p', { class: 'seg-text', lang: 'en' });
         for (const token of tokenize(segment.text)) {
             if (!token.word) { paragraph.append(token.text); continue; }
             const span = el('span', { class: 'w', role: 'button', tabindex: '0' }, token.text);
-            const pick = () => word(work, token.text, span, refreshCarry);
+            const n = spans.length;
+            const pick = () => word(work, token.text, span, refreshCarry, { segment: s, unit: unitWords[s].findIndex(([a, b]) => n >= a && n <= b), index: n });
             span.onclick = pick; span.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } };
             span.dataset.key = wordKey(token.text);
             spans.push(span); paragraph.append(span);
         }
         words.push(spans);
-        return el('div', { class: 'seg' }, el('button', { type: 'button', class: 'seg-play', 'aria-label': `播放第 ${s + 1} 段`, onclick: () => play(s, false) }, '▶'), paragraph);
+        const zh = el('p', { class: 'zh', lang: 'zh-CN', hidden: '' }); zhLines.push(zh);
+        return el('div', { class: 'seg' }, el('button', { type: 'button', class: 'seg-play', 'aria-label': `播放第 ${s + 1} 段`, onclick: () => play(s, false) }, '▶'), el('div', { class: 'seg-body' }, paragraph, zh));
     }));
+    // The machine translation under each paragraph, when there is one and the switch is on.
+    const zhBox = $('zh-box'), zhToggle = $('zh-toggle');
+    refreshZh = () => {
+        const have = Boolean(aids.gloss) && aids.id === work.id;
+        zhBox.hidden = !have; zhToggle.checked = zhOn();
+        zhLines.forEach((line, s) => { line.textContent = have ? segmentZh(aids.gloss, s) : ''; line.hidden = !(have && zhOn()); });
+        refreshFollowZh();
+    };
+    zhToggle.onchange = () => { ctx.setPref('zh', zhToggle.checked); refreshZh(); };
+    loadAids(work); refreshZh();
     $('listen-speed').replaceChildren(...SPEEDS.map(([label, value]) => el('option', { value, ...(value === speed ? { selected: '' } : {}) }, label)));
     $('listen-speed').onchange = e => { speed = Number(e.target.value); };
     enhanceSelect($('listen-speed')); refreshControls();
@@ -240,9 +266,17 @@ function renderListen(work) {
     $('listen-all').disabled = unsupported;
     note.textContent = unsupported ? '这个浏览器不能朗读，只能阅读原文。' : '';
 }
-function word(work, text, span, refreshCarry) {
+// The number of the first word of a unit in its segment.
+const unitWords0 = (work, segment, unit) => unitsOf(work.segments[segment], work.kind).slice(0, unit).reduce((n, u) => n + tokenize(u.replace(/\s*\n\s*/g, ' ')).filter(t => t.word).length, 0);
+function word(work, text, span, refreshCarry, where) {
     const key = text.toLowerCase().replaceAll('’', "'");
-    const gloss = Object.hasOwn(work.glossary, key) ? '· ' + work.glossary[key] : '· 本篇没有收录释义';
+    const own = Object.hasOwn(work.glossary, key) ? work.glossary[key] : '';
+    // The hand-written note first; then what the machine translation of this sentence uses for the word, and the dictionary's senses.
+    const unitAt0 = where?.unit >= 0 ? unitWords0(work, where.segment, where.unit) : null;
+    const help = unitAt0 === null ? { here: '', senses: null } : wordHelp(aids.gloss, aids.dictionary, where.segment, where.unit, where.index - unitAt0, text);
+    // A hand-written note is the best one and stands alone; otherwise what this sentence's translation uses, then the dictionary.
+    const lines = own ? [`· ${own}`] : [help.here && `· 本句译文里：${help.here}`, help.senses && `· 词典：${sensesLine(help.senses)}`].filter(Boolean);
+    const gloss = lines.length ? lines.join('\n') : '· 本篇没有收录释义';
     const listable = /^[a-z][a-z'-]*$/.test(wordKey(text));
     const showPop = () => {
         const known = hasWord(learner.read(), text);
@@ -252,7 +286,7 @@ function word(work, text, span, refreshCarry) {
             if (!known && !hasWord(learner.read(), text)) { $('word-pop').textContent = `生词本已满（最多 ${WORD_LIMIT} 个），先移出一些词再加。`; return; }
             refreshCarry(); showPop();
         } }, known ? '移出生词本' : '＋ 生词本');
-        $('word-pop').replaceChildren(el('strong', { lang: 'en' }, text), ` ${gloss} `, ...(listable ? [toggle] : []));
+        $('word-pop').replaceChildren(el('strong', { lang: 'en' }, text), el('span', { class: 'gloss-lines' }, gloss), ...(listable ? [toggle] : []), ...(!own && (help.here || help.senses) ? [el('small', { class: 'hint' }, '中文来自机器翻译和词典，仅供参考。')] : []));
     };
     showPop();
     for (const other of document.querySelectorAll('#listen-text .w.picked')) other.classList.remove('picked');
@@ -271,6 +305,7 @@ function renderFollow(work) {
         at = next; stop();
         $('follow-count').textContent = `第 ${at + 1} / ${units.length} 句`;
         $('follow-text').textContent = units[at];
+        refreshFollowZh();
         $('follow-prev').disabled = at === 0; $('follow-next').disabled = at === units.length - 1;
         for (const [i, li] of [...$('follow-list').children].entries()) li.classList.toggle('on', i === at);
     };
@@ -286,6 +321,13 @@ function renderFollow(work) {
         stop();
         stopSpeech = say(work, { ...(refs?.[at] ?? {}), text: flatten(units[at]) }, rate, { onEnd: info => { $('follow-note').textContent = info.error === 'unsupported' ? '这个浏览器不能朗读。' : info.stopped ? '' : voiceNote(info); } });
     };
+    refreshFollowZh = () => {
+        const line = $('follow-zh'), ref = refs?.[at], text = aids.gloss && aids.id === work.id && ref ? unitZh(aids.gloss, ref.segment, ref.unit) : '';
+        $('follow-zh-box').hidden = !(aids.gloss && aids.id === work.id) || !refs; $('follow-zh-toggle').checked = zhOn();
+        line.textContent = text; line.hidden = !(text && zhOn());
+    };
+    $('follow-zh-toggle').onchange = () => { ctx.setPref('zh', $('follow-zh-toggle').checked); refreshFollowZh(); refreshZh(); };
+    loadAids(work);
     byLine.onchange = () => { if (ctx.isBusy()) { byLine.checked = !byLine.checked; return; } build(units[at]); };
     $('follow-prev').onclick = () => go(at - 1);
     $('follow-next').onclick = () => go(at + 1);
