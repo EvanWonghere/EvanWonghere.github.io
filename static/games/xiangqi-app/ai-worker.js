@@ -102,9 +102,8 @@ function startEngine() {
     return starting;
 }
 
-const { toEngineFen, fromEngineMove } = self.UciGlue;
-
 async function engineMove(fen, difficulty) {
+    const { toEngineFen, fromEngineMove } = self.UciGlue;
     const level = LEVELS[difficulty] ?? LEVELS.normal;
     const worker = await startEngine();
     return new Promise((resolve, reject) => {
@@ -122,14 +121,20 @@ async function engineMove(fen, difficulty) {
     });
 }
 
+const builtIn = (fen, difficulty) => {
+    const found = choose(fen, difficulty === 'master' ? 'hard' : difficulty);
+    return found ? { from: found.from, to: found.to } : null;
+};
+
 self.addEventListener('message', async (event) => {
     const { id, fen, difficulty } = event.data;
+    // Without cross-origin isolation the engine cannot run, so the built-in search answers at once.
+    if (!self.crossOriginIsolated || typeof Worker === 'undefined') { self.postMessage({ id, move: builtIn(fen, difficulty) }); return; }
     let move = null;
     try { move = await engineMove(fen, difficulty); }
     catch (error) {
         console.warn('Fairy-Stockfish unavailable, using the built-in search:', error.message);
-        const fallback = choose(fen, difficulty === 'master' ? 'hard' : difficulty);
-        move = fallback ? { from: fallback.from, to: fallback.to } : null;
+        move = builtIn(fen, difficulty);
     }
     self.postMessage({ id, move });
 });
