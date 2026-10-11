@@ -52,7 +52,7 @@
         <div id="reader-head"></div>
         <nav id="mode-tabs" class="mode-tabs" aria-label="读法"></nav>
         <div id="mode-listen">
-            <div class="controls"><button class="primary" id="listen-all">▶ 从头听</button><button id="listen-stop">■ 停止</button><label class="inline">速度 <select id="listen-speed" aria-label="朗读速度"></select></label><label id="listen-source-box" class="inline" hidden>声音 <select id="listen-source" aria-label="声音来源"><option value="auto">预生成（神经网络）</option><option value="device">设备自带</option></select></label></div>
+            <div class="controls"><button class="primary" id="listen-all">▶ 从头听</button><button id="listen-stop">■ 停止</button><label class="inline">速度 <select id="listen-speed" aria-label="朗读速度"></select></label><label id="zh-box" class="inline" hidden><input type="checkbox" id="zh-toggle"> 中文对照</label><label id="listen-source-box" class="inline" hidden>声音 <select id="listen-source" aria-label="声音来源"><option value="auto">预生成（神经网络）</option><option value="device">设备自带</option></select></label></div>
             <p id="listen-note" class="hint" role="status"></p>
             <div id="human" class="human" hidden><audio id="human-audio" controls preload="none"></audio><p id="human-credit" class="hint"></p></div>
             <div id="listen-text" class="listen-text"></div>
@@ -65,7 +65,8 @@
         <div id="mode-follow" hidden>
             <div class="follow-bar"><button id="follow-prev" aria-label="上一句">◀</button><strong id="follow-count"></strong><button id="follow-next" aria-label="下一句">▶</button></div>
             <p id="follow-text" class="follow-text" lang="en"></p>
-            <div class="controls"><button id="follow-listen">▶ 听范读</button><button id="follow-slow">▶ 慢速</button><button id="follow-stop">■ 停止</button><label id="follow-grain" class="inline" hidden><input type="checkbox" id="follow-by-line"> 逐行拆开</label></div>
+            <p id="follow-zh" class="zh follow-zh" lang="zh-CN" hidden></p>
+            <div class="controls"><button id="follow-listen">▶ 听范读</button><button id="follow-slow">▶ 慢速</button><button id="follow-stop">■ 停止</button><label id="follow-zh-box" class="inline" hidden><input type="checkbox" id="follow-zh-toggle"> 中文对照</label><label id="follow-grain" class="inline" hidden><input type="checkbox" id="follow-by-line"> 逐行拆开</label></div>
             <p id="follow-note" class="hint" role="status"></p>
             <details class="all-units"><summary>全部句子</summary><ol id="follow-list"></ol></details>
             <p class="hint">听完范读后，在下面的练习区录音、回听。评分仅向管理员开放。</p>

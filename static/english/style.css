@@ -168,4 +168,8 @@ details[open]>summary::before{transform:rotate(45deg)}
 .player input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--accent)}
 @media(max-width:480px){.player{gap:8px}.player .time{min-width:0;font-size:11px}}
 .notice{margin:12px 0;padding:10px 14px;background:#f8efdb;border:1px solid #ecdcb4;border-radius:var(--radius);color:#7a5316;font-size:14px}
+.seg-body{flex:1;min-width:0}
+.zh{font:15px/1.8 -apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;color:var(--muted);margin:2px 0 0}
+.follow-zh{margin:-4px 0 12px;padding:0 16px}
+.word-pop .gloss-lines{display:block;white-space:pre-line;margin:4px 0}
 @media(max-width:800px){.tabs a{padding:10px 12px}.tabs .accent{margin:0 0 8px;flex-basis:100%}.workspace{grid-template-columns:1fr}.paper{padding:22px}.intro{padding:26px 0}main,header,footer{padding:18px}.history li{align-items:start;flex-direction:column;gap:8px}label span{display:block}.scores{gap:6px}}
