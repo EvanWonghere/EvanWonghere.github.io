@@ -174,7 +174,7 @@ s\alpha c\beta c\gamma + c\alpha s\gamma & -s\alpha c\beta s\gamma + c\alpha c\g
 \end{bmatrix}
 \end{aligned}
 $$
-![](33.png)
+![由旋转矩阵求欧拉角的公式：β 不等于 0°、等于 0° 和等于 180° 三种情况下，分别用 Atan2 计算 α、β、γ](33.png)
 
 ### EX: Revisit Euler Angles-2 的范例
 

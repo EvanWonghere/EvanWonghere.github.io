@@ -90,13 +90,13 @@ libboost_python39-vc143-mt-x64-1_82.lib
 >   ```
 > 
 
-![](configuration.png)
+![在解决方案资源管理器中右键点击项目，弹出的菜单最下方的“属性”被选中](configuration.png)
 
-![](config1.png)
+![项目属性页的“常规”页：目标文件名设为 Hello_Boost，配置类型设为动态库（.dll），两项用红框标出](config1.png)
 
-![](config2.png)
+![项目属性页的“高级”页：目标文件扩展名设为 .pyd，用红框标出](config2.png)
 
-![](config3.png)
+![项目属性页的“VC++ 目录”页：包含目录和库目录里加入了 Boost 和 Anaconda 的路径，两项用红框标出](config3.png)
 
 # 测试
 
@@ -136,17 +136,17 @@ BOOST_PYTHON_MODULE(Hello_Boost) {
 
 ​		记得源代码要右键源代码然后添加啊不然就会像我一样以为没配置好环境一直再搞啊啊啊！！！
 
-![](sourceFile.png)
+![在“源文件”上右键，选择“添加”，再选择“新建项”](sourceFile.png)
 
 ## Python测试
 
 ​		如果你执行的是 ```release```，进入目录 ```file2project\\x64\\release\\```，否则进入 ```file2project\\x64\\debug\\```，你能看到一个文件 ```Hello_Boost.pyd```，这就是刚才的 C++ 源代码生成的 Python 模块。
 
-![](path2pyd.png)
+![文件资源管理器里的 x64\Release 文件夹，生成的 Hello_Boost 文件类型是 Python Extension](path2pyd.png)
 
 ​		我们 ```open in terminal```，进入 Python，检测 ```import``` 及函数调用是否正常
 
-![](testBoostPython.png)
+![在 PowerShell 里启动 Python，导入 Hello_Boost 并调用 hello_boost() 和 hello_world()，分别输出 Hello Boost::Python! 和 Hello World!](testBoostPython.png)
 
 如果到这一步都没有问题！那就应该没有问题了！写你的代码去吧！
 

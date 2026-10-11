@@ -11,11 +11,11 @@ categories: ["环境配置"]
 
 1. 下载 C# 拓展
 
-   ![](CSharpExtension.png)
+   ![VS Code 扩展商店里搜索 C# 的结果，列表第一项是微软官方的 C# Dev Kit](CSharpExtension.png)
 
 2. 下载[.NET7 SDK](https://dotnet.microsoft.com/zh-cn/download) 
 
-   ![](NET7SDK.png)
+   ![.NET 官方下载页面，列出 .NET 7.0 和 .NET 6.0 两个版本，各有一个 .NET SDK x64 下载按钮](NET7SDK.png)
 
 
 

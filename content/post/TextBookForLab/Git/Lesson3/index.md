@@ -19,17 +19,17 @@ series: ["实验室课程"]
 
 如果想查看你已经配置的远程仓库服务器，可以运行 `git remote` 命令。 它会列出你指定的每一个远程服务器的简写。 如果你已经克隆了自己的仓库，那么至少应该能看到 origin ——这是 Git 给你克隆的仓库服务器的默认名字：
 
-<img src="remoteOrigin.png" style="zoom:33%;" />
+<img src="remoteOrigin.png" alt="终端运行 git remote，输出 origin" style="zoom:33%;" />
 
 你也可以指定选项 `-v`，会显示需要读写远程仓库使用的 Git 保存的简写与其对应的 URL。如果你的远程仓库不止一个，该命令会将它们全部列出。
 
-<img src="remotev.png" style="zoom:33%;" />
+<img src="remotev.png" alt="终端运行 git remote -v，显示 origin 的抓取地址和推送地址" style="zoom:33%;" />
 
 ### Adding Remote Repositories
 
 我们在之前的章节中已经提到并展示了 `git clone` 命令是如何自行添加远程仓库的， 不过这里将告诉你如何自己来添加它。 运行 `git remote add <shortname> <url>` 添加一个新的远程 Git 仓库，同时指定一个方便使用的简写：
 
-<img src="remoteAdd.png" style="zoom:33%;" />
+<img src="remoteAdd.png" alt="终端依次运行 git remote、git remote add e 加上一个新地址、再运行 git remote 和 git remote -v，新加的远程仓库 e 出现在列表里" style="zoom:33%;" />
 
 现在你可以在命令行中使用字符串 `e` 来代替整个 URL。比如在下面的***抓取***和***拉取***操作中。
 
@@ -59,7 +59,7 @@ git push origin master
 
 如果想要查看某一个远程仓库的更多信息，可以使用 `git remote show <remote>` 命令。 如果想以一个特定的缩写名运行这个命令，例如 `origin`，会得到像下面类似的信息：
 
-<img src="remoteShow.png" style="zoom: 33%;" />
+<img src="remoteShow.png" alt="终端运行 git remote show 和 git remote show origin，后者列出抓取地址、推送地址、HEAD 分支和分支跟踪情况" style="zoom: 33%;" />
 
 这个命令列出了当你在特定的分支上执行 `git push` 会自动地推送到哪一个远程分支。 它也同样地列出了哪些远程分支不在你的本地，哪些远程分支已经从服务器上移除了， 还有当你执行 `git pull` 时哪些本地分支可以与它跟踪的远程分支自动合并。
 
@@ -67,11 +67,11 @@ git push origin master
 
 你可以运行 `git remote rename` 来修改一个远程仓库的简写名。 
 
-<img src="remoteRename.png" style="zoom: 40%;" />
+<img src="remoteRename.png" alt="终端运行 git remote rename e ee，再运行 git remote，e 已改名为 ee" style="zoom: 40%;" />
 
 如果因为一些原因想要移除一个远程仓库,可以使用 `git remote remove` 或 `git remote rm` ：
 
-<img src="remoteRemove.png" style="zoom:40%;" />
+<img src="remoteRemove.png" alt="终端运行 git remote remove ee，再运行 git remote，只剩下 origin" style="zoom:40%;" />
 
 一旦你使用这种方式删除了一个远程仓库，那么所有和这个远程仓库相关的远程跟踪分支以及配置信息也会一起被删除。
 
@@ -126,7 +126,7 @@ git branch modify-index
 git branch
 ```
 
-<img src="testBranch.png" style="zoom:33%;" />
+<img src="testBranch.png" alt="终端运行 git branch，列出 master（当前分支）和 modify-index 两个分支" style="zoom:33%;" />
 
 我们可以看到名为 "modify-index"的新分支，但 master 旁的 * 表明我们目前在该分支上。
 
@@ -136,15 +136,15 @@ checkout 是用来签出分支的命令。它将我们从当前分支转移到�
 git checkout modify-index
 ```
 
-<img src="switchBranch.png" style="zoom:35%;" />
+<img src="switchBranch.png" alt="终端运行 git checkout modify-index 切换分支，再运行 git branch，星号标在 modify-index 上" style="zoom:35%;" />
 
 除此之外，你还可以给`git checkout`指令加上`-b`选项，这样可以直接新建并跳转到新分支。
 
-<img src="checkoutb.png" style="zoom:33%;" />
+<img src="checkoutb.png" alt="终端运行 git checkout -b new-branch 创建并切换到新分支，再运行 git branch，列出 master、modify-index 和 new-branch" style="zoom:33%;" />
 
 回到之前的讨论，现在，我们将当前工作区从主分支移到了新分支。打开你喜欢的编辑器，做一些修改。
 
-<img src="modifiedBranch.png" style="zoom:33%;" />
+<img src="modifiedBranch.png" alt="用 vim 修改 index.md 之后运行 git status，提示 index.md 已修改但还没有暂存" style="zoom:33%;" />
 
 随后正常add, commit即可。
 
@@ -154,13 +154,13 @@ git checkout modify-index
 
 我们当前所在的分支是 modify-index。现在我们在该分支中添加了一个subindex.md，因此让我们列出当前目录下的文件：
 
-<img src="indexbranch.png" style="zoom: 33%;" />
+<img src="indexbranch.png" alt="在 modify-index 分支运行 ls，目录里有 index.md、mainpage.md 和 subindex.md" style="zoom: 33%;" />
 
 我们可以看到新文件 subindex.md，如果打开 index.md 文件，可以看到内容已被修改。这很正常。
 
 现在，让我们看看将分支更改为主分支后会发生什么情况：
 
-<img src="masterbranch.png" style="zoom: 33%;" />
+<img src="masterbranch.png" alt="切换回 master 分支后运行 ls，目录里只有 index.md 和 mainpage.md" style="zoom: 33%;" />
 
 subindex.md 已不复存在！如果我们打开 index.md 文件，可以看到代码恢复到修改前的状态。
 
@@ -172,33 +172,33 @@ subindex.md 已不复存在！如果我们打开 index.md 文件，可以看到�
 
 因此我们需要先切换到主分支，并且执行指令`git merge`：
 
-<img src="merge.png" style="zoom:33%;" />
+<img src="merge.png" alt="在 master 分支运行 git merge modify-index，快进合并：index.md 增加 3 行并新建 subindex.md，再运行 ls 三个文件都在" style="zoom:33%;" />
 
 由于 modifiy-index 分支直接来自于 master，而且在我们工作期间，master 也没有其他改动，因此 Git 将其视为 master 的延续。因此它可以 "快进"，只需将 master 和 modifiy-index 指向同一个提交即可。
 
 由于 master 和 modifiy-index 现在本质上是一样的，我们可以删除 modifiy-index，因为它不再需要了：
 
-<img src="branchDelete.png" style="zoom:40%;" />
+<img src="branchDelete.png" alt="终端运行 git branch -d modify-index，提示已删除该分支" style="zoom:40%;" />
 
 ### Merge Confict
 
 如果这时候我们又接到一个需求，要求修改 index.md 的某个内容，我们还是先按照之前的步骤，创建分支并修改内容：
 
-<img src="beforeConfict.png" style="zoom:33%;" />
+<img src="beforeConfict.png" alt="运行 git branch modify-index 新建分支，用 git checkout 切换过去，然后用 vim 编辑 index.md" style="zoom:33%;" />
 
 然后add并commit，准备合并分支。但是如果在我们在这个分支工作的期间，主分支发生了改动，拿着时候还能直接合并吗？
 
-<img src="confilct.png" style="zoom:33%;" />
+<img src="confilct.png" alt="在 master 分支运行 git merge new-branch，提示 index.md 出现合并冲突，自动合并失败" style="zoom:33%;" />
 
 （此处我合并modify-index分支早了，所以你会看到我在合并new-branch时冲突，但是意思是一样的）
 
 此时我们发现 index.md 合并时出现冲突，我们来检查一下文件的状态：
 
-<img src="checkstatus.png" style="zoom:33%;" />
+<img src="checkstatus.png" alt="合并冲突时运行 git status，提示有未合并的路径，index.md 在两个分支上都被修改" style="zoom:33%;" />
 
 可以看到`both modified:	index.md`，这证实了此文件确实存在冲突，于是我们打开编辑器开始修改：
 
-<img src="showconfict.png" style="zoom:33%;" />
+<img src="showconfict.png" alt="vim 里打开的冲突文件：HEAD 一侧的内容在 &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD 和 ======= 之间，new-branch 一侧的内容在 ======= 和 &gt;&gt;&gt;&gt;&gt;&gt;&gt; new-branch 之间" style="zoom:33%;" />
 
 我们可以看到不同版本之间的差异，并按照自己的意愿进行编辑。编辑好之后正常add和commit即可，也可以顺便把不用的分支给清除了。
 
@@ -235,7 +235,7 @@ SSH 使用一对密钥来启动远程各方之间的安全握手。密钥对包�
 ls -al ~/.ssh
 ```
 
-<img src="sshkey.png" style="zoom:33%;" />
+<img src="sshkey.png" alt="终端运行 ls -al ~/.ssh，列出 id_ed25519、id_ed25519.pub、id_rsa 和 id_rsa.pub 四个文件" style="zoom:33%;" />
 
 检查目录列表，看你是否已经有了 SSH 公钥。默认情况下，GitHub 支持的公钥文件名如下：
 
@@ -267,10 +267,10 @@ ssh-keygen -t ed25519 -C "your_email@example.com"
 
 - 将文件`~/.ssh/id_ed25519.pub`的内容复制到剪贴板
 - 在GitHub - Settings - Access - SSH and GPG keys页面，点击`New SSH Key`
-  <img src="sshgithub.png" style="zoom: 33%;" />
+  <img src="sshgithub.png" alt="GitHub 设置里的“SSH and GPG keys”页面，右上角的绿色“New SSH key”按钮被红圈和箭头标出" style="zoom: 33%;" />
 
 - `title`就是你给这个SSH key的名字，在key处粘贴文件`~/.ssh/id_ed25519.pub`的内容，再点击`Add SSH key`即可
-  <img src="addssh.png" style="zoom:33%;" />
+  <img src="addssh.png" alt="GitHub 的“Add new SSH Key”页面，有标题、密钥类型和密钥内容三个填写项，下方是“Add SSH key”按钮" style="zoom:33%;" />
 
 - 对于Windows用户，请打开Git Bash，对于Mac/Linux直接在CLI执行以下命令检测连接
 
@@ -278,11 +278,11 @@ ssh-keygen -t ed25519 -C "your_email@example.com"
   ssh -T git@github.com
   ```
 
-  <img src="sshtest.png" style="zoom: 33%;" />
+  <img src="sshtest.png" alt="终端运行 ssh -T git@github.com，提示已成功认证，GitHub 不提供 shell 访问" style="zoom: 33%;" />
 
 #### Clone a repository from GitHub
 
-<img src="clone.png" style="zoom:33%;" />
+<img src="clone.png" alt="GitHub 仓库页面，点开绿色“Code”按钮后的克隆面板，HTTPS 地址旁的复制按钮被箭头标出" style="zoom:33%;" />
 
 官方推荐的clone方式是通过HTTPS协议，因为比较方便，可以匿名读取。而SSH方式必须配置好SSH key才行。
 
@@ -296,11 +296,11 @@ ssh-keygen -t ed25519 -C "your_email@example.com"
 
 你可以通过点击项目页面右上角的“Fork”按钮，来fork这个项目。
 
-<img src="fork.png" style="zoom:33%;" />
+<img src="fork.png" alt="GitHub 仓库页面上方，“Fork”按钮被红圈和箭头标出，悬停提示是“Fork your own copy”" style="zoom:33%;" />
 
 稍等片刻，你将被转到新项目页面。
 
-<img src="newfork.png" style="zoom:33%;" />
+<img src="newfork.png" alt="GitHub 的“Create a new fork”页面，可以选择所有者、仓库名和描述，下方是“Create fork”按钮" style="zoom:33%;" />
 
 #### The GitHub Flow
 
