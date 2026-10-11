@@ -68,8 +68,64 @@ export function chooseChessMove(fen, difficulty) {
     return completed;
 }
 
-if (typeof self !== 'undefined') self.addEventListener('message', (event) => {
+// ---- Stockfish ----
+// The computer is Stockfish 19 (lite, single-threaded: it needs no special headers), run by a worker of its own and spoken to over UCI.
+// If it cannot start or does not answer in time, the move comes from the small search above, so the game never stalls.
+const ENGINE_URL = typeof self !== 'undefined' && self.location ? new URL('../vendor/stockfish/stockfish-19-lite-single.js', import.meta.url) : null;
+// Skill Level is Stockfish's own strength dial (0-20); movetime is how long it may think, in milliseconds.
+const LEVELS = { easy: { skill: 0, ms: 60 }, normal: { skill: 8, ms: 250 }, hard: { skill: 16, ms: 1000 }, master: { skill: 20, ms: 2000 } };
+let engine = null, starting = null;
+const listeners = new Set();
+
+function startEngine() {
+    starting ??= new Promise((resolve, reject) => {
+        const worker = new Worker(ENGINE_URL);
+        const timer = setTimeout(() => { worker.terminate(); reject(new Error('Stockfish did not start')); }, 15000);
+        worker.onerror = (event) => { clearTimeout(timer); reject(new Error(event.message || 'Stockfish failed')); };
+        worker.onmessage = (event) => {
+            const line = typeof event.data === 'string' ? event.data : '';
+            if (line === 'uciok') worker.postMessage('isready');
+            else if (line === 'readyok') { clearTimeout(timer); engine = worker; resolve(worker); }
+            for (const listener of listeners) listener(line);
+        };
+        worker.postMessage('uci');
+    });
+    starting.catch(() => { starting = null; });
+    return starting;
+}
+
+// "e2e4" or "e7e8q" → { from, to, promotion }; null when there is no move.
+export function parseBestMove(line) {
+    const match = /^bestmove\s+([a-h][1-8])([a-h][1-8])([qrbn])?/.exec(line);
+    return match ? { from: match[1], to: match[2], promotion: match[3] || undefined } : null;
+}
+
+async function stockfishMove(fen, difficulty) {
+    const level = LEVELS[difficulty] ?? LEVELS.normal;
+    const worker = await startEngine();
+    return new Promise((resolve, reject) => {
+        const timer = setTimeout(() => { listeners.delete(listener); reject(new Error('Stockfish did not answer')); }, level.ms + 6000);
+        const listener = (line) => {
+            if (!line.startsWith('bestmove')) return;
+            clearTimeout(timer); listeners.delete(listener);
+            resolve(parseBestMove(line));
+        };
+        listeners.add(listener);
+        worker.postMessage(`setoption name Skill Level value ${level.skill}`);
+        worker.postMessage('ucinewgame');
+        worker.postMessage(`position fen ${fen}`);
+        worker.postMessage(`go movetime ${level.ms}`);
+    });
+}
+
+if (typeof self !== 'undefined' && typeof self.addEventListener === 'function') self.addEventListener('message', async (event) => {
     const { id, fen, difficulty } = event.data;
-    const move = chooseChessMove(fen, difficulty);
-    self.postMessage({ id, move: move ? { from: move.from, to: move.to, promotion: move.promotion || 'q' } : null });
+    let move = null;
+    try { move = await stockfishMove(fen, difficulty); }
+    catch (error) {
+        console.warn('Stockfish unavailable, using the built-in search:', error.message);
+        const fallback = chooseChessMove(fen, difficulty === 'master' ? 'hard' : difficulty);
+        move = fallback ? { from: fallback.from, to: fallback.to, promotion: fallback.promotion || 'q' } : null;
+    }
+    self.postMessage({ id, move });
 });
