@@ -5,6 +5,7 @@ import { createLive, recognitionSupported, describeRecognitionError } from './li
 import { align, liveStates, wordsCorrectPerMinute } from './align.mjs';
 import { tokenize } from './library.mjs';
 import { createSpanPlayer, renderWordDetail } from './feedback.mjs';
+import { resampleMono, startPcmCapture } from './pcm.mjs';
 import { enhanceSelect, enhanceAudio, refreshControls } from './controls.mjs';
 const $ = id => document.getElementById(id);
 let client, admin = false, phase = 'idle', clip = null, recorder = null, stream = null, playbackURL = '', recordingStart = 0, tick, autoStop, canceledRecording = false, aborter;
@@ -137,58 +138,95 @@ function discard() {
     $('playback').pause(); $('playback').removeAttribute('src'); $('playback').load(); $('playback').hidden = true;
     if (playbackURL) URL.revokeObjectURL(playbackURL); playbackURL = ''; player.release(); controls();
 }
-function releaseMic() { stream?.getTracks().forEach(track => track.stop()); stream = null; clearInterval(tick); clearTimeout(autoStop); }
+function clearTimers() { clearInterval(tick); clearTimeout(autoStop); }
+function releaseMic() { stream?.getTracks().forEach(track => track.stop()); stream = null; clearTimers(); }
+let finishTake = null;   // ends the take that is being recorded: turns what was heard into the clip
 function stopRecording() {
     if (phase !== 'recording') return;
     phase = 'converting'; controls(); status('正在整理录音…');
     liveHeard = live ? live.stop() : null; live = null;   // resolves with every word the browser heard
-    if (recorder?.state !== 'inactive') recorder.stop(); releaseMic();
+    // The microphone stays open until the recorder has handed over its last piece (stopping it at once can cut the end off on Safari).
+    clearTimers();
+    if (recorder && recorder.state !== 'inactive') recorder.stop(); else finishTake?.();
+}
+// One AudioContext for the whole page. Making and closing one per take is what some Apple browsers do not like, and a context has to be
+// started (resume) inside the tap that begins the recording.
+let sharedContext = null;
+function audioContext() {
+    const Context = window.AudioContext || window.webkitAudioContext;
+    if (!Context) return null;
+    if (!sharedContext || sharedContext.state === 'closed') { try { sharedContext = new Context(); } catch { sharedContext = null; } }
+    return sharedContext;
+}
+// What was recorded as 16 kHz mono sound for scoring, from the samples taken directly: no decoding involved.
+function convertSamples({ samples, rate }) {
+    const seconds = samples.length / rate;
+    if (seconds < 0.3 || seconds > MAX_SECONDS + 1) throw new Error('录音太短或超过 25 秒，请重录。');
+    const mono = resampleMono(samples, rate, 16000);
+    return { file: new File([encodeWav(mono)], 'practice.wav', { type: 'audio/wav' }), seconds: mono.length / 16000 };
+}
+// The fallback: decode the file MediaRecorder made. Both the promise and the callback form are used, because older Safari only has the callback one.
+function decode(context, buffer) {
+    return new Promise((resolve, reject) => { const result = context.decodeAudioData(buffer, resolve, reject); if (result && typeof result.then === 'function') result.then(resolve, reject); });
 }
 async function convert(blob) {
-    const Context = window.AudioContext || window.webkitAudioContext;
-    const context = new Context();
+    const context = audioContext();
+    if (!context) throw new Error('当前浏览器不能处理录音。');
     try {
-        const decoded = await context.decodeAudioData(await blob.arrayBuffer());
+        const decoded = await decode(context, await blob.arrayBuffer());
         if (decoded.duration < 0.3 || decoded.duration > MAX_SECONDS + 1) throw new Error('录音太短或超过 25 秒，请重录。');
         const Offline = window.OfflineAudioContext || window.webkitOfflineAudioContext;
         const offline = new Offline(1, Math.ceil(decoded.duration * 16000), 16000);
         const source = offline.createBufferSource(); source.buffer = decoded; source.connect(offline.destination); source.start();
         const rendered = await offline.startRendering();
         return { file: new File([encodeWav(rendered.getChannelData(0))], 'practice.wav', { type: 'audio/wav' }), seconds: rendered.duration };
-    } finally { await context.close(); }
+    } catch (error) {
+        if (error.message?.startsWith('录音太短')) throw error;
+        throw new Error(`录音转换失败（${blob.type || '未知格式'}，${blob.size} 字节）：${error.message || error.name || '未知错误'}。请再录一次；如果一直这样，请换用 Chrome 或 Edge 并反馈这行字。`);
+    }
 }
 $('record').onclick = async () => {
     if (phase !== 'idle') return;
     try {
         const reference = validateReference($('reference').value), locale = $('locale').value;
-        if (!window.isSecureContext || !navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) throw new Error('当前浏览器不支持录音。请使用 HTTPS 下的 Chrome、Edge 或 Safari。');
+        if (!window.isSecureContext || !navigator.mediaDevices?.getUserMedia || !(window.MediaRecorder || window.AudioContext || window.webkitAudioContext)) throw new Error('当前浏览器不支持录音。请使用 HTTPS 下的 Chrome、Edge 或 Safari。');
         hooks.beforeRecord?.();
         discard();   // a new take replaces the old one from the moment record is pressed, even if the microphone is then refused
         phase = 'requesting'; controls(); status('请允许麦克风；录音暂不上传。');
         $('playback').pause();
+        const context = audioContext();
+        context?.resume?.().catch?.(() => {});   // inside the tap, as iOS wants
         stream = await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true }, video: false });
         if (!pageActive) { releaseMic(); phase = 'idle'; controls(); return; }
         if (document.hidden) { releaseMic(); throw new Error('请回到本页面再开始录音。'); }
         discard(); canceledRecording = false;
         const chunks = [];
-        recorder = new MediaRecorder(stream);
+        const capture = startPcmCapture(stream, context);   // the samples themselves; no decoding needed later
+        let finished = false;
+        recorder = window.MediaRecorder ? new MediaRecorder(stream) : { state: 'inactive', mimeType: '', start() { this.state = 'recording'; }, stop() { this.state = 'inactive'; Promise.resolve().then(() => this.onstop?.()); } };
         recorder.ondataavailable = event => { if (event.data.size) chunks.push(event.data); };
-        recorder.onerror = () => { canceledRecording = true; recorder.onstop = null; stopLive(); releaseMic(); phase = 'idle'; controls(); status('录音中断，请重试。', true); };
-        recorder.onstop = async () => {
+        recorder.onerror = () => {
+            if (capture) return;   // the samples are still being taken; the file is only the fallback
+            canceledRecording = true; recorder.onstop = null; stopLive(); releaseMic(); phase = 'idle'; controls(); status('录音中断，请重试。', true);
+        };
+        finishTake = async () => {
+            if (finished) return; finished = true; finishTake = null;
             releaseMic();
+            const captured = capture ? capture.stop() : null;
             if (live) { liveHeard = live.stop(); live = null; }   // the recorder ended on its own (for example the microphone was unplugged)
             if (canceledRecording) { phase = 'idle'; controls(); return; }
             try {
-                const blob = new Blob(chunks, { type: recorder.mimeType });
-                const converted = await convert(blob);
+                const taken = captured && captured.samples.length / captured.rate >= 0.3;
+                const converted = taken ? convertSamples(captured) : await convert(new Blob(chunks, { type: recorder.mimeType }));
                 const heard = liveHeard ? await liveHeard : null; liveHeard = null;
                 if (!pageActive) return;
                 clip = { ...converted, reference, locale, local: measureLocal(reference, heard, converted.seconds) };
-                playbackURL = URL.createObjectURL(blob); $('playback').src = playbackURL; $('playback').hidden = false;
+                playbackURL = URL.createObjectURL(converted.file); $('playback').src = playbackURL; $('playback').hidden = false;   // the 16 kHz sound that will be scored plays everywhere
                 status('录音完成。先回听，再点击“发送录音并评分”。'); hooks.onClip?.(clip);
             } catch (error) { status(error.message || '录音处理失败，请重录。', true); }
             finally { phase = 'idle'; controls(); }
         };
+        recorder.onstop = () => finishTake?.();
         recorder.start(); startLive(reference, locale); recordingStart = performance.now(); phase = 'recording'; controls(); status('正在录音…读完后点击“结束录音”。');
         const updateTimer = () => { const seconds = Math.min(MAX_SECONDS, Math.floor((performance.now() - recordingStart) / 1000)); $('timer').textContent = `00:${String(seconds).padStart(2, '0')} / 00:25`; };
         updateTimer(); tick = setInterval(updateTimer, 250); autoStop = setTimeout(stopRecording, MAX_SECONDS * 1000);

@@ -1,4 +1,4 @@
-importScripts('../vendor/xiangqi.js/xiangqi.min.js');
+importScripts('../vendor/xiangqi.js/xiangqi.min.js', 'uci-glue.js');
 
 const VALUE = { p: 100, a: 120, b: 120, n: 300, c: 350, r: 600, k: 100000 };
 
@@ -72,8 +72,69 @@ function choose(fen, difficulty) {
     return completed;
 }
 
-self.addEventListener('message', (event) => {
+// ---- Fairy-Stockfish ----
+// The computer is Fairy-Stockfish playing the xiangqi variant, run by fairy-host.js and spoken to over UCI. It needs a cross-origin
+// isolated page (SharedArrayBuffer); where there is none, or it fails or is too slow, the small search above answers instead.
+// Skill Level is the engine's own strength dial (0-20); movetime is how long it may think, in milliseconds.
+const LEVELS = { easy: { skill: 0, ms: 60 }, normal: { skill: 8, ms: 300 }, hard: { skill: 16, ms: 1200 }, master: { skill: 20, ms: 2500 } };
+let host = null, starting = null;
+const listeners = new Set();
+
+function startEngine() {
+    starting ??= new Promise((resolve, reject) => {
+        if (!self.crossOriginIsolated || typeof Worker === 'undefined') { reject(new Error('this page is not cross-origin isolated')); return; }
+        const worker = new Worker('fairy-host.js');
+        const timer = setTimeout(() => { worker.terminate(); reject(new Error('Fairy-Stockfish did not start')); }, 20000);
+        worker.onerror = (event) => { clearTimeout(timer); reject(new Error(event.message || 'Fairy-Stockfish failed')); };
+        worker.onmessage = (event) => {
+            const line = typeof event.data === 'string' ? event.data : '';
+            if (line === '__loaded') worker.postMessage('uci');
+            else if (line.startsWith('__failed')) { clearTimeout(timer); reject(new Error(line)); }
+            else if (line === 'uciok') {
+                worker.postMessage('setoption name UCI_Variant value xiangqi');
+                worker.postMessage('setoption name Use NNUE value false');   // no network file is shipped, so the hand-written evaluation is used
+                worker.postMessage('isready');
+            } else if (line === 'readyok') { clearTimeout(timer); host = worker; resolve(worker); }
+            for (const listener of listeners) listener(line);
+        };
+    });
+    starting.catch(() => { starting = null; });
+    return starting;
+}
+
+async function engineMove(fen, difficulty) {
+    const { toEngineFen, fromEngineMove } = self.UciGlue;
+    const level = LEVELS[difficulty] ?? LEVELS.normal;
+    const worker = await startEngine();
+    return new Promise((resolve, reject) => {
+        const timer = setTimeout(() => { listeners.delete(listener); reject(new Error('Fairy-Stockfish did not answer')); }, level.ms + 8000);
+        const listener = (line) => {
+            if (!line.startsWith('bestmove')) return;
+            clearTimeout(timer); listeners.delete(listener);
+            resolve(fromEngineMove(line));
+        };
+        listeners.add(listener);
+        worker.postMessage(`setoption name Skill Level value ${level.skill}`);
+        worker.postMessage('ucinewgame');
+        worker.postMessage(`position fen ${toEngineFen(fen)}`);
+        worker.postMessage(`go movetime ${level.ms}`);
+    });
+}
+
+const builtIn = (fen, difficulty) => {
+    const found = choose(fen, difficulty === 'master' ? 'hard' : difficulty);
+    return found ? { from: found.from, to: found.to } : null;
+};
+
+self.addEventListener('message', async (event) => {
     const { id, fen, difficulty } = event.data;
-    const move = choose(fen, difficulty);
-    self.postMessage({ id, move: move ? { from: move.from, to: move.to } : null });
+    // Without cross-origin isolation the engine cannot run, so the built-in search answers at once.
+    if (!self.crossOriginIsolated || typeof Worker === 'undefined') { self.postMessage({ id, move: builtIn(fen, difficulty) }); return; }
+    let move = null;
+    try { move = await engineMove(fen, difficulty); }
+    catch (error) {
+        console.warn('Fairy-Stockfish unavailable, using the built-in search:', error.message);
+        move = builtIn(fen, difficulty);
+    }
+    self.postMessage({ id, move });
 });

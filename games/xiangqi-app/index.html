@@ -187,11 +187,13 @@
         <option value="easy">休闲</option>
         <option value="normal" selected>标准</option>
         <option value="hard">挑战</option>
+        <option value="master">大师</option>
     </select></label>
     <button onclick="undo()">悔棋</button>
     <button onclick="redo()">重做</button>
     <button onclick="initGame()">重置</button>
 </div>
+<p class="engine-credit" style="margin:8px 12px 0;font:11px/1.5 system-ui,sans-serif;opacity:.6;text-align:center">电脑：<a href="https://github.com/fairy-stockfish/fairy-stockfish.wasm" target="_blank" rel="noopener" style="color:inherit">Fairy-Stockfish</a>（GPL-3.0）· <a href="/games/vendor/fairy-stockfish/NOTICE.md" target="_blank" rel="noopener" style="color:inherit">来源与许可证</a></p>
 
 <script>
     // --- 音效管理器 ---

@@ -79,7 +79,7 @@ $$</div><p>那么到此为止，我们实际上已经跑通了一个视图变换
 & \quad q = M b_i \\
 & \quad \text{drawline}(x_p, y_p, x_q, y_q)
 \end{aligned}
-$$</div><h2 id=projective-transformations><a href=#projective-transformations class=header-anchor></a>Projective Transformations</h2><p>接下来我们步入更为复杂的透视变换。我们的思路是将透视空间转换成正交空间，这样我们可以直接使用前面推导出来的后续矩阵了。我们都知道透视遵循着近大远小的原则，也就是同一物体离观察点越近时所成的像越大。在已知物体位置、视平面和视点的情况下，我们可以给出这样的关系图：</p><p><img src=/p/computer-graphics-viewing/perspective.png width=630 height=404 srcset="/p/computer-graphics-viewing/perspective_hu_3fa321241eda701.png 480w, /p/computer-graphics-viewing/perspective_hu_4c4f4e133cb6cfb.png 1024w" loading=lazy class=gallery-image data-flex-grow=155 data-flex-basis=374px></p><p>物体 \(y\) 与所成像 \(y_s\) 大小满足：</p><div class=math-display>$$
+$$</div><h2 id=projective-transformations><a href=#projective-transformations class=header-anchor></a>Projective Transformations</h2><p>接下来我们步入更为复杂的透视变换。我们的思路是将透视空间转换成正交空间，这样我们可以直接使用前面推导出来的后续矩阵了。我们都知道透视遵循着近大远小的原则，也就是同一物体离观察点越近时所成的像越大。在已知物体位置、视平面和视点的情况下，我们可以给出这样的关系图：</p><p><img src=/p/computer-graphics-viewing/perspective.png width=630 height=404 srcset="/p/computer-graphics-viewing/perspective_hu_3fa321241eda701.png 480w, /p/computer-graphics-viewing/perspective_hu_4c4f4e133cb6cfb.png 1024w" loading=lazy alt="透视投影示意图：眼睛位置 e、视线方向 g、与眼睛相距 d 的观察平面，以及相距 z、高度 y 的点在观察平面上的投影高度 y_s" class=gallery-image data-flex-grow=155 data-flex-basis=374px></p><p>物体 \(y\) 与所成像 \(y_s\) 大小满足：</p><div class=math-display>$$
 y_s = \frac{d}{z}y
 $$</div><p>也就是说，在 \(y\) 与 \(d\) 不变时，\(y_s\) 与深度 \(|z|\) 成反比（等价地，透视缩放因子与 \(|z|\) 也成反比）。</p><p>但是这也就导致了新的问题，<strong>所有的坐标变换，必须且只能用矩阵乘法来完成</strong>，而这是线性变换，也就是说我们只能得到这样的形式：</p><div class=math-display>$$
 x' = a \cdot x + b \cdot y + c \cdot z + d

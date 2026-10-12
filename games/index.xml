@@ -75,10 +75,10 @@
 &lt;li&gt;&lt;strong&gt;直接落底 (Hard Drop)&lt;/strong&gt;: 空格键 Space&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;暂存方块 (Hold)&lt;/strong&gt;: C 键&lt;/li&gt;
 &lt;/ul&gt;</description></item><item><title>国际象棋</title><link>https://yufenghuang.tech/games/chess/</link><pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/chess/</guid><description>&lt;h4 id="游戏说明"&gt;&lt;a href="#%e6%b8%b8%e6%88%8f%e8%af%b4%e6%98%8e" class="header-anchor"&gt;&lt;/a&gt;游戏说明
-&lt;/h4&gt;&lt;p&gt;可选择&lt;strong&gt;本地双人&lt;/strong&gt;或无需联网的&lt;strong&gt;电脑对战&lt;/strong&gt;。电脑使用局面估值、走法排序和 Alpha–Beta 搜索，不需要部署模型。&lt;/p&gt;
+&lt;/h4&gt;&lt;p&gt;可选择&lt;strong&gt;本地双人&lt;/strong&gt;或无需联网的&lt;strong&gt;电脑对战&lt;/strong&gt;。电脑是开源的国际象棋引擎 &lt;strong&gt;Stockfish 19&lt;/strong&gt;（WebAssembly 版，在你的浏览器里运行，不联网、不需要服务器）；如果引擎没能启动，会自动改用内置的小型搜索。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;白方先行&lt;/strong&gt;。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;电脑强度&lt;/strong&gt;：休闲、标准、挑战三级；提高等级会增加搜索深度和思考时间。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;电脑强度&lt;/strong&gt;：休闲、标准、挑战、大师四级，对应引擎自带的强度档位和思考时间；大师档最强，每步最多想 2 秒。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;操作&lt;/strong&gt;：点击棋子选择，点击高亮位置移动。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;特殊规则支持&lt;/strong&gt;：
 &lt;ul&gt;
@@ -122,13 +122,13 @@
 &lt;/h4&gt;&lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;黑棋先手&lt;/strong&gt;，双方轮流落子。&lt;/li&gt;
 &lt;li&gt;最先在横、竖、斜任一方向连成 &lt;strong&gt;5&lt;/strong&gt; 个同色棋子者获胜。&lt;/li&gt;
-&lt;li&gt;提供 &lt;strong&gt;休闲、标准、挑战&lt;/strong&gt; 三级电脑策略：从带随机性的局部判断，到威胁优先和迭代加深 Alpha–Beta 搜索。&lt;/li&gt;
+&lt;li&gt;提供 &lt;strong&gt;休闲、标准、挑战、大师&lt;/strong&gt; 四级电脑：休闲档只做带随机性的局部判断；其余各档会先找“能直接赢”和“必须防守”的点，再搜索连续冲四的必胜路线，最后用带置换表的迭代加深 Alpha–Beta 搜索，档位越高想得越深、越久。电脑在你的浏览器里运行，不联网。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;em&gt;小提示：点击“悔棋”可以回退两步（你的一步和 AI 的一步）。&lt;/em&gt;&lt;/p&gt;</description></item><item><title>中国象棋</title><link>https://yufenghuang.tech/games/xiangqi/</link><pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/xiangqi/</guid><description>&lt;h4 id="游戏说明"&gt;&lt;a href="#%e6%b8%b8%e6%88%8f%e8%af%b4%e6%98%8e" class="header-anchor"&gt;&lt;/a&gt;游戏说明
-&lt;/h4&gt;&lt;p&gt;可选择&lt;strong&gt;本地双人&lt;/strong&gt;或无需联网的&lt;strong&gt;电脑对战&lt;/strong&gt;。电脑使用子力估值、走法排序和 Alpha–Beta 搜索，不需要部署模型。&lt;/p&gt;
+&lt;/h4&gt;&lt;p&gt;可选择&lt;strong&gt;本地双人&lt;/strong&gt;或无需联网的&lt;strong&gt;电脑对战&lt;/strong&gt;。电脑是开源引擎 &lt;strong&gt;Fairy-Stockfish&lt;/strong&gt;（WebAssembly 版，在你的浏览器里运行，不联网）。它需要多线程支持，所以第一次打开本页会自动刷新一次；如果浏览器不支持（例如 Safari），会自动改用内置的小型搜索。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;红方先手&lt;/strong&gt;：游戏开始默认红方先行。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;规则完备&lt;/strong&gt;：内置了马撇脚、象飞田、老将照面等经典规则检测。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;电脑强度&lt;/strong&gt;：休闲、标准、挑战三级；挑战模式会进行更深的局面搜索。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;电脑强度&lt;/strong&gt;：休闲、标准、挑战、大师四级，对应引擎自带的强度档位和思考时间。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;悔棋功能&lt;/strong&gt;：电脑对战会回退完整的一轮，双人对弈则回退一步。&lt;/li&gt;
 &lt;/ul&gt;</description></item></channel></rss>

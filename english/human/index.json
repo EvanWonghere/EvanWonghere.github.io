@@ -1,0 +1,70 @@
+{
+ "version": 1,
+ "works": {
+  "blake-the-tyger": {
+   "rev": "mv3fii4j",
+   "found": 136,
+   "total": 141
+  },
+  "dickinson-hope": {
+   "rev": "mv3filuc",
+   "found": 67,
+   "total": 69
+  },
+  "frost-road-not-taken": {
+   "rev": "mv3fir3p",
+   "found": 140,
+   "total": 144
+  },
+  "frost-stopping-by-woods": {
+   "rev": "mv3fivw3",
+   "found": 106,
+   "total": 108
+  },
+  "henley-invictus": {
+   "rev": "mv3fj3lq",
+   "found": 101,
+   "total": 103
+  },
+  "keats-to-autumn": {
+   "rev": "mv3fj7tl",
+   "found": 244,
+   "total": 256
+  },
+  "kipling-if": {
+   "rev": "mv3fjcd7",
+   "found": 287,
+   "total": 288
+  },
+  "lincoln-gettysburg-address": {
+   "rev": "mv3fjgwm",
+   "found": 269,
+   "total": 271
+  },
+  "rossetti-remember": {
+   "rev": "mv3fjkh2",
+   "found": 109,
+   "total": 111
+  },
+  "shakespeare-sonnet-18": {
+   "rev": "mv3fjp0s",
+   "found": 109,
+   "total": 114
+  },
+  "tennyson-crossing-the-bar": {
+   "rev": "mv3fju7d",
+   "found": 95,
+   "total": 102
+  },
+  "wordsworth-daffodils": {
+   "rev": "mv3fjy77",
+   "found": 151,
+   "total": 153
+  },
+  "yeats-innisfree": {
+   "rev": "mv3fk2qn",
+   "found": 117,
+   "total": 121
+  }
+ }
+}

@@ -137,6 +137,7 @@ width="630"
 height="404"
 srcset="https://yufenghuang.tech/p/computer-graphics-viewing/perspective_hu_3fa321241eda701.png 480w, https://yufenghuang.tech/p/computer-graphics-viewing/perspective_hu_4c4f4e133cb6cfb.png 1024w"
 loading="lazy"
+alt="透视投影示意图：眼睛位置 e、视线方向 g、与眼睛相距 d 的观察平面，以及相距 z、高度 y 的点在观察平面上的投影高度 y_s"
 class="gallery-image"
 data-flex-grow="155"
 data-flex-basis="374px"
@@ -826,12 +827,12 @@ $$
 &lt;h2 id="working-with-remotes"&gt;&lt;a href="#working-with-remotes" class="header-anchor"&gt;&lt;/a&gt;Working with remotes
 &lt;/h2&gt;&lt;h3 id="showing-your-remotes"&gt;&lt;a href="#showing-your-remotes" class="header-anchor"&gt;&lt;/a&gt;Showing your remotes
 &lt;/h3&gt;&lt;p&gt;如果想查看你已经配置的远程仓库服务器，可以运行 &lt;code&gt;git remote&lt;/code&gt; 命令。 它会列出你指定的每一个远程服务器的简写。 如果你已经克隆了自己的仓库，那么至少应该能看到 origin ——这是 Git 给你克隆的仓库服务器的默认名字：&lt;/p&gt;
-&lt;img src="remoteOrigin.png" style="zoom:33%;" /&gt;
+&lt;img src="remoteOrigin.png" alt="终端运行 git remote，输出 origin" style="zoom:33%;" /&gt;
 &lt;p&gt;你也可以指定选项 &lt;code&gt;-v&lt;/code&gt;，会显示需要读写远程仓库使用的 Git 保存的简写与其对应的 URL。如果你的远程仓库不止一个，该命令会将它们全部列出。&lt;/p&gt;
-&lt;img src="remotev.png" style="zoom:33%;" /&gt;
+&lt;img src="remotev.png" alt="终端运行 git remote -v，显示 origin 的抓取地址和推送地址" style="zoom:33%;" /&gt;
 &lt;h3 id="adding-remote-repositories"&gt;&lt;a href="#adding-remote-repositories" class="header-anchor"&gt;&lt;/a&gt;Adding Remote Repositories
 &lt;/h3&gt;&lt;p&gt;我们在之前的章节中已经提到并展示了 &lt;code&gt;git clone&lt;/code&gt; 命令是如何自行添加远程仓库的， 不过这里将告诉你如何自己来添加它。 运行 &lt;code&gt;git remote add &amp;lt;shortname&amp;gt; &amp;lt;url&amp;gt;&lt;/code&gt; 添加一个新的远程 Git 仓库，同时指定一个方便使用的简写：&lt;/p&gt;
-&lt;img src="remoteAdd.png" style="zoom:33%;" /&gt;
+&lt;img src="remoteAdd.png" alt="终端依次运行 git remote、git remote add e 加上一个新地址、再运行 git remote 和 git remote -v，新加的远程仓库 e 出现在列表里" style="zoom:33%;" /&gt;
 &lt;p&gt;现在你可以在命令行中使用字符串 &lt;code&gt;e&lt;/code&gt; 来代替整个 URL。比如在下面的&lt;em&gt;&lt;strong&gt;抓取&lt;/strong&gt;&lt;/em&gt;和&lt;em&gt;&lt;strong&gt;拉取&lt;/strong&gt;&lt;/em&gt;操作中。&lt;/p&gt;
 &lt;h3 id="fetching-and-pulling-from-your-remotes"&gt;&lt;a href="#fetching-and-pulling-from-your-remotes" class="header-anchor"&gt;&lt;/a&gt;Fetching and Pulling from Your Remotes
 &lt;/h3&gt;&lt;p&gt;从远程仓库中获得数据，可以执行：&lt;/p&gt;
@@ -858,13 +859,13 @@ $$
 &lt;p&gt;只有当你有所克隆服务器的写入权限，并且之前没有人推送过时，这条命令才能生效。 当你和其他人在同一时间克隆，他们先推送到上游然后你再推送到上游，你的推送就会毫无疑问地被拒绝。 你必须先抓取他们的工作并将其合并进你的工作后才能推送。所以最好养成一个习惯：&lt;em&gt;在push之前总是先pull&lt;/em&gt;。&lt;/p&gt;
 &lt;h3 id="inspecting-a-remote"&gt;&lt;a href="#inspecting-a-remote" class="header-anchor"&gt;&lt;/a&gt;Inspecting a Remote
 &lt;/h3&gt;&lt;p&gt;如果想要查看某一个远程仓库的更多信息，可以使用 &lt;code&gt;git remote show &amp;lt;remote&amp;gt;&lt;/code&gt; 命令。 如果想以一个特定的缩写名运行这个命令，例如 &lt;code&gt;origin&lt;/code&gt;，会得到像下面类似的信息：&lt;/p&gt;
-&lt;img src="remoteShow.png" style="zoom: 33%;" /&gt;
+&lt;img src="remoteShow.png" alt="终端运行 git remote show 和 git remote show origin，后者列出抓取地址、推送地址、HEAD 分支和分支跟踪情况" style="zoom: 33%;" /&gt;
 &lt;p&gt;这个命令列出了当你在特定的分支上执行 &lt;code&gt;git push&lt;/code&gt; 会自动地推送到哪一个远程分支。 它也同样地列出了哪些远程分支不在你的本地，哪些远程分支已经从服务器上移除了， 还有当你执行 &lt;code&gt;git pull&lt;/code&gt; 时哪些本地分支可以与它跟踪的远程分支自动合并。&lt;/p&gt;
 &lt;h3 id="renaming-and-removing-remotes"&gt;&lt;a href="#renaming-and-removing-remotes" class="header-anchor"&gt;&lt;/a&gt;Renaming and Removing Remotes
 &lt;/h3&gt;&lt;p&gt;你可以运行 &lt;code&gt;git remote rename&lt;/code&gt; 来修改一个远程仓库的简写名。&lt;/p&gt;
-&lt;img src="remoteRename.png" style="zoom: 40%;" /&gt;
+&lt;img src="remoteRename.png" alt="终端运行 git remote rename e ee，再运行 git remote，e 已改名为 ee" style="zoom: 40%;" /&gt;
 &lt;p&gt;如果因为一些原因想要移除一个远程仓库,可以使用 &lt;code&gt;git remote remove&lt;/code&gt; 或 &lt;code&gt;git remote rm&lt;/code&gt; ：&lt;/p&gt;
-&lt;img src="remoteRemove.png" style="zoom:40%;" /&gt;
+&lt;img src="remoteRemove.png" alt="终端运行 git remote remove ee，再运行 git remote，只剩下 origin" style="zoom:40%;" /&gt;
 &lt;p&gt;一旦你使用这种方式删除了一个远程仓库，那么所有和这个远程仓库相关的远程跟踪分支以及配置信息也会一起被删除。&lt;/p&gt;
 &lt;h2 id="git-branch"&gt;&lt;a href="#git-branch" class="header-anchor"&gt;&lt;/a&gt;Git Branch
 &lt;/h2&gt;&lt;p&gt;分支（branch）是Git中很重要的一个东西，详细展开来讲的话也很麻烦，因此在此只需了解概念及其简单使用。&lt;/p&gt;
@@ -914,7 +915,7 @@ $$
 &lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git branch&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;/div&gt;
-&lt;img src="testBranch.png" style="zoom:33%;" /&gt;
+&lt;img src="testBranch.png" alt="终端运行 git branch，列出 master（当前分支）和 modify-index 两个分支" style="zoom:33%;" /&gt;
 &lt;p&gt;我们可以看到名为 &amp;ldquo;modify-index&amp;quot;的新分支，但 master 旁的 * 表明我们目前在该分支上。&lt;/p&gt;
 &lt;p&gt;checkout 是用来签出分支的命令。它将我们从当前分支转移到命令末尾指定的分支：&lt;/p&gt;
 &lt;div class="code-block" data-lang="bash"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
@@ -925,38 +926,38 @@ $$
 &lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git checkout modify-index&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;/div&gt;
-&lt;img src="switchBranch.png" style="zoom:35%;" /&gt;
+&lt;img src="switchBranch.png" alt="终端运行 git checkout modify-index 切换分支，再运行 git branch，星号标在 modify-index 上" style="zoom:35%;" /&gt;
 &lt;p&gt;除此之外，你还可以给&lt;code&gt;git checkout&lt;/code&gt;指令加上&lt;code&gt;-b&lt;/code&gt;选项，这样可以直接新建并跳转到新分支。&lt;/p&gt;
-&lt;img src="checkoutb.png" style="zoom:33%;" /&gt;
+&lt;img src="checkoutb.png" alt="终端运行 git checkout -b new-branch 创建并切换到新分支，再运行 git branch，列出 master、modify-index 和 new-branch" style="zoom:33%;" /&gt;
 &lt;p&gt;回到之前的讨论，现在，我们将当前工作区从主分支移到了新分支。打开你喜欢的编辑器，做一些修改。&lt;/p&gt;
-&lt;img src="modifiedBranch.png" style="zoom:33%;" /&gt;
+&lt;img src="modifiedBranch.png" alt="用 vim 修改 index.md 之后运行 git status，提示 index.md 已修改但还没有暂存" style="zoom:33%;" /&gt;
 &lt;p&gt;随后正常add, commit即可。&lt;/p&gt;
 &lt;h3 id="switching-between-branches"&gt;&lt;a href="#switching-between-branches" class="header-anchor"&gt;&lt;/a&gt;Switching Between Branches
 &lt;/h3&gt;&lt;p&gt;现在，让我们来看看使用不同的分支是多么快捷方便，效果又有多好。&lt;/p&gt;
 &lt;p&gt;我们当前所在的分支是 modify-index。现在我们在该分支中添加了一个subindex.md，因此让我们列出当前目录下的文件：&lt;/p&gt;
-&lt;img src="indexbranch.png" style="zoom: 33%;" /&gt;
+&lt;img src="indexbranch.png" alt="在 modify-index 分支运行 ls，目录里有 index.md、mainpage.md 和 subindex.md" style="zoom: 33%;" /&gt;
 &lt;p&gt;我们可以看到新文件 subindex.md，如果打开 index.md 文件，可以看到内容已被修改。这很正常。&lt;/p&gt;
 &lt;p&gt;现在，让我们看看将分支更改为主分支后会发生什么情况：&lt;/p&gt;
-&lt;img src="masterbranch.png" style="zoom: 33%;" /&gt;
+&lt;img src="masterbranch.png" alt="切换回 master 分支后运行 ls，目录里只有 index.md 和 mainpage.md" style="zoom: 33%;" /&gt;
 &lt;p&gt;subindex.md 已不复存在！如果我们打开 index.md 文件，可以看到代码恢复到修改前的状态。&lt;/p&gt;
 &lt;p&gt;现在看到使用分支是多么容易了吧？你可以在完全在不影响主分支的情况下进行更新功能测试、紧急错误调试及修复等等。&lt;/p&gt;
 &lt;h3 id="merge-branches"&gt;&lt;a href="#merge-branches" class="header-anchor"&gt;&lt;/a&gt;Merge Branches
 &lt;/h3&gt;&lt;p&gt;假设现在我们更新并测试完毕了新功能，因此现在我们需要合并&lt;code&gt;modifiy-index&lt;/code&gt;分支和&lt;code&gt;master&lt;/code&gt;分支，让更新应用到主分支。&lt;/p&gt;
 &lt;p&gt;因此我们需要先切换到主分支，并且执行指令&lt;code&gt;git merge&lt;/code&gt;：&lt;/p&gt;
-&lt;img src="merge.png" style="zoom:33%;" /&gt;
+&lt;img src="merge.png" alt="在 master 分支运行 git merge modify-index，快进合并：index.md 增加 3 行并新建 subindex.md，再运行 ls 三个文件都在" style="zoom:33%;" /&gt;
 &lt;p&gt;由于 modifiy-index 分支直接来自于 master，而且在我们工作期间，master 也没有其他改动，因此 Git 将其视为 master 的延续。因此它可以 &amp;ldquo;快进&amp;rdquo;，只需将 master 和 modifiy-index 指向同一个提交即可。&lt;/p&gt;
 &lt;p&gt;由于 master 和 modifiy-index 现在本质上是一样的，我们可以删除 modifiy-index，因为它不再需要了：&lt;/p&gt;
-&lt;img src="branchDelete.png" style="zoom:40%;" /&gt;
+&lt;img src="branchDelete.png" alt="终端运行 git branch -d modify-index，提示已删除该分支" style="zoom:40%;" /&gt;
 &lt;h3 id="merge-confict"&gt;&lt;a href="#merge-confict" class="header-anchor"&gt;&lt;/a&gt;Merge Confict
 &lt;/h3&gt;&lt;p&gt;如果这时候我们又接到一个需求，要求修改 index.md 的某个内容，我们还是先按照之前的步骤，创建分支并修改内容：&lt;/p&gt;
-&lt;img src="beforeConfict.png" style="zoom:33%;" /&gt;
+&lt;img src="beforeConfict.png" alt="运行 git branch modify-index 新建分支，用 git checkout 切换过去，然后用 vim 编辑 index.md" style="zoom:33%;" /&gt;
 &lt;p&gt;然后add并commit，准备合并分支。但是如果在我们在这个分支工作的期间，主分支发生了改动，拿着时候还能直接合并吗？&lt;/p&gt;
-&lt;img src="confilct.png" style="zoom:33%;" /&gt;
+&lt;img src="confilct.png" alt="在 master 分支运行 git merge new-branch，提示 index.md 出现合并冲突，自动合并失败" style="zoom:33%;" /&gt;
 &lt;p&gt;（此处我合并modify-index分支早了，所以你会看到我在合并new-branch时冲突，但是意思是一样的）&lt;/p&gt;
 &lt;p&gt;此时我们发现 index.md 合并时出现冲突，我们来检查一下文件的状态：&lt;/p&gt;
-&lt;img src="checkstatus.png" style="zoom:33%;" /&gt;
+&lt;img src="checkstatus.png" alt="合并冲突时运行 git status，提示有未合并的路径，index.md 在两个分支上都被修改" style="zoom:33%;" /&gt;
 &lt;p&gt;可以看到&lt;code&gt;both modified: index.md&lt;/code&gt;，这证实了此文件确实存在冲突，于是我们打开编辑器开始修改：&lt;/p&gt;
-&lt;img src="showconfict.png" style="zoom:33%;" /&gt;
+&lt;img src="showconfict.png" alt="vim 里打开的冲突文件：HEAD 一侧的内容在 &amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt; HEAD 和 ======= 之间，new-branch 一侧的内容在 ======= 和 &amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt; new-branch 之间" style="zoom:33%;" /&gt;
 &lt;p&gt;我们可以看到不同版本之间的差异，并按照自己的意愿进行编辑。编辑好之后正常add和commit即可，也可以顺便把不用的分支给清除了。&lt;/p&gt;
 &lt;h2 id="developer-platform-with-git"&gt;&lt;a href="#developer-platform-with-git" class="header-anchor"&gt;&lt;/a&gt;Developer Platform with Git
 &lt;/h2&gt;&lt;p&gt;GitHub 是最大的 Git 版本库托管商，是成千上万的开发者和项目能够合作进行的中心。 大部分 Git 版本库都托管在 GitHub，很多开源项目使用 GitHub 实现 Git 托管、问题追踪、代码审查以及其它事情。 所以，尽管这不是 Git 开源项目的直接部分，但如果想要专业地使用 Git，你将不可避免地与 GitHub 打交道，所以这依然是一个绝好的学习机会。&lt;/p&gt;
@@ -985,7 +986,7 @@ $$
 &lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ls -al ~/.ssh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;/div&gt;
-&lt;img src="sshkey.png" style="zoom:33%;" /&gt;
+&lt;img src="sshkey.png" alt="终端运行 ls -al ~/.ssh，列出 id_ed25519、id_ed25519.pub、id_rsa 和 id_rsa.pub 四个文件" style="zoom:33%;" /&gt;
 &lt;p&gt;检查目录列表，看你是否已经有了 SSH 公钥。默认情况下，GitHub 支持的公钥文件名如下：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;em&gt;id_rsa.pub&lt;/em&gt;&lt;/li&gt;
@@ -1023,11 +1024,11 @@ $$
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;在GitHub - Settings - Access - SSH and GPG keys页面，点击&lt;code&gt;New SSH Key&lt;/code&gt;
-&lt;img src="sshgithub.png" style="zoom: 33%;" /&gt;&lt;/p&gt;
+&lt;img src="sshgithub.png" alt="GitHub 设置里的“SSH and GPG keys”页面，右上角的绿色“New SSH key”按钮被红圈和箭头标出" style="zoom: 33%;" /&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;code&gt;title&lt;/code&gt;就是你给这个SSH key的名字，在key处粘贴文件&lt;code&gt;~/.ssh/id_ed25519.pub&lt;/code&gt;的内容，再点击&lt;code&gt;Add SSH key&lt;/code&gt;即可
-&lt;img src="addssh.png" style="zoom:33%;" /&gt;&lt;/p&gt;
+&lt;img src="addssh.png" alt="GitHub 的“Add new SSH Key”页面，有标题、密钥类型和密钥内容三个填写项，下方是“Add SSH key”按钮" style="zoom:33%;" /&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;对于Windows用户，请打开Git Bash，对于Mac/Linux直接在CLI执行以下命令检测连接&lt;/p&gt;
@@ -1039,20 +1040,20 @@ $$
 &lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ssh -T git@github.com&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;/div&gt;
-&lt;img src="sshtest.png" style="zoom: 33%;" /&gt;
+&lt;img src="sshtest.png" alt="终端运行 ssh -T git@github.com，提示已成功认证，GitHub 不提供 shell 访问" style="zoom: 33%;" /&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id="clone-a-repository-from-github"&gt;&lt;a href="#clone-a-repository-from-github" class="header-anchor"&gt;&lt;/a&gt;Clone a repository from GitHub
-&lt;/h4&gt;&lt;img src="clone.png" style="zoom:33%;" /&gt;
+&lt;/h4&gt;&lt;img src="clone.png" alt="GitHub 仓库页面，点开绿色“Code”按钮后的克隆面板，HTTPS 地址旁的复制按钮被箭头标出" style="zoom:33%;" /&gt;
 &lt;p&gt;官方推荐的clone方式是通过HTTPS协议，因为比较方便，可以匿名读取。而SSH方式必须配置好SSH key才行。&lt;/p&gt;
 &lt;h3 id="contributing-to-a-project"&gt;&lt;a href="#contributing-to-a-project" class="header-anchor"&gt;&lt;/a&gt;Contributing to a Project
 &lt;/h3&gt;&lt;h4 id="forking-projects"&gt;&lt;a href="#forking-projects" class="header-anchor"&gt;&lt;/a&gt;Forking Projects
 &lt;/h4&gt;&lt;p&gt;如果你想要参与某个项目，但是并没有推送权限，这时可以对这个项目进行&lt;em&gt;fork&lt;/em&gt;。 当你&lt;em&gt;fork&lt;/em&gt;一个项目时，GitHub 会在你的空间中创建一个完全属于你的项目副本，且你对其具有推送权限。&lt;/p&gt;
 &lt;p&gt;通过这种方式，项目的管理者不再需要忙着把用户添加到贡献者列表并给予他们推送权限。 人们可以fork这个项目，将修改推送到fork出的项目副本中，并通过创建拉取请求（&lt;em&gt;&lt;strong&gt;Pull Request，简称 PR&lt;/strong&gt;&lt;/em&gt;）来让他们的改动进入源版本库，下文我们会详细说明。 创建了拉取请求后，就会开启一个可供审查代码的板块，项目的拥有者和贡献者可以在此讨论相关修改，直到项目拥有者对其感到满意，并且认为这些修改可以被合并到版本库。&lt;/p&gt;
 &lt;p&gt;你可以通过点击项目页面右上角的“Fork”按钮，来fork这个项目。&lt;/p&gt;
-&lt;img src="fork.png" style="zoom:33%;" /&gt;
+&lt;img src="fork.png" alt="GitHub 仓库页面上方，“Fork”按钮被红圈和箭头标出，悬停提示是“Fork your own copy”" style="zoom:33%;" /&gt;
 &lt;p&gt;稍等片刻，你将被转到新项目页面。&lt;/p&gt;
-&lt;img src="newfork.png" style="zoom:33%;" /&gt;
+&lt;img src="newfork.png" alt="GitHub 的“Create a new fork”页面，可以选择所有者、仓库名和描述，下方是“Create fork”按钮" style="zoom:33%;" /&gt;
 &lt;h4 id="the-github-flow"&gt;&lt;a href="#the-github-flow" class="header-anchor"&gt;&lt;/a&gt;The GitHub Flow
 &lt;/h4&gt;&lt;p&gt;GitHub 设计了一个以拉取请求为中心的特殊合作流程。 不管你是在一个紧密的团队中使用单独的版本库，或者使用许多的“Fork”来为一个由陌生人组成的国际企业或网络做出贡献，这种合作流程都能应付。&lt;/p&gt;
 &lt;p&gt;流程通常如下：&lt;/p&gt;
@@ -5849,6 +5850,7 @@ width="648"
 height="217"
 srcset="https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/33_hu_532f59b6144a7635.png 480w, https://yufenghuang.tech/p/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02fixed-angleseuler-angles/33_hu_1877e06a9e83a252.png 1024w"
 loading="lazy"
+alt="由旋转矩阵求欧拉角的公式：β 不等于 0°、等于 0° 和等于 180° 三种情况下，分别用 Atan2 计算 α、β、γ"
 class="gallery-image"
 data-flex-grow="298"
 data-flex-basis="716px"
@@ -5895,6 +5897,7 @@ width="2560"
 height="1440"
 srcset="https://yufenghuang.tech/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/CSharpExtension_hu_f5d9453939386187.png 480w, https://yufenghuang.tech/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/CSharpExtension_hu_8faba085da66fa1.png 1024w"
 loading="lazy"
+alt="VS Code 扩展商店里搜索 C# 的结果，列表第一项是微软官方的 C# Dev Kit"
 class="gallery-image"
 data-flex-grow="177"
 data-flex-basis="426px"
@@ -5908,6 +5911,7 @@ width="2560"
 height="1440"
 srcset="https://yufenghuang.tech/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/NET7SDK_hu_50caab52db5c4bf9.png 480w, https://yufenghuang.tech/p/%E5%88%A9%E7%94%A8vscode%E9%85%8D%E7%BD%AEcsharp%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/NET7SDK_hu_d826c54640c51c1.png 1024w"
 loading="lazy"
+alt=".NET 官方下载页面，列出 .NET 7.0 和 .NET 6.0 两个版本，各有一个 .NET SDK x64 下载按钮"
 class="gallery-image"
 data-flex-grow="177"
 data-flex-basis="426px"
@@ -6164,6 +6168,7 @@ width="533"
 height="1178"
 srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/configuration_hu_2f6630077ec94efa.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/configuration_hu_1a082ac8256ecfa7.png 1024w"
 loading="lazy"
+alt="在解决方案资源管理器中右键点击项目，弹出的菜单最下方的“属性”被选中"
 class="gallery-image"
 data-flex-grow="45"
 data-flex-basis="108px"
@@ -6173,6 +6178,7 @@ width="1182"
 height="819"
 srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config1_hu_468cf3a2dc164925.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config1_hu_6c764293c62a9d60.png 1024w"
 loading="lazy"
+alt="项目属性页的“常规”页：目标文件名设为 Hello_Boost，配置类型设为动态库（.dll），两项用红框标出"
 class="gallery-image"
 data-flex-grow="144"
 data-flex-basis="346px"
@@ -6182,6 +6188,7 @@ width="1182"
 height="819"
 srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config2_hu_a01a74e8279ef226.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config2_hu_bd236c6d9bc7bf88.png 1024w"
 loading="lazy"
+alt="项目属性页的“高级”页：目标文件扩展名设为 .pyd，用红框标出"
 class="gallery-image"
 data-flex-grow="144"
 data-flex-basis="346px"
@@ -6191,6 +6198,7 @@ width="1182"
 height="819"
 srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config3_hu_1397d2f3bef7ba28.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/config3_hu_b4eef74121a67df9.png 1024w"
 loading="lazy"
+alt="项目属性页的“VC&amp;#43;&amp;#43; 目录”页：包含目录和库目录里加入了 Boost 和 Anaconda 的路径，两项用红框标出"
 class="gallery-image"
 data-flex-grow="144"
 data-flex-basis="346px"
@@ -6261,6 +6269,7 @@ width="1029"
 height="413"
 srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/sourceFile_hu_d41899bd2fd35e88.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/sourceFile_hu_4beb152f62a2f984.png 1024w"
 loading="lazy"
+alt="在“源文件”上右键，选择“添加”，再选择“新建项”"
 class="gallery-image"
 data-flex-grow="249"
 data-flex-basis="597px"
@@ -6272,6 +6281,7 @@ width="1029"
 height="667"
 srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/path2pyd_hu_ec567941f4bf9d1e.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/path2pyd_hu_6dd61bf1291fb95b.png 1024w"
 loading="lazy"
+alt="文件资源管理器里的 x64\Release 文件夹，生成的 Hello_Boost 文件类型是 Python Extension"
 class="gallery-image"
 data-flex-grow="154"
 data-flex-basis="370px"
@@ -6282,6 +6292,7 @@ width="1734"
 height="957"
 srcset="https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/testBoostPython_hu_daceaec2ac6fab53.png 480w, https://yufenghuang.tech/p/%E4%BD%BF%E7%94%A8-visual-studio-%E9%83%A8%E7%BD%B2-boostpython/testBoostPython_hu_b5cb6250574d8854.png 1024w"
 loading="lazy"
+alt="在 PowerShell 里启动 Python，导入 Hello_Boost 并调用 hello_boost() 和 hello_world()，分别输出 Hello Boost::Python! 和 Hello World!"
 class="gallery-image"
 data-flex-grow="181"
 data-flex-basis="434px"
