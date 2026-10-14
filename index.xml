@@ -177,6 +177,21 @@ alt="每月提交数：2026 年 7 月之前每月只有个位数到几十个提�
 &lt;h3 id="收尾交接以及把错误变成规则"&gt;&lt;a href="#%e6%94%b6%e5%b0%be%e4%ba%a4%e6%8e%a5%e4%bb%a5%e5%8f%8a%e6%8a%8a%e9%94%99%e8%af%af%e5%8f%98%e6%88%90%e8%a7%84%e5%88%99" class="header-anchor"&gt;&lt;/a&gt;收尾：交接，以及把错误变成规则
 &lt;/h3&gt;&lt;p&gt;会话结束时工作还没做完，就写一份交接文档：现在是什么状态、做了什么、&lt;strong&gt;为什么这样决定&lt;/strong&gt;、下一步做什么、踩过哪些坑、现场留下了什么。下一个会话从这份文档开始，不需要上一段对话的上下文。&lt;/p&gt;
 &lt;p&gt;同一个错误犯了两次，就做一次复盘。复盘找的是错误的形状，而不是这一次的细节；然后给它找一个最强的落点：能用钩子或测试强制的，就强制；只属于这个项目的，写进踩坑记录；只有那些会静默失败、又经常遇到的，才在规则文件里留一句话。&lt;/p&gt;
+&lt;h2 id="这些做法背后从怎么问到让它看到什么"&gt;&lt;a href="#%e8%bf%99%e4%ba%9b%e5%81%9a%e6%b3%95%e8%83%8c%e5%90%8e%e4%bb%8e%e6%80%8e%e4%b9%88%e9%97%ae%e5%88%b0%e8%ae%a9%e5%ae%83%e7%9c%8b%e5%88%b0%e4%bb%80%e4%b9%88" class="header-anchor"&gt;&lt;/a&gt;这些做法背后：从「怎么问」到「让它看到什么」
+&lt;/h2&gt;&lt;p&gt;整理工作流的时候我才意识到，上面这些做法并不是我独创的，它们正好落在这两年 AI 工具使用方式的一次转变上。&lt;/p&gt;
+&lt;p&gt;最早大家谈的是&lt;strong&gt;提示工程&lt;/strong&gt;：一句话怎么写，模型才答得好。2025 年年中，「&lt;strong&gt;上下文工程&lt;/strong&gt;」这个说法流行起来，关注点从「这一句怎么写」变成了「模型每一步看到的全部东西应该是什么」：系统指令、工具、检索到的资料、对话历史。Anthropic 在&lt;a class="link" href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener"
+&gt;一篇工程文章&lt;/a&gt;里把上下文比作一份会被每个新 token 消耗的注意力预算：上下文越满，模型的回忆越差，所以要用最少的、信号最强的信息换来想要的行为。&lt;/p&gt;
+&lt;p&gt;回头对照，我的不少做法都是在管理这份预算：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;规则文件只留一句话和判据，细节放进按需查阅的笔记；&lt;/li&gt;
+&lt;li&gt;一次只做一件事，纠正两次还不对就开新会话；&lt;/li&gt;
+&lt;li&gt;交接文档和方案文档，是写在上下文之外的笔记；&lt;/li&gt;
+&lt;li&gt;搜索和审查交给子代理，它们在干净的上下文里干活，只把结论交回来。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;到了今年，讨论又往外推了一层，叫 &lt;strong&gt;harness 工程&lt;/strong&gt;：包在 agent 外面的那一整套东西。一半是&lt;strong&gt;事前的引导&lt;/strong&gt;，比如规则文件、skill、架构约定；另一半是&lt;strong&gt;事后的检查&lt;/strong&gt;，比如测试、钩子、审查。只有引导，就从来没有人验证过；只有检查，它会一遍遍犯同样的错。HeirCut 前期的状态正是前一种：规则越写越长，检查全靠记得。&lt;/p&gt;
+&lt;p&gt;还有一件让我印象很深的事。最近有一份 Anthropic 2021 年的内部研究路线图，因为版权诉讼被公开了（&lt;a class="link" href="https://www.lesswrong.com/posts/em5wnA7gpQSvfsuxQ/some-interesting-internal-documents-from-anthropic" target="_blank" rel="noopener"
+&gt;有人整理了内容&lt;/a&gt;，我读的是这份整理，不是原件）。那时它给自己定的第一个概念验证，就是一个能「创建、编辑、解释软件」的助手，最终像一位软件工程师同事。方法是长记忆、超长上下文，以及用自动化的奖励和人类反馈做强化学习，还要让模型学会用工具。五年后，这几条基本都成了我每天在用的东西。&lt;/p&gt;
+&lt;p&gt;它选编程做第一个目标，有一个重要原因：代码&lt;strong&gt;可以自动验证&lt;/strong&gt;。这和我在这个项目里学到的是同一件事：验证不只是保证质量的手段，也是能放心把事情交给 AI 的前提。&lt;/p&gt;
 &lt;h2 id="它会犯什么样的错"&gt;&lt;a href="#%e5%ae%83%e4%bc%9a%e7%8a%af%e4%bb%80%e4%b9%88%e6%a0%b7%e7%9a%84%e9%94%99" class="header-anchor"&gt;&lt;/a&gt;它会犯什么样的错
 &lt;/h2&gt;&lt;p&gt;和 AI 一起工作，产出的速度上去了，出错的速度也上去了。项目的文档里记了不少它犯过的错，回头看，最典型的有这几种：&lt;/p&gt;
 &lt;ul&gt;
