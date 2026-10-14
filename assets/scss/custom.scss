@@ -1472,3 +1472,225 @@ html {
         transform: none !important;
     }
 }
+
+/* ---------- 首页自我介绍下方的入口按钮 ---------- */
+// DOM 来自 layouts/index.html（params.homeIntro.links）
+.home-intro__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0 0 18px;
+}
+
+.home-intro__link {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-size: 1.45rem;
+    font-weight: 600;
+    background-color: var(--card-background);
+    color: var(--card-text-color-main);
+    box-shadow: var(--shadow-l1);
+    transition: transform var(--dur-base) var(--ease-out-soft),
+        box-shadow var(--dur-base) var(--ease-out-soft);
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-hover);
+    }
+
+    &--primary {
+        background-color: var(--accent-color);
+        color: var(--accent-color-text);
+    }
+}
+
+/* ---------- 作品集与简历（content/page/portfolio、content/page/resume） ---------- */
+.pf-hero {
+    margin: 0 0 2.4rem;
+
+    &__meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 18px;
+        font-size: 1.4rem;
+        color: var(--card-text-color-tertiary);
+        margin: 0.4rem 0 1.2rem;
+    }
+
+    &__pitch {
+        font-size: 1.75rem;
+        line-height: 1.7;
+        color: var(--card-text-color-main);
+        margin: 0 0 1.4rem;
+    }
+}
+
+.pf-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 1.6rem;
+
+    a {
+        display: inline-flex;
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 1.35rem;
+        font-weight: 600;
+        background-color: var(--card-background-selected);
+        color: var(--card-text-color-main);
+        text-decoration: none !important;
+        border: none !important;
+    }
+
+    a.pf-links__primary {
+        background-color: var(--accent-color);
+        color: var(--accent-color-text);
+    }
+}
+
+// 左边一张竖版动图跨两行，右边两张横版截图上下排；窄屏改成单列。
+.pf-media {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.6fr);
+    gap: 14px;
+    margin: 1.6rem 0 2.4rem;
+
+    figure {
+        // 主题给文章里的 figure 加了负外边距铺满卡片，放进网格会溢出
+        margin: 0 !important;
+        width: auto !important;
+
+        &:first-child {
+            grid-row: span 2;
+        }
+
+        img {
+            width: 100%;
+            border-radius: 10px;
+            display: block;
+        }
+
+        figcaption {
+            font-size: 1.25rem;
+            color: var(--card-text-color-tertiary);
+            margin-top: 6px;
+            text-align: left;
+        }
+    }
+}
+
+@media (max-width: 640px) {
+    .pf-media {
+        grid-template-columns: minmax(0, 1fr);
+
+        figure:first-child {
+            grid-row: auto;
+        }
+    }
+}
+
+.pf-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 12px;
+    margin: 1.2rem 0 2.4rem;
+}
+
+.pf-card {
+    display: block;
+    padding: 16px 18px;
+    border-radius: 12px;
+    background-color: var(--card-background-selected);
+    color: var(--card-text-color-secondary) !important;
+    text-decoration: none !important;
+    border: none !important;
+    transition: transform var(--dur-base) var(--ease-out-soft);
+
+    &:hover {
+        transform: translateY(-2px);
+    }
+
+    strong {
+        display: block;
+        font-size: 1.6rem;
+        color: var(--card-text-color-main);
+        margin-bottom: 6px;
+    }
+
+    span {
+        display: block;
+        font-size: 1.4rem;
+        line-height: 1.65;
+    }
+
+    em {
+        display: block;
+        font-style: normal;
+        font-size: 1.25rem;
+        color: var(--accent-color);
+        margin-top: 8px;
+    }
+}
+
+.pf-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0.8rem 0 2rem;
+    padding: 0;
+    list-style: none;
+
+    li {
+        margin: 0;
+        padding: 4px 12px;
+        border-radius: 8px;
+        font-size: 1.3rem;
+        background-color: var(--card-background-selected);
+        color: var(--card-text-color-secondary);
+    }
+}
+
+// 简历：每段经历的标题行（左：名称，中：角色，右：时间）
+.cv-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 4px 16px;
+    margin: 1.6rem 0 0.4rem;
+
+    strong {
+        font-size: 1.65rem;
+        color: var(--card-text-color-main);
+    }
+
+    span {
+        font-size: 1.4rem;
+        color: var(--card-text-color-tertiary);
+    }
+}
+
+@media print {
+    .left-sidebar,
+    .right-sidebar,
+    .article-footer,
+    .site-footer,
+    .comments,
+    #comments,
+    .related-content,
+    .series-nav {
+        display: none !important;
+    }
+
+    .main-container {
+        display: block !important;
+    }
+
+    .pf-links,
+    .home-intro__links {
+        display: none !important;
+    }
+}

@@ -66,6 +66,15 @@ subtitle = "EvanWong的个人博客"
     icon = "home"
 
   [[languages.zh-cn.menu.main]]
+  identifier = "portfolio"
+  name = "作品集"
+  url = "/portfolio/"
+  weight = -95
+
+    [languages.zh-cn.menu.main.params]
+    icon = "briefcase"
+
+  [[languages.zh-cn.menu.main]]
   identifier = "archives"
   name = "归档"
   url = "/archives/"
@@ -145,7 +154,17 @@ sync = true
 [params.homeIntro]
 greeting = "你好 👋"
 title = "我是 EvanWong"
-description = "这里记录我在**计算机图形学**、**游戏设计**与开发路上的学习笔记，也放着一些自己做的小游戏。"
+description = "游戏客户端程序，Unity 方向。我是《宫廷理发师》的唯一程序，这里有它的**开发手记**，也有我在**计算机图形学**、**游戏设计**路上的学习笔记，和一些自己做的小游戏。"
+
+  # 自我介绍区块下方的入口按钮；primary = true 的用强调色。
+  [[params.homeIntro.links]]
+  name = "看作品集"
+  url = "/portfolio/"
+  primary = true
+
+  [[params.homeIntro.links]]
+  name = "简历"
+  url = "/resume/"
 
   [params.author] # This defines author as an object
   name = "Evan Wong"

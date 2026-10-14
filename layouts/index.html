@@ -4,7 +4,7 @@
     与主题原文件的唯一差异：在文章流之前加一个自我介绍区块。
     此前首页直接就是文章列表，新访客不知道这个站是谁写的、写什么。
 
-    文案走 hugo.toml 的 [params.homeIntro]，改字不必碰模板。
+    文案走 hugo.toml 的 [params.homeIntro]，改字不必碰模板；links 是自我介绍下方的入口按钮（作品集、简历）。
     未配置 params.homeIntro 时整块不渲染，行为与主题原版一致。
 
     只在第一页显示：翻到第二页还挂着自我介绍会很奇怪。
@@ -21,6 +21,14 @@
                 {{ with .greeting }}<p class="home-intro__greeting">{{ . }}</p>{{ end }}
                 {{ with .title }}<h1 class="home-intro__title">{{ . }}</h1>{{ end }}
                 {{ with .description }}<p class="home-intro__desc">{{ . | markdownify }}</p>{{ end }}
+
+                {{ with .links }}
+                    <div class="home-intro__links">
+                        {{ range . }}
+                            <a class="home-intro__link{{ if .primary }} home-intro__link--primary{{ end }}" href="{{ .url | relURL }}">{{ .name }}</a>
+                        {{ end }}
+                    </div>
+                {{ end }}
 
                 <div class="home-intro__stats">
                     <a href="/archives/">
