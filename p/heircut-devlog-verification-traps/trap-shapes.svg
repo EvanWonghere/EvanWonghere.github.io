@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 400" width="820" height="400" font-family="'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif" role="img" aria-label="验证陷阱的八种形状">
+<title>验证陷阱的八种形状</title>
+<rect x="0.5" y="0.5" width="819" height="399" rx="12" fill="#fcfcfb" stroke="#e6e5e0"/>
+<text x="24.0" y="32.0" font-size="17" fill="#0b0b0b" text-anchor="start" font-weight="600" >检查是对的，只是它在看别的东西</text>
+<rect x="24" y="56" width="182" height="132" rx="10" fill="#ffffff" stroke="#e6e5e0"/>
+<text x="38.0" y="82.0" font-size="12" fill="#8a897f" text-anchor="start" font-weight="normal" >01</text>
+<text x="38.0" y="108.0" font-size="15" fill="#0b0b0b" text-anchor="start" font-weight="600" >同一样东西比了两遍</text>
+<text x="38.0" y="136.0" font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal" >压缩没生效，</text>
+<text x="38.0" y="155.0" font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal" >比的是同一张图</text>
+<rect x="220" y="56" width="182" height="132" rx="10" fill="#ffffff" stroke="#e6e5e0"/>
+<text x="234.0" y="82.0" font-size="12" fill="#8a897f" text-anchor="start" font-weight="normal" >02</text>
+<text x="234.0" y="108.0" font-size="15" fill="#0b0b0b" text-anchor="start" font-weight="600" >验的是旧版本</text>
+<text x="234.0" y="136.0" font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal" >运行时读的是</text>
+<text x="234.0" y="155.0" font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal" >烘进去的旧默认值</text>
+<rect x="416" y="56" width="182" height="132" rx="10" fill="#ffffff" stroke="#e6e5e0"/>
+<text x="430.0" y="82.0" font-size="12" fill="#8a897f" text-anchor="start" font-weight="normal" >03</text>
+<text x="430.0" y="108.0" font-size="15" fill="#0b0b0b" text-anchor="start" font-weight="600" >根本没跑</text>
+<text x="430.0" y="136.0" font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal" >过滤条件漏掉新测试，</text>
+<text x="430.0" y="155.0" font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal" >总数看起来照常</text>
+<rect x="612" y="56" width="182" height="132" rx="10" fill="#ffffff" stroke="#e6e5e0"/>
+<text x="626.0" y="82.0" font-size="12" fill="#8a897f" text-anchor="start" font-weight="normal" >04</text>
+<text x="626.0" y="108.0" font-size="15" fill="#0b0b0b" text-anchor="start" font-weight="600" >中途换了被测对象</text>
+<text x="626.0" y="136.0" font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal" >测试在回归中途</text>
+<text x="626.0" y="155.0" font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal" >重建了数据库</text>
+<rect x="24" y="204" width="182" height="132" rx="10" fill="#ffffff" stroke="#e6e5e0"/>
+<text x="38.0" y="230.0" font-size="12" fill="#8a897f" text-anchor="start" font-weight="normal" >05</text>
+<text x="38.0" y="256.0" font-size="15" fill="#0b0b0b" text-anchor="start" font-weight="600" >断言比意图弱</text>
+<text x="38.0" y="284.0" font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal" >「是个物体」</text>
+<text x="38.0" y="303.0" font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal" >被一片胡子满足</text>
+<rect x="220" y="204" width="182" height="132" rx="10" fill="#ffffff" stroke="#e6e5e0"/>
+<text x="234.0" y="230.0" font-size="12" fill="#8a897f" text-anchor="start" font-weight="normal" >06</text>
+<text x="234.0" y="256.0" font-size="15" fill="#0b0b0b" text-anchor="start" font-weight="600" >量错了东西</text>
+<text x="234.0" y="284.0" font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal" >排版前量到</text>
+<text x="234.0" y="303.0" font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal" >10 × 20 的词框</text>
+<rect x="416" y="204" width="182" height="132" rx="10" fill="#ffffff" stroke="#e6e5e0"/>
+<text x="430.0" y="230.0" font-size="12" fill="#8a897f" text-anchor="start" font-weight="normal" >07</text>
+<text x="430.0" y="256.0" font-size="15" fill="#0b0b0b" text-anchor="start" font-weight="600" >绿，是因为没人测</text>
+<text x="430.0" y="284.0" font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal" >整文件覆盖，</text>
+<text x="430.0" y="303.0" font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal" >丢了 250 行</text>
+<rect x="612" y="204" width="182" height="132" rx="10" fill="#ffffff" stroke="#e6e5e0"/>
+<text x="626.0" y="230.0" font-size="12" fill="#8a897f" text-anchor="start" font-weight="normal" >08</text>
+<text x="626.0" y="256.0" font-size="15" fill="#0b0b0b" text-anchor="start" font-weight="600" >数对了，成分不对</text>
+<text x="626.0" y="284.0" font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal" >两轮都是 22 个失败，</text>
+<text x="626.0" y="303.0" font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal" >失败的成员不同</text>
+<text x="24.0" y="384.0" font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal" >防住它们的办法：先把被检查的东西改坏，确认检查会变红（反向探针）。</text>
+</svg>

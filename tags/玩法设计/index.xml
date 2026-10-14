@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>玩法设计 on 蜂窝</title><link>https://yufenghuang.tech/tags/%E7%8E%A9%E6%B3%95%E8%AE%BE%E8%AE%A1/</link><description>Recent content in 玩法设计 on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Mon, 12 Oct 2026 09:30:00 +0800</lastBuildDate><atom:link href="https://yufenghuang.tech/tags/%E7%8E%A9%E6%B3%95%E8%AE%BE%E8%AE%A1/index.xml" rel="self" type="application/rss+xml"/><item><title>HeirCut 开发手记（四）：把客人说的话剪下来</title><link>https://yufenghuang.tech/p/heircut-devlog-word-swap/</link><pubDate>Mon, 12 Oct 2026 09:30:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/heircut-devlog-word-swap/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;「HeirCut 开发手记」第四篇。游戏简介见&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-submit-guidance/" &gt;第一篇&lt;/a&gt;文末。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;《宫廷理发师》的点子，是主策划在理发的时候想到的：理发师总爱和客人聊这聊那。那如果理发师能把客人说过的话「剪」下来，再拼进别人的话里呢？&lt;/p&gt;
+&lt;p&gt;这就是游戏的核心玩法——换词。客人说话时，有些词可以用剪刀剪下来，收进笔记本；有些句子里留着一个可以替换的位置，把笔记本里的词拖进去，说话的人就会顺着新的意思说下去，剧情也跟着改变。&lt;/p&gt;
+&lt;p&gt;这篇记录换词是怎么实现的、换进去的词怎么一路影响到结局，以及设计上我们一直在纠结的取舍。&lt;/p&gt;
+&lt;h2 id="一个例子"&gt;&lt;a href="#%e4%b8%80%e4%b8%aa%e4%be%8b%e5%ad%90" class="header-anchor"&gt;&lt;/a&gt;一个例子
+&lt;/h2&gt;&lt;p&gt;第一天的女巫来烫发。她说：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;只有湿冷的环境，头发才不容易烫伤。可惜，现在是&lt;strong&gt;正午&lt;/strong&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;「正午」是一个可以替换的位置。如果玩家把之前从公主那里剪下来的「晚上」换进去，女巫会说「你真走运，夜晚是最佳的烫发时机」，烫发就不会把她的头发烫焦；如果换进去的是别的词，她会说「抱歉，我刚刚似乎失言了，请忘掉吧」，一切照旧。&lt;/p&gt;
+&lt;p&gt;整套机制就是这个循环的重复：&lt;strong&gt;听 → 剪 → 换 → 看它变成现实。&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id="一句话是一串小块"&gt;&lt;a href="#%e4%b8%80%e5%8f%a5%e8%af%9d%e6%98%af%e4%b8%80%e4%b8%b2%e5%b0%8f%e5%9d%97" class="header-anchor"&gt;&lt;/a&gt;一句话是一串小块
+&lt;/h2&gt;&lt;h3 id="富文本不够用"&gt;&lt;a href="#%e5%af%8c%e6%96%87%e6%9c%ac%e4%b8%8d%e5%a4%9f%e7%94%a8" class="header-anchor"&gt;&lt;/a&gt;富文本不够用
+&lt;/h3&gt;&lt;p&gt;最开始考虑过直接用 TextMeshPro 的富文本：给可剪的词加个标签、上个颜色。但我们要的不只是「显示得不一样」：每个词要能单独点击、能被剪走、剪走后留下一个同样宽度的空位、空位要能接住拖进来的词，换进去的词长短不同还要重新排版。&lt;/p&gt;
+&lt;p&gt;富文本做不到这些，于是改成了&lt;strong&gt;把一句话拆成一串小块&lt;/strong&gt;：普通文字是一块，每个可剪的词是一块独立的可交互对象，它们放在一个会自动换行的布局里，看起来就像一句完整的话。&lt;/p&gt;
+&lt;p&gt;建库第一周的版本就是这样做的。台词里用标签标出可剪的词，大致是这样（示意）：&lt;/p&gt;
+&lt;div class="code-block" data-lang="text"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;今晚是公主的大婚，为我&amp;lt;demand type=&amp;#34;Curl&amp;#34;&amp;gt;烫&amp;lt;/demand&amp;gt;一个属于&amp;lt;clue id=&amp;#34;…&amp;#34;&amp;gt;巫女&amp;lt;/clue&amp;gt;教母的发型。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;解析器把它拆成「文字块 + 词块」，词被剪掉时，原位置换成一个等宽的空槽：&lt;/p&gt;
+&lt;div class="code-block" data-lang="csharp"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;span class="lnt"&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-csharp" data-lang="csharp"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// 第一版：剪下一个词，原位置换成同样宽度的空槽&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="k"&gt;void&lt;/span&gt; &lt;span class="n"&gt;CutKeyword&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Keyword&lt;/span&gt; &lt;span class="n"&gt;keyword&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;ClueBook&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Instance&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;AddClue&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;keyword&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ClueID&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;keyword&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Text&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;keyword&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;transform&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;position&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;var&lt;/span&gt; &lt;span class="n"&gt;slot&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Instantiate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;slotPrefab&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dialogContainer&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;slot&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;transform&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SetSiblingIndex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;keyword&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;transform&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetSiblingIndex&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;slot&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetComponent&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;LayoutElement&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;().&lt;/span&gt;&lt;span class="n"&gt;preferredWidth&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;keyword&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetComponent&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;LayoutElement&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;().&lt;/span&gt;&lt;span class="n"&gt;preferredWidth&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Destroy&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;keyword&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gameObject&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;「把话剪下来」这个比喻，从第一版代码就在了——它和理发用的是同一把剪刀。&lt;/p&gt;
+&lt;h3 id="现在的写法"&gt;&lt;a href="#%e7%8e%b0%e5%9c%a8%e7%9a%84%e5%86%99%e6%b3%95" class="header-anchor"&gt;&lt;/a&gt;现在的写法
+&lt;/h3&gt;&lt;p&gt;后来剧情改成由内容驱动（见&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-encounter-refactor/" &gt;第三篇&lt;/a&gt;），台词里不再直接写数字 ID，而是用占位符引用有名字的槽和词：&lt;/p&gt;
+&lt;div class="code-block" data-lang="json"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;text&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;我能做的，也仅仅是在婚礼上{slot.king.vow}……然后告诉百姓，{slot.king.peace}。&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;tokens&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nt"&gt;&amp;#34;tokenType&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;ReplacementSlot&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;&amp;#34;slotId&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;slot.king.vow&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;&amp;#34;defaultTextKey&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;text.token.king.vow.default&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;},&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nt"&gt;&amp;#34;tokenType&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;ReplacementSlot&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;&amp;#34;slotId&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;slot.king.peace&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;&amp;#34;defaultTextKey&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;text.token.king.peace.default&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;运行时再把它翻译回旧的标签格式，交给原来的解析和显示代码。显示层基本没动，换掉的只是「词从哪里来」。&lt;/p&gt;
+&lt;h2 id="换进去的词怎么改变剧情"&gt;&lt;a href="#%e6%8d%a2%e8%bf%9b%e5%8e%bb%e7%9a%84%e8%af%8d%e6%80%8e%e4%b9%88%e6%94%b9%e5%8f%98%e5%89%a7%e6%83%85" class="header-anchor"&gt;&lt;/a&gt;换进去的词，怎么改变剧情
+&lt;/h2&gt;&lt;h3 id="每个槽有一张候选表"&gt;&lt;a href="#%e6%af%8f%e4%b8%aa%e6%a7%bd%e6%9c%89%e4%b8%80%e5%bc%a0%e5%80%99%e9%80%89%e8%a1%a8" class="header-anchor"&gt;&lt;/a&gt;每个槽有一张候选表
+&lt;/h3&gt;&lt;p&gt;每个槽在内容里登记了一组&lt;strong&gt;候选词&lt;/strong&gt;。比如国王上面那句话的两个槽：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;槽&lt;/th&gt;
+&lt;th&gt;默认&lt;/th&gt;
+&lt;th&gt;候选&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;婚礼上要做的事&lt;/td&gt;
+&lt;td&gt;宣读誓词&lt;/td&gt;
+&lt;td&gt;离开；把婚约撕个粉碎&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;告诉百姓的话&lt;/td&gt;
+&lt;td&gt;这门婚约将带来和平&lt;/td&gt;
+&lt;td&gt;我对狗毛过敏&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;玩家确认之后，卷轴烧掉、重新长出一句换好的话；按下一句时，这次替换才真正提交，去匹配剧情规则。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;两个槽同时换成「把婚约撕个粉碎」和「我对狗毛过敏」，国王会走向「反抗」这条线，婚礼被推迟，第一天才能往下走。&lt;/li&gt;
+&lt;li&gt;只把第一个槽换成「离开」，国王会走另一条线；这个选择还会一直影响到第二天公主有没有出逃的念头。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="只有一条路通向结局"&gt;&lt;a href="#%e5%8f%aa%e6%9c%89%e4%b8%80%e6%9d%a1%e8%b7%af%e9%80%9a%e5%90%91%e7%bb%93%e5%b1%80" class="header-anchor"&gt;&lt;/a&gt;只有一条路通向结局
+&lt;/h3&gt;&lt;p&gt;换词能影响很多东西：客人接下来说什么、后面播哪段演出、这次会面怎么收尾。但真正能影响&lt;strong&gt;结局&lt;/strong&gt;的，只有一条路：&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-word-swap/word-to-ending.svg"
+loading="lazy"
+alt="换进去的词如何影响结局：候选词被换进槽 → 如果这个候选会「打勾」，就记进账本 → 账本投影成故事事实 → 当天结算读取故事事实，决定走向哪一天或哪个结局"
+&gt;&lt;/p&gt;
+&lt;p&gt;一个词换进去，如果它在候选表里被标成「打勾」，就会记进笔记本的账本；账本被投影成一组&lt;strong&gt;故事事实&lt;/strong&gt;；每天结束时，结算只读这些故事事实。&lt;/p&gt;
+&lt;p&gt;这个限制是被一次测试逼出来的。我们用编辑器加过一个测试用的第四天，在客人的会面里用「设置事实」记下「玩家是否起疑」。推演器显示所有规则都能触发，可两个结局里有一个怎么都到不了——因为会面里设置的事实，在会面结束后就没了，结算根本看不到它。改成由换词打勾来推导之后，立刻就通了。&lt;/p&gt;
+&lt;p&gt;还有一个后来才分清的概念：&lt;strong&gt;「登记为候选」和「换进去会打勾」是两件事。&lt;/strong&gt; 一开始两者是绑在一起的，后来专门加了一个开关把它们拆开：有些候选是给将来的路线预留的，现在换进去不会改变任何东西。&lt;/p&gt;
+&lt;h2 id="设计上的取舍"&gt;&lt;a href="#%e8%ae%be%e8%ae%a1%e4%b8%8a%e7%9a%84%e5%8f%96%e8%88%8d" class="header-anchor"&gt;&lt;/a&gt;设计上的取舍
+&lt;/h2&gt;&lt;h3 id="自由度和工作量"&gt;&lt;a href="#%e8%87%aa%e7%94%b1%e5%ba%a6%e5%92%8c%e5%b7%a5%e4%bd%9c%e9%87%8f" class="header-anchor"&gt;&lt;/a&gt;自由度和工作量
+&lt;/h3&gt;&lt;p&gt;我们希望玩家放下一个词的时候，是真心期待「它会怎么变成现实」。可每多一个能被接住的词，就要多写一段回应、多一条规则、多一次测试。&lt;/p&gt;
+&lt;p&gt;现在的内容里一共有 13 个槽、20 个候选词。换句话说，大部分槽只有一两个词会被「接住」。为了不让剩下的词显得无效，我们做了几件事：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;错词也有回应。&lt;/strong&gt; 换进候选之外的词，客人会自己圆回去（「抱歉，我刚刚似乎失言了」），剧情照常继续，而不是直接拒绝玩家的操作。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;有些槽只是为了参与感。&lt;/strong&gt; 国王问「这是……{谁}给你的？」，这个槽不影响路线，也不影响后面的对话，只是让玩家在关键时刻有手可动。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;错词不能把客人卡住。&lt;/strong&gt; 如果换进去的词没有任何规则接住，客人就会停在那里。所以每句带槽的话都要留一个「默认往下走」的出口；编辑器里的换词向导会自动把它补上。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="正确的词和好玩的词"&gt;&lt;a href="#%e6%ad%a3%e7%a1%ae%e7%9a%84%e8%af%8d%e5%92%8c%e5%a5%bd%e7%8e%a9%e7%9a%84%e8%af%8d" class="header-anchor"&gt;&lt;/a&gt;「正确的词」和「好玩的词」
+&lt;/h3&gt;&lt;p&gt;更难的是另一个问题：我们到底希望玩家多换词、多试，还是只有换对了才算「正确」？&lt;/p&gt;
+&lt;p&gt;如果只有一个正确答案，换词就变成了填空题，会有点无趣。我们的做法是特意放进一些天马行空的候选——「我对狗毛过敏」「开门见山」——让玩家在荒诞里找到乐趣。这种荒诞感是我们想要的，但也是最难想到的。用策划陈2333 的话说：这主要靠对脑电波。&lt;/p&gt;
+&lt;p&gt;这个问题到现在也没有完全解决。&lt;/p&gt;
+&lt;h3 id="需求词另一种收集"&gt;&lt;a href="#%e9%9c%80%e6%b1%82%e8%af%8d%e5%8f%a6%e4%b8%80%e7%a7%8d%e6%94%b6%e9%9b%86" class="header-anchor"&gt;&lt;/a&gt;需求词：另一种收集
+&lt;/h3&gt;&lt;p&gt;除了线索词，客人话里还有&lt;strong&gt;需求词&lt;/strong&gt;，它们决定这次理发要做什么。需求词和线索词一样是剪下来的，但用法不同：玩家要把两个需求词放进合成板，合成出一个服务。比如国王的「手握王权」加「俯视众生」，合成「鹰翼」，这是对的；换成「手握王权」加「盘旋」，合成的是「蛇纹」，国王会不高兴。&lt;/p&gt;
+&lt;p&gt;需求词和合成板都是最初策划案里就有的循环，合成板长什么样是后来讨论出来的。实现上有一个容易被「修」坏的设计：**需求词属于玩家，不属于客人。**第三天的二公主要代替公主去联姻，她的需求就要用第一天从公主那里收来的词去合成。代码里查「有没有这个需求词」是跨角色的，这是故意的。&lt;/p&gt;
+&lt;h2 id="几个实现上的坑"&gt;&lt;a href="#%e5%87%a0%e4%b8%aa%e5%ae%9e%e7%8e%b0%e4%b8%8a%e7%9a%84%e5%9d%91" class="header-anchor"&gt;&lt;/a&gt;几个实现上的坑
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;拖到哪个槽，由词说了算。&lt;/strong&gt; 玩家拖词时瞄的是鼠标指针，但词是以指针为中心画出来的，两者对不上。后来改成「槽的中心落在被拖的词里面」，指针只用来打破平局；高亮和放下用的是同一个判断，免得高亮了一个槽，放下时却去了另一个。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;挡住「跳过」的是状态，不是按钮。&lt;/strong&gt; 带槽的句子在换词完成前不能跳过。最早的做法是把「下一句」按钮藏起来，结果空格键和点击跳过照样能过。后来把这个判断挪到了推进对话的地方。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;读档后需求词被算了两遍。&lt;/strong&gt; 一句话里有几个需求词没收集，就不让往下走。读档重新显示这句话时，已经收集过的词又被算回去了，而它已经点不动了，对话框就一直晃、游戏卡死。之前没出事，是因为玩家能重复收集同一个词，正好把计数凑平——&lt;strong&gt;一个缺陷在掩盖另一个缺陷&lt;/strong&gt;，堵掉前者就暴露了后者。修法是让「显示成已收集」和「计数」共用同一个判断。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;词拿出来再放回去，要回到原来那一页。&lt;/strong&gt; 笔记本按天、按客人分页。词被拖进槽、又撤回时，最初是按「当天 + 当前客人」算页的，结果跨天复用的词会回到一个根本不存在的页。现在是从哪一页拿的，就回哪一页。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="还没解决的"&gt;&lt;a href="#%e8%bf%98%e6%b2%a1%e8%a7%a3%e5%86%b3%e7%9a%84" class="header-anchor"&gt;&lt;/a&gt;还没解决的
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;「正确的词」和「好玩的词」之间的平衡&lt;/strong&gt;，还在调。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;候选词是写死的。&lt;/strong&gt; 更多的候选意味着更多的手写回应。我们讨论过让 AI 来判断一个任意的词放进来「说不说得通」，并想好了边界：AI 只能在作者写好的几种结果里选，不能凭空创造剧情事实，超时就退回写好的文本，结果和存档一起保存，读档时不重新问。但这目前只停留在计划里。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="回头看"&gt;&lt;a href="#%e5%9b%9e%e5%a4%b4%e7%9c%8b" class="header-anchor"&gt;&lt;/a&gt;回头看
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;一个词就是一个对象。&lt;/strong&gt; 放弃富文本、把句子拆成一串可交互的小块，是这套玩法能做下去的前提。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;换词能影响的东西很多，但通向结局的只有一条路。&lt;/strong&gt; 这条限制一开始是踩坑踩出来的，后来反而成了内容作者最好理解的一条规则。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;自由度要有兜底。&lt;/strong&gt; 错词有回应、没被接住的词不卡人、有些槽只为参与感——这些都是为了让「随便试试」不会被惩罚。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;最难的部分不在代码里。&lt;/strong&gt; 想出「我对狗毛过敏」这样的词，比实现它难得多。&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>HeirCut 开发手记（一）：玩家不知道什么时候该停手</title><link>https://yufenghuang.tech/p/heircut-devlog-submit-guidance/</link><pubDate>Mon, 12 Oct 2026 09:00:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/heircut-devlog-submit-guidance/</guid><description>&lt;p&gt;在《宫廷理发师》（HeirCut）里，玩家要真的拿剪刀给客人剪头发：鼠标划过的地方断开、掉落，剪完点「完成」，游戏拿剪出来的形状和目标形状比较，算出客人满不满意。怎么剪完全由玩家决定，分数不会显示出来。&lt;/p&gt;
+&lt;p&gt;几次线下展出，我们在展台边看到的是同一个画面：玩家明明已经剪得差不多了，还在一点一点修边，迟迟不点完成。问他们，答案都一样——&lt;strong&gt;不知道要剪到多好才算满意&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;我们自己也是这样。下面是我们在实验场景里自己剪的四次记录：四次都过了高分线，其中三次过线之后又多剪了三分多钟。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-submit-guidance/lab-curves.svg"
+loading="lazy"
+alt="四次 Lab 校准记录的满意度曲线：四次都越过了 0.75 的高分线，其中三次过线后又剪了约 200 秒"
+&gt;&lt;/p&gt;
+&lt;p&gt;这篇记录我们最后怎么设计「完成」按钮出现的时机、中间放弃了哪些做法，以及两个看起来是 UI 问题、其实是定义没想清楚的坑。&lt;/p&gt;
+&lt;h2 id="按钮要回答的不是剪得好不好"&gt;&lt;a href="#%e6%8c%89%e9%92%ae%e8%a6%81%e5%9b%9e%e7%ad%94%e7%9a%84%e4%b8%8d%e6%98%af%e5%89%aa%e5%be%97%e5%a5%bd%e4%b8%8d%e5%a5%bd" class="header-anchor"&gt;&lt;/a&gt;按钮要回答的，不是「剪得好不好」
+&lt;/h2&gt;&lt;p&gt;先说清楚这个按钮要做什么、不能做什么。和策划讨论下来，目标是四条：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;告诉玩家「现在交是合理的」。&lt;/strong&gt; 让按钮的出现吻合玩家「差不多了」的预期。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;不泄露分数。&lt;/strong&gt; 理发的乐趣有一部分来自「我觉得我剪得不错」的不确定感。如果按钮一亮就意味着过线，玩家就会去刷那条线，而不是去剪头发。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;剪坏了能止损。&lt;/strong&gt; 不能因为玩家乱剪，就把人困在这一关。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;不鼓励犹豫。&lt;/strong&gt; 比划半天不下刀，也应该被推一把。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;还有一个相关但独立的问题：评委老师普遍觉得理发失败的惩罚太重。当时的设计里蜡烛代表生命，剪不好就熄一支。不知道标准、失败代价又高，玩家自然不敢交卷。这个我们是在设计层面解决的：蜡烛改成了单纯的昼夜装饰，失败不再扣命。下面只讨论按钮。&lt;/p&gt;
+&lt;h2 id="最后的规则五个出现理由"&gt;&lt;a href="#%e6%9c%80%e5%90%8e%e7%9a%84%e8%a7%84%e5%88%99%e4%ba%94%e4%b8%aa%e5%87%ba%e7%8e%b0%e7%90%86%e7%94%b1" class="header-anchor"&gt;&lt;/a&gt;最后的规则：五个出现理由
+&lt;/h2&gt;&lt;p&gt;按钮在下面任何一种情况下出现，出现后就一直保持，直到玩家提交：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;条件&lt;/th&gt;
+&lt;th&gt;玩家此时的状态&lt;/th&gt;
+&lt;th&gt;按钮想说的话&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;满意度 ≥ 0.75&lt;/td&gt;
+&lt;td&gt;剪得不错&lt;/td&gt;
+&lt;td&gt;差不多可以交了&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;满意度 &amp;lt; 0.15&lt;/td&gt;
+&lt;td&gt;剪得一团糟&lt;/td&gt;
+&lt;td&gt;及时止损&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;比本次最高分回落 ≥ 0.1&lt;/td&gt;
+&lt;td&gt;本来不错，越修越差&lt;/td&gt;
+&lt;td&gt;别再修了&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;拿着剪刀累计 20 秒&lt;/td&gt;
+&lt;td&gt;一直在犹豫&lt;/td&gt;
+&lt;td&gt;不必追求完美&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;头发已经没有可剪的了&lt;/td&gt;
+&lt;td&gt;剪光了&lt;/td&gt;
+&lt;td&gt;只能交了&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;几点细节：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;按钮出现后不自动提交，也不锁剪刀&lt;/strong&gt;，玩家仍然可以继续修，结算以点下按钮那一刻为准。按钮是建议，不是裁决。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;20 秒只在玩家拿着剪刀时计时&lt;/strong&gt;，暂停菜单打开时不计。一开始我们是从「剪下第一刀」开始计时的，结果拿着剪刀比划半天不下刀的玩家——恰恰最需要被推一把的那种——永远等不到按钮。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;这些数字没有理论来源&lt;/strong&gt;，是策划拍板后在试玩里调出来的。0.75 是结算的高分线，后面会讲为什么它必须和结算是同一个数。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;规则本身写成一个不依赖场景的纯函数，方便单独测试：&lt;/p&gt;
+&lt;div class="code-block" data-lang="csharp"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-csharp" data-lang="csharp"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// 简化后的签名；实际代码还会先把输入夹到合法范围&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="n"&gt;HaircutSubmitPromptDecision&lt;/span&gt; &lt;span class="n"&gt;Evaluate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;bool&lt;/span&gt; &lt;span class="n"&gt;hasValidSatisfaction&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;current&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;historicalPeak&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;high&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;low&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;peakDrop&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;operationSeconds&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;fallbackSeconds&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(!&lt;/span&gt;&lt;span class="n"&gt;hasValidSatisfaction&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Hide&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;current&lt;/span&gt; &lt;span class="p"&gt;&amp;gt;=&lt;/span&gt; &lt;span class="n"&gt;high&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Show&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Reason&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;HighSatisfaction&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;current&lt;/span&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;low&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Show&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Reason&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;VeryLowSatisfaction&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;historicalPeak&lt;/span&gt; &lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="n"&gt;current&lt;/span&gt; &lt;span class="p"&gt;&amp;gt;=&lt;/span&gt; &lt;span class="n"&gt;peakDrop&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Show&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Reason&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;PeakDrop&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;operationSeconds&lt;/span&gt; &lt;span class="p"&gt;&amp;gt;=&lt;/span&gt; &lt;span class="n"&gt;fallbackSeconds&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Show&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Reason&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;FallbackDuration&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Hide&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id="为什么要故意放进和分数无关的理由"&gt;&lt;a href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e8%a6%81%e6%95%85%e6%84%8f%e6%94%be%e8%bf%9b%e5%92%8c%e5%88%86%e6%95%b0%e6%97%a0%e5%85%b3%e7%9a%84%e7%90%86%e7%94%b1" class="header-anchor"&gt;&lt;/a&gt;为什么要故意放进和分数无关的理由
+&lt;/h3&gt;&lt;p&gt;五条里只有第一条和「剪得好」有关。其余四条，有的意味着剪坏了，有的只是时间到了。&lt;/p&gt;
+&lt;p&gt;这是刻意的。玩家能感受到「按钮出现 = 现在交是个合理的选择」，但&lt;strong&gt;没法从按钮反推自己剪得好不好&lt;/strong&gt;。对我们来说，这是让提示「有用但不泄底」最简单的办法。&lt;/p&gt;
+&lt;h2 id="我们试过但放弃的做法"&gt;&lt;a href="#%e6%88%91%e4%bb%ac%e8%af%95%e8%bf%87%e4%bd%86%e6%94%be%e5%bc%83%e7%9a%84%e5%81%9a%e6%b3%95" class="header-anchor"&gt;&lt;/a&gt;我们试过、但放弃的做法
+&lt;/h2&gt;&lt;p&gt;最终的规则不是一开始就想到的。前面还有几种做法，每一种都解决了一部分问题，又暴露出新的问题：&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-submit-guidance/button-versions.svg"
+loading="lazy"
+alt="提交按钮的四个版本：一直在 → 够好时闪烁 → 按有效笔划多条件出现 → 与结算统一"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一直显示。&lt;/strong&gt; 最早的按钮在进入理发时就出现，后来改成剪下第一缕头发时出现，之后一直都在。这是对自由度的尊重，但它只告诉玩家「你可以交了」，不告诉玩家「你应该交了」——展台上那些一直修边的玩家，就是这么来的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;剪得够好时闪烁。&lt;/strong&gt; 后来加了一个提示：分数过线就让按钮闪一下。方向是对的，但它正好违反了「不泄露分数」：按钮一闪，玩家就知道自己过线了。而且它还有一个更隐蔽的毛病，见下一节。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;两道门槛。&lt;/strong&gt; 重写评分时，我在实验场景里跑过一轮校准，报告建议用双门槛：「剪对的比例 ≥ 0.80」&lt;strong&gt;且&lt;/strong&gt;「形状吻合度 ≥ 0.90」，连续三刀都满足才算达标。最后没有采用，原因有两个：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;硬性的「且」是不连续的。两项里差一点的那项会让结果从「是」直接跳到「否」。最后我们改用软最小值把两项合成一个连续的分数（细节见&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/" &gt;下一篇&lt;/a&gt;）。&lt;/li&gt;
+&lt;li&gt;那轮校准的样本全是「剪得还不错」的记录，没有剪坏的，也没有犹豫的。拿这样的数据去校准一个以「止损」和「反犹豫」为目的的按钮，是不够的。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="两个看起来是-ui其实是定义的问题"&gt;&lt;a href="#%e4%b8%a4%e4%b8%aa%e7%9c%8b%e8%b5%b7%e6%9d%a5%e6%98%af-ui%e5%85%b6%e5%ae%9e%e6%98%af%e5%ae%9a%e4%b9%89%e7%9a%84%e9%97%ae%e9%a2%98" class="header-anchor"&gt;&lt;/a&gt;两个看起来是 UI、其实是定义的问题
+&lt;/h2&gt;&lt;h3 id="一刀是什么"&gt;&lt;a href="#%e4%b8%80%e5%88%80%e6%98%af%e4%bb%80%e4%b9%88" class="header-anchor"&gt;&lt;/a&gt;「一刀」是什么
+&lt;/h3&gt;&lt;p&gt;闪烁版本还有一个问题：它在&lt;strong&gt;每次有头发掉落&lt;/strong&gt;时检查分数。&lt;/p&gt;
+&lt;p&gt;可是「掉一次头发」不等于「剪一刀」。一笔划下去，可能掉三片碎发，也可能一片都不掉，只划开了一个口子。于是提示的节奏跟着物理碎片走，而不是跟着玩家的操作走。更糟的是，剪发是边拖边算的，碎片在一笔的中途就会掉下来，那一刻读到的分数只是个中间状态。&lt;/p&gt;
+&lt;p&gt;所以在设计任何反馈之前，我们先给「一刀」下了定义：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;一次有效笔划&lt;/strong&gt; = 鼠标按下到抬起的一段连续输入，至少造成了一次头发的几何变化，并且所有几何计算都已完成。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;然后把两类事件分开：「有一片碎发掉了」只留给物理和音效；「一次有效笔划结束了」才驱动分数、教程、计时和这个按钮。这样，满意度曲线的横轴就是「玩家剪了第几刀」，按钮看到的永远是一个已经剪完、不会再变的状态。&lt;/p&gt;
+&lt;p&gt;回头看，这件事应该在设计任何反馈之前就做：&lt;strong&gt;先定义玩家「一次操作」的单位。&lt;/strong&gt; 反馈挂在错的单位上，节奏就会乱，数值也不可信。&lt;/p&gt;
+&lt;h3 id="按钮和结算必须是同一个分数"&gt;&lt;a href="#%e6%8c%89%e9%92%ae%e5%92%8c%e7%bb%93%e7%ae%97%e5%bf%85%e9%a1%bb%e6%98%af%e5%90%8c%e4%b8%80%e4%b8%aa%e5%88%86%e6%95%b0" class="header-anchor"&gt;&lt;/a&gt;按钮和结算必须是同一个分数
+&lt;/h3&gt;&lt;p&gt;这一个是我的疏漏。&lt;/p&gt;
+&lt;p&gt;重写评分时，我把按钮接到了新算法上，却没有同步去改结算——结算还在用旧的 IoU。两边的高分线也不一样：新算法这边写的是 0.80，结算那边是 0.75。于是有一段时间，游戏里同时存在两个分数。&lt;/p&gt;
+&lt;p&gt;后果是：按钮说剪得不错，结算却可能判不及格；或者明明已经过了结算线，按钮却毫无表示。玩家感受到的就是「这个按钮在骗我」。&lt;/p&gt;
+&lt;p&gt;发现之后分两步补上：先让按钮的阈值直接引用结算的阈值，并加了一条测试，以后谁把它们改得不一样，测试就会变红；随后结算也换成新算法，按钮和结算调用&lt;strong&gt;同一个&lt;/strong&gt;判定函数。&lt;/p&gt;
+&lt;p&gt;这件事让我记住了一条：&lt;strong&gt;一个 UI 如果是在预告某个判定的结果，它就该直接调用那个判定，而不是另写一份「差不多」的逻辑。&lt;/strong&gt; 两份逻辑一开始可能一样，但会各自演化，迟早分叉。&lt;/p&gt;
+&lt;h2 id="还没解决的"&gt;&lt;a href="#%e8%bf%98%e6%b2%a1%e8%a7%a3%e5%86%b3%e7%9a%84" class="header-anchor"&gt;&lt;/a&gt;还没解决的
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;按钮规则缺少数据支撑。&lt;/strong&gt; 实验场景复用了正式的剪发和评分，但没有挂上这个按钮，所以我们手里没有「按钮何时出现、玩家何时提交」的统计。规则的调整靠的是试玩观察。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;数字是调出来的，样本不大。&lt;/strong&gt; 如果之后有更大规模的试玩，最值得验证的是 20 秒兜底会不会让玩家过早交卷。如果会，应该调整时长或提示的措辞，而不是降低结算标准——兜底是为了反犹豫，不是为了放水。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="回头看"&gt;&lt;a href="#%e5%9b%9e%e5%a4%b4%e7%9c%8b" class="header-anchor"&gt;&lt;/a&gt;回头看
+&lt;/h2&gt;&lt;p&gt;这个按钮前后改了好几版，回头看，真正花时间的地方都不在按钮本身：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;「一刀」没定义清楚之前，按钮怎么设计都不稳。&lt;/strong&gt; 我们一开始把反馈挂在物理碎片上，节奏和数值都跟着出问题。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;预告判定的 UI 必须调用判定本身。&lt;/strong&gt; 按钮和结算各算各的分数，是我重写评分时漏改留下的，花了两轮才补上。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;按钮出现的理由不止一个，这是它不泄底的关键。&lt;/strong&gt; 只在高分时出现的按钮，就是一盏及格指示灯。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;兜底是为了反犹豫，不是为了放水。&lt;/strong&gt; 它让玩家可以交卷，但不改变结算标准。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;关于《宫廷理发师》&lt;/strong&gt;（HeirCut）：人类公主和兽人王大婚在即，玩家是宫廷里的理发师，要给前来的宾客们剪、烫、染。而在理发之外，理发师还能把宾客们说过的话「剪」下来、重新拼起来，改写公主乃至整个王国的命运。&lt;a class="link" href="https://store.steampowered.com/app/4268650/" target="_blank" rel="noopener"
+&gt;Steam 商店页&lt;/a&gt;，&lt;a class="link" href="https://www.bilibili.com/video/BV1dkbDzoE9q/" target="_blank" rel="noopener"
+&gt;演示视频&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;开发团队「闭嘴！理发」是为 GameJam 凑起来的：策划尽欢、陈2333，美术 Nya、主美勺，音效肉丸，程序是我（hushh）。项目获得了第五届 CUSGA 最佳剧情设计奖、第十七届厦门国际动漫节「金海豚奖」最佳学生游戏奖等奖项，目前在准备 Steam Demo。&lt;/p&gt;
+&lt;p&gt;下一篇讲上面反复提到的满意度怎么算，以及它依赖的东西：一套可以被剪开的 2D 头发。&lt;/p&gt;</description></item></channel></rss>

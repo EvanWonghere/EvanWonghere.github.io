@@ -1,0 +1,1120 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>开发手记 on 蜂窝</title><link>https://yufenghuang.tech/tags/%E5%BC%80%E5%8F%91%E6%89%8B%E8%AE%B0/</link><description>Recent content in 开发手记 on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Mon, 12 Oct 2026 10:40:00 +0800</lastBuildDate><atom:link href="https://yufenghuang.tech/tags/%E5%BC%80%E5%8F%91%E6%89%8B%E8%AE%B0/index.xml" rel="self" type="application/rss+xml"/><item><title>HeirCut 开发手记（十一）：和 AI 一起做游戏</title><link>https://yufenghuang.tech/p/heircut-devlog-working-with-ai/</link><pubDate>Mon, 12 Oct 2026 10:40:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/heircut-devlog-working-with-ai/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;「HeirCut 开发手记」第十一篇。游戏简介见&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-submit-guidance/" &gt;第一篇&lt;/a&gt;文末。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;前面十篇里，有一件事一直没讲：这个项目的后半程，绝大部分代码不是我手写的。&lt;/p&gt;
+&lt;p&gt;《宫廷理发师》从立项起就有 AI 参与，只是参与的方式一直在变：一开始是在网页上和它聊天、把代码复制粘贴回来；到现在，是由能自己读代码、跑测试、写提交的编程助手来实现，我负责定方向、看方案、做验收。这篇想如实记录这一路的变化，算是一次经验分享。&lt;/p&gt;
+&lt;h2 id="一开始聊天然后复制粘贴"&gt;&lt;a href="#%e4%b8%80%e5%bc%80%e5%a7%8b%e8%81%8a%e5%a4%a9%e7%84%b6%e5%90%8e%e5%a4%8d%e5%88%b6%e7%b2%98%e8%b4%b4" class="header-anchor"&gt;&lt;/a&gt;一开始：聊天，然后复制粘贴
+&lt;/h2&gt;&lt;p&gt;项目刚开始的时候，还没有成熟的「编程助手」。我用的是 Grok、Gemini 这类对话式的 AI，主要做三件事：技术选型、看报错日志、在具体功能卡住的时候帮忙调试。&lt;/p&gt;
+&lt;p&gt;剪发用到的两个最关键的库——做多边形布尔运算的 Clipper2 和做三角化的 Poly2Tri——就是当时 Grok 推荐的（剪发的实现见&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/" &gt;第二篇&lt;/a&gt;）。但写代码这件事本身，主要还是我自己来，AI 能帮的只是一段一段地给建议，我再搬回编辑器里。&lt;/p&gt;
+&lt;p&gt;那时最大的失望，是在&lt;strong&gt;探索阶段&lt;/strong&gt;。剪发效果怎么做、换词这套机制怎么实现，这些从零开始摸方向的时候，AI 给的帮助很有限：它能把一个已知的方案讲清楚，但没法替我找到「头发应该当成纸来剪」这样的方向。方向定下来之后，它的作用才大起来。&lt;/p&gt;
+&lt;h2 id="转折编程助手"&gt;&lt;a href="#%e8%bd%ac%e6%8a%98%e7%bc%96%e7%a8%8b%e5%8a%a9%e6%89%8b" class="header-anchor"&gt;&lt;/a&gt;转折：编程助手
+&lt;/h2&gt;&lt;p&gt;真正的变化，是编程助手成熟之后。下面是仓库里每个月的提交数，按提交说明里的 AI 署名分了颜色：&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-working-with-ai/ai-monthly.svg"
+loading="lazy"
+alt="每月提交数：2026 年 7 月之前每月只有个位数到几十个提交，几乎没有 AI 署名；8 月起提交数大幅增加，8 月 176 个、9 月 399 个、10 月 94 个，其中带 AI 署名的分别占 83%、88% 和 81%"
+&gt;&lt;/p&gt;
+&lt;p&gt;几件事可以从这张图上看出来：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;带 Claude 署名的第一个提交，出现在剧情系统重构开始的那一周。之后三个月，每个月都有八成以上的提交带 AI 署名。&lt;/li&gt;
+&lt;li&gt;提交数本身也变了：重构前每个月是个位数到几十个，重构期间一个月接近四百个。不只是「AI 替我写」，而是同样的时间里，能做的事多了很多。&lt;/li&gt;
+&lt;li&gt;署名是提交时自己写上的，没有署名不代表没用 AI，这张图只能看个大概。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;到现在，我基本不再手写代码，连代码审阅，AI 也比我快、比我准。&lt;/p&gt;
+&lt;h2 id="文档把一个通用助手变成这个项目的助手"&gt;&lt;a href="#%e6%96%87%e6%a1%a3%e6%8a%8a%e4%b8%80%e4%b8%aa%e9%80%9a%e7%94%a8%e5%8a%a9%e6%89%8b%e5%8f%98%e6%88%90%e8%bf%99%e4%b8%aa%e9%a1%b9%e7%9b%ae%e7%9a%84%e5%8a%a9%e6%89%8b" class="header-anchor"&gt;&lt;/a&gt;文档把一个通用助手，变成这个项目的助手
+&lt;/h2&gt;&lt;p&gt;用编程助手做一个真实项目，最先遇到的问题是：它每次都是从零开始的。它不知道这个项目的约定，不知道哪些坑已经踩过，也不知道上一次会话做到了哪里。&lt;/p&gt;
+&lt;p&gt;我的做法是让项目里多了很多文档：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;约定工作流的文档&lt;/strong&gt;：分支怎么开、什么时候能提交、什么事必须先问我；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;记录反复犯过的错的文档&lt;/strong&gt;：每一条都写明是哪天踩的、当时发生了什么、以后的判据是什么；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;阶段规划和进度文档&lt;/strong&gt;：比如&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-encounter-refactor/" &gt;第三篇&lt;/a&gt;里的重构计划，以及每个阶段的实施记录；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;项目知识库&lt;/strong&gt;：给策划和后来的人看的指南，助手也能读。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其中第二类最有意思。比如这样一条：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;蜡烛不再代表玩家生命……「蜡烛耗尽结局」不可抵达……这个错误已经犯了三次，三次都是「查到能支持当前结论的那一处就停下」。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;它记的不是知识，而是&lt;strong&gt;一种会反复出现的错误的形状&lt;/strong&gt;。下一次会话读到它，就知道看到蜡烛相关的代码要先回来读这一段。&lt;/p&gt;
+&lt;p&gt;这些文档合在一起，相当于为这个项目定制了一个助手。很多约束我不必每次重复，它在实施的时候就清楚边界在哪里。不过我觉得这还不够，接下来想把它整理成一套更完整的工作流。&lt;/p&gt;
+&lt;h2 id="我现在怎么和它分工"&gt;&lt;a href="#%e6%88%91%e7%8e%b0%e5%9c%a8%e6%80%8e%e4%b9%88%e5%92%8c%e5%ae%83%e5%88%86%e5%b7%a5" class="header-anchor"&gt;&lt;/a&gt;我现在怎么和它分工
+&lt;/h2&gt;&lt;h3 id="新功能我定边界它出方案我改到满意再动手"&gt;&lt;a href="#%e6%96%b0%e5%8a%9f%e8%83%bd%e6%88%91%e5%ae%9a%e8%be%b9%e7%95%8c%e5%ae%83%e5%87%ba%e6%96%b9%e6%a1%88%e6%88%91%e6%94%b9%e5%88%b0%e6%bb%a1%e6%84%8f%e5%86%8d%e5%8a%a8%e6%89%8b" class="header-anchor"&gt;&lt;/a&gt;新功能：我定边界，它出方案，我改到满意再动手
+&lt;/h3&gt;&lt;p&gt;策划和美术提的需求，往往是一句话、一张图。我先把它梳理成清晰的、有规则的描述。如果是全新的功能，我会先让 AI 调研一下有没有成熟的、适合这个项目的做法，再结合现有的系统确定边界和大致方向。&lt;/p&gt;
+&lt;p&gt;然后交给助手细化成方案。它会产出一份可以看的方案文档，我看完、和它讨论、改到满意，才让它按计划实施。实施完之后，走&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-playthrough-automation/" &gt;自动化测试和整局推演&lt;/a&gt;。&lt;/p&gt;
+&lt;h3 id="大改动先让它把项目画出来再让它质疑我"&gt;&lt;a href="#%e5%a4%a7%e6%94%b9%e5%8a%a8%e5%85%88%e8%ae%a9%e5%ae%83%e6%8a%8a%e9%a1%b9%e7%9b%ae%e7%94%bb%e5%87%ba%e6%9d%a5%e5%86%8d%e8%ae%a9%e5%ae%83%e8%b4%a8%e7%96%91%e6%88%91" class="header-anchor"&gt;&lt;/a&gt;大改动：先让它把项目画出来，再让它质疑我
+&lt;/h3&gt;&lt;p&gt;像剧情系统重构这样的大改动，我的顺序是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;先让 AI 调查整个项目，画出数据流、状态图、模块关系。这些图本身就能说明「为什么必须重构」。&lt;/li&gt;
+&lt;li&gt;我讲清楚现在的痛点：问题由什么设计导致、当初为什么这样设计、它和哪些模块相互影响；再描述我希望重构后的样子。&lt;/li&gt;
+&lt;li&gt;然后交给助手继续调研，分三部分：对应的重构方案、具体的分阶段规划，以及&lt;strong&gt;质疑我&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;第三部分我觉得很重要。有些方案我自己觉得好，并不一定真的好。所以我习惯让它额外调研一下，是否存在更好的做法。&lt;/p&gt;
+&lt;h3 id="会话一次只做一件事长了就写交接"&gt;&lt;a href="#%e4%bc%9a%e8%af%9d%e4%b8%80%e6%ac%a1%e5%8f%aa%e5%81%9a%e4%b8%80%e4%bb%b6%e4%ba%8b%e9%95%bf%e4%ba%86%e5%b0%b1%e5%86%99%e4%ba%a4%e6%8e%a5" class="header-anchor"&gt;&lt;/a&gt;会话：一次只做一件事，长了就写交接
+&lt;/h3&gt;&lt;p&gt;一个会话尽量只专注于一个或一类任务；适合拆出去的小任务，明确告诉它可以交给子代理去做。会话实在太长时，我会让它先写一份交接文档：系统现在是什么状态、计划中下一步是什么状态、哪些事还挂着、踩过哪些坑。下一个会话从这份文档开始，不需要上一段对话的上下文。&lt;/p&gt;
+&lt;h2 id="它会犯什么样的错"&gt;&lt;a href="#%e5%ae%83%e4%bc%9a%e7%8a%af%e4%bb%80%e4%b9%88%e6%a0%b7%e7%9a%84%e9%94%99" class="header-anchor"&gt;&lt;/a&gt;它会犯什么样的错
+&lt;/h2&gt;&lt;p&gt;和 AI 一起工作，产出的速度上去了，出错的速度也上去了。项目的文档里记了不少它犯过的错，回头看，最典型的有这几种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;找到第一个能支持结论的证据就停下。&lt;/strong&gt; 蜡烛那条就是。看到一个开关叫「生命惩罚已关闭」，就推断「蜡烛数不会变」，却没再往下读一行：熄灭动画的函数第一行就因为同一个开关直接返回了。于是它写出了一份让人去看「蜡烛熄灭动画」的验收清单——一个根本不会发生的画面。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;统计口径本身就是错的。&lt;/strong&gt; 为了统计一个文件里两部分代码各引用了多少旧单例，用「第一个内部类的行号」来切分。可 C# 允许在内部类之后继续写外部类的成员，这个文件恰好如此。错误的口径连用了六轮，每轮都报告「某某已归零」。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;检查是绿的，但验的不是那样东西。&lt;/strong&gt; &lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-verification-traps/" &gt;第九篇&lt;/a&gt;里的大部分坑，都是在这种协作中踩到的：只认成功信号的监视脚本、按目录整文件覆盖时悄悄丢掉的 250 行、为了观察状态反而把游戏弄坏的探针。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;应对的办法，说到底都是&lt;strong&gt;把验证变成显式的&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;每一个错误的形状，都写进文档，附上日期和以后的判据；&lt;/li&gt;
+&lt;li&gt;新写的检查，先故意把被测的东西改坏，确认它会变红，再相信它的绿；&lt;/li&gt;
+&lt;li&gt;提交说明里明确写「未验证」的部分：哪些在 Unity 里跑过，哪些只是离线编译通过；&lt;/li&gt;
+&lt;li&gt;重要的验收让另一个助手从头再做一遍，并且明确要求它&lt;strong&gt;不采信&lt;/strong&gt;前一个的记录。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="最大的收获"&gt;&lt;a href="#%e6%9c%80%e5%a4%a7%e7%9a%84%e6%94%b6%e8%8e%b7" class="header-anchor"&gt;&lt;/a&gt;最大的收获
+&lt;/h2&gt;&lt;p&gt;最让我惊喜的，是经过持续的努力，在助手的辅助下完成了剧情系统的绝大部分重构。&lt;/p&gt;
+&lt;p&gt;这件事的意义不只在代码本身。重构之后，才有了策划自己能用的&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-content-editor/" &gt;编辑器&lt;/a&gt;、才能&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-save-system/" &gt;存档到对话中的某一句&lt;/a&gt;、才能让机器把整局玩一遍。团队原本「策划写表格、我照着改代码」那种并不健康的工作流，也随之改变了。&lt;/p&gt;
+&lt;h2 id="还没做好的"&gt;&lt;a href="#%e8%bf%98%e6%b2%a1%e5%81%9a%e5%a5%bd%e7%9a%84" class="header-anchor"&gt;&lt;/a&gt;还没做好的
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;工作流还没有成体系。&lt;/strong&gt; 现在的文档是一条一条踩坑踩出来的，还缺一套完整的、能复用到下一个项目的做法。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;探索期还是得靠人。&lt;/strong&gt; 从零找方向的时候，助手的帮助依然有限。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;验证的成本没有消失，只是换了位置。&lt;/strong&gt; 写代码的时间少了，看方案、定判据、确认它真的验了该验的东西，花的时间多了。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="回头看"&gt;&lt;a href="#%e5%9b%9e%e5%a4%b4%e7%9c%8b" class="header-anchor"&gt;&lt;/a&gt;回头看
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AI 的角色，是跟着工具一起变的。&lt;/strong&gt; 从聊天窗口里的顾问，到能自己动手的助手，我的工作也从「写代码」变成了「定方向、看方案、做验收」。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;让它了解这个项目，比让它更聪明更重要。&lt;/strong&gt; 一份写清楚了约定、错误和判据的文档，比每次在对话里重复叮嘱有用得多。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;让它质疑我。&lt;/strong&gt; 我觉得好的方案，并不一定就是好的。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;它跑得越快，验证越要写在明处。&lt;/strong&gt; 速度放大的不只是产出，也放大了「以为验过了」的错觉。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这是这一批的最后一篇。十一篇写下来，大部分都在讲做错了什么、后来怎么改的。这大概也是做这个项目这一年，最真实的样子。&lt;/p&gt;</description></item><item><title>HeirCut 开发手记（十）：包从 2.2 GB 到 860 MB</title><link>https://yufenghuang.tech/p/heircut-devlog-size-and-performance/</link><pubDate>Mon, 12 Oct 2026 10:30:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/heircut-devlog-size-and-performance/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;「HeirCut 开发手记」第十篇。游戏简介见&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-submit-guidance/" &gt;第一篇&lt;/a&gt;文末。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;《宫廷理发师》是一个 2D 游戏，九组客人、三天剧情，安装包却一度有 &lt;strong&gt;2.2 GB&lt;/strong&gt;。另一个问题是：几乎每次第一次进入理发的近景场景，画面都会明显卡一下。&lt;/p&gt;
+&lt;p&gt;这两件事是在重构期间集中处理的。回头看，它们的共同点是：&lt;strong&gt;第一眼以为的原因，都不是真正的原因。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-size-and-performance/size-steps.svg"
+loading="lazy"
+alt="包体的变化：2.2 GB 的初始打包，界面贴图并入图集后降到 1.6 GB，角色贴图也并入图集后降到 879 MB，之后一次完整构建为 860 MB"
+&gt;&lt;/p&gt;
+&lt;h2 id="22-gb-里有什么"&gt;&lt;a href="#22-gb-%e9%87%8c%e6%9c%89%e4%bb%80%e4%b9%88" class="header-anchor"&gt;&lt;/a&gt;2.2 GB 里有什么
+&lt;/h2&gt;&lt;p&gt;先看构建报告：2.2 GB 里，贴图占了 2.0 GB，也就是 &lt;strong&gt;97.5%&lt;/strong&gt;，其余都是零头。&lt;/p&gt;
+&lt;p&gt;第一反应是「导入设置没调好」：有人忘了开压缩、最大尺寸给得太大。这些问题确实存在，但量下来，大头不在这里，而在&lt;strong&gt;素材的形态&lt;/strong&gt;上。&lt;/p&gt;
+&lt;p&gt;我们的美术习惯把每个元素都导出在一整幅 2400 × 1350 的画布上：一条装饰、一个按钮、一个对话框角，都在各自的画布上占一小块，其余全是透明。这样做有它的道理——丢进场景里，位置自动就对上了。可贴图是按画布大小计价的，&lt;strong&gt;透明像素照样收全费&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;最极端的例子：一张「白条」主体只有 203 × 25，占画布的 0.2%，在包里却有 2.3 MB。整个项目有 643 张贴图整整齐齐地落在 2 到 4 MB 之间，加起来 1.6 GB，占了贴图总量的八成。&lt;/p&gt;
+&lt;p&gt;这也说明了为什么「把最大尺寸调小」不是办法：主体只占画布的 0.2%，压缩画布，就是在压缩主体。&lt;/p&gt;
+&lt;h2 id="用图集把透明的部分挤掉"&gt;&lt;a href="#%e7%94%a8%e5%9b%be%e9%9b%86%e6%8a%8a%e9%80%8f%e6%98%8e%e7%9a%84%e9%83%a8%e5%88%86%e6%8c%a4%e6%8e%89" class="header-anchor"&gt;&lt;/a&gt;用图集把透明的部分挤掉
+&lt;/h2&gt;&lt;p&gt;真正对症的是 &lt;strong&gt;Sprite Atlas&lt;/strong&gt;：它按每个 sprite 实际用到的矩形重新打包，而只被图集引用的源图不会再单独进包。屏幕上的位置和像素都不变，美术不用重新导出，场景也不用改。&lt;/p&gt;
+&lt;p&gt;第一轮先做界面：包从 2.2 GB 降到 1.6 GB。第二轮把角色贴图也并进来，降到 &lt;strong&gt;879 MB&lt;/strong&gt;。之后一次完整的 macOS 构建是 860 MB 左右。&lt;/p&gt;
+&lt;p&gt;几个过程里踩到的点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;成员名单要取自真实的构建报告，而不是扫目录。&lt;/strong&gt; 扫目录会把一些当前根本没进包的死素材，经由图集「拽」进包里，越减越肥。后来试过按目录推断「新素材该不该进图集」，实测有 95 张反例。所以名单的真源只能是一次真实构建的报告。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;有些图不能进图集。&lt;/strong&gt; 头发的网格是根据 sprite 原图的坐标算 UV 的（见&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/" &gt;第二篇&lt;/a&gt;），进了图集就会拿到图集坐标，所以 25 张头发图（70 MB）被排除在外。被材质直接引用的贴图也不行：材质引用的是贴图本身，图集替换不了，结果源图和图集各进一份包，反而更大。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;紧凑打包会画出邻居。&lt;/strong&gt; 第一轮开了按透明边缘紧凑打包的选项，结果「是否开始新游戏？」的确认面板后面多出了一个红色的「女巫」——那是图集里邻座 sprite 的像素。界面上的 Image 画的是 sprite 的完整矩形，而紧凑打包会让矩形压到邻居身上。改回按矩形打包，代价是多了 16 MB，但相比原来仍然省了六百多兆。这个选项是第一轮顺手加上的，加的时候没有验证过它到底省了多少——实测下来，几乎所有收益都和它无关。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;一个被禁用的对象也会进包。&lt;/strong&gt; 开场场景里有一个禁用了的 Spine 动画对象，它照样把整套 Spine 图集打进了包。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="压缩为什么没生效"&gt;&lt;a href="#%e5%8e%8b%e7%bc%a9%e4%b8%ba%e4%bb%80%e4%b9%88%e6%b2%a1%e7%94%9f%e6%95%88" class="header-anchor"&gt;&lt;/a&gt;压缩为什么没生效
+&lt;/h2&gt;&lt;p&gt;图集之外，还有 29 张贴图一直是未压缩的。看起来是有人忘了勾压缩，其实不是：GPU 的块压缩要求宽和高都是 4 的倍数，这些图按最大 2048 缩放之后，落在 2048 × 2038、2048 × 1153 这样的尺寸上，压不了，Unity 也不报错，静默退回未压缩的格式。&lt;/p&gt;
+&lt;p&gt;更隐蔽的是验证环节：我们写了个工具比较压缩前后的像素，结果完全相同——因为压缩根本没发生，比的是同一张图（这个坑在&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-verification-traps/" &gt;第九篇&lt;/a&gt;里也写了）。&lt;/p&gt;
+&lt;p&gt;这批图唯一两全的办法，是让美术按 4 的倍数重新导出，这件事还没有做。&lt;/p&gt;
+&lt;h2 id="第一次进近景卡一秒七"&gt;&lt;a href="#%e7%ac%ac%e4%b8%80%e6%ac%a1%e8%bf%9b%e8%bf%91%e6%99%af%e5%8d%a1%e4%b8%80%e7%a7%92%e4%b8%83" class="header-anchor"&gt;&lt;/a&gt;第一次进近景，卡一秒七
+&lt;/h2&gt;&lt;p&gt;另一个问题是：几乎每次第一次进入理发的近景场景，画面都会卡一下。听上去就是个「场景加载慢」的问题。&lt;/p&gt;
+&lt;p&gt;但优化场景加载是条死路。场景切换时，加载这整段都发生在&lt;strong&gt;帷幕关上&lt;/strong&gt;的时候，而且只有零点几秒——就算优化到零，玩家看到的也只是帷幕少关一会儿。真正被看见的卡顿，在帷幕&lt;strong&gt;拉开之后&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;定位分了三步，每一步都只是加计时日志：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;按阶段拆。&lt;/strong&gt; 帷幕关闭、场景加载、等待稳定，各自计时；再量帷幕拉开后 90 帧里最差的一帧。&lt;strong&gt;跑两次&lt;/strong&gt;——只有第一次慢的东西，第二次会塌下去，这样才能区分「这段本来就慢」和「这段只有第一次慢」。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;最差的一帧落在帷幕拉开后的第 0 帧，就把那一帧里的每个调用单独计时。&lt;/strong&gt; 打开帷幕的调用 1 毫秒、显示工具 1 毫秒，&lt;strong&gt;播放背景音乐 1.682 秒&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;拿到调用名，再去查它的资源。&lt;/strong&gt; 三首背景音乐的导入设置都是「加载时解压」、不预加载、不后台加载，而近景这首是一轨 41.5 MB 的 Vorbis。第一次播放时，Unity 就在主线程上把整轨解压成 PCM，之后常驻内存——所以只有第一次卡。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;改成&lt;strong&gt;流式播放 + 后台加载&lt;/strong&gt;之后，这个调用从 1.682 秒降到 0.002 秒，帷幕拉开后的最差帧从 1744 毫秒降到 121 毫秒。编辑器里帧时间的噪声本底大约 85 毫秒，已经贴着本底了。三轨背景音乐常驻的 PCM 接近 100 MB，也一并省了下来。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-size-and-performance/closeshot-frame.svg"
+loading="lazy"
+alt="第一次进近景时，帷幕拉开后最差一帧的耗时：改之前 1744 毫秒，改之后 121 毫秒；编辑器里的噪声本底约 85 毫秒"
+&gt;&lt;/p&gt;
+&lt;p&gt;还有一个小插曲：按文件名找这首音乐时，项目里有两首同样 41.5 MB 的曲子，名字也很像。真正被引用的那首，是按资源的唯一标识反查出来的，另一首只被一个禁用的音源引用着。&lt;strong&gt;查资源按标识反查，不按名字猜。&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id="让它们别再回来"&gt;&lt;a href="#%e8%ae%a9%e5%ae%83%e4%bb%ac%e5%88%ab%e5%86%8d%e5%9b%9e%e6%9d%a5" class="header-anchor"&gt;&lt;/a&gt;让它们别再回来
+&lt;/h2&gt;&lt;p&gt;上面这些都是逐个资源修好的。可问题是：下一次美术交来新素材，它们会带着 Unity 的默认设置进来——未压缩、加载时解压——一切又回到原点。&lt;/p&gt;
+&lt;p&gt;所以加了两道守卫：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;预防&lt;/strong&gt;：项目里的第一个导入后处理脚本。它只管&lt;strong&gt;新素材&lt;/strong&gt;：新贴图默认最大 2048 并开压缩；超过 10 MB 的新音频默认流式播放、后台加载；导入后的尺寸不是 4 的倍数时打一条警告（这时拿到的是缩放后的真实尺寸，是测量，不是推算）。已有资源和手工调过的设置一概不碰。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;检测&lt;/strong&gt;：三条测试——图集名单里的每一项都还存在、图集内容和名单一致、超过 10 MB 的音频必须是流式的。每一条都先做过反向检查：故意改坏，确认它会变红。第三条加上的当天，就抓出了另一首 39 MB 的音乐还是「加载时解压」。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;只有一件事没法自动守住：&lt;strong&gt;新素材该不该进图集。&lt;/strong&gt; 上面说过，按目录推断有 95 张反例。这只能作为流程要求：加了会进包的新图之后，出一次构建，拿报告和名单对比，再手工补进名单。&lt;/p&gt;
+&lt;h2 id="几个代码层面的小优化"&gt;&lt;a href="#%e5%87%a0%e4%b8%aa%e4%bb%a3%e7%a0%81%e5%b1%82%e9%9d%a2%e7%9a%84%e5%b0%8f%e4%bc%98%e5%8c%96" class="header-anchor"&gt;&lt;/a&gt;几个代码层面的小优化
+&lt;/h2&gt;&lt;p&gt;体积之外，还有几处运行时的性能问题，规模都不大，但定位方式很有代表性：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;规则求值每条都克隆一遍世界事实。&lt;/strong&gt; 会话对外暴露的「世界事实」每次读取都会返回一份拷贝，而判断当前有哪些规则可用时，这个读取写在了逐条遍历里——每条规则都克隆一遍整本事实字典。这个查询一帧会被问好几次，快进时还要再乘上去。改成交出一个只读的视图，拷贝只留给真正需要快照的地方。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;快进比连按空格还慢。&lt;/strong&gt; 有两个都说得通的解释：一是每句的淡入动画拖住了节奏，二是推进流程里每一步都要等一帧。两个修法互斥，所以先加探针测：107 帧全部耗在淡入上，第二个解释当场被否掉。原因是快进为了跳过打字机效果，走了一条带 0.5 秒淡入的路径，上限就是每秒两句。改成「像玩家点击那样」：让这一句正常开始，然后当场显完。同一段实测从 492 毫秒降到 12 毫秒，快了大约 40 倍。&lt;/li&gt;
+&lt;li&gt;剪发本身的性能（节流、分批、碎片预算）在&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/" &gt;第二篇&lt;/a&gt;里写过，这里不再重复。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="还没解决的"&gt;&lt;a href="#%e8%bf%98%e6%b2%a1%e8%a7%a3%e5%86%b3%e7%9a%84" class="header-anchor"&gt;&lt;/a&gt;还没解决的
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;那 29 张尺寸不是 4 的倍数的图&lt;/strong&gt;，还要等美术重新导出。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;仓库本身没有变小。&lt;/strong&gt; 我们把一批音效演示视频移出了项目，工作区少了 205 MB，但它们早已在提交历史里，仓库的 &lt;code&gt;.git&lt;/code&gt; 还是 2.1 GB。真正回收要改写历史，会让所有已有的克隆失效，这是另一个量级的决定，没有做。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;没有设定性能预算&lt;/strong&gt;，也没有在目标机器上系统地做过性能测试，目前都是「发现卡顿 → 定位 → 修掉」。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="回头看"&gt;&lt;a href="#%e5%9b%9e%e5%a4%b4%e7%9c%8b" class="header-anchor"&gt;&lt;/a&gt;回头看
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;先量，再改。&lt;/strong&gt; 包体问题的大头是透明画布，卡顿的根源是一轨音频解压，两者都不是第一眼猜的那个原因。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;按「玩家看到了什么」来拆。&lt;/strong&gt; 场景加载发生在帷幕后面，再慢玩家也看不见；真正要优化的是帷幕拉开后的那一帧。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;跑两次。&lt;/strong&gt; 一次性的成本，只有对比第二次才看得出来。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;修好的东西要有人看着。&lt;/strong&gt; 逐个资源修好只解决了这一次，导入守卫和测试才让它们不会随着下一批素材回来。&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>HeirCut 开发手记（九）：看起来在验证，其实验的是别的东西</title><link>https://yufenghuang.tech/p/heircut-devlog-verification-traps/</link><pubDate>Mon, 12 Oct 2026 10:20:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/heircut-devlog-verification-traps/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;「HeirCut 开发手记」第九篇。游戏简介见&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-submit-guidance/" &gt;第一篇&lt;/a&gt;文末。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;做《宫廷理发师》的这一年里，最让我头疼的问题，往往不是哪个检查失败了——失败至少会指出哪里不对。最麻烦的是&lt;strong&gt;检查通过了，但它验的根本不是我以为的那样东西&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;具体是哪一次最头疼，我已经记不清了。但印象里不止一次是这样：排查时以为问题出在一个方向，查到最后才发现在另一个方向。代码里也因此留下了不少调试日志。&lt;/p&gt;
+&lt;p&gt;回头翻记录，这样的坑我们踩了十几个。回头看，它们可以归成几种形状。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-verification-traps/trap-shapes.svg"
+loading="lazy"
+alt="验证陷阱的八种形状：同一样东西比了两遍、验的是旧版本、根本没跑、中途换了被测对象、断言比意图弱、量错了东西、绿是因为没人测、数对了成分不对"
+&gt;&lt;/p&gt;
+&lt;h2 id="同一样东西比了两遍"&gt;&lt;a href="#%e5%90%8c%e4%b8%80%e6%a0%b7%e4%b8%9c%e8%a5%bf%e6%af%94%e4%ba%86%e4%b8%a4%e9%81%8d" class="header-anchor"&gt;&lt;/a&gt;同一样东西比了两遍
+&lt;/h2&gt;&lt;p&gt;为了给打包瘦身，我们想给一批贴图开压缩，写了个工具：分别导出压缩前、压缩后的图，逐像素比较。结果是&lt;strong&gt;每个像素都相同，最大差值为 0&lt;/strong&gt;。看起来像是「压缩几乎无损，可以放心全量开」。&lt;/p&gt;
+&lt;p&gt;实际上压缩根本没生效。GPU 的块压缩格式要求图片的宽和高都是 4 的倍数，这批图经过最大尺寸缩放之后，落在了 2048 × 1153 这种尺寸上——差一个像素就压不了，Unity 也不报错，静默退回未压缩的格式。工具比的，是同一张图的两份拷贝。&lt;/p&gt;
+&lt;p&gt;唯一的破绽是工具两次都打印了「格式 = RGBA32」。之后的判据是：&lt;strong&gt;比较压缩效果之前，先断言格式确实变了&lt;/strong&gt;，变了才比像素。&lt;/p&gt;
+&lt;h2 id="验的是旧版本"&gt;&lt;a href="#%e9%aa%8c%e7%9a%84%e6%98%af%e6%97%a7%e7%89%88%e6%9c%ac" class="header-anchor"&gt;&lt;/a&gt;验的是旧版本
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;改了代码默认值，运行时还是老数。&lt;/strong&gt; 给一个已有组件新加一个可序列化字段时，Unity 会在第一次编译时，把当时的代码默认值烘进 prefab 的导入产物里。之后再改代码里的默认值，产物不会重新生成。我们为一个手感参数调了四轮，每一轮都在核对源码，可运行时读的一直是第一版的值——新加的日志都打出来了，唯独这个字段是旧的。之后调参期间一律用常量，定下来再暴露成字段。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;测试跑的是上一轮编译的程序集。&lt;/strong&gt; 命令行模式下改完测试直接跑，Unity 有时会先用磁盘上旧的程序集跑完，退出时才重新编译。症状是失败信息里的期望值在源码里&lt;strong&gt;根本搜不到&lt;/strong&gt;。判据也就是这个：拿失败信息里的字面量去搜源码，搜不到就是旧程序集，重跑。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;离线检查读的是源头，游戏读的是成品。&lt;/strong&gt; 剧情内容要「重建」成数据库，游戏才读得到。有一次内容格式升级了，离线校验直接读源文件，全绿；可仓库里那份重建好的数据库还是旧格式，几十个依赖它的测试一启动就报错。离线通过，不等于成品已经更新。&lt;/p&gt;
+&lt;h2 id="根本没跑"&gt;&lt;a href="#%e6%a0%b9%e6%9c%ac%e6%b2%a1%e8%b7%91" class="header-anchor"&gt;&lt;/a&gt;根本没跑
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;新测试从来没被执行过。&lt;/strong&gt; 有一阵我们的回归脚本是按测试类的名字过滤、分块跑的。新加的一个测试类，名字不在任何一块的过滤条件里，于是整轮回归一次都没跑到它——而总数看起来毫无异常。直到有一次整程序集跑，才发现总数是 169，不是 166。判据变成：&lt;strong&gt;加了测试，总数就该涨；没涨，就是没跑到。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;过滤条件写成了字符串 &amp;ldquo;null&amp;rdquo;。&lt;/strong&gt; 测试工具要求某个过滤参数必须出现，传了字符串 &lt;code&gt;&amp;quot;null&amp;quot;&lt;/code&gt;，它就去找一个叫 null 的测试，结果是「成功，共 0 项」。看起来全绿，其实一项没跑。之后每次都核对总数。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;监视脚本只认成功信号。&lt;/strong&gt; 等回归跑完的监视脚本，只看「这一块跑完了」的标记有没有出现。有一次编辑器没关，八块测试全部因为「已有一个 Unity 实例在运行」而崩溃退出，监视脚本却把八次崩溃报成了八次跑完。在这之前，同一个脚本还死等过一个已经被删掉的文件，空转了将近四个小时。两次的形状一样：&lt;strong&gt;只写了「成功长什么样」，没写「失败长什么样」。&lt;/strong&gt; 现在退出码只有两个值算正常，其余一律中止。&lt;/p&gt;
+&lt;h2 id="中途换了被测对象"&gt;&lt;a href="#%e4%b8%ad%e9%80%94%e6%8d%a2%e4%ba%86%e8%a2%ab%e6%b5%8b%e5%af%b9%e8%b1%a1" class="header-anchor"&gt;&lt;/a&gt;中途换了被测对象
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;一个测试在回归中途重建了数据库。&lt;/strong&gt; 有个测试为了验证「重建是确定的」，会连着重建两次数据库——就地重建。于是那一轮回归的前四块测的是旧库，后四块测的是新库。前四块里有一整块全红，后四块全绿，看起来像是「只有那一块坏了」。判据：&lt;strong&gt;回归跑完先看工作区，应该和跑之前一样干净。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;上一次实机测试留下的开关。&lt;/strong&gt; 在游戏里实测时打开过一个开发者模式的静态开关，退出 Play 并不会把它复位。紧接着的回归里多红了几个存档相关的测试，看起来像存档回归了。多出来的失败，先想「上一步动过什么静态状态」，再去怀疑代码。&lt;/p&gt;
+&lt;h2 id="断言太弱"&gt;&lt;a href="#%e6%96%ad%e8%a8%80%e5%a4%aa%e5%bc%b1" class="header-anchor"&gt;&lt;/a&gt;断言太弱
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;「是个物体」和「是那个物体」。&lt;/strong&gt; 有个测试检查资源注册表里的每个角色都指向一个 prefab，断言是「解析出来是个游戏物体，并且属于某个 prefab」。注册表里有四条其实指向的是 prefab 里的&lt;strong&gt;子物体&lt;/strong&gt;——国王那条指向的是一片胡子——它们照样满足这条断言，于是这个测试一直是绿的。直到我们想删掉 prefab 里几个看似没用的物体，回归才全红。之后断言收紧成「必须是 prefab 的根」。从那以后，写断言时我会问一句：&lt;strong&gt;满足这条断言的最坏情况长什么样？&lt;/strong&gt; 如果那个最坏情况恰好就是要防的错误，这条断言就没写对。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;只在文件内部找引用。&lt;/strong&gt; 删 prefab 里的物体之前，我们扫了 prefab 文件内部所有对它的引用，确认没人用。可注册表是从文件&lt;strong&gt;外面&lt;/strong&gt;指进来的，内部扫描根本看不见。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;用被检查的东西去检查它自己。&lt;/strong&gt; 机器人核对「词有没有进正确的笔记本页」时，刻意没有用游戏里决定归档的那个函数——两者一起错的时候，它会说「对」。&lt;/p&gt;
+&lt;h2 id="量的东西不对"&gt;&lt;a href="#%e9%87%8f%e7%9a%84%e4%b8%9c%e8%a5%bf%e4%b8%8d%e5%af%b9" class="header-anchor"&gt;&lt;/a&gt;量的东西不对
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;从图片元数据推尺寸。&lt;/strong&gt; 笔记本里词的背景图是被拉伸使用的，从元数据读出来的四档尺寸，和真实的词框完全对不上。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;在界面排版之前量尺寸。&lt;/strong&gt; 词刚生成出来的那一帧，量到的是预制体裸的 10 × 20，算法按这个尺寸摆，进游戏一看，八个词里三个出框、四个重叠。离线测试抓不到，因为测试里的尺寸是直接传进去的——错的不是算法，是喂进去的数。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;字体「完整覆盖」。&lt;/strong&gt; 游戏用静态字体图集，图集里没有的字会直接显示成空白。我们有个检查：字体是否覆盖了字符集里的所有字。它通过了。可字符集本身漏了一整类字段——一些教程文案存在字符串数组里，提取脚本只抓了另一种写法——于是「描述性前缀」的「性」字一直是空白。检查量的是「字体对字符集」，没量「字符集对实际文本」。&lt;/p&gt;
+&lt;h2 id="绿是因为没人测"&gt;&lt;a href="#%e7%bb%bf%e6%98%af%e5%9b%a0%e4%b8%ba%e6%b2%a1%e4%ba%ba%e6%b5%8b" class="header-anchor"&gt;&lt;/a&gt;绿，是因为没人测
+&lt;/h2&gt;&lt;p&gt;有一次要把一个旧分支上的工作拆进新的开发分支。图省事，直接按目录把整个文件取了过来。新分支在那之后对同名文件的改动——250 行——被悄悄覆盖了。类型检查、内容检查、回归，全部是绿的，因为被删掉的那些东西，本来就没有测试覆盖。&lt;/p&gt;
+&lt;p&gt;之后的做法是在旧工作真实的起点上做一次增量提交，再让 git 做三方合并；判据是：&lt;strong&gt;统计「新分支有、结果里却不见了」的行数，必须为零，或者每一行都能解释。&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id="数对了成分不对"&gt;&lt;a href="#%e6%95%b0%e5%af%b9%e4%ba%86%e6%88%90%e5%88%86%e4%b8%8d%e5%af%b9" class="header-anchor"&gt;&lt;/a&gt;数对了，成分不对
+&lt;/h2&gt;&lt;p&gt;项目里有一批重构前就存在的已知失败测试。回归时我们不看「有没有红的」，而看「红的是不是正好那些」。只比数量是不够的：曾经有两轮的失败总数都是 22，可一轮里有一个新失败、同时修好了一个旧的。所以要&lt;strong&gt;按名字逐条比&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;可按名字比也有前提：名单本身得可信。有一次逐个程序集实跑，发现名单漏了四项——那四项早就红了，只是没人记。&lt;/p&gt;
+&lt;h2 id="留下来的两个习惯"&gt;&lt;a href="#%e7%95%99%e4%b8%8b%e6%9d%a5%e7%9a%84%e4%b8%a4%e4%b8%aa%e4%b9%a0%e6%83%af" class="header-anchor"&gt;&lt;/a&gt;留下来的两个习惯
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;反向探针。&lt;/strong&gt; 一个新写的检查，在相信它的绿之前，先故意把被检查的东西改坏，看它会不会变红。不会变红的检查，绿了也没有意义。这个习惯后来几乎成了每次加检查的固定步骤，项目的提交记录里有四十多次提到它。&lt;/p&gt;
+&lt;p&gt;但反向探针也有自己的盲区：它只能证明&lt;strong&gt;已经写下的断言会响应&lt;/strong&gt;，证明不了断言覆盖得够不够全。有一次做了十一处反向探针、全部抓到，复查时才发现有两条断言一开始根本没写。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;写失败信号。&lt;/strong&gt; 每写一个检查、一个监视，先问自己：&lt;strong&gt;如果它现在是错的，这个检查会不会出声？&lt;/strong&gt; 不会，就把判据放宽到它会出声为止。&lt;/p&gt;
+&lt;h2 id="回头看"&gt;&lt;a href="#%e5%9b%9e%e5%a4%b4%e7%9c%8b" class="header-anchor"&gt;&lt;/a&gt;回头看
+&lt;/h2&gt;&lt;p&gt;这些坑长得不一样，形状却很相似：检查本身是对的，只是它验的不是我以为的那样东西——同一样东西比了两遍、比的是旧版本、根本没跑、跑到一半换了对象、断言比意图弱、量错了尺寸、该测的地方没人测。&lt;/p&gt;
+&lt;p&gt;能防住它们的，不是更多的检查，而是对每一个检查多问一句：&lt;strong&gt;它现在到底在看什么？&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>HeirCut 开发手记（八）：让机器把整局玩一遍</title><link>https://yufenghuang.tech/p/heircut-devlog-playthrough-automation/</link><pubDate>Mon, 12 Oct 2026 10:10:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/heircut-devlog-playthrough-automation/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;「HeirCut 开发手记」第八篇。游戏简介见&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-submit-guidance/" &gt;第一篇&lt;/a&gt;文末。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;《宫廷理发师》有三天、九组客人、五个结局。换词让剧情不断分叉：第一天国王怎么选，会影响第二天公主想不想逃；第三天的二公主，要用第一天从公主那里收来的词。&lt;/p&gt;
+&lt;p&gt;这意味着改一处内容，可能在两天之后的某个结局上出问题。靠人从头玩一遍，一个结局就要很久，五个结局、每条分支都走到，几乎不可能每次改动都做。&lt;/p&gt;
+&lt;p&gt;在做自动化之前，每次发布前全靠手动测：我先尽量把每个结局都通关一遍，确认能正常走完，再把最新版本发到开发群里，团队里的其他人也会主动去玩、去找问题。&lt;/p&gt;
+&lt;p&gt;我们最后用了两样东西：一个在纯逻辑层把整局穷举一遍的&lt;strong&gt;推演器&lt;/strong&gt;，和一个在真实场景里从新游戏玩到结局的&lt;strong&gt;机器人&lt;/strong&gt;。前者回答「哪些内容理论上能到达」，后者回答「玩家真的能玩到」。&lt;/p&gt;
+&lt;h2 id="推演器在纯逻辑层把整局穷举一遍"&gt;&lt;a href="#%e6%8e%a8%e6%bc%94%e5%99%a8%e5%9c%a8%e7%ba%af%e9%80%bb%e8%be%91%e5%b1%82%e6%8a%8a%e6%95%b4%e5%b1%80%e7%a9%b7%e4%b8%be%e4%b8%80%e9%81%8d" class="header-anchor"&gt;&lt;/a&gt;推演器：在纯逻辑层把整局穷举一遍
+&lt;/h2&gt;&lt;p&gt;这件事能做，是因为剧情已经&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-encounter-refactor/" &gt;变成了纯逻辑&lt;/a&gt;：推进一组客人，就是不断给会话发命令。推演器直接用游戏里的同一套会话逻辑，不需要 Unity。&lt;/p&gt;
+&lt;h3 id="怎么穷举"&gt;&lt;a href="#%e6%80%8e%e4%b9%88%e7%a9%b7%e4%b8%be" class="header-anchor"&gt;&lt;/a&gt;怎么穷举
+&lt;/h3&gt;&lt;p&gt;推演器按天、按客人组往前走。在一组客人内部：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;状态&lt;/strong&gt;由两部分组成：会话的快照（在哪个阶段、哪段演出、哪些事实），加上玩家手里的东西（收集了哪些词、哪些词打过勾、手里和给出去的道具）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;每一步&lt;/strong&gt;，列出当前阶段能被接受的所有命令：推进对话、把每个合法的词换进每个槽（外加一个「不会被接住的错词」）、递每一件道具、点每个热点、理发成功或失败、摇铃。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;相同的状态只走一次&lt;/strong&gt;。一组客人结束时，按「玩家手里的东西」归并，同样的结果只保留最短的那条路，作为下一组的起点。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;整局穷举下来大约一分钟。&lt;/p&gt;
+&lt;h3 id="它告诉我们什么"&gt;&lt;a href="#%e5%ae%83%e5%91%8a%e8%af%89%e6%88%91%e4%bb%ac%e4%bb%80%e4%b9%88" class="header-anchor"&gt;&lt;/a&gt;它告诉我们什么
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;五个结局是否都能到达&lt;/strong&gt;，以及每个结局最短的一条路线；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;哪些台词、哪些规则永远到不了&lt;/strong&gt;；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;一组覆盖路线&lt;/strong&gt;：每一轮选出「能新覆盖最多台词和规则」的一整局，重复到再也没有新增为止。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;最近一次的结果是：316 句台词里 303 句可达，113 条规则全部可达，18 条路线就能把它们全部覆盖。到不了的 13 句都是需求分析失败时的反馈：其中 11 句在会话之外播放，推演器本来就看不到，机器人在实机里都见到了；另外 2 句在教程里，按设计就不会出现。&lt;/p&gt;
+&lt;p&gt;有一个细节值得记一笔：&lt;strong&gt;有台词到不了时，推演器的退出码仍然是 0。&lt;/strong&gt; 因为「到不了」不一定是错误，可能是故意的教程分支。所以每次跑完都要拿新的清单和上一次的比，而不是只看它有没有报错。&lt;/p&gt;
+&lt;p&gt;推演器也有一个建模上的简化：一句台词里所有能剪的词，它都当作被收集了。这样「收集了哪些词」总是一个超集，覆盖范围只会被高估、不会被低估——但这也意味着它不能回答「玩家漏剪了一个词会怎样」。&lt;/p&gt;
+&lt;h2 id="机器人在真实场景里玩到结局"&gt;&lt;a href="#%e6%9c%ba%e5%99%a8%e4%ba%ba%e5%9c%a8%e7%9c%9f%e5%ae%9e%e5%9c%ba%e6%99%af%e9%87%8c%e7%8e%a9%e5%88%b0%e7%bb%93%e5%b1%80" class="header-anchor"&gt;&lt;/a&gt;机器人：在真实场景里玩到结局
+&lt;/h2&gt;&lt;p&gt;推演器跑在逻辑层，看不见界面：词有没有显示出来、按钮被没被挡住、动画有没有卡住。这些只能在真实的游戏里验证。&lt;/p&gt;
+&lt;p&gt;机器人就是一个在 Unity 里玩游戏的脚本。它的原则是&lt;strong&gt;走玩家走的路&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;点击和拖拽都走真实的界面射线检测。被遮住、没激活的东西，它和玩家一样点不到。&lt;/li&gt;
+&lt;li&gt;推演器给出的路线&lt;strong&gt;只提供选择&lt;/strong&gt;：换哪个词、递哪件道具、理发成功还是失败。收集词、推进对话、翻笔记本、摇铃，都是它看着画面做出的反应。&lt;/li&gt;
+&lt;li&gt;每一步之间隔一小段时间。连续 90 秒没有任何进展，就判失败，并把当时的现场状态一起记下来。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;除了走到结局，它沿路还要做两件核对：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;台词对账&lt;/strong&gt;：推演器预计这条路线会出现的台词，是否全部出现了。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;归档核对&lt;/strong&gt;：每收集一个词，检查它是否进了正确的笔记本页。这条核对&lt;strong&gt;刻意没有用游戏里决定归档的那个函数&lt;/strong&gt;——用同一个函数去检查它自己，两者一起错的时候，它也会说「对」。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;跑之前，机器人会把玩家的存档挪到一边，跑完再放回去。&lt;/p&gt;
+&lt;p&gt;验收分成四类：五个结局各走一遍；覆盖路线全部走一遍；九组客人各自中途存档、退出、继续，核对回到的是不是同一句；笔记本回溯（包括跨天）之后重玩。&lt;/p&gt;
+&lt;h3 id="成本很不均匀"&gt;&lt;a href="#%e6%88%90%e6%9c%ac%e5%be%88%e4%b8%8d%e5%9d%87%e5%8c%80" class="header-anchor"&gt;&lt;/a&gt;成本很不均匀
+&lt;/h3&gt;&lt;p&gt;覆盖路线的收益极不均匀。前 4 条大约 47 分钟，就能覆盖 93% 的内容；剩下的十几条，每条只补几句台词或几条规则，全部跑完要三个半小时左右。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-playthrough-automation/bot-coverage.svg"
+loading="lazy"
+alt="一次跑满 19 条覆盖路线的机器人批次：第 4 条跑完时已经见到 314 句里的 301 句，用时 47 分钟；第 9 条之后不再出现新台词；全部跑完用了 3.6 小时"
+&gt;&lt;/p&gt;
+&lt;p&gt;所以日常只跑前几条，大改之后才跑全量；全量跑的时候也可以随时让它「跑完当前这一局就停」。&lt;/p&gt;
+&lt;h2 id="它们抓到了什么"&gt;&lt;a href="#%e5%ae%83%e4%bb%ac%e6%8a%93%e5%88%b0%e4%ba%86%e4%bb%80%e4%b9%88" class="header-anchor"&gt;&lt;/a&gt;它们抓到了什么
+&lt;/h2&gt;&lt;p&gt;自动化最直接的好处是省时间：批次排好就可以完全放着不管，回来看报告。而它抓到的，往往是人工测试很难碰到的问题：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;台词变透明。&lt;/strong&gt; 卷轴「收起」的动画还没播完，下一句的「展开」就开始了，两段动画互相打架，结果卷轴处于「显示中」，却是完全透明的。只有在打开「跳过理发」、并且走到某一组客人的某一句时才必现，人工几乎不可能碰到。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;词被放回了一页不存在的笔记本。&lt;/strong&gt; 第三天的二公主要复用第一天公主的需求词；把词从合成板撤回时，代码按「当天 + 当前客人」算页，算出了一页根本不存在的「第三天公主」。这是归档核对加上之后，第一次跑覆盖路线就抓到的。之前从没红过，是因为最常跑的那条路线正好不经过这段复用。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;失败的理发播到一半时存档，读不回来。&lt;/strong&gt; 这是编辑器试玩后端的随机自测撞出来的：随机玩几百局，在各种时刻存档再恢复。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;一批永远到不了的内容。&lt;/strong&gt; 推演器列出的「到不了」的台词和规则，拿去和策划逐条确认，删掉了几条早就作废的线索链和几句废弃台词，台词从 322 句减到 316 句，规则从 127 条减到 123 条，剩下的全部可达。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="两个工具互相纠错"&gt;&lt;a href="#%e4%b8%a4%e4%b8%aa%e5%b7%a5%e5%85%b7%e4%ba%92%e7%9b%b8%e7%ba%a0%e9%94%99" class="header-anchor"&gt;&lt;/a&gt;两个工具互相纠错
+&lt;/h2&gt;&lt;p&gt;推演器和机器人对游戏各有一套理解，它们不一致的地方，往往就是问题所在——有时是游戏的问题，有时是工具自己的问题。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;推演器排出了玩家走不通的路线。&lt;/strong&gt; 会话只按规则匹配命令，而「这个槽、这句台词现在在不在屏幕上」，是游戏里的桥在把关。推演器一开始没模拟这一层，于是排出了「去换一个根本没显示出来的槽」「新的一句还没答完就摇铃」这样的路线，机器人一跑就卡住。之后推演器补上了这些界面层的条件。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;推演器把能到的内容判成了到不了。&lt;/strong&gt; 它要求「某条规则点名的那个词，必须是一个会打勾的候选」，可游戏里的桥只按「槽 + 词」来匹配，和打不打勾无关。修正之前，有 9 条规则、22 句台词被误判为不可达。&lt;/p&gt;
+&lt;p&gt;推演器说「到得了」，和玩家「玩得到」，原本应该是同一件事。每次两边对不上，我们都要先问清楚：错的是游戏，还是工具对游戏的理解。&lt;/p&gt;
+&lt;h2 id="机器人自己踩的坑"&gt;&lt;a href="#%e6%9c%ba%e5%99%a8%e4%ba%ba%e8%87%aa%e5%b7%b1%e8%b8%a9%e7%9a%84%e5%9d%91" class="header-anchor"&gt;&lt;/a&gt;机器人自己踩的坑
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;编辑器失去焦点时，Unity 不会正常推进。&lt;/strong&gt; 同一份代码，一次在主菜单卡住、一次在第三天递道具时卡住，保持编辑器在前台就全部通过。这类失败看起来非常像游戏缺陷。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;有人按了 Esc。&lt;/strong&gt; 按 Esc 会打开暂停菜单，机器人卡在某一组客人的理发上，这个「卡住」被当成偶发的游戏缺陷跟了一整天。现在机器人只要看到不是自己打开的菜单，就当场判失败，并写明原因。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;探针把游戏弄坏了。&lt;/strong&gt; 为了观察状态，写了一个每帧读取管理器单例的探针。场景还没加载完时，读单例会新建一个空实例，真正的实例随后被销毁，机器人在第一天结束时报错。第一次失败的原因，是我们自己加的探针。之后编辑器工具里观察状态，一律用「查找已存在的对象」，不碰单例。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="还没解决的"&gt;&lt;a href="#%e8%bf%98%e6%b2%a1%e8%a7%a3%e5%86%b3%e7%9a%84" class="header-anchor"&gt;&lt;/a&gt;还没解决的
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;机器人不看画面。&lt;/strong&gt; 它能确认流程走得通、台词都出现了，但看不出「这里的动画很别扭」「这个按钮太难找」。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;理发是跳过的。&lt;/strong&gt; 要高分时，机器人打开「跳过理发」的辅助开关，所以剪发本身的手感不在它的验证范围内。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;全量覆盖太贵&lt;/strong&gt;，不能每次改动都跑。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="回头看"&gt;&lt;a href="#%e5%9b%9e%e5%a4%b4%e7%9c%8b" class="header-anchor"&gt;&lt;/a&gt;回头看
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;整局验证能做，是因为剧情是数据。&lt;/strong&gt; 推演器直接复用游戏的会话逻辑，这件事在状态机时代做不到。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;两层验证要回答两个不同的问题。&lt;/strong&gt; 推演器回答「理论上能不能到」，机器人回答「玩家能不能玩到」；两者的分歧本身就是信息。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;检查不要用被检查的东西去检查。&lt;/strong&gt; 归档核对如果用了决定归档的那个函数，它永远会同意。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;自动化的失败，先排除自动化本身。&lt;/strong&gt; 失焦、外部按键、自己的探针——这些都长得很像游戏缺陷。&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>HeirCut 开发手记（七）：存档存的是什么</title><link>https://yufenghuang.tech/p/heircut-devlog-save-system/</link><pubDate>Mon, 12 Oct 2026 10:00:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/heircut-devlog-save-system/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;「HeirCut 开发手记」第七篇。游戏简介见&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-submit-guidance/" &gt;第一篇&lt;/a&gt;文末。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;《宫廷理发师》里，一组客人从进门到离开可能要聊十几分钟：寒暄、分析需求、理发、换词、递道具。玩家在中间退出，再点「继续」，期望的是回到刚才那一句。&lt;/p&gt;
+&lt;p&gt;很长一段时间里，游戏做不到这一点，只能回到这组客人进门的那一刻。这篇记录存档是怎么从「回到这组客人的开头」变成「回到这一句」的，以及做这件事时，我们对「存档到底存什么」的几次重新理解。&lt;/p&gt;
+&lt;h2 id="最早只存到第几天"&gt;&lt;a href="#%e6%9c%80%e6%97%a9%e5%8f%aa%e5%ad%98%e5%88%b0%e7%ac%ac%e5%87%a0%e5%a4%a9" class="header-anchor"&gt;&lt;/a&gt;最早：只存到「第几天」
+&lt;/h2&gt;&lt;p&gt;最早的存档是我写的，粒度很粗：一开始只记得玩到了第几天，后来才一步步细化。那时也没有「存档文件」这个概念。笔记本、解锁的工具、蜡烛数、上次玩到哪一天、每位客人剪过的头发轮廓，各自往 PlayerPrefs 里写几个键；新游戏就把它们全部清空。没有版本号，也没有「一次存档」这个整体。&lt;/p&gt;
+&lt;p&gt;直到项目做了一年多，存档才整理成一份文档：原生平台写一个 JSON 文件（先写临时文件再替换，保留一份 &lt;code&gt;.bak&lt;/code&gt;），网页版写进 IndexedDB。文档里是一条&lt;strong&gt;时间线&lt;/strong&gt;，每个节点对应「第几天、第几组客人」：客人组入场时记下当时的笔记本、蜡烛、已解锁的工具、对话记录和发型。「继续」就是回到最后一个节点。&lt;/p&gt;
+&lt;p&gt;为什么不再细一点？不是不想，而是做不到：剧情跑在每个客人身上的状态机里，「一组客人进行到哪一步」散落在状态、协程和界面动画中，想存得更细，麻烦会成倍增加。能稳定存下来的，只有客人组入场这个干净的时刻。&lt;/p&gt;
+&lt;p&gt;这个粒度有一个明显的缺口：一组客人内部发生的事——聊到了哪一句、换过哪个词、理发结果是什么——都没有存下来。&lt;/p&gt;
+&lt;h2 id="想回到这一句要存什么"&gt;&lt;a href="#%e6%83%b3%e5%9b%9e%e5%88%b0%e8%bf%99%e4%b8%80%e5%8f%a5%e8%a6%81%e5%ad%98%e4%bb%80%e4%b9%88" class="header-anchor"&gt;&lt;/a&gt;想回到「这一句」，要存什么
+&lt;/h2&gt;&lt;p&gt;在旧架构里，这个缺口补不上：一组客人进行到哪一步，是散在各个角色的状态机、协程和界面动画里的，没有一样东西能被完整地存下来。&lt;/p&gt;
+&lt;p&gt;&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-encounter-refactor/" &gt;剧情系统重写&lt;/a&gt;之后，情况变了。一次会面的进度本来就是一份数据：当前在哪个里程碑、正在播哪段演出的第几步、记下了哪些事实、每位客人处在什么状态、理发结果、已经处理过的命令、最后显示的是哪一句。把这份数据序列化，就是会面的中途快照。&lt;/p&gt;
+&lt;p&gt;这里有两条原则，决定了快照能不能可靠地恢复：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;存逻辑状态，不存表现。&lt;/strong&gt; 快照里没有协程、没有补间动画、没有动画播到第几帧。恢复时根据逻辑状态把画面重新摆出来。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;只在干净的边界上改状态。&lt;/strong&gt; 剧情的事实和里程碑只在一段演出播完时统一提交。所以无论在哪一刻存档，快照里的状态都是「某段演出开始前」或「结束后」，不会是「台词说了一半、剧情只改了一半」。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;除了会面本身，还有几样东西得跟着快照一起存：那一刻的笔记本、对话记录、镜头在中景还是近景、正在进行的教程。这些都还在旧的界面层里，会面的逻辑层看不到它们，但恢复时缺了任何一样，画面都对不上。&lt;/p&gt;
+&lt;h2 id="继续和回溯是两件相反的事"&gt;&lt;a href="#%e7%bb%a7%e7%bb%ad%e5%92%8c%e5%9b%9e%e6%ba%af%e6%98%af%e4%b8%a4%e4%bb%b6%e7%9b%b8%e5%8f%8d%e7%9a%84%e4%ba%8b" class="header-anchor"&gt;&lt;/a&gt;「继续」和「回溯」是两件相反的事
+&lt;/h2&gt;&lt;p&gt;游戏里有两种「回到过去」。后一种是我们从最开始和策划一起定下的设计：笔记本相当于一次穿越，翻回某一天、某位客人那一页，就回到那个时刻重新来过——所以我们管它叫「回溯」。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;继续游戏&lt;/strong&gt;：回到上次存档的地方，接着玩。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;笔记本回溯 / 切换到某一天&lt;/strong&gt;：回到某一组客人的开头，重新玩。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;它们看起来很像，处理方式却正好相反。&lt;strong&gt;继续是恢复&lt;/strong&gt;，什么都不能丢；&lt;strong&gt;回溯是重玩&lt;/strong&gt;，要把目标那一组以及之后所有的中途状态都清掉，连带那之后剪过的头发。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-save-system/save-timeline.svg"
+loading="lazy"
+alt="继续与回溯的对比：上一行是继续游戏，玩家停在第 2 天第 2 组的对话中间，继续时回到同一句，什么都不清除；下一行是笔记本回溯到第 1 天第 3 组，从这一组（含）往后的中途状态和发型全部被清除"
+&gt;&lt;/p&gt;
+&lt;p&gt;这两条路一度共用了一段「截断时间线」的逻辑，这也是存档里最严重的一个缺陷的来源：玩家点「继续」时，代码先按回溯的规则把当前这组之后的东西截掉——而中途快照当时存在一个单独的文件里，就这样被删了。结果「继续」变成了「从这组开头重来」。更荒唐的是反过来：玩家选「退出但不保存」，那个单独的文件却没被清，本该丢弃的进度反而留了下来。&lt;/p&gt;
+&lt;p&gt;修法有两步。一是把中途快照&lt;strong&gt;并进主存档&lt;/strong&gt;，随主存档一次写盘，不再有「主档存了、快照没存」或反过来的中间状态；二是把两条路彻底分开，「清除中途状态」的那个函数在注释里写明：继续游戏绝不能调用它。&lt;/p&gt;
+&lt;h2 id="几个不显眼的坑"&gt;&lt;a href="#%e5%87%a0%e4%b8%aa%e4%b8%8d%e6%98%be%e7%9c%bc%e7%9a%84%e5%9d%91" class="header-anchor"&gt;&lt;/a&gt;几个不显眼的坑
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;JSON 序列化表达不了「没有」。&lt;/strong&gt; Unity 的 &lt;code&gt;JsonUtility&lt;/code&gt; 无法把一个嵌套对象序列化成 null：写出去再读回来，它会变成一个默认构造的空对象。而存档每次提交都要克隆一遍，克隆就是一次 JSON 往返。于是「这组客人有没有中途状态」的判断永远是「有」，发型永远不会被截断，表现为恢复之后头发变回没剪过的样子。之后的约定是：&lt;strong&gt;存档里的可选值一律用显式的布尔标记&lt;/strong&gt;，读取时只看标记。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;界面上暂时拿着的东西，不能算进存档。&lt;/strong&gt; 玩家把两个需求词放上合成板、还没合成时存档，这两个词既不在笔记本里，也不在任何会被保存的地方。读档后它们就凭空消失了，有时还会让这组客人再也推进不下去。现在写盘前会先把合成板、道具合成台上的东西还回笔记本。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;恢复一个已经结束的会面。&lt;/strong&gt; 如果存档时这组客人已经聊完，恢复时会重建一个没有规则可走、没有台词可播的会话，客人就站在那里不动。现在遇到已完成的会面，直接走完成流程。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;失败的理发播到一半。&lt;/strong&gt; 理发失败后有一段失败的演出。在它播到一半时存档，恢复必定失败：恢复代码要求待提交的理发结果是「完成」，而失败规则给出的是「失败」。这个缺陷不是人发现的，是编辑器试玩后端的一个随机自测——随机玩几百局，每局在随机位置存档再恢复，对比恢复前后看到的东西是否一致——撞出来的。修好之后，又在游戏里让机器人专门在那段演出中途存档退出，确认修复前失败、修复后能一路玩到结局。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;版本号是一道硬闸。&lt;/strong&gt; 主存档的结构版本要求严格相等，升一次版本，玩家现有的存档就全部作废。这在发布前是可以接受的，所以每次升版本都必须在一个地方显式改，不能顺手。剧情内容另有一个内容版本：存档只比较版本号字符串，内容改了而版本号没升，旧的中途快照会被拿去恢复——指向的步骤还在就带着新文字恢复，不在了就失败。这也是为什么&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-content-editor/" &gt;策划编辑器&lt;/a&gt;在内容变了、版本号没变时会拒绝导出。&lt;/p&gt;
+&lt;h2 id="怎么确认它真的能恢复"&gt;&lt;a href="#%e6%80%8e%e4%b9%88%e7%a1%ae%e8%ae%a4%e5%ae%83%e7%9c%9f%e7%9a%84%e8%83%bd%e6%81%a2%e5%a4%8d" class="header-anchor"&gt;&lt;/a&gt;怎么确认它真的能恢复
+&lt;/h2&gt;&lt;p&gt;存档的问题很难靠单元测试兜住，因为它涉及的是「整个游戏在某一刻的样子」。我们靠的是&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-playthrough-automation/" &gt;实机机器人&lt;/a&gt;的两组验收：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;存档继续&lt;/strong&gt;：对九组客人，每组在进行中打开菜单、存档退出、再点继续，核对是不是同一位客人、同一个阶段、同一句台词。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;回溯&lt;/strong&gt;：在不同的天和客人组上用笔记本回溯，包括跨天回溯，确认重玩的进度和第一次一致。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;回溯那组顺带发现了一个设计层面的问题：回溯重玩时，第一次分析需求的教程会再出现一遍，又把词锁住一次。&lt;/p&gt;
+&lt;h2 id="还没解决的"&gt;&lt;a href="#%e8%bf%98%e6%b2%a1%e8%a7%a3%e5%86%b3%e7%9a%84" class="header-anchor"&gt;&lt;/a&gt;还没解决的
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;没有存档迁移。&lt;/strong&gt; 每次升存档版本都直接作废旧档。上线之后就不能再这样了，到时候需要真正的迁移。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;网页版没有备份回落。&lt;/strong&gt; 原生平台读主文件失败时会读 &lt;code&gt;.bak&lt;/code&gt;，网页版的 IndexedDB 只有一份。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="回头看"&gt;&lt;a href="#%e5%9b%9e%e5%a4%b4%e7%9c%8b" class="header-anchor"&gt;&lt;/a&gt;回头看
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;能不能恢复，取决于状态是不是数据。&lt;/strong&gt; 存档的能力不是存档代码给的，是剧情系统重写之后，「进行到哪一步」终于成了一份可以序列化的数据。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;继续和回溯要分开写。&lt;/strong&gt; 它们只是看起来像，一个保留一切，一个清除一切，共用逻辑的那一刻，就埋下了最严重的那个缺陷。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;一次写盘。&lt;/strong&gt; 主档和快照分开存，就一定会有「一个存了、另一个没存」的时候。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;最好的存档测试，是真的存一次、退出、再读回来。&lt;/strong&gt; 随机自测和机器人抓到的，都是单元测试没想到的时刻。&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>HeirCut 开发手记（六）：让策划自己改剧情</title><link>https://yufenghuang.tech/p/heircut-devlog-content-editor/</link><pubDate>Mon, 12 Oct 2026 09:50:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/heircut-devlog-content-editor/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;「HeirCut 开发手记」第六篇。游戏简介见&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-submit-guidance/" &gt;第一篇&lt;/a&gt;文末。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;《宫廷理发师》的剧情，最早是这样交到我手上的：&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-content-editor/planner-sheet.webp"
+width="2000"
+height="453"
+srcset="https://yufenghuang.tech/p/heircut-devlog-content-editor/planner-sheet_hu_cd4e39a360461b58.webp 480w, https://yufenghuang.tech/p/heircut-devlog-content-editor/planner-sheet_hu_1b8267c32f486f83.webp 1024w"
+loading="lazy"
+alt="早期策划交来的剧情表：每位客人一列，按寒暄、需求、需求合成、关键词使用、换词结果、选对或选错需求、物品传递等行写好台词和备注"
+class="gallery-image"
+data-flex-grow="441"
+data-flex-basis="1059px"
+&gt;&lt;/p&gt;
+&lt;p&gt;每位客人一列，每个环节一行：寒暄说什么、需求是什么、哪两个需求词合成什么、换了哪个词会说什么、选错了怎么回应、递什么道具……我照着表格，把台词一句句敲进 Unity 里的配置资源，再把线索词表、需求词表对上编号。剧情每更新一次，这些都要重来一遍，对没对上全靠肉眼。&lt;/p&gt;
+&lt;p&gt;这篇记录这件事是怎么一步步变成「策划自己改、自己试、导出一个包给我」的。&lt;/p&gt;
+&lt;h2 id="问题不只是麻烦"&gt;&lt;a href="#%e9%97%ae%e9%a2%98%e4%b8%8d%e5%8f%aa%e6%98%af%e9%ba%bb%e7%83%a6" class="header-anchor"&gt;&lt;/a&gt;问题不只是「麻烦」
+&lt;/h2&gt;&lt;p&gt;照着表格改，表面上的问题是慢。真正的问题在后面：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;内容和代码绑在一起。&lt;/strong&gt; 一个线索的配置里同时写着它是谁、能换进哪个槽、换进去触发哪个代码事件、在笔记本的哪个点位显示。改一处，要翻好几个地方。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;编号就是数组下标。&lt;/strong&gt; 线索用整数编号，同时也是一个长度 60 的数组的下标。删一个、插一个，后面全乱。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;错了也不知道。&lt;/strong&gt; 表格写错一个词、配置漏一行，要到实机玩到那里才会发现，有时候还发现不了。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;第一步是在&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-encounter-refactor/" &gt;重构剧情系统&lt;/a&gt;的同时，给所有内容换上&lt;strong&gt;稳定的名字&lt;/strong&gt;（比如 &lt;code&gt;clue.princess.garden&lt;/code&gt;、&lt;code&gt;line.d1.king.entry.010&lt;/code&gt;），名字一旦创建就不再改、删掉的不再复用；然后搭一条管线：内容先经过导入和校验，再生成游戏实际读取的数据库。&lt;/p&gt;
+&lt;h2 id="第一条管线仓库里的表格"&gt;&lt;a href="#%e7%ac%ac%e4%b8%80%e6%9d%a1%e7%ae%a1%e7%ba%bf%e4%bb%93%e5%ba%93%e9%87%8c%e7%9a%84%e8%a1%a8%e6%a0%bc" class="header-anchor"&gt;&lt;/a&gt;第一条管线：仓库里的表格
+&lt;/h2&gt;&lt;p&gt;一开始选择的真源是放在仓库里的 Excel 工作簿：策划熟悉表格，管线只要读表就行。&lt;/p&gt;
+&lt;p&gt;管线是这样的：读工作簿 → 导入成内容模型 → 跑一遍校验 → 生成游戏读的数据库资产。校验现在一共有 103 种诊断，比如「同一个名字被两种东西用了」「演出里引用了不存在的台词」「某个客人组从来没被排进任何一天」「同一个时机有两条规则冲突」「同一个槽、同一个词登记了两遍」。很多以前要玩到才发现的错，在导入时就被拦下了。&lt;/p&gt;
+&lt;p&gt;但表格本身很快成了瓶颈。演出的步骤表有九百多行，而下拉校验只设到了第 500 行；说话人和表情没有下拉；工作簿里的说明早就过时了。更根本的问题，是后来做编辑器时才看清的。&lt;/p&gt;
+&lt;h2 id="从表格换成-json"&gt;&lt;a href="#%e4%bb%8e%e8%a1%a8%e6%a0%bc%e6%8d%a2%e6%88%90-json" class="header-anchor"&gt;&lt;/a&gt;从表格换成 JSON
+&lt;/h2&gt;&lt;h3 id="真正的问题表格只能写已经实现的东西"&gt;&lt;a href="#%e7%9c%9f%e6%ad%a3%e7%9a%84%e9%97%ae%e9%a2%98%e8%a1%a8%e6%a0%bc%e5%8f%aa%e8%83%bd%e5%86%99%e5%b7%b2%e7%bb%8f%e5%ae%9e%e7%8e%b0%e7%9a%84%e4%b8%9c%e8%a5%bf" class="header-anchor"&gt;&lt;/a&gt;真正的问题：表格只能写「已经实现的东西」
+&lt;/h3&gt;&lt;p&gt;计划做编辑器时，我发现一个绕不过去的问题：内容表里同时装着两种东西——&lt;strong&gt;创作意图&lt;/strong&gt;（谁说了什么、换了词会怎样）和&lt;strong&gt;实现绑定&lt;/strong&gt;（用哪个表情、哪个动作、哪张图）。于是编辑器只能让策划选「已经实现了的东西」：想让一个新角色说话，得先有这个角色的美术；想写一个新表情，得先有这张脸。&lt;/p&gt;
+&lt;p&gt;所以内容被拆成了三层：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;创作层&lt;/strong&gt;：策划维护，随时可以新增；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;绑定层&lt;/strong&gt;：程序和美术维护，等素材到了再补；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;就绪报告&lt;/strong&gt;：工具自动生成，告诉大家哪些内容还缺素材、缺程序支持。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;还没实现的东西，游戏运行时用占位代替，不会因为缺一张图就跑不起来。&lt;/p&gt;
+&lt;h3 id="换真源但下游一行不改"&gt;&lt;a href="#%e6%8d%a2%e7%9c%9f%e6%ba%90%e4%bd%86%e4%b8%8b%e6%b8%b8%e4%b8%80%e8%a1%8c%e4%b8%8d%e6%94%b9" class="header-anchor"&gt;&lt;/a&gt;换真源，但下游一行不改
+&lt;/h3&gt;&lt;p&gt;创作层换成了一组 JSON 文件：一个项目文件（天的顺序、内容版本），每个客人组一个文件（参与者、台词、规则、演出），每天一个文件，再加几份共享的目录（角色、线索、需求词、道具）。每一行内容都恰好属于一个文件，格式化工具会按规则把它放回该在的位置，策划手改也不会乱。&lt;/p&gt;
+&lt;p&gt;我给它写了一个编译器，&lt;strong&gt;输出和原来的工作簿读出来的东西一模一样&lt;/strong&gt;。这样只需要换掉读取的入口，导入之后的校验、运行时和存档都不用改。&lt;/p&gt;
+&lt;p&gt;切换的判据也很明确：把工作簿反编译成 JSON 再编译回来，和直接读工作簿的结果逐表、逐行、逐列相等。切换那天，迁移生成的 21 个文件和原工作簿逐格比对是 0 差异，两份工作簿随后被删除。&lt;/p&gt;
+&lt;h2 id="编辑器"&gt;&lt;a href="#%e7%bc%96%e8%be%91%e5%99%a8" class="header-anchor"&gt;&lt;/a&gt;编辑器
+&lt;/h2&gt;&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-content-editor/editor-flow.jpg"
+width="1600"
+height="1000"
+srcset="https://yufenghuang.tech/p/heircut-devlog-content-editor/editor-flow_hu_f646c8b00ceb6115.jpg 480w, https://yufenghuang.tech/p/heircut-devlog-content-editor/editor-flow_hu_d45cb5e4f18d2477.jpg 1024w"
+loading="lazy"
+alt="策划编辑器：左侧是客人组和各个页面的导航，中间是一个客人组的流程图，节点是演出，边是触发它的规则"
+class="gallery-image"
+data-flex-grow="160"
+data-flex-basis="384px"
+&gt;&lt;/p&gt;
+&lt;p&gt;编辑器是一个本地网页（React + React Flow），策划在自己的电脑上打开。它能做的事大致是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;看全局&lt;/strong&gt;：几天、几组客人、每天怎么结算，结算条件可以直接选「故事事实」；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;改一个客人组&lt;/strong&gt;：流程图里节点是演出、边是规则；也可以切到&lt;strong&gt;剧本视图&lt;/strong&gt;，按游戏播放的顺序把一组客人读成一份剧本，直接在行内改台词；&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-content-editor/editor-script.jpg"
+width="1600"
+height="1000"
+srcset="https://yufenghuang.tech/p/heircut-devlog-content-editor/editor-script_hu_546b3bfff48f4097.jpg 480w, https://yufenghuang.tech/p/heircut-devlog-content-editor/editor-script_hu_51e094b294d52e88.jpg 1024w"
+loading="lazy"
+alt="剧本视图：按播放顺序把国王这一组读成剧本，需求词「手握王权」「俯视众生」「盘旋」用高亮标出"
+class="gallery-image"
+data-flex-grow="160"
+data-flex-basis="384px"
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;管词&lt;/strong&gt;：线索词、需求词、需求合成配方、道具、理发服务；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;用向导&lt;/strong&gt;：理发通路向导一次生成「分析需求 → 理发 → 成功 / 失败 → 离场」的整套规则；换词分支向导一次建好槽、候选词、每个候选的回应，以及「换了别的词」时的兜底出口；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;用替身&lt;/strong&gt;：新角色还没有美术时，可以先借一个现有角色的形象写剧情，美术到了再换回来，剧情不用动；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;试玩&lt;/strong&gt;：在编辑器里直接玩一组客人。后端和游戏用的是同一套会话逻辑，所以「编辑器里能玩到」和「游戏里能玩到」是同一件事；只是理发和点热点用按钮代替。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;保存时会自动格式化；一键可以跑校验，也可以跑&lt;strong&gt;推演&lt;/strong&gt;——在纯逻辑层把整局游戏穷举一遍，看五个结局是否都能到达、哪些台词永远播不到。&lt;/p&gt;
+&lt;h3 id="交付一个包一次导入"&gt;&lt;a href="#%e4%ba%a4%e4%bb%98%e4%b8%80%e4%b8%aa%e5%8c%85%e4%b8%80%e6%ac%a1%e5%af%bc%e5%85%a5" class="header-anchor"&gt;&lt;/a&gt;交付：一个包，一次导入
+&lt;/h3&gt;&lt;p&gt;策划用的是一个精简过的仓库副本（只有剧情、编辑器和工具，八十兆左右），不需要装 Unity。改完后点「导出内容包」，得到一个文件，里面带着每个文件的校验和、离线检查的结果，以及这份内容依赖了哪些素材。&lt;/p&gt;
+&lt;p&gt;我在 Unity 里用菜单导入：先看预览（新增、修改、删除了什么，有没有版本倒退），确认后导入并重建。导入前后会备份，任何一步失败都整体回滚，备份只留最近两份。&lt;/p&gt;
+&lt;p&gt;这里有一个不起眼但很重要的限制：&lt;strong&gt;内容变了，内容版本号就必须升。&lt;/strong&gt; 存档只比较版本号字符串。版本号没变而内容变了，旧的中途存档会被拿去恢复；如果存档指向的那一步已经被删掉，恢复就会失败，客人不入场。所以导出时，如果内容和上次导出的不一样、版本号却没变，编辑器会直接拒绝，提示先升版本。&lt;/p&gt;
+&lt;h2 id="三次加一天"&gt;&lt;a href="#%e4%b8%89%e6%ac%a1%e5%8a%a0%e4%b8%80%e5%a4%a9" class="header-anchor"&gt;&lt;/a&gt;三次「加一天」
+&lt;/h2&gt;&lt;p&gt;编辑器做出来之后，我们用同一个场景反复测过它：&lt;strong&gt;在现有三天之后，加一个第四天。&lt;/strong&gt; 每次都暴露了不同层面的问题。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;第一次：第二套真源。&lt;/strong&gt; 剧本写好了，校验、推演、自动化测试全部是绿的。进游戏，客人入场后卡了 10 秒，然后报错。原因是一份很早的配置资源，按「天 + 客人」存着需求板的候选词，它是和内容并行的第二套真源，没有第四天的行。所有离线检查都看不到它。修法是缺行时直接从内容合成。第一版修法读的是「正在进行的会话」，可那时会话还没建立——这个循环依赖也只有进游戏才暴露。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;第二次：从编辑器走一遍全流程。&lt;/strong&gt; 用编辑器新建一个第四天的女巫，从录入一路走到游戏里机器人跑到结局，全链路通过。途中补了一串缺口：结算条件选不到新加的故事事实、占位客人不会离场、没有新建演出的入口、推演面板不显示失败原因、没保存的改动刷新就丢……&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;第三次：正式验收。&lt;/strong&gt; 四组客人的第四天，女巫烫发、平民染发、骑士剪发、下人送信，全部通过编辑器界面录入，没有直接写 JSON，新增 27 句台词。导入 Unity 重建后零错误，机器人跑完整条路线到达结局。&lt;/p&gt;
+&lt;p&gt;之后又做了一轮独立复测，不看前面的记录，从头再走一遍：主路径成立，16 个故意做坏的内容包全部被拒绝；同时发现了 5 个问题，比如导入预览不显示具体差异、每次导入留下一百多兆备份从不清理、导出不强制升版本。前两个随后修掉，第三个就是上面说的那道「先升版本」的拦截。&lt;/p&gt;
+&lt;h2 id="踩过的坑"&gt;&lt;a href="#%e8%b8%a9%e8%bf%87%e7%9a%84%e5%9d%91" class="header-anchor"&gt;&lt;/a&gt;踩过的坑
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;离线全绿，不等于游戏里能跑。&lt;/strong&gt; 第二套真源、还没重建的生成库、测试里写死的资源清单，都会让离线检查全绿而游戏出错。每一次的形状都一样：检查验的不是真正被用的那份东西。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;字体会漏字。&lt;/strong&gt; 游戏用的是静态字体图集，内容里出现了图集没有的字，不会报错，而是直接显示成空白。现在重建内容时会同步字符集、重烘图集，校验也会提示字符集过期。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;整目录覆盖文件会静默丢改动。&lt;/strong&gt; 有一次把一个旧分支上的工作拆进新分支时，整目录取了文件，结果新分支在那之后的 250 行改动被悄悄覆盖了，所有检查都是绿的——被删掉的东西本来就没有测试覆盖。之后的规矩是：拆分完统计「新分支有、结果里却不见了」的行数，必须为零，或者每一行都能解释。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="还没验证的"&gt;&lt;a href="#%e8%bf%98%e6%b2%a1%e9%aa%8c%e8%af%81%e7%9a%84" class="header-anchor"&gt;&lt;/a&gt;还没验证的
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;编辑器还没有经历过一次真正的剧情更新。&lt;/strong&gt; 上面的三次测试都是我们自己造的场景；编辑器上线之后，团队还没有过剧情改动。它在真实协作里好不好用，要等下一次更新才知道。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;新表情、新动作、新的结局图&lt;/strong&gt;，编辑器现在只能「声明」，还不能直接用进台词，要等程序和美术补上绑定。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;复杂的嵌套条件&lt;/strong&gt;，还得手改文件。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="回头看"&gt;&lt;a href="#%e5%9b%9e%e5%a4%b4%e7%9c%8b" class="header-anchor"&gt;&lt;/a&gt;回头看
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;工具的边界，其实是责任的边界。&lt;/strong&gt; 表格时代所有东西都要经过我；拆成创作层和绑定层之后，策划管写什么，程序和美术管怎么实现，中间由就绪报告对账。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;换真源，最好让下游感觉不到。&lt;/strong&gt; 编译器输出和原来一模一样，校验、运行时和存档都不用动，迁移才能做到「逐格比对零差异」这种可以验证的程度。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;离线检查要知道自己验的是哪一份东西。&lt;/strong&gt; 三次加一天里最贵的问题，都出在离线检查看不到的地方。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;一个编辑器好不好，最后要由用它的人来回答。&lt;/strong&gt; 这一题还没交卷。&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>HeirCut 开发手记（五）：笔记本里的词怎么摆</title><link>https://yufenghuang.tech/p/heircut-devlog-notebook-layout/</link><pubDate>Mon, 12 Oct 2026 09:40:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/heircut-devlog-notebook-layout/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;「HeirCut 开发手记」第五篇。游戏简介见&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-submit-guidance/" &gt;第一篇&lt;/a&gt;文末，换词玩法见&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-word-swap/" &gt;第四篇&lt;/a&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;《宫廷理发师》里剪下来的词，会落进一本笔记本。笔记本按「天 + 客人」分页：游戏本来就是一天一天、一位客人一位客人往前推的，词和说出它的客人放在一起，玩家翻到那一页，就能想起「这是谁在什么时候说的」。&lt;/p&gt;
+&lt;p&gt;把词摆在纸上，听起来是最不需要讲的事。但它前后改了三版，每一版都是被一个具体的问题推着走的：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;手摆点位&lt;/strong&gt;：我在场景里一个个选位置；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;算法自动排&lt;/strong&gt;：内容开始由策划随时增删，点位跟不上了；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;美术定稿 + 规则兜底&lt;/strong&gt;：算出来的不够好看，要让美术能调，又不能让新词无处可放。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="第一版手摆点位"&gt;&lt;a href="#%e7%ac%ac%e4%b8%80%e7%89%88%e6%89%8b%e6%91%86%e7%82%b9%e4%bd%8d" class="header-anchor"&gt;&lt;/a&gt;第一版：手摆点位
+&lt;/h2&gt;&lt;p&gt;最早的做法很直接：我在笔记本里放了一组空物体当作位置点——线索区 12 个，需求区 9 个——每个词登记一个点位编号，显示时挂到对应的点上。&lt;/p&gt;
+&lt;p&gt;问题是：&lt;strong&gt;点没有大小，词有大小。&lt;/strong&gt; 一个词框的宽度大约是「24 × 字数 + 10」，从一个字到七八个字都有。会不会出框，取决于「哪个词」放在「哪个点」，而 43 个线索词 × 12 个点的组合，没人逐一检查过。页面的边界也不在数据里——那几个容器本身只是 100 × 100 的空壳。&lt;/p&gt;
+&lt;p&gt;后来实测了一次，把每一天的词都收齐：线索区 11 页里有 12 个词越界、5 对重叠；需求区 8 页里有 10 个越界、1 对重叠。更糟的是，线索区 12 个点里有 3 个，连最窄的一个字的词放上去都会越界——它们根本不在纸上，「再调一调点位」是调不好的。&lt;/p&gt;
+&lt;p&gt;真正让这一版撑不下去的，是后来策划可以自己在编辑器里增删词了。新加的词没有点位，最初的处理只能是「报个警告、不显示」。&lt;/p&gt;
+&lt;h2 id="第二版让算法来排"&gt;&lt;a href="#%e7%ac%ac%e4%ba%8c%e7%89%88%e8%ae%a9%e7%ae%97%e6%b3%95%e6%9d%a5%e6%8e%92" class="header-anchor"&gt;&lt;/a&gt;第二版：让算法来排
+&lt;/h2&gt;&lt;p&gt;于是改成让每个词自己找位置。思路是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;每个词从&lt;strong&gt;自己 ID 的哈希&lt;/strong&gt;出发，沿一个低差异序列在整页上试位置，第一个「不出框、和已经放下的词离得够远」的位置就落下；&lt;/li&gt;
+&lt;li&gt;先试满幅度的倾斜，空间紧张时再逐档扶正；&lt;/li&gt;
+&lt;li&gt;整个过程是确定的：同一页、同一组词，永远排出同样的结果。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;它用构造保证了四件事，并且每一条都有测试：&lt;strong&gt;不出框、不重叠（互相留 10 像素）、追加新词不移动老词、结果确定。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这里最有意思的弯路是「排成行」。最初的版本是一行一行地放，再给每个词加一点随机抖动，想让它看起来像随手贴的。可无论怎么抖，读起来都像一行字——&lt;strong&gt;共享的基线本身就会被读成一行&lt;/strong&gt;。把抖动预留出来，空页面也会处处收紧，最后只剩 ±3.4 像素和 1 度；改成放完再检查，又还是偏规整。最后干脆不排行了。&lt;/p&gt;
+&lt;h3 id="两个测量陷阱"&gt;&lt;a href="#%e4%b8%a4%e4%b8%aa%e6%b5%8b%e9%87%8f%e9%99%b7%e9%98%b1" class="header-anchor"&gt;&lt;/a&gt;两个测量陷阱
+&lt;/h3&gt;&lt;p&gt;这一版还踩了两个量尺寸的坑，它们的共同点是：&lt;strong&gt;看起来在测量，其实量到的不是真东西。&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;词框尺寸不能从图片的元数据推。&lt;/strong&gt; 词的背景图有四档，读它们的导入信息会得到 75、104、136、201 × 61 四种尺寸。可这些图在游戏里是被拉伸着用的，真实的词框是「24 × 字数 + 10」宽、44 高。从元数据推出来的数字和模型，两样都是错的。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;要等界面排完版再量。&lt;/strong&gt; 词刚实例化出来的那一帧，量到的是预制体裸的 10 × 20。算法按这个尺寸摆，放进游戏里，8 个词有 3 个越界、4 个重叠。离线测试抓不到这个问题，因为测试是直接把尺寸传进去的。修法是先强制界面排一次版再量，并加了一道守卫：量到的尺寸小得不正常，就直接报错。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="代价"&gt;&lt;a href="#%e4%bb%a3%e4%bb%b7" class="header-anchor"&gt;&lt;/a&gt;代价
+&lt;/h3&gt;&lt;p&gt;算出来的布局解决了「出框」和「新词无处可放」，但两个代价也很明显：容量有限（一页线索区大约能放 17 个两字词，或 6 个七字词），而且&lt;strong&gt;它是对的，但不一定好看&lt;/strong&gt;。哪里该疏一点、哪里可以挤一挤、长词旁边该不该多留空，这些都是审美判断，写死在算法的权重里谁都调不动。&lt;/p&gt;
+&lt;h2 id="第三版美术定稿规则兜底"&gt;&lt;a href="#%e7%ac%ac%e4%b8%89%e7%89%88%e7%be%8e%e6%9c%af%e5%ae%9a%e7%a8%bf%e8%a7%84%e5%88%99%e5%85%9c%e5%ba%95" class="header-anchor"&gt;&lt;/a&gt;第三版：美术定稿，规则兜底
+&lt;/h2&gt;&lt;p&gt;第三版的思路是我提的：既然好不好看要美术说了算，那就&lt;strong&gt;把规则做成一个工具交给美术，让美术调到满意，再把结果固定下来&lt;/strong&gt;；规则留在游戏里，只负责处理美术没见过的词。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-notebook-layout/notebook-tool.jpg"
+width="1600"
+height="1000"
+srcset="https://yufenghuang.tech/p/heircut-devlog-notebook-layout/notebook-tool_hu_574e471894f59f8f.jpg 480w, https://yufenghuang.tech/p/heircut-devlog-notebook-layout/notebook-tool_hu_ee7864fcb31694b1.jpg 1024w"
+loading="lazy"
+alt="笔记本摆放工具：美术在浏览器里调参数、对比方案、手动拖动词语，再导出方案文件"
+class="gallery-image"
+data-flex-grow="160"
+data-flex-basis="384px"
+&gt;&lt;/p&gt;
+&lt;h3 id="规则"&gt;&lt;a href="#%e8%a7%84%e5%88%99" class="header-anchor"&gt;&lt;/a&gt;规则
+&lt;/h3&gt;&lt;p&gt;规则分两层。&lt;strong&gt;硬规则&lt;/strong&gt;必须满足：词框在可放置区内、词与词之间留足最小间距、倾斜角度随字数减小（长词不倾斜）、放不下就报告而不是画出框、已经定下的位置不因为增删别的词而改变。&lt;strong&gt;软目标&lt;/strong&gt;用来打分：长词之间多留空、疏密自适应、不贴页边、不排成行列、略微偏向中心、短词尽量倾斜。&lt;/p&gt;
+&lt;p&gt;算法对每个候选位置先用硬规则过滤，再按软目标打分取最好的；整页会重试若干次，取丢词最少的那一次。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-notebook-layout/notebook-rules.jpg"
+width="640"
+height="755"
+srcset="https://yufenghuang.tech/p/heircut-devlog-notebook-layout/notebook-rules_hu_3193fbbb358cfc45.jpg 480w, https://yufenghuang.tech/p/heircut-devlog-notebook-layout/notebook-rules_hu_6fd6d784766f0ac0.jpg 1024w"
+loading="lazy"
+alt="第一天公主那一页，打开了「可放置区」和「词框轮廓」：虚线框是词可以落的范围，每个词外面一圈是它占的位置；长词放平，短词带一点角度"
+class="gallery-image"
+data-flex-grow="84"
+data-flex-basis="203px"
+&gt;&lt;/p&gt;
+&lt;h3 id="美术的工具"&gt;&lt;a href="#%e7%be%8e%e6%9c%af%e7%9a%84%e5%b7%a5%e5%85%b7" class="header-anchor"&gt;&lt;/a&gt;美术的工具
+&lt;/h3&gt;&lt;p&gt;美术拿到的是一个双击就能用的网页：左边调参数（间距、长词间距、倾斜、页边留白……），右边是用游戏真实素材画出来的每一页。可以生成几套方案并排对比，也可以勾选「手动摆放」直接拖动某个词。调满意了，下载一个方案文件交回来。&lt;/p&gt;
+&lt;p&gt;我这边把方案文件&lt;strong&gt;烘焙&lt;/strong&gt;成一张位置表：每一页、每个词的位置和角度。烘焙时会再检查一遍硬规则，有违反就拒绝写入。&lt;/p&gt;
+&lt;h3 id="游戏里怎么用"&gt;&lt;a href="#%e6%b8%b8%e6%88%8f%e9%87%8c%e6%80%8e%e4%b9%88%e7%94%a8" class="header-anchor"&gt;&lt;/a&gt;游戏里怎么用
+&lt;/h3&gt;&lt;p&gt;游戏读这张表：&lt;strong&gt;表里有的词，原样钉在美术定的位置；表里没有的词（策划后来新加的），由同一套规则围着已经钉住的词自动排开。&lt;/strong&gt; 如果页面的几何尺寸和烘焙时对不上（超过 1 个单位），说明界面改过了，整页退回规则排，并报一次警告。&lt;/p&gt;
+&lt;p&gt;内容里增删了词，跑一遍校验命令就知道表是否过期；过期就重新烘焙。&lt;/p&gt;
+&lt;h3 id="同一份算法跑在两个地方"&gt;&lt;a href="#%e5%90%8c%e4%b8%80%e4%bb%bd%e7%ae%97%e6%b3%95%e8%b7%91%e5%9c%a8%e4%b8%a4%e4%b8%aa%e5%9c%b0%e6%96%b9" class="header-anchor"&gt;&lt;/a&gt;同一份算法，跑在两个地方
+&lt;/h3&gt;&lt;p&gt;美术的工具是网页，游戏是 Unity。如果两边各写一份算法，美术看到的和游戏里排出来的迟早会不一样。&lt;/p&gt;
+&lt;p&gt;我的做法是：&lt;strong&gt;C# 是唯一的真源&lt;/strong&gt;，游戏和命令行工具编译的是同一份源码；网页里的 JavaScript 版本逐句移植，并有一个对拍测试——用十几组参数、每一页，逐位比较两边的输出，任何一处不同就失败。测试写好后，我故意把 JS 里一个常数的第十位改掉，它当场就红了。&lt;/p&gt;
+&lt;h2 id="一个后来才发现的问题取走一个词其他词都动了"&gt;&lt;a href="#%e4%b8%80%e4%b8%aa%e5%90%8e%e6%9d%a5%e6%89%8d%e5%8f%91%e7%8e%b0%e7%9a%84%e9%97%ae%e9%a2%98%e5%8f%96%e8%b5%b0%e4%b8%80%e4%b8%aa%e8%af%8d%e5%85%b6%e4%bb%96%e8%af%8d%e9%83%bd%e5%8a%a8%e4%ba%86" class="header-anchor"&gt;&lt;/a&gt;一个后来才发现的问题：取走一个词，其他词都动了
+&lt;/h2&gt;&lt;p&gt;位置表接进游戏后，又冒出一个问题：把一个词从笔记本拖进槽里，这一页&lt;strong&gt;剩下的词全都换了位置&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;原因在规则兜底那一层：没有烘焙条目的词由规则排，而规则的输入是「现在书里有哪些词」。取走一个，输入变了，结果自然也变了。这违反了第三版最根本的承诺——&lt;strong&gt;一个词的位置，只取决于它在哪一页、它是哪个词。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;修法是把输入从「书里现在有的词」改成「这一页内容里所有能归档的词」：不在书里的词也参与排版，只是作为看不见的影子，排完就丢掉，只画出现有的。教程里那一页之前没传「当前页」，等于「没有这一页」，也一并修了。&lt;/p&gt;
+&lt;h2 id="还没解决的"&gt;&lt;a href="#%e8%bf%98%e6%b2%a1%e8%a7%a3%e5%86%b3%e7%9a%84" class="header-anchor"&gt;&lt;/a&gt;还没解决的
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;有些页面的规则满足不了。&lt;/strong&gt; 需求区比较矮，按定稿的参数，有几页做不到规定的页边留白，词贴着边。这是看过之后接受的取舍，不是 bug。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;有一个玩家拿不到的词仍然占着位置。&lt;/strong&gt; 它在内容里存在、在笔记本里留了空间，但当前路线里收集不到。这是内容层面的问题，还没处理。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;换词之后字数变了，按哪个排&lt;/strong&gt;，以及参数文件改了要不要算作内容版本的变化，都还没定。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="回头看"&gt;&lt;a href="#%e5%9b%9e%e5%a4%b4%e7%9c%8b" class="header-anchor"&gt;&lt;/a&gt;回头看
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;每一版的推动力都来自「谁来改」。&lt;/strong&gt; 我一个人维护时手摆点位够用；策划能自己加词时，就必须由规则来排；要好看时，就必须让美术能调。布局方式，最后其实是在回答「这件事归谁管」。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;「对」和「好看」要分开交给不同的东西。&lt;/strong&gt; 硬规则保证对，美术保证好看，规则只为美术没见过的情况兜底。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;量尺寸之前，先确认量的是不是真东西。&lt;/strong&gt; 拉伸过的图片、还没排版的界面，都会给出一个看起来合理的错数字。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;一个承诺要落实到输入上。&lt;/strong&gt; 「位置只取决于页和词」这句话写在文档里是不够的，规则的输入里只要混进了「现在书里有什么」，承诺就会被打破。&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>HeirCut 开发手记（四）：把客人说的话剪下来</title><link>https://yufenghuang.tech/p/heircut-devlog-word-swap/</link><pubDate>Mon, 12 Oct 2026 09:30:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/heircut-devlog-word-swap/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;「HeirCut 开发手记」第四篇。游戏简介见&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-submit-guidance/" &gt;第一篇&lt;/a&gt;文末。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;《宫廷理发师》的点子，是主策划在理发的时候想到的：理发师总爱和客人聊这聊那。那如果理发师能把客人说过的话「剪」下来，再拼进别人的话里呢？&lt;/p&gt;
+&lt;p&gt;这就是游戏的核心玩法——换词。客人说话时，有些词可以用剪刀剪下来，收进笔记本；有些句子里留着一个可以替换的位置，把笔记本里的词拖进去，说话的人就会顺着新的意思说下去，剧情也跟着改变。&lt;/p&gt;
+&lt;p&gt;这篇记录换词是怎么实现的、换进去的词怎么一路影响到结局，以及设计上我们一直在纠结的取舍。&lt;/p&gt;
+&lt;h2 id="一个例子"&gt;&lt;a href="#%e4%b8%80%e4%b8%aa%e4%be%8b%e5%ad%90" class="header-anchor"&gt;&lt;/a&gt;一个例子
+&lt;/h2&gt;&lt;p&gt;第一天的女巫来烫发。她说：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;只有湿冷的环境，头发才不容易烫伤。可惜，现在是&lt;strong&gt;正午&lt;/strong&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;「正午」是一个可以替换的位置。如果玩家把之前从公主那里剪下来的「晚上」换进去，女巫会说「你真走运，夜晚是最佳的烫发时机」，烫发就不会把她的头发烫焦；如果换进去的是别的词，她会说「抱歉，我刚刚似乎失言了，请忘掉吧」，一切照旧。&lt;/p&gt;
+&lt;p&gt;整套机制就是这个循环的重复：&lt;strong&gt;听 → 剪 → 换 → 看它变成现实。&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id="一句话是一串小块"&gt;&lt;a href="#%e4%b8%80%e5%8f%a5%e8%af%9d%e6%98%af%e4%b8%80%e4%b8%b2%e5%b0%8f%e5%9d%97" class="header-anchor"&gt;&lt;/a&gt;一句话是一串小块
+&lt;/h2&gt;&lt;h3 id="富文本不够用"&gt;&lt;a href="#%e5%af%8c%e6%96%87%e6%9c%ac%e4%b8%8d%e5%a4%9f%e7%94%a8" class="header-anchor"&gt;&lt;/a&gt;富文本不够用
+&lt;/h3&gt;&lt;p&gt;最开始考虑过直接用 TextMeshPro 的富文本：给可剪的词加个标签、上个颜色。但我们要的不只是「显示得不一样」：每个词要能单独点击、能被剪走、剪走后留下一个同样宽度的空位、空位要能接住拖进来的词，换进去的词长短不同还要重新排版。&lt;/p&gt;
+&lt;p&gt;富文本做不到这些，于是改成了&lt;strong&gt;把一句话拆成一串小块&lt;/strong&gt;：普通文字是一块，每个可剪的词是一块独立的可交互对象，它们放在一个会自动换行的布局里，看起来就像一句完整的话。&lt;/p&gt;
+&lt;p&gt;建库第一周的版本就是这样做的。台词里用标签标出可剪的词，大致是这样（示意）：&lt;/p&gt;
+&lt;div class="code-block" data-lang="text"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;今晚是公主的大婚，为我&amp;lt;demand type=&amp;#34;Curl&amp;#34;&amp;gt;烫&amp;lt;/demand&amp;gt;一个属于&amp;lt;clue id=&amp;#34;…&amp;#34;&amp;gt;巫女&amp;lt;/clue&amp;gt;教母的发型。&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;解析器把它拆成「文字块 + 词块」，词被剪掉时，原位置换成一个等宽的空槽：&lt;/p&gt;
+&lt;div class="code-block" data-lang="csharp"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;span class="lnt"&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-csharp" data-lang="csharp"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// 第一版：剪下一个词，原位置换成同样宽度的空槽&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="k"&gt;void&lt;/span&gt; &lt;span class="n"&gt;CutKeyword&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Keyword&lt;/span&gt; &lt;span class="n"&gt;keyword&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;ClueBook&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Instance&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;AddClue&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;keyword&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ClueID&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;keyword&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Text&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;keyword&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;transform&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;position&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;var&lt;/span&gt; &lt;span class="n"&gt;slot&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Instantiate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;slotPrefab&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dialogContainer&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;slot&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;transform&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SetSiblingIndex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;keyword&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;transform&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetSiblingIndex&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;slot&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetComponent&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;LayoutElement&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;().&lt;/span&gt;&lt;span class="n"&gt;preferredWidth&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;keyword&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetComponent&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;LayoutElement&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;().&lt;/span&gt;&lt;span class="n"&gt;preferredWidth&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Destroy&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;keyword&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gameObject&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;「把话剪下来」这个比喻，从第一版代码就在了——它和理发用的是同一把剪刀。&lt;/p&gt;
+&lt;h3 id="现在的写法"&gt;&lt;a href="#%e7%8e%b0%e5%9c%a8%e7%9a%84%e5%86%99%e6%b3%95" class="header-anchor"&gt;&lt;/a&gt;现在的写法
+&lt;/h3&gt;&lt;p&gt;后来剧情改成由内容驱动（见&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-encounter-refactor/" &gt;第三篇&lt;/a&gt;），台词里不再直接写数字 ID，而是用占位符引用有名字的槽和词：&lt;/p&gt;
+&lt;div class="code-block" data-lang="json"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;text&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;我能做的，也仅仅是在婚礼上{slot.king.vow}……然后告诉百姓，{slot.king.peace}。&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;tokens&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nt"&gt;&amp;#34;tokenType&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;ReplacementSlot&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;&amp;#34;slotId&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;slot.king.vow&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;&amp;#34;defaultTextKey&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;text.token.king.vow.default&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;},&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nt"&gt;&amp;#34;tokenType&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;ReplacementSlot&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;&amp;#34;slotId&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;slot.king.peace&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;&amp;#34;defaultTextKey&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;text.token.king.peace.default&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;运行时再把它翻译回旧的标签格式，交给原来的解析和显示代码。显示层基本没动，换掉的只是「词从哪里来」。&lt;/p&gt;
+&lt;h2 id="换进去的词怎么改变剧情"&gt;&lt;a href="#%e6%8d%a2%e8%bf%9b%e5%8e%bb%e7%9a%84%e8%af%8d%e6%80%8e%e4%b9%88%e6%94%b9%e5%8f%98%e5%89%a7%e6%83%85" class="header-anchor"&gt;&lt;/a&gt;换进去的词，怎么改变剧情
+&lt;/h2&gt;&lt;h3 id="每个槽有一张候选表"&gt;&lt;a href="#%e6%af%8f%e4%b8%aa%e6%a7%bd%e6%9c%89%e4%b8%80%e5%bc%a0%e5%80%99%e9%80%89%e8%a1%a8" class="header-anchor"&gt;&lt;/a&gt;每个槽有一张候选表
+&lt;/h3&gt;&lt;p&gt;每个槽在内容里登记了一组&lt;strong&gt;候选词&lt;/strong&gt;。比如国王上面那句话的两个槽：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;槽&lt;/th&gt;
+&lt;th&gt;默认&lt;/th&gt;
+&lt;th&gt;候选&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;婚礼上要做的事&lt;/td&gt;
+&lt;td&gt;宣读誓词&lt;/td&gt;
+&lt;td&gt;离开；把婚约撕个粉碎&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;告诉百姓的话&lt;/td&gt;
+&lt;td&gt;这门婚约将带来和平&lt;/td&gt;
+&lt;td&gt;我对狗毛过敏&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;玩家确认之后，卷轴烧掉、重新长出一句换好的话；按下一句时，这次替换才真正提交，去匹配剧情规则。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;两个槽同时换成「把婚约撕个粉碎」和「我对狗毛过敏」，国王会走向「反抗」这条线，婚礼被推迟，第一天才能往下走。&lt;/li&gt;
+&lt;li&gt;只把第一个槽换成「离开」，国王会走另一条线；这个选择还会一直影响到第二天公主有没有出逃的念头。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="只有一条路通向结局"&gt;&lt;a href="#%e5%8f%aa%e6%9c%89%e4%b8%80%e6%9d%a1%e8%b7%af%e9%80%9a%e5%90%91%e7%bb%93%e5%b1%80" class="header-anchor"&gt;&lt;/a&gt;只有一条路通向结局
+&lt;/h3&gt;&lt;p&gt;换词能影响很多东西：客人接下来说什么、后面播哪段演出、这次会面怎么收尾。但真正能影响&lt;strong&gt;结局&lt;/strong&gt;的，只有一条路：&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-word-swap/word-to-ending.svg"
+loading="lazy"
+alt="换进去的词如何影响结局：候选词被换进槽 → 如果这个候选会「打勾」，就记进账本 → 账本投影成故事事实 → 当天结算读取故事事实，决定走向哪一天或哪个结局"
+&gt;&lt;/p&gt;
+&lt;p&gt;一个词换进去，如果它在候选表里被标成「打勾」，就会记进笔记本的账本；账本被投影成一组&lt;strong&gt;故事事实&lt;/strong&gt;；每天结束时，结算只读这些故事事实。&lt;/p&gt;
+&lt;p&gt;这个限制是被一次测试逼出来的。我们用编辑器加过一个测试用的第四天，在客人的会面里用「设置事实」记下「玩家是否起疑」。推演器显示所有规则都能触发，可两个结局里有一个怎么都到不了——因为会面里设置的事实，在会面结束后就没了，结算根本看不到它。改成由换词打勾来推导之后，立刻就通了。&lt;/p&gt;
+&lt;p&gt;还有一个后来才分清的概念：&lt;strong&gt;「登记为候选」和「换进去会打勾」是两件事。&lt;/strong&gt; 一开始两者是绑在一起的，后来专门加了一个开关把它们拆开：有些候选是给将来的路线预留的，现在换进去不会改变任何东西。&lt;/p&gt;
+&lt;h2 id="设计上的取舍"&gt;&lt;a href="#%e8%ae%be%e8%ae%a1%e4%b8%8a%e7%9a%84%e5%8f%96%e8%88%8d" class="header-anchor"&gt;&lt;/a&gt;设计上的取舍
+&lt;/h2&gt;&lt;h3 id="自由度和工作量"&gt;&lt;a href="#%e8%87%aa%e7%94%b1%e5%ba%a6%e5%92%8c%e5%b7%a5%e4%bd%9c%e9%87%8f" class="header-anchor"&gt;&lt;/a&gt;自由度和工作量
+&lt;/h3&gt;&lt;p&gt;我们希望玩家放下一个词的时候，是真心期待「它会怎么变成现实」。可每多一个能被接住的词，就要多写一段回应、多一条规则、多一次测试。&lt;/p&gt;
+&lt;p&gt;现在的内容里一共有 13 个槽、20 个候选词。换句话说，大部分槽只有一两个词会被「接住」。为了不让剩下的词显得无效，我们做了几件事：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;错词也有回应。&lt;/strong&gt; 换进候选之外的词，客人会自己圆回去（「抱歉，我刚刚似乎失言了」），剧情照常继续，而不是直接拒绝玩家的操作。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;有些槽只是为了参与感。&lt;/strong&gt; 国王问「这是……{谁}给你的？」，这个槽不影响路线，也不影响后面的对话，只是让玩家在关键时刻有手可动。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;错词不能把客人卡住。&lt;/strong&gt; 如果换进去的词没有任何规则接住，客人就会停在那里。所以每句带槽的话都要留一个「默认往下走」的出口；编辑器里的换词向导会自动把它补上。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="正确的词和好玩的词"&gt;&lt;a href="#%e6%ad%a3%e7%a1%ae%e7%9a%84%e8%af%8d%e5%92%8c%e5%a5%bd%e7%8e%a9%e7%9a%84%e8%af%8d" class="header-anchor"&gt;&lt;/a&gt;「正确的词」和「好玩的词」
+&lt;/h3&gt;&lt;p&gt;更难的是另一个问题：我们到底希望玩家多换词、多试，还是只有换对了才算「正确」？&lt;/p&gt;
+&lt;p&gt;如果只有一个正确答案，换词就变成了填空题，会有点无趣。我们的做法是特意放进一些天马行空的候选——「我对狗毛过敏」「开门见山」——让玩家在荒诞里找到乐趣。这种荒诞感是我们想要的，但也是最难想到的。用策划陈2333 的话说：这主要靠对脑电波。&lt;/p&gt;
+&lt;p&gt;这个问题到现在也没有完全解决。&lt;/p&gt;
+&lt;h3 id="需求词另一种收集"&gt;&lt;a href="#%e9%9c%80%e6%b1%82%e8%af%8d%e5%8f%a6%e4%b8%80%e7%a7%8d%e6%94%b6%e9%9b%86" class="header-anchor"&gt;&lt;/a&gt;需求词：另一种收集
+&lt;/h3&gt;&lt;p&gt;除了线索词，客人话里还有&lt;strong&gt;需求词&lt;/strong&gt;，它们决定这次理发要做什么。需求词和线索词一样是剪下来的，但用法不同：玩家要把两个需求词放进合成板，合成出一个服务。比如国王的「手握王权」加「俯视众生」，合成「鹰翼」，这是对的；换成「手握王权」加「盘旋」，合成的是「蛇纹」，国王会不高兴。&lt;/p&gt;
+&lt;p&gt;需求词和合成板都是最初策划案里就有的循环，合成板长什么样是后来讨论出来的。实现上有一个容易被「修」坏的设计：**需求词属于玩家，不属于客人。**第三天的二公主要代替公主去联姻，她的需求就要用第一天从公主那里收来的词去合成。代码里查「有没有这个需求词」是跨角色的，这是故意的。&lt;/p&gt;
+&lt;h2 id="几个实现上的坑"&gt;&lt;a href="#%e5%87%a0%e4%b8%aa%e5%ae%9e%e7%8e%b0%e4%b8%8a%e7%9a%84%e5%9d%91" class="header-anchor"&gt;&lt;/a&gt;几个实现上的坑
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;拖到哪个槽，由词说了算。&lt;/strong&gt; 玩家拖词时瞄的是鼠标指针，但词是以指针为中心画出来的，两者对不上。后来改成「槽的中心落在被拖的词里面」，指针只用来打破平局；高亮和放下用的是同一个判断，免得高亮了一个槽，放下时却去了另一个。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;挡住「跳过」的是状态，不是按钮。&lt;/strong&gt; 带槽的句子在换词完成前不能跳过。最早的做法是把「下一句」按钮藏起来，结果空格键和点击跳过照样能过。后来把这个判断挪到了推进对话的地方。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;读档后需求词被算了两遍。&lt;/strong&gt; 一句话里有几个需求词没收集，就不让往下走。读档重新显示这句话时，已经收集过的词又被算回去了，而它已经点不动了，对话框就一直晃、游戏卡死。之前没出事，是因为玩家能重复收集同一个词，正好把计数凑平——&lt;strong&gt;一个缺陷在掩盖另一个缺陷&lt;/strong&gt;，堵掉前者就暴露了后者。修法是让「显示成已收集」和「计数」共用同一个判断。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;词拿出来再放回去，要回到原来那一页。&lt;/strong&gt; 笔记本按天、按客人分页。词被拖进槽、又撤回时，最初是按「当天 + 当前客人」算页的，结果跨天复用的词会回到一个根本不存在的页。现在是从哪一页拿的，就回哪一页。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="还没解决的"&gt;&lt;a href="#%e8%bf%98%e6%b2%a1%e8%a7%a3%e5%86%b3%e7%9a%84" class="header-anchor"&gt;&lt;/a&gt;还没解决的
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;「正确的词」和「好玩的词」之间的平衡&lt;/strong&gt;，还在调。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;候选词是写死的。&lt;/strong&gt; 更多的候选意味着更多的手写回应。我们讨论过让 AI 来判断一个任意的词放进来「说不说得通」，并想好了边界：AI 只能在作者写好的几种结果里选，不能凭空创造剧情事实，超时就退回写好的文本，结果和存档一起保存，读档时不重新问。但这目前只停留在计划里。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="回头看"&gt;&lt;a href="#%e5%9b%9e%e5%a4%b4%e7%9c%8b" class="header-anchor"&gt;&lt;/a&gt;回头看
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;一个词就是一个对象。&lt;/strong&gt; 放弃富文本、把句子拆成一串可交互的小块，是这套玩法能做下去的前提。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;换词能影响的东西很多，但通向结局的只有一条路。&lt;/strong&gt; 这条限制一开始是踩坑踩出来的，后来反而成了内容作者最好理解的一条规则。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;自由度要有兜底。&lt;/strong&gt; 错词有回应、没被接住的词不卡人、有些槽只为参与感——这些都是为了让「随便试试」不会被惩罚。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;最难的部分不在代码里。&lt;/strong&gt; 想出「我对狗毛过敏」这样的词，比实现它难得多。&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>HeirCut 开发手记（三）：把剧情从状态机里搬出来</title><link>https://yufenghuang.tech/p/heircut-devlog-encounter-refactor/</link><pubDate>Mon, 12 Oct 2026 09:20:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/heircut-devlog-encounter-refactor/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;「HeirCut 开发手记」第三篇。游戏简介见&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-submit-guidance/" &gt;第一篇&lt;/a&gt;文末。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;《宫廷理发师》的剧情靠换词推动：理发师把宾客说过的词「剪」下来，换进别人的句子里，对方就会做出不同的决定，后面几天来店里的客人和他们说的话也跟着改变。&lt;/p&gt;
+&lt;p&gt;这套剧情系统我写过两遍。第一版是每个客人身上挂一台状态机，写起来快，但在换词面前一路膨胀，最后谁也不敢动。第二版把剧情改成了数据，由一个不依赖 Unity 的纯逻辑层来推进。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-encounter-refactor/architecture.svg"
+loading="lazy"
+alt="重构前后对比：之前剧情分支写在 GuestManager 和每个客人的专属状态里；之后剧情是 JSON 内容，由纯逻辑的 EncounterSession 推进，经桥和端口驱动旧视图"
+&gt;&lt;/p&gt;
+&lt;p&gt;这篇记录两件事：第一版为什么撑不住，以及我们怎么在游戏一直能玩的前提下，把它一点点换掉。&lt;/p&gt;
+&lt;h2 id="第一版每个客人一台状态机"&gt;&lt;a href="#%e7%ac%ac%e4%b8%80%e7%89%88%e6%af%8f%e4%b8%aa%e5%ae%a2%e4%ba%ba%e4%b8%80%e5%8f%b0%e7%8a%b6%e6%80%81%e6%9c%ba" class="header-anchor"&gt;&lt;/a&gt;第一版：每个客人一台状态机
+&lt;/h2&gt;&lt;h3 id="为什么选状态机"&gt;&lt;a href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e9%80%89%e7%8a%b6%e6%80%81%e6%9c%ba" class="header-anchor"&gt;&lt;/a&gt;为什么选状态机
+&lt;/h3&gt;&lt;p&gt;最初的设计里，每位客人的流程都是固定的一套：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;进门 → 寒暄 → 分析需求 → 理发 → 满意 / 不满意 → 闲聊 → 离开&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这几乎就是为状态机准备的。每位客人身上挂一台状态机，每个阶段一个状态类，一个状态做完自己的事，就切到下一个。在 GameJam 的节奏下，这样写又快又清楚，这个选择在当时没有错。&lt;/p&gt;
+&lt;h3 id="换词接不进去"&gt;&lt;a href="#%e6%8d%a2%e8%af%8d%e6%8e%a5%e4%b8%8d%e8%bf%9b%e5%8e%bb" class="header-anchor"&gt;&lt;/a&gt;换词接不进去
+&lt;/h3&gt;&lt;p&gt;问题出在换词。换词的效果是「在某句话里换了某个词，剧情就走向另一个分支」。它可能发生在流程的任何位置，可能改变后面的一切，而且每位客人、每个词的后果都不一样。&lt;/p&gt;
+&lt;p&gt;状态机里没有一个自然的位置来放它。最后的做法是：&lt;strong&gt;每种换词结果，都接一个专属状态&lt;/strong&gt;。&lt;/p&gt;
+&lt;div class="code-block" data-lang="csharp"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-csharp" data-lang="csharp"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// 女巫的一次换词生效后，管理器收到一个专属事件，然后临时塞进一个专属状态&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="k"&gt;void&lt;/span&gt; &lt;span class="n"&gt;OnD1WitchSatTimeToDawn&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;D1WitchSetTimeToDawnEvent&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;_currentGuest&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Fsm&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;AddState&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;D1WitchDawn&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;_currentGuest&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;_currentGuest&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Fsm&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SwitchState&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;D1WitchDawn&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;_groupIndex&lt;/span&gt;&lt;span class="p"&gt;++;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;规则函数里也开始出现写死的角色和线索编号：&lt;/p&gt;
+&lt;div class="code-block" data-lang="csharp"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-csharp" data-lang="csharp"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// 女巫中午来卷发会烫焦头发，除非线索 4 或 5 被打过勾&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;guestName&lt;/span&gt; &lt;span class="p"&gt;==&lt;/span&gt; &lt;span class="n"&gt;GuestName&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Witch&lt;/span&gt; &lt;span class="p"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="p"&gt;!&lt;/span&gt;&lt;span class="n"&gt;clue4Ticked&lt;/span&gt; &lt;span class="p"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="p"&gt;!&lt;/span&gt;&lt;span class="n"&gt;clue5Ticked&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;膨胀来得比我印象中早得多。翻早期的版本记录：状态机文件在建库第二周出现，一开始只有 8 个通用状态；&lt;strong&gt;又过了一周多，接第一天的女巫时，就已经多出了 3 个剧情专属状态&lt;/strong&gt;。之后每接一组客人就长几个，不到三个月涨到 13 个，之后一年多没再变，最后一个加在重构开始的前两天。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-encounter-refactor/story-states.svg"
+loading="lazy"
+alt="剧情专属状态的数量：项目第一个月开始出现，不到三个月涨到 13 个，重构前达到 14 个，重构时一次删光"
+&gt;&lt;/p&gt;
+&lt;p&gt;其实那时就察觉到不对了。早期的提交记录里能看到几次挣扎：第二个月先后「搭多客人框架，为重构换词系统做准备」「重构客人系统」，第三个月又「准备重置换词功能」。但状态机这个骨架一直没动，专属状态还在继续增加。推倒重来的成本太大，而比赛有截止日期，只能将错就错。&lt;/p&gt;
+&lt;h3 id="它到底哪里不好"&gt;&lt;a href="#%e5%ae%83%e5%88%b0%e5%ba%95%e5%93%aa%e9%87%8c%e4%b8%8d%e5%a5%bd" class="header-anchor"&gt;&lt;/a&gt;它到底哪里不好
+&lt;/h3&gt;&lt;p&gt;参展之后，我写了一份重构计划，第一节是诊断，归纳下来是四个根因：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;没有唯一的流程所有者。&lt;/strong&gt; 剧情分支、对话播放、UI 动画、异步加载都混在角色状态里。多人同时出场时，谁来推进剧情，取决于哪个角色的资源先加载完。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;剧情写在代码里。&lt;/strong&gt; 线索、道具、对话直接引用 C# 的状态类、事件类和数组下标。策划写好的剧情，必须由我翻译成代码才能生效。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;存档只能存到「第几天第几组客人」。&lt;/strong&gt; 一次会面进行到哪一步，没办法表达，读档就得从这组客人进门重来。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;资源没有稳定的标识。&lt;/strong&gt; 文件路径和文件名承担了运行时语义，改个名字就可能出问题。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;最折磨人的是第二条。策划在表格里写好剧情，我照着表格改代码，每改一处都要翻好几个文件。&lt;/p&gt;
+&lt;h2 id="第二版剧情是数据"&gt;&lt;a href="#%e7%ac%ac%e4%ba%8c%e7%89%88%e5%89%a7%e6%83%85%e6%98%af%e6%95%b0%e6%8d%ae" class="header-anchor"&gt;&lt;/a&gt;第二版：剧情是数据
+&lt;/h2&gt;&lt;h3 id="一次会面一个推进者"&gt;&lt;a href="#%e4%b8%80%e6%ac%a1%e4%bc%9a%e9%9d%a2%e4%b8%80%e4%b8%aa%e6%8e%a8%e8%bf%9b%e8%80%85" class="header-anchor"&gt;&lt;/a&gt;一次会面，一个推进者
+&lt;/h3&gt;&lt;p&gt;新架构的核心概念是&lt;strong&gt;会面&lt;/strong&gt;（Encounter）：一组客人从进门到离开是一次会面，由一个会话对象作为&lt;strong&gt;唯一&lt;/strong&gt;的推进者。会话的状态只有三样：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;里程碑&lt;/strong&gt;：进门、等待对话、等待分析、准备理发、理发中、展示结果、理发后互动、等待离开、结束。所有客人共用这一副骨架。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;事实&lt;/strong&gt;：剧情状态，比如「国王已经做出决定」。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;正在播放的演出&lt;/strong&gt;，以及播到了第几步。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="玩家的操作是命令剧情的分支是规则"&gt;&lt;a href="#%e7%8e%a9%e5%ae%b6%e7%9a%84%e6%93%8d%e4%bd%9c%e6%98%af%e5%91%bd%e4%bb%a4%e5%89%a7%e6%83%85%e7%9a%84%e5%88%86%e6%94%af%e6%98%af%e8%a7%84%e5%88%99" class="header-anchor"&gt;&lt;/a&gt;玩家的操作是命令，剧情的分支是规则
+&lt;/h3&gt;&lt;p&gt;玩家的每个操作都被翻译成一条&lt;strong&gt;命令&lt;/strong&gt;：推进对话、确认换词、递道具、点热点、提交分析、完成理发、摇铃，一共九种。命令进来后，会话在内容里找一条匹配的&lt;strong&gt;规则&lt;/strong&gt;：当前在哪个里程碑、是什么命令、对着谁、在哪句话的哪个槽里换进了哪个词。匹配上了，就播放规则指定的那段演出。&lt;/p&gt;
+&lt;p&gt;以前「女巫换词后塞进一个专属状态」的写法，现在变成了内容里的一条规则。比如国王的一次换词（节选）：&lt;/p&gt;
+&lt;div class="code-block" data-lang="json"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;ruleId&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;flow.d1.king.confirm_giver&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;fromMilestone&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;PostHaircutInteraction&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;commandType&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;ConfirmReplacement&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;filterLineId&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;line.d1.king.entry.010&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;filterSlotId&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;slot.king.intent&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;conditionId&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;condition.d1.king.giver_available&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;sequenceId&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;seq.d1.king.replace_first&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;priority&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;210&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;factMutations&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;fact.d1.king.decision_ready=Boolean:true&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;读法是：在理发后的互动阶段，玩家对国王某句话里的某个槽确认了换词，并且条件满足，就播放 &lt;code&gt;replace_first&lt;/code&gt; 这段演出，结束后记下「国王已经做出决定」。&lt;/p&gt;
+&lt;p&gt;演出由十几种通用步骤组成：说话、等待推进、换表情、移动角色、设置事实、给线索、开始理发、分支……没有一种是为某个角色写的。&lt;/p&gt;
+&lt;p&gt;有两条约定让这套东西比较牢靠：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;同一优先级有两条规则同时匹配时，直接拒绝。&lt;/strong&gt; 这说明内容写错了，不应该让运行时去猜。导入内容时也会先检查一遍。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;事实和里程碑只在一段演出结束时统一提交。&lt;/strong&gt; 演出播到一半存档、读档，看到的永远是「这段开始前」或「这段结束后」的状态，不会出现对话说了一半、剧情只改了一半。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="不依赖-unity-的好处"&gt;&lt;a href="#%e4%b8%8d%e4%be%9d%e8%b5%96-unity-%e7%9a%84%e5%a5%bd%e5%a4%84" class="header-anchor"&gt;&lt;/a&gt;不依赖 Unity 的好处
+&lt;/h3&gt;&lt;p&gt;新架构里负责领域模型、内容和推进的几个程序集，都声明了不引用 UnityEngine。这个约束一开始像是自找麻烦，后来回报很大：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;测试不用启动 Unity，直接用 &lt;code&gt;dotnet&lt;/code&gt; 编译运行；&lt;/li&gt;
+&lt;li&gt;后来写的&lt;strong&gt;离线推演器&lt;/strong&gt;能在纯逻辑层穷举整局游戏，检查五个结局是否都可达、有没有死路、哪些台词永远播不到；&lt;/li&gt;
+&lt;li&gt;策划编辑器里的「试玩」，用的也是同一份逻辑。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="怎么在不停工的情况下换掉它"&gt;&lt;a href="#%e6%80%8e%e4%b9%88%e5%9c%a8%e4%b8%8d%e5%81%9c%e5%b7%a5%e7%9a%84%e6%83%85%e5%86%b5%e4%b8%8b%e6%8d%a2%e6%8e%89%e5%ae%83" class="header-anchor"&gt;&lt;/a&gt;怎么在不停工的情况下换掉它
+&lt;/h2&gt;&lt;h3 id="为什么不停下来重写"&gt;&lt;a href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e4%b8%8d%e5%81%9c%e4%b8%8b%e6%9d%a5%e9%87%8d%e5%86%99" class="header-anchor"&gt;&lt;/a&gt;为什么不停下来重写
+&lt;/h3&gt;&lt;p&gt;参赛之后我们决定继续做，也终于有了时间重构。但停下来重写不现实：这期间随时可能要出一个能玩的版本，给发行看，或者给玩家试玩。所以必须保证&lt;strong&gt;任何时候游戏都能完整跑通&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;最后的做法是新旧两套并存，一组客人一组客人地迁移。新架构写成纯逻辑；旧架构继续跑还没迁移的客人；中间只有一座&lt;strong&gt;桥&lt;/strong&gt;，把旧的视图和输入翻译成新架构的命令，再把新架构要播放的步骤翻译成对旧视图的调用。&lt;/p&gt;
+&lt;p&gt;桥一开始也是直接去拿各种单例的，最多时有 81 处。后来改成&lt;strong&gt;端口&lt;/strong&gt;：桥只声明自己需要哪些能力（对话、需求板、笔记本、理发……），实现放在视图那一侧，由外面构造好交给桥。做完这一步，桥对旧单例的引用降到了 0。&lt;/p&gt;
+&lt;h3 id="先迁最难的三组"&gt;&lt;a href="#%e5%85%88%e8%bf%81%e6%9c%80%e9%9a%be%e7%9a%84%e4%b8%89%e7%bb%84" class="header-anchor"&gt;&lt;/a&gt;先迁最难的三组
+&lt;/h3&gt;&lt;p&gt;迁移按阶段推进：先以参展版为准，逐组客人记录每条路线该发生什么；再搭纯逻辑骨架和内容校验；然后才开始迁客人。&lt;/p&gt;
+&lt;p&gt;第一批没有挑最简单的，而是挑了覆盖面最广的三组：国王（一段换词同时提交两个槽）、公主（两次换词决定后面走剪发线还是卷发线）、下人和公爵（&lt;strong&gt;两个人同时在场&lt;/strong&gt;）。最后一组是故意的：多人会面正是旧架构最混乱的地方——谁推进、谁说话、谁先离场——如果新架构在这里站不住，迁完单人客人也没有意义。&lt;/p&gt;
+&lt;p&gt;这三组的实机缺陷四天就清零了，再过一周多，剩下六组也迁完。14 个剧情专属状态一次删掉，状态机文件从两千多行降到一千行左右。&lt;/p&gt;
+&lt;h3 id="怎么确认行为没变"&gt;&lt;a href="#%e6%80%8e%e4%b9%88%e7%a1%ae%e8%ae%a4%e8%a1%8c%e4%b8%ba%e6%b2%a1%e5%8f%98" class="header-anchor"&gt;&lt;/a&gt;怎么确认「行为没变」
+&lt;/h3&gt;&lt;p&gt;重构最怕的是悄悄改变了行为。我们靠的是几层东西：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;基线&lt;/strong&gt;：迁移前逐组记录了参展版的行为，迁完一组就对照一组。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;按名字比对回归结果&lt;/strong&gt;：项目里有一批重构前就存在的已知失败，判据不是「有没有红的」，而是「红的是不是正好那些」。只看失败数量，会漏掉「多了一个新失败、同时修好了一个旧失败」的情况。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;缺陷表&lt;/strong&gt;：迁移过程中记了大约一百个缺陷，每个都有根因和修法。&lt;/li&gt;
+&lt;li&gt;后来又加上了离线推演器，以及一个在真实场景里从新游戏一路玩到结局的机器人。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;自动化测试也从三百多项涨到了七百多项。&lt;/p&gt;
+&lt;h2 id="迁移中记住的几件事"&gt;&lt;a href="#%e8%bf%81%e7%a7%bb%e4%b8%ad%e8%ae%b0%e4%bd%8f%e7%9a%84%e5%87%a0%e4%bb%b6%e4%ba%8b" class="header-anchor"&gt;&lt;/a&gt;迁移中记住的几件事
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;缺内容时不能悄悄退回旧路径。&lt;/strong&gt; 有一组客人，玩家把报纸交给平民之后，报纸被收走了，却没有任何对话。查下来是内容里少了一行排程，这组客人根本没被交给新架构；而代码在找不到排程时会悄悄退回旧状态机，旧路径里接收道具后的对话早就注释掉了。所有检查都是绿的。迁移收尾时，我们删掉了「新架构可以不接管」的开关，缺内容就直接报错。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;能记录的，就不要推断。&lt;/strong&gt; 读档时镜头该在中景还是近景，最初是从「是不是国王、在哪个里程碑、正在播哪段演出」推出来的，靠两张手写名单加一个国王专属分支。名单早就和内容对不上了，而且玩家点镜子切换视角是纯视图层的操作，领域层根本看不到，怎么推都推不出来。最后把镜头直接写进了存档。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;回退之前先证明因果。&lt;/strong&gt; 有一次给公主的一条规则加了过滤条件，三个测试变红，看上去像是新规则抢走了匹配，我就回退了。可是回退之后再跑，失败的还是那三个测试，一字不差——真正的原因是同一批改动里的另一处。两次运行的失败名单，本来可以立刻证伪那个猜测。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;计划会被测量推翻。&lt;/strong&gt; 原计划要把桥里的端口实现挪出去，动手前一量，发现大部分单例引用根本不在端口实现里，照计划做完也降不了多少，于是改成了上面说的端口装配。同一时期，「把四万多行的主场景拆开」那部分被搁置了：只能手工拆、只能实机验证，投入产出比太低。&lt;/p&gt;
+&lt;h2 id="现在的样子"&gt;&lt;a href="#%e7%8e%b0%e5%9c%a8%e7%9a%84%e6%a0%b7%e5%ad%90" class="header-anchor"&gt;&lt;/a&gt;现在的样子
+&lt;/h2&gt;&lt;p&gt;最直观的变化是&lt;strong&gt;维护成本降下来了&lt;/strong&gt;。以前加一段剧情分支，要新建状态类、注册事件、写处理函数、再加角色判断；现在大部分情况下只需要在内容里写规则和演出。&lt;/p&gt;
+&lt;p&gt;更大的收益在内容生产上。剧情先从「策划写表格、我照着改代码」变成了「表格直接编译成数据库」，后来又换成一组 JSON 文件，并有了&lt;strong&gt;策划编辑器&lt;/strong&gt;：策划可以自己编辑剧情、看流程图、在编辑器里试玩，然后导出内容包交给我导入。以前每一处剧情改动都要经过我，现在不用了。&lt;/p&gt;
+&lt;h3 id="还没做完的"&gt;&lt;a href="#%e8%bf%98%e6%b2%a1%e5%81%9a%e5%ae%8c%e7%9a%84" class="header-anchor"&gt;&lt;/a&gt;还没做完的
+&lt;/h3&gt;&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-encounter-refactor/lines-over-time.svg"
+loading="lazy"
+alt="2026 年 8–10 月两个文件的行数：旧状态机从 2026 行降到约 990 行，桥从 702 行增长到 3962 行"
+&gt;&lt;/p&gt;
+&lt;p&gt;状态机变小了，但复杂度并没有凭空消失：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;桥越来越大。&lt;/strong&gt; 它承担了把新架构翻译给所有旧视图的工作，后来的一些功能（比如按住快进对话）也加在了它身上。按计划，它要等旧视图都换掉之后才能删。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;旧状态机还有一个外壳。&lt;/strong&gt; 14 个通用状态负责角色入场、离场这类表现，但已经不能再作为剧情入口。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;主场景依然是一个超级场景&lt;/strong&gt;，拆分搁置了。&lt;/li&gt;
+&lt;li&gt;「当前是第几组客人」这个推进状态，还留在旧的管理器里。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="回头看"&gt;&lt;a href="#%e5%9b%9e%e5%a4%b4%e7%9c%8b" class="header-anchor"&gt;&lt;/a&gt;回头看
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;第一版的状态机不是错的选择。&lt;/strong&gt; 它对固定流程很合适，错在换词让流程不再固定之后，我们还在往里塞。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;流程要有唯一的所有者。&lt;/strong&gt; 谁推进剧情，必须是一个明确的对象，而不是取决于谁先加载完。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;剧情一旦变成数据，就可以被校验、被穷举、被策划直接编辑。&lt;/strong&gt; 这是这次重构最大的回报，也是策划编辑器能做出来的前提。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;边跑边换是可行的，但离不开一座桥和一份基线。&lt;/strong&gt; 桥让新旧两套能共存，基线让「行为没变」有了具体的含义。代价是桥本身会长成新的遗留，这笔账还没还完。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;后半程的很多工作是和 AI 编程助手一起完成的，这部分我打算单独写一篇。&lt;/p&gt;</description></item><item><title>HeirCut 开发手记（二）：把头发当成纸来剪</title><link>https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/</link><pubDate>Mon, 12 Oct 2026 09:10:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;「HeirCut 开发手记」第二篇。游戏简介见&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-submit-guidance/" &gt;第一篇&lt;/a&gt;文末。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;《宫廷理发师》里，玩家要拿剪刀给客人剪头发：沿着任意曲线、剪任意多刀，划过的地方断开，断下来的头发掉落，剩下的形状决定客人满不满意。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/cut.gif"
+width="360"
+height="384"
+srcset="https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/cut_hu_496871e34e4ac5e3.gif 480w, https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/cut_hu_af7f3837ab44a056.gif 1024w"
+loading="lazy"
+alt="游戏中给公主剪发：白色轨迹划过长发，轨迹以下的头发被剪断"
+class="gallery-image"
+data-flex-grow="93"
+data-flex-basis="225px"
+&gt;&lt;/p&gt;
+&lt;p&gt;现在的做法可以用一句话概括：&lt;strong&gt;每片头发是一个多边形，剪刀轨迹膨胀成一条带子，两者做布尔差集。&lt;/strong&gt; 这篇记录这套方案是怎么来的、具体怎么实现，以及为了手感踩过的坑。&lt;/p&gt;
+&lt;h2 id="头发是纸不是发丝"&gt;&lt;a href="#%e5%a4%b4%e5%8f%91%e6%98%af%e7%ba%b8%e4%b8%8d%e6%98%af%e5%8f%91%e4%b8%9d" class="header-anchor"&gt;&lt;/a&gt;头发是纸，不是发丝
+&lt;/h2&gt;&lt;p&gt;最早的目标是《托卡美发沙龙》那样的拟真效果：头发是一根根有物理的发丝，剪断哪里，下半截就掉下来。我用 Verlet 积分模拟过发丝，但效果一直调不好——发丝多到看起来像头发，性能就扛不住；少到性能能接受，看起来就像几根面条。&lt;/p&gt;
+&lt;p&gt;转机来自美术方向。游戏最终定成了&lt;strong&gt;纸片、立体书&lt;/strong&gt;的风格：角色像是用纸剪出来、立在舞台上的。头发因此不再是一束发丝，而是一张张纸片，剪头发也就变成了剪纸。&lt;/p&gt;
+&lt;p&gt;剪纸的第一反应是切 Sprite，但现成的方案大多只能沿一条直线切成两半。Unity 商店里有个插件演示效果不错，细看才发现曲线剪口也是用几条直线同时切出来的。理发需要的是任意曲线、任意多次，这两条路都不够。&lt;/p&gt;
+&lt;p&gt;最后的灵感来自 &lt;strong&gt;2D 可破坏地形&lt;/strong&gt;：爆炸能在地面上挖出任意形状的坑，本质是多边形之间的布尔运算。把头发当成多边形，剪刀当成另一个多边形，问题就变成了一个成熟的几何问题。&lt;/p&gt;
+&lt;p&gt;这个方向定得很早，建库没几天，第一次提交的剪发就已经是这个方案了。后面的工作，基本都是在它上面打磨。&lt;/p&gt;
+&lt;h2 id="一刀是怎么剪开的"&gt;&lt;a href="#%e4%b8%80%e5%88%80%e6%98%af%e6%80%8e%e4%b9%88%e5%89%aa%e5%bc%80%e7%9a%84" class="header-anchor"&gt;&lt;/a&gt;一刀是怎么剪开的
+&lt;/h2&gt;&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/cut-pipeline.svg"
+loading="lazy"
+alt="一刀剪开的四步：轨迹 → 膨胀成带子 → 头发减去带子 → 碰到生根区域的留下、其余掉落"
+&gt;&lt;/p&gt;
+&lt;h3 id="头发的表示"&gt;&lt;a href="#%e5%a4%b4%e5%8f%91%e7%9a%84%e8%a1%a8%e7%a4%ba" class="header-anchor"&gt;&lt;/a&gt;头发的表示
+&lt;/h3&gt;&lt;p&gt;每片头发的几何真源是一份拓扑：若干块区域，每块有一条外轮廓，可能还带着几个洞。&lt;/p&gt;
+&lt;div class="code-block" data-lang="csharp"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-csharp" data-lang="csharp"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// 简化后的结构&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;sealed&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;HairRegion&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Vector2&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;outer&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Vector2&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;holes&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;sealed&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;HairTopology&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;HairRegion&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;regions&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;碰撞体和渲染用的网格都从这份拓扑生成，评分和存档读的也是它。只有一份几何真相，就不会出现「看到的形状」和「算分的形状」对不上。&lt;/p&gt;
+&lt;p&gt;之所以要支持多块和洞，是因为一刀可以把一片头发剪成好几块，也可以在中间剪出一个窟窿。早期只存一条轮廓，剪出洞之后，洞会被当成实心的。&lt;/p&gt;
+&lt;h3 id="轨迹膨胀成带子"&gt;&lt;a href="#%e8%bd%a8%e8%bf%b9%e8%86%a8%e8%83%80%e6%88%90%e5%b8%a6%e5%ad%90" class="header-anchor"&gt;&lt;/a&gt;轨迹膨胀成带子
+&lt;/h3&gt;&lt;p&gt;几何运算用的是 &lt;a class="link" href="https://github.com/AngusJohnson/Clipper2" target="_blank" rel="noopener"
+&gt;Clipper2&lt;/a&gt;。鼠标轨迹是一条没有面积的折线，没法直接和多边形做差集，所以先把它向两侧膨胀成一条带子：&lt;/p&gt;
+&lt;div class="code-block" data-lang="csharp"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-csharp" data-lang="csharp"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kt"&gt;var&lt;/span&gt; &lt;span class="n"&gt;offset&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ClipperOffset&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;offset&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;AddPath&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;JoinType&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Round&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;EndType&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Round&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// 转角和两端都用圆角&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;offset&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Execute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;width&lt;/span&gt; &lt;span class="p"&gt;*&lt;/span&gt; &lt;span class="n"&gt;Scale&lt;/span&gt; &lt;span class="p"&gt;*&lt;/span&gt; &lt;span class="m"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ribbon&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// Clipper 用整数坐标，Scale = 1000&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;第一版不是这样做的：它在每两个采样点之间各自生成一个细长矩形，再拼成剪口。矩形和矩形之间没有衔接，转角处就会出现缺口和锯齿。换成带圆角的整体偏移之后，剪口才是一条连续光滑的曲线。&lt;/p&gt;
+&lt;h3 id="头发减去带子"&gt;&lt;a href="#%e5%a4%b4%e5%8f%91%e5%87%8f%e5%8e%bb%e5%b8%a6%e5%ad%90" class="header-anchor"&gt;&lt;/a&gt;头发减去带子
+&lt;/h3&gt;&lt;p&gt;差集的结果是一棵树：外轮廓下面挂着洞，洞里面还可能有岛。按树的层级把结果重建成区域和洞，一刀剪成好几块、剪出窟窿，都不需要额外处理。&lt;/p&gt;
+&lt;h3 id="哪些留下哪些掉落"&gt;&lt;a href="#%e5%93%aa%e4%ba%9b%e7%95%99%e4%b8%8b%e5%93%aa%e4%ba%9b%e6%8e%89%e8%90%bd" class="header-anchor"&gt;&lt;/a&gt;哪些留下，哪些掉落
+&lt;/h3&gt;&lt;p&gt;剪完之后，每片头发可能变成好几块，需要判断哪些还长在头上。每片头发顶部有一个矩形，标记「头发从哪里长出来」：和它相交的块留下，其余的掉落。&lt;/p&gt;
+&lt;p&gt;这个矩形的含义我们来回改过一次。第一版它就是这样的锚点；没过多久，它被改成了&lt;strong&gt;保护区&lt;/strong&gt;——剪刀碰到根部，这一刀就作废，后来又改成只扣掉落在根部的那一段。保护区用了一年多，问题一直在：玩家想剪光的时候，头顶总会剩下一小块。&lt;/p&gt;
+&lt;p&gt;最后把它改回了锚点。改之前量了一下才发现，这个矩形本来就没有按发际线的精度画：如果把它的上边当作发际线，有的刘海、胡子只有 0% 和 7% 真正压在头发上。拿一个粗略的标记去做「保护」，本身就是误用。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/cut-before-after.jpg"
+width="900"
+height="474"
+srcset="https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/cut-before-after_hu_cb3083c3d695eca1.jpg 480w, https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/cut-before-after_hu_6da61b30cd98af0.jpg 1024w"
+loading="lazy"
+alt="同一位公主剪发前后：左边是及腰长发，右边在腰部以上被剪出一道弧线"
+class="gallery-image"
+data-flex-grow="189"
+data-flex-basis="455px"
+&gt;&lt;/p&gt;
+&lt;h3 id="碎片怎么掉"&gt;&lt;a href="#%e7%a2%8e%e7%89%87%e6%80%8e%e4%b9%88%e6%8e%89" class="header-anchor"&gt;&lt;/a&gt;碎片怎么掉
+&lt;/h3&gt;&lt;p&gt;每一刀最多三片碎片做成真正的刚体，其余合并成一个只有视觉效果的网格，碎片总数由一个 32 个的对象池兜底，剪得再碎物理也不会爆炸。碎片带着初速度、自转和阻尼落下：大块懒洋洋地歪倒，小片转得更快。重力不随大小变化，「有些头发在飘」的感觉靠自转和阻力来表达。&lt;/p&gt;
+&lt;p&gt;我们最初想要的其实是另一种效果：像真实理发那样，每剪一下掉一撮，头发边剪边变短。这个一直没做出来，现在是剪刀划过的地方整片断开、整片掉落。回头看，这反而很符合纸片的感觉——纸剪下来，本来就是一整片落下去的。&lt;/p&gt;
+&lt;h2 id="从多边形到画面"&gt;&lt;a href="#%e4%bb%8e%e5%a4%9a%e8%be%b9%e5%bd%a2%e5%88%b0%e7%94%bb%e9%9d%a2" class="header-anchor"&gt;&lt;/a&gt;从多边形到画面
+&lt;/h2&gt;&lt;p&gt;拓扑变了，网格就要重建。第一版用的是扇形三角化，只对凸多边形正确，而头发的轮廓几乎都是凹的，很快就换成了 Poly2Tri 的约束三角化，洞作为约束一起传进去。&lt;/p&gt;
+&lt;p&gt;三角化偶尔会失败：洞的顶点恰好落在外轮廓的边上时，Poly2Tri 会抛异常。早期这会让整批切割回滚，玩家看到的就是「这一刀没剪断」。现在的做法是只在生成网格时把那个顶点挪开一个亚像素再试一次，权威拓扑本身不动。&lt;/p&gt;
+&lt;p&gt;网格的 UV 是从 Sprite 原图的坐标反推出来的。这带来一个隐性约束：&lt;strong&gt;头发的 Sprite 不能打进图集&lt;/strong&gt;，否则拿到的是图集坐标。后来做图集优化时，这一条被专门写进了图集工具的注释里。&lt;/p&gt;
+&lt;h2 id="手感上踩过的坑"&gt;&lt;a href="#%e6%89%8b%e6%84%9f%e4%b8%8a%e8%b8%a9%e8%bf%87%e7%9a%84%e5%9d%91" class="header-anchor"&gt;&lt;/a&gt;手感上踩过的坑
+&lt;/h2&gt;&lt;p&gt;剪发能用之后，第一个大问题是&lt;strong&gt;性能&lt;/strong&gt;，第二个才是锯齿。&lt;/p&gt;
+&lt;p&gt;第一版是松手才剪：一笔划完，一次性算。后来改成边拖边剪，为了省性能，输入每 0.2 秒才处理一次，被跳过的那一帧直接丢掉。代价是快速划过时，中间那段路径根本没被剪——玩家的感受是「剪刀有时候不灵」。后来的做法是把输入排成队列：采样点按距离入队，分批消费，每批先简化折线再一起剪，相邻两批的首尾稍微重叠，避免交界处留下一像素宽的「桥」。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;锯齿&lt;/strong&gt;主要取决于剪口的宽度：太窄，圆角不圆；太宽，又会剪到玩家没想剪的地方。最后定在 0.06 个单位。&lt;/p&gt;
+&lt;p&gt;还有一个查了很久的问题：&lt;strong&gt;一次连续拖动里偶尔有一小段没剪断，位置随机，补一刀就好。&lt;/strong&gt; 原因是两道判断用了不同的门槛：判断「碰到了哪片头发」的面积门槛，比判断「这片头发剪得动」的门槛小了两百倍。一片只被擦了个边的头发会先被当成目标，切的时候又被判为「没切到」；而只要一批里有一个目标失败，整批都会回滚。公主、国王身上有好几处是多层头发叠在一起的，「一帧碰到多个目标」是常态，一次擦边就吞掉了那一帧真实的切割。修法是让两道判断问同一个问题，并把回滚的范围从「整帧」缩小到「叠在一起的那组头发」。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;洞&lt;/strong&gt;也经历过一次放开。一开始在头发中间剪出洞是被禁止的，代码会直接拒绝这一刀；后来补上了「挖洞之后建网格、存档再读回」的测试，把这个限制去掉了。&lt;/p&gt;
+&lt;h2 id="剪得好不好怎么算"&gt;&lt;a href="#%e5%89%aa%e5%be%97%e5%a5%bd%e4%b8%8d%e5%a5%bd%e6%80%8e%e4%b9%88%e7%ae%97" class="header-anchor"&gt;&lt;/a&gt;剪得好不好怎么算
+&lt;/h2&gt;&lt;h3 id="不看轨迹看结果"&gt;&lt;a href="#%e4%b8%8d%e7%9c%8b%e8%bd%a8%e8%bf%b9%e7%9c%8b%e7%bb%93%e6%9e%9c" class="header-anchor"&gt;&lt;/a&gt;不看轨迹，看结果
+&lt;/h3&gt;&lt;p&gt;最开始策划的想法是：屏幕上画一条提示线，判断鼠标轨迹是不是落在线附近，那时的规则还是「一笔剪断」。我觉得不行：它评价的是「怎么剪」而不是「剪出了什么」，同样的结果，绕点路剪出来就不算；一旦允许多刀，轨迹判定也就无从谈起。&lt;/p&gt;
+&lt;p&gt;于是改成比较结果：美术为每片头发画一个理想形状 \(G\)，剪完之后算当前头发 \(C\) 和它的交并比：&lt;/p&gt;
+$$
+\mathrm{IoU}(C, G) = \frac{|C \cap G|}{|C \cup G|}
+$$&lt;p&gt;IoU 能用，但我一直觉得它太简单：还没动剪刀，分数可能就有 0.6；它分不清「该剪的没剪」和「不该剪的剪了」，而对客人来说，「还长」和「剪秃了」完全是两回事；一片头发被剪成两块后，如果分别算再平均，权重也会变。&lt;/p&gt;
+&lt;h3 id="剪得对不对--形状像不像"&gt;&lt;a href="#%e5%89%aa%e5%be%97%e5%af%b9%e4%b8%8d%e5%af%b9--%e5%bd%a2%e7%8a%b6%e5%83%8f%e4%b8%8d%e5%83%8f" class="header-anchor"&gt;&lt;/a&gt;剪得对不对 × 形状像不像
+&lt;/h3&gt;&lt;p&gt;现在的算法先按&lt;strong&gt;原始头发&lt;/strong&gt;聚合：同一片头发剪出来的所有碎块先合并，再和基线比较，拆分就不再影响权重。&lt;/p&gt;
+&lt;p&gt;理发开始时记下基线。设 \(H_0\) 是初始头发，那么：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;应该剪掉的部分：\(R = H_0 \setminus G\)&lt;/li&gt;
+&lt;li&gt;应该保留的部分：\(K = H_0 \cap G\)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/score-sets.svg"
+loading="lazy"
+alt="满意度比较的集合：剪之前分出应剪区 R 与应保留区 K；剪了一刀之后，剪掉的 R 算剪对，剪掉的 K（红色）算误剪"
+&gt;&lt;/p&gt;
+&lt;p&gt;设已经剪掉的部分为 \(X = H_0 \setminus C\)，第一项回答「剪得对不对」：&lt;/p&gt;
+$$
+\text{correctCut} = \frac{|X \cap R|}{|R|}, \quad
+\text{wrongCut} = \frac{|X \cap K|}{|K|}, \quad
+\text{cutScore} = \text{correctCut} \cdot (1 - \text{wrongCut})^{1.8}
+$$&lt;p&gt;指数让误剪的惩罚比线性更重。&lt;/p&gt;
+&lt;p&gt;第二项回答「形状像不像」，比较的不是 \(G\)，而是 \(K\)——&lt;strong&gt;玩家能剪出来的最好形状&lt;/strong&gt;。美术画的理想形状有时会超出初始头发，那部分无论如何都剪不出来，不该算到玩家头上：&lt;/p&gt;
+$$
+\text{shapeFit} = \frac{|C \cap K|}{|C \cup K|}
+$$&lt;p&gt;两项用软最小值合成，\(\tau = 0.03\)：&lt;/p&gt;
+$$
+\text{satisfaction} = \min(a, b) - \tau \ln\frac{1 + e^{-|a-b|/\tau}}{2}
+$$&lt;p&gt;两项相差很大时，结果就是较小的那项；两项接近时，比最小值再低一点点。效果是&lt;strong&gt;两项都要好、主要看差的那一项&lt;/strong&gt;，而且是连续的，不会在某条门槛上突然跳变。&lt;/p&gt;
+&lt;p&gt;这个公式有个反直觉的地方：如果一片头发本来就要求剪掉 93%，那&lt;strong&gt;把它剪光&lt;/strong&gt;，满意度不是 0，而是从 0.03 涨到 0.23——毕竟该剪的大部分都剪掉了。「剪光等于最低分」在这里不成立，调阈值时要记得。&lt;/p&gt;
+&lt;p&gt;为了调这些参数，我做了一个叫 Haircut Lab 的实验场景：复用正式的剪发和评分，记录每一刀之后的各项分数，导出后画曲线；误剪惩罚的指数也可以在 Lab 里用滑杆一边剪一边调。&lt;/p&gt;
+&lt;h2 id="剪过的头发要记住"&gt;&lt;a href="#%e5%89%aa%e8%bf%87%e7%9a%84%e5%a4%b4%e5%8f%91%e8%a6%81%e8%ae%b0%e4%bd%8f" class="header-anchor"&gt;&lt;/a&gt;剪过的头发要记住
+&lt;/h2&gt;&lt;p&gt;客人下次出场时，发型要和上次剪完时一样。早期是把一条轮廓塞进 PlayerPrefs，既丢了洞和多块，同一片头发剪成的几块还会互相覆盖。现在整份拓扑存成一个 JSON 文档，带备份；WebGL 版存进 IndexedDB，两边格式相同。&lt;/p&gt;
+&lt;h2 id="卷发和染发"&gt;&lt;a href="#%e5%8d%b7%e5%8f%91%e5%92%8c%e6%9f%93%e5%8f%91" class="header-anchor"&gt;&lt;/a&gt;卷发和染发
+&lt;/h2&gt;&lt;p&gt;服务不只是剪短，还有卷发和染发。早期这两项做成了独立的小游戏：卷发是控制指示条追一个乱跑的目标，染发是给色块排序。原因很实在：当时没想到好的交互方式。&lt;/p&gt;
+&lt;p&gt;现在正在把它们都搬回头发上。卷发已经改成用烫发棒点击头发，在几档卷度之间切换——实现上不去变形几何，而是给每片头发准备好几档卷度的变体。染发在做涂抹原型：在头发上刷，用一张低分辨率的浓度网格记录每处染了多深，再按浓度混合原色和目标色，目前还停留在网页原型阶段。&lt;/p&gt;
+&lt;h2 id="还没解决的"&gt;&lt;a href="#%e8%bf%98%e6%b2%a1%e8%a7%a3%e5%86%b3%e7%9a%84" class="header-anchor"&gt;&lt;/a&gt;还没解决的
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;生根区域还不是真正的发际线。&lt;/strong&gt; 改回锚点之后，「哪些留在头上」仍然由一个粗略的矩形决定。更合理的做法是为每片头发确定真正的发际线（自动推算或手工标注），方案已经写好，还没做。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;边剪边变短没有实现。&lt;/strong&gt; 现在的效果和纸片风格是契合的，但如果以后要做更细的修剪手感，这仍是一个缺口。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;头发不能打进图集&lt;/strong&gt;，做图集优化时只能把它们排除在外。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;染发还没有接进游戏。&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="回头看"&gt;&lt;a href="#%e5%9b%9e%e5%a4%b4%e7%9c%8b" class="header-anchor"&gt;&lt;/a&gt;回头看
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;选对表示，比选对算法更重要。&lt;/strong&gt; 发丝模拟怎么调都调不好；把头发看成纸之后，剩下的问题都是成熟的几何问题。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;只保留一份几何真相。&lt;/strong&gt; 碰撞、渲染、评分、存档都从同一份拓扑派生，省掉了很多「看到的和算的不一样」的麻烦。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;两个判据不一致，是我反复踩的同一种坑。&lt;/strong&gt; 剪发里是「算命中」和「算剪得动」，&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-submit-guidance/" &gt;上一篇&lt;/a&gt;里是「按钮的分数」和「结算的分数」。两处单独看都对，合在一起就错了。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;很多「手感」问题，其实是数据问题。&lt;/strong&gt; 「剪刀不灵」不是剪刀的问题，是节流把路径丢了。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;下一篇换个方向，讲剧情系统：一个为固定流程设计的状态机，怎么在换词机制面前一路膨胀，以及我们怎么在不停工的情况下把它换掉。&lt;/p&gt;</description></item><item><title>HeirCut 开发手记（一）：玩家不知道什么时候该停手</title><link>https://yufenghuang.tech/p/heircut-devlog-submit-guidance/</link><pubDate>Mon, 12 Oct 2026 09:00:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/heircut-devlog-submit-guidance/</guid><description>&lt;p&gt;在《宫廷理发师》（HeirCut）里，玩家要真的拿剪刀给客人剪头发：鼠标划过的地方断开、掉落，剪完点「完成」，游戏拿剪出来的形状和目标形状比较，算出客人满不满意。怎么剪完全由玩家决定，分数不会显示出来。&lt;/p&gt;
+&lt;p&gt;几次线下展出，我们在展台边看到的是同一个画面：玩家明明已经剪得差不多了，还在一点一点修边，迟迟不点完成。问他们，答案都一样——&lt;strong&gt;不知道要剪到多好才算满意&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;我们自己也是这样。下面是我们在实验场景里自己剪的四次记录：四次都过了高分线，其中三次过线之后又多剪了三分多钟。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-submit-guidance/lab-curves.svg"
+loading="lazy"
+alt="四次 Lab 校准记录的满意度曲线：四次都越过了 0.75 的高分线，其中三次过线后又剪了约 200 秒"
+&gt;&lt;/p&gt;
+&lt;p&gt;这篇记录我们最后怎么设计「完成」按钮出现的时机、中间放弃了哪些做法，以及两个看起来是 UI 问题、其实是定义没想清楚的坑。&lt;/p&gt;
+&lt;h2 id="按钮要回答的不是剪得好不好"&gt;&lt;a href="#%e6%8c%89%e9%92%ae%e8%a6%81%e5%9b%9e%e7%ad%94%e7%9a%84%e4%b8%8d%e6%98%af%e5%89%aa%e5%be%97%e5%a5%bd%e4%b8%8d%e5%a5%bd" class="header-anchor"&gt;&lt;/a&gt;按钮要回答的，不是「剪得好不好」
+&lt;/h2&gt;&lt;p&gt;先说清楚这个按钮要做什么、不能做什么。和策划讨论下来，目标是四条：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;告诉玩家「现在交是合理的」。&lt;/strong&gt; 让按钮的出现吻合玩家「差不多了」的预期。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;不泄露分数。&lt;/strong&gt; 理发的乐趣有一部分来自「我觉得我剪得不错」的不确定感。如果按钮一亮就意味着过线，玩家就会去刷那条线，而不是去剪头发。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;剪坏了能止损。&lt;/strong&gt; 不能因为玩家乱剪，就把人困在这一关。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;不鼓励犹豫。&lt;/strong&gt; 比划半天不下刀，也应该被推一把。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;还有一个相关但独立的问题：评委老师普遍觉得理发失败的惩罚太重。当时的设计里蜡烛代表生命，剪不好就熄一支。不知道标准、失败代价又高，玩家自然不敢交卷。这个我们是在设计层面解决的：蜡烛改成了单纯的昼夜装饰，失败不再扣命。下面只讨论按钮。&lt;/p&gt;
+&lt;h2 id="最后的规则五个出现理由"&gt;&lt;a href="#%e6%9c%80%e5%90%8e%e7%9a%84%e8%a7%84%e5%88%99%e4%ba%94%e4%b8%aa%e5%87%ba%e7%8e%b0%e7%90%86%e7%94%b1" class="header-anchor"&gt;&lt;/a&gt;最后的规则：五个出现理由
+&lt;/h2&gt;&lt;p&gt;按钮在下面任何一种情况下出现，出现后就一直保持，直到玩家提交：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;条件&lt;/th&gt;
+&lt;th&gt;玩家此时的状态&lt;/th&gt;
+&lt;th&gt;按钮想说的话&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;满意度 ≥ 0.75&lt;/td&gt;
+&lt;td&gt;剪得不错&lt;/td&gt;
+&lt;td&gt;差不多可以交了&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;满意度 &amp;lt; 0.15&lt;/td&gt;
+&lt;td&gt;剪得一团糟&lt;/td&gt;
+&lt;td&gt;及时止损&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;比本次最高分回落 ≥ 0.1&lt;/td&gt;
+&lt;td&gt;本来不错，越修越差&lt;/td&gt;
+&lt;td&gt;别再修了&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;拿着剪刀累计 20 秒&lt;/td&gt;
+&lt;td&gt;一直在犹豫&lt;/td&gt;
+&lt;td&gt;不必追求完美&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;头发已经没有可剪的了&lt;/td&gt;
+&lt;td&gt;剪光了&lt;/td&gt;
+&lt;td&gt;只能交了&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;几点细节：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;按钮出现后不自动提交，也不锁剪刀&lt;/strong&gt;，玩家仍然可以继续修，结算以点下按钮那一刻为准。按钮是建议，不是裁决。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;20 秒只在玩家拿着剪刀时计时&lt;/strong&gt;，暂停菜单打开时不计。一开始我们是从「剪下第一刀」开始计时的，结果拿着剪刀比划半天不下刀的玩家——恰恰最需要被推一把的那种——永远等不到按钮。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;这些数字没有理论来源&lt;/strong&gt;，是策划拍板后在试玩里调出来的。0.75 是结算的高分线，后面会讲为什么它必须和结算是同一个数。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;规则本身写成一个不依赖场景的纯函数，方便单独测试：&lt;/p&gt;
+&lt;div class="code-block" data-lang="csharp"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-csharp" data-lang="csharp"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// 简化后的签名；实际代码还会先把输入夹到合法范围&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="n"&gt;HaircutSubmitPromptDecision&lt;/span&gt; &lt;span class="n"&gt;Evaluate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;bool&lt;/span&gt; &lt;span class="n"&gt;hasValidSatisfaction&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;current&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;historicalPeak&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;high&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;low&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;peakDrop&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;operationSeconds&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;fallbackSeconds&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(!&lt;/span&gt;&lt;span class="n"&gt;hasValidSatisfaction&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Hide&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;current&lt;/span&gt; &lt;span class="p"&gt;&amp;gt;=&lt;/span&gt; &lt;span class="n"&gt;high&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Show&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Reason&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;HighSatisfaction&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;current&lt;/span&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;low&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Show&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Reason&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;VeryLowSatisfaction&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;historicalPeak&lt;/span&gt; &lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="n"&gt;current&lt;/span&gt; &lt;span class="p"&gt;&amp;gt;=&lt;/span&gt; &lt;span class="n"&gt;peakDrop&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Show&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Reason&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;PeakDrop&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;operationSeconds&lt;/span&gt; &lt;span class="p"&gt;&amp;gt;=&lt;/span&gt; &lt;span class="n"&gt;fallbackSeconds&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Show&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Reason&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;FallbackDuration&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Hide&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id="为什么要故意放进和分数无关的理由"&gt;&lt;a href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e8%a6%81%e6%95%85%e6%84%8f%e6%94%be%e8%bf%9b%e5%92%8c%e5%88%86%e6%95%b0%e6%97%a0%e5%85%b3%e7%9a%84%e7%90%86%e7%94%b1" class="header-anchor"&gt;&lt;/a&gt;为什么要故意放进和分数无关的理由
+&lt;/h3&gt;&lt;p&gt;五条里只有第一条和「剪得好」有关。其余四条，有的意味着剪坏了，有的只是时间到了。&lt;/p&gt;
+&lt;p&gt;这是刻意的。玩家能感受到「按钮出现 = 现在交是个合理的选择」，但&lt;strong&gt;没法从按钮反推自己剪得好不好&lt;/strong&gt;。对我们来说，这是让提示「有用但不泄底」最简单的办法。&lt;/p&gt;
+&lt;h2 id="我们试过但放弃的做法"&gt;&lt;a href="#%e6%88%91%e4%bb%ac%e8%af%95%e8%bf%87%e4%bd%86%e6%94%be%e5%bc%83%e7%9a%84%e5%81%9a%e6%b3%95" class="header-anchor"&gt;&lt;/a&gt;我们试过、但放弃的做法
+&lt;/h2&gt;&lt;p&gt;最终的规则不是一开始就想到的。前面还有几种做法，每一种都解决了一部分问题，又暴露出新的问题：&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-submit-guidance/button-versions.svg"
+loading="lazy"
+alt="提交按钮的四个版本：一直在 → 够好时闪烁 → 按有效笔划多条件出现 → 与结算统一"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一直显示。&lt;/strong&gt; 最早的按钮在进入理发时就出现，后来改成剪下第一缕头发时出现，之后一直都在。这是对自由度的尊重，但它只告诉玩家「你可以交了」，不告诉玩家「你应该交了」——展台上那些一直修边的玩家，就是这么来的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;剪得够好时闪烁。&lt;/strong&gt; 后来加了一个提示：分数过线就让按钮闪一下。方向是对的，但它正好违反了「不泄露分数」：按钮一闪，玩家就知道自己过线了。而且它还有一个更隐蔽的毛病，见下一节。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;两道门槛。&lt;/strong&gt; 重写评分时，我在实验场景里跑过一轮校准，报告建议用双门槛：「剪对的比例 ≥ 0.80」&lt;strong&gt;且&lt;/strong&gt;「形状吻合度 ≥ 0.90」，连续三刀都满足才算达标。最后没有采用，原因有两个：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;硬性的「且」是不连续的。两项里差一点的那项会让结果从「是」直接跳到「否」。最后我们改用软最小值把两项合成一个连续的分数（细节见&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/" &gt;下一篇&lt;/a&gt;）。&lt;/li&gt;
+&lt;li&gt;那轮校准的样本全是「剪得还不错」的记录，没有剪坏的，也没有犹豫的。拿这样的数据去校准一个以「止损」和「反犹豫」为目的的按钮，是不够的。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="两个看起来是-ui其实是定义的问题"&gt;&lt;a href="#%e4%b8%a4%e4%b8%aa%e7%9c%8b%e8%b5%b7%e6%9d%a5%e6%98%af-ui%e5%85%b6%e5%ae%9e%e6%98%af%e5%ae%9a%e4%b9%89%e7%9a%84%e9%97%ae%e9%a2%98" class="header-anchor"&gt;&lt;/a&gt;两个看起来是 UI、其实是定义的问题
+&lt;/h2&gt;&lt;h3 id="一刀是什么"&gt;&lt;a href="#%e4%b8%80%e5%88%80%e6%98%af%e4%bb%80%e4%b9%88" class="header-anchor"&gt;&lt;/a&gt;「一刀」是什么
+&lt;/h3&gt;&lt;p&gt;闪烁版本还有一个问题：它在&lt;strong&gt;每次有头发掉落&lt;/strong&gt;时检查分数。&lt;/p&gt;
+&lt;p&gt;可是「掉一次头发」不等于「剪一刀」。一笔划下去，可能掉三片碎发，也可能一片都不掉，只划开了一个口子。于是提示的节奏跟着物理碎片走，而不是跟着玩家的操作走。更糟的是，剪发是边拖边算的，碎片在一笔的中途就会掉下来，那一刻读到的分数只是个中间状态。&lt;/p&gt;
+&lt;p&gt;所以在设计任何反馈之前，我们先给「一刀」下了定义：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;一次有效笔划&lt;/strong&gt; = 鼠标按下到抬起的一段连续输入，至少造成了一次头发的几何变化，并且所有几何计算都已完成。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;然后把两类事件分开：「有一片碎发掉了」只留给物理和音效；「一次有效笔划结束了」才驱动分数、教程、计时和这个按钮。这样，满意度曲线的横轴就是「玩家剪了第几刀」，按钮看到的永远是一个已经剪完、不会再变的状态。&lt;/p&gt;
+&lt;p&gt;回头看，这件事应该在设计任何反馈之前就做：&lt;strong&gt;先定义玩家「一次操作」的单位。&lt;/strong&gt; 反馈挂在错的单位上，节奏就会乱，数值也不可信。&lt;/p&gt;
+&lt;h3 id="按钮和结算必须是同一个分数"&gt;&lt;a href="#%e6%8c%89%e9%92%ae%e5%92%8c%e7%bb%93%e7%ae%97%e5%bf%85%e9%a1%bb%e6%98%af%e5%90%8c%e4%b8%80%e4%b8%aa%e5%88%86%e6%95%b0" class="header-anchor"&gt;&lt;/a&gt;按钮和结算必须是同一个分数
+&lt;/h3&gt;&lt;p&gt;这一个是我的疏漏。&lt;/p&gt;
+&lt;p&gt;重写评分时，我把按钮接到了新算法上，却没有同步去改结算——结算还在用旧的 IoU。两边的高分线也不一样：新算法这边写的是 0.80，结算那边是 0.75。于是有一段时间，游戏里同时存在两个分数。&lt;/p&gt;
+&lt;p&gt;后果是：按钮说剪得不错，结算却可能判不及格；或者明明已经过了结算线，按钮却毫无表示。玩家感受到的就是「这个按钮在骗我」。&lt;/p&gt;
+&lt;p&gt;发现之后分两步补上：先让按钮的阈值直接引用结算的阈值，并加了一条测试，以后谁把它们改得不一样，测试就会变红；随后结算也换成新算法，按钮和结算调用&lt;strong&gt;同一个&lt;/strong&gt;判定函数。&lt;/p&gt;
+&lt;p&gt;这件事让我记住了一条：&lt;strong&gt;一个 UI 如果是在预告某个判定的结果，它就该直接调用那个判定，而不是另写一份「差不多」的逻辑。&lt;/strong&gt; 两份逻辑一开始可能一样，但会各自演化，迟早分叉。&lt;/p&gt;
+&lt;h2 id="还没解决的"&gt;&lt;a href="#%e8%bf%98%e6%b2%a1%e8%a7%a3%e5%86%b3%e7%9a%84" class="header-anchor"&gt;&lt;/a&gt;还没解决的
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;按钮规则缺少数据支撑。&lt;/strong&gt; 实验场景复用了正式的剪发和评分，但没有挂上这个按钮，所以我们手里没有「按钮何时出现、玩家何时提交」的统计。规则的调整靠的是试玩观察。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;数字是调出来的，样本不大。&lt;/strong&gt; 如果之后有更大规模的试玩，最值得验证的是 20 秒兜底会不会让玩家过早交卷。如果会，应该调整时长或提示的措辞，而不是降低结算标准——兜底是为了反犹豫，不是为了放水。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="回头看"&gt;&lt;a href="#%e5%9b%9e%e5%a4%b4%e7%9c%8b" class="header-anchor"&gt;&lt;/a&gt;回头看
+&lt;/h2&gt;&lt;p&gt;这个按钮前后改了好几版，回头看，真正花时间的地方都不在按钮本身：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;「一刀」没定义清楚之前，按钮怎么设计都不稳。&lt;/strong&gt; 我们一开始把反馈挂在物理碎片上，节奏和数值都跟着出问题。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;预告判定的 UI 必须调用判定本身。&lt;/strong&gt; 按钮和结算各算各的分数，是我重写评分时漏改留下的，花了两轮才补上。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;按钮出现的理由不止一个，这是它不泄底的关键。&lt;/strong&gt; 只在高分时出现的按钮，就是一盏及格指示灯。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;兜底是为了反犹豫，不是为了放水。&lt;/strong&gt; 它让玩家可以交卷，但不改变结算标准。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;关于《宫廷理发师》&lt;/strong&gt;（HeirCut）：人类公主和兽人王大婚在即，玩家是宫廷里的理发师，要给前来的宾客们剪、烫、染。而在理发之外，理发师还能把宾客们说过的话「剪」下来、重新拼起来，改写公主乃至整个王国的命运。&lt;a class="link" href="https://store.steampowered.com/app/4268650/" target="_blank" rel="noopener"
+&gt;Steam 商店页&lt;/a&gt;，&lt;a class="link" href="https://www.bilibili.com/video/BV1dkbDzoE9q/" target="_blank" rel="noopener"
+&gt;演示视频&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;开发团队「闭嘴！理发」是为 GameJam 凑起来的：策划尽欢、陈2333，美术 Nya、主美勺，音效肉丸，程序是我（hushh）。项目获得了第五届 CUSGA 最佳剧情设计奖、第十七届厦门国际动漫节「金海豚奖」最佳学生游戏奖等奖项，目前在准备 Steam Demo。&lt;/p&gt;
+&lt;p&gt;下一篇讲上面反复提到的满意度怎么算，以及它依赖的东西：一套可以被剪开的 2D 头发。&lt;/p&gt;</description></item></channel></rss>

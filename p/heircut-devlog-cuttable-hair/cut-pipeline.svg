@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380" width="800" height="380" font-family="'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif" role="img" aria-label="一刀是怎么剪开的：轨迹、带子、差集、分离">
+<title>一刀是怎么剪开的：轨迹、带子、差集、分离</title>
+<rect x="0.5" y="0.5" width="799" height="379" rx="12" fill="#fcfcfb" stroke="#e6e5e0"/>
+<text x="24.0" y="32.0" font-size="17" fill="#0b0b0b" text-anchor="start" font-weight="600" >一刀是怎么剪开的</text>
+<defs>
+<mask id="cutmask" maskUnits="userSpaceOnUse" x="-20" y="-20" width="230" height="280"><rect x="-20" y="-20" width="230" height="280" fill="#fff"/><path d="M-6 120 Q12 122 30 108 Q50 107 70 122 Q90 124 110 110 Q130 109 150 124 Q168 126 186 112" fill="none" stroke="#000" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></mask>
+<clipPath id="above"><path d="M-6 120 Q12 122 30 108 Q50 107 70 122 Q90 124 110 110 Q130 109 150 124 Q168 126 186 112 L186 -40 L-6 -40 Z"/></clipPath>
+<clipPath id="below"><path d="M-6 120 Q12 122 30 108 Q50 107 70 122 Q90 124 110 110 Q130 109 150 124 Q168 126 186 112 L186 260 L-6 260 Z"/></clipPath>
+</defs>
+<g transform="translate(30 70)">
+<path d="M20 20 Q20 0 60 0 L120 0 Q160 0 160 20 L162 200 Q150 214 136 204 Q122 220 106 206 Q90 222 76 206 Q60 220 46 204 Q30 214 18 200 Z" fill="#f2c46b" stroke="#c99a3c" stroke-width="1.5"/>
+<path d="M-6 120 Q12 122 30 108 Q50 107 70 122 Q90 124 110 110 Q130 109 150 124 Q168 126 186 112" fill="none" stroke="#0b0b0b" stroke-width="2" stroke-dasharray="1 0"/>
+<circle cx="-6" cy="120" r="3.5" fill="#0b0b0b"/>
+<path d="M178 106 l8 6 l-8 6" fill="none" stroke="#0b0b0b" stroke-width="2"/>
+</g>
+<text x="120.0" y="344.0" font-size="14" fill="#0b0b0b" text-anchor="middle" font-weight="600" >① 剪刀轨迹</text>
+<text x="120.0" y="363.0" font-size="12" fill="#52514e" text-anchor="middle" font-weight="normal" >鼠标划过的折线，没有面积</text>
+<g transform="translate(222 70)">
+<path d="M20 20 Q20 0 60 0 L120 0 Q160 0 160 20 L162 200 Q150 214 136 204 Q122 220 106 206 Q90 222 76 206 Q60 220 46 204 Q30 214 18 200 Z" fill="#f2c46b" stroke="#c99a3c" stroke-width="1.5"/>
+<path d="M-6 120 Q12 122 30 108 Q50 107 70 122 Q90 124 110 110 Q130 109 150 124 Q168 126 186 112" fill="none" stroke="#2a78d6" stroke-opacity="0.45" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M-6 120 Q12 122 30 108 Q50 107 70 122 Q90 124 110 110 Q130 109 150 124 Q168 126 186 112" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+</g>
+<text x="312.0" y="344.0" font-size="14" fill="#0b0b0b" text-anchor="middle" font-weight="600" >② 膨胀成带子</text>
+<text x="312.0" y="363.0" font-size="12" fill="#52514e" text-anchor="middle" font-weight="normal" >ClipperOffset，圆角，宽 0.06</text>
+<g transform="translate(414 70)">
+<path d="M20 20 Q20 0 60 0 L120 0 Q160 0 160 20 L162 200 Q150 214 136 204 Q122 220 106 206 Q90 222 76 206 Q60 220 46 204 Q30 214 18 200 Z" fill="#f2c46b" stroke="#c99a3c" stroke-width="1.5" mask="url(#cutmask)"/>
+</g>
+<text x="504.0" y="344.0" font-size="14" fill="#0b0b0b" text-anchor="middle" font-weight="600" >③ 头发 − 带子</text>
+<text x="504.0" y="363.0" font-size="12" fill="#52514e" text-anchor="middle" font-weight="normal" >Clipper 差集，结果按层级重建</text>
+<g transform="translate(606 70)">
+<g clip-path="url(#above)"><path d="M20 20 Q20 0 60 0 L120 0 Q160 0 160 20 L162 200 Q150 214 136 204 Q122 220 106 206 Q90 222 76 206 Q60 220 46 204 Q30 214 18 200 Z" fill="#f2c46b" stroke="#c99a3c" stroke-width="1.5" mask="url(#cutmask)"/></g>
+<g transform="translate(10 30) rotate(6 90 160)" opacity="0.9"><g clip-path="url(#below)"><path d="M20 20 Q20 0 60 0 L120 0 Q160 0 160 20 L162 200 Q150 214 136 204 Q122 220 106 206 Q90 222 76 206 Q60 220 46 204 Q30 214 18 200 Z" fill="#f2c46b" stroke="#c99a3c" stroke-width="1.5" mask="url(#cutmask)"/></g></g>
+<rect x="30" y="-6" width="120" height="30" rx="4" fill="none" stroke="#1baf7a" stroke-width="2" stroke-dasharray="5 3"/>
+<text x="90.0" y="-12.0" font-size="12" fill="#52514e" text-anchor="middle" font-weight="normal" >生根区域</text>
+<text x="186.0" y="176.0" font-size="12.5" fill="#52514e" text-anchor="end" font-weight="normal" >掉落 ↓</text>
+</g>
+<text x="696.0" y="344.0" font-size="14" fill="#0b0b0b" text-anchor="middle" font-weight="600" >④ 判断去留</text>
+<text x="696.0" y="363.0" font-size="12" fill="#52514e" text-anchor="middle" font-weight="normal" >碰到生根区域的留下，其余掉落</text>
+</svg>

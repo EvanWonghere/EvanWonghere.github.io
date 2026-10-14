@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>计算几何 on 蜂窝</title><link>https://yufenghuang.tech/tags/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/</link><description>Recent content in 计算几何 on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Mon, 12 Oct 2026 09:10:00 +0800</lastBuildDate><atom:link href="https://yufenghuang.tech/tags/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/index.xml" rel="self" type="application/rss+xml"/><item><title>HeirCut 开发手记（二）：把头发当成纸来剪</title><link>https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/</link><pubDate>Mon, 12 Oct 2026 09:10:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;「HeirCut 开发手记」第二篇。游戏简介见&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-submit-guidance/" &gt;第一篇&lt;/a&gt;文末。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;《宫廷理发师》里，玩家要拿剪刀给客人剪头发：沿着任意曲线、剪任意多刀，划过的地方断开，断下来的头发掉落，剩下的形状决定客人满不满意。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/cut.gif"
+width="360"
+height="384"
+srcset="https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/cut_hu_496871e34e4ac5e3.gif 480w, https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/cut_hu_af7f3837ab44a056.gif 1024w"
+loading="lazy"
+alt="游戏中给公主剪发：白色轨迹划过长发，轨迹以下的头发被剪断"
+class="gallery-image"
+data-flex-grow="93"
+data-flex-basis="225px"
+&gt;&lt;/p&gt;
+&lt;p&gt;现在的做法可以用一句话概括：&lt;strong&gt;每片头发是一个多边形，剪刀轨迹膨胀成一条带子，两者做布尔差集。&lt;/strong&gt; 这篇记录这套方案是怎么来的、具体怎么实现，以及为了手感踩过的坑。&lt;/p&gt;
+&lt;h2 id="头发是纸不是发丝"&gt;&lt;a href="#%e5%a4%b4%e5%8f%91%e6%98%af%e7%ba%b8%e4%b8%8d%e6%98%af%e5%8f%91%e4%b8%9d" class="header-anchor"&gt;&lt;/a&gt;头发是纸，不是发丝
+&lt;/h2&gt;&lt;p&gt;最早的目标是《托卡美发沙龙》那样的拟真效果：头发是一根根有物理的发丝，剪断哪里，下半截就掉下来。我用 Verlet 积分模拟过发丝，但效果一直调不好——发丝多到看起来像头发，性能就扛不住；少到性能能接受，看起来就像几根面条。&lt;/p&gt;
+&lt;p&gt;转机来自美术方向。游戏最终定成了&lt;strong&gt;纸片、立体书&lt;/strong&gt;的风格：角色像是用纸剪出来、立在舞台上的。头发因此不再是一束发丝，而是一张张纸片，剪头发也就变成了剪纸。&lt;/p&gt;
+&lt;p&gt;剪纸的第一反应是切 Sprite，但现成的方案大多只能沿一条直线切成两半。Unity 商店里有个插件演示效果不错，细看才发现曲线剪口也是用几条直线同时切出来的。理发需要的是任意曲线、任意多次，这两条路都不够。&lt;/p&gt;
+&lt;p&gt;最后的灵感来自 &lt;strong&gt;2D 可破坏地形&lt;/strong&gt;：爆炸能在地面上挖出任意形状的坑，本质是多边形之间的布尔运算。把头发当成多边形，剪刀当成另一个多边形，问题就变成了一个成熟的几何问题。&lt;/p&gt;
+&lt;p&gt;这个方向定得很早，建库没几天，第一次提交的剪发就已经是这个方案了。后面的工作，基本都是在它上面打磨。&lt;/p&gt;
+&lt;h2 id="一刀是怎么剪开的"&gt;&lt;a href="#%e4%b8%80%e5%88%80%e6%98%af%e6%80%8e%e4%b9%88%e5%89%aa%e5%bc%80%e7%9a%84" class="header-anchor"&gt;&lt;/a&gt;一刀是怎么剪开的
+&lt;/h2&gt;&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/cut-pipeline.svg"
+loading="lazy"
+alt="一刀剪开的四步：轨迹 → 膨胀成带子 → 头发减去带子 → 碰到生根区域的留下、其余掉落"
+&gt;&lt;/p&gt;
+&lt;h3 id="头发的表示"&gt;&lt;a href="#%e5%a4%b4%e5%8f%91%e7%9a%84%e8%a1%a8%e7%a4%ba" class="header-anchor"&gt;&lt;/a&gt;头发的表示
+&lt;/h3&gt;&lt;p&gt;每片头发的几何真源是一份拓扑：若干块区域，每块有一条外轮廓，可能还带着几个洞。&lt;/p&gt;
+&lt;div class="code-block" data-lang="csharp"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-csharp" data-lang="csharp"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// 简化后的结构&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;sealed&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;HairRegion&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Vector2&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;outer&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Vector2&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;holes&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;sealed&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;HairTopology&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;HairRegion&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;regions&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;碰撞体和渲染用的网格都从这份拓扑生成，评分和存档读的也是它。只有一份几何真相，就不会出现「看到的形状」和「算分的形状」对不上。&lt;/p&gt;
+&lt;p&gt;之所以要支持多块和洞，是因为一刀可以把一片头发剪成好几块，也可以在中间剪出一个窟窿。早期只存一条轮廓，剪出洞之后，洞会被当成实心的。&lt;/p&gt;
+&lt;h3 id="轨迹膨胀成带子"&gt;&lt;a href="#%e8%bd%a8%e8%bf%b9%e8%86%a8%e8%83%80%e6%88%90%e5%b8%a6%e5%ad%90" class="header-anchor"&gt;&lt;/a&gt;轨迹膨胀成带子
+&lt;/h3&gt;&lt;p&gt;几何运算用的是 &lt;a class="link" href="https://github.com/AngusJohnson/Clipper2" target="_blank" rel="noopener"
+&gt;Clipper2&lt;/a&gt;。鼠标轨迹是一条没有面积的折线，没法直接和多边形做差集，所以先把它向两侧膨胀成一条带子：&lt;/p&gt;
+&lt;div class="code-block" data-lang="csharp"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-csharp" data-lang="csharp"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kt"&gt;var&lt;/span&gt; &lt;span class="n"&gt;offset&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ClipperOffset&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;offset&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;AddPath&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;JoinType&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Round&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;EndType&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Round&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// 转角和两端都用圆角&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;offset&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Execute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;width&lt;/span&gt; &lt;span class="p"&gt;*&lt;/span&gt; &lt;span class="n"&gt;Scale&lt;/span&gt; &lt;span class="p"&gt;*&lt;/span&gt; &lt;span class="m"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ribbon&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// Clipper 用整数坐标，Scale = 1000&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;第一版不是这样做的：它在每两个采样点之间各自生成一个细长矩形，再拼成剪口。矩形和矩形之间没有衔接，转角处就会出现缺口和锯齿。换成带圆角的整体偏移之后，剪口才是一条连续光滑的曲线。&lt;/p&gt;
+&lt;h3 id="头发减去带子"&gt;&lt;a href="#%e5%a4%b4%e5%8f%91%e5%87%8f%e5%8e%bb%e5%b8%a6%e5%ad%90" class="header-anchor"&gt;&lt;/a&gt;头发减去带子
+&lt;/h3&gt;&lt;p&gt;差集的结果是一棵树：外轮廓下面挂着洞，洞里面还可能有岛。按树的层级把结果重建成区域和洞，一刀剪成好几块、剪出窟窿，都不需要额外处理。&lt;/p&gt;
+&lt;h3 id="哪些留下哪些掉落"&gt;&lt;a href="#%e5%93%aa%e4%ba%9b%e7%95%99%e4%b8%8b%e5%93%aa%e4%ba%9b%e6%8e%89%e8%90%bd" class="header-anchor"&gt;&lt;/a&gt;哪些留下，哪些掉落
+&lt;/h3&gt;&lt;p&gt;剪完之后，每片头发可能变成好几块，需要判断哪些还长在头上。每片头发顶部有一个矩形，标记「头发从哪里长出来」：和它相交的块留下，其余的掉落。&lt;/p&gt;
+&lt;p&gt;这个矩形的含义我们来回改过一次。第一版它就是这样的锚点；没过多久，它被改成了&lt;strong&gt;保护区&lt;/strong&gt;——剪刀碰到根部，这一刀就作废，后来又改成只扣掉落在根部的那一段。保护区用了一年多，问题一直在：玩家想剪光的时候，头顶总会剩下一小块。&lt;/p&gt;
+&lt;p&gt;最后把它改回了锚点。改之前量了一下才发现，这个矩形本来就没有按发际线的精度画：如果把它的上边当作发际线，有的刘海、胡子只有 0% 和 7% 真正压在头发上。拿一个粗略的标记去做「保护」，本身就是误用。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/cut-before-after.jpg"
+width="900"
+height="474"
+srcset="https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/cut-before-after_hu_cb3083c3d695eca1.jpg 480w, https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/cut-before-after_hu_6da61b30cd98af0.jpg 1024w"
+loading="lazy"
+alt="同一位公主剪发前后：左边是及腰长发，右边在腰部以上被剪出一道弧线"
+class="gallery-image"
+data-flex-grow="189"
+data-flex-basis="455px"
+&gt;&lt;/p&gt;
+&lt;h3 id="碎片怎么掉"&gt;&lt;a href="#%e7%a2%8e%e7%89%87%e6%80%8e%e4%b9%88%e6%8e%89" class="header-anchor"&gt;&lt;/a&gt;碎片怎么掉
+&lt;/h3&gt;&lt;p&gt;每一刀最多三片碎片做成真正的刚体，其余合并成一个只有视觉效果的网格，碎片总数由一个 32 个的对象池兜底，剪得再碎物理也不会爆炸。碎片带着初速度、自转和阻尼落下：大块懒洋洋地歪倒，小片转得更快。重力不随大小变化，「有些头发在飘」的感觉靠自转和阻力来表达。&lt;/p&gt;
+&lt;p&gt;我们最初想要的其实是另一种效果：像真实理发那样，每剪一下掉一撮，头发边剪边变短。这个一直没做出来，现在是剪刀划过的地方整片断开、整片掉落。回头看，这反而很符合纸片的感觉——纸剪下来，本来就是一整片落下去的。&lt;/p&gt;
+&lt;h2 id="从多边形到画面"&gt;&lt;a href="#%e4%bb%8e%e5%a4%9a%e8%be%b9%e5%bd%a2%e5%88%b0%e7%94%bb%e9%9d%a2" class="header-anchor"&gt;&lt;/a&gt;从多边形到画面
+&lt;/h2&gt;&lt;p&gt;拓扑变了，网格就要重建。第一版用的是扇形三角化，只对凸多边形正确，而头发的轮廓几乎都是凹的，很快就换成了 Poly2Tri 的约束三角化，洞作为约束一起传进去。&lt;/p&gt;
+&lt;p&gt;三角化偶尔会失败：洞的顶点恰好落在外轮廓的边上时，Poly2Tri 会抛异常。早期这会让整批切割回滚，玩家看到的就是「这一刀没剪断」。现在的做法是只在生成网格时把那个顶点挪开一个亚像素再试一次，权威拓扑本身不动。&lt;/p&gt;
+&lt;p&gt;网格的 UV 是从 Sprite 原图的坐标反推出来的。这带来一个隐性约束：&lt;strong&gt;头发的 Sprite 不能打进图集&lt;/strong&gt;，否则拿到的是图集坐标。后来做图集优化时，这一条被专门写进了图集工具的注释里。&lt;/p&gt;
+&lt;h2 id="手感上踩过的坑"&gt;&lt;a href="#%e6%89%8b%e6%84%9f%e4%b8%8a%e8%b8%a9%e8%bf%87%e7%9a%84%e5%9d%91" class="header-anchor"&gt;&lt;/a&gt;手感上踩过的坑
+&lt;/h2&gt;&lt;p&gt;剪发能用之后，第一个大问题是&lt;strong&gt;性能&lt;/strong&gt;，第二个才是锯齿。&lt;/p&gt;
+&lt;p&gt;第一版是松手才剪：一笔划完，一次性算。后来改成边拖边剪，为了省性能，输入每 0.2 秒才处理一次，被跳过的那一帧直接丢掉。代价是快速划过时，中间那段路径根本没被剪——玩家的感受是「剪刀有时候不灵」。后来的做法是把输入排成队列：采样点按距离入队，分批消费，每批先简化折线再一起剪，相邻两批的首尾稍微重叠，避免交界处留下一像素宽的「桥」。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;锯齿&lt;/strong&gt;主要取决于剪口的宽度：太窄，圆角不圆；太宽，又会剪到玩家没想剪的地方。最后定在 0.06 个单位。&lt;/p&gt;
+&lt;p&gt;还有一个查了很久的问题：&lt;strong&gt;一次连续拖动里偶尔有一小段没剪断，位置随机，补一刀就好。&lt;/strong&gt; 原因是两道判断用了不同的门槛：判断「碰到了哪片头发」的面积门槛，比判断「这片头发剪得动」的门槛小了两百倍。一片只被擦了个边的头发会先被当成目标，切的时候又被判为「没切到」；而只要一批里有一个目标失败，整批都会回滚。公主、国王身上有好几处是多层头发叠在一起的，「一帧碰到多个目标」是常态，一次擦边就吞掉了那一帧真实的切割。修法是让两道判断问同一个问题，并把回滚的范围从「整帧」缩小到「叠在一起的那组头发」。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;洞&lt;/strong&gt;也经历过一次放开。一开始在头发中间剪出洞是被禁止的，代码会直接拒绝这一刀；后来补上了「挖洞之后建网格、存档再读回」的测试，把这个限制去掉了。&lt;/p&gt;
+&lt;h2 id="剪得好不好怎么算"&gt;&lt;a href="#%e5%89%aa%e5%be%97%e5%a5%bd%e4%b8%8d%e5%a5%bd%e6%80%8e%e4%b9%88%e7%ae%97" class="header-anchor"&gt;&lt;/a&gt;剪得好不好怎么算
+&lt;/h2&gt;&lt;h3 id="不看轨迹看结果"&gt;&lt;a href="#%e4%b8%8d%e7%9c%8b%e8%bd%a8%e8%bf%b9%e7%9c%8b%e7%bb%93%e6%9e%9c" class="header-anchor"&gt;&lt;/a&gt;不看轨迹，看结果
+&lt;/h3&gt;&lt;p&gt;最开始策划的想法是：屏幕上画一条提示线，判断鼠标轨迹是不是落在线附近，那时的规则还是「一笔剪断」。我觉得不行：它评价的是「怎么剪」而不是「剪出了什么」，同样的结果，绕点路剪出来就不算；一旦允许多刀，轨迹判定也就无从谈起。&lt;/p&gt;
+&lt;p&gt;于是改成比较结果：美术为每片头发画一个理想形状 \(G\)，剪完之后算当前头发 \(C\) 和它的交并比：&lt;/p&gt;
+$$
+\mathrm{IoU}(C, G) = \frac{|C \cap G|}{|C \cup G|}
+$$&lt;p&gt;IoU 能用，但我一直觉得它太简单：还没动剪刀，分数可能就有 0.6；它分不清「该剪的没剪」和「不该剪的剪了」，而对客人来说，「还长」和「剪秃了」完全是两回事；一片头发被剪成两块后，如果分别算再平均，权重也会变。&lt;/p&gt;
+&lt;h3 id="剪得对不对--形状像不像"&gt;&lt;a href="#%e5%89%aa%e5%be%97%e5%af%b9%e4%b8%8d%e5%af%b9--%e5%bd%a2%e7%8a%b6%e5%83%8f%e4%b8%8d%e5%83%8f" class="header-anchor"&gt;&lt;/a&gt;剪得对不对 × 形状像不像
+&lt;/h3&gt;&lt;p&gt;现在的算法先按&lt;strong&gt;原始头发&lt;/strong&gt;聚合：同一片头发剪出来的所有碎块先合并，再和基线比较，拆分就不再影响权重。&lt;/p&gt;
+&lt;p&gt;理发开始时记下基线。设 \(H_0\) 是初始头发，那么：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;应该剪掉的部分：\(R = H_0 \setminus G\)&lt;/li&gt;
+&lt;li&gt;应该保留的部分：\(K = H_0 \cap G\)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/score-sets.svg"
+loading="lazy"
+alt="满意度比较的集合：剪之前分出应剪区 R 与应保留区 K；剪了一刀之后，剪掉的 R 算剪对，剪掉的 K（红色）算误剪"
+&gt;&lt;/p&gt;
+&lt;p&gt;设已经剪掉的部分为 \(X = H_0 \setminus C\)，第一项回答「剪得对不对」：&lt;/p&gt;
+$$
+\text{correctCut} = \frac{|X \cap R|}{|R|}, \quad
+\text{wrongCut} = \frac{|X \cap K|}{|K|}, \quad
+\text{cutScore} = \text{correctCut} \cdot (1 - \text{wrongCut})^{1.8}
+$$&lt;p&gt;指数让误剪的惩罚比线性更重。&lt;/p&gt;
+&lt;p&gt;第二项回答「形状像不像」，比较的不是 \(G\)，而是 \(K\)——&lt;strong&gt;玩家能剪出来的最好形状&lt;/strong&gt;。美术画的理想形状有时会超出初始头发，那部分无论如何都剪不出来，不该算到玩家头上：&lt;/p&gt;
+$$
+\text{shapeFit} = \frac{|C \cap K|}{|C \cup K|}
+$$&lt;p&gt;两项用软最小值合成，\(\tau = 0.03\)：&lt;/p&gt;
+$$
+\text{satisfaction} = \min(a, b) - \tau \ln\frac{1 + e^{-|a-b|/\tau}}{2}
+$$&lt;p&gt;两项相差很大时，结果就是较小的那项；两项接近时，比最小值再低一点点。效果是&lt;strong&gt;两项都要好、主要看差的那一项&lt;/strong&gt;，而且是连续的，不会在某条门槛上突然跳变。&lt;/p&gt;
+&lt;p&gt;这个公式有个反直觉的地方：如果一片头发本来就要求剪掉 93%，那&lt;strong&gt;把它剪光&lt;/strong&gt;，满意度不是 0，而是从 0.03 涨到 0.23——毕竟该剪的大部分都剪掉了。「剪光等于最低分」在这里不成立，调阈值时要记得。&lt;/p&gt;
+&lt;p&gt;为了调这些参数，我做了一个叫 Haircut Lab 的实验场景：复用正式的剪发和评分，记录每一刀之后的各项分数，导出后画曲线；误剪惩罚的指数也可以在 Lab 里用滑杆一边剪一边调。&lt;/p&gt;
+&lt;h2 id="剪过的头发要记住"&gt;&lt;a href="#%e5%89%aa%e8%bf%87%e7%9a%84%e5%a4%b4%e5%8f%91%e8%a6%81%e8%ae%b0%e4%bd%8f" class="header-anchor"&gt;&lt;/a&gt;剪过的头发要记住
+&lt;/h2&gt;&lt;p&gt;客人下次出场时，发型要和上次剪完时一样。早期是把一条轮廓塞进 PlayerPrefs，既丢了洞和多块，同一片头发剪成的几块还会互相覆盖。现在整份拓扑存成一个 JSON 文档，带备份；WebGL 版存进 IndexedDB，两边格式相同。&lt;/p&gt;
+&lt;h2 id="卷发和染发"&gt;&lt;a href="#%e5%8d%b7%e5%8f%91%e5%92%8c%e6%9f%93%e5%8f%91" class="header-anchor"&gt;&lt;/a&gt;卷发和染发
+&lt;/h2&gt;&lt;p&gt;服务不只是剪短，还有卷发和染发。早期这两项做成了独立的小游戏：卷发是控制指示条追一个乱跑的目标，染发是给色块排序。原因很实在：当时没想到好的交互方式。&lt;/p&gt;
+&lt;p&gt;现在正在把它们都搬回头发上。卷发已经改成用烫发棒点击头发，在几档卷度之间切换——实现上不去变形几何，而是给每片头发准备好几档卷度的变体。染发在做涂抹原型：在头发上刷，用一张低分辨率的浓度网格记录每处染了多深，再按浓度混合原色和目标色，目前还停留在网页原型阶段。&lt;/p&gt;
+&lt;h2 id="还没解决的"&gt;&lt;a href="#%e8%bf%98%e6%b2%a1%e8%a7%a3%e5%86%b3%e7%9a%84" class="header-anchor"&gt;&lt;/a&gt;还没解决的
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;生根区域还不是真正的发际线。&lt;/strong&gt; 改回锚点之后，「哪些留在头上」仍然由一个粗略的矩形决定。更合理的做法是为每片头发确定真正的发际线（自动推算或手工标注），方案已经写好，还没做。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;边剪边变短没有实现。&lt;/strong&gt; 现在的效果和纸片风格是契合的，但如果以后要做更细的修剪手感，这仍是一个缺口。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;头发不能打进图集&lt;/strong&gt;，做图集优化时只能把它们排除在外。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;染发还没有接进游戏。&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="回头看"&gt;&lt;a href="#%e5%9b%9e%e5%a4%b4%e7%9c%8b" class="header-anchor"&gt;&lt;/a&gt;回头看
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;选对表示，比选对算法更重要。&lt;/strong&gt; 发丝模拟怎么调都调不好；把头发看成纸之后，剩下的问题都是成熟的几何问题。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;只保留一份几何真相。&lt;/strong&gt; 碰撞、渲染、评分、存档都从同一份拓扑派生，省掉了很多「看到的和算的不一样」的麻烦。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;两个判据不一致，是我反复踩的同一种坑。&lt;/strong&gt; 剪发里是「算命中」和「算剪得动」，&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-submit-guidance/" &gt;上一篇&lt;/a&gt;里是「按钮的分数」和「结算的分数」。两处单独看都对，合在一起就错了。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;很多「手感」问题，其实是数据问题。&lt;/strong&gt; 「剪刀不灵」不是剪刀的问题，是节流把路径丢了。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;下一篇换个方向，讲剧情系统：一个为固定流程设计的状态机，怎么在换词机制面前一路膨胀，以及我们怎么在不停工的情况下把它换掉。&lt;/p&gt;</description></item></channel></rss>

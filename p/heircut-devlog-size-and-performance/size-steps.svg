@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" width="760" height="300" font-family="'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif" role="img" aria-label="安装包体积的变化">
+<title>安装包体积的变化</title>
+<rect x="0.5" y="0.5" width="759" height="299" rx="12" fill="#fcfcfb" stroke="#e6e5e0"/>
+<text x="24.0" y="32.0" font-size="17" fill="#0b0b0b" text-anchor="start" font-weight="600" >安装包体积：主要靠图集把透明画布挤掉</text>
+<text x="178.0" y="84.0" font-size="13" fill="#0b0b0b" text-anchor="end" font-weight="normal" >初始打包</text>
+<rect x="190" y="62" width="430.0" height="34" rx="4" fill="#8a897f"/>
+<text x="628.0" y="78.0" font-size="13" fill="#0b0b0b" text-anchor="start" font-weight="600" >2.2 GB</text>
+<text x="628.0" y="94.0" font-size="11.5" fill="#52514e" text-anchor="start" font-weight="normal" >贴图占 97.5%</text>
+<text x="178.0" y="138.0" font-size="13" fill="#0b0b0b" text-anchor="end" font-weight="normal" >界面贴图并入图集</text>
+<rect x="190" y="116" width="312.7" height="34" rx="4" fill="#2a78d6"/>
+<text x="510.7" y="132.0" font-size="13" fill="#0b0b0b" text-anchor="start" font-weight="600" >1.6 GB</text>
+<text x="510.7" y="148.0" font-size="11.5" fill="#52514e" text-anchor="start" font-weight="normal" >透明画布不再计价</text>
+<text x="178.0" y="192.0" font-size="13" fill="#0b0b0b" text-anchor="end" font-weight="normal" >角色贴图并入图集</text>
+<rect x="190" y="170" width="171.8" height="34" rx="4" fill="#2a78d6"/>
+<text x="369.8" y="186.0" font-size="13" fill="#0b0b0b" text-anchor="start" font-weight="600" >879 MB</text>
+<text x="369.8" y="202.0" font-size="11.5" fill="#52514e" text-anchor="start" font-weight="normal" >头发图不能进图集，被排除</text>
+<text x="178.0" y="246.0" font-size="13" fill="#0b0b0b" text-anchor="end" font-weight="normal" >之后一次完整构建</text>
+<rect x="190" y="224" width="168.1" height="34" rx="4" fill="#2a78d6"/>
+<text x="366.1" y="240.0" font-size="13" fill="#0b0b0b" text-anchor="start" font-weight="600" >860 MB</text>
+<text x="366.1" y="256.0" font-size="11.5" fill="#52514e" text-anchor="start" font-weight="normal" >macOS</text>
+</svg>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" font-family="'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif" role="img" aria-label="剧情专属状态的数量随时间的变化">
+<title>剧情专属状态的数量随时间的变化</title>
+<rect x="0.5" y="0.5" width="759" height="379" rx="12" fill="#fcfcfb" stroke="#e6e5e0"/>
+<text x="24.0" y="32.0" font-size="17" fill="#0b0b0b" text-anchor="start" font-weight="600" >剧情专属状态：一个月就开始长，重构时一次删光</text>
+<text x="24.0" y="53.0" font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal" >GuestStates.cs 里 D1/D2/D3 开头的状态类个数（2025 年取自 Plastic SCM，2026 年取自 git）</text>
+<line x1="56" x2="720" y1="310.0" y2="310.0" stroke="#ebeae5"/>
+<text x="46.0" y="314.0" font-size="12" fill="#8a897f" text-anchor="end" font-weight="normal" >0</text>
+<line x1="56" x2="720" y1="251.0" y2="251.0" stroke="#ebeae5"/>
+<text x="46.0" y="255.0" font-size="12" fill="#8a897f" text-anchor="end" font-weight="normal" >4</text>
+<line x1="56" x2="720" y1="192.0" y2="192.0" stroke="#ebeae5"/>
+<text x="46.0" y="196.0" font-size="12" fill="#8a897f" text-anchor="end" font-weight="normal" >8</text>
+<line x1="56" x2="720" y1="133.0" y2="133.0" stroke="#ebeae5"/>
+<text x="46.0" y="137.0" font-size="12" fill="#8a897f" text-anchor="end" font-weight="normal" >12</text>
+<line x1="56" x2="720" y1="74.0" y2="74.0" stroke="#ebeae5"/>
+<text x="46.0" y="78.0" font-size="12" fill="#8a897f" text-anchor="end" font-weight="normal" >16</text>
+<text x="56.0" y="330.0" font-size="12" fill="#8a897f" text-anchor="middle" font-weight="normal" >2025-03</text>
+<text x="192.6" y="330.0" font-size="12" fill="#8a897f" text-anchor="middle" font-weight="normal" >2025-07</text>
+<text x="330.3" y="330.0" font-size="12" fill="#8a897f" text-anchor="middle" font-weight="normal" >2025-11</text>
+<text x="464.7" y="330.0" font-size="12" fill="#8a897f" text-anchor="middle" font-weight="normal" >2026-03</text>
+<text x="601.3" y="330.0" font-size="12" fill="#8a897f" text-anchor="middle" font-weight="normal" >2026-07</text>
+<text x="704.3" y="330.0" font-size="12" fill="#8a897f" text-anchor="middle" font-weight="normal" >2026-10</text>
+<line x1="226.2" x2="226.2" y1="74" y2="310" stroke="#8a897f" stroke-dasharray="3 3"/>
+<text x="230.2" y="86.0" font-size="11.5" fill="#52514e" text-anchor="start" font-weight="normal" >CUSGA 终版</text>
+<line x1="358.3" x2="358.3" y1="74" y2="310" stroke="#8a897f" stroke-dasharray="3 3"/>
+<text x="362.3" y="86.0" font-size="11.5" fill="#52514e" text-anchor="start" font-weight="normal" >迁到 git</text>
+<polyline points="75.0,310.0 85.1,310.0 85.1,265.8 100.8,265.8 100.8,221.5 116.5,221.5 116.5,192.0 137.7,192.0 137.7,133.0 145.6,133.0 145.6,118.2 645.0,118.2 645.0,103.5 660.7,103.5 660.7,310.0 720.0,310.0" fill="none" stroke="#eb6834" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="85.1" cy="265.8" r="4.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<text x="93.1" y="285.8" font-size="12" fill="#0b0b0b" text-anchor="start" font-weight="normal" >第一天的女巫：3 个</text>
+<circle cx="145.6" cy="118.2" r="4.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<text x="153.6" y="108.2" font-size="12" fill="#0b0b0b" text-anchor="start" font-weight="normal" >BOOOM 终版 Demo：13 个</text>
+<circle cx="660.7" cy="310.0" r="4.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<text x="652.7" y="302.0" font-size="12" fill="#0b0b0b" text-anchor="end" font-weight="normal" >阶段 4 收尾，一次删光</text>
+<text x="637.0" y="93.5" font-size="12" fill="#0b0b0b" text-anchor="end" font-weight="normal" >14 个</text>
+<text x="720.0" y="358.0" font-size="12" fill="#8a897f" text-anchor="end" font-weight="normal" >最后一个（D1KingChooseLeave）加在重构开始前两天</text>
+</svg>
