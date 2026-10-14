@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 520" width="840" height="520" font-family="'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif" role="img" aria-label="重构前后的剧情架构">
+<title>重构前后的剧情架构</title>
+<rect x="0.5" y="0.5" width="839" height="519" rx="12" fill="#fcfcfb" stroke="#e6e5e0"/>
+<text x="24.0" y="32.0" font-size="17" fill="#0b0b0b" text-anchor="start" font-weight="600" >剧情系统：重构之前与之后</text>
+<line x1="300" x2="300" y1="56" y2="496" stroke="#e6e5e0" stroke-width="1"/>
+<text x="28.0" y="70.0" font-size="14" fill="#52514e" text-anchor="start" font-weight="600" >之前：每个客人一台状态机</text>
+<rect x="28" y="86" width="248" height="60" rx="8" fill="#ffffff" stroke="#e6e5e0"/>
+<rect x="28" y="86" width="4" height="60" rx="2" fill="#8a897f"/>
+<text x="42.0" y="108.0" font-size="14" fill="#0b0b0b" text-anchor="start" font-weight="600" >策划表格</text>
+<text x="42.0" y="128.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" >程序照着表格改代码</text>
+<line x1="152" y1="146" x2="152" y2="176" stroke="#8a897f" stroke-width="1.5"/>
+<path d="M148.5 168.8 L152 176 L155.5 168.8" fill="none" stroke="#8a897f" stroke-width="1.5"/>
+<rect x="28" y="176" width="248" height="92" rx="8" fill="#ffffff" stroke="#e6e5e0"/>
+<rect x="28" y="176" width="4" height="92" rx="2" fill="#eb6834"/>
+<text x="42.0" y="198.0" font-size="14" fill="#0b0b0b" text-anchor="start" font-weight="600" >GuestManager</text>
+<text x="42.0" y="218.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" >OnD1WitchSatTimeToDawn(…)</text>
+<text x="42.0" y="236.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" >OnKingChooseLeave(…)</text>
+<text x="42.0" y="254.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" >if (guestName == King) …</text>
+<line x1="152" y1="268" x2="152" y2="296" stroke="#8a897f" stroke-width="1.5"/>
+<path d="M148.5 288.8 L152 296 L155.5 288.8" fill="none" stroke="#8a897f" stroke-width="1.5"/>
+<text x="158.0" y="278.0" font-size="11.5" fill="#52514e" text-anchor="start" font-weight="normal" >new 专属状态</text>
+<rect x="28" y="296" width="248" height="150" rx="8" fill="#ffffff" stroke="#e6e5e0"/>
+<rect x="28" y="296" width="4" height="150" rx="2" fill="#eb6834"/>
+<text x="42.0" y="318.0" font-size="14" fill="#0b0b0b" text-anchor="start" font-weight="600" >Guest.Fsm（每个客人一台）</text>
+<text x="42.0" y="338.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" >Entering → Pleasantries → …</text>
+<text x="42.0" y="356.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" >→ Haircutting → Chatting → Exiting</text>
+<text x="42.0" y="374.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" ></text>
+<text x="42.0" y="392.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" >+ D1WitchDawn</text>
+<text x="42.0" y="410.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" >+ D1KingReceivePainting</text>
+<text x="42.0" y="428.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" >+ D2KnightCatchTraitor …（共 14 个）</text>
+<text x="152.0" y="476.0" font-size="12" fill="#8a897f" text-anchor="middle" font-weight="normal" >推进、对话、事件、单例调用</text>
+<text x="152.0" y="494.0" font-size="12" fill="#8a897f" text-anchor="middle" font-weight="normal" >混在同一个状态类里</text>
+<text x="324.0" y="70.0" font-size="14" fill="#52514e" text-anchor="start" font-weight="600" >之后：内容驱动的 Encounter</text>
+<rect x="324" y="86" width="196" height="78" rx="8" fill="#ffffff" stroke="#e6e5e0"/>
+<rect x="324" y="86" width="4" height="78" rx="2" fill="#1baf7a"/>
+<text x="338.0" y="108.0" font-size="14" fill="#0b0b0b" text-anchor="start" font-weight="600" >剧情内容（JSON）</text>
+<text x="338.0" y="128.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" >规则 · 序列 · 条件</text>
+<text x="338.0" y="146.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" >策划编辑器直接编辑</text>
+<line x1="522" y1="125" x2="588" y2="125" stroke="#8a897f" stroke-width="1.5"/>
+<path d="M580.8 128.5 L588 125 L580.8 121.5" fill="none" stroke="#8a897f" stroke-width="1.5"/>
+<text x="555.0" y="145.0" font-size="11.5" fill="#52514e" text-anchor="middle" font-weight="normal" >编译+校验</text>
+<rect x="590" y="86" width="222" height="78" rx="8" fill="#ffffff" stroke="#e6e5e0"/>
+<rect x="590" y="86" width="4" height="78" rx="2" fill="#1baf7a"/>
+<text x="604.0" y="108.0" font-size="14" fill="#0b0b0b" text-anchor="start" font-weight="600" >内容数据库</text>
+<text x="604.0" y="128.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" >引用 · 冲突 · 可达性检查</text>
+<text x="604.0" y="146.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" >离线推演 5 个结局</text>
+<rect x="324" y="196" width="488" height="150" rx="10" fill="#f3f7fd" stroke="#cfe0f5"/>
+<text x="338.0" y="216.0" font-size="12" fill="#2a78d6" text-anchor="start" font-weight="600" >纯逻辑层（noEngineReferences，不引用 UnityEngine）</text>
+<rect x="338" y="228" width="240" height="104" rx="8" fill="#ffffff" stroke="#e6e5e0"/>
+<rect x="338" y="228" width="4" height="104" rx="2" fill="#2a78d6"/>
+<text x="352.0" y="250.0" font-size="14" fill="#0b0b0b" text-anchor="start" font-weight="600" >EncounterSession</text>
+<text x="352.0" y="270.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" >命令 → 匹配规则 → 播放序列</text>
+<text x="352.0" y="288.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" >CompleteSequence 时统一提交</text>
+<text x="352.0" y="306.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" >里程碑 · 事实 · 快照</text>
+<rect x="590" y="228" width="208" height="104" rx="8" fill="#ffffff" stroke="#e6e5e0"/>
+<rect x="590" y="228" width="4" height="104" rx="2" fill="#2a78d6"/>
+<text x="604.0" y="250.0" font-size="14" fill="#0b0b0b" text-anchor="start" font-weight="600" >NarrativeRunner</text>
+<text x="604.0" y="270.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" >19 种通用步骤</text>
+<text x="604.0" y="288.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" >Say / SetFact / Branch …</text>
+<text x="604.0" y="306.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" >可在任意步骤存档恢复</text>
+<line x1="700" y1="164" x2="700" y2="196" stroke="#8a897f" stroke-width="1.5"/>
+<path d="M696.5 188.8 L700 196 L703.5 188.8" fill="none" stroke="#8a897f" stroke-width="1.5"/>
+<rect x="324" y="382" width="488" height="62" rx="8" fill="#ffffff" stroke="#e6e5e0"/>
+<rect x="324" y="382" width="4" height="62" rx="2" fill="#4a3aa7"/>
+<text x="338.0" y="404.0" font-size="14" fill="#0b0b0b" text-anchor="start" font-weight="600" >LegacyEncounterBridge（桥）</text>
+<text x="338.0" y="424.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" >视图操作 → 命令；步骤 → 端口调用；单例引用 81 → 0</text>
+<line x1="470" y1="382" x2="470" y2="346" stroke="#2a78d6" stroke-width="1.5"/>
+<path d="M473.5 353.2 L470 346 L466.5 353.2" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="476.0" y="360.0" font-size="11.5" fill="#52514e" text-anchor="start" font-weight="normal" >命令</text>
+<line x1="640" y1="346" x2="640" y2="382" stroke="#2a78d6" stroke-width="1.5"/>
+<path d="M636.5 374.8 L640 382 L643.5 374.8" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="646.0" y="360.0" font-size="11.5" fill="#52514e" text-anchor="start" font-weight="normal" >步骤</text>
+<rect x="324" y="462" width="488" height="40" rx="8" fill="#ffffff" stroke="#e6e5e0"/>
+<rect x="324" y="462" width="4" height="40" rx="2" fill="#8a897f"/>
+<text x="338.0" y="484.0" font-size="12.5" fill="#0b0b0b" text-anchor="start" font-weight="600" >旧视图：对话框 · 笔记本 · 需求板 · 理发（经端口注入）</text>
+<line x1="568" y1="444" x2="568" y2="462" stroke="#8a897f" stroke-width="1.5"/>
+<path d="M564.5 454.8 L568 462 L571.5 454.8" fill="none" stroke="#8a897f" stroke-width="1.5"/>
+</svg>

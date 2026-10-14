@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 210" width="800" height="210" font-family="'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif" role="img" aria-label="提交按钮的四个版本">
+<title>提交按钮的四个版本</title>
+<rect x="0.5" y="0.5" width="799" height="209" rx="12" fill="#fcfcfb" stroke="#e6e5e0"/>
+<rect x="24" y="28" width="170" height="150" rx="10" fill="#ffffff" stroke="#e6e5e0"/>
+<rect x="24" y="28" width="170" height="6" rx="3" fill="#8a897f"/>
+<text x="38.0" y="58.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" >第 1 版 · 项目第一个月</text>
+<text x="38.0" y="86.0" font-size="17" fill="#0b0b0b" text-anchor="start" font-weight="600" >一直在</text>
+<text x="38.0" y="118.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="normal" >进入理发就出现</text>
+<text x="38.0" y="140.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="normal" >之后一直可以点</text>
+<path d="M198 103 l16 0 m-6 -5 l6 5 l-6 5" fill="none" stroke="#8a897f" stroke-width="1.6"/>
+<rect x="220" y="28" width="170" height="150" rx="10" fill="#ffffff" stroke="#e6e5e0"/>
+<rect x="220" y="28" width="170" height="6" rx="3" fill="#eda100"/>
+<text x="234.0" y="58.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" >第 2 版 · 一年多以后</text>
+<text x="234.0" y="86.0" font-size="17" fill="#0b0b0b" text-anchor="start" font-weight="600" >够好时闪一下</text>
+<text x="234.0" y="118.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="normal" >每次掉发算一次分</text>
+<text x="234.0" y="140.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="normal" >≥ 0.75 时闪烁</text>
+<path d="M394 103 l16 0 m-6 -5 l6 5 l-6 5" fill="none" stroke="#8a897f" stroke-width="1.6"/>
+<rect x="416" y="28" width="170" height="150" rx="10" fill="#ffffff" stroke="#e6e5e0"/>
+<rect x="416" y="28" width="170" height="6" rx="3" fill="#2a78d6"/>
+<text x="430.0" y="58.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" >第 3 版 · 两个月后</text>
+<text x="430.0" y="86.0" font-size="17" fill="#0b0b0b" text-anchor="start" font-weight="600" >按有效笔划出现</text>
+<text x="430.0" y="118.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="normal" >每剪完一刀判断一次</text>
+<text x="430.0" y="140.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="normal" >高分·极低·回落·20 秒</text>
+<path d="M590 103 l16 0 m-6 -5 l6 5 l-6 5" fill="none" stroke="#8a897f" stroke-width="1.6"/>
+<rect x="612" y="28" width="170" height="150" rx="10" fill="#ffffff" stroke="#e6e5e0"/>
+<rect x="612" y="28" width="170" height="6" rx="3" fill="#1baf7a"/>
+<text x="626.0" y="58.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" >第 4 版 · 又过一个月</text>
+<text x="626.0" y="86.0" font-size="17" fill="#0b0b0b" text-anchor="start" font-weight="600" >与结算统一</text>
+<text x="626.0" y="118.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="normal" >按钮和结算调用</text>
+<text x="626.0" y="140.0" font-size="13" fill="#52514e" text-anchor="start" font-weight="normal" >同一个判定函数</text>
+</svg>

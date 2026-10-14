@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420" font-family="'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif" role="img" aria-label="每月提交数与 AI 署名">
+<title>每月提交数与 AI 署名</title>
+<rect x="0.5" y="0.5" width="759" height="419" rx="12" fill="#fcfcfb" stroke="#e6e5e0"/>
+<text x="24.0" y="32.0" font-size="17" fill="#0b0b0b" text-anchor="start" font-weight="600" >每月提交数：重构开始后，AI 参与的提交占了八成以上</text>
+<text x="24.0" y="53.0" font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal" >按提交说明里的 Co-Authored-By 署名统计（署名是自报的，没有署名不代表没用 AI）</text>
+<line x1="56" x2="736" y1="320.0" y2="320.0" stroke="#ebeae5"/>
+<text x="46.0" y="324.0" font-size="12" fill="#8a897f" text-anchor="end" font-weight="normal" >0</text>
+<line x1="56" x2="736" y1="261.0" y2="261.0" stroke="#ebeae5"/>
+<text x="46.0" y="265.0" font-size="12" fill="#8a897f" text-anchor="end" font-weight="normal" >100</text>
+<line x1="56" x2="736" y1="202.0" y2="202.0" stroke="#ebeae5"/>
+<text x="46.0" y="206.0" font-size="12" fill="#8a897f" text-anchor="end" font-weight="normal" >200</text>
+<line x1="56" x2="736" y1="143.0" y2="143.0" stroke="#ebeae5"/>
+<text x="46.0" y="147.0" font-size="12" fill="#8a897f" text-anchor="end" font-weight="normal" >300</text>
+<line x1="56" x2="736" y1="84.0" y2="84.0" stroke="#ebeae5"/>
+<text x="46.0" y="88.0" font-size="12" fill="#8a897f" text-anchor="end" font-weight="normal" >400</text>
+<rect x="66.8" y="317.6" width="35.1" height="0.5" rx="2" fill="#c9c7bf"/>
+<text x="84.3" y="338.0" font-size="11.5" fill="#8a897f" text-anchor="middle" font-weight="normal" >25.11</text>
+<text x="84.3" y="311.6" font-size="11.5" fill="#52514e" text-anchor="middle" font-weight="normal" >4</text>
+<rect x="123.4" y="318.8" width="35.1" height="0.5" rx="2" fill="#c9c7bf"/>
+<text x="141.0" y="338.0" font-size="11.5" fill="#8a897f" text-anchor="middle" font-weight="normal" >25.12</text>
+<text x="141.0" y="312.8" font-size="11.5" fill="#52514e" text-anchor="middle" font-weight="normal" >2</text>
+<rect x="180.1" y="317.6" width="35.1" height="0.5" rx="2" fill="#c9c7bf"/>
+<text x="197.7" y="338.0" font-size="11.5" fill="#8a897f" text-anchor="middle" font-weight="normal" >26.01</text>
+<text x="197.7" y="311.6" font-size="11.5" fill="#52514e" text-anchor="middle" font-weight="normal" >4</text>
+<rect x="236.8" y="319.4" width="35.1" height="0.5" rx="2" fill="#c9c7bf"/>
+<text x="254.3" y="338.0" font-size="11.5" fill="#8a897f" text-anchor="middle" font-weight="normal" >26.02</text>
+<text x="254.3" y="313.4" font-size="11.5" fill="#52514e" text-anchor="middle" font-weight="normal" >1</text>
+<rect x="293.4" y="319.4" width="35.1" height="0.5" rx="2" fill="#c9c7bf"/>
+<text x="311.0" y="338.0" font-size="11.5" fill="#8a897f" text-anchor="middle" font-weight="normal" >26.03</text>
+<text x="311.0" y="313.4" font-size="11.5" fill="#52514e" text-anchor="middle" font-weight="normal" >1</text>
+<text x="367.7" y="338.0" font-size="11.5" fill="#8a897f" text-anchor="middle" font-weight="normal" >26.04</text>
+<rect x="406.8" y="317.6" width="35.1" height="0.5" rx="2" fill="#eb6834"/>
+<rect x="406.8" y="314.7" width="35.1" height="1.0" rx="2" fill="#c9c7bf"/>
+<text x="424.3" y="338.0" font-size="11.5" fill="#8a897f" text-anchor="middle" font-weight="normal" >26.05</text>
+<text x="424.3" y="308.7" font-size="11.5" fill="#52514e" text-anchor="middle" font-weight="normal" >9</text>
+<rect x="463.4" y="314.1" width="35.1" height="3.9" rx="2" fill="#c9c7bf"/>
+<text x="481.0" y="338.0" font-size="11.5" fill="#8a897f" text-anchor="middle" font-weight="normal" >26.06</text>
+<text x="481.0" y="308.1" font-size="11.5" fill="#52514e" text-anchor="middle" font-weight="normal" >10</text>
+<rect x="520.1" y="314.1" width="35.1" height="3.9" rx="2" fill="#eb6834"/>
+<rect x="520.1" y="272.2" width="35.1" height="39.9" rx="2" fill="#c9c7bf"/>
+<text x="537.7" y="338.0" font-size="11.5" fill="#8a897f" text-anchor="middle" font-weight="normal" >26.07</text>
+<text x="537.7" y="264.2" font-size="12" fill="#0b0b0b" text-anchor="middle" font-weight="normal" >81（12%）</text>
+<rect x="576.8" y="255.1" width="35.1" height="62.9" rx="2" fill="#2a78d6"/>
+<rect x="576.8" y="233.9" width="35.1" height="19.2" rx="2" fill="#eb6834"/>
+<rect x="576.8" y="216.2" width="35.1" height="15.7" rx="2" fill="#c9c7bf"/>
+<text x="594.3" y="338.0" font-size="11.5" fill="#8a897f" text-anchor="middle" font-weight="normal" >26.08</text>
+<text x="594.3" y="208.2" font-size="12" fill="#0b0b0b" text-anchor="middle" font-weight="normal" >176（83%）</text>
+<rect x="633.4" y="112.9" width="35.1" height="205.1" rx="2" fill="#2a78d6"/>
+<rect x="633.4" y="111.7" width="35.1" height="0.5" rx="2" fill="#eb6834"/>
+<rect x="633.4" y="84.6" width="35.1" height="25.1" rx="2" fill="#c9c7bf"/>
+<text x="651.0" y="338.0" font-size="11.5" fill="#8a897f" text-anchor="middle" font-weight="normal" >26.09</text>
+<text x="651.0" y="76.6" font-size="12" fill="#0b0b0b" text-anchor="middle" font-weight="normal" >399（88%）</text>
+<rect x="690.1" y="275.2" width="35.1" height="42.8" rx="2" fill="#2a78d6"/>
+<rect x="690.1" y="264.5" width="35.1" height="8.6" rx="2" fill="#c9c7bf"/>
+<text x="707.7" y="338.0" font-size="11.5" fill="#8a897f" text-anchor="middle" font-weight="normal" >26.10</text>
+<text x="707.7" y="256.5" font-size="12" fill="#0b0b0b" text-anchor="middle" font-weight="normal" >94（81%）</text>
+<rect x="56" y="366" width="12" height="12" rx="3" fill="#2a78d6"/>
+<text x="74.0" y="376.0" font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal" >Claude 署名</text>
+<rect x="176" y="366" width="12" height="12" rx="3" fill="#eb6834"/>
+<text x="194.0" y="376.0" font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal" >Cursor 署名</text>
+<rect x="296" y="366" width="12" height="12" rx="3" fill="#c9c7bf"/>
+<text x="314.0" y="376.0" font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal" >无署名</text>
+<text x="56.0" y="402.0" font-size="11.5" fill="#8a897f" text-anchor="start" font-weight="normal" >括号内为带 AI 署名的比例；2025 年 3–10 月在 Plastic SCM，没有署名信息，未计入</text>
+</svg>

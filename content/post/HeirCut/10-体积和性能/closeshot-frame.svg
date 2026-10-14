@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" width="760" height="260" font-family="'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif" role="img" aria-label="第一次进近景时帷幕拉开后的最差一帧">
+<title>第一次进近景时帷幕拉开后的最差一帧</title>
+<rect x="0.5" y="0.5" width="759" height="259" rx="12" fill="#fcfcfb" stroke="#e6e5e0"/>
+<text x="24.0" y="32.0" font-size="17" fill="#0b0b0b" text-anchor="start" font-weight="600" >第一次进近景：帷幕拉开后最差的一帧</text>
+<text x="24.0" y="53.0" font-size="12.5" fill="#52514e" text-anchor="start" font-weight="normal" >近景背景音乐从「加载时解压」改成「流式 + 后台加载」前后，编辑器内实测</text>
+<text x="178.0" y="104.0" font-size="13" fill="#0b0b0b" text-anchor="end" font-weight="normal" >改之前</text>
+<rect x="190" y="82" width="436.0" height="34" rx="4" fill="#eb6834"/>
+<text x="634.0" y="104.0" font-size="13" fill="#0b0b0b" text-anchor="start" font-weight="600" >1744 ms</text>
+<text x="198.0" y="134.0" font-size="11.5" fill="#52514e" text-anchor="start" font-weight="normal" >其中播放背景音乐 1682 ms</text>
+<text x="178.0" y="166.0" font-size="13" fill="#0b0b0b" text-anchor="end" font-weight="normal" >改之后</text>
+<rect x="190" y="144" width="30.2" height="34" rx="4" fill="#2a78d6"/>
+<text x="228.2" y="166.0" font-size="13" fill="#0b0b0b" text-anchor="start" font-weight="600" >121 ms</text>
+<line x1="211.2" x2="211.2" y1="72" y2="220" stroke="#52514e" stroke-dasharray="4 3"/>
+<text x="217.2" y="236.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" >编辑器帧时间噪声本底 ≈ 85 ms</text>
+</svg>
