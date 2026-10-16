@@ -57,7 +57,7 @@ hideMeta: true
 <a class="pf-card" href="/p/heircut-devlog-size-and-performance/"><strong>包体 2.2 GB → 860 MB</strong><span>定位到透明画布占满贴图预算，用 Sprite Atlas 解决；首次进场景 1.7 秒卡顿定位到一轨音频解压；加导入守卫与测试防回归。</span><em>开发手记（十）→</em></a>
 </div>
 
-另外几篇：[理发什么时候算剪完了]({{< relref "post/HeirCut/01-理发什么时候算剪完了/index.md" >}}) · [换词机制]({{< relref "post/HeirCut/04-把客人说的话剪下来/index.md" >}}) · [笔记本词语摆放]({{< relref "post/HeirCut/05-笔记本里的词怎么摆/index.md" >}}) · [验证陷阱]({{< relref "post/HeirCut/09-看起来在验证/index.md" >}}) · [和 AI 一起做游戏]({{< relref "post/HeirCut/11-和AI一起做游戏/index.md" >}})
+另外几篇：[理发什么时候算剪完了]({{< relref "post/HeirCut/01-理发什么时候算剪完了/index.md" >}}) · [换词机制]({{< relref "post/HeirCut/04-把客人说的话剪下来/index.md" >}}) · [笔记本词语摆放]({{< relref "post/HeirCut/05-笔记本里的词怎么摆/index.md" >}}) · [验证陷阱]({{< relref "post/HeirCut/09-看起来在验证/index.md" >}}) · [和 AI 一起做游戏]({{< relref "post/HeirCut/12-和AI一起做游戏/index.md" >}})
 
 ## 技术栈
 

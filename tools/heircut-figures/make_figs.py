@@ -732,7 +732,7 @@ def fig_closeshot_frame():
     write("closeshot-frame.svg", p)
 
 
-# ---------------------------------------------------------------- 12: letterbox / pillarbox
+# ---------------------------------------------------------------- 11: letterbox / pillarbox
 def viewport(aspect, target=16 / 9):
     """与游戏里 DisplayViewportUtility.CalculateViewport 同一个公式：返回 (x, y, w, h)，单位是屏幕的比例。"""
     if abs(aspect - target) < 1e-6:
