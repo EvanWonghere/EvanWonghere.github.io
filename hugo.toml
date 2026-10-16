@@ -154,7 +154,7 @@ sync = true
 [params.homeIntro]
 greeting = "你好 👋"
 title = "我是 EvanWong"
-description = "游戏客户端程序，Unity 方向。我是《宫廷理发师》的唯一程序，这里有它的**开发手记**，也有我在**计算机图形学**、**游戏设计**路上的学习笔记，和一些自己做的小游戏。"
+description = "游戏客户端程序，Unity 方向。我是《宫廷理发师》的唯一程序，这里有它的**开发手记**，也有我在**计算机图形学**、**游戏设计**路上的学习笔记。"
 
   # 自我介绍区块下方的入口按钮；primary = true 的用强调色。
   [[params.homeIntro.links]]
@@ -304,7 +304,7 @@ enabled = true
   [[menu.social]]
   identifier = "github"
   name = "GitHub"
-  url = "https://github.com/EvanWonghere/EvanWonghere.github.io"
+  url = "https://github.com/EvanWonghere"
 
     [menu.social.params]
     icon = "brand-github"

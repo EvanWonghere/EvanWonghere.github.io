@@ -23,10 +23,10 @@ hideMeta: true
 <a href="/p/heircut-devlog-submit-guidance/">开发手记（12 篇）</a>
 <a href="/resume/">简历</a>
 </div>
+<figure class="pf-hero__media"><video src="/portfolio/cut.mp4" poster="/portfolio/cut-poster.jpg" width="360" height="384" autoplay muted loop playsinline aria-label="游戏中给公主剪发：白色轨迹划过长发，轨迹以下的头发被剪断"></video><figcaption>可以沿任意曲线剪开的 2D 头发</figcaption></figure>
 </div>
 
 <div class="pf-media">
-<figure><img src="/p/heircut-devlog-cuttable-hair/cut.gif" alt="游戏中给公主剪发：白色轨迹划过长发，轨迹以下的头发被剪断" loading="lazy"><figcaption>可以沿任意曲线剪开的 2D 头发</figcaption></figure>
 <figure><img src="/p/heircut-devlog-content-editor/editor-flow.jpg" alt="策划编辑器：一个客人组的流程图，节点是演出，边是规则" loading="lazy"><figcaption>给策划用的剧情编辑器</figcaption></figure>
 <figure><img src="/p/heircut-devlog-notebook-layout/notebook-tool.jpg" alt="笔记本摆放工具：美术在浏览器里调参数、对比方案、拖动词语" loading="lazy"><figcaption>给美术用的笔记本摆放工具</figcaption></figure>
 </div>
@@ -52,7 +52,7 @@ hideMeta: true
 <a class="pf-card" href="/p/heircut-devlog-cuttable-hair/"><strong>可以剪的 2D 头发</strong><span>头发是多边形拓扑，剪刀轨迹膨胀成带子做布尔差集（Clipper2），Poly2Tri 三角化；评分从 IoU 演进为「剪得对不对 × 形状像不像」的软最小值。</span><em>开发手记（二）→</em></a>
 <a class="pf-card" href="/p/heircut-devlog-encounter-refactor/"><strong>剧情系统重构</strong><span>把膨胀到 14 个剧情专属状态的角色状态机，换成内容驱动、不依赖 Unity 的纯逻辑架构；新旧并行，游戏全程可玩，9 组客人逐组迁移。</span><em>开发手记（三）→</em></a>
 <a class="pf-card" href="/p/heircut-devlog-content-editor/"><strong>内容管线与策划编辑器</strong><span>剧情从表格换成 JSON，编译后经 103 种诊断校验；React Flow 编辑器让策划自己编辑、试玩、导出内容包，Unity 端一键导入并可回滚。</span><em>开发手记（六）→</em></a>
-<a class="pf-card" href="/p/heircut-devlog-playthrough-automation/"><strong>整局自动化</strong><span>离线推演器穷举整局（5 个结局、113 条规则、303 句可达台词），实机机器人走真实射线从新游戏玩到结局；两者互相纠错。</span><em>开发手记（八）→</em></a>
+<a class="pf-card" href="/p/heircut-devlog-playthrough-automation/"><strong>整局自动化</strong><span>离线推演器穷举整局（5 个结局、113 条规则、316 句台词中 303 句可达），实机机器人走真实射线从新游戏玩到结局；两者互相纠错。</span><em>开发手记（八）→</em></a>
 <a class="pf-card" href="/p/heircut-devlog-save-system/"><strong>存档到对话中的某一句</strong><span>从「第几天第几组」到恢复会面中途状态；继续与回溯两条语义分离，快照随主档一次原子写盘。</span><em>开发手记（七）→</em></a>
 <a class="pf-card" href="/p/heircut-devlog-size-and-performance/"><strong>包体 2.2 GB → 860 MB</strong><span>定位到透明画布占满贴图预算，用 Sprite Atlas 解决；首次进场景 1.7 秒卡顿定位到一轨音频解压；加导入守卫与测试防回归。</span><em>开发手记（十）→</em></a>
 </div>

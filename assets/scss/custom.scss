@@ -1525,6 +1525,62 @@ html {
         color: var(--card-text-color-main);
         margin: 0 0 1.4rem;
     }
+
+    // 剪发演示视频放在首屏：宽屏在文字右侧，窄屏插在标签行和简介之间。
+    // 只有带视频的 hero（作品集）用这套网格，简历页的 hero 不受影响。
+    &:has(> .pf-hero__media) {
+        display: grid;
+        grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+        grid-template-areas:
+            "title media"
+            "meta  media"
+            "pitch media"
+            "links media";
+        grid-template-rows: auto auto auto 1fr;
+        column-gap: 24px;
+
+        > h2 { grid-area: title; }
+        > .pf-hero__meta { grid-area: meta; }
+        > .pf-hero__pitch { grid-area: pitch; }
+        > .pf-links { grid-area: links; align-self: start; }
+    }
+
+    &__media {
+        grid-area: media;
+        // 不支持 :has 的旧浏览器里 hero 不是网格，用它限住视频宽度
+        max-width: 360px;
+        // 主题给文章里的 figure 加了负外边距铺满卡片，放进网格会溢出
+        margin: 0 !important;
+        width: auto !important;
+
+        video {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            background-color: #1b1b1f;
+        }
+
+        figcaption {
+            font-size: 1.25rem;
+            color: var(--card-text-color-tertiary);
+            margin-top: 6px;
+            text-align: left;
+        }
+    }
+}
+
+@media (max-width: 640px) {
+    .pf-hero:has(> .pf-hero__media) {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas: "title" "meta" "media" "pitch" "links";
+        grid-template-rows: none;
+    }
+
+    .pf-hero__media {
+        max-width: 280px;
+        margin: 0 0 1.4rem !important;
+    }
 }
 
 .pf-links {
@@ -1551,10 +1607,10 @@ html {
     }
 }
 
-// 左边一张竖版动图跨两行，右边两张横版截图上下排；窄屏改成单列。
+// 两张横版工具截图并排（剪发动图已移到 .pf-hero 首屏）；窄屏改成单列。
 .pf-media {
     display: grid;
-    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.6fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
     margin: 1.6rem 0 2.4rem;
 
@@ -1562,10 +1618,6 @@ html {
         // 主题给文章里的 figure 加了负外边距铺满卡片，放进网格会溢出
         margin: 0 !important;
         width: auto !important;
-
-        &:first-child {
-            grid-row: span 2;
-        }
 
         img {
             width: 100%;
@@ -1585,10 +1637,6 @@ html {
 @media (max-width: 640px) {
     .pf-media {
         grid-template-columns: minmax(0, 1fr);
-
-        figure:first-child {
-            grid-row: auto;
-        }
     }
 }
 
