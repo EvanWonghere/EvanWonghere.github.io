@@ -1,4 +1,89 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>UI on 蜂窝</title><link>https://yufenghuang.tech/tags/ui/</link><description>Recent content in UI on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Mon, 12 Oct 2026 09:40:00 +0800</lastBuildDate><atom:link href="https://yufenghuang.tech/tags/ui/index.xml" rel="self" type="application/rss+xml"/><item><title>HeirCut 开发手记（五）：笔记本里的词怎么摆</title><link>https://yufenghuang.tech/p/heircut-devlog-notebook-layout/</link><pubDate>Mon, 12 Oct 2026 09:40:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/heircut-devlog-notebook-layout/</guid><description>&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>UI on 蜂窝</title><link>https://yufenghuang.tech/tags/ui/</link><description>Recent content in UI on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Fri, 16 Oct 2026 10:00:00 +0800</lastBuildDate><atom:link href="https://yufenghuang.tech/tags/ui/index.xml" rel="self" type="application/rss+xml"/><item><title>HeirCut 开发手记（十一）：不再单独发窗口版</title><link>https://yufenghuang.tech/p/heircut-devlog-display-adaptation/</link><pubDate>Fri, 16 Oct 2026 10:00:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/heircut-devlog-display-adaptation/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;「HeirCut 开发手记」第十一篇。游戏简介见&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-submit-guidance/" &gt;第一篇&lt;/a&gt;文末。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;《宫廷理发师》很长一段时间只在 16:9 的屏幕上表现正常，在不是 16:9 的显示器上全屏玩，经常出各种问题。我们的应对办法是：每次发版，除了全屏版，再另出一个窗口版，遇到问题的人就用窗口玩。&lt;/p&gt;
+&lt;p&gt;这样能凑合，但很繁琐，而且窗口版谈不上沉浸。今年七月，在一次比赛提交之前，我们终于把它做成了自适应：任何屏幕都能全屏玩。&lt;/p&gt;
+&lt;h2 id="为什么非-169-会出问题"&gt;&lt;a href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e9%9d%9e-169-%e4%bc%9a%e5%87%ba%e9%97%ae%e9%a2%98" class="header-anchor"&gt;&lt;/a&gt;为什么非 16:9 会出问题
+&lt;/h2&gt;&lt;p&gt;这个游戏的画面是一张张摆好的 2D 构图。&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-size-and-performance/" &gt;第十篇&lt;/a&gt;里提过，美术习惯把每个元素都导出在一整幅 16:9 的画布上，丢进场景位置就是对的。客人站在哪、帷幕拉到哪、笔记本从哪里滑出来，全都是按 16:9 的画面摆的。&lt;/p&gt;
+&lt;p&gt;屏幕比例一变，这套按 16:9 摆好的构图就失去了前提，问题也就五花八门。&lt;/p&gt;
+&lt;h2 id="选择画面锁定-169多出来的留黑边"&gt;&lt;a href="#%e9%80%89%e6%8b%a9%e7%94%bb%e9%9d%a2%e9%94%81%e5%ae%9a-169%e5%a4%9a%e5%87%ba%e6%9d%a5%e7%9a%84%e7%95%99%e9%bb%91%e8%be%b9" class="header-anchor"&gt;&lt;/a&gt;选择：画面锁定 16:9，多出来的留黑边
+&lt;/h2&gt;&lt;p&gt;常见的做法有几种：拉伸（画面变形）、把视野放大（要给画布以外补美术）、裁掉一部分（会丢掉构图里的内容）。对一个每一处都按 16:9 手摆的 2D 游戏来说，最稳妥的是&lt;strong&gt;不改变画面本身&lt;/strong&gt;：画面始终是 16:9，屏幕更宽就左右留黑边，更高就上下留黑边。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-display-adaptation/letterbox.svg"
+loading="lazy"
+alt="三块屏幕的示意图：16:9 的屏幕上画面占满；21:9 超宽屏上画面居中、左右是黑边，画面占屏幕 76%；16:10 屏幕上画面居中、上下是黑边，画面占屏幕 90%。虚线框是 UI 安全框"
+&gt;&lt;/p&gt;
+&lt;p&gt;计算本身很简单，以 1920 × 1080 为参考，算出画面在屏幕上应该占的矩形：&lt;/p&gt;
+&lt;div class="code-block" data-lang="csharp"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-csharp" data-lang="csharp"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="n"&gt;Rect&lt;/span&gt; &lt;span class="n"&gt;CalculateViewport&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;screenWidth&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;screenHeight&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;var&lt;/span&gt; &lt;span class="n"&gt;windowAspect&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;float&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;screenWidth&lt;/span&gt; &lt;span class="p"&gt;/&lt;/span&gt; &lt;span class="n"&gt;screenHeight&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Mathf&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Approximately&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;windowAspect&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;TargetAspect&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Rect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;0f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;1f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;1f&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;windowAspect&lt;/span&gt; &lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;TargetAspect&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;// 屏幕更宽：左右留黑边&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;var&lt;/span&gt; &lt;span class="n"&gt;width&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;TargetAspect&lt;/span&gt; &lt;span class="p"&gt;/&lt;/span&gt; &lt;span class="n"&gt;windowAspect&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Rect&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="m"&gt;1f&lt;/span&gt; &lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="n"&gt;width&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;*&lt;/span&gt; &lt;span class="m"&gt;0.5f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;0f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;width&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;1f&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;var&lt;/span&gt; &lt;span class="n"&gt;height&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;windowAspect&lt;/span&gt; &lt;span class="p"&gt;/&lt;/span&gt; &lt;span class="n"&gt;TargetAspect&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// 屏幕更高：上下留黑边&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Rect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1f&lt;/span&gt; &lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="n"&gt;height&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;*&lt;/span&gt; &lt;span class="m"&gt;0.5f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;1f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;height&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;然后把这个矩形设给场景里的每一台相机。黑边本身由一台专门的相机负责：它什么都不渲染，只把背景清成黑色，垫在最底下。&lt;/p&gt;
+&lt;p&gt;UI 是另一套坐标系，要单独处理。显示管理器会找出场景里需要适配的 UI 画布，逐个设成以 1920 × 1080 为参考缩放：屏幕偏宽时按高度对齐，偏高时按宽度对齐。画布里原有的元素全部挪进一个 16:9 的「安全框」，超出框的部分直接裁掉，这样 UI 和画面始终对得上。&lt;/p&gt;
+&lt;h2 id="真正麻烦的是输入"&gt;&lt;a href="#%e7%9c%9f%e6%ad%a3%e9%ba%bb%e7%83%a6%e7%9a%84%e6%98%af%e8%be%93%e5%85%a5" class="header-anchor"&gt;&lt;/a&gt;真正麻烦的是输入
+&lt;/h2&gt;&lt;p&gt;画面加上黑边并不难，难的是&lt;strong&gt;黑边里的点击&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;这个游戏几乎所有的交互都依赖鼠标位置：用剪刀划线剪头发、把词从笔记本拖进对话、在合成台上拖需求词、染发小游戏里拖色块、光标跟随……原来这些代码都默认「整块屏幕就是画面」。加了黑边以后，鼠标完全可能落在画面之外。&lt;/p&gt;
+&lt;p&gt;所以除了显示管理器本身，还有 12 个脚本跟着改了，规则统一成一条：**落在黑边里的输入不算数。**每个交互的具体处理不一样：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;剪刀&lt;/strong&gt;：划进黑边的那一段不算；在黑边里松开鼠标，这一刀按画面内划过的部分结算；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;拖拽&lt;/strong&gt;：词、道具、色块被拖到黑边上松手，视为没放下，回到原处；&lt;/li&gt;
+&lt;li&gt;拖拽开始时就在黑边里的，直接忽略。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;镜头震动也要改。它原来直接改相机的显示矩形，默认这个矩形就是整块屏幕，震动结束时把它重置回全屏。加了黑边以后，这一重置等于把黑边震没了。现在震动改成在当前画面矩形的基础上偏移，结束时也回到这个矩形。&lt;/p&gt;
+&lt;p&gt;回头看，这和我们在别处总结的一条修复准则是一回事：**给一样东西加上新规则之前，先把所有会碰到它的地方列全。**这次的「东西」是屏幕坐标，碰到它的地方散落在十几个脚本里。漏掉一个，就是黑边里一次莫名其妙的点击。&lt;/p&gt;
+&lt;h2 id="边上的那条缝"&gt;&lt;a href="#%e8%be%b9%e4%b8%8a%e7%9a%84%e9%82%a3%e6%9d%a1%e7%bc%9d" class="header-anchor"&gt;&lt;/a&gt;边上的那条缝
+&lt;/h2&gt;&lt;p&gt;黑边加上之后，又冒出一个小问题：美术素材的边缘和画面边界没有严丝合缝，在黑边旁边露出一条亮线。&lt;/p&gt;
+&lt;p&gt;我们没有逐张去改素材，而是在画面四周最内侧各盖了一条细细的黑条：上下 4 像素、左右 11 像素，放在一个永远在最上层的画布上。这是在显示层打的补丁，不算优雅，但在比赛提交前能马上解决问题。&lt;/p&gt;
+&lt;h2 id="比赛前的取舍"&gt;&lt;a href="#%e6%af%94%e8%b5%9b%e5%89%8d%e7%9a%84%e5%8f%96%e8%88%8d" class="header-anchor"&gt;&lt;/a&gt;比赛前的取舍
+&lt;/h2&gt;&lt;p&gt;整套适配做完的第二天就要出比赛提交的包，有些东西来不及做完：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;分辨率和窗口模式本来要做成玩家可以调的设置，当时只有一个代码临时生成的面板，和菜单的美术不搭。提交版干脆把面板藏起来，默认 1920 × 1080 无边框全屏。&lt;/li&gt;
+&lt;li&gt;同一个提交里，顺手把剪刀轨迹的宽度从 0.03 调到了 0.06。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;两周多以后，菜单美术更新，临时面板被删掉，正式的设置面板里只保留了一个开关：无边框全屏还是窗口，分辨率按模式自动选。玩家的选择会保存下来；没设置过的，默认还是 1920 × 1080 无边框全屏。&lt;/p&gt;
+&lt;p&gt;这部分代码是和 AI 编程助手一起写的。显示管理器本身很快就写出来了，真正花时间的是上面那张清单：哪些地方用到了屏幕坐标、每一处出界时应该怎么处理。&lt;/p&gt;
+&lt;h2 id="还没做好的"&gt;&lt;a href="#%e8%bf%98%e6%b2%a1%e5%81%9a%e5%a5%bd%e7%9a%84" class="header-anchor"&gt;&lt;/a&gt;还没做好的
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;黑边浪费了屏幕。&lt;/strong&gt; 带鱼屏上画面只占 76%。要真正利用宽屏，得给画布以外补美术，或者让部分 UI 移到黑边里，这两件事都没做。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;边缘遮挡条是补丁。&lt;/strong&gt; 根本的解决是让素材边缘和画面对齐。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;没有自动化测试。&lt;/strong&gt; 视口的计算是纯函数，很容易测，但现在没有测试覆盖；各个脚本「出界不算数」的行为也只靠手动验证。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="回头看"&gt;&lt;a href="#%e5%9b%9e%e5%a4%b4%e7%9c%8b" class="header-anchor"&gt;&lt;/a&gt;回头看
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;先确定什么不能变。&lt;/strong&gt; 这个游戏不能变的是 16:9 的构图，所以选择了留黑边，而不是拉伸或者扩展视野。确定了这一点，其余都是推论。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;画面是容易的部分，输入才是。&lt;/strong&gt; 加黑边只要几十行代码，把所有依赖屏幕坐标的交互找全、逐个定好出界规则，才是工作量所在。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;为截止日期做减法。&lt;/strong&gt; 提交前把半成品的设置面板藏起来，用固定的默认值顶上，等美术到位再并进正式面板。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;不用再单独发窗口版，是这次最直接的收获。&lt;/p&gt;</description></item><item><title>HeirCut 开发手记（五）：笔记本里的词怎么摆</title><link>https://yufenghuang.tech/p/heircut-devlog-notebook-layout/</link><pubDate>Mon, 12 Oct 2026 09:40:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/heircut-devlog-notebook-layout/</guid><description>&lt;blockquote&gt;
 &lt;p&gt;「HeirCut 开发手记」第五篇。游戏简介见&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-submit-guidance/" &gt;第一篇&lt;/a&gt;文末，换词玩法见&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-word-swap/" &gt;第四篇&lt;/a&gt;。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;《宫廷理发师》里剪下来的词，会落进一本笔记本。笔记本按「天 + 客人」分页：游戏本来就是一天一天、一位客人一位客人往前推的，词和说出它的客人放在一起，玩家翻到那一页，就能想起「这是谁在什么时候说的」。&lt;/p&gt;
