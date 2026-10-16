@@ -731,6 +731,47 @@ def fig_closeshot_frame():
     p.append(text(nx + 6, H - 24, "编辑器帧时间噪声本底 ≈ 85 ms", 12, INK2))
     write("closeshot-frame.svg", p)
 
+
+# ---------------------------------------------------------------- 12: letterbox / pillarbox
+def viewport(aspect, target=16 / 9):
+    """与游戏里 DisplayViewportUtility.CalculateViewport 同一个公式：返回 (x, y, w, h)，单位是屏幕的比例。"""
+    if abs(aspect - target) < 1e-6:
+        return 0.0, 0.0, 1.0, 1.0
+    if aspect > target:
+        w = target / aspect
+        return (1 - w) / 2, 0.0, w, 1.0
+    h = aspect / target
+    return 0.0, (1 - h) / 2, 1.0, h
+
+
+def fig_letterbox():
+    W, H = 760, 290
+    p = svg_open(W, H, "不同宽高比的屏幕上，画面保持 16:9，多出来的部分留黑边")
+    p.append(text(24, 32, "画面锁定 16:9，多出来的部分留黑边", 17, INK, weight="600"))
+    p.append(text(24, 53, "黑边宽度按游戏里同一个公式算出；UI 放在同样大小的安全框里，超出部分被裁掉", 12.5, INK2))
+    screens = [("16:9", 16 / 9, "1920×1080"), ("21:9 超宽屏", 21 / 9, "左右各留黑边"), ("16:10", 16 / 10, "上下各留黑边")]
+    sh = 108  # 屏幕高度
+    x = 30
+    for label, aspect, note in screens:
+        sw = sh * aspect
+        y = 80
+        p.append(f'<rect x="{x:.1f}" y="{y}" width="{sw:.1f}" height="{sh}" rx="3" fill="#1d1d1b"/>')
+        vx, vy, vw, vh = viewport(aspect)
+        cx, cy, cw, ch = x + vx * sw, y + vy * sh, vw * sw, vh * sh
+        p.append(f'<rect x="{cx:.1f}" y="{cy:.1f}" width="{cw:.1f}" height="{ch:.1f}" fill="#f2c46b"/>')
+        p.append(f'<rect x="{cx+6:.1f}" y="{cy+6:.1f}" width="{cw-12:.1f}" height="{ch-12:.1f}" fill="none" '
+                 f'stroke="{S1}" stroke-width="1.5" stroke-dasharray="5 3"/>')
+        p.append(text(cx + cw / 2, cy + ch / 2 + 5, "游戏画面 16:9", 12.5, INK, "middle", "600"))
+        p.append(text(x + sw / 2, y + sh + 24, label, 14, INK, "middle", "600"))
+        share = vw * vh * 100
+        p.append(text(x + sw / 2, y + sh + 44, f"{note}，画面占屏幕 {share:.0f}%", 12, INK2, "middle"))
+        x += sw + 26
+    p.append(f'<rect x="34" y="{H-38}" width="14" height="10" fill="none" stroke="{S1}" stroke-dasharray="4 2"/>')
+    p.append(text(54, H - 29, "UI 安全框", 12, INK2))
+    p.append(f'<rect x="140" y="{H-38}" width="14" height="10" fill="#1d1d1b"/>')
+    p.append(text(160, H - 29, "黑边：不渲染，也不接受输入", 12, INK2))
+    write("letterbox.svg", p)
+
 fig_lab_curves()
 fig_versions()
 fig_pipeline()
@@ -745,4 +786,5 @@ fig_bot_coverage()
 fig_trap_shapes()
 fig_size_steps()
 fig_closeshot_frame()
+fig_letterbox()
 print("ok", sorted(os.listdir(OUT)))

@@ -24,6 +24,7 @@ python3 tools/heircut-figures/make_figs.py <HeirCut 检出>/Library/HaircutLab t
 | `trap-shapes.svg` | 09 | 无，示意图 |
 | `size-steps.svg` | 10 | 写在脚本里的 `SIZE_STEPS`，取自提交说明里的构建实测（2.2 GB → 1.6 GB → 879 MB → 860 MB） |
 | `closeshot-frame.svg` | 10 | 写在脚本里：帷幕拉开后最差帧 1744 ms → 121 ms，噪声本底约 85 ms（取自提交说明） |
+| `letterbox.svg` | 12 | 写在脚本里：用与游戏 `DisplayViewportUtility.CalculateViewport` 相同的公式算 16:9、21:9、16:10 屏幕上的画面矩形 |
 
 `lines.csv` 是快照，每行是「提交时间, 提交, GuestStates.cs 行数, 桥的行数」，由下面的命令从 HeirCut 仓库重新生成：
 

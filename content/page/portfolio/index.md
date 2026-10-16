@@ -20,7 +20,7 @@ hideMeta: true
 <div class="pf-links">
 <a class="pf-links__primary" href="https://store.steampowered.com/app/4268650/">Steam 商店页</a>
 <a href="https://www.bilibili.com/video/BV1dkbDzoE9q/">演示视频</a>
-<a href="/p/heircut-devlog-submit-guidance/">开发手记（11 篇）</a>
+<a href="/p/heircut-devlog-submit-guidance/">开发手记（12 篇）</a>
 <a href="/resume/">简历</a>
 </div>
 </div>
