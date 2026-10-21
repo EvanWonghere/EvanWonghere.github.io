@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>中文译文 on 蜂窝</title><link>https://yufenghuang.tech/tags/%E4%B8%AD%E6%96%87%E8%AF%91%E6%96%87/</link><description>Recent content in 中文译文 on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Wed, 21 Oct 2026 00:00:00 -0400</lastBuildDate><atom:link href="https://yufenghuang.tech/tags/%E4%B8%AD%E6%96%87%E8%AF%91%E6%96%87/index.xml" rel="self" type="application/rss+xml"/><item><title>享受编程，依然没什么不对</title><link>https://yufenghuang.tech/p/it-is-still-ok-to-enjoy-programming-zh/</link><pubDate>Wed, 21 Oct 2026 00:00:00 -0400</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/it-is-still-ok-to-enjoy-programming-zh/</guid><description>&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;原作者：&lt;/strong&gt; &lt;a class="link" href="https://chriskiehl.com/about" target="_blank" rel="noopener"
+&gt;Chris Kiehl&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文原文：&lt;/strong&gt; &lt;a class="link" href="https://chriskiehl.com/article/it-is-still-ok-to-enjoy-programming" target="_blank" rel="noopener"
+&gt;It&amp;rsquo;s still OK to enjoy programming&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;原文发布：&lt;/strong&gt; 2026 年 10 月 17 日&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;翻译与校对：&lt;/strong&gt; AI 辅助翻译，Evan Wong 校对。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;以下为中文译文，原文版权归原作者所有。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;看了 &lt;a class="link" href="https://news.ycombinator.com/news" target="_blank" rel="noopener"
+&gt;Hacker News&lt;/a&gt; 上的讨论，我觉得有必要写下这句话：&lt;em&gt;享受编程，依然没什么不对。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;没错，在工作中，你拿报酬是为了给企业创造价值；从成本和收益的角度看，完全靠自己手写代码这件事，经济账确实已经和过去不同了。但那是工作。&lt;strong&gt;工作不等于生活。&lt;/strong&gt; 互联网上声音最大的那群人，往往也最悲观，而这种悲观还格外容易传染。&lt;/p&gt;
+&lt;p&gt;为了给这一片绝望之海提供一个小小的反例：我周末依然会写程序，因为这很好玩。我最近正在学游戏编程！以我目前的水平，也就只能做出一个 Bug 一堆、碰撞检测烂得一塌糊涂的《打砖块》（Breakout）仿制版。我亲手写它，因为我乐在其中。我愿意花时间跟难题较劲，因为解决问题会让我开心。Claude 能一次就把它生成出来，我也不在乎——因为我做这件事，图的根本不是这个。&lt;/p&gt;
+&lt;p&gt;而且，我还常常写着这个所谓的“游戏”，就跑去研究一些不相干的编程话题。比如上周末，我借鉴了 &lt;a class="link" href="https://agda.readthedocs.io/en/latest/index.html" target="_blank" rel="noopener"
+&gt;Agda&lt;/a&gt; 这类依赖类型语言（dependently typed languages）的思路，想试试看能把 Java 的类型安全性推到什么程度。这事没什么实际目的。最终，它大概只会被我归进“思考某类问题的有趣方式”这个抽屉里。也许以后工作时能派上用场，也许永远用不上。我研究它，只是因为探索本身很好玩&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
+&lt;p&gt;再往前几个周末，我研究的是&lt;a class="link" href="https://en.wikipedia.org/wiki/Category:Recursion_schemes" target="_blank" rel="noopener"
+&gt;递归模式（recursion schemes）&lt;/a&gt;。严格来说，那次并不好玩。我花了好几个小时跟这些概念死磕，简直像在拿脑袋撞墙。结果到最后，我甚至还没弄明白这些思想到底有什么价值&lt;sup id="fnref:2"&gt;&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref"&gt;2&lt;/a&gt;&lt;/sup&gt;。但我知道，编程中许多最美妙的思想，都要在我脑海里酝酿好几年，我才能真正领会。这也正是为什么&lt;a class="link" href="http://ozark.hendrix.edu/~yorgey/pub/monoid-pearl.pdf" target="_blank" rel="noopener"
+&gt;有人能专门写一整篇论文讨论幺半群（Monoid）&lt;/a&gt;。也许总有一天，我会遇到一个正好能用上这些思想的问题；也许不会。我之所以研究它，是因为理解艰深的事物，本身就会带来满足感。&lt;/p&gt;
+&lt;p&gt;我写下这些，是因为我越来越感受到一种奇怪的社会压力。仿佛我已经“不应该”再享受编程了。仿佛作为一个人继续学习、成长，已经既无意义，也无乐趣。你刷到的这种末日论调越多，就越容易被它感染。到后来，你甚至会不由自主地想：“也许真的没什么意义了。”可只要从网络上断开，这种念头就消失了。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;享受自己喜欢的事，没什么不对&lt;sup id="fnref:3"&gt;&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref"&gt;3&lt;/a&gt;&lt;/sup&gt;。你不需要拿经济收益来为这种快乐辩护。&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id="原文与翻译说明"&gt;&lt;a href="#%e5%8e%9f%e6%96%87%e4%b8%8e%e7%bf%bb%e8%af%91%e8%af%b4%e6%98%8e" class="header-anchor"&gt;&lt;/a&gt;原文与翻译说明
+&lt;/h2&gt;&lt;p&gt;原文：&lt;a class="link" href="https://chriskiehl.com/article/it-is-still-ok-to-enjoy-programming" target="_blank" rel="noopener"
+&gt;It&amp;rsquo;s still OK to enjoy programming&lt;/a&gt; · Chris Kiehl。&lt;/p&gt;
+&lt;p&gt;AI 辅助翻译，Evan Wong 校对。译文保留作者的技术术语、引用链接和三条脚注；部分句式按中文阅读习惯调整。原文配图请前往原站查看。&lt;/p&gt;
+&lt;p&gt;延伸阅读：&lt;a class="link" href="https://yufenghuang.tech/p/agentic-coding-is-a-trap-zh/" &gt;《智能体编程是一个陷阱》&lt;/a&gt;。&lt;/p&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;找一天花点时间理解一下 &lt;a class="link" href="https://idris-lang.org/Idris2/base/docs/Data.Fin.html" target="_blank" rel="noopener"
+&gt;&lt;code&gt;Fin&lt;/code&gt;&lt;/a&gt; 吧。它真的很美妙。&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:2"&gt;
+&lt;p&gt;我还没领会到那一步，但研究它的目标，是为自己多添一种工具，以便从代数的角度推理程序的正确性（这个话题我也在&lt;a class="link" href="https://www.manning.com/books/data-oriented-programming-in-java" target="_blank" rel="noopener"
+&gt;我的书&lt;/a&gt;里讲过！）。&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:3"&gt;
+&lt;p&gt;我玩 &lt;strong&gt;vibe coding（氛围编程）&lt;/strong&gt; 也玩得非常开心。我已经做出了一套应用，却从没看过其中任何一行代码。我怀疑真要去看，恐怕会把自己吓坏。用这种方式“编程”同样很好玩，很多时候甚至好玩得不得了——只不过，它有自己独特的乐趣。&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</description></item><item><title>智能体编程是一个陷阱</title><link>https://yufenghuang.tech/p/agentic-coding-is-a-trap-zh/</link><pubDate>Wed, 21 Oct 2026 00:00:00 -0400</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/agentic-coding-is-a-trap-zh/</guid><description>&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;原作者：&lt;/strong&gt; &lt;a class="link" href="https://larsfaye.com/about" target="_blank" rel="noopener"
+&gt;Lars Faye&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文原文：&lt;/strong&gt; &lt;a class="link" href="https://larsfaye.com/articles/agentic-coding-is-a-trap" target="_blank" rel="noopener"
+&gt;Agentic Coding is a Trap&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;原文发布：&lt;/strong&gt; 2026 年 4 月（原站未标具体日期）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;翻译与校对：&lt;/strong&gt; AI 辅助翻译，Evan Wong 校对。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;以下为中文译文，原文版权归原作者所有。&lt;/p&gt;
+&lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“AI 负责写代码，人类则作为人类在环的‘编排者’。”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;如今，整个行业都在热炒这种论调：传统的代码编写方式已经奄奄一息，&lt;strong&gt;规范驱动开发（Spec-Driven Development，SDD）&lt;/strong&gt; 才是未来。你先生成一份计划，然后便不再亲手写任何代码。智能体比你更懂实现，所有实现工作都交给它们。你只需以&lt;em&gt;专家&lt;/em&gt;的身份提供所谓的“好品味”，审查产出，并不断引导智能体按照你精心制定的计划执行。&lt;/p&gt;
+&lt;p&gt;如今，这套工作流已经演化出许多形态，但总体而言，流程都是：有人定义项目需求（从宏观到微观，同时兼顾两个层面），生成计划，然后&lt;a class="link" href="https://blog.quent.in/blog/2026/03/09/one-more-prompt-the-dopamine-trap-of-agentic-coding/" target="_blank" rel="noopener"
+&gt;一次又一次地拉动老虎机的拉杆&lt;/a&gt;，反复迭代，有时还会同时运行多个智能体实例，直到任务完成。在整个过程中，“编排者”与那些正在生成并提交的代码之间的距离，越来越远。&lt;/p&gt;
+&lt;p&gt;编程智能体（Coding Agent）确实有用，也确实强大。但它们已经带来了一些可以衡量、值得讨论的代价：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;为了应对 AI 非确定性所带来的额外不确定性，周边支撑系统必须变得更加复杂。&lt;/li&gt;
+&lt;li&gt;相当一部分人的技能正在退化。&lt;/li&gt;
+&lt;li&gt;个人乃至整个团队受到供应商锁定（vendor lock-in）的影响。（Claude Code 一旦宕机，已经出现过整个团队工作停摆的情况。）&lt;/li&gt;
+&lt;li&gt;使用工具的费用不断波动并上涨。雇员成本相对固定，Token 成本却始终充满变数。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;要想真正用好这种编程智能体工作流，关键在于一个极其重要的前提：&lt;strong&gt;只有具备扎实经验、能够进行批判性思考，并且能自如地在软件架构层面工作的开发者，才可能在几千行生成代码中的问题酿成后果&lt;em&gt;之前&lt;/em&gt;发现它们。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;但命运偏偏开了个讽刺的玩笑：已有研究表明，AI 工具恰恰会对人的批判性思考能力和思维清晰度&lt;a class="link" href="https://margaretstorey.com/blog/2026/02/18/cognitive-debt-revisited/" target="_blank" rel="noopener"
+&gt;产生负面影响&lt;/a&gt;。&lt;/p&gt;
+&lt;h2 id="section-1"&gt;&lt;a href="#section-1" class="header-anchor"&gt;&lt;/a&gt;不只是又一层“抽象”
+&lt;/h2&gt;&lt;p&gt;社区里有个很常见的说法：程序员只不过是在“往技术栈上层走”，转向另一种抽象形式罢了。但这些工具究竟能否算作一个抽象层，本身还没有定论。&lt;strong&gt;不确定性变得更高，并不等于抽象层级变得更高。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;暂且把这个争议放到一边，程序员确实向来对新语言、新编程方式心存戒备。当年 FORTRAN 问世时，程序员同样持怀疑态度。他们提出过类似的担忧：它可能引入更多 Bug 和不稳定性，直接写汇编反而更高效。后来，围绕编译器的普及，也有人争论它会不会给开发过程引入太多不可见的“魔法”。这些争论本质上是规范性判断：人们担心，一旦接纳了新技术，某些东西&lt;em&gt;可能&lt;/em&gt;会因此失去。&lt;/p&gt;
+&lt;p&gt;但今天的不同之处在于，过去那些担忧主要还停留在猜测和理论层面。而 AI 工具出现不过短短几年，我们已经开始看见显著影响。受影响的&lt;em&gt;不只是初级开发者&lt;/em&gt;，甚至包括拥有十年乃至更长经验的人：&lt;/p&gt;
+&lt;h3 id="section-2"&gt;&lt;a href="#section-2" class="header-anchor"&gt;&lt;/a&gt;开发者反馈：技能退化与 AI 依赖
+&lt;/h3&gt;&lt;p&gt;&lt;em&gt;以下保留原文引用的六张 Reddit 截图中可见帖文的中文译文；截图原图请前往原文查看。截图被截断的部分不补写。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;截图 1｜r/ClaudeCode：因为 AI，我正在失去写代码的能力&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;a class="link" href="https://larsfaye.com/articles/agentic-coding-is-a-trap" target="_blank" rel="noopener"
+&gt;在原文中查看这张讨论截图&lt;/a&gt;。&lt;/em&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;大家好。这个话题似乎讨论得不多，但即使我已经有好几年编程经验，过去一年多来经常使用 AI，还是让我对自己的编程能力越来越没有信心。&lt;/p&gt;
+&lt;p&gt;我感觉自己的技能确实在退化；与此同时，又觉得似乎已经没必要知道如何编程了。&lt;/p&gt;
+&lt;p&gt;这是怎么回事？&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;补充：&lt;/strong&gt; 我还得再加几句。我认为，不理解语法本身就是一个问题。也许是我忽略了什么，但很多时候，要判断 AI 有没有搞砸、有没有引入隐蔽的 Bug，你就必须理解这门语言，知道如何用它编程。&lt;/p&gt;
+&lt;p&gt;语法与语言的运行机制及其背后的思想密不可分。所以在我看来，不理解语法，就意味着不理解代码，也就谈不上安全。&lt;/p&gt;
+&lt;p&gt;我不认同“AI 只是又一层更高级的抽象”这种说法，主要是因为它生成代码的方式具有非确定性。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;截图 2｜r/webdev：因为必须使用 AI，我觉得自己变笨了、技能也在流失&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;a class="link" href="https://larsfaye.com/articles/agentic-coding-is-a-trap" target="_blank" rel="noopener"
+&gt;在原文中查看这张讨论截图&lt;/a&gt;。&lt;/em&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;最近，公司开始强制要求所有软件开发工作都只能使用 AI。AI 写代码，接着由智能体审查代码。我们这些人被要求当“架构师”，只看结果，不看代码本身。&lt;/p&gt;
+&lt;p&gt;交代一下背景：我有九年工作经验，31 岁，是一个一岁孩子的父亲。所以我们就别提下班后再做业余项目这种选择了。&lt;/p&gt;
+&lt;p&gt;每当我把一切都交给 AI，我都觉得自己的能力在流失，自己正变成一个更差的专业人士。特别是当你想找一份新工作时，别人考察的主要还是你的技术能力。&lt;/p&gt;
+&lt;p&gt;你们怎么应对这种状况？怎样保持竞争力？怎样才能不开始讨厌这份工作？我只觉得自己被困住了，而且很快就会失去就业能力。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;截图 3｜r/cscareerquestions：让 AI 写全部代码，感觉我的大脑都被烧坏了。救命？？？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;a class="link" href="https://larsfaye.com/articles/agentic-coding-is-a-trap" target="_blank" rel="noopener"
+&gt;在原文中查看这张讨论截图&lt;/a&gt;。&lt;/em&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;今年年初开始，我就一直在玩vibe coding（氛围编程）。但最近我发现，自己的整体认知能力和解决问题的能力都明显变差了。现在我进退两难：是应该像老派程序员一样去学编程、提高自己的技能，还是应该像其他人那样继续氛围编程，专注于扩大 AI 业务的规模？&lt;/p&gt;
+&lt;p&gt;我同意，刷 LeetCode 确实能锻炼认知能力，就像给大脑做健身训练。但我真觉得自己像被做了额叶切除术一样，因为所有费脑子的活都让 AI 干了。&lt;/p&gt;
+&lt;p&gt;可现实又像一场赛跑：大家都开着汽车，只有你在跑步。你当然知道，雇辆车来跑得比别人快，会让自己失去肌肉和力量；但你似乎又别无选择。&lt;/p&gt;
+&lt;p&gt;那我到底该怎么办？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;截图 4｜r/webdev：依赖 AI 与认知能力下降&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;a class="link" href="https://larsfaye.com/articles/agentic-coding-is-a-trap" target="_blank" rel="noopener"
+&gt;在原文中查看这张讨论截图&lt;/a&gt;。&lt;/em&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我发现自己越来越常用 AI 来提高效率，或是安排日程，或是快速浏览代码，甚至是编写很小的代码片段。我能看出来自己越来越依赖它，同时也很清楚，对于这些简单练习，我已经不再自然地调动自己的认知能力了。&lt;/p&gt;
+&lt;p&gt;多年前，在进入开发行业前，我曾在健身行业工作。当时最先学到的一件事就是肌肉萎缩：一块肌肉如果长期不用，就会因为不再需要而退化。我相信，大脑和其他器官也是如此，而且确实有一些研究支持这一点。&lt;/p&gt;
+&lt;p&gt;我已经开始做一些练习，试着扭转这种情况。业余时间，我会每天花几分钟下国际象棋、用 Duolingo 学语言。&lt;/p&gt;
+&lt;p&gt;还有其他人担心这个问题吗？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;刚入行的开发者面临的困境甚至更加严峻，因为我们正在剥夺他们直接与代码打交道的机会，转而让他们审查生成的代码。代码审查当然重要，但充其量只占学习过程的一半。如果失去了亲手处理代码时不可避免的摩擦和挑战，他们的学习能力就会受到严重影响。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;截图 5｜r/cscareerquestions：团队里的初级开发者交付很快，但调不动不是自己写的代码&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;a class="link" href="https://larsfaye.com/articles/agentic-coding-is-a-trap" target="_blank" rel="noopener"
+&gt;在原文中查看这张讨论截图&lt;/a&gt;。&lt;/em&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我们团队的一位初级开发者上周只花两天就上线了一个功能。代码很干净，测试通过，交付也很顺利。可一周之后，一处本不该出现的地方冒出了 &lt;code&gt;null&lt;/code&gt;。他花了大半天修 Bug，最后还是得来求助，因为他真的追不出那个错误值是从哪里来的。&lt;/p&gt;
+&lt;p&gt;提示词是他写的，代码是 Claude 写的。所以代码坏掉时，他脑子里根本没有可以依靠的心智模型；那只是一份碰巧归他负责的、别人写的代码。&lt;/p&gt;
+&lt;p&gt;常见的反驳是：“资深开发者也不写汇编了，每一代都在往更高层的抽象走。”没错，但我清楚自己写的代码是怎样一步步变成指令的。我见到的初级开发者，却不是仅仅隔着一层抽象，而是根本没有任何基础。他们扫描代码、检查运行、合并提交。&lt;/p&gt;
+&lt;p&gt;我总会想到的一个问题，就是&lt;strong&gt;调试这块肌肉&lt;/strong&gt;。只有晚上十一点坐在自己写坏的代码面前，被迫想明白为什么事情没有按预期发生，才能把它练出来。如果你连续四年跳过这个循环，因为 AI 大多数时候都能把事情做对，那么你就到了资深开发者的水平，却只交付过很多东西，几乎没调试过任何问题。&lt;/p&gt;
+&lt;p&gt;补充一句：我不是说初级开发者不该用这些工具，那不现实。但用它们来加快自己本来就能做的事情，与用它们交付自己根本写不出来的东西，之间有很大的差别。而且我觉得，大多数人并不知道自己正处于哪一边。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;截图 6｜r/ClaudeAI：招了个靠 AI 学编程的初级开发者。他离开 AI 就不会调试，我不知道该怎么帮他&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;a class="link" href="https://larsfaye.com/articles/agentic-coding-is-a-trap" target="_blank" rel="noopener"
+&gt;在原文中查看这张讨论截图&lt;/a&gt;。&lt;/em&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;他们写代码很快，测试也都能通过，表面看起来没问题。但生产环境一出故障，他们就卡住了：追不出逻辑，读不懂栈追踪。如果不用 Claude 或其他 AI 代码审查工具（比如 CodeAnt），就不知道该怎么找 Bug；根本不理解代码实际上在做什么。&lt;/p&gt;
+&lt;p&gt;我试过结对编程，但他们只想把错误信息贴给 AI，再把修复方案复制回来。既不理解为什么会坏，也不理解为什么这个修复有效。&lt;/p&gt;
+&lt;p&gt;昨天我让他解释自己的 PR。他能描述代码做了什么，却解释不了代码是怎样工作的。他说：“Claude 写了这一部分，它会处理边界情况。”我问：“哪些边界情况？”他说：“不太确定，但测试都通过了。”&lt;/p&gt;
+&lt;p&gt;我开始觉得，我们正在培养一代能够交付代码，却没法维护代码的开发者。你们也有这种经历吗？还是只有我们如此？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;研究这种现象需要时间，所以要想及时了解现状，收集个人经历这样的轶事证据很重要。但它也已经进入正式研究视野，并且有&lt;a class="link" href="https://www.media.mit.edu/publications/your-brain-on-chatgpt/" target="_blank" rel="noopener"
+&gt;多项&lt;/a&gt;&lt;a class="link" href="https://www.404media.co/microsoft-study-finds-ai-makes-human-cognition-atrophied-and-unprepared-3/" target="_blank" rel="noopener"
+&gt;报告&lt;/a&gt;进一步支持：这种现象确实存在。&lt;/p&gt;
+&lt;h3 id="section-3"&gt;&lt;a href="#section-3" class="header-anchor"&gt;&lt;/a&gt;这一次，确实不一样。
+&lt;/h3&gt;&lt;p&gt;当一名 C++ 开发者转向 Java 或 Python 时，他们并没有抱怨自己变得脑子不清楚。当一名系统管理员开始使用 AWS 时，他们也没有觉得自己正在失去理解网络的能力。&lt;/p&gt;
+&lt;p&gt;资深工程师转向管理岗位、写代码的机会减少，久而久之编码手感生疏，这并不是什么新现象。过去，这是一条自然而然的专业成长路径：一名工程师积累了几十年的编码实践、摸索与磨炼，有足够的时间和经验，将技能和判断沉淀下来。等工作重心从具体语法转向更高层次的架构决策时，他就能运用这些经验。然而，这样的人本来就极为稀少。如果我们所有人都不再经历亲手编写代码、解决问题、调试程序所带来的磨炼，下一代资深工程师又从哪里来？&lt;/p&gt;
+&lt;p&gt;而当下的趋势却是：那些还没来得及积累长期实践经验、没经历过三十多年摸索与磨炼的开发者，被直接推向更高层级的工作流，要求他们拿出资深工程师花了几十年才获得的技能，去管理 AI 智能体。&lt;/p&gt;
+&lt;p&gt;不过，资深工程师也无法幸免。拥有近三十年开发经验的 &lt;a class="link" href="https://simonwillison.net/2026/Feb/15/cognitive-debt/" target="_blank" rel="noopener"
+&gt;Simon Willison&lt;/a&gt; 也曾表示，他已经缺少一个“关于应用究竟能做什么、又是如何运作的牢固心智模型。这意味着每增加一项功能，推理它的难度都会进一步提高”。&lt;/p&gt;
+&lt;h2 id="section-4"&gt;&lt;a href="#section-4" class="header-anchor"&gt;&lt;/a&gt;“熟练的编排者”悖论
+&lt;/h2&gt;&lt;p&gt;Anthropic 最近的一项&lt;a class="link" href="https://www.anthropic.com/research/how-ai-is-transforming-work-at-anthropic#and-less-hands-on-practice" target="_blank" rel="noopener"
+&gt;研究&lt;/a&gt;里，谈到频繁使用编程智能体的风险时，有一段出人意料的坦诚表述：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;编码技能的退化之所以令人担忧，原因之一是“监督悖论”……有效使用 Claude 需要监督，而监督 Claude 恰恰需要那些可能因为过度使用 AI 而退化的编码技能。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;LinkedIn 的软件工程总监 Sandor Nyako 管理着 50 名工程师。他已经注意到这种现象正在组织内部蔓延，因此要求团队不要在“需要批判性思考或问题解决能力的任务”中使用这些工具。&lt;a class="link" href="https://www.businessinsider.com/leaders-worry-about-skill-atrophy-due-to-ai-adoption-2025-10#8786254a-3fe1-4407-98a2-7c2eaac66b6f" target="_blank" rel="noopener"
+&gt;来源&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“人要想提升技能，就必须经历困难。他们必须锻炼自己独立思考、把问题想透的能力。”他说，“如果一个人没有批判性思考能力，又怎么判断 AI 说得对不对？”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;另一个问题是，究竟怎样才算“过度使用”？我们已经有&lt;a class="link" href="https://www.anthropic.com/research/AI-assistance-coding-skills" target="_blank" rel="noopener"
+&gt;数据研究&lt;/a&gt;和&lt;a class="link" href="https://www.youtube.com/watch?v=pzkwn3hu1Cc" target="_blank" rel="noopener"
+&gt;个人经历&lt;/a&gt;表明，这些技能可能在相当短的时间内退化甚至流失，有些案例只需要几个月。&lt;/p&gt;
+&lt;p&gt;这就是让许多 AI 鼓吹者陷入自相矛盾的地方：&lt;strong&gt;编程智能体的使用，正在削弱有效管理编程智能体所必需的技能。&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id="section-5"&gt;&lt;a href="#section-5" class="header-anchor"&gt;&lt;/a&gt;大语言模型加速了错误的环节
+&lt;/h2&gt;&lt;p&gt;与当下盛行的说法恰恰相反，我们未必&lt;em&gt;需要&lt;/em&gt;更快地写出代码。尤其是那些我们没有完全理解的代码，更何况是大批量生成、根本无法在合理时间内审查完的代码。&lt;/p&gt;
+&lt;h3 id="section-6"&gt;&lt;a href="#section-6" class="header-anchor"&gt;&lt;/a&gt;在 AI 出现之前，一名优秀开发者的优先事项可能是：
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;理解代码，以及它与整个代码库的关系。&lt;/li&gt;
+&lt;li&gt;确保代码符合既定文档和高效、合理的工程规范。&lt;/li&gt;
+&lt;li&gt;在不牺牲可读性的前提下，用尽可能少的代码完成目标。&lt;/li&gt;
+&lt;li&gt;交付速度。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="section-7"&gt;&lt;a href="#section-7" class="header-anchor"&gt;&lt;/a&gt;智能体编程，以及大语言模型总体上的使用方式，几乎把这张清单彻底颠倒了。
+&lt;/h3&gt;&lt;p&gt;它们的能力展示和实际用法，往往聚焦于速度：在固定时间内生成更多代码。速度原本是高水平能力的自然结果；如果强行追求速度，就总会牺牲准确性。而这些工具的集成方式，很少把更深入的理解或更精炼的实现放在首位。&lt;/p&gt;
+&lt;p&gt;这些工具能不能按这样的方向使用？能。只要愿意下功夫，当然可以。&lt;/p&gt;
+&lt;p&gt;但人们真的这么用了吗？恐怕并没有。组织内部强制推行 AI，以及围绕 &lt;a class="link" href="https://www.pymnts.com/artificial-intelligence-2/2026/ai-adoption-is-being-measured-in-tokens-but-the-metric-falls-short-experts-say/" target="_blank" rel="noopener"
+&gt;Token 用量的狂热宣传&lt;/a&gt;，已经很能说明问题。&lt;/p&gt;
+&lt;h2 id="section-8"&gt;&lt;a href="#section-8" class="header-anchor"&gt;&lt;/a&gt;写代码 === 做规划
+&lt;/h2&gt;&lt;p&gt;开发者之间其实还有一道不那么常被提起的分野：&lt;strong&gt;我们中的一些人，恰恰是在写代码的过程中，才能更好地规划与思考。&lt;/strong&gt; 用代码思考、在代码中工作，绝不是毫无意义的苦差事。它迫使你从技术层面思考问题，涵盖安全性、性能、用户体验以及可维护性等方方面面。&lt;/p&gt;
+&lt;p&gt;最近，在一次讨论“规范驱动开发”的&lt;a class="link" href="https://youtu.be/IGsbARhERqc?t=501" target="_blank" rel="noopener"
+&gt;访谈&lt;/a&gt;中，开源编程智能体 OpenCode 的创造者 Dax（没错，他自己就做了一个开源 Coding Agent）说过：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“当我着手做一件新事情，或者一件很有挑战性的事情时，亲手敲代码，就是我弄清楚&lt;strong&gt;我们到底应该做什么&lt;/strong&gt;的过程。要我坐在那里，写一份巨长的规格说明，精确规定功能应该如何运作，我真的很难做到。&lt;/p&gt;
+&lt;p&gt;“我喜欢先写类型定义，喜欢写出几个函数可能怎样协同工作，也喜欢摆弄文件夹结构，看看不同概念应该如何组织。我认为，绝大多数程序员其实一直都是这样做事的。我看不出自己有什么充分理由要放弃这种方式，因为我就是靠它来弄清楚该做什么的。”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;你说出口的，往往并不完全是你真正想表达的。&lt;/strong&gt; 大语言模型会自行用假设（或幻觉）填补歧义。结果就是：需要更多代码审查、更多智能体修改、消耗更多 Token，而且你与实际造出来的东西越来越脱节。反过来说，即使你写出了一份自认为美得无可挑剔、毫无歧义、结构完美的提示词，大语言模型仍可能编造出一个根本不存在的方法。因为从根本上说，它是一个预测下一个 Token 的引擎，而不是编译器。你不能拿概率性系统替代确定性系统，却又指望它完全不存在歧义。&lt;/p&gt;
+&lt;p&gt;即使是那些最热衷 AI 的&lt;a class="link" href="https://www.youtube.com/watch?v=cv6rwHTGT5w" target="_blank" rel="noopener"
+&gt;资深开发者&lt;/a&gt;，也已经开始意识到这种脱节正在变成一个迫在眉睫、而且不断扩大的问题。&lt;/p&gt;
+&lt;h2 id="section-9"&gt;&lt;a href="#section-9" class="header-anchor"&gt;&lt;/a&gt;“供应商锁定”
+&lt;/h2&gt;&lt;p&gt;前段时间 Claude 服务中断时，我在 LinkedIn 上看到&lt;a class="link" href="https://www.linkedin.com/pulse/claudes-outages-show-dark-side-ai-productivity-total-system-lam-osbjc/" target="_blank" rel="noopener"
+&gt;不少帖子&lt;/a&gt;，说某些开发者和工程团队已经完全停工。他们的工作流，乃至他们自己的编码能力，已经发展到高度依赖这些供应商的地步。原本只需要键盘和文本编辑器就能施展的技能，突然变成了必须订阅某家 AI 模型服务才能使用的东西。&lt;/p&gt;
+&lt;p&gt;顺着这个趋势想下去，并不难想象：我们可能正在创造一个行业，在这里，过去依靠独立思考和解决问题能力完成的事情，如今却必须通过付费购买 Token 才能完成。这有点像“供应商锁定”，但被锁住的是整个行业的技能体系（我敢肯定，模型供应商想到这里，正&lt;a class="link" href="https://giphy.com/gifs/giphyqa-g0JP0HG6zF0o8" target="_blank" rel="noopener"
+&gt;兴奋地搓着手&lt;/a&gt;）。无论是资金层面，还是智力与技能层面，这种支撑都可能随时被抽走；而本地大语言模型还远远没有准备好承接如此规模的需求。因此，我这里说的并不是被某一家具体供应商锁定，但“供应商锁定”这个概念，仍然与我们所看到的对这些系统的过度依赖密切相关。&lt;/p&gt;
+&lt;p&gt;这不是纯粹的理论猜测：如今就已经有人在&lt;a class="link" href="https://www.youtube.com/watch?v=5HaQnIPrfKk" target="_blank" rel="noopener"
+&gt;报告这种情况&lt;/a&gt;。甚至模型提供商自己也在揭示这一问题。Anthropic 的另一项&lt;a class="link" href="https://www.anthropic.com/research/AI-assistance-coding-skills" target="_blank" rel="noopener"
+&gt;研究&lt;/a&gt;显示，调试技能出现了高达 47% 的骤降：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“在工作场所大规模引入 AI，尤其是在软件工程领域，必然伴随着取舍……开发者可能依赖 AI 快速产出结果，却因此牺牲了关键技能的培养——尤其是当事情出错时进行调试的能力。”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="section-10"&gt;&lt;a href="#section-10" class="header-anchor"&gt;&lt;/a&gt;你没法预测自己的 Token 成本
+&lt;/h3&gt;&lt;p&gt;模型提供商正在接受&lt;a class="link" href="https://www.theverge.com/ai-artificial-intelligence/917380/ai-monetization-anthropic-openai-token-economics-revenue" target="_blank" rel="noopener"
+&gt;巨额补贴&lt;/a&gt;，模型本身也像建在流沙上。每次发布新模型，都重复着同样的循环：基准测试成绩亮眼，接着市场热炒，然后用户在实际使用中碰到现实，开始抱怨模型被“削弱”（nerfed），完成同样的工作却要多烧两三倍 Token。&lt;/p&gt;
+&lt;p&gt;你知道雇员要花多少钱，却不知道 Token 的费用会在每天、每月、每年发生怎样的变化。如果整个团队默认采用智能体编程，你的费用预算就得一直保持极高的弹性。正如 ThePrimeagen 最近&lt;a class="link" href="https://www.youtube.com/watch?v=_vB0PDzaa7I&amp;amp;t=3299s" target="_blank" rel="noopener"
+&gt;所说&lt;/a&gt;：“当你使用这些完全由智能体驱动的工作流时，模型供应商实际上就控制了你。”&lt;/p&gt;
+&lt;p&gt;当然，有办法避免这一切。大语言模型是一项极具威力的技术进步。如果使用得当，它们完全可以成为帮助人学习、提升技能的绝佳工具。它们让我能够更深入、更广泛地钻研各种概念和技术，扩大自己的理解范围，也让我得以探索那些过去实验起来既困难又耗时的新想法。我认为，这才是它们能为整个行业带来的最有长期价值的贡献。&lt;/p&gt;
+&lt;h2 id="section-11"&gt;&lt;a href="#section-11" class="header-anchor"&gt;&lt;/a&gt;我的做法：降低 AI 的角色地位
+&lt;/h2&gt;&lt;p&gt;我当然不是在主张，所有代码都必须靠人一个字一个字地敲出来。程序员一直都在想办法不必亲手写下每一行代码，就能&lt;em&gt;创造&lt;/em&gt;出代码。这也正是我们会有 &lt;a class="link" href="https://code.visualstudio.com/docs/languages/emmet" target="_blank" rel="noopener"
+&gt;Emmet&lt;/a&gt;、自动补全和代码片段（snippets）的原因。就连 COBOL 当初的设计，也是为了用 &lt;code&gt;MOVE&lt;/code&gt;、&lt;code&gt;WRITE&lt;/code&gt; 这类近似英语的关键词，以更少的输入表达更多指令。jQuery 的口号更是“&lt;a class="link" href="https://brand.jquery.org/logos/" target="_blank" rel="noopener"
+&gt;写得更少，做得更多&lt;/a&gt;”（write less, do more）。大语言模型只是这一整套代码生成工具中的又一位新成员。&lt;/p&gt;
+&lt;p&gt;但我真正主张的是：&lt;strong&gt;让大语言模型和编程智能体担任辅助角色，而不是为了生产力，把个人技能当成祭品。&lt;/strong&gt; 你完全可以把流程反过来：让它们在规划阶段协助头脑风暴，而你自己始终深度参与实现，只在有需要时才把任务委派给它们。这样既可以享受生产力提升，又能减轻理解债务（comprehension debt）。&lt;/p&gt;
+&lt;h3 id="section-12"&gt;&lt;a href="#section-12" class="header-anchor"&gt;&lt;/a&gt;我的日常工作流
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我让大语言模型协助生成规格说明和计划，由我来主导实现。&lt;/strong&gt; 这和“编排者”工作流刚好相反；视任务而定，我仍然亲手编写 20% 到 100% 的代码。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;和模型协作时，我经常会先写伪代码。&lt;/strong&gt; 这样能缩短需求与最终生成代码之间的距离。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;我把模型当成按需委派任务的工具。&lt;/strong&gt; 它们可以临时生成代码、充当交互式文档，也可以作为研究工具，让我不断提问、迭代、重构，并理清自己的实现思路。&lt;a class="link" href="https://cheewebdevelopment.com/dont-vibe-code-delegate-responsible-development-with-llms/" target="_blank" rel="noopener"
+&gt;关于任务委派的延伸阅读&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;我绝不一次生成超过自己能够一口气审查完的代码量。&lt;/strong&gt; 如果内容太多，我就放慢速度，把任务拆小，必要时亲自重构，确保最终能够完整理解结果。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;我绝不会让大语言模型或智能体直接实现自己从未做过、也没有能力独立完成的东西。&lt;/strong&gt; 只有纯粹出于学习或教程目的时，我才可能例外，而且这类代码往往随后就会被丢弃。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果一定要把这份清单压缩成一句话，那就是：&lt;strong&gt;把它们当成《星际迷航》里的舰载计算机，而不是 Data（数据少校）。&lt;/strong&gt;（《星际迷航》的粉丝应该懂这个梗。）&lt;/p&gt;
+&lt;h3 id="section-13"&gt;&lt;a href="#section-13" class="header-anchor"&gt;&lt;/a&gt;我没有变得更快，但我正在做质量更高的工作
+&lt;/h3&gt;&lt;p&gt;这些模型带来的生产力提升是真实的；&lt;strong&gt;而经常亲手参与工作所带来的磨炼，以及由此获得的理解，同样是真实的。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;过去，人们无数次试图让不懂编程的人也能轻松编程，但都未能真正解决这个问题。如今摆在我们面前的现实仍然是：&lt;strong&gt;不亲自接触代码，就不可能真正理解代码。&lt;/strong&gt; 而且现在已经越来越清楚，如果你不再持续地接触、编写代码，就可能渐渐失去这份理解。讽刺的是，这最终会让你连“编排者”都当得越来越差，使当前这轮 AI 编程热潮成了一段古怪而又徒增压力的插曲。&lt;/p&gt;
+&lt;h3 id="section-14"&gt;&lt;a href="#section-14" class="header-anchor"&gt;&lt;/a&gt;或许是我担心得太多，但历史值得借鉴
+&lt;/h3&gt;&lt;p&gt;这一切总让我觉得似曾相识，仿佛我们又在自己身上进行另一场大规模实验。社交媒体刚出现时，我们同样没有弄清楚它的长期影响，就大规模投入使用；如今，我们已经面临普遍的注意力缺失等诸多问题。&lt;/p&gt;
+&lt;p&gt;而这一次，我们拿来下注的，是风险大得多的东西。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“现在就全面押注 AI 智能体的人，无异于在确保自己终将被淘汰。如果你把所有思考都外包给计算机，你就会停止提升技能、停止学习，也不再变得更有能力。”&lt;/p&gt;
+&lt;p&gt;—— Jeremy Howard，&lt;a class="link" href="https://www.fast.ai/about.html" target="_blank" rel="noopener"
+&gt;fast.ai&lt;/a&gt; 创始人&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h3 id="section-15"&gt;&lt;a href="#section-15" class="header-anchor"&gt;&lt;/a&gt;发表后补记
+&lt;/h3&gt;&lt;p&gt;这篇文章获得的关注超出了我的预期。它似乎引发了 Hacker News、Reddit、daily.dev、YouTube 等社区的广泛共鸣。尤其值得一提的是，两位颇有影响力的内容创作者也讨论了这篇文章。&lt;/p&gt;
+&lt;p&gt;MIT 计算机科学家、《深度工作》（&lt;em&gt;Deep Work&lt;/em&gt;）畅销书作者 &lt;strong&gt;Cal Newport&lt;/strong&gt; 在自己的播客中谈到了它：&lt;a class="link" href="https://www.youtube.com/watch?v=SOKfVVOq-Ck" target="_blank" rel="noopener"
+&gt;观看视频&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;知名 YouTuber、T3 Stack 创造者 &lt;strong&gt;Theo Brown&lt;/strong&gt; 则朗读并评论了这篇文章：&lt;a class="link" href="https://www.youtube.com/watch?v=lNVa33qUzZ8" target="_blank" rel="noopener"
+&gt;观看视频&lt;/a&gt;。&lt;/p&gt;
+&lt;h3 id="section-16"&gt;&lt;a href="#section-16" class="header-anchor"&gt;&lt;/a&gt;续篇：《AI 编程将阻碍专业能力的形成》
+&lt;/h3&gt;&lt;p&gt;我从一开始就想把这篇文章写成某种“两部曲”。第二部分将着重探讨，这些系统对于正在成长的新一代开发者意味着什么：他们还没有足够的时间，来形成负责任地使用大语言模型所需要的技术品味和判断力。&lt;/p&gt;
+&lt;p&gt;你可以在我的后续文章中读到这部分内容：&lt;/p&gt;
+&lt;p&gt;&lt;a class="link" href="https://larsfaye.com/articles/ai-coding-will-prevent-expertise" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;AI Coding will Prevent Expertise｜AI 编程将阻碍专业能力的形成：为什么长期的技能培养离不开持续的磨炼&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="原文与翻译说明"&gt;&lt;a href="#%e5%8e%9f%e6%96%87%e4%b8%8e%e7%bf%bb%e8%af%91%e8%af%b4%e6%98%8e" class="header-anchor"&gt;&lt;/a&gt;原文与翻译说明
+&lt;/h2&gt;&lt;p&gt;原文：&lt;a class="link" href="https://larsfaye.com/articles/agentic-coding-is-a-trap" target="_blank" rel="noopener"
+&gt;Agentic Coding is a Trap&lt;/a&gt; · Lars Faye。&lt;/p&gt;
+&lt;p&gt;AI 辅助翻译，Evan Wong 校对。译文保留原文结构、参考链接、引语、发表后补记和续篇链接。截图中可见帖文的中文转写作为阅读辅助保留；原文截图与视频封面请前往原站查看，视频使用外部链接。&lt;/p&gt;
+&lt;p&gt;术语说明：agentic coding＝智能体编程，coding agent＝编程智能体，vibe coding＝氛围编程，cognitive debt＝认知债务，comprehension debt＝理解债务，orchestrator＝编排者，Spec-Driven Development＝规范驱动开发，vendor lock-in＝供应商锁定。&lt;/p&gt;
+&lt;p&gt;延伸阅读：&lt;a class="link" href="https://yufenghuang.tech/p/it-is-still-ok-to-enjoy-programming-zh/" &gt;《享受编程，依然没什么不对》&lt;/a&gt;。&lt;/p&gt;</description></item></channel></rss>
