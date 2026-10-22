@@ -1,4 +1,29 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>独立游戏厅 on 蜂窝</title><link>https://yufenghuang.tech/games/</link><description>Recent content in 独立游戏厅 on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Sun, 23 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://yufenghuang.tech/games/index.xml" rel="self" type="application/rss+xml"/><item><title>数织工坊</title><link>https://yufenghuang.tech/games/nonogram/</link><pubDate>Sun, 23 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/nonogram/</guid><description>&lt;h4 id="游戏规则"&gt;&lt;a href="#%e6%b8%b8%e6%88%8f%e8%a7%84%e5%88%99" class="header-anchor"&gt;&lt;/a&gt;游戏规则
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>玩具箱 on 蜂窝</title><link>https://yufenghuang.tech/games/</link><description>Recent content in 玩具箱 on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Mon, 19 Oct 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://yufenghuang.tech/games/index.xml" rel="self" type="application/rss+xml"/><item><title>剪窗花</title><link>https://yufenghuang.tech/games/papercut/</link><pubDate>Mon, 19 Oct 2026 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/papercut/</guid><description>&lt;h4 id="怎么玩"&gt;&lt;a href="#%e6%80%8e%e4%b9%88%e7%8e%a9" class="header-anchor"&gt;&lt;/a&gt;怎么玩
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;10 关，由浅入深&lt;/strong&gt;：红纸先折好（对折、四折或八折），纸上用铅笔画好了要剪的线。按住拖动就是剪刀，可以剪任意曲线、任意多刀。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;剪下来的纸屑会掉下去&lt;/strong&gt;：手里捏着的是折起来的那一边，所以留下贴着折痕最长的那块，其余失去支撑，从纸的后面掉出画面。绕一圈剪，中间那块掉下去，纸上就多了一个洞。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;在折痕上剪的缺口，展开会变成洞&lt;/strong&gt;：折痕的边用虚线标了出来。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;剪好了点「展开」&lt;/strong&gt;：窗花一片片翻开，和目标叠在一起比较，按相似度给一到三星，每关记录最好成绩。可以回去接着修，也可以撤销上一刀。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;挑战模式&lt;/strong&gt;：关掉「提示线」，纸上就没有铅笔线了，只能看着左上角的目标凭眼力剪。挑战的成绩单独记录。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;最后一关之后是「自由剪纸」&lt;/strong&gt;：从一整张纸开始，自己挑对称轴折（竖、横、两条对角线；只能沿这一叠自己的对称轴折，折得齐，所以最多折三次、八层），随时剪、随时展开一层再接着剪。折之前剪的地方不会被镜像，所以能剪出不完全对称的图案。左上角实时显示摊开后的样子。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="怎么做的"&gt;&lt;a href="#%e6%80%8e%e4%b9%88%e5%81%9a%e7%9a%84" class="header-anchor"&gt;&lt;/a&gt;怎么做的
+&lt;/h4&gt;&lt;p&gt;所有几何都是从头手写的，没有用几何库：布尔运算在 &lt;code&gt;static/games/engines/polygon-boolean.mjs&lt;/code&gt;，剪纸规则在 &lt;code&gt;papercut.mjs&lt;/code&gt;，纸屑在 &lt;code&gt;paper-fragments.mjs&lt;/code&gt;。三个模块都不碰 DOM，用 Node 单元测试覆盖。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;纸是一份带洞的多边形。&lt;/strong&gt; 纸由若干区域组成，每块一条外轮廓，可以带几个洞。画面直接用 Canvas 的 &lt;code&gt;evenodd&lt;/code&gt; 规则填充，洞和洞里的岛都交给奇偶规则，不需要三角化；评分也读同一份数据。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一刀 = 纸 − 带子。&lt;/strong&gt; 剪刀轨迹是一条没有面积的折线，先把每一段向两侧膨胀成一个两端是半圆的&amp;quot;胶囊&amp;quot;，再把胶囊并成一条带子，转角和两端自然都是圆角，然后用纸减去带子。圆上的点取在固定的角度上，所以相邻两段在同一个点上的圆角完全重合，不会出现两条近似圆互相交错的碎边。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;布尔运算：平面划分 + 面分类。&lt;/strong&gt; 差集、交集、并集是同一套做法：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;把两个形状的所有边放在一起，在交点处断开；距离在 ε 以内的点并成同一个结点。这样顶点恰好落在边上、两条边重合这类退化情况，都不需要单独写分支。&lt;/li&gt;
+&lt;li&gt;沿半边走出平面图的每一个面，在面里取一个离所有边都有距离的样本点，按奇偶规则判断它在不在纸里、在不在带子里。&lt;/li&gt;
+&lt;li&gt;留下&amp;quot;在纸里、不在带子里&amp;quot;的面；只有一侧保留、另一侧不保留的边，才是新的边界。&lt;/li&gt;
+&lt;li&gt;把边界串成环：逆时针的是外轮廓，顺时针的是洞，洞挂到包含它的最小外轮廓下面。洞里的岛自然就成了另一块。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;所以一刀剪成好几块、在中间剪出窟窿、窟窿里再剪出岛，都不用额外处理。每次运算之后都会检查结果：环不自交、环之间最多在顶点处接触、洞在外轮廓里面。不合格就丢掉这一批，纸保持原样。包围盒碰不到剪刀的碎块和洞不参与运算，所以每一批的开销主要取决于被剪到的那块纸的轮廓有多少条边，远处已经剪好的洞再多也不会拖慢。自由模式里折了几层就要减几次，把纸剪得极碎时会比关卡里慢。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;边拖边剪，不留细缝。&lt;/strong&gt; 输入按距离采样，排进队列，每攒够 3 个新点处理一批。每批先化简折线，再膨胀成带子。下一批从上一批的倒数第二个点开始，两批重叠一段，所以交界处不会留下一条没剪断的细缝；同一处减两次，结果也不变。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;哪块留下、哪块掉落。&lt;/strong&gt; 剪完后只有一块还捏在手里：贴着折痕最长的那块。剪窗花时手捏的是折起来的那一边，贴着折痕的边越长，展开后连成的那片就越大。如果都不贴折痕，就留面积最大的那块。其余的块失去支撑，带着物理掉下去。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;纸屑的物理和上限。&lt;/strong&gt; 每一刀（按下到抬起）掉下来的块里，最大的 3 块做成真正的刚体，带着初速度、自转和阻尼往下掉。纸屑画在纸的后面，一路掉出画面下沿就回收，不会挡住正在剪的纸。自转和面积的平方根成反比：大块慢慢歪倒，小片转得快，重力对所有纸屑一样。其余的块合并成一块，只做视觉效果。纸屑总数由一个 32 个的池子兜底，剪得再碎，手机上也不会越剪越卡。物理用 120 Hz 固定步长推进，结果和帧率无关。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;自由折叠：存展开的纸，而不是折好的那一片。&lt;/strong&gt; 自由模式里可以先剪再折，所以权威几何是整张展开的纸，另外记着现在折成的这一叠的形状，以及每一层对应整张纸的哪个镜像。对称轴都过纸的中心，镜像矩阵只由 0 和 ±1 组成，复合是精确的；折一次层数翻倍，层的映射按&amp;quot;旧映射 ∘ 这次的镜像&amp;quot;复合。在这一叠上剪一刀，就是先把带子裁到这一叠的范围里（伸到外面的那截下面并没有纸），再经过每一层的映射搬到整张纸上减掉。画这一叠时不做布尔运算：每一层把整张纸按逆映射搬回来，裁到这一叠的轮廓里画，只有每一层都剪掉的地方才透光。折和展开的动画，是把翻过去的那一半按 p ↦ p + s·(R(p) − p) 压扁再翻到另一侧。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;展开和评分。&lt;/strong&gt; 每种折法对应一组镜像，都是坐标取反或交换，所以折痕上的点映射后完全不变，相邻两片沿折痕严格共边，并集会把折痕抹掉。也因为这样，折痕上的缺口展开后会变成洞。相似度是剪出的纸和目标的交并比；各个镜像完全相同，所以只需要在折好的那一片上算。测试会模拟&amp;quot;沿着铅笔线剪&amp;quot;，确认每一关都能拿到三星。&lt;/p&gt;</description></item><item><title>数织工坊</title><link>https://yufenghuang.tech/games/nonogram/</link><pubDate>Sun, 23 Nov 2025 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/nonogram/</guid><description>&lt;h4 id="游戏规则"&gt;&lt;a href="#%e6%b8%b8%e6%88%8f%e8%a7%84%e5%88%99" class="header-anchor"&gt;&lt;/a&gt;游戏规则
 &lt;/h4&gt;&lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;数字含义&lt;/strong&gt;：行或列旁边的数字表示该行/列中&lt;strong&gt;连续填充&lt;/strong&gt;的方块数量。例如 &lt;code&gt;2 1&lt;/code&gt; 表示有 2 个连续黑格，之后至少有一个空格，然后是 1 个黑格。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;操作&lt;/strong&gt;：

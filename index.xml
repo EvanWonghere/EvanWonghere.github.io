@@ -242,7 +242,32 @@
 &gt;Agentic Coding is a Trap&lt;/a&gt; · Lars Faye。&lt;/p&gt;
 &lt;p&gt;AI 辅助翻译，Evan Wong 校对。译文保留原文结构、参考链接、引语、发表后补记和续篇链接。截图中可见帖文的中文转写作为阅读辅助保留；原文截图与视频封面请前往原站查看，视频使用外部链接。&lt;/p&gt;
 &lt;p&gt;术语说明：agentic coding＝智能体编程，coding agent＝编程智能体，vibe coding＝氛围编程，cognitive debt＝认知债务，comprehension debt＝理解债务，orchestrator＝编排者，Spec-Driven Development＝规范驱动开发，vendor lock-in＝供应商锁定。&lt;/p&gt;
-&lt;p&gt;延伸阅读：&lt;a class="link" href="https://yufenghuang.tech/p/it-is-still-ok-to-enjoy-programming-zh/" &gt;《享受编程，依然没什么不对》&lt;/a&gt;。&lt;/p&gt;</description></item><item><title>HeirCut 开发手记（十二）：和 AI 一起做游戏</title><link>https://yufenghuang.tech/p/heircut-devlog-working-with-ai/</link><pubDate>Fri, 16 Oct 2026 10:10:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/heircut-devlog-working-with-ai/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;延伸阅读：&lt;a class="link" href="https://yufenghuang.tech/p/it-is-still-ok-to-enjoy-programming-zh/" &gt;《享受编程，依然没什么不对》&lt;/a&gt;。&lt;/p&gt;</description></item><item><title>剪窗花</title><link>https://yufenghuang.tech/games/papercut/</link><pubDate>Mon, 19 Oct 2026 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/papercut/</guid><description>&lt;h4 id="怎么玩"&gt;&lt;a href="#%e6%80%8e%e4%b9%88%e7%8e%a9" class="header-anchor"&gt;&lt;/a&gt;怎么玩
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;10 关，由浅入深&lt;/strong&gt;：红纸先折好（对折、四折或八折），纸上用铅笔画好了要剪的线。按住拖动就是剪刀，可以剪任意曲线、任意多刀。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;剪下来的纸屑会掉下去&lt;/strong&gt;：手里捏着的是折起来的那一边，所以留下贴着折痕最长的那块，其余失去支撑，从纸的后面掉出画面。绕一圈剪，中间那块掉下去，纸上就多了一个洞。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;在折痕上剪的缺口，展开会变成洞&lt;/strong&gt;：折痕的边用虚线标了出来。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;剪好了点「展开」&lt;/strong&gt;：窗花一片片翻开，和目标叠在一起比较，按相似度给一到三星，每关记录最好成绩。可以回去接着修，也可以撤销上一刀。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;挑战模式&lt;/strong&gt;：关掉「提示线」，纸上就没有铅笔线了，只能看着左上角的目标凭眼力剪。挑战的成绩单独记录。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;最后一关之后是「自由剪纸」&lt;/strong&gt;：从一整张纸开始，自己挑对称轴折（竖、横、两条对角线；只能沿这一叠自己的对称轴折，折得齐，所以最多折三次、八层），随时剪、随时展开一层再接着剪。折之前剪的地方不会被镜像，所以能剪出不完全对称的图案。左上角实时显示摊开后的样子。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="怎么做的"&gt;&lt;a href="#%e6%80%8e%e4%b9%88%e5%81%9a%e7%9a%84" class="header-anchor"&gt;&lt;/a&gt;怎么做的
+&lt;/h4&gt;&lt;p&gt;所有几何都是从头手写的，没有用几何库：布尔运算在 &lt;code&gt;static/games/engines/polygon-boolean.mjs&lt;/code&gt;，剪纸规则在 &lt;code&gt;papercut.mjs&lt;/code&gt;，纸屑在 &lt;code&gt;paper-fragments.mjs&lt;/code&gt;。三个模块都不碰 DOM，用 Node 单元测试覆盖。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;纸是一份带洞的多边形。&lt;/strong&gt; 纸由若干区域组成，每块一条外轮廓，可以带几个洞。画面直接用 Canvas 的 &lt;code&gt;evenodd&lt;/code&gt; 规则填充，洞和洞里的岛都交给奇偶规则，不需要三角化；评分也读同一份数据。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一刀 = 纸 − 带子。&lt;/strong&gt; 剪刀轨迹是一条没有面积的折线，先把每一段向两侧膨胀成一个两端是半圆的&amp;quot;胶囊&amp;quot;，再把胶囊并成一条带子，转角和两端自然都是圆角，然后用纸减去带子。圆上的点取在固定的角度上，所以相邻两段在同一个点上的圆角完全重合，不会出现两条近似圆互相交错的碎边。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;布尔运算：平面划分 + 面分类。&lt;/strong&gt; 差集、交集、并集是同一套做法：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;把两个形状的所有边放在一起，在交点处断开；距离在 ε 以内的点并成同一个结点。这样顶点恰好落在边上、两条边重合这类退化情况，都不需要单独写分支。&lt;/li&gt;
+&lt;li&gt;沿半边走出平面图的每一个面，在面里取一个离所有边都有距离的样本点，按奇偶规则判断它在不在纸里、在不在带子里。&lt;/li&gt;
+&lt;li&gt;留下&amp;quot;在纸里、不在带子里&amp;quot;的面；只有一侧保留、另一侧不保留的边，才是新的边界。&lt;/li&gt;
+&lt;li&gt;把边界串成环：逆时针的是外轮廓，顺时针的是洞，洞挂到包含它的最小外轮廓下面。洞里的岛自然就成了另一块。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;所以一刀剪成好几块、在中间剪出窟窿、窟窿里再剪出岛，都不用额外处理。每次运算之后都会检查结果：环不自交、环之间最多在顶点处接触、洞在外轮廓里面。不合格就丢掉这一批，纸保持原样。包围盒碰不到剪刀的碎块和洞不参与运算，所以每一批的开销主要取决于被剪到的那块纸的轮廓有多少条边，远处已经剪好的洞再多也不会拖慢。自由模式里折了几层就要减几次，把纸剪得极碎时会比关卡里慢。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;边拖边剪，不留细缝。&lt;/strong&gt; 输入按距离采样，排进队列，每攒够 3 个新点处理一批。每批先化简折线，再膨胀成带子。下一批从上一批的倒数第二个点开始，两批重叠一段，所以交界处不会留下一条没剪断的细缝；同一处减两次，结果也不变。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;哪块留下、哪块掉落。&lt;/strong&gt; 剪完后只有一块还捏在手里：贴着折痕最长的那块。剪窗花时手捏的是折起来的那一边，贴着折痕的边越长，展开后连成的那片就越大。如果都不贴折痕，就留面积最大的那块。其余的块失去支撑，带着物理掉下去。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;纸屑的物理和上限。&lt;/strong&gt; 每一刀（按下到抬起）掉下来的块里，最大的 3 块做成真正的刚体，带着初速度、自转和阻尼往下掉。纸屑画在纸的后面，一路掉出画面下沿就回收，不会挡住正在剪的纸。自转和面积的平方根成反比：大块慢慢歪倒，小片转得快，重力对所有纸屑一样。其余的块合并成一块，只做视觉效果。纸屑总数由一个 32 个的池子兜底，剪得再碎，手机上也不会越剪越卡。物理用 120 Hz 固定步长推进，结果和帧率无关。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;自由折叠：存展开的纸，而不是折好的那一片。&lt;/strong&gt; 自由模式里可以先剪再折，所以权威几何是整张展开的纸，另外记着现在折成的这一叠的形状，以及每一层对应整张纸的哪个镜像。对称轴都过纸的中心，镜像矩阵只由 0 和 ±1 组成，复合是精确的；折一次层数翻倍，层的映射按&amp;quot;旧映射 ∘ 这次的镜像&amp;quot;复合。在这一叠上剪一刀，就是先把带子裁到这一叠的范围里（伸到外面的那截下面并没有纸），再经过每一层的映射搬到整张纸上减掉。画这一叠时不做布尔运算：每一层把整张纸按逆映射搬回来，裁到这一叠的轮廓里画，只有每一层都剪掉的地方才透光。折和展开的动画，是把翻过去的那一半按 p ↦ p + s·(R(p) − p) 压扁再翻到另一侧。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;展开和评分。&lt;/strong&gt; 每种折法对应一组镜像，都是坐标取反或交换，所以折痕上的点映射后完全不变，相邻两片沿折痕严格共边，并集会把折痕抹掉。也因为这样，折痕上的缺口展开后会变成洞。相似度是剪出的纸和目标的交并比；各个镜像完全相同，所以只需要在折好的那一片上算。测试会模拟&amp;quot;沿着铅笔线剪&amp;quot;，确认每一关都能拿到三星。&lt;/p&gt;</description></item><item><title>HeirCut 开发手记（十二）：和 AI 一起做游戏</title><link>https://yufenghuang.tech/p/heircut-devlog-working-with-ai/</link><pubDate>Fri, 16 Oct 2026 10:10:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/heircut-devlog-working-with-ai/</guid><description>&lt;blockquote&gt;
 &lt;p&gt;「HeirCut 开发手记」第十二篇。游戏简介见&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-submit-guidance/" &gt;第一篇&lt;/a&gt;文末。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;前面十一篇里，有一件事一直没讲：这个项目的后半程，绝大部分代码不是我手写的。&lt;/p&gt;
@@ -467,11 +492,13 @@ alt="三块屏幕的示意图：16:9 的屏幕上画面占满；21:9 超宽屏�
 &gt;演示视频&lt;/a&gt; · &lt;a class="link" href="https://store.steampowered.com/app/4268650/" target="_blank" rel="noopener"
 &gt;Steam&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;项目成果：第五届 CUSGA 中国大学生游戏开发大赛&lt;strong&gt;最佳剧情设计奖&lt;/strong&gt;；第十七届厦门国际动漫节「金海豚奖」&lt;strong&gt;最佳学生游戏奖&lt;/strong&gt;；2026「指尖星图」游戏创新大赛叙事与沉浸体验赛道&lt;strong&gt;优胜奖&lt;/strong&gt;；2025 Unity 中国开发挑战赛 PC 端游戏赛道决赛入围；2025 IGN 中国单机游戏年度评选「年度课外作业」入围奖；2026 开拓芯大学生游戏创作大赛 / 网易高校 MINI-GAME 决赛入围。&lt;/p&gt;
+&lt;p&gt;展出：第十四届深圳动漫节、ChinaJoy 2026。&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;设计并实现统一的数据驱动剧情框架&lt;/strong&gt;：将 9 组客人的独立状态机迁移至统一流程；进出场、对话推进、条件分支与结算均由脱离 Unity API 的纯逻辑层执行，场景层仅负责表现与输入。配套 600+ 项自动化测试，支持无需启动游戏场景即可验证完整剧情逻辑。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;搭建剧情内容编译与验证管线&lt;/strong&gt;：将客人顺序、台词、线索、关键词填空及结局条件结构化配置，并编译为运行时内容库；当前覆盖约 316 句台词、113 条分支规则。在进入引擎前自动执行一致性检查、结局可达性分析与不可达内容检测，并可整局推演 5 个结局。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;设计并实现统一的数据驱动剧情框架&lt;/strong&gt;：将 9 组客人的独立状态机迁移至统一流程；进出场、对话推进、条件分支与结算均由脱离 Unity API 的纯逻辑层执行，场景层仅负责表现与输入。全项目自动化测试 700+ 项，支持无需启动游戏场景即可验证完整剧情逻辑。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;搭建剧情内容编译与验证管线&lt;/strong&gt;：将客人顺序、台词、线索、关键词填空及结局条件结构化配置，并编译为运行时内容库；当前覆盖 316 句台词（其中 303 句可达）、113 条分支规则。在进入引擎前自动执行一致性检查、结局可达性分析与不可达内容检测，并可整局推演 5 个结局。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;开发剧情节点图编辑器&lt;/strong&gt;：支持可视化编排每日客人顺序、对话节点、关键词槽位、剪发要求及道具配置；保存时自动格式化数据并触发内容校验与剧情推演，错误可直接定位至对应节点，降低手工编辑配置与运行游戏排查剧情分支的成本。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;独立实现实时 2D 剪发系统&lt;/strong&gt;：将玩家划线与头发轮廓通过 Clipper2 进行多边形布尔运算，并使用 Poly2Tri 重新三角化生成运行时 Mesh 与 Collider；剪落区域生成 2D 刚体碎发，并通过对象池与运行时网格回收控制动态生成带来的性能开销。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;包体与加载优化&lt;/strong&gt;：安装包 2.2 GB → 860 MB（缩小 61%），首次进理发场景最差帧 1744 ms → 121 ms（降低 93%）。贴图占包体 97.5%（多为透明画布），改用 Sprite Atlas；分段计时定位 BGM 主线程解压 1.68 s，改为流式加载，常驻内存省约 100 MB；加导入检查防回归。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;实现游戏存档、对话断点恢复与画面适配&lt;/strong&gt;：将主线进度与当前对话运行时状态原子化保存，支持中途继续及回溯重玩时的状态重置与发型恢复；同时完成 16:9 安全画幅、相机取景及 UI Safe Area 适配。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class="cv-row"&gt;&lt;strong&gt;《心声桌宠》&lt;/strong&gt;&lt;span&gt;合作开发 / 主要程序 · 2024.02 – 2025.04&lt;/span&gt;&lt;/div&gt;
@@ -482,6 +509,19 @@ alt="三块屏幕的示意图：16:9 的屏幕上画面占满；21:9 超宽屏�
 &lt;li&gt;&lt;strong&gt;桌宠状态与交互架构&lt;/strong&gt;：基于 WindowManager 实现系统级悬浮宠物，手写轻量级 FSM 管理 10+ 行为状态，统一驱动动画切换、菜单交互、对话气泡与养成属性反馈。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;动画资源与实时性能优化&lt;/strong&gt;：封装逐帧动画加载器，支持内置 / 自定义角色资源、异步加载、缓存清理、左右朝向翻转复用与过渡动画回退；接入 Choreographer 对齐 VSync，并对重力传感器输入进行采样节流、插值与边界限制，提升拖拽 / 漂浮反馈流畅度。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;AI 交互与上线合规接入&lt;/strong&gt;：使用 OkHttp + Gson 异步调用大模型 API，结合悬浮输入框与角色化对白实现沉浸式对话；独立完成 TapTap 登录、防沉迷回调、剩余时长倒计时、强制退出及隐私协议持久化等上架合规流程。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="cv-row"&gt;&lt;strong&gt;EW-Framework&lt;/strong&gt;&lt;span&gt;个人项目 · GitHub 开源 · 2026.03&lt;/span&gt;&lt;/div&gt;
+&lt;p&gt;&lt;a class="link" href="https://github.com/EvanWonghere/EW-Framework" target="_blank" rel="noopener"
+&gt;GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Unity Gameplay 框架&lt;/strong&gt;：以 UPM 包组织，已实现 ScriptableObject 事件总线（含编辑器扩展）、对象池、状态机、计时器、共享变量与音频模块，各模块附文档与可运行示例。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="ai-研发实践"&gt;&lt;a href="#ai-%e7%a0%94%e5%8f%91%e5%ae%9e%e8%b7%b5" class="header-anchor"&gt;&lt;/a&gt;AI 研发实践
+&lt;/h2&gt;&lt;p&gt;&lt;a class="link" href="https://yufenghuang.tech/p/heircut-devlog-working-with-ai/" &gt;开发手记：和 AI 一起做游戏&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AI Agent 研发流程&lt;/strong&gt;：建立按改动规模分级的 Coding Agent 研发流程（Spec → 实现 → 验证 → 独立审查 → 讲解），完成标准先行，由未参与实现的子 Agent 独立审查；在 HeirCut 中让设定为新手策划的 AI Agent 只用编辑器完成剧情任务，做 5 轮可用性测试，暴露并修复推演工具缺陷。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;上下文工程与知识库&lt;/strong&gt;：为 HeirCut 做上下文工程，常驻规则 803 行 → 约 130 行，细节拆为 7 份按需读取的领域文档；Agent 经 MCP for Unity 自主跑 EditMode 回归；搭建 LLM 维护的知识库，Agent 把 40 份原始材料整理为 53 页 Wiki，配收录、检查、问答 3 个 Skill。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AI 提效工具开发&lt;/strong&gt;：开发 7 个 Agent Skill（方案、验证、审查、讲解、交接、复盘、知识沉淀）与 2 个 Hook：PreToolUse 拦截 push、reset &amp;ndash;hard 等高风险 git 操作；Stop 钩子在 Agent 收尾前自动跑项目验证脚本，不通过即打回继续修复。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id="实践经历"&gt;&lt;a href="#%e5%ae%9e%e8%b7%b5%e7%bb%8f%e5%8e%86" class="header-anchor"&gt;&lt;/a&gt;实践经历
 &lt;/h2&gt;&lt;div class="cv-row"&gt;&lt;strong&gt;山东师范大学机器人与人工智能实验室&lt;/strong&gt;&lt;span&gt;技术负责人 · 2022.09 – 2024.09&lt;/span&gt;&lt;/div&gt;
@@ -518,9 +558,9 @@ alt="三块屏幕的示意图：16:9 的屏幕上画面占满；21:9 超宽屏�
 &lt;a href="https://yufenghuang.tech/p/heircut-devlog-submit-guidance/"&gt;开发手记（12 篇）&lt;/a&gt;
 &lt;a href="https://yufenghuang.tech/resume/"&gt;简历&lt;/a&gt;
 &lt;/div&gt;
+&lt;figure class="pf-hero__media"&gt;&lt;video src="https://yufenghuang.tech/portfolio/cut.mp4" poster="/portfolio/cut-poster.jpg" width="360" height="384" autoplay muted loop playsinline aria-label="游戏中给公主剪发：白色轨迹划过长发，轨迹以下的头发被剪断"&gt;&lt;/video&gt;&lt;figcaption&gt;可以沿任意曲线剪开的 2D 头发&lt;/figcaption&gt;&lt;/figure&gt;
 &lt;/div&gt;
 &lt;div class="pf-media"&gt;
-&lt;figure&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/cut.gif" alt="游戏中给公主剪发：白色轨迹划过长发，轨迹以下的头发被剪断" loading="lazy"&gt;&lt;figcaption&gt;可以沿任意曲线剪开的 2D 头发&lt;/figcaption&gt;&lt;/figure&gt;
 &lt;figure&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-content-editor/editor-flow.jpg" alt="策划编辑器：一个客人组的流程图，节点是演出，边是规则" loading="lazy"&gt;&lt;figcaption&gt;给策划用的剧情编辑器&lt;/figcaption&gt;&lt;/figure&gt;
 &lt;figure&gt;&lt;img src="https://yufenghuang.tech/p/heircut-devlog-notebook-layout/notebook-tool.jpg" alt="笔记本摆放工具：美术在浏览器里调参数、对比方案、拖动词语" loading="lazy"&gt;&lt;figcaption&gt;给美术用的笔记本摆放工具&lt;/figcaption&gt;&lt;/figure&gt;
 &lt;/div&gt;
@@ -533,6 +573,11 @@ alt="三块屏幕的示意图：16:9 的屏幕上画面占满；21:9 超宽屏�
 &lt;li&gt;2025 IGN 中国单机游戏年度评选「年度课外作业」入围&lt;/li&gt;
 &lt;li&gt;2026 开拓芯大学生游戏创作大赛 / 网易高校 MINI-GAME 决赛入围&lt;/li&gt;
 &lt;/ul&gt;
+&lt;h2 id="展出"&gt;&lt;a href="#%e5%b1%95%e5%87%ba" class="header-anchor"&gt;&lt;/a&gt;展出
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;第十四届深圳动漫节&lt;/li&gt;
+&lt;li&gt;ChinaJoy 2026&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2 id="我负责的"&gt;&lt;a href="#%e6%88%91%e8%b4%9f%e8%b4%a3%e7%9a%84" class="header-anchor"&gt;&lt;/a&gt;我负责的
 &lt;/h2&gt;&lt;p&gt;团队为 GameJam 组建，六个人：两位策划、两位美术、一位音效，程序由我一个人负责。玩法方向由主策划定，细节一起讨论；程序侧的架构、系统、工具链和验证都由我负责，后半程与 AI 编程助手协作完成了大部分实现。&lt;/p&gt;
 &lt;h2 id="技术亮点"&gt;&lt;a href="#%e6%8a%80%e6%9c%af%e4%ba%ae%e7%82%b9" class="header-anchor"&gt;&lt;/a&gt;技术亮点
@@ -541,7 +586,7 @@ alt="三块屏幕的示意图：16:9 的屏幕上画面占满；21:9 超宽屏�
 &lt;a class="pf-card" href="https://yufenghuang.tech/p/heircut-devlog-cuttable-hair/"&gt;&lt;strong&gt;可以剪的 2D 头发&lt;/strong&gt;&lt;span&gt;头发是多边形拓扑，剪刀轨迹膨胀成带子做布尔差集（Clipper2），Poly2Tri 三角化；评分从 IoU 演进为「剪得对不对 × 形状像不像」的软最小值。&lt;/span&gt;&lt;em&gt;开发手记（二）→&lt;/em&gt;&lt;/a&gt;
 &lt;a class="pf-card" href="https://yufenghuang.tech/p/heircut-devlog-encounter-refactor/"&gt;&lt;strong&gt;剧情系统重构&lt;/strong&gt;&lt;span&gt;把膨胀到 14 个剧情专属状态的角色状态机，换成内容驱动、不依赖 Unity 的纯逻辑架构；新旧并行，游戏全程可玩，9 组客人逐组迁移。&lt;/span&gt;&lt;em&gt;开发手记（三）→&lt;/em&gt;&lt;/a&gt;
 &lt;a class="pf-card" href="https://yufenghuang.tech/p/heircut-devlog-content-editor/"&gt;&lt;strong&gt;内容管线与策划编辑器&lt;/strong&gt;&lt;span&gt;剧情从表格换成 JSON，编译后经 103 种诊断校验；React Flow 编辑器让策划自己编辑、试玩、导出内容包，Unity 端一键导入并可回滚。&lt;/span&gt;&lt;em&gt;开发手记（六）→&lt;/em&gt;&lt;/a&gt;
-&lt;a class="pf-card" href="https://yufenghuang.tech/p/heircut-devlog-playthrough-automation/"&gt;&lt;strong&gt;整局自动化&lt;/strong&gt;&lt;span&gt;离线推演器穷举整局（5 个结局、113 条规则、303 句可达台词），实机机器人走真实射线从新游戏玩到结局；两者互相纠错。&lt;/span&gt;&lt;em&gt;开发手记（八）→&lt;/em&gt;&lt;/a&gt;
+&lt;a class="pf-card" href="https://yufenghuang.tech/p/heircut-devlog-playthrough-automation/"&gt;&lt;strong&gt;整局自动化&lt;/strong&gt;&lt;span&gt;离线推演器穷举整局（5 个结局、113 条规则、316 句台词中 303 句可达），实机机器人走真实射线从新游戏玩到结局；两者互相纠错。&lt;/span&gt;&lt;em&gt;开发手记（八）→&lt;/em&gt;&lt;/a&gt;
 &lt;a class="pf-card" href="https://yufenghuang.tech/p/heircut-devlog-save-system/"&gt;&lt;strong&gt;存档到对话中的某一句&lt;/strong&gt;&lt;span&gt;从「第几天第几组」到恢复会面中途状态；继续与回溯两条语义分离，快照随主档一次原子写盘。&lt;/span&gt;&lt;em&gt;开发手记（七）→&lt;/em&gt;&lt;/a&gt;
 &lt;a class="pf-card" href="https://yufenghuang.tech/p/heircut-devlog-size-and-performance/"&gt;&lt;strong&gt;包体 2.2 GB → 860 MB&lt;/strong&gt;&lt;span&gt;定位到透明画布占满贴图预算，用 Sprite Atlas 解决；首次进场景 1.7 秒卡顿定位到一轨音频解压；加导入守卫与测试防回归。&lt;/span&gt;&lt;em&gt;开发手记（十）→&lt;/em&gt;&lt;/a&gt;
 &lt;/div&gt;
@@ -11442,7 +11487,7 @@ data-flex-basis="434px"
 &gt;https://zhuanlan.zhihu.com/p/60215378&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class="link" href="https://blog.csdn.net/HaleyPKU/article/details/82911669" target="_blank" rel="noopener"
 &gt;https://blog.csdn.net/HaleyPKU/article/details/82911669&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;</description></item><item><title>Archives</title><link>https://yufenghuang.tech/archives/</link><pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/archives/</guid><description/></item><item><title>Search</title><link>https://yufenghuang.tech/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/search/</guid><description/></item><item><title>概念实验室</title><link>https://yufenghuang.tech/study/labs/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/study/labs/</guid><description>&lt;p&gt;对照预测与运行结果，验证 C++ 对象、内存、渲染和时间同步里那些容易讲错的点。&lt;/p&gt;</description></item><item><title>毛概刷题</title><link>https://yufenghuang.tech/study/maogai/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/study/maogai/</guid><description>&lt;p&gt;题目在设备本地运行，学习进度和错题记录只保存在当前浏览器中。&lt;/p&gt;</description></item><item><title>音乐练习室</title><link>https://yufenghuang.tech/study/music/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/study/music/</guid><description/></item><item><title>英语朗读室</title><link>https://yufenghuang.tech/study/english/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/study/english/</guid><description/></item><item><title>游戏厅致谢与授权</title><link>https://yufenghuang.tech/games/credits/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/credits/</guid><description>&lt;p&gt;游戏厅的代码、绘图、字体和音效均随站点本地提供，游玩过程中不会从第三方 CDN 或接口加载资源。&lt;/p&gt;
+&lt;/blockquote&gt;</description></item><item><title>Archives</title><link>https://yufenghuang.tech/archives/</link><pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/archives/</guid><description/></item><item><title>Search</title><link>https://yufenghuang.tech/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/search/</guid><description/></item><item><title>概念实验室</title><link>https://yufenghuang.tech/study/labs/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/study/labs/</guid><description>&lt;p&gt;对照预测与运行结果，验证 C++ 对象、内存、渲染和时间同步里那些容易讲错的点。&lt;/p&gt;</description></item><item><title>毛概刷题</title><link>https://yufenghuang.tech/study/maogai/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/study/maogai/</guid><description>&lt;p&gt;题目在设备本地运行，学习进度和错题记录只保存在当前浏览器中。&lt;/p&gt;</description></item><item><title>玩具箱致谢与授权</title><link>https://yufenghuang.tech/games/credits/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/games/credits/</guid><description>&lt;p&gt;玩具箱里小游戏的代码、绘图、字体和音效均随站点本地提供，游玩过程中不会从第三方 CDN 或接口加载资源。&lt;/p&gt;
 &lt;h3 id="随仓库提供的数据"&gt;&lt;a href="#%e9%9a%8f%e4%bb%93%e5%ba%93%e6%8f%90%e4%be%9b%e7%9a%84%e6%95%b0%e6%8d%ae" class="header-anchor"&gt;&lt;/a&gt;随仓库提供的数据
 &lt;/h3&gt;&lt;p&gt;Hive Words 与 Typing Rain 使用由 &lt;strong&gt;SCOWL / English Speller Database&lt;/strong&gt; 生成的美式英语词库。本站词库从 LibreOffice &lt;code&gt;en_US&lt;/code&gt; Hunspell 2020.12.07 版提取，只保留 3–10 个小写英文字母组成的词条。&lt;/p&gt;
 &lt;ul&gt;
@@ -11453,4 +11498,4 @@ data-flex-basis="434px"
 &lt;/ul&gt;
 &lt;h3 id="实现参考"&gt;&lt;a href="#%e5%ae%9e%e7%8e%b0%e5%8f%82%e8%80%83" class="header-anchor"&gt;&lt;/a&gt;实现参考
 &lt;/h3&gt;&lt;p&gt;部分经典玩法参考了开源项目的规则、边界条件与测试案例，包括 Chromium 恐龙跑酷、2048、sudoku.js、chess.js、xiangqi.js、JSMinesweeper 和 Nonogram。当前游戏实现没有在运行时加载这些项目，也没有直接复制其美术资源。&lt;/p&gt;
-&lt;p&gt;完整来源、项目地址和授权说明见仓库中的 &lt;code&gt;THIRD_PARTY_NOTICES.md&lt;/code&gt;。&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;完整来源、项目地址和授权说明见仓库中的 &lt;code&gt;THIRD_PARTY_NOTICES.md&lt;/code&gt;。&lt;/p&gt;</description></item><item><title>音乐练习室</title><link>https://yufenghuang.tech/study/music/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/study/music/</guid><description/></item><item><title>英语朗读室</title><link>https://yufenghuang.tech/study/english/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/study/english/</guid><description/></item></channel></rss>
