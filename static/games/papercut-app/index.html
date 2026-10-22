@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <title>剪窗花 · Paper Cut</title>
+    <style>
+        :root { color-scheme:light; --bg:#efe3cf; --card:#fffaf2; --line:#dcc6a6; --ink:#3b2a20; --muted:#8b7563; --red:#c8322a; --red-dark:#8f1f1a; --gold:#e0a43a; }
+        * { box-sizing:border-box; }
+        html,body { margin:0; width:100%; height:100%; overflow:hidden; }
+        body { color:var(--ink); background:var(--bg); font:500 14px/1.45 ui-sans-serif,system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif; user-select:none; -webkit-user-select:none; touch-action:none; }
+        button { font:inherit; color:inherit; cursor:pointer; }
+        .app { height:100%; display:grid; grid-template-rows:auto auto auto minmax(0,1fr) auto; gap:6px; padding:8px clamp(8px,2vw,14px); }
+        .topbar,.tipbar,.toolbar { width:min(600px,100%); margin:0 auto; }
+        .topbar { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+        .brand h1 { margin:0; font-size:clamp(18px,3.8vw,23px); letter-spacing:.1em; line-height:1.1; }
+        .brand h1 span { display:block; margin-top:2px; color:var(--muted); font-size:10px; letter-spacing:.2em; }
+        .nav { display:flex; align-items:center; gap:4px; }
+        .nav button { width:34px; height:34px; border:1px solid var(--line); border-radius:10px; background:var(--card); }
+        #level-name { min-width:0; padding:0 6px; text-align:center; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:42vw; }
+        .tipbar { display:flex; align-items:center; gap:8px; min-height:34px; padding:5px 10px; border:1px solid var(--line); border-radius:12px; background:var(--card); font-size:13px; }
+        #tip { flex:1; min-width:0; }
+        .best { color:var(--gold); white-space:nowrap; font-weight:700; }
+        .hint-toggle { padding:3px 9px; border:1px dashed var(--line); border-radius:8px; background:transparent; font-size:12px; white-space:nowrap; }
+        .hint-toggle[aria-pressed="false"] { border-style:solid; border-color:var(--red); color:var(--red); background:#fdeceb; }
+        .hint-toggle[hidden] { display:none; }
+        .foldbar { width:min(600px,100%); margin:0 auto; display:flex; gap:5px; }
+        .foldbar[hidden] { display:none; }
+        /* 折叠栏隐藏时不占格子：显式指定行号，画布始终在可伸缩的那一行。 */
+        .foldbar { grid-row:3; } .stage { grid-row:4; } .toolbar { grid-row:5; }
+        .foldbar button { flex:1; min-width:0; padding:7px 4px; border:1px solid var(--line); border-radius:10px; background:var(--card); font-size:13px; white-space:nowrap; box-shadow:0 2px 0 #0000000f; }
+        .foldbar button:disabled { opacity:.4; cursor:default; }
+        .foldbar b { display:inline-block; width:1.1em; color:var(--red); }
+        .stage { min-height:0; display:grid; place-items:center; }
+        .board { position:relative; height:100%; max-width:100%; aspect-ratio:600/800; border-radius:14px; overflow:hidden; box-shadow:0 10px 30px #5a3d2033, 0 0 0 1px var(--line); }
+        canvas { display:block; width:100%; height:100%; touch-action:none; cursor:crosshair; }
+        .result { position:absolute; left:50%; bottom:14px; width:min(360px,calc(100% - 24px)); transform:translateX(-50%); padding:14px 16px; border-radius:16px; background:var(--card); border:1px solid var(--line); text-align:center; box-shadow:0 14px 40px #3b2a2055; transition:opacity .25s, transform .25s; }
+        .result.hidden { opacity:0; transform:translate(-50%, 20px); pointer-events:none; }
+        .result h2 { margin:0; font-size:20px; letter-spacing:.06em; }
+        .stars { margin:2px 0; color:var(--gold); font-size:26px; letter-spacing:.18em; }
+        .result p { margin:2px 0 8px; color:var(--muted); }
+        .actions { display:flex; gap:6px; }
+        .actions button { flex:1; padding:9px 6px; border:1px solid var(--line); border-radius:10px; background:#fff; }
+        .actions .primary { border:0; background:var(--red); color:#fff; font-weight:700; box-shadow:0 3px 0 var(--red-dark); }
+        .toolbar { display:flex; align-items:center; gap:6px; }
+        .toolbar button { padding:9px 12px; border:1px solid var(--line); border-radius:11px; background:var(--card); white-space:nowrap; box-shadow:0 2px 0 #0000000f; }
+        .toolbar button:disabled { opacity:.45; cursor:default; }
+        .toolbar .spacer { flex:1; }
+        #unfold { border:0; background:var(--red); color:#fff; font-weight:700; letter-spacing:.1em; box-shadow:0 3px 0 var(--red-dark); padding:9px 20px; }
+        @media (max-width:520px) { .result { padding:10px 12px; bottom:8px; } .stars { font-size:22px; } .brand h1 span { display:none; } .tipbar { font-size:12px; } .toolbar button { padding:8px 9px; } #unfold { padding:8px 14px; } }
+    </style>
+    <script src="/games/arcade-runtime.js"></script>
+</head>
+<body>
+<main class="app">
+    <header class="topbar">
+        <div class="brand"><h1>剪窗花<span>PAPER CUT · 折起来剪，展开看</span></h1></div>
+        <div class="nav">
+            <button type="button" id="prev" aria-label="上一关">◀</button>
+            <span id="level-name"></span>
+            <button type="button" id="next" aria-label="下一关">▶</button>
+        </div>
+    </header>
+    <div class="tipbar">
+        <span id="tip"></span>
+        <button type="button" class="hint-toggle" id="hints" aria-pressed="true" title="关掉提示线就是挑战模式，最好成绩单独记录">提示线</button>
+        <span class="best" id="best"></span>
+    </div>
+    <div class="foldbar" id="foldbar" hidden>
+        <button type="button" data-axis="vertical"><b>┃</b>竖折</button>
+        <button type="button" data-axis="horizontal"><b>━</b>横折</button>
+        <button type="button" data-axis="diagonal"><b>╲</b>斜折</button>
+        <button type="button" data-axis="anti"><b>╱</b>斜折</button>
+        <button type="button" id="unfold-one"><b>↺</b>展开一层</button>
+    </div>
+    <section class="stage">
+        <div class="board">
+            <canvas id="game" aria-label="剪窗花：在折好的红纸上拖动剪刀，沿铅笔线剪，然后展开"></canvas>
+            <div class="result hidden" id="result">
+                <h2 id="result-title">展开了</h2>
+                <div class="stars" id="result-stars"></div>
+                <p id="result-text"></p>
+                <div class="actions">
+                    <button type="button" id="refold">接着修</button>
+                    <button type="button" id="retry">重剪</button>
+                    <button type="button" class="primary" id="next-level">下一关</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="toolbar">
+        <button type="button" id="undo">↶ 撤销</button>
+        <button type="button" id="restart">重来</button>
+        <span class="spacer"></span>
+        <button type="button" id="unfold">展开</button>
+    </footer>
+</main>
+<script type="module" src="game.js"></script>
+</body>
+</html>
