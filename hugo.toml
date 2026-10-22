@@ -298,7 +298,7 @@ enabled = true
 # 且链接全部指向中文页面（/about/、/quotes/…）——这些页面没有英文版本。
 # 现在英文站只保留确实存在英文版的三项。
 #
-# 「游戏厅」不在这里：它由 content/games/_index.md 的页面级菜单声明，
+# 「玩具箱」（小游戏）不在这里：它由 content/games/_index.md 的页面级菜单声明，
 # 页面级菜单天然按语言隔离，因此只会出现在中文站。
 [menu]
   [[menu.social]]
