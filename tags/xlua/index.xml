@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>XLua on 蜂窝</title><link>https://yufenghuang.tech/tags/xlua/</link><description>Recent content in XLua on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Sun, 25 Oct 2026 20:00:00 +0800</lastBuildDate><atom:link href="https://yufenghuang.tech/tags/xlua/index.xml" rel="self" type="application/rss+xml"/><item><title>从一个拼写错误到两个 PR：给 xLua 挑错的一次记录</title><link>https://yufenghuang.tech/p/xlua-typos-to-pull-requests/</link><pubDate>Sun, 25 Oct 2026 20:00:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/xlua-typos-to-pull-requests/</guid><description>&lt;p&gt;学 xLua 的协程示例时，我注意到一行代码：&lt;/p&gt;
+&lt;div class="code-block" data-lang="csharp"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-csharp" data-lang="csharp"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;luaenv&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DoString&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;require &amp;#39;coruntine_test&amp;#39;&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;coruntine&lt;/code&gt;，少了个 o、多了个 n。示例照样能跑，因为 Lua 文件本身也叫 &lt;code&gt;coruntine_test.lua.txt&lt;/code&gt;，两边拼错得很一致。&lt;/p&gt;
+&lt;p&gt;这种错误本身没什么影响，但它让我好奇：一个这么多人用的项目，还有多少类似的地方？于是我顺着找了下去。这篇记录的就是这一路：从几个拼写错误开始，最后找到签名工具里一个从 2023 年起就存在的回归，向 &lt;a class="link" href="https://github.com/Tencent/xLua" target="_blank" rel="noopener"
+&gt;Tencent/xLua&lt;/a&gt; 提了两个 PR。&lt;/p&gt;
+&lt;h2 id="一份清单"&gt;&lt;a href="#%e4%b8%80%e4%bb%bd%e6%b8%85%e5%8d%95" class="header-anchor"&gt;&lt;/a&gt;一份清单
+&lt;/h2&gt;&lt;p&gt;我先在 ChatGPT 的帮助下，把找到的问题整理成了一份清单，一共 8 条：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;编号&lt;/th&gt;
+&lt;th&gt;问题&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;XL-01&lt;/td&gt;
+&lt;td&gt;签名工具：生成器写出的私钥叫 &lt;code&gt;key_ras&lt;/code&gt;，签名器却去找 &lt;code&gt;key_rsa&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;XL-02&lt;/td&gt;
+&lt;td&gt;密钥生成器检测到已有密钥后，仍然覆盖&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;XL-03&lt;/td&gt;
+&lt;td&gt;协程示例的 &lt;code&gt;coruntine_test&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;XL-04&lt;/td&gt;
+&lt;td&gt;异步热修复示例里的局部变量 &lt;code&gt;rightPposition&lt;/code&gt;、&lt;code&gt;inteval&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;XL-05&lt;/td&gt;
+&lt;td&gt;示例目录 &lt;code&gt;04_LuaObjectOrented&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;XL-06&lt;/td&gt;
+&lt;td&gt;热修复示例的类名 &lt;code&gt;StatefullTest&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;XL-07&lt;/td&gt;
+&lt;td&gt;示例和单测里的结构体 &lt;code&gt;Pedding&lt;/code&gt;，疑似 &lt;code&gt;Padding&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;XL-08&lt;/td&gt;
+&lt;td&gt;英文 README 把 02 示例描述成 &amp;ldquo;use Mono to write MonoBehaviour&amp;rdquo;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;清单看着挺像回事，但它是对话里整理出来的，我并不确定每一条都对。在拿去提 PR 之前，得先把每一条都核实一遍。&lt;/p&gt;
+&lt;h2 id="先核实每一条都是真的吗"&gt;&lt;a href="#%e5%85%88%e6%a0%b8%e5%ae%9e%e6%af%8f%e4%b8%80%e6%9d%a1%e9%83%bd%e6%98%af%e7%9c%9f%e7%9a%84%e5%90%97" class="header-anchor"&gt;&lt;/a&gt;先核实：每一条都是真的吗
+&lt;/h2&gt;&lt;p&gt;核实是交给 Claude Code 做的，我在旁边看它怎么查。方法其实很朴素：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;用最新的源码。&lt;/strong&gt; 从官方仓库克隆 &lt;code&gt;master&lt;/code&gt;，而不是用自己学习时改过的那份工程。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;每个名字都 &lt;code&gt;git grep&lt;/code&gt; 一遍。&lt;/strong&gt; 不只看清单里列的那一处，还要看所有引用：代码、配置、文档，连已经生成好的 &lt;code&gt;docs/public/*.html&lt;/code&gt; 都算。XL-06 的 &lt;code&gt;StatefullTest&lt;/code&gt; 就是这样查出来的：除了 C# 代码，它还出现在四份热修复文档的示例代码里。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;用 &lt;code&gt;git log&lt;/code&gt; 找来源。&lt;/strong&gt; 一个问题是一直都在，还是某次修改引入的，决定了它该怎么描述。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;查重。&lt;/strong&gt; 用 &lt;code&gt;gh search issues --include-prs&lt;/code&gt; 按每个拼错的词、文件名、关键词搜一遍上游的 Issue 和 PR。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;结果是 8 条都对得上源码，上游也没有专门报告这些问题的 Issue 或 PR。但「是真的」不等于「值得提」，而清单里最重要的第一条，影响和修法都和清单写的不一样。&lt;/p&gt;
+&lt;h2 id="最有意思的一条签名工具的文件名"&gt;&lt;a href="#%e6%9c%80%e6%9c%89%e6%84%8f%e6%80%9d%e7%9a%84%e4%b8%80%e6%9d%a1%e7%ad%be%e5%90%8d%e5%b7%a5%e5%85%b7%e7%9a%84%e6%96%87%e4%bb%b6%e5%90%8d" class="header-anchor"&gt;&lt;/a&gt;最有意思的一条：签名工具的文件名
+&lt;/h2&gt;&lt;p&gt;xLua 支持给 Lua 脚本签名，防止被篡改。流程分三步：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;KeyPairsGen&lt;/code&gt; 在当前目录生成一对 RSA 密钥：私钥 &lt;code&gt;key_ras&lt;/code&gt;，公钥 &lt;code&gt;key_ras.pub&lt;/code&gt;；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;FilesSignature&lt;/code&gt; 用私钥给每个 &lt;code&gt;.lua&lt;/code&gt; 文件签名，把 128 字节的签名写在文件开头；&lt;/li&gt;
+&lt;li&gt;游戏运行时，&lt;code&gt;SignatureLoader&lt;/code&gt; 用打包进去的公钥校验签名。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这三步之间唯一的约定，就是文件名。而源码里，生成器写的是 &lt;code&gt;key_ras&lt;/code&gt;，签名器找的是 &lt;code&gt;key_rsa&lt;/code&gt;：&lt;/p&gt;
+&lt;div class="code-block" data-lang="csharp"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;span class="lnt"&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-csharp" data-lang="csharp"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// KeyPairsGen.cs&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;File&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;WriteAllText&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;key_ras&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;rsa&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ToXmlString&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// FilesSignature.cs&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(!&lt;/span&gt;&lt;span class="n"&gt;File&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Exists&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;key_rsa&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;WriteLine&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;No key_rsa file found!&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;git log&lt;/code&gt; 显示，签名器的这个名字是 2023 年 8 月的 &lt;a class="link" href="https://github.com/Tencent/xLua/pull/1087" target="_blank" rel="noopener"
+&gt;#1087&lt;/a&gt; 改的。那个 PR 的说明里写着「修复了代码中的一些变量命名和拼写错误」：贡献者大概觉得 &lt;code&gt;ras&lt;/code&gt; 是 &lt;code&gt;rsa&lt;/code&gt; 拼反了，就顺手改了。但生成器、文档、示例资源都没跟着改，于是两边对不上了。&lt;/p&gt;
+&lt;h3 id="官方工具其实没坏"&gt;&lt;a href="#%e5%ae%98%e6%96%b9%e5%b7%a5%e5%85%b7%e5%85%b6%e5%ae%9e%e6%b2%a1%e5%9d%8f" class="header-anchor"&gt;&lt;/a&gt;官方工具其实没坏
+&lt;/h3&gt;&lt;p&gt;清单把这条标成了最高优先级的功能回归。但 Claude Code 在核对时多看了一步：仓库里除了源码，还有一份预编译好的 &lt;code&gt;Tools/KeyPairsGen.exe&lt;/code&gt; 和 &lt;code&gt;Tools/FilesSignature.exe&lt;/code&gt;，文档让用户直接用这两个 exe。&lt;/p&gt;
+&lt;p&gt;它从两个 exe 里把字符串提了出来，发现&lt;strong&gt;两个都还在用 &lt;code&gt;key_ras&lt;/code&gt;&lt;/strong&gt;。再看 &lt;code&gt;git log&lt;/code&gt;，这两个 exe 最后一次更新是 2023 年 6 月，比 #1087 早两个多月。&lt;/p&gt;
+&lt;p&gt;所以真实情况是：按文档用官方 exe 的人，一切正常；&lt;strong&gt;只有从源码自己编译签名器的人会撞上这个问题&lt;/strong&gt;。比如 macOS 用户，没法直接运行这两个 exe。上游有一个从 2021 年开到现在的 &lt;a class="link" href="https://github.com/Tencent/xLua/issues/942" target="_blank" rel="noopener"
+&gt;Issue #942&lt;/a&gt;，问的正是有没有 mac 版或者源码。&lt;/p&gt;
+&lt;p&gt;这改变了两件事。&lt;/p&gt;
+&lt;p&gt;第一是&lt;strong&gt;严重程度&lt;/strong&gt;。这不是「所有人的签名流程都坏了」，而是「源码和发布的工具不一致了」。PR 说明里要按这个写，不能夸大。&lt;/p&gt;
+&lt;p&gt;第二是&lt;strong&gt;修法&lt;/strong&gt;。清单建议把 &lt;code&gt;key_rsa&lt;/code&gt; 定为标准名，生成器、文档、示例资源都跟着改。但现在看，用 &lt;code&gt;key_ras&lt;/code&gt; 的有生成器、两个 exe、文档、示例资源，以及&lt;strong&gt;所有用户手里已经存在的密钥文件&lt;/strong&gt;；用 &lt;code&gt;key_rsa&lt;/code&gt; 的只有被 #1087 改过的那一个源文件。要是全部统一成 &lt;code&gt;key_rsa&lt;/code&gt;，就得重新编译、提交 exe（外部贡献者提交的二进制，维护者一般不会收），用户已有的密钥文件也会失效。&lt;/p&gt;
+&lt;p&gt;所以最后的修法正好反过来：把签名器里的三处 &lt;code&gt;key_rsa&lt;/code&gt; 改回 &lt;code&gt;key_ras&lt;/code&gt;。一个文件，三行。&lt;/p&gt;
+&lt;p&gt;这也是我在这件事里最大的收获：&lt;strong&gt;清单给出的方向是错的，而纠正它的证据不在源码里，在二进制里。&lt;/strong&gt; 只读 &lt;code&gt;.cs&lt;/code&gt; 文件的话，这一点是看不出来的。&lt;/p&gt;
+&lt;h2 id="顺带的一个-bug说已存在然后照样覆盖"&gt;&lt;a href="#%e9%a1%ba%e5%b8%a6%e7%9a%84%e4%b8%80%e4%b8%aa-bug%e8%af%b4%e5%b7%b2%e5%ad%98%e5%9c%a8%e7%84%b6%e5%90%8e%e7%85%a7%e6%a0%b7%e8%a6%86%e7%9b%96" class="header-anchor"&gt;&lt;/a&gt;顺带的一个 bug：说「已存在」，然后照样覆盖
+&lt;/h2&gt;&lt;p&gt;同一个生成器里还有另一个问题：&lt;/p&gt;
+&lt;div class="code-block" data-lang="csharp"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-csharp" data-lang="csharp"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;File&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Exists&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;key_ras&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;||&lt;/span&gt; &lt;span class="n"&gt;File&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Exists&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;key_ras.pub&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;WriteLine&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;key pairs existed!&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kt"&gt;var&lt;/span&gt; &lt;span class="n"&gt;rsa&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;RSACryptoServiceProvider&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;File&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;WriteAllText&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;key_ras&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;rsa&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ToXmlString&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;它检查了文件是否存在，提示了一句，然后……接着往下执行，把两个文件都覆盖了。if 分支里少了一个 &lt;code&gt;return&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;这个后果比文件名那个更严重：误运行一次，私钥就被换掉了。已经发布的游戏里打包的是旧公钥，之后用新私钥签的脚本，在玩家那边全都过不了校验。&lt;/p&gt;
+&lt;p&gt;修法就是补上那个 &lt;code&gt;return&lt;/code&gt;。&lt;/p&gt;
+&lt;h2 id="怎么证明修好了"&gt;&lt;a href="#%e6%80%8e%e4%b9%88%e8%af%81%e6%98%8e%e4%bf%ae%e5%a5%bd%e4%ba%86" class="header-anchor"&gt;&lt;/a&gt;怎么证明修好了
+&lt;/h2&gt;&lt;p&gt;改动只有四行，但我不想只靠「看起来对」。验证分成了几层：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;先复现。&lt;/strong&gt; 用 Mono 的 &lt;code&gt;mcs&lt;/code&gt; 编译修改前的源码，确认两个 bug 都真实存在：签名器输出 &lt;code&gt;No key_rsa file found!&lt;/code&gt; 后直接退出；第二次运行生成器后，两个密钥文件的 SHA1 都变了。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;再跑完整流程。&lt;/strong&gt; 修改后重新编译，在一个临时目录里依次运行：生成密钥、对包含子目录的 &lt;code&gt;.lua&lt;/code&gt; 文件签名、用公钥校验。再运行一次生成器，确认文件没被改动；只留公钥或只留私钥时，也都不会写入任何文件。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;校验程序本身也要验证。&lt;/strong&gt; 「签名校验通过」需要一个校验程序，而这个程序是另外写的，模仿 &lt;code&gt;SignatureLoader.load_and_verify&lt;/code&gt;：读公钥、取前 128 字节当签名、用 SHA1 校验。一个永远返回「通过」的校验程序毫无意义，所以还测了三件事：内容被篡改的文件要报失败；换一把错误的公钥要报失败；仓库里官方提交的已签名示例文件，用官方公钥要报通过。最后一条说明这个校验程序和 xLua 真实的签名格式是一致的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;最后是独立审查。&lt;/strong&gt; 开一个全新上下文的子代理，只给它 diff 和完成标准，让它找正确性问题。它用 &lt;code&gt;-langversion:3&lt;/code&gt;（对应项目目标的 .NET 3.5 时代）又编译了一遍，按同样的场景跑过，结论是没有问题。&lt;/p&gt;
+&lt;p&gt;没验证到的也写进了 PR 说明：没有在 Windows 上用项目自带的 &lt;code&gt;.csproj&lt;/code&gt; 编译，也没测 &lt;code&gt;SignatureLoader&lt;/code&gt; 的 UWP 分支。&lt;/p&gt;
+&lt;h2 id="哪些没提为什么"&gt;&lt;a href="#%e5%93%aa%e4%ba%9b%e6%b2%a1%e6%8f%90%e4%b8%ba%e4%bb%80%e4%b9%88" class="header-anchor"&gt;&lt;/a&gt;哪些没提，为什么
+&lt;/h2&gt;&lt;p&gt;清单里有三条，我决定不提：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;XL-05 目录名 &lt;code&gt;04_LuaObjectOrented&lt;/code&gt;&lt;/strong&gt;：改目录名会让所有指向它的外部链接失效，换来的只是一个拼写正确的目录名。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;XL-06 类名 &lt;code&gt;StatefullTest&lt;/code&gt;&lt;/strong&gt;：热修复文档的示例代码里写着 &lt;code&gt;CS.StatefullTest&lt;/code&gt;，用户会照着抄。改了类名，就得同时改四份文档，而这只是一个示例类。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;XL-07 &lt;code&gt;Pedding&lt;/code&gt;&lt;/strong&gt;：它是一个只有一个 &lt;code&gt;byte&lt;/code&gt; 字段、嵌在另一个结构体里的类型，看起来像是在测内存对齐，大概率确实是 &lt;code&gt;Padding&lt;/code&gt;。但它同时出现在示例和单元测试里，作者原意也没法确认，改名的收益接近零。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;挑错和修错是两回事。一个问题是真的，不代表修它的收益大于成本。&lt;/p&gt;
+&lt;h2 id="拆成几个-pr"&gt;&lt;a href="#%e6%8b%86%e6%88%90%e5%87%a0%e4%b8%aa-pr" class="header-anchor"&gt;&lt;/a&gt;拆成几个 PR
+&lt;/h2&gt;&lt;p&gt;一开始的计划是拆成四五个小 PR，每个只修一件事。但看了上游的情况之后改了主意：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;从 2025 年 2 月起，就有 PR 一直开着没人处理；2025 年 11 月之后，一个 PR 都没合过。&lt;/li&gt;
+&lt;li&gt;现在开着的 12 个 PR 里，9 个的 CLA 检查还是 &lt;code&gt;PENDING&lt;/code&gt;。但也有签了 CLA 的 PR 从 2024 年开到现在，所以 CLA 不是主要原因，维护者没时间才是。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在一个不活跃的仓库里，PR 越多，每个被看到的机会越小。最后合成了两个：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a class="link" href="https://github.com/Tencent/xLua/pull/1221" target="_blank" rel="noopener"
+&gt;#1221&lt;/a&gt;：签名工具的两个 bug（XL-01、XL-02），两个 commit；&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://github.com/Tencent/xLua/pull/1222" target="_blank" rel="noopener"
+&gt;#1222&lt;/a&gt;：示例和英文 README 的三处拼写和描述问题（XL-03、XL-04、XL-08），三个 commit。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;每个 commit 只修一件事，审阅的人可以一个一个看。&lt;/p&gt;
+&lt;h2 id="ai-在这件事里做了什么"&gt;&lt;a href="#ai-%e5%9c%a8%e8%bf%99%e4%bb%b6%e4%ba%8b%e9%87%8c%e5%81%9a%e4%ba%86%e4%bb%80%e4%b9%88" class="header-anchor"&gt;&lt;/a&gt;AI 在这件事里做了什么
+&lt;/h2&gt;&lt;p&gt;这件事从头到尾都有 AI 参与，分工大概是这样：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;ChatGPT&lt;/strong&gt;：帮我整理最初的问题清单。清单里的大方向是对的，但 XL-01 的严重程度和修法都错了。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Claude Code&lt;/strong&gt;：核对源码、查重、发现 exe 里的字符串、写修复代码和验证程序、跑测试、开 PR。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;我&lt;/strong&gt;：发现最初那个拼写错误，决定查下去；在每个节点拍板：改回 &lt;code&gt;key_ras&lt;/code&gt; 而不是统一成 &lt;code&gt;key_rsa&lt;/code&gt;、哪几条不提、拆成几个 PR、什么时候提交和推送。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;有个细节挺有意思：建 fork 和 &lt;code&gt;git push&lt;/code&gt; 这两步，Claude Code 被它自己的安全检查拦下了，因为这两步都会对外产生影响、不容易撤回。最后是我自己在终端里执行的。我觉得这样的边界是对的：在本地怎么改都行，往外发的那一步由人来按。&lt;/p&gt;
+&lt;p&gt;回头看，AI 让「核实」这件事变得便宜了：搜索、grep、编译、跑十几个测试场景，都是几分钟的事。但它也让「看起来对」变得更便宜了：那份清单写得很像回事，要是直接照着提，第一个 PR 就会把修法弄反。&lt;/p&gt;
+&lt;h2 id="现在"&gt;&lt;a href="#%e7%8e%b0%e5%9c%a8" class="header-anchor"&gt;&lt;/a&gt;现在
+&lt;/h2&gt;&lt;p&gt;两个 PR 都还开着。签名工具那个 PR 修的是一个真实的回归，有复现，有验证；拼写那个 PR 很小，零风险。会不会合、什么时候合，取决于维护者。&lt;/p&gt;
+&lt;p&gt;不管结果如何，这一趟下来我对 xLua 的签名机制、热修复的类型引用、Unity 资源的 &lt;code&gt;.meta&lt;/code&gt; GUID 都比之前熟悉了很多。这大概是挑错最实在的收获：为了证明一个地方是错的，你得先把它真正读懂。&lt;/p&gt;</description></item></channel></rss>
