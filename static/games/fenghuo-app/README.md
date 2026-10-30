@@ -7,3 +7,5 @@
 外层 `index.html` 保持竖屏比例并对接玩具箱；`game/arcade-bridge.js` 等待场景就绪、转发错误和处理暂停原因。重新生成 `game/` 后需要保留桥接脚本，并在生成的 `game/index.html` 中、`</body>` 前加入 `<script src="arcade-bridge.js"></script>`。构建完成后须从玩具箱入口验证加载、拖动派兵与暂停恢复。
 
 地图加载优化：使用 `cwebp -q 85` 将 `game/assets/main/native/d6/d654a212-4af3-4c46-88a9-e6956a49522b.png` 编码为同名 `.webp`，并将 `game/assets/main/import/d6/d654a212-4af3-4c46-88a9-e6956a49522b.json` 中的 `fmt` 从 `0` 改为 `4_0`。Creator 3.8.5 会优先选择受支持的 WebP，不支持时回退 PNG。重新构建后需要重新生成 WebP 并重新设置 `fmt`，保留原 PNG。
+
+启动错误提示依赖生成文件中的两处补丁：`game/index.html` 在启动 `System.import('./index.js')` 前加载 `arcade-bridge.js`，并在导入失败时调用 `window.FenghuoLoadError()`；`game/index.js` 的引擎初始化及启动失败分支同样调用该函数。重新构建后须重做这两处补丁，并模拟导入失败验证提示。
