@@ -22,6 +22,7 @@ System.register(["./application.js"], function (_export, _context) {
         return application.start();
       })["catch"](function (err) {
         console.error(err);
+        if (window.FenghuoLoadError) window.FenghuoLoadError();
       });
     }
   };
