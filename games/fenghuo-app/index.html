@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>烽火城池</title>
+<style>
+html,body { width:100%; height:100%; margin:0; overflow:hidden; background:#131211; }
+body { display:flex; justify-content:center; align-items:center; }
+iframe { width:min(100vw, 56.25vh); height:min(100vh, 177.7778vw); border:0; display:block; }
+</style>
+</head>
+<body>
+<iframe id="game" src="game/index.html" title="烽火城池" allowfullscreen></iframe>
+<script>
+(function () {
+    const game = document.getElementById('game');
+    const origin = location.origin;
+    let ready = false;
+    const pauseReasons = new Set();
+    function send(target, type, detail) { target.postMessage(Object.assign({ type }, detail || {}), origin); }
+    window.addEventListener('pageshow', function (event) {
+        if (event.persisted) {
+            pauseReasons.delete('navigation');
+            if (ready) send(game.contentWindow, 'arcade:resume', { reason: 'navigation' });
+        }
+    });
+    window.addEventListener('message', function (event) {
+        if (event.origin !== origin) return;
+        const data = event.data || {};
+        if (event.source === game.contentWindow) {
+            if (data.type === 'fenghuo:ready') {
+                ready = true;
+                if (parent !== window && parent.document.body.classList.contains('guide-open')) pauseReasons.add('guide');
+                if (parent !== window && parent.document.hidden) pauseReasons.add('visibility');
+                pauseReasons.forEach(function (reason) { send(game.contentWindow, 'arcade:pause', { reason }); });
+                if (parent !== window) send(parent, 'arcade:ready');
+            }
+            if (data.type === 'fenghuo:error' && parent !== window) send(parent, 'arcade:error', { message: data.message });
+        } else if (event.source === parent && parent !== window) {
+            if (data.type === 'arcade:hello' && ready) send(parent, 'arcade:ready');
+            if (data.type === 'arcade:pause' || data.type === 'arcade:resume') {
+                const reason = data.reason || 'shell';
+                if (data.type === 'arcade:pause') pauseReasons.add(reason);
+                else pauseReasons.delete(reason);
+                if (ready) send(game.contentWindow, data.type, { reason });
+            }
+        }
+    });
+}());
+</script>
+</body>
+</html>
