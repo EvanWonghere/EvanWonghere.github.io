@@ -138,6 +138,8 @@
         .loading-error { display: none; max-width: 30em; text-align: center; line-height: 1.6; }
         .game-loading.is-error .loading-label { display: none; }
         .game-loading.is-error .loading-error { display: block; }
+        .game-loading.is-slow .loading-label { display: none; }
+        .game-loading.is-slow .loading-error { display: block; }
         .retry-btn {
             margin-top: 12px;
             color: #171412;
@@ -343,6 +345,7 @@
 
             var expectedOrigin = window.location.origin;
             var readyTimer;
+            var loadState = "loading";
             var errorMessage = document.getElementById("loading-error-message");
 
             function postToGame(type, reason) {
@@ -352,31 +355,37 @@
 
             function showError(message) {
                 window.clearTimeout(readyTimer);
-                loading.classList.remove("is-hidden");
+                loadState = "error";
+                loading.classList.remove("is-hidden", "is-slow");
                 loading.classList.add("is-error");
                 errorMessage.textContent = message || "游戏未能完成初始化。";
             }
 
             function startReadyTimer() {
                 window.clearTimeout(readyTimer);
-                loading.classList.remove("is-hidden", "is-error");
+                loadState = "loading";
+                loading.classList.remove("is-hidden", "is-error", "is-slow");
                 readyTimer = window.setTimeout(function () {
-                    showError("载入时间过长，请检查网络或重新载入游戏。");
+                    if (loadState !== "loading") return;
+                    loading.classList.add("is-slow");
+                    errorMessage.textContent = "游戏仍在加载，网络较慢时可能需要更多时间。你可以继续等待或重新载入。";
                 }, 12000);
             }
 
             startReadyTimer();
-            frame.addEventListener("load", function () {
+            function onFrameLoad() {
                 /* load 只代表文档到达；等待游戏主动确认初始化完成。 */
-                startReadyTimer();
                 postToGame("arcade:hello", "handshake");
-            });
+            }
+            frame.addEventListener("load", onFrameLoad);
 
             window.addEventListener("message", function (event) {
                 if (event.origin !== expectedOrigin || event.source !== frame.contentWindow) return;
                 var data = event.data || {};
-                if (data.type === "arcade:ready") {
+                if (data.type === "arcade:ready" && loadState !== "error") {
                     window.clearTimeout(readyTimer);
+                    loadState = "ready";
+                    loading.classList.remove("is-slow");
                     loading.classList.add("is-hidden");
                     /* 首次按键应直接进入游戏，不要求用户先额外点击 iframe。 */
                     window.setTimeout(function () { frame.focus(); }, 0);
@@ -390,7 +399,11 @@
                 startReadyTimer();
                 var url = new URL(frame.src, window.location.href);
                 url.searchParams.set("reload", Date.now());
+                var previousFrame = frame;
+                frame = previousFrame.cloneNode(false);
+                frame.addEventListener("load", onFrameLoad);
                 frame.src = url.toString();
+                previousFrame.replaceWith(frame);
             });
 
             /* 子页面可能在父页面监听器注册前完成载入，主动握手消除这个竞态。 */

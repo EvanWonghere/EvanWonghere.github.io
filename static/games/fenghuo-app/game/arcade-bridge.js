@@ -33,12 +33,13 @@
             engine.game.resume();
         }
     });
-    window.addEventListener('error', function (event) { post('fenghuo:error', { message: event.message }); });
-    window.addEventListener('unhandledrejection', function (event) {
-        post('fenghuo:error', { message: String(event.reason && event.reason.message || event.reason) });
-    });
-
-    sendProgress(0.05);
+    // 只报告启动阶段的失败，文案固定，不把错误细节传给外层页面。
+    let ready = false;
+    window.FenghuoLoadError = function () {
+        if (!ready) post('fenghuo:error', { message: '游戏启动失败，请重新载入。' });
+    };
+    window.addEventListener('error', function () { window.FenghuoLoadError(); });
+    window.addEventListener('unhandledrejection', function () { window.FenghuoLoadError(); });
 
     System.import('cc').then(function (cc) {
         engine = cc;
@@ -47,6 +48,7 @@
         function waitForScene() {
             if (cc.director.getScene()) {
                 sendProgress(1);
+                ready = true;
                 post('fenghuo:ready');
                 return;
             }
@@ -55,5 +57,5 @@
             requestAnimationFrame(waitForScene);
         }
         waitForScene();
-    }).catch(function (error) { post('fenghuo:error', { message: String(error) }); });
+    }).catch(function (error) { console.error(error); window.FenghuoLoadError(); });
 }());

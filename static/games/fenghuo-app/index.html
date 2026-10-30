@@ -94,18 +94,18 @@ body { display:flex; justify-content:center; align-items:center; }
                 if (parent !== window && parent.document.body.classList.contains('guide-open')) pauseReasons.add('guide');
                 if (parent !== window && parent.document.hidden) pauseReasons.add('visibility');
                 pauseReasons.forEach(function (reason) { send(game.contentWindow, 'arcade:pause', { reason }); });
+                if (parent !== window) send(parent, 'arcade:ready');
             }
             if (data.type === 'fenghuo:error') {
-                // 就绪后的运行时错误只转发给玩具箱，不把遮罩盖回正在进行的对局。
-                if (!ready) {
+                // 嵌在玩具箱里时由外壳显示错误和重试；单独打开时才用本页遮罩。
+                if (parent !== window) send(parent, 'arcade:error', { message: data.message });
+                else if (!ready) {
                     loadError.classList.add('visible');
                     loading.classList.remove('hidden');
                 }
-                if (parent !== window) send(parent, 'arcade:error', { message: data.message });
             }
         } else if (event.source === parent && parent !== window) {
-            // 加载进度由本页遮罩展示，握手立即应答，免得玩具箱 12 秒超时在慢网下误报。
-            if (data.type === 'arcade:hello') send(parent, 'arcade:ready');
+            if (data.type === 'arcade:hello' && ready) send(parent, 'arcade:ready');
             if (data.type === 'arcade:pause' || data.type === 'arcade:resume') {
                 const reason = data.reason || 'shell';
                 if (data.type === 'arcade:pause') pauseReasons.add(reason);
@@ -114,13 +114,14 @@ body { display:flex; justify-content:center; align-items:center; }
             }
         }
     });
-    if (parent !== window) send(parent, 'arcade:ready');
-    setTimeout(function () {
-        if (ready) return;
-        loadError.textContent = '加载时间过长，请检查网络后刷新重试';
-        loadError.classList.add('visible');
-        if (parent !== window) send(parent, 'arcade:error', { message: '加载时间过长' });
-    }, 60000);
+    // 玩具箱外壳 12 秒后会自行提示「仍在加载」；这里只照顾单独打开的情况。
+    window.addEventListener('load', function () {
+        setTimeout(function () {
+            if (ready) return;
+            loadError.textContent = '加载时间过长，请检查网络后刷新重试';
+            loadError.classList.add('visible');
+        }, 60000);
+    });
 }());
 </script>
 </body>
