@@ -7,18 +7,75 @@
 <style>
 html,body { width:100%; height:100%; margin:0; overflow:hidden; background:#131211; }
 body { display:flex; justify-content:center; align-items:center; }
-iframe { width:min(100vw, 56.25vh); height:min(100vh, 177.7778vw); border:0; display:block; }
+.stage {
+  position:relative;
+  width:min(100vw, 56.25vh);
+  height:min(100vh, 177.7778vw);
+  flex-shrink:0;
+}
+.stage iframe { width:100%; height:100%; border:0; display:block; }
+#loading {
+  position:absolute; inset:0; z-index:2;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  background:#131211; color:#e8dcc8;
+  transition:opacity .45s ease, visibility .45s ease;
+}
+#loading.hidden { opacity:0; visibility:hidden; pointer-events:none; }
+#loading h1 { margin:0 0 1.25rem; font:600 1.35rem/1.3 "PingFang SC","Microsoft YaHei",sans-serif; letter-spacing:.12em; }
+#loading p { margin:0 0 .75rem; font:400 .95rem/1.4 "PingFang SC","Microsoft YaHei",sans-serif; color:#a89880; }
+.progress {
+  width:min(72%, 14rem); height:.35rem; border-radius:999px;
+  background:rgba(255,255,255,.08); overflow:hidden;
+}
+.progress > span {
+  display:block; height:100%; width:0%;
+  background:linear-gradient(90deg,#8b4513,#c9a227);
+  transition:width .25s ease;
+}
+.progress.indeterminate > span {
+  width:40% !important;
+  animation:load-slide 1.2s ease-in-out infinite;
+}
+@keyframes load-slide {
+  0% { transform:translateX(-120%); }
+  100% { transform:translateX(320%); }
+}
+#load-error {
+  display:none; margin-top:1rem; max-width:85%; text-align:center;
+  font:400 .9rem/1.5 "PingFang SC","Microsoft YaHei",sans-serif; color:#e07070;
+}
+#load-error.visible { display:block; }
 </style>
 </head>
 <body>
-<iframe id="game" src="game/index.html" title="烽火城池" allowfullscreen></iframe>
+<div class="stage">
+  <div id="loading" aria-live="polite">
+    <h1>烽火城池</h1>
+    <p id="load-status">加载中…</p>
+    <div class="progress indeterminate" id="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+    <p id="load-error">加载失败，请刷新重试</p>
+  </div>
+  <iframe id="game" src="game/index.html" title="烽火城池" allowfullscreen></iframe>
+</div>
 <script>
 (function () {
     const game = document.getElementById('game');
+    const loading = document.getElementById('loading');
+    const progress = document.getElementById('progress');
+    const progressBar = document.getElementById('progress-bar');
+    const loadError = document.getElementById('load-error');
     const origin = location.origin;
     let ready = false;
+    let indeterminate = true;
     const pauseReasons = new Set();
     function send(target, type, detail) { target.postMessage(Object.assign({ type }, detail || {}), origin); }
+    function setProgress(finished, total) {
+        if (total > 0 && finished >= 0) {
+            indeterminate = false;
+            progress.classList.remove('indeterminate');
+            progressBar.style.width = Math.min(100, Math.round((finished / total) * 100)) + '%';
+        }
+    }
     window.addEventListener('pageshow', function (event) {
         if (event.persisted) {
             pauseReasons.delete('navigation');
@@ -29,14 +86,24 @@ iframe { width:min(100vw, 56.25vh); height:min(100vh, 177.7778vw); border:0; dis
         if (event.origin !== origin) return;
         const data = event.data || {};
         if (event.source === game.contentWindow) {
+            if (data.type === 'fenghuo:progress') setProgress(data.finished | 0, data.total | 0);
             if (data.type === 'fenghuo:ready') {
                 ready = true;
+                setProgress(100, 100);
+                loading.classList.add('hidden');
                 if (parent !== window && parent.document.body.classList.contains('guide-open')) pauseReasons.add('guide');
                 if (parent !== window && parent.document.hidden) pauseReasons.add('visibility');
                 pauseReasons.forEach(function (reason) { send(game.contentWindow, 'arcade:pause', { reason }); });
                 if (parent !== window) send(parent, 'arcade:ready');
             }
-            if (data.type === 'fenghuo:error' && parent !== window) send(parent, 'arcade:error', { message: data.message });
+            if (data.type === 'fenghuo:error') {
+                // 嵌在玩具箱里时由外壳显示错误和重试；单独打开时才用本页遮罩。
+                if (parent !== window) send(parent, 'arcade:error', { message: data.message });
+                else if (!ready) {
+                    loadError.classList.add('visible');
+                    loading.classList.remove('hidden');
+                }
+            }
         } else if (event.source === parent && parent !== window) {
             if (data.type === 'arcade:hello' && ready) send(parent, 'arcade:ready');
             if (data.type === 'arcade:pause' || data.type === 'arcade:resume') {
@@ -46,6 +113,14 @@ iframe { width:min(100vw, 56.25vh); height:min(100vh, 177.7778vw); border:0; dis
                 if (ready) send(game.contentWindow, data.type, { reason });
             }
         }
+    });
+    // 玩具箱外壳 12 秒后会自行提示「仍在加载」；这里只照顾单独打开的情况。
+    window.addEventListener('load', function () {
+        setTimeout(function () {
+            if (ready) return;
+            loadError.textContent = '加载时间过长，请检查网络后刷新重试';
+            loadError.classList.add('visible');
+        }, 60000);
     });
 }());
 </script>
