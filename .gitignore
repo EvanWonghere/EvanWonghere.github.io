@@ -5,6 +5,6 @@
 .history
 .history/
 public/
-resources/
+/resources/
 .hugo_build.lock
 supabase/.temp/
