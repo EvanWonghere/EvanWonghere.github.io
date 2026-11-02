@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="data:,">
 <title>烽火城池</title>
 <style>
 html,body { width:100%; height:100%; margin:0; overflow:hidden; background:#131211; }
@@ -13,6 +14,14 @@ body { display:flex; justify-content:center; align-items:center; }
   height:min(100vh, 177.7778vw);
   flex-shrink:0;
 }
+#orientation-hint { display:none; position:fixed; top:env(safe-area-inset-top, 0px); left:0; right:0; z-index:3; align-items:center; justify-content:center; gap:8px; padding:8px; background:#f1e2c3; color:#3d2b1f; font:16px/1.4 sans-serif; }
+#orientation-hint button, #load-retry { min-width:44px; min-height:44px; padding:0 12px; border:1px solid #b89c69; border-radius:8px; background:#f1e2c3; color:#3d2b1f; font:16px sans-serif; cursor:pointer; }
+#orientation-hint.dismissed { display:none; }
+@media (orientation:landscape) and (max-height:480px) and (max-width:899px) {
+  #orientation-hint { display:flex; }
+}
+#load-retry { display:none; margin-top:8px; }
+#load-retry.visible { display:block; }
 .stage iframe { width:100%; height:100%; border:0; display:block; }
 #loading {
   position:absolute; inset:0; z-index:2;
@@ -48,12 +57,14 @@ body { display:flex; justify-content:center; align-items:center; }
 </style>
 </head>
 <body>
+<aside id="orientation-hint" aria-label="屏幕方向建议"><span>竖屏游玩更清楚，可旋转设备继续。</span><button id="orientation-dismiss" type="button" aria-label="关闭竖屏建议">关闭</button></aside>
 <div class="stage">
   <div id="loading" aria-live="polite">
     <h1>烽火城池</h1>
     <p id="load-status">加载中…</p>
     <div class="progress indeterminate" id="progress" aria-hidden="true"><span id="progress-bar"></span></div>
-    <p id="load-error">加载失败，请刷新重试</p>
+    <p id="load-error"></p>
+    <button id="load-retry" type="button">重试</button>
   </div>
   <iframe id="game" src="game/index.html?controls=inspect" title="烽火城池" allowfullscreen></iframe>
 </div>
@@ -64,18 +75,58 @@ body { display:flex; justify-content:center; align-items:center; }
     const progress = document.getElementById('progress');
     const progressBar = document.getElementById('progress-bar');
     const loadError = document.getElementById('load-error');
+    const retry = document.getElementById('load-retry');
+    const status = document.getElementById('load-status');
+    const source = game.getAttribute('src');
     const origin = location.origin;
     let ready = false;
-    let indeterminate = true;
+    let timeout;
     const pauseReasons = new Set();
     function send(target, type, detail) { target.postMessage(Object.assign({ type }, detail || {}), origin); }
     function setProgress(finished, total) {
         if (total > 0 && finished >= 0) {
-            indeterminate = false;
             progress.classList.remove('indeterminate');
             progressBar.style.width = Math.min(100, Math.round((finished / total) * 100)) + '%';
         }
     }
+    function fail(message) {
+        clearTimeout(timeout);
+        ready = false;
+        status.textContent = '加载失败';
+        progress.classList.remove('indeterminate');
+        loadError.textContent = message;
+        loadError.classList.add('visible');
+        retry.classList.add('visible');
+        loading.classList.remove('hidden');
+        if (parent !== window) send(parent, 'arcade:error', { message });
+    }
+    function startLoading() {
+        clearTimeout(timeout);
+        ready = false;
+        status.textContent = '加载中…';
+        progress.classList.add('indeterminate');
+        progressBar.style.width = '0%';
+        loadError.textContent = '';
+        loadError.classList.remove('visible');
+        retry.classList.remove('visible');
+        loading.classList.remove('hidden');
+        if (location.protocol === 'file:') {
+            fail('请使用游戏预览链接打开，本地文件无法启动游戏。');
+            return;
+        }
+        // 从外壳脚本执行开始计时；iframe 的 load 可能永远不会到达。
+        timeout = setTimeout(function () {
+            if (!ready) fail('加载时间过长，请检查网络后重试。');
+        }, 60000);
+    }
+    retry.addEventListener('click', function () {
+        startLoading();
+        game.src = source;
+    });
+    game.addEventListener('error', function () { fail('游戏资源加载失败，请检查网络后重试。'); });
+    document.getElementById('orientation-dismiss').addEventListener('click', function () {
+        document.getElementById('orientation-hint').classList.add('dismissed');
+    });
     window.addEventListener('pageshow', function (event) {
         if (event.persisted) {
             pauseReasons.delete('navigation');
@@ -89,6 +140,9 @@ body { display:flex; justify-content:center; align-items:center; }
             if (data.type === 'fenghuo:progress') setProgress(data.finished | 0, data.total | 0);
             if (data.type === 'fenghuo:ready') {
                 ready = true;
+                clearTimeout(timeout);
+                loadError.classList.remove('visible');
+                retry.classList.remove('visible');
                 setProgress(100, 100);
                 loading.classList.add('hidden');
                 if (parent !== window && parent.document.body.classList.contains('guide-open')) pauseReasons.add('guide');
@@ -96,14 +150,7 @@ body { display:flex; justify-content:center; align-items:center; }
                 pauseReasons.forEach(function (reason) { send(game.contentWindow, 'arcade:pause', { reason }); });
                 if (parent !== window) send(parent, 'arcade:ready');
             }
-            if (data.type === 'fenghuo:error') {
-                // 嵌在玩具箱里时由外壳显示错误和重试；单独打开时才用本页遮罩。
-                if (parent !== window) send(parent, 'arcade:error', { message: data.message });
-                else if (!ready) {
-                    loadError.classList.add('visible');
-                    loading.classList.remove('hidden');
-                }
-            }
+            if (data.type === 'fenghuo:error') fail(typeof data.message === 'string' && data.message ? data.message : '游戏加载失败，请重试。');
         } else if (event.source === parent && parent !== window) {
             if (data.type === 'arcade:hello' && ready) send(parent, 'arcade:ready');
             if (data.type === 'arcade:pause' || data.type === 'arcade:resume') {
@@ -114,14 +161,7 @@ body { display:flex; justify-content:center; align-items:center; }
             }
         }
     });
-    // 玩具箱外壳 12 秒后会自行提示「仍在加载」；这里只照顾单独打开的情况。
-    window.addEventListener('load', function () {
-        setTimeout(function () {
-            if (ready) return;
-            loadError.textContent = '加载时间过长，请检查网络后刷新重试';
-            loadError.classList.add('visible');
-        }, 60000);
-    });
+    startLoading();
 }());
 </script>
 </body>

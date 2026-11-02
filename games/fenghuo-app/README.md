@@ -33,11 +33,11 @@ tools/deploy/release-web.sh --site /path/to/EvanWonghere.github.io --sync
 
 显式增加 `--push` 会仅提交网站 `static/games/fenghuo-app` 并推送 main，触发 GitHub Pages；不提交源游戏工程或其他网站文件。先确保当前版本已经验收，再使用此选项。默认模式只准备本地待发布结果，保留原有未跟踪文件；若已有待发布游戏改动，脚本拒绝再次覆盖，请先确认/处理。`publish-site.mjs <site> [build-directory]` 仍可单独使用，支持指定新鲜构建目录。
 
-## 本地记录与回放
+## 记录与回放已关闭
 
-开局可选“记录本局”（首次默认关闭），暂停或结算时手动导出 JSON。重新开局后在菜单导入本地文件，支持暂停、1×/2×和退出；无上传接口。录制只捕获成功真人命令，包含真实场景地图、有效规则、难度/AI种子及逻辑代码指纹。中途导出是合法局部记录；调试派兵/升级、局内AI开关变化或达到预算会停止有效记录。
+当前交付版 `GameConfig.replay.enabled = false`。开局、暂停、结算均不显示记录/导入/导出入口，不读取旧录制偏好、不创建后台记录器、不接受记录文件；相关实现保留，当前无法启用。原点击派遣和两种点击设置的拖动操作保留。
 
-回放仅支持同一代码和配置版本。两个网页构建脚本都会先生成代码指纹；手动用 Creator 预览或构建前须运行 `npm run replay:identity`，检查用 `node tools/replay/update-identity.mjs --check`。文件最多4MiB、20000条成功命令和216000个逻辑tick（60Hz下一小时）。不支持从检查点跳转；从开局依次重放并验证状态。浏览器界面使用独立DOM，非浏览器运行不提供文件入口，原游戏流程不受影响。
+每次打包前仍运行 `npm run replay:identity` 生成构建代码指纹，用来核对测试和线上版本；检查用 `node tools/replay/update-identity.mjs --check`。这一步不会启用游戏内记录回放。
 
 本地预览须服务发布器生成的外壳目录，不直接服务 Creator 裸构建：
 
@@ -50,4 +50,6 @@ python3 tools/deploy/serve-preview.py --directory /private/tmp/fh-replay-preview
 
 ## 点击与拖动操作
 
-网站外壳的 iframe 使用 `game/index.html?controls=inspect`：点击查看任意据点，己方可升级或调整出兵比例；拖动派兵。原 Creator 工程默认 `classic`，保留点击来源→目标→数量→派遣。显式 `controls=classic` 可验收传统操作；未知值沿用工程默认。两种模式拖动均优先，超过阈值后不再触发点击。网页预览应保留外壳以维持9:16适配，检查经典模式时修改iframe参数，不直接打开裸构建。
+网站外壳的 iframe 使用 `game/index.html?controls=inspect`：点击查看任意据点，己方可升级或调整出兵比例；拖动派兵。原 Creator 工程默认 `classic`，保留点击来源→目标→数量→派遣。显式 `controls=classic` 可验收传统操作；未知值沿用工程默认。两种模式拖动均优先，超过阈值后不再触发点击。开局面板以“点击据点时”区分“选择派兵对象”“查看据点信息”，并明确两种设置都支持拖动，参数仅决定初始选项；同一入口可以选择两种模式，开始后锁定，重新开始可再选。网页预览应保留外壳以维持9:16适配。
+
+当前UX布局：游戏画幅统一9:16，保留满幅地图、头像与结算比例；较宽窗口等比居中，小横屏保留可关闭的竖屏建议。记录回放关闭后开局菜单不再预留其空白区；外壳加载失败可真实重试。
