@@ -210,11 +210,20 @@ test('wrapper forwards an actual game error only from its own same-origin iframe
     const script = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].at(-1)?.[1];
     assert.ok(script, 'wrapper message bridge must exist');
     const handlers = new Map(), forwarded = [];
-    const game = { contentWindow: { postMessage() {} } };
+    const elements = new Map();
+    const element = id => {
+        if (!elements.has(id)) elements.set(id, { style: {}, textContent: '',
+            classList: { add() {}, remove() {} }, addEventListener() {} });
+        return elements.get(id);
+    };
+    const game = Object.assign(element('game'), { contentWindow: { postMessage() {} },
+        getAttribute() { return 'game/index.html?controls=inspect'; } });
     const parent = { postMessage(data, origin) { forwarded.push({ data, origin }); },
         document: { body: { classList: { contains() { return false; } } }, hidden: false } };
     const window = { addEventListener(type, fn) { handlers.set(type, fn); } };
-    vm.runInNewContext(script, { window, parent, document: { getElementById() { return game; } }, location: { origin: 'https://example.test' }, Set });
+    vm.runInNewContext(script, { window, parent, document: { getElementById: element },
+        location: { protocol: 'https:', origin: 'https://example.test' }, Set,
+        setTimeout() { return 1; }, clearTimeout() {} });
     const message = handlers.get('message');
     message({ origin: 'https://untrusted.test', source: game.contentWindow, data: { type: 'fenghuo:error', message: '伪造' } });
     message({ origin: 'https://example.test', source: {}, data: { type: 'fenghuo:error', message: '伪造' } });
