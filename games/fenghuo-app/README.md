@@ -47,3 +47,7 @@ python3 tools/deploy/serve-preview.py --directory /private/tmp/fh-replay-preview
 ```
 
 首次切换旧入口时使用带新版本参数的URL，例如 `http://127.0.0.1:18813/?preview=responsive-v3`。预览服务器禁用缓存并忽略条件GET，避免同一端口从裸构建切为外壳时复用旧HTML。正式站点发布不使用此开发服务器。
+
+## 点击与拖动操作
+
+网站外壳的 iframe 使用 `game/index.html?controls=inspect`：点击查看任意据点，己方可升级或调整出兵比例；拖动派兵。原 Creator 工程默认 `classic`，保留点击来源→目标→数量→派遣。显式 `controls=classic` 可验收传统操作；未知值沿用工程默认。两种模式拖动均优先，超过阈值后不再触发点击。网页预览应保留外壳以维持9:16适配，检查经典模式时修改iframe参数，不直接打开裸构建。
