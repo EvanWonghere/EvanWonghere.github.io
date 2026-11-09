@@ -1,4 +1,35 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>学习笔记 on 蜂窝</title><link>https://yufenghuang.tech/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link><description>Recent content in 学习笔记 on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Sun, 25 Oct 2026 20:00:00 +0800</lastBuildDate><atom:link href="https://yufenghuang.tech/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml"/><item><title>从一个拼写错误到两个 PR：给 xLua 挑错的一次记录</title><link>https://yufenghuang.tech/p/xlua-typos-to-pull-requests/</link><pubDate>Sun, 25 Oct 2026 20:00:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/xlua-typos-to-pull-requests/</guid><description>&lt;p&gt;学 xLua 的协程示例时，我注意到一行代码：&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>学习笔记 on 蜂窝</title><link>https://yufenghuang.tech/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link><description>Recent content in 学习笔记 on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Mon, 09 Nov 2026 00:00:00 -0800</lastBuildDate><atom:link href="https://yufenghuang.tech/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml"/><item><title>AI 时代的编程元认知</title><link>https://yufenghuang.tech/p/programming-metacognition-in-the-ai-era/</link><pubDate>Mon, 09 Nov 2026 00:00:00 -0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/programming-metacognition-in-the-ai-era/</guid><description>&lt;p&gt;写一个函数，有时真正费时间的是动手之前的停顿。这个输入应该得到什么结果？为什么选这个数据结构？上一次改动已经排除了哪种可能？卡住和挫败感常常是解题的一部分。停下来写出一个可验证的预期，可能比再改十行代码更接近答案。&lt;/p&gt;
+&lt;p&gt;这篇笔记源自 Clara Maine 在 JetBrains Academy 的视频。&lt;strong&gt;元认知&lt;/strong&gt;在这里指解题时监控和调整自己的思考。你知道正在做哪一步，能说出目前的依据，并在证据与预期不符时调整策略。AI 可以把代码生成得很快，也让我们更容易把任务完成的进度当作自己理解的进度。&lt;a class="link" href="https://www.youtube.com/watch?v=DkhhE97Swmo" target="_blank" rel="noopener"
+&gt;JetBrains Academy 视频《Therapy for the Vibe-Coded Brain》&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="不用-ai-也会遇到的五种卡点"&gt;&lt;a href="#%e4%b8%8d%e7%94%a8-ai-%e4%b9%9f%e4%bc%9a%e9%81%87%e5%88%b0%e7%9a%84%e4%ba%94%e7%a7%8d%e5%8d%a1%e7%82%b9" class="header-anchor"&gt;&lt;/a&gt;不用 AI 也会遇到的五种卡点
+&lt;/h2&gt;&lt;p&gt;Prather 等人在 2018 年观察编程初学者做题时记录了五种卡点。下面用一个假想的 C# 背包练习来说明。每次拾取一件物品，优先放进同类物品的未满堆叠，再找空格。背包放不下的物品留在原地，玩家也可以手动调整格子里的物品。&lt;a class="link" href="https://doi.org/10.1145/3230977.3230981" target="_blank" rel="noopener"
+&gt;Prather 等人的 2018 年研究&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="构思forming"&gt;&lt;a href="#%e6%9e%84%e6%80%9dforming" class="header-anchor"&gt;&lt;/a&gt;构思（Forming）
+&lt;/h3&gt;&lt;p&gt;你读懂了需求，却建立了一个表达不了需求的模型。比如用 &lt;code&gt;Dictionary&amp;lt;ItemId, int&amp;gt;&lt;/code&gt; 作为唯一库存数据，只能知道有 101 个木材，无法知道哪一格放了 100 个、哪一格放了 1 个，也就保存不了玩家调过的位置。先拿一组必须区分的状态检验模型。试着把两个格子互换，如果交换前后在模型里完全一样，就需要把槽位也纳入状态。&lt;/p&gt;
+&lt;h3 id="脱困dislodging"&gt;&lt;a href="#%e8%84%b1%e5%9b%b0dislodging" class="header-anchor"&gt;&lt;/a&gt;脱困（Dislodging）
+&lt;/h3&gt;&lt;p&gt;你已经怀疑原先的解释有问题，手却还在沿同一条路改。比如背包数量多加了一次，你反复调整 UI 刷新的时机，日志却显示界面刷新前库存就已多加了一次。此时先暂停改界面，跟踪一次拾取触发了几次库存写入。这个检查能把问题从显示层移回写入路径。&lt;/p&gt;
+&lt;h3 id="假设assumption"&gt;&lt;a href="#%e5%81%87%e8%ae%beassumption" class="header-anchor"&gt;&lt;/a&gt;假设（Assumption）
+&lt;/h3&gt;&lt;p&gt;你把一个相近的问题解对了。比如把「每格最多 100 个」理解成「同种物品总共最多 100 个」。代码和测试都可能自洽，因为它们沿用了同一个假设。回到题目，写一组能区分两种解释的输入和输出。背包里只有一格木材，已经叠满 100 个，旁边还有空格。再拾取一个木材应该占用一个新格子。&lt;/p&gt;
+&lt;h3 id="定位location"&gt;&lt;a href="#%e5%ae%9a%e4%bd%8dlocation" class="header-anchor"&gt;&lt;/a&gt;定位（Location）
+&lt;/h3&gt;&lt;p&gt;你觉得只差把界面接上，实际还跳过了规则验证。先测库存的两种边界状态。有未满的同类堆叠时，即使没有空格也能加一件。完全放不下时，库存应返回失败且数量不变。然后从拾取入口走一遍失败路径，确认场景里的物品还在。知道这些步骤各自验证过什么，才好判断接下来该写界面还是回头改规则。&lt;/p&gt;
+&lt;h3 id="成就achievement"&gt;&lt;a href="#%e6%88%90%e5%b0%b1achievement" class="header-anchor"&gt;&lt;/a&gt;成就（Achievement）
+&lt;/h3&gt;&lt;p&gt;代码写得越多，就越容易觉得再补一处就能结束。比如按钮回调和碰撞回调都能直接写库存，每出一次重复结算就给其中一处加判断。先写出一个能复现问题的用例，再把拾取决策收拢到同一个入口，由它判断这件场景物品是否已经拾取成功。重跑重复触发和正常拾取两类用例，确认修复保留了两条入口的正常行为。&lt;/p&gt;
+&lt;h2 id="使用-ai-时需要留意的三种卡点"&gt;&lt;a href="#%e4%bd%bf%e7%94%a8-ai-%e6%97%b6%e9%9c%80%e8%a6%81%e7%95%99%e6%84%8f%e7%9a%84%e4%b8%89%e7%a7%8d%e5%8d%a1%e7%82%b9" class="header-anchor"&gt;&lt;/a&gt;使用 AI 时需要留意的三种卡点
+&lt;/h2&gt;&lt;p&gt;Prather 等人 2024 年在一所大学观察了 21 名初学者在可使用 Copilot 和 ChatGPT 的情况下做一道练习，记录到以下三种困难。20 人完成了可运行的程序，研究者同时观察到部分学生对自身理解的判断偏乐观。这些观察来自一次特定的实验任务。&lt;a class="link" href="https://arxiv.org/abs/2405.17739" target="_blank" rel="noopener"
+&gt;Prather 等人的 2024 年研究《The Widening Gap》&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="进展progression"&gt;&lt;a href="#%e8%bf%9b%e5%b1%95progression" class="header-anchor"&gt;&lt;/a&gt;进展（Progression）
+&lt;/h3&gt;&lt;p&gt;AI 让背包能跑，读它的解释时你觉得每句话都懂。合上解释，遇到唯一的同类堆叠已经满了、旁边还有空格的情况，你却说不出代码会写到哪一格，也找不到这个决定在哪里做。先关掉补全，预测一组现有规则下的结果，再独立写个测试来检查。如果说得清，再试着给不同物品设不同的叠加上限，看看理解能否用到新条件上。&lt;/p&gt;
+&lt;h3 id="打断interruption"&gt;&lt;a href="#%e6%89%93%e6%96%adinterruption" class="header-anchor"&gt;&lt;/a&gt;打断（Interruption）
+&lt;/h3&gt;&lt;p&gt;你正在推演怎样优先填入已有堆叠，自动补全开始生成另一个版本，你转而评估它，原来的推演停在半路。构思时可以暂时关掉行内补全，先写下处理顺序和失败条件。拿一个既有未满的同类堆叠又有空格的例子手推一遍，能说明该写哪一格，再打开补全协助实现。&lt;/p&gt;
+&lt;h3 id="误导mislead"&gt;&lt;a href="#%e8%af%af%e5%af%bcmislead" class="header-anchor"&gt;&lt;/a&gt;误导（Mislead）
+&lt;/h3&gt;&lt;p&gt;AI 建议按物品类型过滤重复拾取，日志里的重复结算消失了，玩家拾起第二件同类物品时也被过滤掉了。用两个场景验证这条建议，背包都预留至少两件物品的空间。同一个拾取请求重试时，数量只加一。拾取两件不同的同类物品时，数量应该加二。用这组反例审查 AI 的建议，也用它检查教程和自己的猜测。&lt;/p&gt;
+&lt;h2 id="下次卡住时先写三句话"&gt;&lt;a href="#%e4%b8%8b%e6%ac%a1%e5%8d%a1%e4%bd%8f%e6%97%b6%e5%85%88%e5%86%99%e4%b8%89%e5%8f%a5%e8%af%9d" class="header-anchor"&gt;&lt;/a&gt;下次卡住时，先写三句话
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;目标&lt;/strong&gt;。我想让哪组输入得到什么结果？&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;证据&lt;/strong&gt;。目前哪一步已经验证过，哪一步还只是猜测？&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;下一步&lt;/strong&gt;。哪个最小的检查能让我决定继续当前方案还是换路？&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;如果目标是练习一项能力，可以先请 AI 给一个反例或提示，再自己写预期、跑测试、解释结果。如果目标是交付，AI 可以承担更多实现工作，验收时仍要能判断代码是否满足真正的要求。练习做完后，可以合上对话，试着独立处理一个小变式，看看今天学到的办法能不能再用一次。&lt;/p&gt;</description></item><item><title>从一个拼写错误到两个 PR：给 xLua 挑错的一次记录</title><link>https://yufenghuang.tech/p/xlua-typos-to-pull-requests/</link><pubDate>Sun, 25 Oct 2026 20:00:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/xlua-typos-to-pull-requests/</guid><description>&lt;p&gt;学 xLua 的协程示例时，我注意到一行代码：&lt;/p&gt;
 &lt;div class="code-block" data-lang="csharp"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
 &lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1

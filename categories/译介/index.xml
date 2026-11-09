@@ -1,4 +1,43 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>译介 on 蜂窝</title><link>https://yufenghuang.tech/categories/%E8%AF%91%E4%BB%8B/</link><description>Recent content in 译介 on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Wed, 21 Oct 2026 00:00:00 -0400</lastBuildDate><atom:link href="https://yufenghuang.tech/categories/%E8%AF%91%E4%BB%8B/index.xml" rel="self" type="application/rss+xml"/><item><title>享受编程，依然没什么不对</title><link>https://yufenghuang.tech/p/it-is-still-ok-to-enjoy-programming-zh/</link><pubDate>Wed, 21 Oct 2026 00:00:00 -0400</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/it-is-still-ok-to-enjoy-programming-zh/</guid><description>&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>译介 on 蜂窝</title><link>https://yufenghuang.tech/categories/%E8%AF%91%E4%BB%8B/</link><description>Recent content in 译介 on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Mon, 09 Nov 2026 00:00:00 -0800</lastBuildDate><atom:link href="https://yufenghuang.tech/categories/%E8%AF%91%E4%BB%8B/index.xml" rel="self" type="application/rss+xml"/><item><title>《永别了，程序员》导读</title><link>https://yufenghuang.tech/p/farewell-programmers-reading-note/</link><pubDate>Mon, 09 Nov 2026 00:00:00 -0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/farewell-programmers-reading-note/</guid><description>&lt;p&gt;&lt;strong&gt;原作者&lt;/strong&gt; 王咏刚 · &lt;strong&gt;来源&lt;/strong&gt; 微信公众号「半轻人」&lt;/p&gt;
+&lt;p&gt;&lt;a class="link" href="https://mp.weixin.qq.com/s/x_xS7lJ-Odv_sIWyvFldhw" target="_blank" rel="noopener"
+&gt;阅读微信公众号原文&lt;/a&gt; · &lt;a class="link" href="https://www.huxiu.com/article/4903060.html" target="_blank" rel="noopener"
+&gt;阅读虎嗅刊载版（2026 年 11 月 4 日）&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;王咏刚把自己中学时手写 6502 汇编的经历，与今天用 AI 升级老电脑模拟器的经历放在一起。贯穿两段经历的问题是，当模型接手越来越多的实现工作，多年编程经验还能给程序员和软件产品带来多少溢价？&lt;/p&gt;
+&lt;h2 id="1-软件更容易做供给和需求会怎样变化"&gt;&lt;a href="#1-%e8%bd%af%e4%bb%b6%e6%9b%b4%e5%ae%b9%e6%98%93%e5%81%9a%e4%be%9b%e7%bb%99%e5%92%8c%e9%9c%80%e6%b1%82%e4%bc%9a%e6%80%8e%e6%a0%b7%e5%8f%98%e5%8c%96" class="header-anchor"&gt;&lt;/a&gt;1. 软件更容易做，供给和需求会怎样变化
+&lt;/h2&gt;&lt;p&gt;作者判断，过去要靠有经验的开发者投入工时才能完成的功能，现在越来越多地可以用模型调用来实现。如果更多团队能以较低成本做出类似产品，单凭实现难度维持高价就更难了。他也区分了两种增长。卖显卡、模型和算力的市场可以迅速扩张，消费者愿意为软件付的钱却未必同步增长。后一种需求跟不上时，更多供给可能先带来降价。&lt;/p&gt;
+&lt;h2 id="2-altair-8800-项目里人和-ai-分别做了什么"&gt;&lt;a href="#2-altair-8800-%e9%a1%b9%e7%9b%ae%e9%87%8c%e4%ba%ba%e5%92%8c-ai-%e5%88%86%e5%88%ab%e5%81%9a%e4%ba%86%e4%bb%80%e4%b9%88" class="header-anchor"&gt;&lt;/a&gt;2. Altair 8800 项目里，人和 AI 分别做了什么
+&lt;/h2&gt;&lt;p&gt;起初，王咏刚只想为一位计算机老师改进课堂用的模拟器。原项目主要模拟前面板和 CPU，后来加入了调试器、8080 汇编工具，还做出了可拆解的 3D 机箱。按他的回顾，他提出需求、选定推进方向、试用和报错，AI 则承担了大量方案设计、资料检索和实现。做 3D 机箱时，AI 帮他找到一位收藏者，后者提供了真机照片和尺寸用于校准。&lt;a class="link" href="https://github.com/wixette/8800-simulator" target="_blank" rel="noopener"
+&gt;Altair 8800 模拟器源码&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="3-如果初级岗位减少新人从哪里积累经验"&gt;&lt;a href="#3-%e5%a6%82%e6%9e%9c%e5%88%9d%e7%ba%a7%e5%b2%97%e4%bd%8d%e5%87%8f%e5%b0%91%e6%96%b0%e4%ba%ba%e4%bb%8e%e5%93%aa%e9%87%8c%e7%a7%af%e7%b4%af%e7%bb%8f%e9%aa%8c" class="header-anchor"&gt;&lt;/a&gt;3. 如果初级岗位减少，新人从哪里积累经验
+&lt;/h2&gt;&lt;p&gt;文中引用了黄一孟对未来团队的设想。少数合伙人负责定义产品、规划和管理，AI 承担大部分研发。王咏刚担心，初中级岗位因此减少，毕业生更难靠会写代码找到第一份工作。这也引出一个培养问题。如果改小功能、修普通缺陷的机会变少，新人还能通过哪些任务练习定位问题、权衡方案和验证改动？&lt;/p&gt;
+&lt;h2 id="4-生产力的收益和转型的代价落到谁身上"&gt;&lt;a href="#4-%e7%94%9f%e4%ba%a7%e5%8a%9b%e7%9a%84%e6%94%b6%e7%9b%8a%e5%92%8c%e8%bd%ac%e5%9e%8b%e7%9a%84%e4%bb%a3%e4%bb%b7%e8%90%bd%e5%88%b0%e8%b0%81%e8%ba%ab%e4%b8%8a" class="header-anchor"&gt;&lt;/a&gt;4. 生产力的收益和转型的代价落到谁身上
+&lt;/h2&gt;&lt;p&gt;王咏刚愿意相信，生产力增长最终能催生新需求，让人有机会缩短工作时间。眼下他更担心的是，现有岗位可能先减少，新需求和收入分配机制却需要更长时间形成。文章最后把焦虑延伸到 AI 自主性增强之后，人是否还掌握控制权的问题。&lt;/p&gt;</description></item><item><title>Fabien Sanglard 如何用 agent.md 改进 AI 生成的代码</title><link>https://yufenghuang.tech/p/fabien-sanglard-agent-md/</link><pubDate>Mon, 09 Nov 2026 00:00:00 -0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/fabien-sanglard-agent-md/</guid><description>&lt;p&gt;&lt;strong&gt;原作者&lt;/strong&gt; &lt;a class="link" href="https://fabiensanglard.net/" target="_blank" rel="noopener"
+&gt;Fabien Sanglard&lt;/a&gt; · &lt;strong&gt;原文发布于&lt;/strong&gt; 2026 年 8 月 21 日&lt;/p&gt;
+&lt;p&gt;&lt;a class="link" href="https://fabiensanglard.net/agent.md/index.html" target="_blank" rel="noopener"
+&gt;阅读英文原文《My agent.md to improve LLM-assisted code quality》&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Sanglard 在审查 AI 生成的代码时，发现自己在不同会话里反复提同样的意见。他把这些反馈写进项目的 &lt;code&gt;agent.md&lt;/code&gt;，例如让修复从一个能复现问题的失败测试开始。这样一来，他可以把更多审查时间花在架构和设计上。&lt;/p&gt;
+&lt;p&gt;他也提到，长会话里模型有时会逐渐偏离已有规则。他的做法是为每个功能开一个短会话，或在发现偏离时请助手重新读取规则。&lt;/p&gt;
+&lt;h2 id="agent-md-bilingual"&gt;&lt;a href="#agent-md-bilingual" class="header-anchor"&gt;&lt;/a&gt;&lt;code&gt;agent.md&lt;/code&gt; 双语要点
+&lt;/h2&gt;&lt;p&gt;&lt;a class="link" href="https://fabiensanglard.net/agent.md/agent.md" target="_blank" rel="noopener"
+&gt;阅读 Fabien Sanglard 的英文 &lt;code&gt;agent.md&lt;/code&gt; 原文件&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="中文要点"&gt;&lt;a href="#%e4%b8%ad%e6%96%87%e8%a6%81%e7%82%b9" class="header-anchor"&gt;&lt;/a&gt;中文要点
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;注释、提交信息和回复直接说重点，省去夸张和恭维。&lt;/li&gt;
+&lt;li&gt;把反复出现、有特定含义或由规范规定的值提取为命名常量或枚举。用提前返回和 &lt;code&gt;continue&lt;/code&gt; 减少嵌套，单行 &lt;code&gt;if&lt;/code&gt; 也加花括号。&lt;/li&gt;
+&lt;li&gt;函数名少于 30 个字符。用枚举替代布尔开关参数，用空行分隔逻辑段，简短说明代码做什么、为什么这样做。&lt;/li&gt;
+&lt;li&gt;成员默认私有，改为 &lt;code&gt;internal&lt;/code&gt; 或 &lt;code&gt;public&lt;/code&gt; 前先获明确同意。把底层操作封装起来，每层只调用紧邻的下一层。&lt;/li&gt;
+&lt;li&gt;改动限于当前任务。修复前先写复现测试，看到它失败后再修，最后重跑确认通过。&lt;/li&gt;
+&lt;li&gt;提交标题以大写字母开头，用祈使句，省略句号。目标 50 字符，上限 72。用空行分隔正文，正文按 72 字符折行，交代改了什么、为什么改。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="english-summary"&gt;&lt;a href="#english-summary" class="header-anchor"&gt;&lt;/a&gt;English summary
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;Get to the point in comments, commit messages, and replies. Skip superlatives and flattery.&lt;/li&gt;
+&lt;li&gt;Use named constants or enums for recurring, meaningful, or spec-defined values. Flatten nesting with early exits and &lt;code&gt;continue&lt;/code&gt;. Brace even single-line &lt;code&gt;if&lt;/code&gt; blocks.&lt;/li&gt;
+&lt;li&gt;Keep function names under 30 characters. Use enums for options passed as boolean flags. Separate logical blocks and briefly explain their purpose and rationale.&lt;/li&gt;
+&lt;li&gt;Default to private members and get explicit approval before making them &lt;code&gt;internal&lt;/code&gt; or &lt;code&gt;public&lt;/code&gt;. Encapsulate low-level operations and call only the layer directly below.&lt;/li&gt;
+&lt;li&gt;Limit edits to the task. For a bug, reproduce it with a failing test, make the fix, then rerun the test.&lt;/li&gt;
+&lt;li&gt;Use a capitalized, imperative commit subject without a period. Aim for 50 characters and cap it at 72. After a blank line, explain what changed and why, wrapping at 72.&lt;/li&gt;
+&lt;/ol&gt;</description></item><item><title>享受编程，依然没什么不对</title><link>https://yufenghuang.tech/p/it-is-still-ok-to-enjoy-programming-zh/</link><pubDate>Wed, 21 Oct 2026 00:00:00 -0400</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/it-is-still-ok-to-enjoy-programming-zh/</guid><description>&lt;blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;原作者：&lt;/strong&gt; &lt;a class="link" href="https://chriskiehl.com/about" target="_blank" rel="noopener"
 &gt;Chris Kiehl&lt;/a&gt;&lt;/li&gt;

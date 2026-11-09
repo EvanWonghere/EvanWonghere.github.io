@@ -1,4 +1,74 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AI on 蜂窝</title><link>https://yufenghuang.tech/tags/ai/</link><description>Recent content in AI on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Sun, 25 Oct 2026 20:00:00 +0800</lastBuildDate><atom:link href="https://yufenghuang.tech/tags/ai/index.xml" rel="self" type="application/rss+xml"/><item><title>从一个拼写错误到两个 PR：给 xLua 挑错的一次记录</title><link>https://yufenghuang.tech/p/xlua-typos-to-pull-requests/</link><pubDate>Sun, 25 Oct 2026 20:00:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/xlua-typos-to-pull-requests/</guid><description>&lt;p&gt;学 xLua 的协程示例时，我注意到一行代码：&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AI on 蜂窝</title><link>https://yufenghuang.tech/tags/ai/</link><description>Recent content in AI on 蜂窝</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>yufenghuang009@gmail.com (Evan Wong)</managingEditor><webMaster>yufenghuang009@gmail.com (Evan Wong)</webMaster><copyright>EvanWong</copyright><lastBuildDate>Mon, 09 Nov 2026 00:00:00 -0800</lastBuildDate><atom:link href="https://yufenghuang.tech/tags/ai/index.xml" rel="self" type="application/rss+xml"/><item><title>《永别了，程序员》导读</title><link>https://yufenghuang.tech/p/farewell-programmers-reading-note/</link><pubDate>Mon, 09 Nov 2026 00:00:00 -0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/farewell-programmers-reading-note/</guid><description>&lt;p&gt;&lt;strong&gt;原作者&lt;/strong&gt; 王咏刚 · &lt;strong&gt;来源&lt;/strong&gt; 微信公众号「半轻人」&lt;/p&gt;
+&lt;p&gt;&lt;a class="link" href="https://mp.weixin.qq.com/s/x_xS7lJ-Odv_sIWyvFldhw" target="_blank" rel="noopener"
+&gt;阅读微信公众号原文&lt;/a&gt; · &lt;a class="link" href="https://www.huxiu.com/article/4903060.html" target="_blank" rel="noopener"
+&gt;阅读虎嗅刊载版（2026 年 11 月 4 日）&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;王咏刚把自己中学时手写 6502 汇编的经历，与今天用 AI 升级老电脑模拟器的经历放在一起。贯穿两段经历的问题是，当模型接手越来越多的实现工作，多年编程经验还能给程序员和软件产品带来多少溢价？&lt;/p&gt;
+&lt;h2 id="1-软件更容易做供给和需求会怎样变化"&gt;&lt;a href="#1-%e8%bd%af%e4%bb%b6%e6%9b%b4%e5%ae%b9%e6%98%93%e5%81%9a%e4%be%9b%e7%bb%99%e5%92%8c%e9%9c%80%e6%b1%82%e4%bc%9a%e6%80%8e%e6%a0%b7%e5%8f%98%e5%8c%96" class="header-anchor"&gt;&lt;/a&gt;1. 软件更容易做，供给和需求会怎样变化
+&lt;/h2&gt;&lt;p&gt;作者判断，过去要靠有经验的开发者投入工时才能完成的功能，现在越来越多地可以用模型调用来实现。如果更多团队能以较低成本做出类似产品，单凭实现难度维持高价就更难了。他也区分了两种增长。卖显卡、模型和算力的市场可以迅速扩张，消费者愿意为软件付的钱却未必同步增长。后一种需求跟不上时，更多供给可能先带来降价。&lt;/p&gt;
+&lt;h2 id="2-altair-8800-项目里人和-ai-分别做了什么"&gt;&lt;a href="#2-altair-8800-%e9%a1%b9%e7%9b%ae%e9%87%8c%e4%ba%ba%e5%92%8c-ai-%e5%88%86%e5%88%ab%e5%81%9a%e4%ba%86%e4%bb%80%e4%b9%88" class="header-anchor"&gt;&lt;/a&gt;2. Altair 8800 项目里，人和 AI 分别做了什么
+&lt;/h2&gt;&lt;p&gt;起初，王咏刚只想为一位计算机老师改进课堂用的模拟器。原项目主要模拟前面板和 CPU，后来加入了调试器、8080 汇编工具，还做出了可拆解的 3D 机箱。按他的回顾，他提出需求、选定推进方向、试用和报错，AI 则承担了大量方案设计、资料检索和实现。做 3D 机箱时，AI 帮他找到一位收藏者，后者提供了真机照片和尺寸用于校准。&lt;a class="link" href="https://github.com/wixette/8800-simulator" target="_blank" rel="noopener"
+&gt;Altair 8800 模拟器源码&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="3-如果初级岗位减少新人从哪里积累经验"&gt;&lt;a href="#3-%e5%a6%82%e6%9e%9c%e5%88%9d%e7%ba%a7%e5%b2%97%e4%bd%8d%e5%87%8f%e5%b0%91%e6%96%b0%e4%ba%ba%e4%bb%8e%e5%93%aa%e9%87%8c%e7%a7%af%e7%b4%af%e7%bb%8f%e9%aa%8c" class="header-anchor"&gt;&lt;/a&gt;3. 如果初级岗位减少，新人从哪里积累经验
+&lt;/h2&gt;&lt;p&gt;文中引用了黄一孟对未来团队的设想。少数合伙人负责定义产品、规划和管理，AI 承担大部分研发。王咏刚担心，初中级岗位因此减少，毕业生更难靠会写代码找到第一份工作。这也引出一个培养问题。如果改小功能、修普通缺陷的机会变少，新人还能通过哪些任务练习定位问题、权衡方案和验证改动？&lt;/p&gt;
+&lt;h2 id="4-生产力的收益和转型的代价落到谁身上"&gt;&lt;a href="#4-%e7%94%9f%e4%ba%a7%e5%8a%9b%e7%9a%84%e6%94%b6%e7%9b%8a%e5%92%8c%e8%bd%ac%e5%9e%8b%e7%9a%84%e4%bb%a3%e4%bb%b7%e8%90%bd%e5%88%b0%e8%b0%81%e8%ba%ab%e4%b8%8a" class="header-anchor"&gt;&lt;/a&gt;4. 生产力的收益和转型的代价落到谁身上
+&lt;/h2&gt;&lt;p&gt;王咏刚愿意相信，生产力增长最终能催生新需求，让人有机会缩短工作时间。眼下他更担心的是，现有岗位可能先减少，新需求和收入分配机制却需要更长时间形成。文章最后把焦虑延伸到 AI 自主性增强之后，人是否还掌握控制权的问题。&lt;/p&gt;</description></item><item><title>AI 时代的编程元认知</title><link>https://yufenghuang.tech/p/programming-metacognition-in-the-ai-era/</link><pubDate>Mon, 09 Nov 2026 00:00:00 -0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/programming-metacognition-in-the-ai-era/</guid><description>&lt;p&gt;写一个函数，有时真正费时间的是动手之前的停顿。这个输入应该得到什么结果？为什么选这个数据结构？上一次改动已经排除了哪种可能？卡住和挫败感常常是解题的一部分。停下来写出一个可验证的预期，可能比再改十行代码更接近答案。&lt;/p&gt;
+&lt;p&gt;这篇笔记源自 Clara Maine 在 JetBrains Academy 的视频。&lt;strong&gt;元认知&lt;/strong&gt;在这里指解题时监控和调整自己的思考。你知道正在做哪一步，能说出目前的依据，并在证据与预期不符时调整策略。AI 可以把代码生成得很快，也让我们更容易把任务完成的进度当作自己理解的进度。&lt;a class="link" href="https://www.youtube.com/watch?v=DkhhE97Swmo" target="_blank" rel="noopener"
+&gt;JetBrains Academy 视频《Therapy for the Vibe-Coded Brain》&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="不用-ai-也会遇到的五种卡点"&gt;&lt;a href="#%e4%b8%8d%e7%94%a8-ai-%e4%b9%9f%e4%bc%9a%e9%81%87%e5%88%b0%e7%9a%84%e4%ba%94%e7%a7%8d%e5%8d%a1%e7%82%b9" class="header-anchor"&gt;&lt;/a&gt;不用 AI 也会遇到的五种卡点
+&lt;/h2&gt;&lt;p&gt;Prather 等人在 2018 年观察编程初学者做题时记录了五种卡点。下面用一个假想的 C# 背包练习来说明。每次拾取一件物品，优先放进同类物品的未满堆叠，再找空格。背包放不下的物品留在原地，玩家也可以手动调整格子里的物品。&lt;a class="link" href="https://doi.org/10.1145/3230977.3230981" target="_blank" rel="noopener"
+&gt;Prather 等人的 2018 年研究&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="构思forming"&gt;&lt;a href="#%e6%9e%84%e6%80%9dforming" class="header-anchor"&gt;&lt;/a&gt;构思（Forming）
+&lt;/h3&gt;&lt;p&gt;你读懂了需求，却建立了一个表达不了需求的模型。比如用 &lt;code&gt;Dictionary&amp;lt;ItemId, int&amp;gt;&lt;/code&gt; 作为唯一库存数据，只能知道有 101 个木材，无法知道哪一格放了 100 个、哪一格放了 1 个，也就保存不了玩家调过的位置。先拿一组必须区分的状态检验模型。试着把两个格子互换，如果交换前后在模型里完全一样，就需要把槽位也纳入状态。&lt;/p&gt;
+&lt;h3 id="脱困dislodging"&gt;&lt;a href="#%e8%84%b1%e5%9b%b0dislodging" class="header-anchor"&gt;&lt;/a&gt;脱困（Dislodging）
+&lt;/h3&gt;&lt;p&gt;你已经怀疑原先的解释有问题，手却还在沿同一条路改。比如背包数量多加了一次，你反复调整 UI 刷新的时机，日志却显示界面刷新前库存就已多加了一次。此时先暂停改界面，跟踪一次拾取触发了几次库存写入。这个检查能把问题从显示层移回写入路径。&lt;/p&gt;
+&lt;h3 id="假设assumption"&gt;&lt;a href="#%e5%81%87%e8%ae%beassumption" class="header-anchor"&gt;&lt;/a&gt;假设（Assumption）
+&lt;/h3&gt;&lt;p&gt;你把一个相近的问题解对了。比如把「每格最多 100 个」理解成「同种物品总共最多 100 个」。代码和测试都可能自洽，因为它们沿用了同一个假设。回到题目，写一组能区分两种解释的输入和输出。背包里只有一格木材，已经叠满 100 个，旁边还有空格。再拾取一个木材应该占用一个新格子。&lt;/p&gt;
+&lt;h3 id="定位location"&gt;&lt;a href="#%e5%ae%9a%e4%bd%8dlocation" class="header-anchor"&gt;&lt;/a&gt;定位（Location）
+&lt;/h3&gt;&lt;p&gt;你觉得只差把界面接上，实际还跳过了规则验证。先测库存的两种边界状态。有未满的同类堆叠时，即使没有空格也能加一件。完全放不下时，库存应返回失败且数量不变。然后从拾取入口走一遍失败路径，确认场景里的物品还在。知道这些步骤各自验证过什么，才好判断接下来该写界面还是回头改规则。&lt;/p&gt;
+&lt;h3 id="成就achievement"&gt;&lt;a href="#%e6%88%90%e5%b0%b1achievement" class="header-anchor"&gt;&lt;/a&gt;成就（Achievement）
+&lt;/h3&gt;&lt;p&gt;代码写得越多，就越容易觉得再补一处就能结束。比如按钮回调和碰撞回调都能直接写库存，每出一次重复结算就给其中一处加判断。先写出一个能复现问题的用例，再把拾取决策收拢到同一个入口，由它判断这件场景物品是否已经拾取成功。重跑重复触发和正常拾取两类用例，确认修复保留了两条入口的正常行为。&lt;/p&gt;
+&lt;h2 id="使用-ai-时需要留意的三种卡点"&gt;&lt;a href="#%e4%bd%bf%e7%94%a8-ai-%e6%97%b6%e9%9c%80%e8%a6%81%e7%95%99%e6%84%8f%e7%9a%84%e4%b8%89%e7%a7%8d%e5%8d%a1%e7%82%b9" class="header-anchor"&gt;&lt;/a&gt;使用 AI 时需要留意的三种卡点
+&lt;/h2&gt;&lt;p&gt;Prather 等人 2024 年在一所大学观察了 21 名初学者在可使用 Copilot 和 ChatGPT 的情况下做一道练习，记录到以下三种困难。20 人完成了可运行的程序，研究者同时观察到部分学生对自身理解的判断偏乐观。这些观察来自一次特定的实验任务。&lt;a class="link" href="https://arxiv.org/abs/2405.17739" target="_blank" rel="noopener"
+&gt;Prather 等人的 2024 年研究《The Widening Gap》&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="进展progression"&gt;&lt;a href="#%e8%bf%9b%e5%b1%95progression" class="header-anchor"&gt;&lt;/a&gt;进展（Progression）
+&lt;/h3&gt;&lt;p&gt;AI 让背包能跑，读它的解释时你觉得每句话都懂。合上解释，遇到唯一的同类堆叠已经满了、旁边还有空格的情况，你却说不出代码会写到哪一格，也找不到这个决定在哪里做。先关掉补全，预测一组现有规则下的结果，再独立写个测试来检查。如果说得清，再试着给不同物品设不同的叠加上限，看看理解能否用到新条件上。&lt;/p&gt;
+&lt;h3 id="打断interruption"&gt;&lt;a href="#%e6%89%93%e6%96%adinterruption" class="header-anchor"&gt;&lt;/a&gt;打断（Interruption）
+&lt;/h3&gt;&lt;p&gt;你正在推演怎样优先填入已有堆叠，自动补全开始生成另一个版本，你转而评估它，原来的推演停在半路。构思时可以暂时关掉行内补全，先写下处理顺序和失败条件。拿一个既有未满的同类堆叠又有空格的例子手推一遍，能说明该写哪一格，再打开补全协助实现。&lt;/p&gt;
+&lt;h3 id="误导mislead"&gt;&lt;a href="#%e8%af%af%e5%af%bcmislead" class="header-anchor"&gt;&lt;/a&gt;误导（Mislead）
+&lt;/h3&gt;&lt;p&gt;AI 建议按物品类型过滤重复拾取，日志里的重复结算消失了，玩家拾起第二件同类物品时也被过滤掉了。用两个场景验证这条建议，背包都预留至少两件物品的空间。同一个拾取请求重试时，数量只加一。拾取两件不同的同类物品时，数量应该加二。用这组反例审查 AI 的建议，也用它检查教程和自己的猜测。&lt;/p&gt;
+&lt;h2 id="下次卡住时先写三句话"&gt;&lt;a href="#%e4%b8%8b%e6%ac%a1%e5%8d%a1%e4%bd%8f%e6%97%b6%e5%85%88%e5%86%99%e4%b8%89%e5%8f%a5%e8%af%9d" class="header-anchor"&gt;&lt;/a&gt;下次卡住时，先写三句话
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;目标&lt;/strong&gt;。我想让哪组输入得到什么结果？&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;证据&lt;/strong&gt;。目前哪一步已经验证过，哪一步还只是猜测？&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;下一步&lt;/strong&gt;。哪个最小的检查能让我决定继续当前方案还是换路？&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;如果目标是练习一项能力，可以先请 AI 给一个反例或提示，再自己写预期、跑测试、解释结果。如果目标是交付，AI 可以承担更多实现工作，验收时仍要能判断代码是否满足真正的要求。练习做完后，可以合上对话，试着独立处理一个小变式，看看今天学到的办法能不能再用一次。&lt;/p&gt;</description></item><item><title>Fabien Sanglard 如何用 agent.md 改进 AI 生成的代码</title><link>https://yufenghuang.tech/p/fabien-sanglard-agent-md/</link><pubDate>Mon, 09 Nov 2026 00:00:00 -0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/fabien-sanglard-agent-md/</guid><description>&lt;p&gt;&lt;strong&gt;原作者&lt;/strong&gt; &lt;a class="link" href="https://fabiensanglard.net/" target="_blank" rel="noopener"
+&gt;Fabien Sanglard&lt;/a&gt; · &lt;strong&gt;原文发布于&lt;/strong&gt; 2026 年 8 月 21 日&lt;/p&gt;
+&lt;p&gt;&lt;a class="link" href="https://fabiensanglard.net/agent.md/index.html" target="_blank" rel="noopener"
+&gt;阅读英文原文《My agent.md to improve LLM-assisted code quality》&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Sanglard 在审查 AI 生成的代码时，发现自己在不同会话里反复提同样的意见。他把这些反馈写进项目的 &lt;code&gt;agent.md&lt;/code&gt;，例如让修复从一个能复现问题的失败测试开始。这样一来，他可以把更多审查时间花在架构和设计上。&lt;/p&gt;
+&lt;p&gt;他也提到，长会话里模型有时会逐渐偏离已有规则。他的做法是为每个功能开一个短会话，或在发现偏离时请助手重新读取规则。&lt;/p&gt;
+&lt;h2 id="agent-md-bilingual"&gt;&lt;a href="#agent-md-bilingual" class="header-anchor"&gt;&lt;/a&gt;&lt;code&gt;agent.md&lt;/code&gt; 双语要点
+&lt;/h2&gt;&lt;p&gt;&lt;a class="link" href="https://fabiensanglard.net/agent.md/agent.md" target="_blank" rel="noopener"
+&gt;阅读 Fabien Sanglard 的英文 &lt;code&gt;agent.md&lt;/code&gt; 原文件&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="中文要点"&gt;&lt;a href="#%e4%b8%ad%e6%96%87%e8%a6%81%e7%82%b9" class="header-anchor"&gt;&lt;/a&gt;中文要点
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;注释、提交信息和回复直接说重点，省去夸张和恭维。&lt;/li&gt;
+&lt;li&gt;把反复出现、有特定含义或由规范规定的值提取为命名常量或枚举。用提前返回和 &lt;code&gt;continue&lt;/code&gt; 减少嵌套，单行 &lt;code&gt;if&lt;/code&gt; 也加花括号。&lt;/li&gt;
+&lt;li&gt;函数名少于 30 个字符。用枚举替代布尔开关参数，用空行分隔逻辑段，简短说明代码做什么、为什么这样做。&lt;/li&gt;
+&lt;li&gt;成员默认私有，改为 &lt;code&gt;internal&lt;/code&gt; 或 &lt;code&gt;public&lt;/code&gt; 前先获明确同意。把底层操作封装起来，每层只调用紧邻的下一层。&lt;/li&gt;
+&lt;li&gt;改动限于当前任务。修复前先写复现测试，看到它失败后再修，最后重跑确认通过。&lt;/li&gt;
+&lt;li&gt;提交标题以大写字母开头，用祈使句，省略句号。目标 50 字符，上限 72。用空行分隔正文，正文按 72 字符折行，交代改了什么、为什么改。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="english-summary"&gt;&lt;a href="#english-summary" class="header-anchor"&gt;&lt;/a&gt;English summary
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;Get to the point in comments, commit messages, and replies. Skip superlatives and flattery.&lt;/li&gt;
+&lt;li&gt;Use named constants or enums for recurring, meaningful, or spec-defined values. Flatten nesting with early exits and &lt;code&gt;continue&lt;/code&gt;. Brace even single-line &lt;code&gt;if&lt;/code&gt; blocks.&lt;/li&gt;
+&lt;li&gt;Keep function names under 30 characters. Use enums for options passed as boolean flags. Separate logical blocks and briefly explain their purpose and rationale.&lt;/li&gt;
+&lt;li&gt;Default to private members and get explicit approval before making them &lt;code&gt;internal&lt;/code&gt; or &lt;code&gt;public&lt;/code&gt;. Encapsulate low-level operations and call only the layer directly below.&lt;/li&gt;
+&lt;li&gt;Limit edits to the task. For a bug, reproduce it with a failing test, make the fix, then rerun the test.&lt;/li&gt;
+&lt;li&gt;Use a capitalized, imperative commit subject without a period. Aim for 50 characters and cap it at 72. After a blank line, explain what changed and why, wrapping at 72.&lt;/li&gt;
+&lt;/ol&gt;</description></item><item><title>从一个拼写错误到两个 PR：给 xLua 挑错的一次记录</title><link>https://yufenghuang.tech/p/xlua-typos-to-pull-requests/</link><pubDate>Sun, 25 Oct 2026 20:00:00 +0800</pubDate><author>yufenghuang009@gmail.com (Evan Wong)</author><guid>https://yufenghuang.tech/p/xlua-typos-to-pull-requests/</guid><description>&lt;p&gt;学 xLua 的协程示例时，我注意到一行代码：&lt;/p&gt;
 &lt;div class="code-block" data-lang="csharp"&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
 &lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
