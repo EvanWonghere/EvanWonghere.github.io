@@ -25,6 +25,7 @@ Pushes to `main` trigger `.github/workflows/gh-pages.yml`: `node --test tests/*.
 
 - `hugo.toml` is the live config. `hugo.yaml` is a leftover Stack example template and is not used; edit `hugo.toml`.
 - Site-wide menu entries (including custom ones like `quiz`, `quotes`, `games`) are defined in `hugo.toml` under `[[menu.main]]`. Custom icons referenced by those entries (`device-gamepad`, `quote`, `brand-steam`) live in `assets/icons/` and override the Stack theme's icons by filename.
+- The site icon (the 蜂 seal) is generated: `node tools/site-icons/make-icons.mjs` writes `static/favicon.svg`, `favicon.ico`, `favicon-96x96.png`, `apple-touch-icon.png` and the two `web-app-manifest-*.png` (needs `rsvg-convert` and ImageMagick locally). Change the script, not the outputs; the glyph outline in `tools/site-icons/glyphs.json` comes from Noto Serif SC (OFL). `layouts/partials/head/custom.html` links them. The sidebar avatar is `assets/img/avatar.png`.
 - Math uses the Stack theme's built-in KaTeX, enabled site-wide via `[params.article] math = true`, with a local override at `layouts/partials/article/components/math.html`. Per-page override with frontmatter `math: true/false`. `params.markup.goldmark` has passthrough delimiters for `\[...\]`, `$$...$$` and `\(...\)`; single `$...$` is recognized by KaTeX but is **not** in passthrough, so avoid it.
 
 ## Content architecture

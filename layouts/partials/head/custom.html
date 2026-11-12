@@ -25,3 +25,13 @@
         }, 2500);
     })();
 </script>
+
+{{/*
+    站点图标。主题已经按 params.favicon 输出了 favicon.ico；这里补上矢量图标、
+    iOS 主屏图标和 manifest。SVG 放在最后，支持它的浏览器会优先用它。
+    这些文件由 tools/site-icons/make-icons.mjs 生成，不要手改。
+*/}}
+<link rel="icon" type="image/png" sizes="96x96" href="{{ "favicon-96x96.png" | relURL }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ "apple-touch-icon.png" | relURL }}">
+<link rel="manifest" href="{{ "site.webmanifest" | relURL }}">
+<link rel="icon" type="image/svg+xml" href="{{ "favicon.svg" | relURL }}">
