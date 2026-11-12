@@ -23,7 +23,7 @@
         {{ end }}
     </div>
 
-    {{/* 本站覆盖：front matter 写 hideMeta: true 的页面（作品集、简历）不显示日期与阅读时长。
+    {{/* 本站覆盖：front matter 写 hideMeta: true 的页面（作品页）不显示日期与阅读时长。
          主题原文用 `.Params.readingTime | default ...`，false 会被 default 当成没设置，关不掉。 */}}
     {{ $showReadingTime := and (not .Params.hideMeta) (.Params.readingTime | default (.Site.Params.article.readingTime)) }}
     {{ $showDate := and (not .Params.hideMeta) (not .Date.IsZero) }}

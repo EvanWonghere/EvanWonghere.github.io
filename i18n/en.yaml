@@ -1,0 +1,9 @@
+# 本站自己的英文文案，与主题的 i18n/en.yaml 合并（同名键以本文件为准）。
+# 首页自我介绍下方的统计（layouts/index.html），中文站用模板里的默认值。
+home:
+    posts:
+        one: post
+        other: posts
+    categories:
+        one: category
+        other: categories

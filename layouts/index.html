@@ -4,7 +4,8 @@
     与主题原文件的唯一差异：在文章流之前加一个自我介绍区块。
     此前首页直接就是文章列表，新访客不知道这个站是谁写的、写什么。
 
-    文案走 hugo.toml 的 [params.homeIntro]，改字不必碰模板；links 是自我介绍下方的入口按钮（作品集、简历）。
+    文案走 hugo.toml 的 [params.homeIntro]，改字不必碰模板；links 是自我介绍下方的入口按钮（开发手记、关于我）。
+    英文首页的文案在 [languages.en.params.homeIntro]，覆盖同名的全局配置。
     未配置 params.homeIntro 时整块不渲染，行为与主题原版一致。
 
     只在第一页显示：翻到第二页还挂着自我介绍会很奇怪。
@@ -30,18 +31,21 @@
                     </div>
                 {{ end }}
 
+                {{/* 英文站目前没有已发布的文章，"0 篇文章"没有意义，就不显示统计 */}}
+                {{ if $filtered }}
                 <div class="home-intro__stats">
-                    <a href="/archives/">
+                    <a href="{{ "archives/" | relLangURL }}">
                         <strong>{{ len $filtered }}</strong>
-                        <span>{{ T "home.posts" | default "篇文章" }}</span>
+                        <span>{{ T "home.posts" (len $filtered) | default "篇文章" }}</span>
                     </a>
                     {{ with $.Site.Taxonomies.categories }}
-                        <a href="/categories/">
+                        <a href="{{ "categories/" | relLangURL }}">
                             <strong>{{ len . }}</strong>
-                            <span>{{ T "home.categories" | default "个分类" }}</span>
+                            <span>{{ T "home.categories" (len .) | default "个分类" }}</span>
                         </a>
                     {{ end }}
                 </div>
+                {{ end }}
             </section>
         {{ end }}
     {{ end }}

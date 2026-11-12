@@ -1506,7 +1506,7 @@ html {
     }
 }
 
-/* ---------- 作品集与简历（content/page/portfolio、content/page/resume） ---------- */
+/* ---------- 作品页（content/page/portfolio） ---------- */
 .pf-hero {
     margin: 0 0 2.4rem;
 
@@ -1527,7 +1527,7 @@ html {
     }
 
     // 剪发演示视频放在首屏：宽屏在文字右侧，窄屏插在标签行和简介之间。
-    // 只有带视频的 hero（作品集）用这套网格，简历页的 hero 不受影响。
+    // 只有带视频的 hero 用这套网格，不支持 :has 的浏览器退回普通排版。
     &:has(> .pf-hero__media) {
         display: grid;
         grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
@@ -1698,26 +1698,6 @@ html {
         font-size: 1.3rem;
         background-color: var(--card-background-selected);
         color: var(--card-text-color-secondary);
-    }
-}
-
-// 简历：每段经历的标题行（左：名称，中：角色，右：时间）
-.cv-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 4px 16px;
-    margin: 1.6rem 0 0.4rem;
-
-    strong {
-        font-size: 1.65rem;
-        color: var(--card-text-color-main);
-    }
-
-    span {
-        font-size: 1.4rem;
-        color: var(--card-text-color-tertiary);
     }
 }
 

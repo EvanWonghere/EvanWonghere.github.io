@@ -1,5 +1,5 @@
 ---
-title: "作品集"
+title: "作品"
 slug: "portfolio"
 description: "EvanWong 的作品：《宫廷理发师》（HeirCut），技术负责人 / 唯一程序。"
 date: 2026-10-14T10:00:00+08:00
@@ -21,7 +21,6 @@ hideMeta: true
 <a class="pf-links__primary" href="https://store.steampowered.com/app/4268650/">Steam 商店页</a>
 <a href="https://www.bilibili.com/video/BV1dkbDzoE9q/">演示视频</a>
 <a href="/p/heircut-devlog-submit-guidance/">开发手记（12 篇）</a>
-<a href="/resume/">简历</a>
 </div>
 <figure class="pf-hero__media"><video src="/portfolio/cut.mp4" poster="/portfolio/cut-poster.jpg" width="360" height="384" autoplay muted loop playsinline aria-label="游戏中给公主剪发：白色轨迹划过长发，轨迹以下的头发被剪断"></video><figcaption>可以沿任意曲线剪开的 2D 头发</figcaption></figure>
 </div>

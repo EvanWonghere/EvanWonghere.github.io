@@ -19,6 +19,22 @@ weight = 1
 [languages.en.params.sidebar]
 subtitle = "EvanWong's Personal Blog"
 
+# 英文首页的自我介绍，覆盖下面 [params.homeIntro] 的中文文案。
+# 英文站还没有已发布的文章（英文译稿都是草稿），所以按钮把读者引到中文站。
+[languages.en.params.homeIntro]
+greeting = "Hi 👋"
+title = "I'm EvanWong"
+description = "This is **Hive**, where I keep notes on **computer graphics** and **game design and development**, plus the **devlog** of *HeirCut*, the game I write the code for. Most posts are in Chinese for now."
+
+  [[languages.en.params.homeIntro.links]]
+  name = "Read in Chinese"
+  url = "/"
+  primary = true
+
+  [[languages.en.params.homeIntro.links]]
+  name = "HeirCut devlog (Chinese)"
+  url = "/series/heircut-开发手记/"
+
 # 英文站只列出确有英文版本的页面。about / quotes / quiz 仅有中文内容，
 # 若列在这里会把英文读者直接甩回中文站。
   [[languages.en.menu.main]]
@@ -67,7 +83,7 @@ subtitle = "EvanWong的个人博客"
 
   [[languages.zh-cn.menu.main]]
   identifier = "portfolio"
-  name = "作品集"
+  name = "作品"
   url = "/portfolio/"
   weight = -95
 
@@ -154,17 +170,17 @@ sync = true
 [params.homeIntro]
 greeting = "你好 👋"
 title = "我是 EvanWong"
-description = "游戏客户端程序，Unity 方向。我是《宫廷理发师》的唯一程序，这里有它的**开发手记**，也有我在**计算机图形学**、**游戏设计**路上的学习笔记。"
+description = "这里是**蜂窝**，记录我在**计算机图形学**、**游戏设计与开发**路上的学习笔记，也有我做《宫廷理发师》的**开发手记**。"
 
   # 自我介绍区块下方的入口按钮；primary = true 的用强调色。
   [[params.homeIntro.links]]
-  name = "看作品集"
-  url = "/portfolio/"
+  name = "开发手记"
+  url = "/series/heircut-开发手记/"
   primary = true
 
   [[params.homeIntro.links]]
-  name = "简历"
-  url = "/resume/"
+  name = "关于我"
+  url = "/about/"
 
   [params.author] # This defines author as an object
   name = "Evan Wong"
